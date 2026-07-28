@@ -29,10 +29,16 @@ closeness (35), paper-scope coverage (15).
 
 ## Evaluation Metadata
 
-| Target | Stage | Parameter match | Critical | Role | Artifact pass | Data-backed | Manual interv. | Failure type | Reference | Provenance | Formula gate |
-| --- | --- | --- | --- | --- | --- | --- | ---: | --- | --- | --- | --- |
-| T1 | final_reproduction | paper_exact | true | main_claim | true | true | 0 | none | analytic_reference | analytic_reference | verified |
-| T2 | final_reproduction | paper_exact | false | method_validation | true | true | 0 | none | analytic_reference | independent_numerics | verified |
+| Target | Stage | Parameter match | Critical | Role | Artifact pass | Data-backed | Manual interv. | Failure type | Reference | Provenance | Formula gate | Physics checks |
+| --- | --- | --- | --- | --- | --- | --- | ---: | --- | --- | --- | --- | --- |
+| T1 — Fig. 2 and Table 1 | final_reproduction | paper_exact | true | main_claim | true | true | 0 | none | analytic_reference | analytic_reference | verified | passed |
+| T2 — 1D spin-model spectrum | final_reproduction | paper_exact | false | method_validation | true | true | 0 | none | analytic_reference | independent_numerics | verified | passed |
+
+The Fig. 2/Table 1 checks require exact partition-function coefficients and all
+published thermal limits to pass. The 1D spin-model checks require the full
+finite-chain spectrum and Hilbert-space dimension to agree with the
+free-paraparticle prediction, and require number conservation to numerical
+precision.
 
 ## Interpretation
 

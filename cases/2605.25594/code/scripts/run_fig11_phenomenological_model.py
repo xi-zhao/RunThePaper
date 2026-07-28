@@ -7,6 +7,13 @@ uniform weights and Lorentzian-broadened Drude peaks,
 with relaxation rates Gamma_j drawn from p(Gamma) ~ Gamma^(zeta-2) on
 [Gamma_min, Gamma_max].
 
+Source boundary: the paper's printed Eq. (explanation) uses
+Gamma^(zeta+1) in the continuum integrand. Multiplying its immediately
+preceding p(Gamma) by the Lorentzian numerator gives Gamma^(zeta-1),
+which is also the only power consistent with the paper's following
+omega^-(2-zeta) claim. This script implements that internally consistent
+construction by sampling p(Gamma) and averaging the Lorentzians directly.
+
 Two limiting scenarios (the two panels):
 (a) fading ergodicity: Gamma_min ~ Gamma_max - a single Lorentzian whose
     width tracks Gamma (~ 1/Z at the transition);
@@ -30,7 +37,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT = SCRIPT_DIR.parent
+if ROOT.name == "code":
+    ROOT = ROOT.parent
 FIGURE_PATH = ROOT / "outputs/figures/fig11_phenomenological_model.png"
 DATA_PATH = ROOT / "outputs/data/fig11_model_curves.csv"
 CHECK_PATH = ROOT / "outputs/checks/fig11_phenomenological_model.json"
@@ -100,15 +110,18 @@ def main() -> int:
     fig, axes = plt.subplots(1, 2, figsize=(10.5, 4.2))
     for g in gamma_family:
         axes[0].loglog(omega, f2_fading[g], label=rf"$\Gamma={g:g}$")
-    axes[0].set_xlabel(r"$\omega$"); axes[0].set_ylabel(r"$|f(\omega)|^2$")
+    axes[0].set_xlabel(r"$\omega$")
+    axes[0].set_ylabel(r"$|f(\omega)|^2$")
     axes[0].set_title("(a) fading ergodicity: single Lorentzian family", fontsize=10)
     axes[0].legend(fontsize=8)
     axes[1].loglog(omega, f2_poly, ".", color="0.4", markersize=4, label="model")
     fit_line = np.exp(intercept) * omega[window] ** slope
     axes[1].loglog(omega[window], fit_line, "-", color="tab:red",
                    label=rf"$b\,\omega^{{-a}}$, $a={a_fit:.2f}$ (paper $\approx${PAPER_A})")
-    axes[1].axvline(GAMMA_MIN, color="0.8", ls=":"); axes[1].axvline(GAMMA_MAX, color="0.8", ls=":")
-    axes[1].set_xlabel(r"$\omega$"); axes[1].set_ylabel(r"$|f(\omega)|^2$")
+    axes[1].axvline(GAMMA_MIN, color="0.8", ls=":")
+    axes[1].axvline(GAMMA_MAX, color="0.8", ls=":")
+    axes[1].set_xlabel(r"$\omega$")
+    axes[1].set_ylabel(r"$|f(\omega)|^2$")
     axes[1].set_title("(b) polynomial relaxation: power-law envelope", fontsize=10)
     axes[1].legend(fontsize=8)
     fig.tight_layout()
@@ -133,6 +146,7 @@ def main() -> int:
         "figure_path": "outputs/figures/fig11_phenomenological_model.png",
         "notes": [
             "The paper selected panel-(b) parameters to best match its Fig. 3(b) at V=38^3; our gate is the model's analytic self-consistency plus the paper's reported exponent a~0.52.",
+            "The printed Eq. (explanation) has Gamma^(zeta+1), but p(Gamma) times the Lorentzian numerator gives Gamma^(zeta-1), the power required for the stated omega^-(2-zeta) envelope; this script uses the internally consistent construction.",
         ],
     }
     CHECK_PATH.write_text(json.dumps(checks, indent=2) + "\n")

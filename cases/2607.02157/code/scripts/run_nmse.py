@@ -14,11 +14,12 @@ import csv
 import sys
 import time
 from concurrent.futures import ProcessPoolExecutor
-from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+from runtime_layout import CASE_ROOT, SOURCE_DIR
+
+sys.path.insert(0, str(SOURCE_DIR))
 from mackey_glass import generate_mg_sequences  # noqa: E402
 from qrc_engine import (  # noqa: E402
     build_map_cache,
@@ -85,7 +86,7 @@ def main() -> int:
     jobs = [(args.model, p, r, args.n_seq, 7000 + 100 * i + r)
             for i, p in enumerate(params) for r in range(args.realizations)]
 
-    out_path = Path(__file__).resolve().parents[1] / "outputs" / "data" / f"nmse_{args.model}_scan.csv"
+    out_path = CASE_ROOT / "outputs" / "data" / f"nmse_{args.model}_scan.csv"
     out_path.parent.mkdir(parents=True, exist_ok=True)
     rows = []
     with ProcessPoolExecutor(max_workers=args.workers) as pool:

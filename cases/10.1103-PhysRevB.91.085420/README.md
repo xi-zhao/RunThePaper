@@ -16,6 +16,7 @@ Independently reproduces all four figures of the continuously driven Harper mode
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [中文复现 Note PDF](note/reproduction-note.zh-CN.pdf)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

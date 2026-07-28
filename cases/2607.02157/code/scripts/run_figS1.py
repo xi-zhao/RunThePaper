@@ -14,17 +14,18 @@ import argparse
 import csv
 import json
 import sys
-from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+from runtime_layout import CASE_ROOT, SOURCE_DIR
+
+sys.path.insert(0, str(SOURCE_DIR))
 from mackey_glass import generate_mg_sequences  # noqa: E402
 from qrc_engine import bin_indices, cluster_hamiltonian, tfim_hamiltonian  # noqa: E402
 
 P_TH = 1.0 - np.exp(-0.1)  # gamma0 = 0.1, dt = 1
-DATA_DIR = Path(__file__).resolve().parents[1] / "outputs" / "data"
-CHECK_DIR = Path(__file__).resolve().parents[1] / "outputs" / "checks"
+DATA_DIR = CASE_ROOT / "outputs" / "data"
+CHECK_DIR = CASE_ROOT / "outputs" / "checks"
 
 
 def g_factor_binned(sequences: np.ndarray, omegas: np.ndarray, n_wash: int = 500, n_bins: int = 50) -> np.ndarray:

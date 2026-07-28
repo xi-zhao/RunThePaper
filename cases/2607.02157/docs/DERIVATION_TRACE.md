@@ -15,6 +15,23 @@ state is exactly invariant, which is the thermodynamic-consistency property the
 paper's SI I derives from the global Davies-Lindblad construction.
 Verified numerically (trace, positivity, Gibbs invariance).
 
+## EQC002 — Mackey-Glass drive and preprocessing
+
+The delay equation is integrated directly. The nontrivial numerical mapping is
+the preprocessing. For raw samples \(x\), define
+\(y=x-\langle x\rangle\) and
+\(s=y\sqrt{0.11/\operatorname{Var}(y)}\). It follows algebraically that
+\(\langle s\rangle=0\) and \(\operatorname{Var}(s)=0.11\). The generated
+ensemble also stays inside \([-1,1]\), so no clipping changes that identity.
+The independent check verifies the mean, variance, support, and spectral peak
+near \(\omega_s=0.36\).
+
+This resolves an internal inconsistency in the paper rather than hiding it:
+literal per-sequence min-max scaling does not reproduce the paper's own stated
+mean and variance. We preserve the published ensemble statistics, while
+retaining the unpublished initial-history and integration-step choices as
+explicit assumptions.
+
 ## EQC003/EQC004 — Holevo capacities and the relative-entropy recast (S13)
 
 chi = S(rho_bar) - sum_x P_x S(rho_x). Adding and subtracting
@@ -23,6 +40,24 @@ chi = sum_x P_x [Tr(rho_x ln rho_x) - Tr(rho_x ln rho_bar)] = sum_x P_x S(rho_x 
 Verified numerically to machine precision. The memory/predictive ensembles share
 the same average (S8/S9, probability product rule) — verified in the binning
 implementation (both partitions of the same trajectory set average identically).
+
+## EQC005 — Quantum informational dissipation
+
+Both conditional ensembles reconstruct the same unconditional state
+\(\bar\rho\). Therefore
+
+\[
+\chi^{\mathrm m}-\chi^{\mathrm p}
+=
+\left[S(\bar\rho)-\sum_m P_m S(\rho_m)\right]
+-
+\left[S(\bar\rho)-\sum_p P_p S(\rho_p)\right]
+=
+\sum_p P_p S(\rho_p)-\sum_m P_m S(\rho_m).
+\]
+
+The shared entropy cancels exactly. A random paired-ensemble check verifies
+the Holevo-difference and conditional-entropy forms to machine precision.
 
 ## EQC006/EQC007 — Coherence decomposition (S53-S56)
 
@@ -33,6 +68,22 @@ Delta(rho_bar) = sum P Delta(rho_x). Since memory and predictive ensembles share
 rho_bar, the C(rho_bar) baseline cancels in chi_d, leaving
 D_q = sum P C(rho_m) - sum P C(rho_p) (S56). Both identities verified numerically;
 C >= 0 follows from convexity of relative entropy of coherence (also EQC015).
+
+## EQC008 — Conditional-state form of injection work
+
+Let \(R\) denote the pre-injection reservoir state of a trajectory. The law of
+total expectation gives
+
+\[
+\mathbb E[\operatorname{Tr}(R H(s))]
+=
+\sum_s P(s)\operatorname{Tr}\!\left(\mathbb E[R\mid s]H(s)\right).
+\]
+
+Applying this identity once to \(s_n\) and once to \(s_{n+1}\), then
+subtracting, gives Eq. (S62). The verification constructs random trajectories,
+forms their conditional states, and confirms that the conditional-state work
+equals the direct trajectory-averaged energy jump.
 
 ## EQC009 — Injection-work identity (S62-S64), re-derived independently
 
@@ -99,6 +150,24 @@ fingerprints:
 
 The PBC bulk gap still minimizes at alpha = 0.50, consistent with the stated
 transition point.
+
+## EQC014 — Ridge readout and NMSE
+
+For the regularized objective
+\(L(w)=\|Xw-\hat y\|_2^2+\eta\|w\|_2^2\), stationarity gives
+
+\[
+\nabla_w L=2X^\mathsf{T}(Xw-\hat y)+2\eta w=0,
+\qquad
+w=(X^\mathsf{T}X+\eta I)^{-1}X^\mathsf{T}\hat y.
+\]
+
+Because \(X^\mathsf{T}X+\eta I\) is positive definite for \(\eta>0\), this
+stationary point is the unique minimum. The numerical check verifies the
+normal-equation residual, local objective increase, and non-negativity of the
+stated NMSE. The constant bias feature remains an explicit unpublished
+convention; the full \(4^6-1\) Pauli readout and all published training
+parameters are otherwise preserved.
 
 ## EQC015 — Markovian bound (S57-S61)
 

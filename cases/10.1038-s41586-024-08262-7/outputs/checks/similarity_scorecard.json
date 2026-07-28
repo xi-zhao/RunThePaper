@@ -29,6 +29,7 @@
       },
       "evidence": [
         "outputs/figures/fig2_reproduction.png",
+        "../../docs/comparisons/10.1038-s41586-024-08262-7_fig2_source_vs_reproduction.png",
         "outputs/data/fig2_left_degeneracies.csv",
         "outputs/data/fig2_right_occupation.csv",
         "outputs/checks/fig2.json"
@@ -54,7 +55,25 @@
       "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
+      "physics_assertions": [
+        {
+          "assertion_id": "fig2_degeneracies_exact",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2.json#degeneracies_all_match",
+          "claim": "Every plotted single-mode degeneracy sequence equals the coefficient sequence of the paper's partition function."
+        },
+        {
+          "assertion_id": "fig2_occupation_limits",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2.json#limit_checks_all_pass",
+          "claim": "All published zero-energy values and large-occupation saturation limits pass."
+        }
+      ],
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -131,7 +150,25 @@
       "critical": false,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
+      "physics_assertions": [
+        {
+          "assertion_id": "spin_chain_spectrum_matches",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/ed_validation.json#cases",
+          "claim": "For all three finite-chain checks, the Hilbert-space dimension agrees and the exact-diagonalization spectrum matches the free-paraparticle subset-sum spectrum within 1e-9."
+        },
+        {
+          "assertion_id": "spin_chain_number_conserved",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/ed_validation.json#cases",
+          "claim": "The spin-chain Hamiltonian commutes with total paraparticle number to numerical precision in every checked case."
+        }
+      ],
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -187,9 +224,11 @@
       "method_validation": 1
     },
     "physics_status_counts": {
-      "undeclared": 2
+      "passed": 2
     },
-    "physics_assertion_status_counts": {},
+    "physics_assertion_status_counts": {
+      "passed": 4
+    },
     "essential_physics_failures": [],
     "final_reproduction_ready": true,
     "final_reproduction_target_ids": [

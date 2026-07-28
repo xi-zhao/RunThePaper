@@ -17,10 +17,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 
 import numpy as np
 import torch
 
+from runtime_layout import SOURCE_DIR
+
+sys.path.insert(0, str(SOURCE_DIR))
 import qrc_gpu
 from qrc_gpu import (
     MAX_H, N_BINS, N_EVAL, N_WASH, build_cache, device_auto,

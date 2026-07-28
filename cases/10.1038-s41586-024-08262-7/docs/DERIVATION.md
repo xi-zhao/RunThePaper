@@ -15,6 +15,12 @@ $$
 
 status: `verified` · source: main text Eq. single_mode_Z; Table 1 (tab:Hilbert_series); SI Sec. 'Calculation of exclusion statistics and single mode partition functions'
 
+Numerical form:
+
+```
+For each species, evaluate the exact Taylor coefficients d_n of z_R(x) for n=0..4; write one row per species to outputs/data/fig2_left_degeneracies.csv and compare the integer vector with the SI values.
+```
+
 Code: `src/paraparticles.py::Species.degeneracies`, `src/paraparticles.py::species_table`
 
 
@@ -28,6 +34,12 @@ $$
 
 status: `verified` · source: main text Eq. n_k_expectation; main text 'Exact solution of free paraparticles'
 
+Numerical form:
+
+```
+Evaluate <n> = x z'_R(x)/z_R(x) on 401 equally spaced beta*eps values in [-4,4] for the five Fig. 2 species; write the curves to outputs/data/fig2_right_occupation.csv and verify analytic crossing and saturation limits.
+```
+
 Code: `src/paraparticles.py::Species.occupation`, `scripts/gen_fig2.py`
 
 
@@ -40,5 +52,11 @@ For the Ex.3 R-matrix, the (m+1)-level spin chain H = sum_{i,a} J_i (x^+_{i,a} y
 $$
 
 status: `verified` · source: main text Eq. Hamil1Dspin and 'Emergent paraparticles in condensed matter systems'; SI 'Details on the 1D spin model and the MPO JWT'
+
+Numerical form:
+
+```
+Build the finite open-chain Hamiltonian on the full (m+1)^N Hilbert space, diagonalize it, and compare the sorted many-body eigenvalues with all subset sums of the one-particle spectrum carrying multiplicity m^{|S|}; also evaluate max|[H,n_hat]|.
+```
 
 Code: `src/spin_model_1d.py`, `scripts/run_ed_validation.py`

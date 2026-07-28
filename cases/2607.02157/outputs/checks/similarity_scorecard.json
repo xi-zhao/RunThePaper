@@ -54,7 +54,7 @@
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "artifact_stage": "exploratory",
+        "artifact_stage": "final_reproduction",
         "reference_comparison": "visual_feature_contract",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
@@ -73,41 +73,67 @@
           "EQC014"
         ]
       },
+      "physics_assertions": [
+        {
+          "assertion_id": "T001_CRITICAL_CAPACITY_PEAKS",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/T001_feature_contract.json"
+        },
+        {
+          "assertion_id": "T001_LANDAUER_IDENTITY_AND_BOUND",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/T001_feature_contract.json"
+        },
+        {
+          "assertion_id": "T001_TFIM_WIRR_AMPLITUDE",
+          "tier": "alignment",
+          "essential": false,
+          "status": "failed",
+          "evidence": "outputs/checks/T001_feature_contract.json"
+        }
+      ],
       "components": {
         "feature_match": {
           "score": 46.0,
-          "reason": "All contracted features present (14/14 Fig. 2 contract checks): capacity peaks inside both critical regions, Landauer gap with the widening large-J plateau, C_p > C_m coherence ordering at the peak, classical-MI insets without critical scaling, NMSE minima aligned with capacity peaks.",
+          "reason": "All essential Fig. 2 structures pass at paper scale: capacity and NMSE extrema lie in both critical regions, the Landauer inequality holds with the large-J excess-work plateau, and the coherence/classical-MI orderings match. One nonessential alignment diagnostic records the lower TFIM irreversible-work amplitude.",
           "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 28.0,
-          "reason": "Cluster row near-quantitative: chi_m peak 2.25 vs 2.25, endpoints 1.69/1.11 vs ~1.72/~1.15, beta*W_irr peak 0.499 vs ~0.52. TFIM row close: peak 1.82 vs ~2.0 (-9%, reduced disorder statistics), endpoints and plateau values match. NMSE amplitudes not comparable (reduced readout basis).",
+          "reason": "Cluster row is near quantitative: chi_m peak 2.185 vs ~2.25, endpoints 1.676/1.104 vs ~1.72/~1.15, and beta*W_irr peak 0.499 vs ~0.52. The TFIM capacity peak is 1.797 vs ~2.0 and its irreversible-work peak is 0.396 vs ~0.49; endpoints, large-J plateau, and full-Pauli NMSE minima agree structurally.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 12.0,
-          "reason": "All six panels and both insets generated; grids coarser than the paper (17 alpha / 13 J points), 8 instead of 100 disorder realizations, NMSE on a reduced feature basis.",
+          "score": 15.0,
+          "reason": "All six panels and both insets use the completed paper-scale campaign: 21 alpha points, 25 J points, 100 TFIM disorder realizations with 5000 sequences, and full-Pauli NMSE over 500 sequences.",
           "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/checks/fig2_figS2_feature_contract.json",
-        "outputs/data/fig2_cluster_scan.csv",
-        "outputs/data/fig2_tfim_scan.csv",
+        "outputs/checks/T001_feature_contract.json",
+        "outputs/checks/a100_campaign_provenance.json",
+        "outputs/data/fig2_cluster_scan_paper_exact.csv",
+        "outputs/data/fig2_tfim_scan_paper_exact.csv",
+        "outputs/data/nmse_cluster_scan_paper_exact.csv",
+        "outputs/data/nmse_tfim_scan_paper_exact.csv",
         "outputs/figures/fig2_reproduction.png",
-        "docs/comparisons/fig2_source_vs_repro.png"
+        "docs/comparisons/fig2_comparison.png"
       ],
-      "remaining_gap": "Paper-exact ensembles (5000 sequences; TFIM 100 realizations; full-Pauli NMSE) pending; see PLANNED_LARGE_SCALE_RUNS.md and config/fig2_paper_exact.yaml.",
-      "final_reproduction_eligible": false,
-      "final_reproduction_gate": "exploratory_only",
-      "physics_status": "undeclared",
+      "remaining_gap": "The paper publishes no author data; comparison remains feature-based. The TFIM irreversible-work peak is 0.396 versus a visual paper reading near 0.49 and is retained as a diagnostic amplitude mismatch.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
       "reference_score_cap": 80.0,
-      "component_total": 86.0,
+      "component_total": 89.0,
       "score": 80.0,
       "similarity_level": "numerical_feature_reproduction"
     },
@@ -145,8 +171,8 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "none",
-        "parameter_match": "paper_exact",
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
         "reference_comparison": "visual_feature_contract",
         "generated_data_provenance": "independent_numerics",
@@ -157,6 +183,22 @@
           "EQC013"
         ]
       },
+      "physics_assertions": [
+        {
+          "assertion_id": "T002_RESONANCE_FREQUENCY",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/figS1_features.json"
+        },
+        {
+          "assertion_id": "T002_CLUSTER_BOUNDARY_FINGERPRINT",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/figS1_features.json"
+        }
+      ],
       "components": {
         "feature_match": {
           "score": 47.0,
@@ -170,27 +212,27 @@
         },
         "paper_scope_coverage": {
           "score": 12.0,
-          "reason": "All three panels plus the two insets generated; panel b uses 400 instead of 10000 disorder realizations.",
+          "reason": "All three panels and both insets are generated, but the statistical ensembles are reduced: Fig. S1a uses 400 x 2500 rather than 5000 x 5000 sequence-steps, and panel b uses 400 rather than 10000 disorder realizations.",
           "max_score": 15.0
         }
       },
       "evidence": [
         "outputs/checks/figS1_features.json",
         "outputs/figures/figS1_reproduction.png",
-        "docs/comparisons/figS1_source_vs_repro.png"
+        "docs/comparisons/figS1_comparison.png"
       ],
-      "remaining_gap": "Panel b at the paper's 10000 realizations; F(omega) normalization confirmation.",
+      "remaining_gap": "Final reproduction is blocked by scale: 400 rather than 5000 drive sequences, 2500 rather than 5000 steps per sequence, and 400 rather than 10000 TFIM disorder realizations. The paper also leaves F(omega) normalization unspecified.",
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
       "reference_score_cap": 80.0,
       "component_total": 86.0,
-      "score": 80.0,
+      "score": 70.0,
       "similarity_level": "numerical_feature_reproduction"
     },
     {
@@ -215,8 +257,8 @@
           },
           {
             "panel_id": "c1",
-            "status": "partial",
-            "note": "NMSE generated for h=1,2,3 with a reduced 153-feature readout; absolute floor not comparable"
+            "status": "reproduced",
+            "evidence": "outputs/data/nmse_tfim_scan_paper_exact.csv (full-Pauli h=1,2,3)"
           },
           {
             "panel_id": "a2",
@@ -230,11 +272,11 @@
           },
           {
             "panel_id": "c2",
-            "status": "partial",
-            "note": "NMSE generated for h=1,2,3 with a reduced 153-feature readout"
+            "status": "reproduced",
+            "evidence": "outputs/data/nmse_cluster_scan_paper_exact.csv (full-Pauli h=1,2,3)"
           }
         ],
-        "panel_scope_cap": 12.5
+        "panel_scope_cap": 15.0
       },
       "evaluation": {
         "critical": false,
@@ -244,7 +286,7 @@
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "artifact_stage": "exploratory",
+        "artifact_stage": "final_reproduction",
         "reference_comparison": "visual_feature_contract",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
@@ -257,44 +299,65 @@
           "EQC014"
         ]
       },
+      "physics_assertions": [
+        {
+          "assertion_id": "T003_DELAY_AND_HORIZON_ORDERING",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/T003_feature_contract.json"
+        },
+        {
+          "assertion_id": "T003_FULL_PAULI_NMSE_MINIMA",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/T003_feature_contract.json"
+        }
+      ],
       "components": {
         "feature_match": {
-          "score": 42.0,
-          "reason": "Multi-step peaks stay inside the critical regions; tau/h orderings monotone over the paper-readable region (cluster: everywhere; TFIM: J <= 5); NMSE minima for all horizons inside the critical regions. Deep-MBL tail shows a reproducible tau/h ordering inversion where the paper's curves are visually degenerate (recorded as an observation).",
+          "score": 45.0,
+          "reason": "All 12 target checks pass at paper scale: delayed-memory and forecast-horizon peaks stay inside the critical regions, orderings match over the paper-readable domain, and all six full-Pauli NMSE minima lie in the expected regions. The deep-MBL inversion remains a documented observation where the paper curves are visually degenerate.",
           "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 24.0,
-          "reason": "Capacity magnitudes track the Fig. 2 values (same data); systematic reduction with tau and h matches the paper qualitatively; NMSE absolute values inflated by the reduced readout basis.",
+          "score": 28.0,
+          "reason": "Capacity magnitudes inherit the paper-scale Fig. 2 scans; systematic reduction with delay and horizon matches the paper, and full-Pauli NMSE now lies on the paper's absolute scale with minima at alpha=0.45-0.55 and J=2.37.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 11.0,
-          "reason": "All six panels generated for tau in {0,1,2}, h in {1,2,3}; NMSE panels carry the reduced-readout caveat (marked partial).",
+          "score": 15.0,
+          "reason": "All six panels are reproduced for tau in {0,1,2} and h in {1,2,3}, using paper-scale capacity ensembles and the full 4^6-1 Pauli readout over 500 sequences.",
           "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/checks/fig2_figS2_feature_contract.json",
+        "outputs/checks/T003_feature_contract.json",
+        "outputs/checks/a100_campaign_provenance.json",
+        "outputs/data/fig2_cluster_scan_paper_exact.csv",
+        "outputs/data/fig2_tfim_scan_paper_exact.csv",
+        "outputs/data/nmse_cluster_scan_paper_exact.csv",
+        "outputs/data/nmse_tfim_scan_paper_exact.csv",
         "outputs/figures/figS2_reproduction.png",
-        "docs/comparisons/figS2_source_vs_repro.png"
+        "docs/comparisons/figS2_comparison.png"
       ],
-      "remaining_gap": "Full-Pauli NMSE readout and paper-exact ensembles; adjudicate the deep-MBL ordering inversion at 5000 sequences.",
-      "final_reproduction_eligible": false,
-      "final_reproduction_gate": "exploratory_only",
-      "physics_status": "undeclared",
+      "remaining_gap": "The paper publishes no author data, so comparison remains feature-based. The deep-MBL ordering inversion persists at full scale and is retained as a finding rather than treated as a sampling failure.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
       "reference_score_cap": 80.0,
-      "component_total": 77.0,
-      "score": 77.0,
+      "component_total": 88.0,
+      "score": 80.0,
       "similarity_level": "numerical_feature_reproduction"
     }
   ],
-  "overall_score": 79.18,
+  "overall_score": 77.27,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
     "scored_items": 3,
@@ -304,10 +367,12 @@
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "none": 3
+      "none": 2,
+      "insufficient_compute": 1
     },
     "parameter_match_counts": {
-      "paper_exact": 3
+      "paper_exact": 2,
+      "reduced_scale": 1
     },
     "reference_comparison_counts": {
       "visual_feature_contract": 3
@@ -327,18 +392,22 @@
       "supporting": 1
     },
     "physics_status_counts": {
-      "undeclared": 3
+      "passed": 3
     },
-    "physics_assertion_status_counts": {},
+    "physics_assertion_status_counts": {
+      "passed": 6,
+      "failed": 1
+    },
     "essential_physics_failures": [],
-    "final_reproduction_ready": false,
-    "final_reproduction_target_ids": [],
+    "final_reproduction_ready": true,
+    "final_reproduction_target_ids": [
+      "T001",
+      "T003"
+    ],
     "final_reproduction_blocked_target_ids": [],
     "exploratory_target_ids": [
-      "T001",
-      "T002",
-      "T003"
+      "T002"
     ]
   },
-  "status": "failed"
+  "status": "passed"
 }

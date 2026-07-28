@@ -1,42 +1,162 @@
 {
-  "equations": [
-    {
-      "check": "The derivative form gives chi_n = sum_m |O_nm|^2 / omega_nm^2.",
-      "id": "E001",
-      "implementation": "The observable O is converted to the eigenbasis and used as the perturbation generator.",
-      "paper_equation": "H_lambda = H_0 + lambda O"
-    },
-    {
-      "check": "m=n terms are zeroed to avoid the singular denominator.",
-      "id": "E002",
-      "implementation": "susceptibility_metrics computes the unregularized kernel with the diagonal excluded.",
-      "paper_equation": "chi_n = sum_{m != n} |<n|O|m>|^2 / omega_nm^2"
-    },
-    {
-      "check": "The kernel is finite and vanishes on the diagonal.",
-      "id": "E003",
-      "implementation": "regularized_kernel = omega**2 / (omega**2 + mu**2)**2",
-      "paper_equation": "chi_av^r = D^-1 sum_n sum_m omega^2/(omega^2+mu^2)^2 |O_nm|^2"
-    },
-    {
-      "check": "A tiny positive floor is used only to avoid log(0) in finite precision.",
-      "id": "E004",
-      "implementation": "The code averages log chi_n^r over the central 20 percent of eigenstates.",
-      "paper_equation": "chi_typ^r = exp(D^-1 sum_n log chi_n^r)"
-    },
-    {
-      "check": "The matrix is real symmetric and uses open boundary conditions.",
-      "id": "E005",
-      "implementation": "anderson_hamiltonian builds an open-boundary cubic-lattice hopping matrix plus uniform onsite disorder.",
-      "paper_equation": "H_A = -sum_<ij> c_i^dag c_j + sum_i eps_i c_i^dag c_i"
-    },
-    {
-      "check": "The plotted data uses the rescaled quantities for paper figures.",
-      "id": "E006",
-      "implementation": "susceptibility_metrics reports both raw and rescaled values.",
-      "paper_equation": "tilde chi_typ = chi_typ omega_typ, tilde chi_typ/av^r = chi_typ/av^r mu"
-    }
-  ],
+  "status": "passed",
   "schema_version": 1,
-  "status": "passed"
+  "paper_id": "2605.25594",
+  "summary": {
+    "cards_total": 10,
+    "numeric_open": 10,
+    "numeric_closed": 0,
+    "blocked_cards": []
+  },
+  "formulas": {
+    "FS001": {
+      "title": "Eigenstate fidelity susceptibility",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::operator_in_eigenbasis",
+        "code/src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    "FS002": {
+      "title": "Regularized susceptibility kernel",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    "FS003": {
+      "title": "Average and typical susceptibility",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    "FS004": {
+      "title": "3D Anderson Hamiltonian",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::anderson_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    "FS005": {
+      "title": "Perturbation operators",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::sublattice_kinetic_matrix",
+        "code/src/anderson_sensitivity.py::randomized_site_operator"
+      ],
+      "open_questions": []
+    },
+    "FS006": {
+      "title": "Rescaled susceptibility",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    "FS007": {
+      "title": "Spectral function mechanism",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::spectral_function"
+      ],
+      "open_questions": []
+    },
+    "FS008": {
+      "title": "Perturbative Ts trend",
+      "numeric_gate": "open",
+      "readiness_level": "exploratory",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::perturbation_theory_ts"
+      ],
+      "open_questions": [
+        "The implementation averages over connected pairs rather than summing per eigenstate, so it is a trend proxy and may differ by a constant vertical factor."
+      ]
+    },
+    "FS009": {
+      "title": "Adjacent-gap ratio",
+      "numeric_gate": "open",
+      "readiness_level": "trusted",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/src/anderson_sensitivity.py::spacing_stats"
+      ],
+      "open_questions": []
+    },
+    "FS010": {
+      "title": "Slow-mode Drude envelope",
+      "numeric_gate": "open",
+      "readiness_level": "exploratory",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "code/scripts/run_fig11_phenomenological_model.py::sample_rates",
+        "code/scripts/run_fig11_phenomenological_model.py::spectral_function"
+      ],
+      "open_questions": [
+        "The printed Eq. (explanation) contains Gamma^(zeta+1), inconsistent with both the preceding p(Gamma) times Lorentzian construction and the following omega^-(2-zeta) claim. This reproduction uses the internally consistent Gamma^(zeta-1) integrand.",
+        "The paper does not publish the exact parameters used to tune panel (b) against its V=38^3 data, so exact curve alignment remains externally blocked."
+      ]
+    }
+  },
+  "findings": []
 }

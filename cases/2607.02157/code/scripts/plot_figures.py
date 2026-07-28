@@ -18,7 +18,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-WS = Path(__file__).resolve().parents[1]
+from runtime_layout import CASE_ROOT  # noqa: E402
+
+WS = CASE_ROOT
 DATA = WS / "outputs" / "data"
 FIGS = WS / "outputs" / "figures"
 
@@ -187,7 +189,10 @@ def make_figS2() -> None:
             ax.set_xlabel(xlabel)
         made_any = True
     if made_any:
-        fig.suptitle("Fig. S2 reproduction (reduced-scale ensembles)", fontsize=9)
+        fig.suptitle(
+            "Fig. S2 reproduction (paper-scale capacities and full-Pauli NMSE)",
+            fontsize=9,
+        )
         fig.tight_layout()
         fig.savefig(FIGS / "figS2_reproduction.png", dpi=180)
     plt.close(fig)
@@ -227,8 +232,11 @@ def make_figS1() -> None:
     ax.set_xlabel(r"$\alpha$")
     ax.set_ylabel("Energy")
 
-    fig.suptitle("Fig. S1 reproduction (a: spectral resonance; b: TFIM spectrum; c: cluster spectrum)",
-                 fontsize=9)
+    fig.suptitle(
+        "Fig. S1 exploratory reproduction "
+        "(reduced statistical ensembles; spectral features only)",
+        fontsize=9,
+    )
     fig.tight_layout()
     fig.savefig(FIGS / "figS1_reproduction.png", dpi=180)
     plt.close(fig)

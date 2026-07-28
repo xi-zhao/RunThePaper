@@ -10,20 +10,19 @@ from __future__ import annotations
 
 import json
 import sys
-from pathlib import Path
 
 import numpy as np
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+from runtime_layout import CASE_ROOT, SOURCE_DIR
+
+sys.path.insert(0, str(SOURCE_DIR))
 from mackey_glass import generate_mg_sequences, sequence_statistics  # noqa: E402
 from qrc_engine import (  # noqa: E402
-    EIG_TRUNCATION,
     binned_states,
     build_map_cache,
     cluster_hamiltonian,
     coherence_terms,
     collisional_step,
-    drive_diagonal,
     eig_map_pieces,
     holevo_capacity,
     relative_entropy,
@@ -114,6 +113,31 @@ def check_marginalization() -> None:
            f"memory-avg err={err_m:.2e}, predictive-avg err={err_p:.2e}")
 
 
+def check_qid_definition() -> None:
+    """Verify that the QID difference is the conditional-entropy excess.
+
+    The two ensembles have the same unconditional state, so the entropy of
+    that shared state cancels between their Holevo quantities.
+    """
+    rng = np.random.default_rng(36)
+    P_m, rho_m, P_p, rho_p = paired_ensembles(rng, 6, 8, 5)
+    rho_bar = np.einsum("b,bij->ij", P_m, rho_m)
+    qid_from_capacities = (
+        holevo_capacity(rho_bar, P_m, rho_m)
+        - holevo_capacity(rho_bar, P_p, rho_p)
+    )
+    qid_from_conditional_entropies = float(
+        np.sum(P_p * von_neumann_entropy(rho_p))
+        - np.sum(P_m * von_neumann_entropy(rho_m))
+    )
+    err = abs(qid_from_capacities - qid_from_conditional_entropies)
+    record(
+        "EQC005_definition",
+        err < 1e-9,
+        f"|Holevo difference - conditional-entropy difference|={err:.2e}",
+    )
+
+
 def check_coherence_split() -> None:
     rng = np.random.default_rng(41)
     P, states = random_ensemble(rng, 6, 8)
@@ -147,6 +171,52 @@ def check_qid_split() -> None:
     D_q = Cc_m - Cc_p
     err = abs((chi_m - chi_p) - (D_c + D_q))
     record("EQC007_split", err < 1e-9, f"|chi_d-(D_c+D_q)|={err:.2e}")
+
+
+def check_injection_work_conditioning() -> None:
+    """Check that conditional-state work equals a direct trajectory average."""
+    rng = np.random.default_rng(56)
+    n, d, lam = 600, 6, 0.05
+    states = np.stack([random_density(rng, d) for _ in range(n)])
+    current_labels = rng.integers(0, 7, size=n)
+    next_labels = rng.integers(0, 5, size=n)
+    current_values = np.linspace(-0.9, 0.9, 7)
+    next_values = np.linspace(-0.8, 0.8, 5)
+    H0 = random_hermitian(rng, d)
+    drive = np.diag(rng.normal(size=d))
+
+    def hamiltonian(signal: float) -> np.ndarray:
+        return H0 + lam * signal * drive
+
+    direct = 0.0
+    for index, rho in enumerate(states):
+        H_before = hamiltonian(float(current_values[current_labels[index]]))
+        H_after = hamiltonian(float(next_values[next_labels[index]]))
+        direct += float(np.trace(rho @ (H_after - H_before)).real) / n
+
+    def conditional_energy(labels: np.ndarray, values: np.ndarray) -> float:
+        total = 0.0
+        for label, signal in enumerate(values):
+            selected = states[labels == label]
+            if len(selected) == 0:
+                continue
+            probability = len(selected) / n
+            conditional_state = selected.mean(axis=0)
+            total += probability * float(
+                np.trace(conditional_state @ hamiltonian(float(signal))).real
+            )
+        return total
+
+    conditional = (
+        conditional_energy(next_labels, next_values)
+        - conditional_energy(current_labels, current_values)
+    )
+    err = abs(direct - conditional)
+    record(
+        "EQC008_conditioning",
+        err < 1e-12,
+        f"|trajectory-average work - conditional-state work|={err:.2e}",
+    )
 
 
 def check_work_identity() -> None:
@@ -272,6 +342,37 @@ def check_cluster_gap() -> None:
            f"OBC alpha=1 edge-mode gap={edge_gap:.1e}")
 
 
+def check_ridge_normal_equations() -> None:
+    """Independently verify the ridge closed form and NMSE definition."""
+    rng = np.random.default_rng(96)
+    n_samples, n_features, eta = 80, 12, 1e-5
+    X = rng.normal(size=(n_samples, n_features))
+    target = rng.normal(size=n_samples)
+    gram = X.T @ X + eta * np.eye(n_features)
+    weights = np.linalg.solve(gram, X.T @ target)
+    gradient = X.T @ (X @ weights - target) + eta * weights
+    gradient_norm = float(np.linalg.norm(gradient))
+
+    def objective(candidate: np.ndarray) -> float:
+        residual = X @ candidate - target
+        return float(residual @ residual + eta * (candidate @ candidate))
+
+    perturbations = rng.normal(scale=1e-3, size=(20, n_features))
+    objective_gap = min(
+        objective(weights + perturbation) - objective(weights)
+        for perturbation in perturbations
+    )
+    prediction = X @ weights
+    nmse = float(np.sum((prediction - target) ** 2) / np.sum(target**2))
+    ok = gradient_norm < 1e-9 and objective_gap > -1e-10 and nmse >= 0.0
+    record(
+        "EQC014_ridge_solution",
+        ok,
+        f"normal-equation residual={gradient_norm:.2e}, "
+        f"min perturbed objective gap={objective_gap:.2e}, NMSE={nmse:.3f}",
+    )
+
+
 def check_coherence_convexity() -> None:
     rng = np.random.default_rng(101)
     worst = np.inf
@@ -290,14 +391,17 @@ def main() -> int:
     check_mg_stats()
     check_holevo_recast()
     check_marginalization()
+    check_qid_definition()
     check_coherence_split()
     check_qid_split()
+    check_injection_work_conditioning()
     check_work_identity()
     check_relax_nonneg()
     check_bkm_integral()
     check_bkm_quadratic()
     check_g_peak()
     check_cluster_gap()
+    check_ridge_normal_equations()
     check_coherence_convexity()
 
     failed = [r for r in RESULTS if r["status"] != "passed"]
@@ -308,7 +412,7 @@ def main() -> int:
         "status": "passed" if not failed else "failed",
         "results": RESULTS,
     }
-    out = Path(__file__).resolve().parents[1] / "outputs" / "checks" / "formula_check_details.json"
+    out = CASE_ROOT / "outputs" / "checks" / "formula_check_details.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     print(f"\n{len(RESULTS) - len(failed)}/{len(RESULTS)} checks passed -> {out}")

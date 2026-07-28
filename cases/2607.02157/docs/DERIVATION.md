@@ -32,7 +32,7 @@ $$
 \frac{dx}{dt} = \frac{\beta_{\mathrm{MG}}\,x(t-\tau_{\mathrm{MG}})}{1+x^{10}(t-\tau_{\mathrm{MG}})} - \gamma_{\mathrm{MG}}\,x(t),\quad (\beta_{\mathrm{MG}},\gamma_{\mathrm{MG}},\tau_{\mathrm{MG}}) = (0.2, 0.1, 18)
 $$
 
-status: `source_only` · source: equation: Eq. (18) + Methods 'Chaotic time-series generation'
+status: `verified` · source: equation: Eq. (18) + Methods 'Chaotic time-series generation'
 
 Numerical form:
 
@@ -89,7 +89,7 @@ $$
 \chi^{\mathrm{d}}_{t_{n+1}} = \chi^{\mathrm{m}}_{t_{n+1}} - \chi^{\mathrm{p}}_{t_{n+1}}
 $$
 
-status: `source_only` · derived from: `EQC003`, `EQC004` · source: equation: Eq. (10)
+status: `verified` · derived from: `EQC003`, `EQC004` · source: equation: Eq. (10)
 
 Numerical form:
 
@@ -146,7 +146,7 @@ $$
 W_{n+1} = \sum_{s_{n+1}} P(s_{n+1})\,\mathrm{Tr}(\rho^{\mathrm{p}}_{s_{n+1}} H_{t_{n+1}}) - \sum_{s_n} P(s_n)\,\mathrm{Tr}(\rho^{\mathrm{m}}_{s_n} H_{t_n})
 $$
 
-status: `source_only` · derived from: `microscopic quench work averaged over trajectories, conditioned via the probability product rule` · source: equation: SI Eq. (S62)
+status: `verified` · derived from: `microscopic quench work averaged over trajectories, conditioned via the probability product rule` · source: equation: SI Eq. (S62)
 
 Numerical form:
 
@@ -241,7 +241,7 @@ $$
 H_0^{\mathrm{TFIM}} = \sum_{i>j} J_{ij}\sigma^z_i\sigma^z_j + h\sum_i \sigma^x_i,\ h=1,\ J_{ij}\sim U[-J/2,J/2];\quad H_0^{\mathrm{cluster}} = -J_{zz}\sum_i \sigma^z_i\sigma^z_{i+1} - h_x\sum_i \sigma^x_i + J_{zxz}\sum_i \sigma^z_{i-1}\sigma^x_i\sigma^z_{i+1},\ J_{zz}=0.1,\ J_{zxz}=(1-J_{zz})\alpha,\ h_x=(1-J_{zz})(1-\alpha)
 $$
 
-status: `source_only` · source: text: Main text, 'Quantum critical thermodynamics' (p. 7)
+status: `verified` · source: text: Main text, 'Quantum critical thermodynamics' (p. 7)
 
 Numerical form:
 
@@ -260,7 +260,7 @@ $$
 \mathbf{w}_{\mathrm{opt}} = (\mathbf{X}^T\mathbf{X} + \eta I)^{-1}\mathbf{X}^T\hat{\mathbf{y}},\quad \mathrm{NMSE} = \frac{\|\mathbf{y} - \hat{\mathbf{y}}\|^2}{\|\hat{\mathbf{y}}\|^2}
 $$
 
-status: `source_only` · source: equation: Eqs. (2)-(3)
+status: `verified` · source: equation: Eqs. (2)-(3)
 
 Numerical form:
 

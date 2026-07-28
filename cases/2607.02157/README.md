@@ -4,9 +4,9 @@ Preprint: [arXiv:2607.02157 — Thermodynamics of Quantum Reservoir Computing](h
 
 Formal publication: **Not recorded as of 2026-07-20**
 
-Public status: **Feature-level reproduction (paper-exact ensembles)** · Audit score: **79.18/100**
+Public status: **Feature-level reproduction (two final targets, one exploratory target)** · Audit score: **77.27/100**
 
-Independently reproduces all three numerical figures of Ding & Qiu's thermodynamics of quantum reservoir computing at the paper's full ensemble sizes: the memory/predictive Holevo capacities, generalized Landauer bound, and coherence decomposition (Fig. 2, both TFIM and cluster architectures), the drive spectral resonance G(omega) and reservoir spectra (Fig. S1), and the multi-step capacities with forecasting error (Fig. S2). The central identity beta*W_irr = chi^d (Eq. 13) holds at machine precision across all runs, and the capacity peaks and NMSE minima coincide inside the quantum critical regions.
+Independently reproduces the three numerical figures of Ding & Qiu's thermodynamics of quantum reservoir computing with an explicit stage boundary. Fig. 2 and Fig. S2 use the completed paper-scale A100 campaign and are guarded final reproductions. Fig. S1 reproduces the resonance location and spectral fingerprints but remains exploratory because its drive and disorder ensembles are reduced. The central identity beta*W_irr = chi^d (Eq. 13) holds at machine precision, and the capacity peaks and NMSE minima coincide inside the quantum critical regions.
 
 ## Start Here / 从这里开始
 
@@ -22,9 +22,9 @@ Independently reproduces all three numerical figures of Ding & Qiu's thermodynam
 
 | Paper item | Reproduced result | Figure | Check |
 | --- | --- | --- | --- |
-| Fig. 2 | Holevo capacities, generalized Landauer bound, coherence decomposition; TFIM and cluster, paper-exact ensembles | [PNG](outputs/figures/fig2_reproduction.png) | [JSON](outputs/checks/fig2_figS2_feature_contract.json) |
-| Fig. S1 | Drive resonance G(omega) peak and TFIM/cluster reservoir spectra | [PNG](outputs/figures/figS1_reproduction.png) | [JSON](outputs/checks/figS1_features.json) |
-| Fig. S2 | Multi-step memory/predictive capacities and full-Pauli NMSE minima | [PNG](outputs/figures/figS2_reproduction.png) | [JSON](outputs/checks/fig2_figS2_feature_contract.json) |
+| Fig. 2 | Holevo capacities, generalized Landauer bound, coherence decomposition; TFIM and cluster, paper-exact ensembles | [PNG](outputs/figures/fig2_reproduction.png) | [JSON](outputs/checks/T001_feature_contract.json) |
+| Fig. S1 | Exploratory reduced-scale drive resonance G(omega) peak and TFIM/cluster reservoir spectra | [PNG](outputs/figures/figS1_reproduction.png) | [JSON](outputs/checks/figS1_features.json) |
+| Fig. S2 | Multi-step memory/predictive capacities and full-Pauli NMSE minima | [PNG](outputs/figures/figS2_reproduction.png) | [JSON](outputs/checks/T003_feature_contract.json) |
 
 ## Paper Reference vs Independent Reproduction
 
@@ -46,7 +46,7 @@ The left column in each panel is a limited excerpt from Ding and Qiu, [arXiv:260
 
 ![Fig. 2 reproduction](outputs/figures/fig2_reproduction.png)
 
-### Fig. S1: Drive resonance G(omega) peak and TFIM/cluster reservoir spectra
+### Fig. S1: Exploratory reduced-scale drive resonance G(omega) peak and TFIM/cluster reservoir spectra
 
 ![Fig. S1 reproduction](outputs/figures/figS1_reproduction.png)
 
@@ -60,6 +60,7 @@ The left column in each panel is a limited excerpt from Ding and Qiu, [arXiv:260
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+pip install torch
 cd cases/2607.02157/code
 python scripts/run_scan.py
 python scripts/run_nmse.py
@@ -75,6 +76,6 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 3 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Comparison is a feature contract against the paper's raster panels (no author data or tables); score is bound at 80 because the paper releases no numerical data and we decline to digitize its curves. The disorder-ensemble aggregation convention (per-realization vs pooled) was adjudicated to resolve a TFIM peak ambiguity; three unspecified conventions (Mackey-Glass normalization, cluster boundary condition, F(omega) normalization) are documented as questions for the authors.
+Remaining limitation: Comparison is a feature contract against the paper's raster panels (no author data or tables), so each target is capped at 80. Fig. S1 uses 400 rather than 5000 drive sequences, 2500 rather than 5000 samples, and 400 rather than 10000 TFIM realizations; the paper also leaves F(omega) normalization unspecified. Fig. 2 retains a nonessential amplitude mismatch: the TFIM irreversible-work peak is 0.396 versus a visual paper reading near 0.49.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.

@@ -3,6 +3,7 @@
 请选择语言 / Choose a language:
 
 - [中文上手讲义](reproduction-note.zh-CN.md)
+- [中文复现讲义 PDF](reproduction-note.zh-CN.pdf)
 - [English getting-started note](reproduction-note.en.md)
 
 Case overview: [../README.md](../README.md)

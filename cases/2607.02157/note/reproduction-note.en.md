@@ -26,12 +26,12 @@ symmetry-protected topological transition.
 
 ## Reproduced results
 
-All three numerical figures (Fig. 2, Fig. S1, Fig. S2) were reproduced from
-independent simulations at the paper's full ensemble sizes (5000 sequences per
-parameter point; 100 disorder realizations for the TFIM; the full `4^6-1` Pauli
-readout for NMSE). Overall audit score **79.18/100**, bound at 80 by a
-feature-level comparison against the published panels (the paper releases no
-numerical data, and we do not digitize its curves).
+All three numerical figures were computed independently, but their evidence
+stages differ. Fig. 2 and Fig. S2 use the completed paper-scale A100 campaign
+(5000 sequences per parameter point, 100 TFIM disorder realizations, and the
+full `4^6-1` Pauli readout) and are final reproductions. Fig. S1 uses 400 drive
+sequences, 2500 samples, and 400 TFIM realizations, so it remains exploratory.
+The weighted score is **77.27/100**.
 
 - **Fig. 2 (cluster row):** near-quantitative. Memory-capacity peak 2.19 at
   alpha = 0.5 (paper ~2.25), endpoints 1.68 / 1.10, generalized Landauer peak
@@ -42,10 +42,17 @@ numerical data, and we do not digitize its curves).
   signature — the widening gray gap where `beta W^irr` plateaus while `chi^d`
   collapses in the deep paramagnet.
 - **Central identity:** `beta W^irr = chi^d` holds at machine precision
-  (max residual ≤ 3e-14) across all ~3000 production runs — the strongest
+  (max residual ≤ 5.7e-14) across all ~3000 production runs — the strongest
   internal check the framework admits.
 - **NMSE:** the forecasting-error minimum sits at the capacity peak for both
   models (cluster minimum 6.5e-4 at alpha = 0.45; TFIM minimum at J = 2.37).
+- **Fig. S1 (exploratory):** the resonance peak at 0.355 agrees with the
+  paper's ~0.36 and the cluster spectral fingerprints match, but its statistical
+  ensembles are smaller than the paper's.
+- **Retained diagnostic mismatch:** the TFIM irreversible-work peak in
+  Fig. 2b1 is 0.396 versus a visual paper reading near 0.49. Its location,
+  Landauer bound, and large-J plateau pass, so the amplitude difference is
+  recorded rather than hidden by widening the tolerance.
 
 **Difference reason (TFIM peak, ~1.80 vs ~2.0):** an aggregation-convention
 question the manuscript leaves open. We adjudicated it directly at the peak:
@@ -76,9 +83,10 @@ python code/scripts/verify_formulas.py
 python code/scripts/adjudicate_pooling.py
 ```
 
-The paper-exact ensembles were produced on a single A100-class GPU
-(`qrc_gpu.py --cupy-eig`) in about two days; the same physics runs on CPU at
-reduced ensembles via `qrc_engine.py`.
+The paper-exact Fig. 2/Fig. S2 ensembles were produced on a single A100-class
+GPU (`qrc_gpu.py --cupy-eig`) in about two days; Fig. S1 was not part of that
+campaign. Promoting it requires 5000 x 5000 drive statistics and 10000 TFIM
+disorder realizations.
 
 ## Reproduction boundary
 
@@ -86,6 +94,8 @@ reduced ensembles via `qrc_engine.py`.
   data, so agreement is verified against the published panels rather than
   author data, and we decline to digitize the figures (pixel-derived agreement
   is not scientific reproduction).
+- Fig. S1 remains exploratory and must not be presented as a final
+  paper-scale result alongside Fig. 2 and Fig. S2.
 - Three conventions the manuscript leaves unspecified were resolved and are
   documented as questions for the authors: the Mackey–Glass affine
   normalization, the open vs. periodic boundary of the augmented cluster chain
