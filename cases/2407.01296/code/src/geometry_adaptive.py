@@ -659,7 +659,7 @@ def basis_hopping_model(hoppings: HoppingModel, basis: str) -> dict[Site, comple
     return transformed
 
 
-def _batched_polynomial_roots(coefficients: np.ndarray) -> np.ndarray:
+def batched_polynomial_roots(coefficients: np.ndarray) -> np.ndarray:
     """Return roots for rows of descending-order polynomial coefficients."""
 
     values = np.asarray(coefficients, dtype=np.complex128)
@@ -715,7 +715,7 @@ def cylindrical_root_potential(
         coefficients[:, descending_index] += amplitude * outer_beta**outer_exponent
     coefficients[:, degree - p] -= energy
 
-    roots = _batched_polynomial_roots(coefficients)
+    roots = batched_polynomial_roots(coefficients)
     root_moduli = np.sort(np.abs(roots), axis=1)
     selected = root_moduli[:, p : p + q]
     tiny = np.finfo(np.float64).tiny

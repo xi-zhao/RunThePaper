@@ -24,6 +24,13 @@ checks: complete boundary density, scale-free Gaussian localization, spectral
 density from the geometry-adaptive potential, boundary-ratio spectra, a
 paper-size disordered spectrum, and finite-size spectral-potential scaling.
 
+For Supplementary Fig. S2, Eq. (S18) separability turns the nominal `N=5625`
+diagonalization into pairwise sums of two 75-state OBC spectra. Eqs. (S19)-(S22)
+are evaluated from batched quartic roots and a 192-point arcsine quadrature.
+The Amoeba potential uses a Jensen reduction of the inner momentum integral;
+the two caption energies are classified from formula-generated zero loci and
+integer torus winding, not source-image segmentation.
+
 For Supplementary Fig. S4, Eq. (S24) is built directly under PBC and OBC. The
 caption lengths `L=20,40,60,80` are diagonalized, both extremal-energy states
 are inspected at `L=80`, and the central-state inverse localization length is
@@ -39,12 +46,10 @@ computed from the local Jacobian determinant.
 For Supplementary Fig. S7, the clean OBC Hamiltonian is diagonalized with
 paired left/right eigenvectors. The site-resolved kernel
 `<L_i|n_j|R_i>/<L_i|R_i>` evaluates Eq. (S29) for 100 fresh `U[0,1]` onsite
-samples at each of six paper sizes. Common random numbers are reused only across
-disorder strengths because first-order perturbation theory is exactly linear in
-that strength. Released curves and paper pixels are absent from the generation
-path; author slopes are a separate post-generation validation. The exact
-`r=43` diamond has 925 sites, exposing the caption's printed `N=935` as a source
-discrepancy.
+samples at each of six paper sizes. Released curves and paper pixels are absent
+from the generation path; author slopes are a separate post-generation
+validation. The exact `r=43` diamond has 925 sites, exposing the caption's
+printed `N=935` as a source discrepancy.
 
 ## Reproducibility layers
 
@@ -71,6 +76,7 @@ The component runners are also available:
 python scripts/run_fig2_geometry.py --scale smoke
 python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
 python scripts/run_fig4_boundary_ratio.py --scale smoke
+python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper

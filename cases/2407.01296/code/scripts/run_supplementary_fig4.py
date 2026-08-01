@@ -15,7 +15,7 @@ import numpy as np
 
 
 CODE_ROOT = Path(__file__).resolve().parents[1]
-CASE_ROOT = CODE_ROOT.parent
+OUTPUT_ROOT = CODE_ROOT.parent if CODE_ROOT.name == "code" else CODE_ROOT
 sys.path.insert(0, str(CODE_ROOT))
 
 from src.geometry_adaptive import (  # noqa: E402
@@ -52,6 +52,7 @@ def configure_matplotlib() -> None:
             "axes.linewidth": 0.8,
             "pdf.fonttype": 42,
             "svg.fonttype": "none",
+            "svg.hashsalt": "pragent-2407.01296",
         }
     )
 
@@ -323,15 +324,25 @@ def render(
 
     path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(path, dpi=240)
-    figure.savefig(path.with_suffix(".svg"))
+    figure.savefig(
+        path.with_suffix(".pdf"),
+        metadata={"CreationDate": None, "ModDate": None},
+    )
+    svg_path = path.with_suffix(".svg")
+    figure.savefig(svg_path, metadata={"Date": None})
     plt.close(figure)
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
 
 
 def main() -> int:
     spectra, profiles, scaling, check = compute()
-    data_dir = CASE_ROOT / "outputs" / "data"
-    check_dir = CASE_ROOT / "outputs" / "checks"
-    figure_path = CASE_ROOT / "outputs" / "figures" / "supp_fig_s4_reproduction.png"
+    data_dir = OUTPUT_ROOT / "outputs" / "data"
+    check_dir = OUTPUT_ROOT / "outputs" / "checks"
+    figure_path = OUTPUT_ROOT / "outputs" / "figures" / "supp_fig_s4_reproduction.png"
     write_rows(data_dir / "supp_fig_s4_spectra.csv", spectra)
     write_rows(data_dir / "supp_fig_s4_profiles.csv", profiles)
     write_rows(data_dir / "supp_fig_s4_scaling.csv", scaling)

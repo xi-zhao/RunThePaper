@@ -22,7 +22,7 @@ import numpy as np
 
 
 CODE_ROOT = Path(__file__).resolve().parents[1]
-CASE_ROOT = CODE_ROOT.parent
+OUTPUT_ROOT = CODE_ROOT.parent if CODE_ROOT.name == "code" else CODE_ROOT
 sys.path.insert(0, str(CODE_ROOT))
 
 from src.geometry_adaptive import (  # noqa: E402
@@ -69,6 +69,7 @@ def configure_matplotlib() -> None:
             "axes.linewidth": 0.8,
             "pdf.fonttype": 42,
             "svg.fonttype": "none",
+            "svg.hashsalt": "pragent-2407.01296",
         }
     )
 
@@ -351,8 +352,12 @@ def render(path: Path, rows: list[dict[str, object]], scale: str) -> None:
         )
     path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(path, dpi=240)
+    figure.savefig(
+        path.with_suffix(".pdf"),
+        metadata={"CreationDate": None, "ModDate": None},
+    )
     svg_path = path.with_suffix(".svg")
-    figure.savefig(svg_path)
+    figure.savefig(svg_path, metadata={"Date": None})
     plt.close(figure)
     svg_text = svg_path.read_text(encoding="utf-8")
     svg_path.write_text(
@@ -366,19 +371,19 @@ def main() -> int:
     rows, check = compute(args.scale)
     suffix = "" if args.scale == "paper" else f"_{args.scale}"
     data_path = (
-        CASE_ROOT
+        OUTPUT_ROOT
         / "outputs"
         / "data"
         / f"supp_fig_s7_instability{suffix}.csv"
     )
     figure_path = (
-        CASE_ROOT
+        OUTPUT_ROOT
         / "outputs"
         / "figures"
         / f"supp_fig_s7_reproduction{suffix}.png"
     )
     check_path = (
-        CASE_ROOT / "outputs" / "checks" / f"supp_fig_s7{suffix}.json"
+        OUTPUT_ROOT / "outputs" / "checks" / f"supp_fig_s7{suffix}.json"
     )
     write_rows(data_path, rows)
     render(figure_path, rows, args.scale)
