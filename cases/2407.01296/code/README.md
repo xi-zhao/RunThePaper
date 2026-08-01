@@ -18,4 +18,4 @@ python scripts/run_supplementary_fig7.py
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Fig. S4 retains a declared large-L proxy for its exact TDL line. Supplementary Fig. S7 records the caption's N=935 versus equation- and runner-consistent N=925 source discrepancy. Large Fig. 2(d) sparse determinants expose a retained double-precision LU-ordering-sensitive tail. Unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in several panels.
+Boundary: Strict SSIM 0.95 pixel identity is not claimed. Main-text pixel-layout evidence covers 18 subplots; 17 supplementary subplots are explicitly deferred until separately cropped reference panels are frozen. Supplementary Fig. S7 records the caption's N=935 versus equation- and runner-consistent N=925 source discrepancy. Large Fig. 2(d) sparse determinants retain a double-precision LU-ordering-sensitive tail, and the exact Fig. S4 continuum is numerically traced on two finite energy grids.

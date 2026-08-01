@@ -38,8 +38,10 @@ integer torus winding, not source-image segmentation.
 For Supplementary Fig. S4, Eq. (S24) is built directly under PBC and OBC. The
 caption lengths `L=20,40,60,80` are diagonalized, both extremal-energy states
 are inspected at `L=80`, and the central-state inverse localization length is
-regressed against `1/L` over nine sizes. The additional `L=160` spectrum is a
-declared large-size proxy, not an exact thermodynamic-limit curve.
+regressed against `1/L` over nine sizes. The exact TDL continuum is obtained by
+expanding `beta^2 det[H(beta)-E]` as a quartic, modulus-sorting its roots, and
+tracing `|beta_2|=|beta_3|` at 801×161 resolution with a 401×101 convergence
+audit. No large finite chain or source curve supplies the grey TDL series.
 
 For Supplementary Fig. S5, the printed Eq. (S27) is expanded into eight
 directed hoppings. Exact OBC spectra are computed for the caption geometries

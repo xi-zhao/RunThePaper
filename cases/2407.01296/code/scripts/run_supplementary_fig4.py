@@ -7,11 +7,11 @@ import csv
 import json
 from pathlib import Path
 import sys
-import time
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.spatial import cKDTree
 
 
 CODE_ROOT = Path(__file__).resolve().parents[1]
@@ -20,11 +20,11 @@ sys.path.insert(0, str(CODE_ROOT))
 
 from src.geometry_adaptive import (  # noqa: E402
     full_right_eigensystem,
-    full_spectrum,
 )
 from src.supplementary_models import (  # noqa: E402
     double_chain_bloch_spectrum,
     double_chain_hamiltonian,
+    double_chain_tdl_spectrum,
     fit_boundary_exponential,
     site_probability,
 )
@@ -32,7 +32,8 @@ from src.supplementary_models import (  # noqa: E402
 
 PAPER_LENGTHS = (20, 40, 60, 80)
 SCALING_LENGTHS = (20, 30, 40, 50, 60, 70, 80, 100, 120)
-TDL_PROXY_LENGTH = 160
+TDL_FINE_RESOLUTION = (801, 161)
+TDL_COARSE_RESOLUTION = (401, 101)
 PARAMETERS = {
     "t1_left": 0.5,
     "t1_right": 1.0,
@@ -60,7 +61,7 @@ def configure_matplotlib() -> None:
 def write_rows(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -83,7 +84,6 @@ def compute() -> tuple[
     list[dict[str, object]],
     dict[str, object],
 ]:
-    started = time.perf_counter()
     spectra: list[dict[str, object]] = []
     profiles: list[dict[str, object]] = []
     scaling: list[dict[str, object]] = []
@@ -100,6 +100,7 @@ def compute() -> tuple[
                     "momentum": k,
                     "real_energy": value.real,
                     "imag_energy": value.imag,
+                    "root_gap": "",
                 }
             )
 
@@ -160,21 +161,56 @@ def compute() -> tuple[
                     "momentum": "",
                     "real_energy": value.real,
                     "imag_energy": value.imag,
+                    "root_gap": "",
                 }
             )
 
-    tdl = full_spectrum(double_chain_hamiltonian(TDL_PROXY_LENGTH, **PARAMETERS))
-    for value in tdl:
+    tdl = double_chain_tdl_spectrum(
+        real_samples=TDL_FINE_RESOLUTION[0],
+        imaginary_samples=TDL_FINE_RESOLUTION[1],
+        **PARAMETERS,
+    )
+    coarse_tdl = double_chain_tdl_spectrum(
+        real_samples=TDL_COARSE_RESOLUTION[0],
+        imaginary_samples=TDL_COARSE_RESOLUTION[1],
+        **PARAMETERS,
+    )
+    for value, root_gap in zip(tdl.energies, tdl.root_gaps, strict=True):
         spectra.append(
             {
-                "series": "large_L_TDL_proxy",
-                "length": TDL_PROXY_LENGTH,
+                "series": "exact_TDL_root_condition",
+                "length": 0,
                 "band": 0,
                 "momentum": "",
                 "real_energy": value.real,
                 "imag_energy": value.imag,
+                "root_gap": root_gap,
             }
         )
+
+    tdl_points = np.column_stack((tdl.energies.real, tdl.energies.imag))
+    coarse_points = np.column_stack(
+        (coarse_tdl.energies.real, coarse_tdl.energies.imag)
+    )
+    tdl_tree = cKDTree(tdl_points)
+    coarse_tree = cKDTree(coarse_points)
+    fine_to_coarse = coarse_tree.query(tdl_points)[0]
+    coarse_to_fine = tdl_tree.query(coarse_points)[0]
+    conjugation_error = tdl_tree.query(
+        np.column_stack((tdl.energies.real, -tdl.energies.imag))
+    )[0]
+    finite_size_to_tdl: dict[str, dict[str, float]] = {}
+    for length in PAPER_LENGTHS:
+        values = cached[length][0]
+        distances = tdl_tree.query(
+            np.column_stack((values.real, values.imag))
+        )[0]
+        finite_size_to_tdl[str(length)] = {
+            "mean": float(np.mean(distances)),
+            "median": float(np.median(distances)),
+            "p95": float(np.quantile(distances, 0.95)),
+            "maximum": float(np.max(distances)),
+        }
 
     central = [row for row in scaling if row["state"] == "central_max_imag"]
     inverse_length = np.asarray([row["inverse_length"] for row in central], dtype=float)
@@ -190,6 +226,10 @@ def compute() -> tuple[
         row
         for row in scaling
         if row["state"] == "central_max_imag" and row["length"] == 80
+    )
+    paper_p95 = np.asarray(
+        [finite_size_to_tdl[str(length)]["p95"] for length in PAPER_LENGTHS],
+        dtype=np.float64,
     )
     acceptance = {
         "caption_obc_lengths_complete": sorted(PAPER_LENGTHS)
@@ -212,6 +252,17 @@ def compute() -> tuple[
         "selected_eigenpairs_have_small_residual": maximum_residual < 1e-10,
         "profile_fits_are_resolved": min(float(row["fit_r_squared"]) for row in scaling)
         > 0.88,
+        "exact_tdl_middle_root_condition_satisfied": float(np.max(tdl.root_gaps))
+        <= tdl.root_gap_tolerance,
+        "exact_tdl_has_conjugation_symmetry": float(np.max(conjugation_error)) < 1e-12,
+        "exact_tdl_is_resolution_stable": float(np.quantile(fine_to_coarse, 0.95))
+        < 0.01
+        and float(np.quantile(coarse_to_fine, 0.95)) < 0.01,
+        "finite_obc_spectra_converge_toward_exact_tdl": bool(
+            np.all(np.diff(paper_p95) < 0.0)
+        ),
+        "largest_paper_obc_spectrum_is_close_to_exact_tdl": float(paper_p95[-1])
+        < 0.1,
     }
     check = {
         "schema_version": 1,
@@ -222,12 +273,26 @@ def compute() -> tuple[
         "artifact_stage": "scientific_reproduction",
         "generated_data_provenance": "independent_numerics",
         "source_pixels_copied_into_reproduction": False,
-        "formula_refs": ["EQC007", "EQC008"],
+        "formula_refs": ["EQC007", "EQC008", "EQC015"],
         "parameters": PARAMETERS,
         "paper_lengths": list(PAPER_LENGTHS),
         "scaling_lengths": list(SCALING_LENGTHS),
-        "tdl_proxy_length": TDL_PROXY_LENGTH,
-        "tdl_note": "Large-L OBC numerical proxy; not asserted as an exact analytic TDL curve.",
+        "tdl_construction": "Eq. (S24) quartic with ordered-root condition |beta_2(E)|=|beta_3(E)|",
+        "tdl_resolution": {
+            "fine": list(TDL_FINE_RESOLUTION),
+            "coarse": list(TDL_COARSE_RESOLUTION),
+            "fine_points": int(tdl.energies.size),
+            "coarse_points": int(coarse_tdl.energies.size),
+            "root_gap_tolerance": tdl.root_gap_tolerance,
+            "maximum_root_gap": float(np.max(tdl.root_gaps)),
+            "fine_to_coarse_p95_distance": float(
+                np.quantile(fine_to_coarse, 0.95)
+            ),
+            "coarse_to_fine_p95_distance": float(
+                np.quantile(coarse_to_fine, 0.95)
+            ),
+        },
+        "finite_size_to_exact_tdl": finite_size_to_tdl,
         "central_kappa_regression": {
             "slope": float(coefficients[0]),
             "intercept": float(coefficients[1]),
@@ -235,7 +300,10 @@ def compute() -> tuple[
         },
         "maximum_selected_eigenpair_residual": maximum_residual,
         "acceptance": acceptance,
-        "runtime_seconds": time.perf_counter() - started,
+        "execution_budget": {
+            "hardware_class": "local_cpu",
+            "wall_clock_budget_seconds": 60,
+        },
     }
     return spectra, profiles, scaling, check
 
@@ -251,14 +319,14 @@ def render(
     figure, axes = plt.subplots(1, 2, figsize=(8.2, 3.25), constrained_layout=True)
     spectrum_axis, profile_axis = axes
     colors = {20: "#E69F00", 40: "#CC79A7", 60: "#D55E00", 80: "#0072B2"}
-    tdl = [row for row in spectra if row["series"] == "large_L_TDL_proxy"]
+    tdl = [row for row in spectra if row["series"] == "exact_TDL_root_condition"]
     spectrum_axis.scatter(
         [row["real_energy"] for row in tdl],
         [row["imag_energy"] for row in tdl],
         s=2.0,
         color="0.72",
         linewidths=0,
-        label=f"large-L proxy ({TDL_PROXY_LENGTH})",
+        label="exact TDL (root condition)",
     )
     periodic = [row for row in spectra if row["series"] == "PBC"]
     spectrum_axis.scatter(
@@ -324,12 +392,15 @@ def render(
 
     path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(path, dpi=240)
-    figure.savefig(
-        path.with_suffix(".pdf"),
-        metadata={"CreationDate": None, "ModDate": None},
-    )
     svg_path = path.with_suffix(".svg")
     figure.savefig(svg_path, metadata={"Date": None})
+    # The master case keeps a publication PDF, while the sanitized public
+    # projection intentionally permits only PNG/SVG generated figures.
+    if CODE_ROOT.name != "code":
+        figure.savefig(
+            path.with_suffix(".pdf"),
+            metadata={"CreationDate": None, "ModDate": None},
+        )
     plt.close(figure)
     svg_text = svg_path.read_text(encoding="utf-8")
     svg_path.write_text(

@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 import numpy as np
 from scipy import linalg, sparse
-from scipy.optimize import root
+from scipy.optimize import minimize_scalar, root
 from scipy.sparse.linalg import eigs
 
 from src.geometry_adaptive import HoppingModel, Site, TargetEigenstate
@@ -69,6 +69,23 @@ class SpatialProfileMetrics:
     boundary_mass: float
     peak_x: int
     peak_y: int
+
+
+@dataclass(frozen=True)
+class DoubleChainTDLSpectrum:
+    """Equation-defined OBC thermodynamic spectrum for Eq. (S24).
+
+    For the quartic characteristic equation ordered as
+    ``|beta_1| <= ... <= |beta_4|``, the one-dimensional non-Bloch continuum
+    is the locus ``|beta_2| = |beta_3|``.  ``root_gaps`` stores the residual
+    ``log|beta_3| - log|beta_2|`` for every returned energy.
+    """
+
+    energies: np.ndarray
+    root_gaps: np.ndarray
+    real_samples: int
+    imaginary_samples: int
+    root_gap_tolerance: float
 
 
 def model_s27() -> dict[tuple[int, int], complex]:
@@ -265,6 +282,161 @@ def double_chain_bloch_spectrum(
     center = 0.5 * (first + second)
     splitting = np.sqrt((0.5 * (first - second)) ** 2 + coupling**2)
     return np.column_stack((center + splitting, center - splitting))
+
+
+def double_chain_characteristic_coefficients(
+    energy: complex,
+    *,
+    t1_left: float = 0.5,
+    t1_right: float = 1.0,
+    t2_left: float = 1.0,
+    t2_right: float = 0.5,
+    potential: float = 0.5,
+    coupling: float = 0.01,
+) -> np.ndarray:
+    """Return coefficients of ``beta^2 det[H(beta)-E]`` for Eq. (S24).
+
+    The returned array is ordered from ``beta^4`` to ``beta^0``.  Expanding
+    the two diagonal Laurent polynomials before subtracting ``coupling**2``
+    keeps the derivation explicit and avoids using any finite-size spectrum.
+    """
+
+    value = complex(energy)
+    first_zero = potential - value
+    second_zero = -potential - value
+    return np.asarray(
+        (
+            t1_right * t2_right,
+            first_zero * t2_right + t1_right * second_zero,
+            t1_left * t2_right
+            + first_zero * second_zero
+            + t1_right * t2_left
+            - coupling**2,
+            t1_left * second_zero + first_zero * t2_left,
+            t1_left * t2_left,
+        ),
+        dtype=np.complex128,
+    )
+
+
+def double_chain_characteristic_roots(
+    energy: complex,
+    **parameters: float,
+) -> np.ndarray:
+    """Solve the four generalized-Bloch roots at one complex energy."""
+
+    coefficients = double_chain_characteristic_coefficients(energy, **parameters)
+    roots = np.roots(coefficients)
+    return roots[np.argsort(np.abs(roots))]
+
+
+def double_chain_middle_root_gap(
+    energy: complex,
+    **parameters: float,
+) -> float:
+    """Return the non-negative residual of ``|beta_2|=|beta_3|``."""
+
+    roots = double_chain_characteristic_roots(energy, **parameters)
+    moduli = np.abs(roots)
+    if np.any(moduli <= 0.0) or not np.all(np.isfinite(moduli)):
+        return float("inf")
+    return float(np.log(moduli[2]) - np.log(moduli[1]))
+
+
+def double_chain_tdl_spectrum(
+    *,
+    real_window: tuple[float, float] = (-2.05, 2.05),
+    imaginary_window: tuple[float, float] = (0.0, 0.55),
+    real_samples: int = 801,
+    imaginary_samples: int = 161,
+    root_gap_tolerance: float = 1e-7,
+    coarse_gap_tolerance: float = 0.025,
+    **parameters: float,
+) -> DoubleChainTDLSpectrum:
+    """Numerically trace the exact middle-root condition of Eq. (S24).
+
+    Each fixed-Re(E) slice is searched for every local minimum of the
+    non-negative middle-root gap.  Candidate minima are refined directly on
+    the quartic-root equation and accepted only when the declared equality
+    tolerance is met.  Complex-conjugate partners are generated from the real
+    coefficients, not inferred from a source figure or a large finite chain.
+    """
+
+    if real_samples < 21 or imaginary_samples < 21:
+        raise ValueError("TDL tracing requires at least 21 samples per axis")
+    if real_window[0] >= real_window[1]:
+        raise ValueError("real_window must be increasing")
+    if imaginary_window[0] != 0.0 or imaginary_window[1] <= 0.0:
+        raise ValueError("imaginary_window must start at zero and end positive")
+    if root_gap_tolerance <= 0.0 or coarse_gap_tolerance <= root_gap_tolerance:
+        raise ValueError("gap tolerances must satisfy 0 < root < coarse")
+
+    real_axis = np.linspace(*real_window, real_samples)
+    imaginary_axis = np.linspace(*imaginary_window, imaginary_samples)
+    energies: list[complex] = []
+    gaps: list[float] = []
+
+    def gap_at(real_energy: float, imaginary_energy: float) -> float:
+        return double_chain_middle_root_gap(
+            complex(real_energy, imaginary_energy), **parameters
+        )
+
+    for real_energy in real_axis:
+        coarse = np.asarray(
+            [gap_at(float(real_energy), float(value)) for value in imaginary_axis],
+            dtype=np.float64,
+        )
+        candidate_indices: list[int] = []
+        if coarse[0] <= coarse[1]:
+            candidate_indices.append(0)
+        candidate_indices.extend(
+            index
+            for index in range(1, imaginary_axis.size - 1)
+            if coarse[index] <= coarse[index - 1]
+            and coarse[index] <= coarse[index + 1]
+        )
+
+        for index in candidate_indices:
+            if coarse[index] > coarse_gap_tolerance:
+                continue
+            if index == 0:
+                imaginary_energy = 0.0
+                refined_gap = float(coarse[0])
+            else:
+                result = minimize_scalar(
+                    lambda value: gap_at(float(real_energy), float(value)),
+                    bounds=(
+                        float(imaginary_axis[index - 1]),
+                        float(imaginary_axis[index + 1]),
+                    ),
+                    method="bounded",
+                    options={"xatol": 1e-13, "maxiter": 160},
+                )
+                imaginary_energy = float(result.x)
+                refined_gap = float(result.fun)
+            if refined_gap > root_gap_tolerance:
+                continue
+            energies.append(complex(float(real_energy), imaginary_energy))
+            gaps.append(refined_gap)
+            if imaginary_energy > 10.0 * np.finfo(float).eps:
+                energies.append(complex(float(real_energy), -imaginary_energy))
+                gaps.append(refined_gap)
+
+    if not energies:
+        raise RuntimeError("no points satisfied the Eq. (S24) middle-root condition")
+    order = np.lexsort(
+        (
+            np.asarray([value.imag for value in energies]),
+            np.asarray([value.real for value in energies]),
+        )
+    )
+    return DoubleChainTDLSpectrum(
+        energies=np.asarray(energies, dtype=np.complex128)[order],
+        root_gaps=np.asarray(gaps, dtype=np.float64)[order],
+        real_samples=real_samples,
+        imaginary_samples=imaginary_samples,
+        root_gap_tolerance=root_gap_tolerance,
+    )
 
 
 def site_probability(eigenvector: np.ndarray) -> np.ndarray:

@@ -13,7 +13,9 @@ from src.geometry_adaptive import (
 )
 from src.supplementary_models import (
     biorthogonal_diagonal_response,
+    double_chain_characteristic_coefficients,
     double_chain_hamiltonian,
+    double_chain_tdl_spectrum,
     find_fermi_points,
     fit_boundary_exponential,
     laurent_bloch_value,
@@ -94,6 +96,38 @@ def test_s24_matrix_matches_the_two_laurent_chains() -> None:
     assert matrix[2, 0] == 0.5
     assert matrix[1, 3] == 0.5
     assert matrix[3, 1] == 1.0
+
+
+def test_s24_characteristic_quartic_matches_direct_bloch_determinant() -> None:
+    energy = 0.37 + 0.19j
+    beta = 0.83 * np.exp(0.71j)
+    bloch = np.asarray(
+        (
+            (0.5 / beta + beta + 0.5, 0.01),
+            (0.01, 1.0 / beta + 0.5 * beta - 0.5),
+        ),
+        dtype=np.complex128,
+    )
+    direct = np.linalg.det(bloch - energy * np.eye(2))
+    quartic = np.polyval(double_chain_characteristic_coefficients(energy), beta)
+
+    np.testing.assert_allclose(quartic / beta**2, direct, rtol=1e-13, atol=1e-13)
+
+
+def test_s24_tdl_is_traced_from_the_middle_root_condition() -> None:
+    spectrum = double_chain_tdl_spectrum(
+        real_samples=121,
+        imaginary_samples=61,
+        root_gap_tolerance=2e-7,
+    )
+
+    assert spectrum.energies.size > 100
+    assert float(np.max(spectrum.root_gaps)) <= spectrum.root_gap_tolerance
+    rounded = {
+        (round(float(value.real), 12), round(float(value.imag), 12))
+        for value in spectrum.energies
+    }
+    assert all((real, round(-imaginary, 12)) in rounded for real, imaginary in rounded)
 
 
 def test_s24_central_state_localization_scales_with_inverse_length() -> None:
