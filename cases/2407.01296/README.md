@@ -6,11 +6,11 @@ Published as: [Geometry-adaptive formulation of non-Bloch bands in arbitrary dim
 
 Formal citation: Communications Physics 9, 127 (2026) · DOI `10.1038/s42005-026-02546-2` · Locator `Article 127`
 
-Public status: **Main-text plus Supplementary Figs. S4/S6 scientific reproduction; pixel-registered, not identical** · Legacy evidence score: **88.39/100**
+Public status: **Main-text plus Supplementary Figs. S4/S6/S7 scientific reproduction; pixel-registered, not identical** · Legacy evidence score: **88.39/100**
 
 Completes the main-text scientific evidence chain for Figs. 1-5 and independently
-computes Supplementary Figs. S4 and S6 from Eqs. (S24)-(S28). Figs. 2(a-c), 3,
-4(a-f), S4, and S6 are generated from equations or declared models; Fig. 2(d)
+computes Supplementary Figs. S4, S6, and S7 from Eqs. (S24)-(S29). Figs. 2(a-c), 3,
+4(a-f), S4, S6, and S7 are generated from equations or declared models; Fig. 2(d)
 is author-data-assisted; Figs. 1 and 5 are analytic redraws. The S4 large-size
 curve is explicitly a finite-`L=160` proxy, not an exact thermodynamic-limit
 claim. Strict SSIM 0.95 pixel identity is not claimed.
@@ -24,6 +24,8 @@ claim. Strict SSIM 0.95 pixel identity is not claimed.
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Supplementary Fig. S4 scientific check](outputs/checks/supp_fig_s4.json)
 - [Supplementary Fig. S6 scientific check](outputs/checks/supp_fig_s6.json)
+- [Supplementary Fig. S7 scientific check](outputs/checks/supp_fig_s7.json)
+- [Supplementary Fig. S7 post-generation author-data check](outputs/checks/supp_fig_s7_author_comparison.json)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
@@ -38,6 +40,7 @@ claim. Strict SSIM 0.95 pixel identity is not claimed.
 | Fig. 5 | Analytic basis-transformation schematic | [PNG](outputs/figures/fig5_pixel_registered.png) | [JSON](outputs/checks/main_schematic_pixel_similarity.json) |
 | Supplementary Fig. S4 | Eq. (S24) PBC/OBC spectra, extremal-state profiles, and Eq. (S25) inverse-size localization scaling | [PNG](outputs/figures/supp_fig_s4_reproduction.png) | [JSON](outputs/checks/supp_fig_s4.json) |
 | Supplementary Fig. S6 | Eq. (S28) slice winding and independently solved charged Fermi points | [PNG](outputs/figures/supp_fig_s6_reproduction.png) | [JSON](outputs/checks/supp_fig_s6.json) |
+| Supplementary Fig. S7 | Eq. (S29) biorthogonal disorder response for all six paper-size series | [PNG](outputs/figures/supp_fig_s7_reproduction.png) | [JSON](outputs/checks/supp_fig_s7.json) |
 
 ## Paper Reference vs Independent Reproduction
 
@@ -91,6 +94,16 @@ Each board contains a limited attributed excerpt from the formal paper beside th
 
 ![Supplementary Fig. S6 reproduction](outputs/figures/supp_fig_s6_reproduction.png)
 
+### Supplementary Fig. S7: biorthogonal disorder instability
+
+![Supplementary Fig. S7 reproduction](outputs/figures/supp_fig_s7_reproduction.png)
+
+The six curves use fresh deterministic disorder samples and do not read paper
+pixels or released curves. The normal response is size-stable, while the largest
+critical response is `705x` the largest normal response. The caption's middle
+critical count `N=935` conflicts with both the exact lattice and released
+`r=43` runner, which give `N=925`; the generated result records this discrepancy.
+
 ## Quick Run
 
 ```bash
@@ -101,6 +114,7 @@ cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig6.py
+python scripts/run_supplementary_fig7.py --scale paper
 ```
 
 Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
@@ -109,7 +123,7 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 5 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Supplementary Figs. S2, S5, and S7 are not yet independently
+Remaining limitation: Supplementary Figs. S2 and S5 are not yet independently
 complete. Supplementary Fig. S4 is scientifically partial because its grey
 thermodynamic-limit curve is represented by an independently calculated
 finite-`L=160` OBC proxy. Fig. 2(d) uses author-released ED tables, and unreported

@@ -8,7 +8,8 @@ with Python/SciPy. Figs. 1 and 5 are analytic schematic redraws. Fig. 2(d) is th
 only source-assisted numerical panel: it uses author-released finite-size ED
 tables, while the displayed observable is recomputed by this case. The current
 extension also independently computes Supplementary Fig. S4 from Eqs.
-(S24)-(S26) and Supplementary Fig. S6 from Eq. (S28).
+(S24)-(S26), Supplementary Fig. S6 from Eq. (S28), and Supplementary Fig. S7
+from the biorthogonal first-order response in Eq. (S29).
 
 This is not a pixel copy of the paper. Every formal canvas is registered to the
 published dimensions, but none passes the strict `SSIM >= 0.95` threshold. The
@@ -16,8 +17,8 @@ main-text scientific evidence chain is complete. Supplementary Fig. S6 passes
 its equation-level winding and Fermi-charge checks. Supplementary Fig. S4 is
 scientifically partial: its caption sizes and inverse-size localization scaling
 are reproduced, but the grey thermodynamic-limit series is honestly represented
-by an independently calculated finite-`L=160` proxy. Supplementary Figs. S2,
-S5, and S7 remain open.
+by an independently calculated finite-`L=160` proxy. Supplementary Figs. S2
+and S5 remain open.
 
 ## Supplementary equation checks
 
@@ -31,6 +32,15 @@ Eq. (S28) on independently sampled momentum slices and solves the zeros of the
 complex Bloch Hamiltonian. The normal model has winding values `{0,1}` and two
 oppositely charged Fermi points; the critical rhombus model has `{-1,1}` and
 four points with balanced total charge.
+
+For Supplementary Fig. S7, paired left/right eigensystems are independently
+computed at all six paper sizes and Eq. (S29) is averaged over 100 fresh
+uniform-disorder realizations per size. The normal response coefficient varies
+by only `0.37%`; the critical coefficient grows from `3.40` to `356.17` and
+reaches `705x` the largest normal response. Released author data are read only
+after generation for slope validation. The caption's `N=935` middle critical
+count is recorded as a source discrepancy because both the exact diamond and
+released `r=43` runner contain `N=925` sites.
 
 ## How Fig. 3 is drawn
 
@@ -75,10 +85,11 @@ cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig6.py
+python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-The smoke runner checks reduced-scale Fig. 2 geometry and Fig. 4(d). The two
-supplementary runners reproduce S4 and S6 at the declared scientific settings.
+The smoke runner checks reduced-scale Fig. 2 geometry and Fig. 4(d). The three
+supplementary runners reproduce S4, S6, and S7 at the declared scientific settings.
 Paper-scale generated results are included in the case. See
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) and
 [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md) for the

@@ -6,13 +6,14 @@
 Fig. 4(a–f) 由 Python/SciPy 从论文模型重新计算；Fig. 1 与 Fig. 5 是解析示意图
 重绘。Fig. 2(d) 是唯一的来源辅助数值面板：它使用作者公开的有限尺寸 ED 表，
 但图中观测量由本案例重新计算。当前扩展还从 Eq. (S24)–(S26) 独立计算了
-Supplementary Fig. S4，并从 Eq. (S28) 独立计算了 Supplementary Fig. S6。
+Supplementary Fig. S4，从 Eq. (S28) 独立计算了 Supplementary Fig. S6，并从
+Eq. (S29) 的双正交一阶响应独立计算了 Supplementary Fig. S7。
 
 这不是论文原图的像素副本。所有正式画布都已按出版尺寸注册，但严格阈值
 `SSIM >= 0.95` 没有通过。主文科学证据链已闭合。Supplementary Fig. S6 的
 绕数和费米点电荷检查全部通过。Supplementary Fig. S4 属于科学部分复现：正文
 列出的尺寸和逆尺寸局域化标度已完成，但灰色热力学极限曲线诚实地用独立计算的
-有限 `L=160` OBC 代理表示。Supplementary Fig. S2、S5 和 S7 仍待完成。
+有限 `L=160` OBC 代理表示。Supplementary Fig. S2 和 S5 仍待完成。
 
 ## 补充材料方程检查
 
@@ -24,6 +25,13 @@ Supplementary Fig. S4，并从 Eq. (S28) 独立计算了 Supplementary Fig. S6�
 相位绕数，并独立求解复 Bloch 哈密顿量的零点。普通模型的绕数集合为 `{0,1}`，
 有两个电荷相反的费米点；临界菱形模型的绕数集合为 `{-1,1}`，有四个费米点且
 总电荷守恒。
+
+对于 Supplementary Fig. S7，代码在全部六个论文尺度上独立求解左右本征系，
+并对每个尺度使用 100 组全新均匀无序样本计算 Eq. (S29)。普通模型响应系数跨
+尺寸仅变化 `0.37%`；临界模型由 `3.40` 增至 `356.17`，最大值达到普通模型的
+`705x`。作者公开数据只在独立生成完成后用于斜率验证。图注中间临界尺寸写为
+`N=935`，但精确菱形格点和作者 `r=43` runner 都给出 `N=925`，因此该差异被
+显式记录而没有被隐藏。
 
 ## Fig. 3 的画法
 
@@ -61,10 +69,11 @@ cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig6.py
+python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-smoke runner 运行缩小尺度的 Fig. 2 几何依赖与 Fig. 4(d) 边界比例检查；两个
-补充材料 runner 按声明的科学设置复现 S4 与 S6。论文尺度生成结果已随案例发布，
+smoke runner 运行缩小尺度的 Fig. 2 几何依赖与 Fig. 4(d) 边界比例检查；三个
+补充材料 runner 按声明的科学设置复现 S4、S6 与 S7。论文尺度生成结果已随案例发布，
 方法和计算边界见
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) 与
 [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md)。

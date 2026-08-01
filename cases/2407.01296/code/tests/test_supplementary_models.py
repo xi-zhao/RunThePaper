@@ -4,14 +4,19 @@ import numpy as np
 
 from src.geometry_adaptive import (
     basis_hopping_model,
+    build_obc_hamiltonian,
+    diamond_sites,
     full_right_eigensystem,
     model_eq11,
     model_eq15,
+    square_sites,
 )
 from src.supplementary_models import (
+    biorthogonal_diagonal_response,
     double_chain_hamiltonian,
     find_fermi_points,
     fit_boundary_exponential,
+    mean_absolute_first_order_shift,
     site_probability,
     winding_sweep,
 )
@@ -76,3 +81,32 @@ def test_fermi_point_charges_are_balanced() -> None:
     assert sum(point.charge for point in normal) == 0
     assert sum(point.charge for point in critical) == 0
     assert max(point.residual for point in (*normal, *critical)) < 1e-9
+
+
+def test_s29_biorthogonal_weights_reproduce_a_uniform_shift() -> None:
+    matrix = build_obc_hamiltonian(square_sites(4), model_eq11())
+    response = biorthogonal_diagonal_response(matrix)
+    samples = np.full((3, matrix.shape[0]), 0.125)
+
+    assert response.maximum_uniform_shift_error < 1e-10
+    assert response.maximum_sampled_eigenpair_residual < 1e-10
+    assert abs(mean_absolute_first_order_shift(response, samples) - 0.125) < 1e-10
+
+
+def test_s29_common_random_samples_scale_exactly_with_disorder_strength() -> None:
+    matrix = build_obc_hamiltonian(diamond_sites(3), model_eq15())
+    response = biorthogonal_diagonal_response(matrix)
+    unit_samples = np.random.default_rng(240701296).random((8, matrix.shape[0]))
+    unit_shift = mean_absolute_first_order_shift(response, unit_samples)
+
+    assert np.isclose(
+        mean_absolute_first_order_shift(response, 0.2 * unit_samples),
+        0.2 * unit_shift,
+        rtol=1e-12,
+    )
+
+
+def test_s7_rhombus_counts_expose_the_middle_caption_typo() -> None:
+    counts = [len(diamond_sites(radius)) for radius in (14, 21, 28)]
+    assert counts == [421, 925, 1625]
+    assert counts[1] != 935

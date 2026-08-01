@@ -36,6 +36,16 @@ the point gap closes and the winding is undefined. Fermi points are solved from
 the real and imaginary parts of the Bloch Hamiltonian, and their charges are
 computed from the local Jacobian determinant.
 
+For Supplementary Fig. S7, the clean OBC Hamiltonian is diagonalized with
+paired left/right eigenvectors. The site-resolved kernel
+`<L_i|n_j|R_i>/<L_i|R_i>` evaluates Eq. (S29) for 100 fresh `U[0,1]` onsite
+samples at each of six paper sizes. Common random numbers are reused only across
+disorder strengths because first-order perturbation theory is exactly linear in
+that strength. Released curves and paper pixels are absent from the generation
+path; author slopes are a separate post-generation validation. The exact
+`r=43` diamond has 925 sites, exposing the caption's printed `N=935` as a source
+discrepancy.
+
 ## Reproducibility layers
 
 The public quick runner uses reduced matrices so it can execute on an ordinary
@@ -63,6 +73,7 @@ python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
 python scripts/run_fig4_boundary_ratio.py --scale smoke
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig6.py
+python scripts/run_supplementary_fig7.py --scale paper
 ```
 
 The first and third component scripts write relative to the code package when

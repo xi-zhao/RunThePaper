@@ -11,7 +11,7 @@ from collections.abc import Mapping
 from dataclasses import dataclass
 
 import numpy as np
-from scipy import sparse
+from scipy import linalg, sparse
 from scipy.optimize import root
 
 from src.geometry_adaptive import HoppingModel
@@ -37,6 +37,23 @@ class FermiPoint:
     charge: int
     residual: float
     jacobian_determinant: float
+
+
+@dataclass(frozen=True)
+class BiorthogonalDiagonalResponse:
+    """First-order response weights for arbitrary real onsite disorder.
+
+    For right/left eigenvectors ``|R_i>`` and ``<L_i|``, row ``i`` of
+    ``weights`` contains ``<L_i|n_j|R_i>/<L_i|R_i>`` for every site ``j``.
+    Multiplying this row by a diagonal disorder realization evaluates the
+    first-order energy shift used operationally for Supplementary Eq. (S29).
+    """
+
+    eigenvalues: np.ndarray
+    weights: np.ndarray
+    maximum_uniform_shift_error: float
+    minimum_left_right_overlap: float
+    maximum_sampled_eigenpair_residual: float
 
 
 def double_chain_hamiltonian(
@@ -275,6 +292,96 @@ def find_fermi_points(
 
     points = [_fermi_point(momentum, hoppings, reference_energy) for momentum in roots]
     return tuple(sorted(points, key=lambda item: (item.momentum_1, item.momentum_2)))
+
+
+def biorthogonal_diagonal_response(
+    hamiltonian: sparse.spmatrix | np.ndarray,
+    *,
+    residual_samples: int = 12,
+) -> BiorthogonalDiagonalResponse:
+    """Build the clean-system response kernel in Supplementary Eq. (S29).
+
+    The paper's released implementation evaluates the mean absolute
+    first-order energy shift, even though the printed equation does not show
+    the absolute-value bars explicitly.  This routine implements that
+    biorthogonal perturbation formula without loading any released curves or
+    figure pixels.
+    """
+
+    dense = (
+        hamiltonian.toarray()
+        if sparse.issparse(hamiltonian)
+        else np.asarray(hamiltonian, dtype=np.complex128).copy()
+    )
+    if dense.ndim != 2 or dense.shape[0] != dense.shape[1] or dense.shape[0] < 2:
+        raise ValueError("hamiltonian must be a square matrix of size at least two")
+    if residual_samples < 1:
+        raise ValueError("residual_samples must be positive")
+
+    eigenvalues, left, right = linalg.eig(
+        dense,
+        left=True,
+        right=True,
+        overwrite_a=False,
+        check_finite=False,
+    )
+    overlaps = np.einsum("ji,ji->i", left.conj(), right)
+    overlap_magnitudes = np.abs(overlaps)
+    if np.any(overlap_magnitudes == 0.0) or not np.all(np.isfinite(overlaps)):
+        raise RuntimeError("eigensolver returned a singular left-right pairing")
+
+    weights = ((left.conj() * right) / overlaps[None, :]).T
+    uniform_error = float(np.max(np.abs(np.sum(weights, axis=1) - 1.0)))
+
+    dimension = dense.shape[0]
+    sample_indices = np.unique(
+        np.linspace(
+            0,
+            dimension - 1,
+            min(residual_samples, dimension),
+            dtype=np.int64,
+        )
+    )
+    operator_norm = float(np.max(np.sum(np.abs(dense), axis=1)))
+    maximum_residual = 0.0
+    for index in sample_indices:
+        eigenvalue = complex(eigenvalues[index])
+        right_vector = right[:, index]
+        left_vector = left[:, index]
+        right_residual = np.linalg.norm(dense @ right_vector - eigenvalue * right_vector)
+        left_residual = np.linalg.norm(
+            dense.conj().T @ left_vector - eigenvalue.conjugate() * left_vector
+        )
+        right_scale = (operator_norm + abs(eigenvalue)) * np.linalg.norm(right_vector)
+        left_scale = (operator_norm + abs(eigenvalue)) * np.linalg.norm(left_vector)
+        maximum_residual = max(
+            maximum_residual,
+            float(right_residual / right_scale),
+            float(left_residual / left_scale),
+        )
+
+    return BiorthogonalDiagonalResponse(
+        eigenvalues=np.asarray(eigenvalues, dtype=np.complex128),
+        weights=np.asarray(weights, dtype=np.complex128),
+        maximum_uniform_shift_error=uniform_error,
+        minimum_left_right_overlap=float(np.min(overlap_magnitudes)),
+        maximum_sampled_eigenpair_residual=maximum_residual,
+    )
+
+
+def mean_absolute_first_order_shift(
+    response: BiorthogonalDiagonalResponse,
+    onsite_samples: np.ndarray,
+) -> float:
+    """Average the absolute Eq. (S29) shift over states and realizations."""
+
+    samples = np.asarray(onsite_samples, dtype=np.float64)
+    if samples.ndim != 2 or samples.shape[1] != response.weights.shape[1]:
+        raise ValueError("onsite_samples must have shape (realizations, sites)")
+    if samples.shape[0] < 1 or not np.all(np.isfinite(samples)):
+        raise ValueError("onsite_samples must contain finite realizations")
+    shifts = samples @ response.weights.T
+    return float(np.mean(np.abs(shifts)))
 
 
 def _fermi_point(
