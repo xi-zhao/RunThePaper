@@ -101,6 +101,10 @@ percentage of physical correctness, a visual similarity rating, a cross-paper
 ranking, or a publication threshold. Read the status and limitation statement
 together with the score.
 
+The [scientific-lifecycle audit snapshot](cases/scientific-lifecycle-audit-2026-08-01.json)
+tracks full-paper claim scope, scientific completion, and pixel evidence as
+independent dimensions under the current scientific-first contract.
+
 Original paper PDFs, source archives, standalone original figures, and extracted
 plotting data are not redistributed here. A case may include a limited,
 source-attributed comparison panel when it is necessary to audit reproduction
