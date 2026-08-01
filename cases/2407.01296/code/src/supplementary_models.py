@@ -1,20 +1,21 @@
-"""Independent numerical models for Supplementary Figs. S4 and S6.
+"""Independent numerical models for Supplementary Figs. S4-S7.
 
 The functions in this module are derived from Supplementary Eqs. (S24),
-(S26), and (S28).  They never consume source-figure pixels or digitized
-curves; the only inputs are paper parameters and numerical resolution.
+(S26)-(S29). They never consume source-figure pixels or digitized curves; the
+only inputs are paper parameters and numerical resolution.
 """
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 import numpy as np
 from scipy import linalg, sparse
 from scipy.optimize import root
+from scipy.sparse.linalg import eigs
 
-from src.geometry_adaptive import HoppingModel
+from src.geometry_adaptive import HoppingModel, Site, TargetEigenstate
 
 
 @dataclass(frozen=True)
@@ -54,6 +55,145 @@ class BiorthogonalDiagonalResponse:
     maximum_uniform_shift_error: float
     minimum_left_right_overlap: float
     maximum_sampled_eigenpair_residual: float
+
+
+@dataclass(frozen=True)
+class SpatialProfileMetrics:
+    """Coordinate-space diagnostics for one normalized right eigenstate."""
+
+    center_x: float
+    center_y: float
+    rms_width: float
+    inverse_participation_ratio: float
+    effective_site_count: float
+    boundary_mass: float
+    peak_x: int
+    peak_y: int
+
+
+def model_s27() -> dict[tuple[int, int], complex]:
+    """Directed hoppings obtained by expanding Supplementary Eq. (S27)."""
+
+    return {
+        (1, 0): 6.0,
+        (-1, 0): -4.0,
+        (0, 1): 6.0,
+        (0, -1): -4.0,
+        (1, 1): 0.5,
+        (1, -1): 0.5,
+        (-1, 1): 0.5,
+        (-1, -1): 0.5,
+    }
+
+
+def spatial_profile_metrics(
+    sites: Sequence[Site], eigenvector: np.ndarray
+) -> SpatialProfileMetrics:
+    """Measure size, participation, and boundary enrichment of a lattice state.
+
+    Boundary sites are detected from the four nearest-neighbour directions,
+    which makes the definition work for both the square and rhombus cuts in
+    Supplementary Fig. S5 without geometry-specific thresholds.
+    """
+
+    coordinates = np.asarray(sites, dtype=np.float64)
+    vector = np.asarray(eigenvector, dtype=np.complex128).reshape(-1)
+    if coordinates.ndim != 2 or coordinates.shape[1] != 2:
+        raise ValueError("sites must contain two-dimensional integer coordinates")
+    if coordinates.shape[0] != vector.size:
+        raise ValueError("site and eigenvector lengths differ")
+    probability = np.abs(vector) ** 2
+    total = float(np.sum(probability))
+    if total <= 0.0 or not np.isfinite(total):
+        raise ValueError("eigenvector has no finite probability mass")
+    probability = np.asarray(probability / total, dtype=np.float64)
+    center = probability @ coordinates
+    squared_distance = np.sum((coordinates - center) ** 2, axis=1)
+    rms_width = float(np.sqrt(probability @ squared_distance))
+    inverse_participation_ratio = float(np.sum(probability**2))
+
+    site_set = set(sites)
+    nearest_neighbours = ((1, 0), (-1, 0), (0, 1), (0, -1))
+    boundary = np.asarray(
+        [
+            any((x + dx, y + dy) not in site_set for dx, dy in nearest_neighbours)
+            for x, y in sites
+        ],
+        dtype=bool,
+    )
+    peak = int(np.argmax(probability))
+    return SpatialProfileMetrics(
+        center_x=float(center[0]),
+        center_y=float(center[1]),
+        rms_width=rms_width,
+        inverse_participation_ratio=inverse_participation_ratio,
+        effective_site_count=1.0 / inverse_participation_ratio,
+        boundary_mass=float(np.sum(probability[boundary])),
+        peak_x=int(sites[peak][0]),
+        peak_y=int(sites[peak][1]),
+    )
+
+
+def select_target_spatial_eigenstate(
+    sites: Sequence[Site],
+    hamiltonian: sparse.spmatrix | np.ndarray,
+    target_energy: complex,
+    *,
+    selection: str = "nearest",
+    candidate_count: int = 16,
+    tolerance: float = 1e-10,
+    maximum_iterations: int = 10_000,
+) -> TargetEigenstate:
+    """Select a declared local spectral state with a deterministic rule.
+
+    ``nearest`` chooses the eigenvalue nearest the declared target.
+    ``narrowest`` and ``widest`` choose the smallest or largest coordinate-space
+    RMS width among the same local shift-invert candidate set. They
+    operationalize the normal A and scale-free B branches in Supplementary
+    Fig. S5 without inspecting source-figure pixels.
+    """
+
+    if selection not in {"nearest", "narrowest", "widest"}:
+        raise ValueError("selection must be 'nearest', 'narrowest', or 'widest'")
+    matrix = sparse.csr_matrix(hamiltonian, dtype=np.complex128)
+    size = matrix.shape[0]
+    if matrix.shape[1] != size or size != len(sites):
+        raise ValueError("hamiltonian shape must match the declared sites")
+    if not 1 <= candidate_count < size - 1:
+        raise ValueError("candidate_count must be between 1 and matrix size - 2")
+
+    phase = np.arange(size, dtype=np.float64)
+    initial = np.exp(1j * (np.sqrt(2.0) * phase + 0.13 * phase**2 / max(size, 1)))
+    initial /= np.linalg.norm(initial)
+    eigenvalues, vectors = eigs(
+        matrix,
+        k=candidate_count,
+        sigma=complex(target_energy),
+        which="LM",
+        v0=initial,
+        tol=tolerance,
+        maxiter=maximum_iterations,
+        ncv=min(size, max(2 * candidate_count + 1, 40)),
+    )
+    if selection == "nearest":
+        selected = int(np.argmin(np.abs(eigenvalues - target_energy)))
+    else:
+        widths = [
+            spatial_profile_metrics(sites, vectors[:, index]).rms_width
+            for index in range(candidate_count)
+        ]
+        selected = int(np.argmin(widths) if selection == "narrowest" else np.argmax(widths))
+    vector = np.asarray(vectors[:, selected], dtype=np.complex128)
+    vector /= np.linalg.norm(vector)
+    eigenvalue = complex(eigenvalues[selected])
+    residual = float(np.linalg.norm(matrix @ vector - eigenvalue * vector))
+    return TargetEigenstate(
+        target_energy=complex(target_energy),
+        eigenvalue=eigenvalue,
+        right_eigenvector=vector,
+        normalized_residual=residual,
+        candidate_count=candidate_count,
+    )
 
 
 def double_chain_hamiltonian(

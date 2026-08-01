@@ -37,6 +37,15 @@ are inspected at `L=80`, and the central-state inverse localization length is
 regressed against `1/L` over nine sizes. The additional `L=160` spectrum is a
 declared large-size proxy, not an exact thermodynamic-limit curve.
 
+For Supplementary Fig. S5, the printed Eq. (S27) is expanded into eight
+directed hoppings. Exact OBC spectra are computed for the caption geometries
+`N=6400/6385`. Normal A and scale-free B states are selected as the narrowest
+and widest states in declared local shift-invert windows over 11 sizes, so the
+choice is algorithmic and independent of source pixels. The two `101 x 161`
+densities are obtained by evaluating Eq. (10) separately in the square and
+rhombus cut bases. The differently parameterized legacy model in the author
+release is not used as generated input.
+
 For Supplementary Fig. S6, Eq. (S28) is evaluated as an unwrapped phase winding
 on 240 midpoint slices with 4096 samples per loop. Midpoints avoid slices where
 the point gap closes and the winding is undefined. Fermi points are solved from
@@ -78,6 +87,7 @@ python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
 python scripts/run_fig4_boundary_ratio.py --scale smoke
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
+python scripts/run_supplementary_fig5.py --scale smoke --workers 4
 python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper
 ```

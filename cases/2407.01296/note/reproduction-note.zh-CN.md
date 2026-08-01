@@ -8,13 +8,17 @@ Fig. 4(a–f) 由 Python/SciPy 从论文模型重新计算；Fig. 1 与 Fig. 5 �
 但图中观测量由本案例重新计算。
 
 这不是论文原图的像素副本。所有正式画布都已按出版尺寸注册，但严格阈值
-`SSIM >= 0.95` 没有通过。主文科学证据链已闭合；补充材料 Fig. S2、S6、S7
-现已独立复算。Fig. S4 的精确 TDL 线仍以明确标注的大 `L` 代理表示，Fig. S5
-仍未完成。
+`SSIM >= 0.95` 没有通过。主文科学证据链已闭合；补充材料 Fig. S2、S5、S6、S7
+现已独立复算。Fig. S4 的精确 TDL 线仍以明确标注的大 `L` 代理表示。
 
 补充 Fig. S2 完全从 Eqs. (S14)–(S22) 生成：包括可分离的 `N=5625` 精确谱、
 精确/Amoeba 谱密度，以及两个图注能量的绕数洞分类。作者公开数组只由独立的
 事后比较脚本读取，不进入复现 runner。
+
+补充 Fig. S5 完全从正式 Eq. (S27) 和 Eq. (10) 生成：包括 `N=6400/6385`
+两套完整谱、11 个尺寸的普通/尺度自由态展宽、菱形切边态和两套谱密度。A/B 态
+按声明能窗内最窄/最宽 RMS 宽度确定性选择，不查看原图。作者 release 中同名目录
+使用不同的旧哈密顿量，因此不作为生成输入。
 
 ## 补充材料方程检查
 
@@ -70,11 +74,12 @@ cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
+python scripts/run_supplementary_fig5.py --scale smoke --workers 4
 python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-这些命令运行主文缩小尺度 smoke 检查、S2 的快速公式检查，以及 S4/S6/S7 的
+这些命令运行主文缩小尺度 smoke 检查、S2/S5 的快速公式检查，以及 S4/S6/S7 的
 独立补充材料计算。论文尺度生成结果已随案例发布，方法和计算边界见
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) 与
 [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md)。

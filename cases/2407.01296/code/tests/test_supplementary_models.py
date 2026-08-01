@@ -16,10 +16,73 @@ from src.supplementary_models import (
     double_chain_hamiltonian,
     find_fermi_points,
     fit_boundary_exponential,
+    laurent_bloch_value,
     mean_absolute_first_order_shift,
+    model_s27,
+    select_target_spatial_eigenstate,
     site_probability,
+    spatial_profile_metrics,
     winding_sweep,
 )
+
+
+def test_s27_hoppings_match_the_printed_bloch_formula() -> None:
+    momentum_x = np.asarray((-1.2, -0.1, 0.7))
+    momentum_y = np.asarray((0.3, -0.9, 1.4))
+    beta_x = np.exp(1j * momentum_x)
+    beta_y = np.exp(1j * momentum_y)
+    expected = (
+        6.0 * beta_x
+        - 4.0 / beta_x
+        + 6.0 * beta_y
+        - 4.0 / beta_y
+        + 0.5
+        * (
+            beta_x * beta_y
+            + beta_x / beta_y
+            + beta_y / beta_x
+            + 1.0 / (beta_x * beta_y)
+        )
+    )
+
+    np.testing.assert_allclose(
+        laurent_bloch_value(momentum_x, momentum_y, model_s27()),
+        expected,
+        rtol=1e-13,
+        atol=1e-13,
+    )
+
+
+def test_s5_paper_geometries_have_the_caption_site_counts() -> None:
+    assert len(square_sites(80)) == 6400
+    assert len(diamond_sites(56)) == 6385
+
+
+def test_s5_spatial_state_selection_is_deterministic_and_rule_based() -> None:
+    sites = square_sites(12)
+    matrix = build_obc_hamiltonian(sites, model_s27())
+    narrowest = select_target_spatial_eigenstate(
+        sites,
+        matrix,
+        1.5 + 8.0j,
+        selection="narrowest",
+        candidate_count=8,
+    )
+    widest = select_target_spatial_eigenstate(
+        sites,
+        matrix,
+        -1.0 + 10.0j,
+        selection="widest",
+        candidate_count=8,
+    )
+    narrowest_metrics = spatial_profile_metrics(sites, narrowest.right_eigenvector)
+    widest_metrics = spatial_profile_metrics(sites, widest.right_eigenvector)
+
+    assert narrowest.normalized_residual < 1e-9
+    assert widest.normalized_residual < 1e-9
+    assert 0.0 < narrowest_metrics.boundary_mass <= 1.0
+    assert widest_metrics.rms_width > narrowest_metrics.rms_width
+    assert widest_metrics.effective_site_count > narrowest_metrics.effective_site_count
 
 
 def test_s24_matrix_matches_the_two_laurent_chains() -> None:

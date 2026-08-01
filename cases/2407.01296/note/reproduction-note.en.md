@@ -10,14 +10,21 @@ tables, while the displayed observable is recomputed by this case.
 
 This is not a pixel copy of the paper. Every formal canvas is registered to the
 published dimensions, but none passes the strict `SSIM >= 0.95` threshold. The
-main-text scientific evidence chain is complete. Supplementary Figs. S2, S6,
-and S7 are now independently reproduced; Fig. S4 retains a declared large-`L`
-proxy for its exact TDL line, and Fig. S5 remains open.
+main-text scientific evidence chain is complete. Supplementary Figs. S2, S5,
+S6, and S7 are now independently reproduced; Fig. S4 retains a declared
+large-`L` proxy for its exact TDL line.
 
 Supplementary Fig. S2 is generated from Eqs. (S14)–(S22): an exact separable
 `N=5625` spectrum, exact and Amoeba spectral densities, and winding-classified
 holes for both caption energies. Released author arrays are read only by a
 separate post-generation comparison and never by the reproduction runner.
+
+Supplementary Fig. S5 is generated from the formal Eq. (S27) and Eq. (10):
+two exact `N=6400/6385` spectra, normal/scale-free broadening over 11 sizes, a
+rhombus cut-edge state, and two spectral densities. A/B states are selected by
+minimum/maximum RMS width in declared local windows without inspecting source
+pixels. The differently parameterized legacy model in the author release is
+excluded from generated inputs.
 
 ## Supplementary equation checks
 
@@ -85,11 +92,12 @@ cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
+python scripts/run_supplementary_fig5.py --scale smoke --workers 4
 python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-These commands run the reduced main-text smoke checks, a fast S2 formula check,
+These commands run the reduced main-text smoke checks, fast S2/S5 formula checks,
 and the independent S4/S6/S7 supplementary calculations. Paper-scale generated
 results are included in the case. See
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) and
