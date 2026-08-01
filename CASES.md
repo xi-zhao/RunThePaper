@@ -42,6 +42,7 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2607.15597`](cases/2607.15597/README.md) | Rydberg atom-ion geometric gates, multi-ion mode closure, deterministic interconnect timing, and hybrid qLDPC memory | Numerical feature reproduction with pixel-registered figures | 75.21 |
 | [`2510.26761`](cases/2510.26761/README.md) | Continuous-variable genuine multipartite entanglement witnesses from finite Wigner and characteristic-function measurements | Numerical feature reproduction; exact W-state witnesses | 85.00 |
 | [`2512.08279`](cases/2512.08279/README.md) | Programmable Lindblad dynamics, signed quantum-channel sampling, and error-dependent retrieval cost | Complete reproduction of both numerical main figures | 95.00 |
+| [`2607.00718`](cases/2607.00718/README.md) | Squeezed-reservoir nonreciprocity, Gaussian quantum batteries, ergotropy, and optical isolation | Scientific contract complete: 23/23 numerical panels; 4 claims verified and 1 published cutoff claim rejected | 90.31 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.
