@@ -98,6 +98,15 @@ class AmoebaMinimum:
     evaluations: int
 
 
+@dataclass(frozen=True)
+class SparsePotentialConsensus:
+    """Ordering-invariant audit of one sparse log-determinant potential."""
+
+    potential: float
+    ordering_spread: float
+    estimates: tuple[float, ...]
+
+
 def square_sites(length_x: int, length_y: int | None = None) -> tuple[Site, ...]:
     """Return a deterministic rectangular integer lattice."""
 
@@ -528,6 +537,8 @@ def spectral_potential_grid(
 def sparse_spectral_potential(
     hamiltonian: sparse.spmatrix | np.ndarray,
     probe_energy: complex,
+    *,
+    permutation: str = "COLAMD",
 ) -> float:
     """Evaluate Eq. (2) as ``log|det(H-E)|/N`` using sparse LU."""
 
@@ -538,11 +549,46 @@ def sparse_spectral_potential(
     shifted = matrix - complex(probe_energy) * sparse.identity(
         size, format="csc", dtype=np.complex128
     )
-    factorization = splu(shifted, permc_spec="COLAMD")
+    allowed_permutations = {"NATURAL", "MMD_ATA", "MMD_AT_PLUS_A", "COLAMD"}
+    if permutation not in allowed_permutations:
+        raise ValueError(f"unsupported SuperLU column permutation: {permutation}")
+    factorization = splu(shifted, permc_spec=permutation)
     diagonal = np.abs(factorization.U.diagonal())
     if np.any(diagonal == 0.0):
         return float("-inf")
     return float(np.sum(np.log(diagonal)) / size)
+
+
+def sparse_spectral_potential_consensus(
+    hamiltonian: sparse.spmatrix | np.ndarray,
+    probe_energy: complex,
+    *,
+    permutations: tuple[str, ...] = ("COLAMD", "MMD_AT_PLUS_A", "MMD_ATA"),
+) -> SparsePotentialConsensus:
+    """Evaluate Eq. (2) under independent LU orderings and audit agreement.
+
+    The determinant is invariant under the SuperLU column-ordering strategy.
+    A large spread therefore exposes floating-point sensitivity in strongly
+    non-normal finite matrices without assuming that the expected physical
+    finite-size trend must be monotone.
+    """
+
+    if len(permutations) < 2:
+        raise ValueError("consensus requires at least two LU permutations")
+    estimates = tuple(
+        sparse_spectral_potential(
+            hamiltonian,
+            probe_energy,
+            permutation=permutation,
+        )
+        for permutation in permutations
+    )
+    values = np.asarray(estimates, dtype=np.float64)
+    return SparsePotentialConsensus(
+        potential=float(np.median(values)),
+        ordering_spread=float(np.ptp(values)),
+        estimates=estimates,
+    )
 
 
 def sparse_spectral_potential_grid(

@@ -12,7 +12,11 @@ For Fig. 2, Eq. (11) is evaluated on a 40-by-40 square (`N=1600`) and a radius-3
 rhombus (`N=1861`). Complete right eigensystems provide the complex spectra and
 aggregate right-eigenvector density. The geometry-adaptive potential uses the
 minimum of two cylindrical root potentials on the paper's `101 x 101` energy
-grid with 200 momentum samples.
+grid with 200 momentum samples. Fig. 2(d) independently computes all 317 printed
+probe locations as sparse finite-OBC `log|det(H_L-E)|/N` values and independent
+Eq. (10) targets. Three LU orderings provide an objective floating-stability
+audit; unreliable large-size tail points remain visible and are not silently
+discarded.
 
 For Fig. 3, the generalized Brillouin-zone characteristic equations are solved
 for a deterministic cover of 256 independently computed OBC energies per
@@ -84,6 +88,7 @@ The component runners are also available:
 ```bash
 python scripts/run_fig2_geometry.py --scale smoke
 python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
+python scripts/run_fig2d_finite_size.py --scale smoke
 python scripts/run_fig4_boundary_ratio.py --scale smoke
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py

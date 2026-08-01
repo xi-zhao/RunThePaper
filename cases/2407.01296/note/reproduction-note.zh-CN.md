@@ -2,10 +2,15 @@
 
 ## 结论
 
-本案例完成了正式论文主文 Fig. 1–5 的科学复现。Fig. 2(a–c)、Fig. 3 和
+本案例完成了正式论文主文 Fig. 1–5 的科学复现。Fig. 2(a–d)、Fig. 3 和
 Fig. 4(a–f) 由 Python/SciPy 从论文模型重新计算；Fig. 1 与 Fig. 5 是解析示意图
-重绘。Fig. 2(d) 是唯一的来源辅助数值面板：它使用作者公开的有限尺寸 ED 表，
-但图中观测量由本案例重新计算。
+重绘。所有生成数值面板都不读取作者 ED 表、数字化曲线或论文原图像素。
+
+Fig. 2(d) 的 317 个能量探针全部由有限 OBC 稀疏
+`log|det(H_L-E)|/N` 与 Eq. (10) 独立计算。三种稀疏 LU 排序只依据预先声明的
+数值一致性阈值确定可靠拟合前缀，不查看预期收敛趋势；所有不稳定的大尺寸尾点
+仍保留在公开数据和图中。十条可靠曲线均满足 `R²>0.9988`，外推截距绝对值低于
+`6.3e-4`。
 
 这不是论文原图的像素副本。所有正式画布都已按出版尺寸注册，但严格阈值
 `SSIM >= 0.95` 没有通过。主文科学证据链已闭合；补充材料 Fig. S2、S5、S6、S7
@@ -72,6 +77,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
+python scripts/run_fig2d_finite_size.py --scale smoke
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig5.py --scale smoke --workers 4
@@ -79,7 +85,7 @@ python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-这些命令运行主文缩小尺度 smoke 检查、S2/S5 的快速公式检查，以及 S4/S6/S7 的
+这些命令运行主文与 Fig. 2(d) 的缩小尺度 smoke 检查、S2/S5 的快速公式检查，以及 S4/S6/S7 的
 独立补充材料计算。论文尺度生成结果已随案例发布，方法和计算边界见
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) 与
 [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md)。

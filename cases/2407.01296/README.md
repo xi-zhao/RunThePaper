@@ -8,7 +8,7 @@ Formal citation: Communications Physics 9, 127 (2026) · DOI `10.1038/s42005-026
 
 Public status: **Main-text plus Supplementary Figs. S2/S4/S5/S6/S7 scientific reproduction; pixel-registered, not identical** · Audit score: **88.39/100**
 
-Completes the main-text scientific evidence chain for Figs. 1-5 and independently computes Supplementary Figs. S2, S4, S5, S6, and S7 from Eqs. (S14)-(S29). Figs. 2(a-c), 3, 4(a-f), S2, S4, S5, S6, and S7 are equation- or model-generated; Fig. 2(d) is author-data-assisted. Strict SSIM 0.95 pixel identity is explicitly not claimed.
+Completes the main-text scientific evidence chain for Figs. 1-5 and independently computes Supplementary Figs. S2, S4, S5, S6, and S7 from Eqs. (S14)-(S29). Every main-text numerical panel, including all 317 Fig. 2(d) finite-size probes, is equation- or model-generated. Strict SSIM 0.95 pixel identity is explicitly not claimed.
 
 ## Start Here / 从这里开始
 
@@ -25,7 +25,7 @@ Completes the main-text scientific evidence chain for Figs. 1-5 and independentl
 | Paper item | Reproduced result | Figure | Check |
 | --- | --- | --- | --- |
 | Fig. 1 | Analytic geometry-adaptive spectral-potential schematic | [PNG](outputs/figures/fig1_pixel_registered.png) | [JSON](outputs/checks/main_schematic_pixel_similarity.json) |
-| Fig. 2 | Geometry-dependent spectra, skin density, potential, and finite-size convergence | [PNG](outputs/figures/fig2_full_pixel_registered.png) | [JSON](outputs/checks/fig2_full_pixel_similarity.json) |
+| Fig. 2 | Fully independent geometry-dependent spectra, skin density, potential, and finite-size convergence | [PNG](outputs/figures/fig2_full_pixel_registered.png) | [JSON](outputs/checks/fig2_full_pixel_similarity.json) |
 | Fig. 3 | Geometry-dependent generalized Brillouin zones with corrected projection and view | [PNG](outputs/figures/fig3_gbz_pixel_registered.png) | [JSON](outputs/checks/fig3_gbz_pixel_similarity.json) |
 | Fig. 4(a-f) | Critical boundary modes and spectral instability across all six panels | [PNG](outputs/figures/fig4_full_pixel_registered.png) | [JSON](outputs/checks/fig4_full_pixel_similarity.json) |
 | Fig. 5 | Analytic basis-transformation schematic | [PNG](outputs/figures/fig5_pixel_registered.png) | [JSON](outputs/checks/main_schematic_pixel_similarity.json) |
@@ -63,7 +63,7 @@ Each board contains a limited attributed excerpt from the formal paper beside th
 
 ![Fig. 1 reproduction](outputs/figures/fig1_pixel_registered.png)
 
-### Fig. 2: Geometry-dependent spectra, skin density, potential, and finite-size convergence
+### Fig. 2: Fully independent geometry-dependent spectra, skin density, potential, and finite-size convergence
 
 ![Fig. 2 reproduction](outputs/figures/fig2_full_pixel_registered.png)
 
@@ -107,6 +107,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
+python scripts/run_fig2d_finite_size.py
 python scripts/run_supplementary_fig2.py
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig5.py
@@ -120,6 +121,6 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 5 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Fig. S4 retains a declared large-L proxy for its exact TDL line, and Fig. 2(d) uses author-released ED tables. Supplementary Fig. S7 records the caption's N=935 versus equation- and runner-consistent N=925 source discrepancy. Unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in several panels.
+Remaining limitation: Fig. S4 retains a declared large-L proxy for its exact TDL line. Supplementary Fig. S7 records the caption's N=935 versus equation- and runner-consistent N=925 source discrepancy. Large Fig. 2(d) sparse determinants expose a retained double-precision LU-ordering-sensitive tail. Unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in several panels.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.

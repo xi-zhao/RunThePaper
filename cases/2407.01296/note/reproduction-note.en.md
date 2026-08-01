@@ -3,10 +3,17 @@
 ## Result
 
 This case completes a scientific reproduction of the formal paper's main-text
-Figs. 1–5. Figs. 2(a–c), 3, and 4(a–f) are recomputed from the published model
-with Python/SciPy. Figs. 1 and 5 are analytic schematic redraws. Fig. 2(d) is the
-only source-assisted numerical panel: it uses author-released finite-size ED
-tables, while the displayed observable is recomputed by this case.
+Figs. 1–5. Figs. 2(a–d), 3, and 4(a–f) are recomputed from the published model
+with Python/SciPy. Figs. 1 and 5 are analytic schematic redraws. No generated
+numerical panel consumes author ED tables, digitized curves, or publication
+pixels.
+
+For Fig. 2(d), all 317 energy probes are independently evaluated from sparse
+finite-OBC `log|det(H_L-E)|/N` and Eq. (10). A three-ordering sparse-LU audit
+selects the numerically reliable fit prefix without consulting the expected
+trend; every unstable large-size tail value remains in the public data and is
+marked in the figure. All ten reliable fits have `R²>0.9988` and extrapolated
+intercepts below `6.3e-4` in magnitude.
 
 This is not a pixel copy of the paper. Every formal canvas is registered to the
 published dimensions, but none passes the strict `SSIM >= 0.95` threshold. The
@@ -90,6 +97,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
+python scripts/run_fig2d_finite_size.py --scale smoke
 python scripts/run_supplementary_fig2.py --scale smoke
 python scripts/run_supplementary_fig4.py
 python scripts/run_supplementary_fig5.py --scale smoke --workers 4
@@ -97,8 +105,8 @@ python scripts/run_supplementary_fig6.py
 python scripts/run_supplementary_fig7.py --scale paper
 ```
 
-These commands run the reduced main-text smoke checks, fast S2/S5 formula checks,
-and the independent S4/S6/S7 supplementary calculations. Paper-scale generated
+These commands run the reduced main-text and Fig. 2(d) smoke checks, fast S2/S5
+formula checks, and the independent S4/S6/S7 supplementary calculations. Paper-scale generated
 results are included in the case. See
 [`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) and
 [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md) for the
