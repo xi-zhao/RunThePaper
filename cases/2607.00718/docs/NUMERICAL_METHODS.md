@@ -6,6 +6,9 @@
   master-equation solver.
 - Passive energy and ergotropy use the single-mode symplectic invariant of the
   centered covariance.
+- Figure S3 evaluates nine EQ002 curves in both absolute and formula-normalized
+  form. Unit-intercept, monotonicity, identity, ordering, and endpoint checks
+  run before any source-image comparison.
 - The S1 cutoff audit uses a separately isolated finite-Fock Liouvillian. It is
   diagnostic evidence, not the production generator.
 - Every run writes structured data before rendering a figure.

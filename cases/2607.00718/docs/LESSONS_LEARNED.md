@@ -9,3 +9,6 @@
    rejection is not an execution failure and should not cause infinite retries.
 5. Source arrays and pixels belong to the comparison layer, never the numerical
    generation layer.
+6. Axis labels are scientific claims. Check units, limits, intercepts, and
+   endpoints from formulas before assigning visual credit; Figure S3's printed
+   absolute-energy label fails this audit while its normalized curves pass.

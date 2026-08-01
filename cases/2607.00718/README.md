@@ -8,7 +8,7 @@ Formal citation: Physical Review Letters 136, 253602 (2026) · DOI `10.1103/kh36
 
 Public status: **Scientific contract complete: 23/23 numerical panels; 4 claims verified and 1 published cutoff claim rejected** · Audit score: **90.31/100**
 
-Independently generates every theory-numerical panel from the paper's coupling, Gaussian moment, steady-state, passive-energy, derivative, and scattering equations. Eight of ten target bundles are fully reproduced. The audit verifies four central claims and rejects the published quantitative Figure S1 cutoff claim: the exact Gaussian S1(d) peak is 59.97, while cutoff 10 gives 3.75 and matches the published scale near 4 without convergence evidence.
+Independently generates every theory-numerical panel from the paper's coupling, Gaussian moment, steady-state, passive-energy, derivative, and scattering equations. Eight of ten target bundles are fully reproduced. The audit verifies four central claims, rejects the published quantitative Figure S1 cutoff claim, and corrects Figure S3's printed absolute-energy label to the formula- and curve-consistent normalized enhancement.
 
 ## Start Here / 从这里开始
 
@@ -87,6 +87,6 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 4 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Figure 1(c) leaves the absolute representative squeezing unspecified. The released Figure 4 transmission arrays belong to an earlier manuscript and peak at 10.07 rather than the final-formula 27.31. Figure S1 does not disclose its finite-Hilbert cutoff or convergence study, so its four panels are excluded from pixel-fidelity credit. Pixel evidence is 66.18 over the remaining independently rendered targets.
+Remaining limitation: Figure 1(c) leaves the absolute representative squeezing unspecified. The released Figure 4 transmission arrays belong to an earlier manuscript and peak at 10.07 rather than the final-formula 27.31. Figure S1 does not disclose its finite-Hilbert cutoff or convergence study. Figure S3 has no released array and its printed axis conflicts with the visible unit intercepts, so author confirmation remains open. Scientific visual fidelity is 90.31; the secondary presentation diagnostic is 66.23 and contributes no scientific credit.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.

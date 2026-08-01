@@ -91,6 +91,29 @@ def steady_state_energy(
     return np.asarray(baseline + squeezing_term, dtype=float)
 
 
+def steady_state_energy_enhancement(
+    case: BatteryCase,
+    coupling: ArrayLike,
+    squeezing: ArrayLike,
+    kappa: float,
+    drive: float,
+) -> FloatArray:
+    """Return the dimensionless enhancement ``E_i^ss / E^ss``.
+
+    Keeping the normalization next to the closed energy expression prevents a
+    plotted curve from silently switching between absolute energy and
+    enhancement-factor semantics.
+    """
+
+    baseline = steady_state_energy_nonsqueezed(coupling, kappa, drive)
+    if np.any(baseline == 0.0):
+        raise ValueError("steady-state enhancement is undefined at zero baseline")
+    return np.asarray(
+        steady_state_energy(case, coupling, squeezing, kappa, drive) / baseline,
+        dtype=float,
+    )
+
+
 def steady_state_energy_derivative(
     case: BatteryCase,
     coupling: ArrayLike,

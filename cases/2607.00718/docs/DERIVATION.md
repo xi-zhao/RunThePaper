@@ -20,6 +20,13 @@ and squeezing thresholds. The optical-isolator panels follow from the normal
 and anomalous scattering channels; at zero squeezed frequency the optimum is
 `J'_op = sqrt(kappa_a kappa_b)/2`.
 
+For Figure S3, the same formula is evaluated in both absolute and normalized
+form. Writing `R_i(r;J)=E_i^ss(r;J)/E^ss(J)` gives `R_i(0;J)=1` exactly. The
+three absolute baselines are unequal, so they cannot explain the three visible
+unit intercepts in the source. The normalized formula also reproduces every
+visible endpoint scale. We therefore render `R_i` and retain both forms in the
+released data; the source image is validation evidence only.
+
 Figure S1 is also governed by the exact affine Gaussian system. Its published
 strong-coupling amplitude instead matches a low finite-Fock cutoff. Since the
 paper does not disclose that cutoff or show convergence, the qualitative

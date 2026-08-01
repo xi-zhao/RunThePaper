@@ -38,6 +38,7 @@ from squeezing_nonreciprocity import (  # noqa: E402
     optimal_transmission_coupling,
     passive_state_energy,
     steady_state_energy,
+    steady_state_energy_enhancement,
     steady_state_energy_derivative,
     steady_state_ergotropy,
     steady_state_energy_nonsqueezed,
@@ -224,9 +225,10 @@ def run_t002c(config: dict[str, Any]) -> dict[str, Any]:
         float(config["squeezing_max"]),
         int(config["points"]),
     )
-    baseline = float(steady_state_energy_nonsqueezed(coupling, kappa, drive))
     enhancements = {
-        case: steady_state_energy(case, coupling, squeezing, kappa, drive) / baseline
+        case: steady_state_energy_enhancement(
+            case, coupling, squeezing, kappa, drive
+        )
         for case in ("a", "b", "c")
     }
 
@@ -1507,19 +1509,41 @@ def run_ts03(config: dict[str, Any]) -> dict[str, Any]:
         float(config["squeezing_max"]),
         int(config["points"]),
     )
-    energies = {
+    absolute_energies = {
         f"{case}_{index}": steady_state_energy(
             case, coupling, squeezing, kappa, drive
         )
         for index, coupling in enumerate(coupling_values)
         for case in ("a", "b", "c")
     }
+    enhancements = {
+        f"{case}_{index}": steady_state_energy_enhancement(
+            case, coupling, squeezing, kappa, drive
+        )
+        for index, coupling in enumerate(coupling_values)
+        for case in ("a", "b", "c")
+    }
+    baselines = np.asarray(
+        [
+            steady_state_energy_nonsqueezed(coupling, kappa, drive)
+            for coupling in coupling_values
+        ],
+        dtype=float,
+    )
     data_path = WORKSPACE / "outputs" / "data" / "figs3_energy_vs_squeezing.npz"
     np.savez_compressed(
         data_path,
         squeezing=squeezing,
         coupling_values=np.asarray(coupling_values),
-        **energies,
+        baseline_energies=baselines,
+        **{
+            f"energy_{key}": values
+            for key, values in absolute_energies.items()
+        },
+        **{
+            f"enhancement_{key}": values
+            for key, values in enhancements.items()
+        },
     )
 
     fig, axes = plt.subplots(1, 3, figsize=(16.115, 4.345), dpi=200)
@@ -1528,16 +1552,21 @@ def run_ts03(config: dict[str, Any]) -> dict[str, Any]:
         for case in ("a", "b", "c"):
             ax.plot(
                 squeezing,
-                energies[f"{case}_{index}"],
+                enhancements[f"{case}_{index}"],
                 color=COLORS[case],
                 linestyle=LINESTYLES[case],
                 linewidth=3.0,
             )
         if index == 2:
             ax.set_yscale("log")
+            ax.set_ylim(0.8, 110.0)
+        elif index == 0:
+            ax.set_ylim(0.8, 5.9)
+        else:
+            ax.set_ylim(0.7, 10.3)
         ax.set_xlim(0.0, 2.0)
         ax.set_xlabel(r"$r$", fontsize=14)
-        ax.set_ylabel(r"$E_i^{\rm ss}/\omega_b$", fontsize=14)
+        ax.set_ylabel(r"$E_i^{\rm ss}/E^{\rm ss}$", fontsize=14)
         ax.text(0.03, 0.90, f"({chr(97 + index)})", transform=ax.transAxes, fontsize=18)
         _paper_axes(ax)
     fig.subplots_adjust(left=0.06, right=0.985, top=0.95, bottom=0.18, wspace=0.26)
@@ -1547,44 +1576,98 @@ def run_ts03(config: dict[str, Any]) -> dict[str, Any]:
 
     monotonic_min_steps = {
         key: float(np.min(np.diff(values)))
-        for key, values in energies.items()
+        for key, values in enhancements.items()
     }
-    identity_errors = {}
+    absolute_identity_errors = {}
+    normalized_identity_errors = {}
     for index, coupling in enumerate(coupling_values):
-        baseline = steady_state_energy_nonsqueezed(coupling, kappa, drive)
-        identity_errors[str(index)] = float(
+        baseline = baselines[index]
+        absolute_identity_errors[str(index)] = float(
             np.max(
                 np.abs(
-                    energies[f"a_{index}"]
-                    + energies[f"b_{index}"]
+                    absolute_energies[f"a_{index}"]
+                    + absolute_energies[f"b_{index}"]
                     - baseline
-                    - energies[f"c_{index}"]
+                    - absolute_energies[f"c_{index}"]
+                )
+            )
+        )
+        normalized_identity_errors[str(index)] = float(
+            np.max(
+                np.abs(
+                    enhancements[f"a_{index}"]
+                    + enhancements[f"b_{index}"]
+                    - 1.0
+                    - enhancements[f"c_{index}"]
                 )
             )
         )
     endpoint_orders = {
         str(index): bool(
-            energies[f"c_{index}"][-1]
-            > energies[f"b_{index}"][-1]
-            > energies[f"a_{index}"][-1]
+            enhancements[f"c_{index}"][-1]
+            > enhancements[f"b_{index}"][-1]
+            > enhancements[f"a_{index}"][-1]
         )
         for index in range(len(coupling_values))
     }
+    source_contract = dict(config["validation_only_source_contract"])
+    source_r_zero = float(source_contract["visible_curve_r_zero_value"])
+    r_zero_enhancement_errors = {
+        key: float(abs(values[0] - source_r_zero))
+        for key, values in enhancements.items()
+    }
+    absolute_baseline_offsets_from_source = {
+        str(index): float(abs(value - source_r_zero))
+        for index, value in enumerate(baselines)
+    }
+    axis_label_discrepancy_detected = bool(
+        source_contract.get("generation_input_forbidden")
+        and source_contract.get("published_axis_observable")
+        != source_contract.get("curve_observable_inferred_from_visible_shape")
+        and max(r_zero_enhancement_errors.values()) < 1e-12
+        and max(absolute_baseline_offsets_from_source.values()) > 0.5
+    )
     passed = (
         min(monotonic_min_steps.values()) >= -1e-12
-        and max(identity_errors.values()) < 2e-12
+        and max(absolute_identity_errors.values()) < 2e-12
+        and max(normalized_identity_errors.values()) < 2e-12
         and all(endpoint_orders.values())
+        and axis_label_discrepancy_detected
     )
     return {
         "status": "passed" if passed else "failed",
+        "scientific_verdict": "reproduced_with_source_axis_label_correction",
         "artifact_stage": "final_reproduction",
         "parameter_match": "paper_exact",
         "generated_data_provenance": "analytic_reference",
         "reference_comparison": "analytic_reference",
         "metrics": {
             "minimum_forward_difference": monotonic_min_steps,
-            "steady_energy_identity_max_abs_error": identity_errors,
+            "steady_energy_identity_max_abs_error": absolute_identity_errors,
+            "normalized_energy_identity_max_abs_error": normalized_identity_errors,
             "endpoint_order_c_gt_b_gt_a": endpoint_orders,
+            "baseline_energy_by_panel": {
+                str(index): float(value)
+                for index, value in enumerate(baselines)
+            },
+            "enhancement_endpoint_by_panel": {
+                str(index): {
+                    case: float(enhancements[f"{case}_{index}"][-1])
+                    for case in ("a", "b", "c")
+                }
+                for index in range(len(coupling_values))
+            },
+            "source_axis_semantics": {
+                **source_contract,
+                "r_zero_enhancement_max_abs_error": max(
+                    r_zero_enhancement_errors.values()
+                ),
+                "absolute_baseline_max_offset_from_visible_r_zero": max(
+                    absolute_baseline_offsets_from_source.values()
+                ),
+                "axis_label_discrepancy_detected": axis_label_discrepancy_detected,
+                "generated_observable": "E_i^ss/E^ss",
+            },
             "points_per_curve": int(squeezing.size),
         },
         "artifacts": {

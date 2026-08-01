@@ -20,6 +20,7 @@ from squeezing_nonreciprocity import (  # noqa: E402
     optimal_transmission_coupling,
     passive_state_energy,
     steady_state_energy,
+    steady_state_energy_enhancement,
     steady_state_energy_derivative,
     steady_state_ergotropy,
     steady_state_energy_nonsqueezed,
@@ -67,6 +68,24 @@ def test_energy_identity_holds_for_broadcast_grids() -> None:
         rtol=5e-13,
         atol=1e-13,
     )
+
+
+def test_s3_enhancement_normalization_is_distinct_from_absolute_axis_quantity() -> None:
+    coupling = np.asarray([5e-5, 1e-4, 5e-4])
+    kappa = 8e-5
+    drive = 1e-4
+    baselines = steady_state_energy_nonsqueezed(coupling, kappa, drive)
+
+    assert np.max(np.abs(baselines - 1.0)) > 0.5
+    for case in ("a", "b", "c"):
+        enhancement = steady_state_energy_enhancement(
+            case,
+            coupling,
+            0.0,
+            kappa,
+            drive,
+        )
+        np.testing.assert_allclose(enhancement, 1.0, rtol=0.0, atol=1e-12)
 
 
 def test_closed_derivatives_match_centered_finite_differences() -> None:
