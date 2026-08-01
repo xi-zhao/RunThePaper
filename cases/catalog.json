@@ -860,15 +860,15 @@
         "review_priority": "scientific_state_upgrade",
         "paper_scope_state": "external_data_blocked",
         "lifecycle": {
-          "workflow": "active",
+          "workflow": "blocked",
           "scientific_scope": "legacy_missing",
           "declared_scope": "open",
           "paper_scope": "open",
           "scientific": "open",
           "pixel": "unassessed"
         },
-        "control_status": "human_required",
-        "next_action": "build_repro_state_adapter_or_verdict_artifact",
+        "control_status": "blocked",
+        "next_action": "repair_claim_target_ledger",
         "scientific_score": null,
         "pixel_score": null
       }
@@ -954,15 +954,15 @@
         "review_priority": "scientific_state_upgrade",
         "paper_scope_state": "declared",
         "lifecycle": {
-          "workflow": "active",
+          "workflow": "blocked",
           "scientific_scope": "legacy_missing",
           "declared_scope": "open",
           "paper_scope": "open",
           "scientific": "open",
           "pixel": "unassessed"
         },
-        "control_status": "human_required",
-        "next_action": "build_repro_state_adapter_or_verdict_artifact",
+        "control_status": "blocked",
+        "next_action": "repair_claim_target_ledger",
         "scientific_score": null,
         "pixel_score": null
       }
@@ -1475,13 +1475,15 @@
         "doi_url": "https://doi.org/10.1038/s42005-026-02546-2",
         "locator": "Article 127"
       },
-      "status": "Main-text scientific reproduction; pixel-registered, not identical",
+      "status": "Main-text plus Supplementary Figs. S4/S6 scientific reproduction; pixel-registered, not identical",
       "similarity_level": "numerical_feature_reproduction",
       "audit_score": 88.39,
-      "summary": "Completes the main-text scientific evidence chain for Figs. 1-5. Figs. 2(a-c), 3, and 4(a-f) are independently recomputed; Fig. 2(d) is author-data-assisted; Figs. 1 and 5 are analytic redraws. Every formal canvas is registered, while strict SSIM 0.95 pixel identity is explicitly not claimed.",
-      "limitation": "Supplementary Figs. S2 and S4-S7 are not independently complete. Fig. 2(d) uses author-released ED tables, and unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in Fig. 3 and several Fig. 4 panels.",
+      "summary": "Completes the main-text scientific evidence chain for Figs. 1-5 and independently computes Supplementary Figs. S4 and S6 from Eqs. (S24)-(S28). Figs. 2(a-c), 3, 4(a-f), S4, and S6 are equation- or model-generated; Fig. 2(d) is author-data-assisted; Figs. 1 and 5 are analytic redraws. Strict SSIM 0.95 pixel identity is explicitly not claimed.",
+      "limitation": "Supplementary Figs. S2, S5, and S7 remain open. Supplementary Fig. S4 uses an independently computed finite-L=160 OBC proxy for the grey thermodynamic-limit series and is therefore scientifically partial. Fig. 2(d) uses author-released ED tables, and unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in Fig. 3 and several Fig. 4 panels.",
       "run_scripts": [
-        "run_reproduction_smoke.py"
+        "run_reproduction_smoke.py",
+        "run_supplementary_fig4.py",
+        "run_supplementary_fig6.py"
       ],
       "extra_dependencies": [],
       "featured_results": [
@@ -1514,6 +1516,18 @@
           "result": "Analytic basis-transformation schematic",
           "figure": "fig5_pixel_registered.png",
           "check": "main_schematic_pixel_similarity.json"
+        },
+        {
+          "paper_item": "Supplementary Fig. S4",
+          "result": "Eq. (S24) spectra, extremal-state profiles, and inverse-size localization scaling",
+          "figure": "supp_fig_s4_reproduction.png",
+          "check": "supp_fig_s4.json"
+        },
+        {
+          "paper_item": "Supplementary Fig. S6",
+          "result": "Eq. (S28) slice winding and independently solved charged Fermi points",
+          "figure": "supp_fig_s6_reproduction.png",
+          "check": "supp_fig_s6.json"
         }
       ],
       "comparison_attribution": "Xing, Xiong, and Hu",
@@ -3092,12 +3106,14 @@
         "none": 1
       },
       "control_status_counts": {
-        "human_required": 37,
+        "human_required": 35,
+        "blocked": 2,
         "terminal": 1
       },
       "lifecycle_counts": {
         "workflow": {
-          "active": 37,
+          "active": 35,
+          "blocked": 2,
           "terminal": 1
         },
         "scientific_scope": {
