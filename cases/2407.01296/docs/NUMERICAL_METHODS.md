@@ -24,6 +24,18 @@ checks: complete boundary density, scale-free Gaussian localization, spectral
 density from the geometry-adaptive potential, boundary-ratio spectra, a
 paper-size disordered spectrum, and finite-size spectral-potential scaling.
 
+For Supplementary Fig. S4, Eq. (S24) is built directly under PBC and OBC. The
+caption lengths `L=20,40,60,80` are diagonalized, both extremal-energy states
+are inspected at `L=80`, and the central-state inverse localization length is
+regressed against `1/L` over nine sizes. The additional `L=160` spectrum is a
+declared large-size proxy, not an exact thermodynamic-limit curve.
+
+For Supplementary Fig. S6, Eq. (S28) is evaluated as an unwrapped phase winding
+on 240 midpoint slices with 4096 samples per loop. Midpoints avoid slices where
+the point gap closes and the winding is undefined. Fermi points are solved from
+the real and imaginary parts of the Bloch Hamiltonian, and their charges are
+computed from the local Jacobian determinant.
+
 ## Reproducibility layers
 
 The public quick runner uses reduced matrices so it can execute on an ordinary
@@ -49,6 +61,8 @@ The component runners are also available:
 python scripts/run_fig2_geometry.py --scale smoke
 python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
 python scripts/run_fig4_boundary_ratio.py --scale smoke
+python scripts/run_supplementary_fig4.py
+python scripts/run_supplementary_fig6.py
 ```
 
 The first and third component scripts write relative to the code package when

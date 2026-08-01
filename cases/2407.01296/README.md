@@ -6,9 +6,14 @@ Published as: [Geometry-adaptive formulation of non-Bloch bands in arbitrary dim
 
 Formal citation: Communications Physics 9, 127 (2026) · DOI `10.1038/s42005-026-02546-2` · Locator `Article 127`
 
-Public status: **Main-text scientific reproduction; pixel-registered, not identical** · Audit score: **88.39/100**
+Public status: **Main-text plus Supplementary Figs. S4/S6 scientific reproduction; pixel-registered, not identical** · Legacy evidence score: **88.39/100**
 
-Completes the main-text scientific evidence chain for Figs. 1-5. Figs. 2(a-c), 3, and 4(a-f) are independently recomputed; Fig. 2(d) is author-data-assisted; Figs. 1 and 5 are analytic redraws. Every formal canvas is registered, while strict SSIM 0.95 pixel identity is explicitly not claimed.
+Completes the main-text scientific evidence chain for Figs. 1-5 and independently
+computes Supplementary Figs. S4 and S6 from Eqs. (S24)-(S28). Figs. 2(a-c), 3,
+4(a-f), S4, and S6 are generated from equations or declared models; Fig. 2(d)
+is author-data-assisted; Figs. 1 and 5 are analytic redraws. The S4 large-size
+curve is explicitly a finite-`L=160` proxy, not an exact thermodynamic-limit
+claim. Strict SSIM 0.95 pixel identity is not claimed.
 
 ## Start Here / 从这里开始
 
@@ -17,6 +22,8 @@ Completes the main-text scientific evidence chain for Figs. 1-5. Figs. 2(a-c), 3
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
+- [Supplementary Fig. S4 scientific check](outputs/checks/supp_fig_s4.json)
+- [Supplementary Fig. S6 scientific check](outputs/checks/supp_fig_s6.json)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
@@ -29,6 +36,8 @@ Completes the main-text scientific evidence chain for Figs. 1-5. Figs. 2(a-c), 3
 | Fig. 3 | Geometry-dependent generalized Brillouin zones with corrected projection and view | [PNG](outputs/figures/fig3_gbz_pixel_registered.png) | [JSON](outputs/checks/fig3_gbz_pixel_similarity.json) |
 | Fig. 4(a-f) | Critical boundary modes and spectral instability across all six panels | [PNG](outputs/figures/fig4_full_pixel_registered.png) | [JSON](outputs/checks/fig4_full_pixel_similarity.json) |
 | Fig. 5 | Analytic basis-transformation schematic | [PNG](outputs/figures/fig5_pixel_registered.png) | [JSON](outputs/checks/main_schematic_pixel_similarity.json) |
+| Supplementary Fig. S4 | Eq. (S24) PBC/OBC spectra, extremal-state profiles, and Eq. (S25) inverse-size localization scaling | [PNG](outputs/figures/supp_fig_s4_reproduction.png) | [JSON](outputs/checks/supp_fig_s4.json) |
+| Supplementary Fig. S6 | Eq. (S28) slice winding and independently solved charged Fermi points | [PNG](outputs/figures/supp_fig_s6_reproduction.png) | [JSON](outputs/checks/supp_fig_s6.json) |
 
 ## Paper Reference vs Independent Reproduction
 
@@ -74,6 +83,14 @@ Each board contains a limited attributed excerpt from the formal paper beside th
 
 ![Fig. 5 reproduction](outputs/figures/fig5_pixel_registered.png)
 
+### Supplementary Fig. S4: spectra and scale-free localization
+
+![Supplementary Fig. S4 reproduction](outputs/figures/supp_fig_s4_reproduction.png)
+
+### Supplementary Fig. S6: winding-number transition and Fermi-point charge
+
+![Supplementary Fig. S6 reproduction](outputs/figures/supp_fig_s6_reproduction.png)
+
 ## Quick Run
 
 ```bash
@@ -82,6 +99,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2407.01296/code
 python scripts/run_reproduction_smoke.py
+python scripts/run_supplementary_fig4.py
+python scripts/run_supplementary_fig6.py
 ```
 
 Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
@@ -90,6 +109,12 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 5 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Supplementary Figs. S2 and S4-S7 are not independently complete. Fig. 2(d) uses author-released ED tables, and unreported state selection, integer boundary vertices, random seeds, probe grids, three-dimensional projection, and renderer details limit pixel identity in Fig. 3 and several Fig. 4 panels.
+Remaining limitation: Supplementary Figs. S2, S5, and S7 are not yet independently
+complete. Supplementary Fig. S4 is scientifically partial because its grey
+thermodynamic-limit curve is represented by an independently calculated
+finite-`L=160` OBC proxy. Fig. 2(d) uses author-released ED tables, and unreported
+state selection, integer boundary vertices, random seeds, probe grids,
+three-dimensional projection, and renderer details limit pixel identity in
+Fig. 3 and several Fig. 4 panels.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
