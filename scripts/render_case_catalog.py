@@ -250,9 +250,12 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
     lines.extend(["```", ""])
     full_run_scripts = [str(item) for item in case.get("full_run_scripts", [])]
     if full_run_scripts:
+        full_run_heading = str(
+            case.get("full_run_heading", "Full paper-scale rerun")
+        ).strip()
         lines.extend(
             [
-                "### Full paper-scale rerun",
+                f"### {full_run_heading}",
                 "",
                 str(case["full_run_note"]),
                 "",
@@ -336,9 +339,12 @@ def render_code_readme(case: dict[str, Any]) -> str:
     lines.extend(["```", ""])
     full_run_scripts = [str(item) for item in case.get("full_run_scripts", [])]
     if full_run_scripts:
+        full_run_heading = str(
+            case.get("full_run_heading", "Full paper-scale rerun")
+        ).strip()
         lines.extend(
             [
-                "## Full paper-scale rerun",
+                f"## {full_run_heading}",
                 "",
                 str(case["full_run_note"]),
                 "",
