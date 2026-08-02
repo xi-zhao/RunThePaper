@@ -44,6 +44,7 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2512.08279`](cases/2512.08279/README.md) | Programmable Lindblad dynamics, signed quantum-channel sampling, and error-dependent retrieval cost | Complete reproduction of both numerical main figures | 95.00 |
 | [`2607.00718`](cases/2607.00718/README.md) | Squeezed-reservoir nonreciprocity, Gaussian quantum batteries, ergotropy, and optical isolation | Scientific contract complete: 23/23 numerical panels; 4 claims verified and 1 published cutoff claim rejected | 90.31 |
 | [`1903.05124`](cases/1903.05124/README.md) | Formula-derived Clifford/stabilizer reproduction of scrambling-enabled quantum error correction and measurement-induced criticality | Complete-scope mixed-scale numerical reproduction | 78.41 |
+| [`1706.07435`](cases/1706.07435/README.md) | Equation-level reproduction of non-Hermitian topology, exceptional points, domain-wall states, and lattice cylinder spectra | Complete equation-level reproduction | 90.00 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.
