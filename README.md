@@ -16,7 +16,7 @@ explicit reproduction boundary.
 ## Reproduction Catalog / 论文复现目录
 
 <!-- case-catalog:start -->
-**39 public cases.** Open a paper below, then choose the reading or
+**40 public cases.** Open a paper below, then choose the reading or
 reproduction resource you need.
 
 | Paper | Preprint / formal publication | Reproduction status | Open package |
@@ -60,6 +60,7 @@ reproduction resource you need.
 | [Sufficient Wigner Negativity Implies Genuine Multipartite Entanglement](cases/2510.26761/README.md) | [arXiv:2510.26761](https://arxiv.org/abs/2510.26761)<br>[Physical Review Letters 137, 040202 (2026)](https://doi.org/10.1103/bftw-qnbf) · DOI `10.1103/bftw-qnbf` | Numerical feature reproduction; exact W-state witnesses | [中文 Note](cases/2510.26761/note/reproduction-note.zh-CN.md) · [English Note](cases/2510.26761/note/reproduction-note.en.md)<br>[Code](cases/2510.26761/code/README.md) · [Figures](cases/2510.26761/outputs/figures/) · [Checks](cases/2510.26761/outputs/checks/) |
 | [Programmable Open Quantum Systems](cases/2512.08279/README.md) | [arXiv:2512.08279](https://arxiv.org/abs/2512.08279)<br>[Physical Review Letters 137, 040403 (2026)](https://doi.org/10.1103/yqlr-2dhr) · DOI `10.1103/yqlr-2dhr` | Complete reproduction of both numerical main figures | [中文 Note](cases/2512.08279/note/reproduction-note.zh-CN.md) · [English Note](cases/2512.08279/note/reproduction-note.en.md)<br>[Code](cases/2512.08279/code/README.md) · [Figures](cases/2512.08279/outputs/figures/) · [Checks](cases/2512.08279/outputs/checks/) |
 | [Enhancing Nonreciprocity through Squeezing-Induced Symmetry Breaking](cases/2607.00718/README.md) | [arXiv:2607.00718](https://arxiv.org/abs/2607.00718)<br>[Physical Review Letters 136, 253602 (2026)](https://doi.org/10.1103/kh36-7z76) · DOI `10.1103/kh36-7z76` | Scientific contract complete: 23/23 numerical panels; 4 claims verified and 1 published cutoff claim rejected | [中文 Note](cases/2607.00718/note/reproduction-note.zh-CN.md) · [English Note](cases/2607.00718/note/reproduction-note.en.md)<br>[Code](cases/2607.00718/code/README.md) · [Figures](cases/2607.00718/outputs/figures/) · [Checks](cases/2607.00718/outputs/checks/) |
+| [Topological Band Theory for Non-Hermitian Hamiltonians](cases/1706.07435/README.md) | [arXiv:1706.07435](https://arxiv.org/abs/1706.07435)<br>[Phys. Rev. Lett. 120, 146402 (2018)](https://doi.org/10.1103/PhysRevLett.120.146402) · DOI `10.1103/PhysRevLett.120.146402` | Complete equation-level reproduction | [中文 Note](cases/1706.07435/note/reproduction-note.zh-CN.md) · [English Note](cases/1706.07435/note/reproduction-note.en.md)<br>[Code](cases/1706.07435/code/README.md) · [Figures](cases/1706.07435/outputs/figures/) · [Checks](cases/1706.07435/outputs/checks/) |
 
 Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for audit scores and explicit boundaries.
 <!-- case-catalog:end -->
