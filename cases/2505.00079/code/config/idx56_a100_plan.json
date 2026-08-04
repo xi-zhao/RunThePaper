@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "paper_id": "2505.00079",
+  "benchmark_record": "prlb-f37350e-056",
+  "remote_repo_root": "<private-runtime>/projects/PRAgent-2604-a100-training",
+  "existing_2604_workspace": "<private-runtime>/projects/PRAgent-2604-a100-training/case/2604.08669/workspace",
+  "launch_cwd": "<private-runtime>/projects/PRAgent-2604-a100-training",
+  "connection_boundary": "HTTP JupyterHub browser login; launch only from an authenticated Jupyter terminal",
+  "stages": [
+    {
+      "stage": "cuda_smoke",
+      "command": "python case/2505.00079/code/scripts/run_a100_batched.py --target z3 --device cuda --batch-size 4 --measurements 40 --decorrelation-sweeps 2 --thermal-sweeps 20 --tag cuda_smoke",
+      "acceptance": "completes, finite observables, 0 < acceptance_rate < 1"
+    },
+    {
+      "stage": "z3_benchmark_pilot",
+      "command": "python case/2505.00079/code/scripts/run_a100_batched.py --target z3 --device cuda --batch-size 8 --measurements 4000 --decorrelation-sweeps 100 --thermal-sweeps 5000 --tag a100_pilot --write-csv",
+      "acceptance": "stable checkpoint/progress and susceptibility materially above the local smoke result"
+    },
+    {
+      "stage": "z3_benchmark_total_count",
+      "command": "python case/2505.00079/code/scripts/run_a100_batched.py --target z3 --device cuda --batch-size 8 --thermal-sweeps 10000 --tag a100_total --write-csv",
+      "acceptance": "40,000 total samples with 100 skipped sweeps per chain; hot/cold convergence and error analysis still required"
+    },
+    {
+      "stage": "z7_benchmark_anchors",
+      "command": "python case/2505.00079/code/scripts/run_a100_batched.py --target z7 --device cuda --batch-size 8 --thermal-sweeps 5000 --start cold --tag a100_total --write-csv",
+      "acceptance": "three Polyakov anchors within declared tolerance and defect densities ordered as beta1 > beta2 > beta2.5"
+    }
+  ],
+  "stop_conditions": [
+    "CUDA OOM or traceback",
+    "NaN/Inf observable",
+    "acceptance rate exactly 0 or 1 after thermalization",
+    "no progress update for 20 minutes"
+  ],
+  "resume": "repeat the same command with --resume"
+}
