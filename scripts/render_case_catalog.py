@@ -8,14 +8,18 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
+CASE_CONTRACT = "paper_reproduction_only_v1"
 README_CATALOG_START = "<!-- case-catalog:start -->"
 README_CATALOG_END = "<!-- case-catalog:end -->"
 
 
 def load_catalog() -> list[dict[str, Any]]:
     payload = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != 2:
-        raise ValueError("unsupported catalog schema")
+    if (
+        payload.get("schema_version") != 2
+        or payload.get("case_contract") != CASE_CONTRACT
+    ):
+        raise ValueError("unsupported catalog schema or case contract")
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         raise ValueError("catalog must contain cases")

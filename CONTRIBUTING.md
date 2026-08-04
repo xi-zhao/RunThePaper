@@ -30,7 +30,10 @@ Every formula/theory case must ship, so readers can follow the science:
 - **source-vs-reproduction comparison panels** under `docs/comparisons/` for the
   reproduced figures (see the limited-excerpt rules above).
 
-Algorithm/benchmark cases substitute a method/algorithm trace for the derivation.
+Reproductions of algorithm or benchmarking papers may substitute a
+method/algorithm trace for the equation derivation. A standalone benchmark,
+synthetic task, source-contract audit, or internal evaluation is not a
+RunThePaper case and must not receive its own catalog entry.
 
 For each case, keep the public boundary clear:
 
@@ -45,6 +48,16 @@ objects. A published entry needs its formal title, venue, full citation, DOI,
 and article/page/PII locator. If no formal publication can be found, use
 `publication.status: "not_recorded"` together with `checked_at`; do not use an
 empty DOI as an implicit status.
+
+At least one paper identity must be verifiable. A case may have an unrecorded
+preprint or an unrecorded formal publication, but never both. Before adding a
+case, confirm that its code, generated data, figures, and checks reproduce
+claims or numerical results belonging to that identified paper.
+
+Every case must include scientific Python code in `code/` beyond
+`verify_public_artifacts.py`. The verifier proves that frozen files are intact;
+it does not replace the implementation that computes or reanalyzes the paper's
+scientific result.
 
 ## Before Opening a Pull Request
 

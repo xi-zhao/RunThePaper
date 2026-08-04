@@ -27,7 +27,6 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`prlb-f37350e-000`](cases/prlb-f37350e-000/README.md) | Vacuum-resonance mode conversion and polarization in magnetized neutron-star atmospheres | Paper-figure feature reproduction and PRL-Bench gold audit | 84.00 |
 | [`prlb-f37350e-008`](cases/prlb-f37350e-008/README.md) | Secular resonance and eccentricity excitation in hierarchical black-hole triples | Paper-figure feature reproduction and PRL-Bench source audit | 88.75 |
 | [`prlb-f37350e-009`](cases/prlb-f37350e-009/README.md) | Relic gravitational-wave spectra, adiabatic regularization, and frozen-answer provenance | Paper-exact figure reproduction and composite benchmark audit | 90.25 |
-| [`prlb-f37350e-016`](cases/prlb-f37350e-016/README.md) | Single-impurity resonance in a d-wave superconductor and benchmark identifiability | Formula-level reproduction with unresolved source identity | 85.00 |
 | [`prlb-f37350e-028`](cases/prlb-f37350e-028/README.md) | Macrospin dynamics and deterministic Neel-vector switching in antiferromagnets | Source-grounded macrospin reproduction and benchmark audit | 90.00 |
 | [`prlb-f37350e-040`](cases/prlb-f37350e-040/README.md) | Modulational instability, wedge selection, and nonlinear dynamics in two-component condensates | Equation-level numerical feature reproduction | 80.00 |
 | [`2503.20566`](cases/2503.20566/README.md) | Gauge-invariant tensor-network simulations of Abelian lattice gauge theories | Complete PRL-Bench target reproduction; partial paper coverage | 100.00 |
@@ -47,7 +46,6 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`1706.07435`](cases/1706.07435/README.md) | Equation-level reproduction of non-Hermitian topology, exceptional points, domain-wall states, and lattice cylinder spectra | Complete equation-level reproduction | 90.00 |
 | [`10.1038-s41467-025-67768-4`](cases/10.1038-s41467-025-67768-4/README.md) | Feedback/post-selection expectation under amplified Pauli injection. | Historical scientific artifact (9 numerical targets; 2 blocked_missing_method, 1 failed, 5 partially_reproduced, 1 reproduced) | 72.25 |
 | [`10.1103-PhysRevB.31.5946`](cases/10.1103-PhysRevB.31.5946/README.md) | Exact zero-temperature phase diagram. | Historical scientific artifact (15 numerical targets; 11 blocked_missing_method, 1 blocked_missing_parameter, 2 failed, 1 reproduced) | 11.20 |
-| [`1810.05651`](cases/1810.05651/README.md) | quantum characterization; statistical hypothesis testing; quantum processor crosstalk | Historical scientific artifact (2 numerical targets; 2 reproduced) | 100.00 |
 | [`1904.10246`](cases/1904.10246/README.md) | quantum algorithms; amplitude estimation; maximum likelihood | Historical scientific artifact (4 numerical targets; 4 reproduced) | 95.00 |
 | [`1905.09460`](cases/1905.09460/README.md) | non-Hermitian physics; quasicrystals; topological phase transitions; mode-locked lasers | Historical scientific artifact (4 numerical targets; 2 evidence_compared, 2 partially_reproduced) | 84.29 |
 | [`2401.08523`](cases/2401.08523/README.md) | quantum information; fermionic phase space; majorization; uncertainty relations | Historical scientific artifact (2 numerical targets; 2 evidence_compared) | 90.00 |
@@ -71,9 +69,6 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2607.23978`](cases/2607.23978/README.md) | Optimal Hermitian and non-Hermitian interferometric fringe baselines. | Historical scientific artifact (4 numerical targets; 4 evidence_compared) | 78.48 |
 | [`2607.27060`](cases/2607.27060/README.md) | open quantum systems; Trotter-Suzuki product formulas; quantum resource estimation | Historical scientific artifact (8 numerical targets; 8 reproduced) | 90.00 |
 | [`2607.28795`](cases/2607.28795/README.md) | Mitten-code algebraic parameters and canonical logical weights. | Historical scientific artifact (4 numerical targets; 2 partially_reproduced, 2 reproduced) | 78.75 |
-| [`prlb-f37350e-010`](cases/prlb-f37350e-010/README.md) | Independent audit of frozen Tasks 1-6. | Historical scientific artifact (3 numerical targets; 2 blocked_missing_parameter, 1 reproduced) | 0.00 |
-| [`prlb-f37350e-051`](cases/prlb-f37350e-051/README.md) | Audit all five frozen analytic tasks and their source provenance. | Historical scientific artifact (1 numerical target; 1 reproduced) | 0.00 |
-| [`prlb-f37350e-088`](cases/prlb-f37350e-088/README.md) | Audit all five frozen analytic and numerical claims. | Historical scientific artifact (1 numerical target; 1 reproduced) | 35.00 |
 | [`prlb-f37350e-100`](cases/prlb-f37350e-100/README.md) | Homogeneous-state spinodal temperature versus density for six altruistic fractions. | Historical scientific artifact (2 numerical targets; 1 failed, 1 reproduced) | 0.00 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
