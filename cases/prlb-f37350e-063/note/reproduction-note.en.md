@@ -1,31 +1,84 @@
-# Phase Transitions in Nonreciprocal Driven-Dissipative Condensates: public reproduction note
+# Phase transitions in nonreciprocal driven-dissipative condensates: an independent numerical reproduction
 
-## Result
+## Outcome
 
-Uses an A100 grid calculation to reproduce the paper's gamma=0.3 lambda-2 branch and independently audits the frozen critical-exceptional-point claims. The paper curve passes its feature gate, while the frozen benchmark gold fails independent evaluation.
+This case reconstructs the paper's nonreciprocal lattice model directly from
+its equations. It covers the main numerical content of Main Figs. 1–6 and
+Supplemental Figs. S1, S2(a), and S3. The result is a **partial full-paper
+numerical reproduction**, not a complete reproduction: all 12 executed targets
+pass their scientific checks, while four compute-intensive numerical items
+remain open.
 
-The public status of this case is **A100 source-curve feature reproduction and benchmark audit**.  Its audit score measures the strength and coverage of the published evidence; it does not mean that every figure and table in the source paper has been reproduced.  When a frozen PRL-Bench answer conflicts with the source equations, the case preserves the independent calculation and reports the failed gold instead of changing the physical model to match it.
+The normalized reproduction score is **76.75/100**. Across predeclared
+scientific regions, mean grayscale pixel similarity is **86.56/100** and mean
+SSIM is **0.5330**. Pixel metrics evaluate how faithfully independently
+generated science was rendered; they cannot replace equation, parameter, or
+dynamical checks.
 
-## Method
+## Reproduced content
 
-The reproduction starts from source-derived equations or algorithms, gates them with analytic identities, small-system numerics, or normalization and conservation checks, and only then generates structured data and figures.  The public package contains the independent implementation, generated data, generated images, and machine-readable checks.  It excludes the paper PDF, standalone source figures, digitized reference curves, and the internal error-correction history.
+- PBC and OBC complex spectra and vacuum thresholds from Eq. (1);
+- nonlinear open-boundary dynamics, the static kink, and broad phase structure
+  from Eq. (2);
+- existence and Bogoliubov stability of PBC traveling waves;
+- Lyapunov exponents, phase portraits, and particle-hole dynamics;
+- supplemental critical-exceptional-point curves, chaotic domains, and edge
+  dynamics.
 
-## Main evidence
+Representative quantitative results include a static-kink exponent of
+`-0.5045` (paper: `-0.5`), a dynamic frequency-versus-dispersion RMSE of
+`0.00625`, and an independently measured particle-hole period of `26.655`
+(paper: `26.66`).
 
-- gamma=0.3 lambda-2 branch: A100 nonreciprocal-condensate source-curve reproduction (figure: `../outputs/figures/idx63_cep_gamma03_reproduction.png`; check: `../outputs/checks/idx63_figure_check.json`)
+## Findings from independent checks
+
+1. The displayed 2×2 stability matrix requires `4 Lambda^2` in the eigenvalue
+   radical, whereas the printed closed form contains only `Lambda^2`. The
+   corrected expression agrees with direct diagonalization to `2.7e-15`.
+2. The Fig. S1 caption's critical kappa values for `gamma=0.1` and `0.2` differ
+   from independent Jacobian-zero locations by about `0.00671` and `0.00540`.
+   The `gamma=0.3` value agrees within `4e-5`.
+
+## Scientific boundary
+
+The numerical programs do not read paper images, extracted curves, author
+numerical code, or author-produced numerical datasets. Paper figures enter only
+after generated arrays have been frozen, in a separate rendering comparison
+that may tune layout and style but cannot change physical parameters or arrays.
+The limited paper excerpts inside comparison boards validate structure rather
+than author-data-level equivalence.
 
 ## Run
 
-Execute the following commands from this case's `code` directory:
+From this case's `code` directory, regenerate every public figure from the
+included independent arrays:
 
 ```bash
-python scripts/render_idx63_figures.py
+python scripts/render_fast_formula_targets.py
+python scripts/render_dynamic_targets.py
+python scripts/render_cep_targets.py
+python scripts/render_phase_diagram_targets.py
 ```
 
-The scripts write generated artifacts to `outputs/data`, `outputs/figures`, and `outputs/checks` at the case root.  GPU-scale reruns, when applicable, are listed separately in the main README; the default command path favors a locally inspectable regeneration step.
+Recompute the implemented targets:
 
-## Boundary
+```bash
+python scripts/run_fast_formula_targets.py
+python scripts/run_dynamic_targets.py
+python scripts/run_cep_targets.py
+python scripts/run_phase_diagram_targets.py
+```
 
-The paper-curve result is feature-level rather than author-data exact. Recomputing the full grid requires CUDA/PyTorch; the default public command regenerates figures from the included A100 summaries.
+The complete local run takes a few minutes; the dynamic stage peaks near
+2.2 GiB. Outputs are written to `../outputs/data`, `../outputs/checks`, and
+`../outputs/figures`.
 
-This case should therefore be read as an executable numerical or feature-level reproduction with an explicit boundary, not as a replacement for all author data, presentation choices, or experimental conditions.
+## Remaining boundary
+
+- the paper-resolution boundary in Main Fig. 3(a);
+- the fine multistable stripes in Main Fig. 4(a);
+- the complete five-attractor hierarchy in Main Fig. 4(d);
+- the 300-nearby-trajectory ensemble in Supplemental Fig. S2(b).
+
+This package is therefore a runnable and auditable scientific reproduction
+with explicit limits, not a replacement for every author dataset and figure.

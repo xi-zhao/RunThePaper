@@ -32,7 +32,6 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2503.20566`](cases/2503.20566/README.md) | Gauge-invariant tensor-network simulations of Abelian lattice gauge theories | Complete PRL-Bench target reproduction; partial paper coverage | 100.00 |
 | [`prlb-f37350e-058`](cases/prlb-f37350e-058/README.md) | Quantum backflow optimization and large-bandwidth extrapolation | Source-extrapolation feature reproduction and benchmark audit | 83.60 |
 | [`prlb-f37350e-060`](cases/prlb-f37350e-060/README.md) | Fermionic reference states, neutral-atom error correction, and benchmark consistency | Formula-level numerical feature reproduction and benchmark audit | 84.00 |
-| [`prlb-f37350e-063`](cases/prlb-f37350e-063/README.md) | Nonreciprocal condensate phase transitions and critical exceptional points | A100 source-curve feature reproduction and benchmark audit | 89.55 |
 | [`prlb-f37350e-071`](cases/prlb-f37350e-071/README.md) | Parametric amplification, apparent noise, and quantum-memory stability | Complete benchmark-task reproduction and source audit | 90.00 |
 | [`prlb-f37350e-090`](cases/prlb-f37350e-090/README.md) | Spontaneous emission and excitation in photonic time crystals | Complete benchmark-task reproduction and source-consistency audit | 90.00 |
 | [`prlb-f37350e-093`](cases/prlb-f37350e-093/README.md) | Shooting-point exchange, path-space sampling, and free-energy reconstruction | Paper-figure feature reproduction and benchmark statistics audit | 70.10 |
@@ -70,6 +69,7 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2607.27060`](cases/2607.27060/README.md) | open quantum systems; Trotter-Suzuki product formulas; quantum resource estimation | Historical scientific artifact (8 numerical targets; 8 reproduced) | 90.00 |
 | [`2607.28795`](cases/2607.28795/README.md) | Mitten-code algebraic parameters and canonical logical weights. | Historical scientific artifact (4 numerical targets; 2 partially_reproduced, 2 reproduced) | 78.75 |
 | [`prlb-f37350e-100`](cases/prlb-f37350e-100/README.md) | Homogeneous-state spinodal temperature versus density for six altruistic fractions. | Historical scientific artifact (2 numerical targets; 1 failed, 1 reproduced) | 0.00 |
+| [`prlb-f37350e-063`](cases/prlb-f37350e-063/README.md) | Nonreciprocal condensate phase transitions, nonlinear edge dynamics, and critical exceptional points | Formula-driven numerical feature reproduction; 4 items deferred | 76.75 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

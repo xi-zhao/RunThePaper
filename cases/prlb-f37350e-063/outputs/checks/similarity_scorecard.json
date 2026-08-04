@@ -1,38 +1,46 @@
 {
   "schema_version": 3,
   "status": "passed",
-  "score_model": "rra_similarity_v3_figure_evaluation",
+  "score_model": "rra_similarity_v3_science_then_render",
   "paper_id": "prlb-f37350e-063",
-  "summary": "The gamma=0.3 source lambda_2 branch is reproduced at feature level, but the frozen benchmark gold fails independent evaluation.",
+  "summary": "Full-paper numerical reproduction with independent arrays, explicit partial targets, and post-run scientific-region pixel diagnostics.",
   "targets": [
     {
-      "target_id": "T_SOURCE_CEP_GAMMA03",
-      "label": "Supplemental Fig. S1(a), gamma=0.3 lambda_2 branch",
+      "target_id": "T_FIG1_BCD",
+      "label": "PBC and OBC complex spectra across nonreciprocal regimes.",
       "figure_refs": [
-        "SM_S1A_GAMMA03"
+        "MAIN_FIG1"
       ],
-      "weight": 0.45,
+      "weight": 1.0,
       "components": {
         "feature_match": {
-          "score": 48.0,
+          "score": 45.0,
           "max_score": 50.0,
-          "reason": "Critical origin, monotone lambda_2 branch, range, and curvature align with the digitized source."
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
         },
         "numeric_closeness": {
-          "score": 34.0,
+          "score": 30.0,
           "max_score": 35.0,
-          "reason": "564 overlapping points give RMSE 0.001337 and MAE 0.001087."
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
         },
         "paper_scope_coverage": {
-          "score": 7.0,
+          "score": 15.0,
           "max_score": 15.0,
-          "reason": "One gamma branch of panel S1(a) is covered; S1(b) and three other gamma curves remain outside this target."
+          "reason": "Panel credit is derived from the panel ledger."
         }
       },
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "lambda2_gamma03",
+            "panel_id": "b",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "d",
             "status": "reproduced"
           }
         ],
@@ -45,39 +53,32 @@
         "data_backed": true,
         "manual_interventions": 0,
         "parameter_match": "paper_subset",
-        "reference_comparison": "digitized_curve",
+        "reference_comparison": "visual_feature_contract",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
-        "failure_type": "partial_target_coverage",
+        "failure_type": "none",
         "artifact_stage": "exploratory",
         "formula_dependencies": [
-          "EQ_CEP_PROTOCOL"
+          "EQ_HN_MATRIX",
+          "EQ_PBC_DISPERSION",
+          "EQ_OBC_SPECTRUM"
         ]
       },
       "physics_assertions": [
         {
-          "assertion_id": "source_protocol",
-          "tier": "analytic",
-          "essential": true,
-          "status": "passed",
-          "evidence": "paper-source/supp_wrefs.tex:188-195",
-          "claim": "The source evaluates the Jacobian on steady states approaching the transition from the static side."
-        },
-        {
-          "assertion_id": "curve_rmse",
+          "assertion_id": "t_fig1_bcd_science_check",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/data/idx63_gold_audit.json",
-          "claim": "Independent A100 lambda_2 values reproduce the digitized gamma=0.3 curve."
+          "evidence": "outputs/checks/fast_formula_targets.json",
+          "claim": "PBC and OBC complex spectra across nonreciprocal regimes."
         }
       ],
       "evidence": [
-        "outputs/data/idx63_source_figure_features.json",
-        "outputs/figures/idx63_cep_gamma03_reproduction.png",
-        "FIGURE_QA.md"
+        "outputs/checks/fast_formula_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
       ],
-      "remaining_gap": "The source caption omits N and solver details; the full panel and eigenvector-angle panel are therefore not claimed pixel-identical.",
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
@@ -87,51 +88,39 @@
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
-      "reference_score_cap": 95.0,
-      "component_total": 89.0,
-      "score": 89.0,
+      "reference_score_cap": 80.0,
+      "component_total": 90.0,
+      "score": 80.0,
       "similarity_level": "numerical_feature_reproduction"
     },
     {
-      "target_id": "T_GOLD_AUDIT",
-      "label": "Frozen idx63 source/gold audit",
+      "target_id": "T_FIG2",
+      "label": "Existence and linear stability of PBC traveling-wave condensates.",
       "figure_refs": [
-        "BENCH_AUDIT"
+        "MAIN_FIG2"
       ],
-      "weight": 0.55,
+      "weight": 1.0,
       "components": {
         "feature_match": {
-          "score": 50.0,
+          "score": 47.0,
           "max_score": 50.0,
-          "reason": "All four frozen tasks and their declared robustness checks are audited."
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
         },
         "numeric_closeness": {
-          "score": 35.0,
+          "score": 33.0,
           "max_score": 35.0,
-          "reason": "Literal grid, seeds, integrators, epsilon checks, and tolerances are evaluated."
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
         },
         "paper_scope_coverage": {
-          "score": 5.0,
+          "score": 15.0,
           "max_score": 15.0,
-          "reason": "This is a complete benchmark audit, not a reproduction of every paper figure."
+          "reason": "Panel credit is derived from the panel ledger."
         }
       },
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "residual_gate",
-            "status": "reproduced"
-          },
-          {
-            "panel_id": "cep_criterion",
-            "status": "reproduced"
-          },
-          {
-            "panel_id": "eigenpair_residuals",
-            "status": "reproduced"
-          },
-          {
-            "panel_id": "ph_branches",
+            "panel_id": "full",
             "status": "reproduced"
           }
         ],
@@ -139,57 +128,36 @@
       },
       "evaluation": {
         "critical": true,
-        "paper_level_role": "method_validation",
+        "paper_level_role": "main_claim",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "parameter_match": "not_applicable",
-        "reference_comparison": "benchmark_data",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
-        "failure_type": "formula_or_method_error",
+        "failure_type": "none",
         "artifact_stage": "exploratory",
         "formula_dependencies": [
-          "EQ_OBC_MATRIX",
-          "EQ_OBC_EIGENPAIR",
-          "EQ_VACUUM_THRESHOLD",
-          "EQ_BULK_STATIC",
-          "EQ_PH_RATIO",
-          "EQ_CEP_PROTOCOL"
+          "EQ_PBC_TRAVELING_WAVE",
+          "EQ_PBC_STABILITY_MATRIX"
         ]
       },
       "physics_assertions": [
         {
-          "assertion_id": "eigenpair_residual",
-          "tier": "analytic",
-          "essential": true,
-          "status": "passed",
-          "evidence": "tests/test_nonreciprocal_cep_audit.py",
-          "claim": "Exact source pairs have residual below 2e-14 while frozen pairs do not."
-        },
-        {
-          "assertion_id": "ph_two_branches",
-          "tier": "analytic",
-          "essential": true,
-          "status": "passed",
-          "evidence": "tests/test_nonreciprocal_cep_audit.py",
-          "claim": "Both q=+pi/2 and q=-pi/2 have site-independent PH ratio."
-        },
-        {
-          "assertion_id": "cep_grid",
+          "assertion_id": "t_fig2_science_check",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/a100/idx63_a100_result.json",
-          "claim": "No full-grid point meets the frozen CEP criterion in any robustness run."
+          "evidence": "outputs/checks/fast_formula_targets.json",
+          "claim": "Existence and linear stability of PBC traveling-wave condensates."
         }
       ],
       "evidence": [
-        "outputs/data/idx63_gold_audit.json",
-        "outputs/figures/idx63_gold_audit.png",
-        "GOLD_AUDIT.md"
+        "outputs/checks/fast_formula_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
       ],
-      "remaining_gap": "Benchmark maintainers must repair the frozen answers before this case can count as benchmark-reproduced.",
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
@@ -199,59 +167,929 @@
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
-      "reference_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 95.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG3_A",
+      "label": "Vacuum/static/dynamic phase structure under open boundaries.",
+      "figure_refs": [
+        "MAIN_FIG3"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 34.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 22.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "partial"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "partial_target_coverage",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_VACUUM_THRESHOLD"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig3_a_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/phase_diagram_targets.json",
+          "claim": "Vacuum/static/dynamic phase structure under open boundaries."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/phase_diagram_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "See the target ledger; this target is deliberately partial.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 63.5,
+      "score": 63.5,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG3_BC",
+      "label": "Static boundary kink and its critical-position exponent.",
+      "figure_refs": [
+        "MAIN_FIG3"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 47.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 32.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_STATIC_REDUCTION",
+          "EQ_VACUUM_THRESHOLD"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig3_bc_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fast_formula_targets.json",
+          "claim": "Static boundary kink and its critical-position exponent."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/fast_formula_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 94.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG3_DE",
+      "label": "Selected frequency/wavevector branches and activity across the dynamic transition.",
+      "figure_refs": [
+        "MAIN_FIG3"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 46.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 32.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "d",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "e",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_PBC_DISPERSION",
+          "EQ_PH_SYMMETRY"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig3_de_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Selected frequency/wavevector branches and activity across the dynamic transition."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 93.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG4_A",
+      "label": "Coarse locations of active edge and bulk dynamical regimes.",
+      "figure_refs": [
+        "MAIN_FIG4"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 20.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "partial"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "insufficient_compute",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD"
+        ],
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "The coarse partial target has no like-for-like fine-stripe reference contract."
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig4_a_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/phase_diagram_targets.json",
+          "claim": "Coarse locations of active edge and bulk dynamical regimes."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/phase_diagram_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "See the target ledger; this target is deliberately partial.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 57.5,
+      "score": 57.5,
+      "similarity_level": "feature_not_accepted"
+    },
+    {
+      "target_id": "T_FIG4_BCDE",
+      "label": "Representative periodic, edge-localized, and multistable nonlinear trajectories.",
+      "figure_refs": [
+        "MAIN_FIG4"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 40.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 27.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 13.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "d",
+            "status": "partial"
+          },
+          {
+            "panel_id": "e",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 13.12
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "partial_target_coverage",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig4_bcde_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Representative periodic, edge-localized, and multistable nonlinear trajectories."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "See the target ledger; this target is deliberately partial.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 80.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG5",
+      "label": "Transition to extensive chaos measured by Lyapunov exponents and phase portraits.",
+      "figure_refs": [
+        "END_FIG5"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 46.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 31.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_REAL_JACOBIAN",
+          "EQ_TANGENT_BENETTIN"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig5_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Transition to extensive chaos measured by Lyapunov exponents and phase portraits."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 92.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_FIG6",
+      "label": "Restored particle-hole symmetry in periodic and chaotic trajectories.",
+      "figure_refs": [
+        "END_FIG6"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 30.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_PH_SYMMETRY"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_fig6_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Restored particle-hole symmetry in periodic and chaotic trajectories."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
       "component_total": 90.0,
-      "score": 90.0,
-      "similarity_level": "complete_reproduction"
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_SUPP_S1",
+      "label": "Critical Jacobian eigenvalue and eigenvector coalescence angle.",
+      "figure_refs": [
+        "SUPP_FIG_S1"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 46.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 32.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_subset",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_REAL_JACOBIAN"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_supp_s1_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/cep_targets.json",
+          "claim": "Critical Jacobian eigenvalue and eigenvector coalescence angle."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/cep_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 80.0,
+      "component_total": 93.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_SUPP_S2A",
+      "label": "Spatial domains and bulk statistics of a chaotic condensate trajectory.",
+      "figure_refs": [
+        "SUPP_FIG_S2"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 43.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 28.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_supp_s2a_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Spatial domains and bulk statistics of a chaotic condensate trajectory."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 86.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T_SUPP_S3",
+      "label": "Representative edge-localized periodic and chaotic behavior.",
+      "figure_refs": [
+        "SUPP_FIG_S3"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 43.0,
+          "max_score": 50.0,
+          "reason": "Independent numerics reproduce the declared scientific features; partial targets retain explicit gaps."
+        },
+        "numeric_closeness": {
+          "score": 28.0,
+          "max_score": 35.0,
+          "reason": "Analytic identities, invariants, or trajectory-derived observables are checked before visual comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Panel credit is derived from the panel ledger."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "d",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "none",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t_supp_s3_science_check",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/dynamic_targets.json",
+          "claim": "Representative edge-localized periodic and chaotic behavior."
+        }
+      ],
+      "evidence": [
+        "outputs/checks/dynamic_targets.json",
+        "outputs/checks/pixel_similarity_scientific_regions.json"
+      ],
+      "remaining_gap": "No known scientific feature gap at the executed resolution; independent review is still pending.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 86.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction"
     }
   ],
-  "overall_score": 89.55,
+  "unscored_targets": [
+    {
+      "target_id": "T_SUPP_S2B",
+      "label": "Supplemental Fig. S2(b) 300-trajectory ensemble",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "parameter_match": "paper_exact",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "failure_type": "insufficient_compute",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "EQ_MEAN_FIELD",
+          "EQ_TANGENT_BENETTIN"
+        ],
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No generated paper-scale ensemble exists yet."
+      }
+    }
+  ],
+  "overall_score": 76.75,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 2,
-    "critical_items": 2,
+    "scored_items": 12,
+    "critical_items": 12,
     "artifact_pass_rate": 1.0,
     "data_backed_rate": 1.0,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "partial_target_coverage": 1,
-      "formula_or_method_error": 1
+      "none": 9,
+      "partial_target_coverage": 2,
+      "insufficient_compute": 1
     },
     "parameter_match_counts": {
-      "paper_subset": 1,
-      "not_applicable": 1
+      "paper_subset": 2,
+      "paper_exact": 10
     },
     "reference_comparison_counts": {
-      "digitized_curve": 1,
-      "benchmark_data": 1
+      "visual_feature_contract": 12
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 2
+      "independent_numerics": 12
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 2
+      "physics_reproduction": 12
     },
     "formula_gate_counts": {
-      "verified": 2
+      "verified": 12
     },
     "paper_level_role_counts": {
-      "main_claim": 1,
-      "method_validation": 1
+      "main_claim": 9,
+      "supporting": 3
     },
     "physics_status_counts": {
-      "passed": 2
+      "passed": 12
     },
     "physics_assertion_status_counts": {
-      "passed": 5
+      "passed": 12
     },
     "essential_physics_failures": [],
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
     "exploratory_target_ids": [
-      "T_SOURCE_CEP_GAMMA03",
-      "T_GOLD_AUDIT"
+      "T_FIG1_BCD",
+      "T_FIG2",
+      "T_FIG3_A",
+      "T_FIG3_BC",
+      "T_FIG3_DE",
+      "T_FIG4_A",
+      "T_FIG4_BCDE",
+      "T_FIG5",
+      "T_FIG6",
+      "T_SUPP_S1",
+      "T_SUPP_S2A",
+      "T_SUPP_S3"
     ]
   }
 }

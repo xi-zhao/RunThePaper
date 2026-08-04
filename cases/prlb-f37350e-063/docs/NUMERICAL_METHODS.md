@@ -1,23 +1,32 @@
 # Numerical methods
 
-## Exact and analytic checks
+## Provenance boundary
 
-NumPy constructs the complex tridiagonal matrix, source eigenpairs, frozen pairs, and relative residuals. Vacuum thresholds and bulk static branches are evaluated from closed forms and checked against direct matrix/substitution tests.
+Numerical runners read only independent code and declared parameters. They do not read `raw/`, source figures, digitized curves, or author numerical source code. Generated NPZ arrays are frozen and hashed before the RenderContract stage reads source figures.
 
-## Frozen Task 4
+## Linear and PBC calculations
 
-- `N=40`, `J=Gamma=1`, `theta=pi`, `gamma=0.3`
-- `kappa=2.36...2.41` in steps of `1e-5` (5,001 trajectories)
-- `dt=0.02`, `T=4000`, 200,000 time steps
-- MT19937 seed 1, tested with NumPy Generator and legacy streams
-- RK4 primary integrator, full Heun rerun
-- static residual gate `<1e-8`
-- centered finite-difference Jacobian with `epsilon=1e-7` and `epsilon/2`
-- SVD nullity tolerance `5e-7`
-- CEP criterion `|Re lambda_2|<1e-5`, nullities `(1,2)`
+- NumPy complex eigensolvers diagonalize independently constructed OBC/PBC matrices.
+- PBC traveling-wave stability is obtained by diagonalizing the displayed 2x2 matrix on declared momentum grids.
+- The matrix result, not the paper's inconsistent printed closed form, controls the stability map.
 
-Trajectories were vectorized over the kappa grid on an A100. Jacobians are computed only for states passing the residual gate, preserving the frozen rule order.
+## Static OBC calculations
 
-## Source-figure comparison
+- At `theta=pi`, a real gauge-fixed boundary equation provides residual and Jacobian checks.
+- Stable kink profiles are selected by long-time integration of the full complex Eq. (2) from seed 7. Direct root finding alone is not a physical selector because exact but unstable roots exist in the non-normal boundary problem.
+- CEP curves use high-kappa attractor selection, nonlinear continuation, and the exact `2N x 2N` real Jacobian.
 
-The direct PDF was rasterized losslessly at 300 dpi. The `gamma=0.3` blue curve was extracted in calibrated axes and linearly compared with the independent A100 curve. Source pixels never replace generated physics data.
+## Dynamic calculations
+
+- Primary integrator: fixed-step RK4 with `dt=0.05`.
+- Seeds, burn times, observation windows, and sampling intervals are declared in the generated checks because the paper does not provide them.
+- Lyapunov exponents use the exact tangent equation advanced with the state and periodic QR orthonormalization.
+- Particle-hole delays are evaluated with fractional-sample interpolation; no source curve is fitted.
+
+## Phase maps
+
+The local phase-map run uses `N=100`, burn time `3000`, observation time `100`, `dt=0.05`, and seed `101`. It is a coarse basin scan. It is not promoted to the paper's unresolved fine multistable structure.
+
+## Rendering
+
+PNG/PDF/SVG figures are rendered only from frozen NPZ arrays. The separate source-reading script crops predeclared scientific regions and computes SSIM, grayscale MAE, and pixel similarity. It cannot alter parameters or arrays.

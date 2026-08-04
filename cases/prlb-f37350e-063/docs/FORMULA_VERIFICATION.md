@@ -1,12 +1,9 @@
 # Formula verification
 
-All six equation cards are open for numeric use.
+All eleven equation cards are open for numerical use after direct-source tracing and an independent symbolic or numerical check.
 
-- Source identity and definitions were read from the direct TeX bundle.
-- Exact eigenpairs satisfy relative residual below `2e-14` for both `gamma=0.3` and `gamma=1.7` test regimes.
-- Frozen Task 1 pairings have minimum residual `0.0575` and `0.299`, respectively, despite matching the eigenvalue set up to relabeling.
-- The finite-size threshold agrees with direct eigenvalue stability.
-- Both PH-compatible static branches satisfy the substituted equations.
-- The full frozen CEP grid and its robustness variants were executed on A100.
+Key regressions include matrix-versus-dispersion agreement, exact OBC eigenpair residuals, traveling-wave substitution, direct 2x2 stability eigenvalues, finite-difference Jacobian comparison, static-complex lift, tangent-action comparison, particle-hole equivariance, and finite-size threshold crossing.
 
-Machine-readable status is generated at `outputs/checks/formula_verification.json`.
+An open formula gate means the implemented relation is traceable and checked. It does not mean every caption value or printed derived expression is correct: the factor-four stability typo and the S1 critical-value inconsistency are explicitly preserved as paper findings.
+
+Machine result: `outputs/checks/formula_verification.json`.

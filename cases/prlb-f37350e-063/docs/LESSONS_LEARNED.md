@@ -1,19 +1,26 @@
 # Lessons learned
 
-1. An eigenvalue set match is weaker than an eigenpair check. Residuals must preserve the source's mode labeling and site-dependent phase.
-2. Symmetry compatibility is not the same as uniqueness. Both static momenta must be substituted before declaring PH selection.
-3. A protocol's gates are ordered business rules. A state that fails the residual gate cannot be promoted to a CEP by later Jacobian calculations.
-4. Paper methods and benchmark extensions need separate provenance objects. Otherwise an invalid benchmark extension can be mistaken for a paper failure.
-5. Digitized source comparisons are valuable when paired with independent generated data and a narrow, explicit panel scope.
+1. A strongly non-normal nonlinear boundary problem may have exact but unstable roots. Static-state reproduction needs an attractor-selection rule before root refinement.
+2. Displayed matrices should be diagonalized independently even when a closed form is printed. Here that exposed a missing factor of four.
+3. Caption critical values are hypotheses, not ground truth. Independent Jacobian-zero searches found material offsets for two S1 curves.
+4. Particle-hole symmetry can require a fractional time shift and a global phase. Integer-sample comparison falsely makes a correct trajectory look inaccurate.
+5. Lyapunov calculations should integrate state and tangent equations with the same RK stages; a post-step Jacobian approximation can shift exponents.
+6. Broad phase features and fine multistable stripes are different targets. A coarse scan must not be promoted to paper-exact coverage.
+7. Source figures are useful after scientific data freeze for RenderContract work, but must remain outside numerical parameter selection and array generation.
 
 ## New Failure Modes
 
-- `eigenvalue_set_without_pairing`: a spectrum can match while every displayed vector is paired to the wrong eigenvalue or misses a site-dependent phase.
-- `symmetry_compatibility_as_uniqueness`: satisfying a symmetry relation does not establish that no other branch satisfies it.
-- `downstream_metric_before_acceptance_gate`: computing a Jacobian metric on a trajectory that failed the static-state gate changes the protocol.
+- `exact_root_not_physical_attractor`
+- `printed_closed_form_disagrees_with_displayed_matrix`
+- `caption_critical_value_not_jacobian_zero`
+- `integer_delay_breaks_continuous_symmetry_check`
+- `coarse_basin_scan_promoted_to_fine_phase_map`
 
 ## Reusable Checks Or Tools
 
-- `eigenpair_residuals` compares `(A v_m-lambda_m v_m)` mode by mode instead of comparing unordered spectra only.
-- `run_frozen_cep_grid` vectorizes a long independent-trajectory sweep while preserving residual-before-Jacobian ordering.
-- The source-curve digitizer stores calibrated pixel axes and source-reference provenance separately from generated numerical data.
+- direct matrix-versus-closed-form eigenvalue comparison;
+- scalar-versus-vectorized RHS comparison;
+- exact Jacobian versus finite differences;
+- shared-stage state/tangent RK4 regression;
+- source-free isolated run attestation;
+- post-freeze scientific-region pixel comparison.

@@ -1,24 +1,25 @@
-# Source audit
+# Public source and provenance boundary
 
-## Identity gate
+## Paper identity
 
-- arXiv: `2502.05267v3`
-- publication: *Physical Review Letters* **135**, 123401 (2025)
-- DOI: `10.1103/gphr-d1bc`
-- direct source bundle: `paper-source/main_wrefs.tex`, `paper-source/supp_wrefs.tex`, and rendered PDF figures
+- Preprint: [arXiv:2502.05267v3](https://arxiv.org/abs/2502.05267v3)
+- Publication: *Physical Review Letters* **135**, 123401 (2025)
+- DOI: [10.1103/gphr-d1bc](https://doi.org/10.1103/gphr-d1bc)
 
-Status: `verified_direct_prl`.
+The paper text, equations, captions, and supplement were used to reconstruct the
+scientific model and enumerate every numerical panel. The numerical
+implementation was written independently.
 
-## Formula gate
+## Numerical boundary
 
-The source explicitly provides:
+- Author numerical code and author-produced numerical datasets were not used.
+- Paper pixels, extracted curves, and comparison images were not numerical
+  inputs, initial states, fitted physical parameters, or generated arrays.
+- Numerical arrays were generated and frozen before any paper image was opened
+  for rendering comparison.
+- Limited paper excerpts appear only inside the labeled comparison boards. They
+  are used to diagnose scientific-region rendering and do not establish
+  author-data-level equivalence.
 
-- the Hatano-Nelson matrix and `J_+`, `J_-`, and `Delta` definitions;
-- the open-boundary eigenvector with site-dependent factor `r^j exp(i delta j/2)`;
-- the two finite-size vacuum thresholds on the two sides of `gamma=J`;
-- periodic plane-wave solutions and the particle-hole transformation;
-- the CEP diagnostic as a Jacobian evaluated on a steady-state solution approached from the static phase.
-
-## Important protocol boundary
-
-Frozen Task 4 is not a transcription of the source method. It defines independent finite-time trajectories, a residual gate, finite-difference Jacobians, and fixed tolerances. That extension can be audited, but failure of that extension does not contradict the paper's steady-state-continuation CEP evidence.
+This public package does not redistribute the paper PDF, source archive,
+standalone paper figures, digitized curves, or internal process records.
