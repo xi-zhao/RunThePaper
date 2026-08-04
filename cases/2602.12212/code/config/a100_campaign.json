@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "paper_id": "2602.12212",
+  "backend": "cupy",
+  "require_accelerator_name_contains": "A100",
+  "require_idle_gpu_before_start": true,
+  "boundary": "periodic",
+  "shell_mode": "centred",
+  "shell_width": "round(sqrt(2**L))",
+  "threshold_grid": {
+    "start": 0.0,
+    "stop": 0.17,
+    "points": 69
+  },
+  "canary": {
+    "lengths": [6],
+    "groups": ["main"]
+  },
+  "production": {
+    "lengths": [9, 11, 12],
+    "groups_by_length": {
+      "9": ["main", "supplemental"],
+      "11": ["main", "supplemental"],
+      "12": ["main", "supplemental", "integrable"]
+    }
+  },
+  "checkpoint_contract": "one atomic CSV and JSON check per (group,L)",
+  "stop_on_formula_invariant_error": true,
+  "max_initial_window_minutes": 60
+}

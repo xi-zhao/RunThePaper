@@ -1,1 +1,0 @@
-"""Public numerical implementation."""

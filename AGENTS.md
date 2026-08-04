@@ -40,6 +40,23 @@ materials.
 
 ## Core Case Rule
 
+A public case is always a reproduction of one identifiable paper. It must have
+at least one verifiable paper identity: an arXiv/preprint record or a formal
+publication with a DOI. Benchmark tasks, synthetic exercises, source-contract
+audits, internal evaluations, and method demonstrations are not public cases by
+themselves; keep them in PRAgent or attach them as supporting evidence inside
+the paper case they validate.
+
+A partial, failed, or compute-blocked attempt may remain public when it is still
+scoped to an identifiable paper and states its boundary honestly. Missing paper
+identity is not a partial-reproduction status; it is a catalog admission
+failure.
+
+The package must also contain a scientific implementation that computes or
+reanalyzes a paper claim. An artifact hash checker, frozen output bundle, note,
+or comparison image alone is evidence about a reproduction, not the
+reproduction implementation itself.
+
 Each public case should make five things easy to inspect:
 
 1. what the paper claims;

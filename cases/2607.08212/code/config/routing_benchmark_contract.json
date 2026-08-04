@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.08212",
+  "status": "proxy_approved",
+  "approval": {
+    "classification": "proxy_model",
+    "approved_by": "user",
+    "approved_at": "2026-07-10",
+    "source": "explicit_conversation_approval",
+    "scope": "all locally feasible proxy reproductions for the published benchmark families",
+    "expanded_by_user_at": "2026-07-10",
+    "expanded_instruction": "reproduce every feasible target while preserving exact-vs-proxy boundaries"
+  },
+  "paper_table_i": {
+    "t_1q_us": 52.0,
+    "t_2q_us": 0.36,
+    "t_multiq_us": 0.576,
+    "t_transfer_us": 15.0,
+    "f_1q": 0.9997,
+    "f_2q": 0.995,
+    "f_transfer": 0.999,
+    "f_idle": 0.9975,
+    "f_native_3": 0.981557,
+    "f_native_4": 0.968852,
+    "t2_us": 1500000.0,
+    "movement_duration_formula": "200*sqrt(distance_um/110) us",
+    "native_cutoff": 4,
+    "native_radius_um": 8.0
+  },
+  "missing_before_exact_fig4_to_fig8_run": [
+    "benchmark generator definitions for all eight families",
+    "the six clauses and literal polarities of the Fig. 3 instance",
+    "qubit-count grid used in Figs. 4, 5, and 8",
+    "partition count for each qubit count",
+    "storage and entanglement-zone coordinates",
+    "movement-throughput and shared-zone capacity values",
+    "random seed set and aggregation rule",
+    "ZX extraction version and options",
+    "exact per-block ordering used for the reported ZAP depth"
+  ],
+  "safe_next_scope": {
+    "classification": "proxy_model",
+    "allowed": [
+      "one explicitly declared synthetic 3-SAT family",
+      "one pairwise QFT negative control",
+      "one GHZ-chain negative control",
+      "Table-I sensitivity under a declared toy zoned geometry"
+    ],
+    "forbidden_claim": "Do not label synthetic routed curves as an exact reproduction of Figs. 4-8."
+  },
+  "generated_run": {
+    "families": [
+      "synthetic_3sat",
+      "qaoa_3local",
+      "p_spin_ising",
+      "hypergraph_4local",
+      "qram_oracle",
+      "multiplier_oracle",
+      "qft_pairs",
+      "ghz_chain"
+    ],
+    "qubit_counts": [6, 10, 20, 30],
+    "seeds": [7, 19, 43, 71, 101],
+    "aggregation": "arithmetic mean over five declared seeds",
+    "synthetic_3sat_clauses_per_qubit": 2,
+    "partition_capacity_atoms": 5,
+    "duration_scaling_families": ["synthetic_3sat", "p_spin_ising", "qram_oracle"],
+    "duration_scaling_qubit_counts": [20, 40, 60, 80, 100],
+    "duration_scaling_seed": 19,
+    "compile_time_repetitions": 5,
+    "sensitivity_families": ["synthetic_3sat", "p_spin_ising", "qram_oracle"],
+    "sensitivity_qubits": 30,
+    "sensitivity_seed": 19,
+    "sensitivity_p3_grid": {"min": 0.0, "max": 0.2, "points": 41},
+    "sensitivity_p4_grid": {"min": 0.0, "max": 0.2, "points": 41}
+  },
+  "toy_zoned_architecture": {
+    "classification": "proxy_model",
+    "storage_partition_spacing_um": 20.0,
+    "storage_origin_distance_um": 25.0,
+    "storage_slot_spacing_um": 5.0,
+    "shared_zone_coordinate_um": [0.0, 0.0],
+    "shared_zone_capacity_atoms": 4,
+    "concurrent_entangling_operations": 1,
+    "movement_throughput_atoms_per_layer": 4,
+    "residency_policy": "return_to_storage_after_each_entangling_operation",
+    "single_qubit_policy": "execute_in_storage_without_motion",
+    "movement_time_policy": "support atoms move concurrently; use the slowest atom in each in/out layer",
+    "transfer_time_policy": "activation and deactivation are parallel layers but fidelity is counted per atom"
+  },
+  "acceptance_contract": {
+    "deterministic_replay": true,
+    "qft_and_ghz_paths_must_match_exactly": true,
+    "synthetic_3sat_native_mean_log_fidelity_must_improve_at_every_size": true,
+    "synthetic_3sat_native_mean_moves_must_not_increase": true,
+    "synthetic_3sat_native_mean_stages_must_not_increase": true,
+    "all_six_many_body_families_must_improve_proxy_log_fidelity": true,
+    "duration_scaling_native_must_be_shorter": true,
+    "three_sat_sensitivity_must_be_p4_independent": true,
+    "parameter_match": "proxy_model",
+    "reference_comparison": "visual_feature_contract",
+    "generated_data_provenance": "independent_numerics"
+  }
+}

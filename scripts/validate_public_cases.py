@@ -9,6 +9,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
+CASE_CONTRACT = "paper_reproduction_only_v1"
 TEXT_SUFFIXES = {
     ".csv",
     ".ini",
@@ -54,8 +55,15 @@ DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 def load_catalog() -> list[dict[str, Any]]:
     payload = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     cases = payload.get("cases")
-    if payload.get("schema_version") != 2 or not isinstance(cases, list):
-        raise ValueError("cases/catalog.json does not match schema version 2")
+    if (
+        payload.get("schema_version") != 2
+        or payload.get("case_contract") != CASE_CONTRACT
+        or not isinstance(cases, list)
+    ):
+        raise ValueError(
+            "cases/catalog.json does not match schema version 2 and the "
+            f"{CASE_CONTRACT} contract"
+        )
     return cases
 
 
@@ -64,6 +72,16 @@ def text_files(case_dir: Path) -> list[Path]:
         path
         for path in case_dir.rglob("*")
         if path.is_file() and path.suffix.lower() in TEXT_SUFFIXES
+    ]
+
+
+def scientific_python_files(case_dir: Path) -> list[Path]:
+    """Return implementations, excluding package markers and artifact-only checks."""
+
+    return [
+        path
+        for path in (case_dir / "code").rglob("*.py")
+        if path.name not in {"__init__.py", "verify_public_artifacts.py"}
     ]
 
 
@@ -85,6 +103,29 @@ def validate_markdown_links(path: Path, errors: list[str]) -> None:
 def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
     paper_id = str(case.get("paper_id", "<missing>"))
     preprint = case.get("preprint")
+    publication = case.get("publication")
+    preprint_identified = (
+        isinstance(preprint, dict)
+        and preprint.get("status") != "not_recorded"
+        and all(
+            isinstance(preprint.get(field), str) and preprint[field].strip()
+            for field in ("identifier", "title", "url")
+        )
+    )
+    publication_identified = (
+        isinstance(publication, dict)
+        and publication.get("status") == "published"
+        and all(
+            isinstance(publication.get(field), str) and publication[field].strip()
+            for field in ("title", "venue", "citation", "doi", "doi_url", "locator")
+        )
+    )
+    if not (preprint_identified or publication_identified):
+        errors.append(
+            f"{paper_id} is not an identifiable paper reproduction: "
+            "both preprint and formal publication identities are unverified"
+        )
+
     if not isinstance(preprint, dict):
         errors.append(f"{paper_id} has no preprint identity")
     elif preprint.get("status") == "not_recorded":
@@ -96,7 +137,6 @@ def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
             if not isinstance(preprint.get(field), str) or not preprint[field].strip():
                 errors.append(f"{paper_id} has no preprint.{field}")
 
-    publication = case.get("publication")
     if not isinstance(publication, dict):
         errors.append(f"{paper_id} has no formal publication status")
         return
@@ -149,7 +189,7 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
             errors.append(f"missing additional resource for {paper_id}: {resource['path']}")
 
     required_groups = {
-        "runnable Python": list((case_dir / "code").rglob("*.py")),
+        "scientific Python implementation": scientific_python_files(case_dir),
         "generated data": [p for p in (case_dir / "outputs" / "data").rglob("*") if p.is_file()],
         "generated figure": [p for p in (case_dir / "outputs" / "figures").rglob("*") if p.is_file()],
         "machine-readable check": [p for p in (case_dir / "outputs" / "checks").rglob("*.json") if p.is_file()],

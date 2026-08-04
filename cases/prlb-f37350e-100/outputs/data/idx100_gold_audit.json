@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "paper_id": "prlb-f37350e-100",
+  "source_contract": {
+    "status": "source_verified",
+    "title": "Hydrodynamics of Cooperation and Self-Interest in a Two-Population Occupation Model",
+    "authors": [
+      "Jérôme Garnier-Brun",
+      "Ruben Zakine",
+      "Michael Benzaquen"
+    ],
+    "publication": "Physical Review Letters 135, 107402 (2025)",
+    "doi": "10.1103/3bj7-jc92",
+    "arxiv": "2412.14996v2",
+    "direct_equations": {
+      "linear_dispersion": "source publication material/SM.tex:108-119",
+      "well_mixed_chemical_potential": "source publication material/SM.tex:143-149",
+      "gradient_mapping": "source publication material/SM.tex:151-192",
+      "paper_figure": "source publication material/spinodals.pdf (PRL Fig. 1)"
+    },
+    "precursor": {
+      "title": "Socioeconomic agents as active matter in nonequilibrium Sakoda-Schelling models",
+      "publication": "Physical Review E 109, 044310 (2024)",
+      "arxiv": "2307.14270v2",
+      "role": "context only; it does not contain the alpha-dependent frozen model"
+    }
+  },
+  "parameters": {
+    "dimension": 2,
+    "sigma": 10.0,
+    "length": 1000.0,
+    "alpha": 0.6,
+    "rho_0": 0.37
+  },
+  "task_1": {
+    "status": "partially_valid",
+    "exact_dispersion": "-k^2[T-rho(1-rho)((1+alpha)u' q + alpha rho u'' q^2)]",
+    "valid_sector": "rho_0<1/2, where a positive attained discrete maximum exists",
+    "global_issue": "For rho_0>1/2 every finite-mode contribution is negative and tends to 0 from below; the displayed max does not exist. A nonnegative critical temperature uses sup=0 (or has infimum 0 if T is required strictly positive)."
+  },
+  "task_2": {
+    "status": "invalid",
+    "correct": {
+      "critical_temperature": 0.0944939203368691,
+      "k_squared": 0.001342266198548153,
+      "shell": 34,
+      "representative_mode": [
+        -5,
+        -3
+      ],
+      "degeneracy": 8
+    },
+    "proof_carrying_search": {
+      "q_vertex": 0.9369369369369372,
+      "continuum_shell": 32.99995598798843,
+      "maximum_shell_searched": 36,
+      "reason": "D(q) is concave and q decreases with shell m; the guaranteed representable axis shell ceil(sqrt(m_cont))^2 brackets the optimum."
+    },
+    "frozen": {
+      "critical_temperature": 0.052140879463,
+      "k_squared": 0.001579136704,
+      "implied_shell": 40,
+      "actual_contribution_at_implied_shell": 0.09447649386731938
+    },
+    "reason": "Literal execution of the displayed frozen formula gives shell 34 and Tc=0.0944939203368691; the frozen code block and reported output are mutually inconsistent."
+  },
+  "task_3": {
+    "status": "invalid",
+    "correct_threshold": 0.36363636363636365,
+    "correct_criterion": "finite k iff rho_0>(1+alpha)/(2+4alpha)",
+    "frozen_threshold": 0.4210526315789474,
+    "frozen_criterion": "rho_0>(1+alpha)/(2+3alpha)",
+    "record_classification": {
+      "correct": true,
+      "frozen": false
+    },
+    "reason": "Solving q_vertex<1 gives 2+4alpha. At alpha=0.6, rho=0.37 the correct criterion predicts the finite mode found in Task 2, while the frozen criterion predicts no finite mode."
+  },
+  "task_4": {
+    "status": "partially_invalid",
+    "correct_rho_m": 0.36363636363636365,
+    "frozen_rho_m": 0.4210526315789474,
+    "denominator_at_correct_rho_m": 0.0,
+    "denominator_at_frozen_rho_m": -0.6743417843388199,
+    "correct_and_frozen_xi": 0.9090909090909091,
+    "source_general_rho_m": "rho_star/[1+2 alpha (gamma-1)/(alpha+1)]",
+    "reason": "The PRL supplement and direct residue algebra give rho_m=(1+alpha)/(2+4alpha); the exponent xi=(1+5alpha)/(2+4alpha) is valid."
+  },
+  "task_5": {
+    "status": "invalid",
+    "a0_zero_temperature": 0.09406619795092346,
+    "correct_coefficients": {
+      "A0": 0.0,
+      "A2": -0.6788282326355266,
+      "A4": 286.07761232497313,
+      "A4_formula": "-rho(1-rho)sigma^4[(1+alpha)u'+4 alpha rho u'']/8"
+    },
+    "frozen_A4": -286.07761232497313,
+    "correct_k_selected": 0.039773369280899445,
+    "frozen_factor_only_k_after_repairing_A4_sign": 0.03444474819135853,
+    "correct_k_formula": "sqrt(-2 A2/(3 A4))",
+    "frozen_k_formula": "sqrt(-A2/(2 A4))",
+    "growth_at_correct_k": 6.484896298800416e-07,
+    "reason": "Expanding T-D(k) produces a minus sign in A4. Maximizing the conserved growth -A2 s^2-A4 s^3 gives s=-2A2/(3A4); the frozen solution derives this stationary point and then prints a different answer."
+  },
+  "verdict": {
+    "status": "benchmark_gold_invalid",
+    "source_gate": "passed",
+    "formula_gate": "failed",
+    "fully_valid_tasks": [],
+    "partially_valid_tasks": [
+      1,
+      4
+    ],
+    "invalid_tasks": [
+      2,
+      3,
+      5
+    ],
+    "a100_used": false,
+    "a100_reason": "All decisive checks are closed-form or a 36-shell finite enumeration; GPU execution would add no evidential value."
+  }
+}
