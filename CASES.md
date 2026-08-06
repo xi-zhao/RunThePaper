@@ -70,6 +70,8 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2607.28795`](cases/2607.28795/README.md) | Mitten-code algebraic parameters and canonical logical weights. | Historical scientific artifact (4 numerical targets; 2 partially_reproduced, 2 reproduced) | 78.75 |
 | [`prlb-f37350e-100`](cases/prlb-f37350e-100/README.md) | Homogeneous-state spinodal temperature versus density for six altruistic fractions. | Historical scientific artifact (2 numerical targets; 1 failed, 1 reproduced) | 0.00 |
 | [`prlb-f37350e-063`](cases/prlb-f37350e-063/README.md) | Nonreciprocal condensate phase transitions, nonlinear edge dynamics, and critical exceptional points | Formula-driven numerical feature reproduction; 4 items deferred | 76.75 |
+| [`2412.14271`](cases/2412.14271/README.md) | Two-photon Dicke model, dissipative phase transitions, quantum trajectories, and nonlinear stability | Feature-level numerical reproduction with a documented equation-level discrepancy | 46.71 |
+| [`physics-0206018`](cases/physics-0206018/README.md) | Boundary-integral scattering, resonances, and near- and far-field reconstruction in dielectric microcavities | Reduced-scale reproduction of all numerical figures | 50.49 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.
