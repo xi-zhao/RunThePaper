@@ -1,0 +1,343 @@
+{
+  "schema_version": 3,
+  "paper_id": "physics-0206018",
+  "score_model": "scientific_foreground_pixel_v1",
+  "primary_metric": {
+    "name": "foreground_pixel_similarity_0_100",
+    "definition": "100 * (1 - foreground-union grayscale MAE / 255) after canvas registration",
+    "comparison_role": "post_run_evidence_only_after_science_gate",
+    "source_pixels_used_as_numerical_inputs": false,
+    "raw_comparable_target_mean": 58.15689850122357,
+    "source": "outputs/checks/render_similarity.json"
+  },
+  "targets": [
+    {
+      "target_id": "T001",
+      "label": "Fig. 5 scattering cross section",
+      "figure_refs": [
+        "Fig. 5"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 19.18,
+          "reason": "50% allocation of the declared foreground-pixel score after the scattering and optical-theorem checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 13.42,
+          "reason": "35% allocation; resonance locations and peak heights retain reduced-mesh drift.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 5.75,
+          "reason": "15% allocation; the full plotted kR interval is generated, at 73 independently solved points.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "all",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig5_render_contract.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "not_paper_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "BEM001",
+          "BEM002",
+          "BEM003",
+          "BEM004"
+        ],
+        "formula_gate": "verified",
+        "pixel_status": "scored"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig5_linear_residual",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig5_science.json#linear_residual_max",
+          "claim": "Every driven boundary solve has relative residual below 7.9e-15."
+        },
+        {
+          "assertion_id": "fig5_optical_theorem",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig5_science.json#optical_theorem_relative_error_median",
+          "claim": "Angular integration and the optical theorem agree to median relative error 0.0734 at feature scale."
+        }
+      ],
+      "evidence": [
+        "outputs/data/bem_reproduction.npz",
+        "outputs/figures/fig5_render_contract.png",
+        "outputs/checks/fig5_science.json",
+        "outputs/checks/render_similarity.json#fig5"
+      ],
+      "remaining_gap": "The publication's exact rounding and nonuniform 1600-element map are unavailable; foreground score is 38.35/100.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 38.35,
+      "score": 38.35,
+      "similarity_level": "feature_not_accepted"
+    },
+    {
+      "target_id": "T002",
+      "label": "Fig. 6 resonant near field",
+      "figure_refs": [
+        "Fig. 6"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 46.5,
+          "reason": "50% allocation of the foreground-pixel score after singular-value convergence and field-localization checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 32.55,
+          "reason": "35% allocation; the two-cavity intensity structure is close, with local texture drift.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 13.95,
+          "reason": "15% allocation; the complete near-field panel is reconstructed from one frozen boundary null vector.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "all",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig6_render_contract.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "not_paper_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "BEM001",
+          "BEM002",
+          "BEM003",
+          "BEM005"
+        ],
+        "formula_gate": "verified",
+        "pixel_status": "scored"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig6_singular_convergence",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig6_science.json#smallest_singular_by_mesh",
+          "claim": "The smallest singular value at the published complex resonance decreases monotonically across four meshes."
+        },
+        {
+          "assertion_id": "fig6_localization",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig6_science.json#inside_to_outside_mean_intensity_ratio",
+          "claim": "Mean field intensity inside the two cavities is 2.80 times the exterior mean."
+        }
+      ],
+      "evidence": [
+        "outputs/data/bem_reproduction.npz",
+        "outputs/figures/fig6_render_contract.png",
+        "outputs/checks/fig6_science.json",
+        "outputs/checks/render_similarity.json#fig6"
+      ],
+      "remaining_gap": "The 93.00 raw foreground score is capped at 70 because the mesh and rounding are not paper-exact.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 93.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction"
+    },
+    {
+      "target_id": "T003",
+      "label": "Fig. 7 far-field intensity",
+      "figure_refs": [
+        "Fig. 7"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 21.56,
+          "reason": "50% allocation of the foreground-pixel score after inversion-symmetry and lobe-direction checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 15.09,
+          "reason": "35% allocation; the narrow-peak sequence is present but small angular shifts are strongly penalized.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 6.47,
+          "reason": "15% allocation; the full 0-360 degree far-field curve is generated from the Fig. 6 boundary state.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "all",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig7_render_contract.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "not_paper_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "BEM001",
+          "BEM002",
+          "BEM003",
+          "BEM004",
+          "BEM005"
+        ],
+        "formula_gate": "verified",
+        "pixel_status": "scored"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig7_shared_state",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig7_science.json#same_frozen_boundary_state_as_T002",
+          "claim": "The far field is derived from the same independently frozen boundary state as Fig. 6."
+        },
+        {
+          "assertion_id": "fig7_inversion",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig7_science.json#pi_rotation_max_absolute_error",
+          "claim": "The computed far field has pi-rotation maximum error below 1.8e-9."
+        }
+      ],
+      "evidence": [
+        "outputs/data/bem_reproduction.npz",
+        "outputs/figures/fig7_render_contract.png",
+        "outputs/checks/fig7_science.json",
+        "outputs/checks/render_similarity.json#fig7"
+      ],
+      "remaining_gap": "Narrow angular peak shifts leave the foreground score at 43.11/100.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 43.12,
+      "score": 43.12,
+      "similarity_level": "feature_not_accepted"
+    }
+  ],
+  "overall_score": 50.49,
+  "similarity_level": "feature_not_accepted",
+  "evaluation_summary": {
+    "scored_items": 3,
+    "critical_items": 2,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "not_paper_parameters": 3
+    },
+    "parameter_match_counts": {
+      "reduced_scale": 3
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 3
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 3
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 3
+    },
+    "formula_gate_counts": {
+      "verified": 3
+    },
+    "paper_level_role_counts": {
+      "main_claim": 2,
+      "supporting": 1
+    },
+    "physics_status_counts": {
+      "passed": 3
+    },
+    "physics_assertion_status_counts": {
+      "passed": 6
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ]
+  },
+  "status": "passed"
+}

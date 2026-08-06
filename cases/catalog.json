@@ -4921,6 +4921,155 @@
         "render_phase_diagram_targets.py"
       ],
       "full_run_note": "The implemented local campaign takes a few minutes and peaks near 2.2 GiB during the dynamic stage. It recomputes the published independent arrays and figures, but it does not close the four explicitly deferred paper items."
+    },
+    {
+      "paper_id": "physics-0206018",
+      "title": "Boundary element method for resonances in dielectric microcavities",
+      "topic": "Boundary-integral scattering, resonances, and near- and far-field reconstruction in dielectric microcavities",
+      "preprint": {
+        "identifier": "arXiv:physics/0206018",
+        "title": "Boundary element method for resonances in dielectric microcavities",
+        "url": "https://arxiv.org/abs/physics/0206018"
+      },
+      "publication": {
+        "status": "published",
+        "title": "Boundary element method for resonances in dielectric microcavities",
+        "venue": "Journal of Optics A: Pure and Applied Optics",
+        "citation": "Journal of Optics A: Pure and Applied Optics 5, 53–60 (2003)",
+        "doi": "10.1088/1464-4258/5/1/308",
+        "doi_url": "https://doi.org/10.1088/1464-4258/5/1/308",
+        "locator": "53–60"
+      },
+      "status": "Reduced-scale reproduction of all numerical figures",
+      "similarity_level": "feature_not_accepted",
+      "audit_score": 50.49,
+      "summary": "Independently implements the paper's boundary-element equations and regenerates all and only its numerical figures: the scattering cross section, resonant near field, and far-field radiation pattern. All three targets pass independent physical checks.",
+      "limitation": "The feature run uses 432 constant boundary elements rather than the paper's 1600 because the exact corner-rounding curve and nonuniform element map are not published; narrow resonance and far-field peaks therefore retain mesh-dependent shifts.",
+      "run_scripts": [
+        "run_all.py",
+        "render_figures.py"
+      ],
+      "extra_dependencies": [],
+      "featured_results": [
+        {
+          "paper_item": "Fig. 5",
+          "result": "Plane-wave scattering cross section and resonance sequence",
+          "figure": "fig5_render_contract.png",
+          "check": "fig5_science.json"
+        },
+        {
+          "paper_item": "Fig. 6",
+          "result": "Resonant near-field intensity from the generated boundary state",
+          "figure": "fig6_render_contract.png",
+          "check": "fig6_science.json"
+        },
+        {
+          "paper_item": "Fig. 7",
+          "result": "Far-field radiation from the same generated boundary state",
+          "figure": "fig7_render_contract.png",
+          "check": "fig7_science.json"
+        }
+      ],
+      "additional_resources": [
+        {
+          "label": "Similarity scorecard",
+          "path": "docs/SIMILARITY_SCORECARD.md"
+        }
+      ]
+    },
+    {
+      "paper_id": "2412.14271",
+      "title": "Dissipative Phase Transition in the Two-Photon Dicke Model",
+      "topic": "Two-photon Dicke model, dissipative phase transitions, quantum trajectories, and nonlinear stability",
+      "preprint": {
+        "identifier": "arXiv:2412.14271",
+        "title": "Dissipative Phase Transition in the Two-Photon Dicke Model",
+        "url": "https://arxiv.org/abs/2412.14271"
+      },
+      "publication": {
+        "status": "published",
+        "title": "Dissipative Phase Transition in the Two-Photon Dicke Model",
+        "venue": "Physical Review Letters",
+        "citation": "Physical Review Letters 135, 173602 (2025)",
+        "doi": "10.1103/mz92-6l9g",
+        "doi_url": "https://doi.org/10.1103/mz92-6l9g",
+        "locator": "173602"
+      },
+      "status": "Feature-level numerical reproduction with a documented equation-level discrepancy",
+      "similarity_level": "feature_not_accepted",
+      "audit_score": 46.71,
+      "summary": "Independently reconstructs the analytic fixed points, stability spectra, seeded finite-size quantum trajectories, Wigner functions, and parity sectors for seven of eight numerical figure groups. The audit also identifies a reproducible branch-to-spectrum evidence discrepancy in Fig. 3(g)/Fig. S2.",
+      "limitation": "Main quantum panels use reduced trajectory counts, formal supplemental Figs. S3–S4 remain blocked by unavailable defining parameters, and the Fig. 3(g)/Fig. S2 evidence discrepancy awaits independent review or author clarification.",
+      "run_scripts": [
+        "run_analytic.py",
+        "render_figures.py"
+      ],
+      "full_run_scripts": [
+        "run_analytic.py",
+        "run_quantum_one_photon.py",
+        "run_quantum_main.py",
+        "run_quantum_parity.py",
+        "render_figures.py"
+      ],
+      "full_run_heading": "Full reduced-ensemble rerun",
+      "full_run_note": "Regenerates all shipped analytic and quantum arrays with the declared public configurations. The quantum jobs take roughly ten-plus minutes on the reference CPU and remain reduced relative to the paper's trajectory counts.",
+      "extra_dependencies": [
+        "qutip"
+      ],
+      "featured_results": [
+        {
+          "paper_item": "Fig. 2",
+          "result": "One-photon analytic transition and finite-cutoff trajectory distributions",
+          "figure": "fig2.png",
+          "check": "fig2_science.json"
+        },
+        {
+          "paper_item": "Fig. 3",
+          "result": "Two-photon finite-size distributions and thermodynamic branches",
+          "figure": "fig3.png",
+          "check": "fig3_analytic_science.json"
+        },
+        {
+          "paper_item": "Fig. 4",
+          "result": "Wigner functions from generated reduced density matrices",
+          "figure": "fig4.png",
+          "check": "fig4_science.json"
+        },
+        {
+          "paper_item": "Fig. S1",
+          "result": "One-photon fixed-point stability spectra",
+          "figure": "figS1.png",
+          "check": "figS1_science.json"
+        },
+        {
+          "paper_item": "Fig. S2",
+          "result": "Both-loss stability audit with branch-specific discrepancy evidence",
+          "figure": "figS2.png",
+          "check": "figS2_science.json"
+        },
+        {
+          "paper_item": "Fig. S5",
+          "result": "Reduced trajectory-count convergence",
+          "figure": "figS5.png",
+          "check": "figS5_science.json"
+        },
+        {
+          "paper_item": "Parity supplement",
+          "result": "Liouvillian near-zero kernel and parity-resolved distributions",
+          "figure": "figS_parity.png",
+          "check": "figS_parity_science.json"
+        }
+      ],
+      "additional_resources": [
+        {
+          "label": "Fig. 3(g) / Fig. S2 discrepancy report",
+          "path": "docs/PAPER_DISCREPANCY.md"
+        },
+        {
+          "label": "Similarity scorecard",
+          "path": "docs/SIMILARITY_SCORECARD.md"
+        }
+      ]
     }
   ],
   "scientific_lifecycle_audit": {
