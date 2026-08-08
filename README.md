@@ -20,7 +20,7 @@ published as cases.
 ## Reproduction Catalog / 论文复现目录
 
 <!-- case-catalog:start -->
-**69 public cases.** Open a paper below, then choose the reading or
+**70 public cases.** Open a paper below, then choose the reading or
 reproduction resource you need.
 
 | Paper | Preprint / formal publication | Reproduction status | Open package |
@@ -94,6 +94,7 @@ reproduction resource you need.
 | [Dissipative Phase Transition in the Two-Photon Dicke Model](cases/2412.14271/README.md) | [arXiv:2412.14271](https://arxiv.org/abs/2412.14271)<br>[Physical Review Letters 135, 173602 (2025)](https://doi.org/10.1103/mz92-6l9g) · DOI `10.1103/mz92-6l9g` | Feature-level numerical reproduction with a documented equation-level discrepancy | [中文 Note](cases/2412.14271/note/reproduction-note.zh-CN.md) · [English Note](cases/2412.14271/note/reproduction-note.en.md)<br>[Code](cases/2412.14271/code/README.md) · [Figures](cases/2412.14271/outputs/figures/) · [Checks](cases/2412.14271/outputs/checks/) |
 | [Boundary element method for resonances in dielectric microcavities](cases/physics-0206018/README.md) | [arXiv:physics/0206018](https://arxiv.org/abs/physics/0206018)<br>[Journal of Optics A: Pure and Applied Optics 5, 53–60 (2003)](https://doi.org/10.1088/1464-4258/5/1/308) · DOI `10.1088/1464-4258/5/1/308` | Reduced-scale reproduction of all numerical figures | [中文 Note](cases/physics-0206018/note/reproduction-note.zh-CN.md) · [English Note](cases/physics-0206018/note/reproduction-note.en.md)<br>[Code](cases/physics-0206018/code/README.md) · [Figures](cases/physics-0206018/outputs/figures/) · [Checks](cases/physics-0206018/outputs/checks/) |
 | [Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators](cases/2608.03987/README.md) | [arXiv:2608.03987v2](https://arxiv.org/abs/2608.03987)<br>Not recorded / 未检索到正式发表（checked 2026-08-08） | Independent numerical feature reproduction (Figure 8 exact; Figure 9 partial) | [中文 Note](cases/2608.03987/note/reproduction-note.zh-CN.md) · [English Note](cases/2608.03987/note/reproduction-note.en.md)<br>[Code](cases/2608.03987/code/README.md) · [Figures](cases/2608.03987/outputs/figures/) · [Checks](cases/2608.03987/outputs/checks/) |
+| [Unidirectional Dark-to-Bright Rescue in Cavity-Coupled Quantum Transport](cases/2608.05312/README.md) | [arXiv:2608.05312v1](https://arxiv.org/abs/2608.05312)<br>Not recorded / 未检索到正式发表（checked 2026-08-08） | Feature-level numerical reproduction (10/10 executable targets; QCLE input-blocked) | [中文 Note](cases/2608.05312/note/reproduction-note.zh-CN.md) · [English Note](cases/2608.05312/note/reproduction-note.en.md)<br>[Code](cases/2608.05312/code/README.md) · [Figures](cases/2608.05312/outputs/figures/) · [Checks](cases/2608.05312/outputs/checks/) |
 
 Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for audit scores and explicit boundaries.
 <!-- case-catalog:end -->

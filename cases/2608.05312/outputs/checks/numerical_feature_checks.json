@@ -1,0 +1,388 @@
+{
+  "check": "numerical_feature_checks",
+  "paper_id": "2608.05312",
+  "schema_version": 1,
+  "status": "passed",
+  "summary": {
+    "passed_claims": 26,
+    "passed_targets": 10,
+    "total_claims": 26,
+    "total_targets": 10
+  },
+  "targets": {
+    "T001": {
+      "claims": [
+        {
+          "claim_id": "size_independent_rescue",
+          "evidence": "outputs/data/size_scaling.csv",
+          "generated": 0.9986308419601954,
+          "paper_reference": "> 0.998 for N=3..96",
+          "passed": true,
+          "tolerance": "minimum efficiency must exceed 0.998"
+        },
+        {
+          "claim_id": "advantage_grows_with_size",
+          "evidence": "outputs/data/size_scaling.csv",
+          "generated": {
+            "first": 0.06209518147358206,
+            "last": 0.8816211127507637
+          },
+          "paper_reference": "monotonic growth",
+          "passed": true,
+          "tolerance": "strictly increasing on the sampled N grid"
+        },
+        {
+          "claim_id": "large_n_dephasing_values",
+          "evidence": "outputs/data/size_scaling.csv",
+          "generated": {
+            "32": 0.298666934733953,
+            "48": 0.2157439936749485,
+            "64": 0.16827500432746462
+          },
+          "paper_reference": {
+            "32": 0.296875,
+            "48": 0.21666666666666667,
+            "64": 0.16875
+          },
+          "passed": true,
+          "tolerance": "maximum absolute error < 0.005"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    },
+    "T002": {
+      "claims": [
+        {
+          "claim_id": "rescue_reaches_unit_efficiency",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": {
+            "16": 0.9993152486336796,
+            "32": 0.9993074849725148,
+            "4": 0.9991147070792263
+          },
+          "paper_reference": "eta approaches 1 for N=4,16,32",
+          "passed": true,
+          "tolerance": "all final efficiencies > 0.995"
+        },
+        {
+          "claim_id": "dephasing_efficiency_degrades_with_size",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": {
+            "16": 0.45630738140535,
+            "32": 0.2644810466011072,
+            "4": 0.90243127226433
+          },
+          "paper_reference": "monotonic size-dependent deficit",
+          "passed": true,
+          "tolerance": "strictly decreasing on N=4,16,32"
+        },
+        {
+          "claim_id": "normalized_rescue_dark_curves_collapse",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": 0.07176433624092904,
+          "paper_reference": "single size-independent decay envelope",
+          "passed": true,
+          "tolerance": "maximum inter-size normalized spread < 0.10"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    },
+    "T003": {
+      "claims": [
+        {
+          "claim_id": "transient_bright_rescue_peak",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": {
+            "population": 0.5864857083569761,
+            "time": 1.7000000000000002
+          },
+          "paper_reference": "pronounced peak near one rescue lifetime",
+          "passed": true,
+          "tolerance": "population > 0.5 and time in [0.5,3]"
+        },
+        {
+          "claim_id": "dephasing_long_lived_dark_plateau",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": 0.15932481419464797,
+          "paper_reference": "> 0.15 at t=30",
+          "passed": true,
+          "tolerance": "strictly above 0.15"
+        },
+        {
+          "claim_id": "dephasing_sink_endpoint",
+          "evidence": "outputs/data/fig2_dynamics.csv",
+          "generated": 0.7959258451976315,
+          "paper_reference": "approximately 0.8 at t=30",
+          "passed": true,
+          "tolerance": "absolute error < 0.03"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    },
+    "T004": {
+      "claims": [
+        {
+          "claim_id": "n6_temperature_boundary",
+          "evidence": "outputs/data/temperature_map_n6.csv",
+          "generated": {
+            "high_temperature": 0.16291882824813847,
+            "low_temperature": 0.08451883225392902
+          },
+          "paper_reference": {
+            "high_temperature": 0.16,
+            "low_temperature": 0.08
+          },
+          "passed": true,
+          "tolerance": "absolute errors < 0.02 and < 0.03"
+        },
+        {
+          "claim_id": "size_dependent_dephasing_collapse",
+          "evidence": "outputs/data/temperature_lines.csv",
+          "generated": {
+            "N=6": 0.6624271723114653,
+            "N=64": 0.09337674672222769
+          },
+          "paper_reference": {
+            "N=6": 0.66,
+            "N=64": 0.09
+          },
+          "passed": true,
+          "tolerance": "absolute error < 0.02"
+        },
+        {
+          "claim_id": "fixed_rate_ranking_inversion",
+          "evidence": "outputs/data/temperature_lines.csv",
+          "generated": {
+            "N=6": {
+              "dephasing": 0.6624271723114653,
+              "rescue": 0.5321769183830526
+            },
+            "N=64": {
+              "dephasing": 0.09337674672222769,
+              "rescue": 0.4139472915378168
+            }
+          },
+          "paper_reference": "dephasing wins at N=6; rescue wins at N=64",
+          "passed": true,
+          "tolerance": "sign agreement at the low-temperature endpoint"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    },
+    "T005": {
+      "claims": [
+        {
+          "claim_id": "site_n_dephasing_outperforms_rescue",
+          "evidence": "outputs/data/site_n_sweep.csv",
+          "generated": {
+            "dephasing": 0.7326625359665687,
+            "gap": -0.07972104794489909,
+            "rescue": 0.6529414880216696
+          },
+          "paper_reference": {
+            "gap": -0.044
+          },
+          "passed": true,
+          "tolerance": "ranking must match and gap error < 0.05"
+        },
+        {
+          "claim_id": "site_n_peak_gap",
+          "evidence": "outputs/data/site_n_sweep.csv",
+          "generated": -0.07972104794489909,
+          "paper_reference": -0.044,
+          "passed": true,
+          "tolerance": "absolute error < 0.05"
+        }
+      ],
+      "passed_claims": 2,
+      "status": "passed",
+      "total_claims": 2
+    },
+    "T006": {
+      "claims": [
+        {
+          "claim_id": "all_regime_verdicts",
+          "evidence": "outputs/data/table_s1_regimes.csv",
+          "generated": {
+            "matching": 7,
+            "total": 7
+          },
+          "paper_reference": "7/7 mechanism rankings",
+          "passed": true,
+          "tolerance": "all signs must agree"
+        },
+        {
+          "claim_id": "regime_table_efficiencies",
+          "evidence": "outputs/data/table_s1_regimes.csv",
+          "generated": {
+            "mae": 0.00615029169563165,
+            "max_error": 0.04137997793832371
+          },
+          "paper_reference": "printed Table S1 values",
+          "passed": true,
+          "tolerance": "MAE < 0.01 and max error < 0.05"
+        }
+      ],
+      "passed_claims": 2,
+      "status": "passed",
+      "total_claims": 2
+    },
+    "T007": {
+      "claims": [
+        {
+          "claim_id": "detuning_table_values",
+          "evidence": "outputs/data/table_s2_detuning.csv",
+          "generated": {
+            "mae": 0.0018162928763123115,
+            "max_error": 0.005911910438146206
+          },
+          "paper_reference": "printed Table S2 values",
+          "passed": true,
+          "tolerance": "maximum absolute error < 0.01"
+        },
+        {
+          "claim_id": "detuning_robust_rescue",
+          "evidence": "outputs/data/table_s2_detuning.csv",
+          "generated": {
+            "dephasing": [
+              0.7957292709879714,
+              0.6169119104381462,
+              0.4001277194620484,
+              0.17152634647568518
+            ],
+            "minimum_rescue": 0.9992172802782001
+          },
+          "paper_reference": "rescue near unity; dephasing decreases monotonically",
+          "passed": true,
+          "tolerance": "rescue > 0.995 and strict dephasing decrease"
+        }
+      ],
+      "passed_claims": 2,
+      "status": "passed",
+      "total_claims": 2
+    },
+    "T008": {
+      "claims": [
+        {
+          "claim_id": "finite_window_log_law",
+          "evidence": "outputs/checks/scaling_fits.json",
+          "generated": {
+            "intercept": -0.29632719572411953,
+            "r_squared": 0.9940735195220499,
+            "slope": 0.28707346120591654
+          },
+          "paper_reference": {
+            "intercept": -0.3,
+            "r_squared": 0.994,
+            "slope": 0.29
+          },
+          "passed": true,
+          "tolerance": "coefficient errors < 0.02 and R^2 error < 0.01"
+        },
+        {
+          "claim_id": "large_n_power_law",
+          "evidence": "outputs/checks/scaling_fits.json",
+          "generated": {
+            "alpha": 0.7994475111783899,
+            "r_squared": 0.9979861561179375
+          },
+          "paper_reference": {
+            "alpha": 0.77,
+            "r_squared": 0.998
+          },
+          "passed": true,
+          "tolerance": "alpha error < 0.05 and R^2 error < 0.01"
+        }
+      ],
+      "passed_claims": 2,
+      "status": "passed",
+      "total_claims": 2
+    },
+    "T009": {
+      "claims": [
+        {
+          "claim_id": "site_n_trapping_without_rescue",
+          "evidence": "outputs/data/site_n_dynamics.csv",
+          "generated": {
+            "dark_final": 0.5367202165895668,
+            "sink_final": 0.3286162863034624
+          },
+          "paper_reference": "dark retained; sink below 0.4",
+          "passed": true,
+          "tolerance": "dark > 0.5 and sink < 0.4 at t=60"
+        },
+        {
+          "claim_id": "site_n_valve_with_rescue",
+          "evidence": "outputs/data/site_n_dynamics.csv",
+          "generated": {
+            "bright_peak": 0.7029244031249996,
+            "dark_final": 0.03641883944624659
+          },
+          "paper_reference": "dark approaches zero with a transient bright population",
+          "passed": true,
+          "tolerance": "dark < 0.05 and bright peak > 0.65"
+        },
+        {
+          "claim_id": "bright_peak_is_rescue_specific",
+          "evidence": "outputs/data/site_n_dynamics.csv",
+          "generated": {
+            "difference": 0.5274344264745412,
+            "with_rescue": 0.7029244031249996,
+            "without_rescue": 0.17548997665045846
+          },
+          "paper_reference": "pronounced rescue-only bright peak",
+          "passed": true,
+          "tolerance": "peak difference > 0.4"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    },
+    "T010": {
+      "claims": [
+        {
+          "claim_id": "n64_temperature_boundary",
+          "evidence": "outputs/data/temperature_map_n64.csv",
+          "generated": {
+            "high_temperature": 0.014971945893881705,
+            "low_temperature": 0.0075579300985881845
+          },
+          "paper_reference": {
+            "high_temperature": 0.015,
+            "low_temperature": 0.008
+          },
+          "passed": true,
+          "tolerance": "absolute error < 0.003"
+        },
+        {
+          "claim_id": "n64_maximum_advantage",
+          "evidence": "outputs/data/temperature_map_n64.csv",
+          "generated": 0.8929746021075866,
+          "paper_reference": 0.86,
+          "passed": true,
+          "tolerance": "absolute error < 0.05"
+        },
+        {
+          "claim_id": "n64_dephasing_benchmark",
+          "evidence": "outputs/data/temperature_map_n64.csv",
+          "generated": 0.09298126635634428,
+          "paper_reference": 0.09,
+          "passed": true,
+          "tolerance": "absolute error < 0.01"
+        }
+      ],
+      "passed_claims": 3,
+      "status": "passed",
+      "total_claims": 3
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "paper_id": "2608.05312",
+  "units": {
+    "energy_and_rate": "meV",
+    "time": "hbar/meV"
+  },
+  "shared_model": {
+    "g": 1.5,
+    "t_mean": 1.0,
+    "delta_t": 0.5,
+    "detuning": 0.0,
+    "gamma_lead_cavity": 0.5,
+    "source_site": 1,
+    "seed_start": 0
+  },
+  "parameter_evidence": {
+    "direct_from_paper": [
+      "g",
+      "delta_t",
+      "detuning=0 for coherent main-text runs",
+      "gamma_lead_cavity",
+      "system sizes",
+      "measurement times",
+      "realization counts"
+    ],
+    "reconstructed": {
+      "t_mean": "1 meV, inferred from the SM Figure S5 peak at g approximately t and cross-figure endpoint agreement",
+      "source_site": "site 1, inferred from the pump schematic, 'loaded at the source', and initial dark fraction",
+      "seeds": "0-based independent seeds; author only says fixed seeds and does not publish them"
+    },
+    "parameter_match": "paper_subset",
+    "artifact_stage": "exploratory"
+  },
+  "profiles": {
+    "quick": {
+      "dynamics_samples_ab": 3,
+      "dynamics_samples_cd": 3,
+      "dynamics_points": 61,
+      "scaling_n": [3, 6, 16, 32],
+      "scaling_samples": 3,
+      "optimization_samples": 2,
+      "coarse_rate_points": 7,
+      "refinement_rate_points": 3,
+      "temperature_line_samples": 3,
+      "temperature_points": 7,
+      "temperature_map_samples_n6": 3,
+      "temperature_map_points_n6": 6,
+      "temperature_map_samples_n64": 2,
+      "temperature_map_points_n64": 4,
+      "site_n_samples": 3,
+      "site_n_rate_points": 7
+    },
+    "paper_subset": {
+      "dynamics_samples_ab": 15,
+      "dynamics_samples_cd": 20,
+      "dynamics_points": 301,
+      "scaling_n": [3, 4, 5, 6, 7, 8, 9, 10, 12, 16, 20, 24, 28, 32, 48, 64, 96],
+      "scaling_samples": 15,
+      "optimization_samples": 5,
+      "coarse_rate_points": 13,
+      "refinement_rate_points": 7,
+      "temperature_line_samples": 15,
+      "temperature_points": 17,
+      "temperature_map_samples_n6": 15,
+      "temperature_map_points_n6": 15,
+      "temperature_map_samples_n64": 5,
+      "temperature_map_points_n64": 9,
+      "site_n_samples": 15,
+      "site_n_rate_points": 21
+    }
+  },
+  "targets": {
+    "dynamics": {
+      "sizes_ab": [4, 16, 32],
+      "size_cd": 6,
+      "gamma_rec": 1.0,
+      "gamma_deph": 1.0,
+      "final_time": 30.0
+    },
+    "scaling": {
+      "final_time": 25.0,
+      "rate_min": 0.001,
+      "rate_max_n_le_32": 10.0,
+      "deph_rate_max_n_ge_48": 100.0
+    },
+    "temperature": {
+      "final_time": 25.0,
+      "gamma_deph": 0.5,
+      "line_rate_ratio": 0.05,
+      "thermal_ratio_min": 0.03,
+      "thermal_ratio_max": 30.0,
+      "map_rate_ratio_min_n6": 0.02,
+      "map_rate_ratio_max_n6": 3.0,
+      "map_rate_ratio_min_n64": 0.005,
+      "map_rate_ratio_max_n64": 0.5
+    },
+    "site_n": {
+      "final_time": 25.0,
+      "gamma_lead_sweep": 0.5,
+      "rate_min": 0.001,
+      "rate_max": 10.0,
+      "dynamics_final_time": 60.0,
+      "dynamics_gamma_lead": 0.05,
+      "dynamics_gamma_rec": 0.05
+    },
+    "detuning": {
+      "values": [0.0, 5.0, 10.0, 20.0],
+      "final_time": 30.0,
+      "samples": 15,
+      "matched_rate": 1.0
+    }
+  }
+}

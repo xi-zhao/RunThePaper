@@ -73,6 +73,7 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2412.14271`](cases/2412.14271/README.md) | Two-photon Dicke model, dissipative phase transitions, quantum trajectories, and nonlinear stability | Feature-level numerical reproduction with a documented equation-level discrepancy | 46.71 |
 | [`physics-0206018`](cases/physics-0206018/README.md) | Boundary-integral scattering, resonances, and near- and far-field reconstruction in dielectric microcavities | Reduced-scale reproduction of all numerical figures | 50.49 |
 | [`2608.03987`](cases/2608.03987/README.md) | Realification cost laws and contraction-order transferability for quantum-circuit tensor networks | Independent numerical feature reproduction (Figure 8 exact; Figure 9 partial) | 72.00 |
+| [`2608.05312`](cases/2608.05312/README.md) | Open-system dark-state rescue, cavity transport, and finite-temperature mechanism competition | Feature-level numerical reproduction (10/10 executable targets; QCLE input-blocked) | 83.40 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.
