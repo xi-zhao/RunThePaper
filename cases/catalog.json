@@ -5070,6 +5070,74 @@
           "path": "docs/SIMILARITY_SCORECARD.md"
         }
       ]
+    },
+    {
+      "paper_id": "2608.03987",
+      "title": "Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators",
+      "topic": "Realification cost laws and contraction-order transferability for quantum-circuit tensor networks",
+      "preprint": {
+        "status": "recorded",
+        "identifier": "arXiv:2608.03987v2",
+        "title": "Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators",
+        "url": "https://arxiv.org/abs/2608.03987"
+      },
+      "publication": {
+        "status": "not_recorded",
+        "checked_at": "2026-08-08"
+      },
+      "status": "Independent numerical feature reproduction (Figure 8 exact; Figure 9 partial)",
+      "similarity_level": "numerical_feature_reproduction",
+      "audit_score": 72.0,
+      "summary": "A clean-room Python tensor-network implementation evaluates all 67 paper circuits without executing or translating the authors' Rust crates. Figure 8's exact realification law passes on every circuit (maximum residual 4.44e-16; post-hoc overhead correlation 0.9881). Figure 9 remains optimizer-sensitive: 57/67 independent trees, versus 66/67 in the paper, fall below the 5e-4 transfer-gap threshold.",
+      "limitation": "This is not a complete reproduction of the paper. The independent optimizer differs from the published optimizer and reproduces only 58/67 Figure-9 threshold labels. The package evaluates contraction-tree arithmetic, not Ascend 910/A800 tensor kernels, so it does not reproduce device wall clocks, precision, or end-to-end acceleration tables. The official Zenodo ZIP is downloaded separately; the primary optimizer opens only its 122 raw circuit and observable payloads, while author results are used only for post-hoc comparison.",
+      "run_scripts": [
+        "fetch_benchmark_inputs.py",
+        "run_independent_reimplementation.py"
+      ],
+      "script_arguments": {
+        "run_independent_reimplementation.py": "--preset smoke --scope random --circuit test"
+      },
+      "full_run_heading": "Full clean-room 67-circuit rerun",
+      "full_run_note": "The full preset fixes seed 42, ten generic cotengra candidates, 600,000 NNI steps per objective, and 60,000 polish steps. The completed records sum to about 29.3 CPU-minutes; parallel wall time depends on how the circuit set is sharded.",
+      "full_run_scripts": [
+        "run_independent_reimplementation.py",
+        "run_reproduction.py"
+      ],
+      "full_run_script_arguments": {
+        "run_independent_reimplementation.py": "--preset full --output-dir ../outputs/data/independent_python_full"
+      },
+      "extra_dependencies": [
+        "cotengra==0.7.5",
+        "opt_einsum==3.4.0"
+      ],
+      "additional_resources": [
+        {
+          "label": "Full path-free contraction-tree records (JSONL)",
+          "path": "outputs/data/independent_tree_records.jsonl"
+        },
+        {
+          "label": "Figure 8 independent data (CSV)",
+          "path": "outputs/data/fig8_cost_law.csv"
+        },
+        {
+          "label": "Figure 9 independent data (CSV)",
+          "path": "outputs/data/fig9_pipeline.csv"
+        }
+      ],
+      "featured_results": [
+        {
+          "paper_item": "Figure 8",
+          "result": "Exact realification cost law and analytic band on all 67 circuits",
+          "figure": "fig8_cost_law.png",
+          "check": "numerical_feature_checks.json"
+        },
+        {
+          "paper_item": "Figure 9",
+          "result": "Independent contraction-order transfer study with the retained 57/67 versus 66/67 threshold mismatch",
+          "figure": "fig9_pipeline.png",
+          "check": "numerical_feature_checks.json"
+        }
+      ]
     }
   ],
   "scientific_lifecycle_audit": {
