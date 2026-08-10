@@ -86,12 +86,12 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`1807.03311`](cases/1807.03311/README.md) | Independent scientific reproduction of Topological insulators in twisted transition metal dichalcogenide homobilayers | Partial scientific reproduction | 70.00 |
 | [`1807.10084`](cases/1807.10084/README.md) | Independent scientific reproduction of Nonreciprocal Photon Blockade | Scientific reproduction — visual review pending | 82.24 |
 | [`1807.10676`](cases/1807.10676/README.md) | Independent scientific reproduction of All "Magic Angles" Are "Stable" Topological | Partial scientific reproduction | 69.77 |
-| [`1810.00888`](cases/1810.00888/README.md) | Independent scientific reproduction of Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain | Scientific reproduction — independent review pending | 80.33 |
 | [`1811.08017`](cases/1811.08017/README.md) | Independent scientific reproduction of A random compiler for fast Hamiltonian simulation | Scientific reproduction — independent review pending | 90.00 |
 | [`1812.05561`](cases/1812.05561/README.md) | Independent scientific reproduction of Emergent SU(2) dynamics and perfect quantum many-body scars | Partial scientific reproduction | 66.65 |
 | [`1910.00020`](cases/1910.00020/README.md) | Independent scientific reproduction of Scalable probes of measurement-induced criticality | Partial scientific reproduction | 69.34 |
 | [`1910.08980`](cases/1910.08980/README.md) | Independent scientific reproduction of Obstacles to State Preparation and Variational Optimization from Symmetry Protection | Partial scientific reproduction | 89.00 |
 | [`2005.09722`](cases/2005.09722/README.md) | Independent scientific reproduction of Entanglement transition in a monitored free fermion chain -- from extended criticality to area law | Partial scientific reproduction | 67.02 |
+| [`1810.00888`](cases/1810.00888/README.md) | Independent scientific reproduction of Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain | Scientific reproduction — paper-error candidates identified | 80.33 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

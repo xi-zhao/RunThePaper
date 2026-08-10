@@ -6,9 +6,9 @@ Published as: [Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom
 
 Formal citation: Phys. Rev. Lett. 122, 173401 (2019) · DOI `10.1103/PhysRevLett.122.173401` · Locator `173401`
 
-Public status: **Scientific reproduction — independent review pending** · Audit score: **80.33/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **80.33/100**
 
-All nine numerical figure targets have a formula-derived paper-scale implementation.
+All nine numerical figure targets and nineteen reproducible quantitative claims are covered by formula-derived paper-scale implementations.
 
 ## Start Here / 从这里开始
 
@@ -76,7 +76,7 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 7 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: The isolated paper-scale run and fresh-context protocol-v2 review are recorded. T001/T002 and T006/T007 carry independently validated paper-error candidates; the remaining targets support the paper.
+Remaining limitation: The isolated paper-scale run and the 28-item fresh-context protocol-v2 review are recorded. T001/T002 and T006/T007 carry independently validated paper-error candidates; the remaining targets support the paper.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
