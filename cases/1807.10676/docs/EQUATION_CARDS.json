@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.10676",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Dimensionless one-valley moire band Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (M-model-1)"
+        }
+      ],
+      "latex": "H_{QQ'}(k)/(v_F k_D)=delta_{QQ'}(kbar-Qbar)·sigma+alpha sum_j(delta_{Q'-Q,q_j}+delta_{Q-Q',q_j})T^j",
+      "role": "continuum_band_diagonalization",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the dimensionless Hamiltonian and alpha definition."
+        },
+        {
+          "id": "EQ001-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Complete hexagonal reciprocal shells were enlarged by one shell at all six reported magic alphas; the maximum velocity change is 0.001474."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::ContinuumModel",
+        "src/tbg_topology/reproduction.py::adaptive_cutoff"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Momentum honeycomb and interlayer coupling matrices",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement equations immediately before and after Eq. (M-model-1)"
+        }
+      ],
+      "latex": "q_1=(0,-1), q_{2,3}=(±sqrt(3)/2,1/2); T^1=sigma_0+sigma_x; T^{2,3}=sigma_0-sigma_x/2±sqrt(3)sigma_y/2",
+      "role": "moire_reciprocal_geometry_and_coupling",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three q vectors and T matrices are printed in the supplement."
+        },
+        {
+          "id": "EQ002-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The generated Q graph closes under the three interlayer offsets and every coupling is inserted with its Hermitian conjugate."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::ContinuumModel.__post_init__",
+        "src/tbg_topology/model.py::ContinuumModel._build_couplings"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Fermi velocity, isolation gap, and magic-angle criterion",
+      "source_refs": [
+        {
+          "type": "caption",
+          "value": "Main Fig. 1 and Supplement Figs. 2-5"
+        }
+      ],
+      "latex": "alpha=w/[2 v_F |K| sin(theta/2)], v*/v_F=|dE_+(K+q)/d|q||, alpha_m: v*(alpha_m)=0",
+      "role": "magic_angle_and_phase_observables",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The alpha definition and first six reported magic alphas are stated in the main Fig. 1 caption."
+        },
+        {
+          "id": "EQ003-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently computed |v*/v_F| at all six reported alphas is below 0.012."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::ContinuumModel.fermi_velocity",
+        "src/tbg_topology/model.py::ContinuumModel.isolation_gap"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Non-Abelian Wilson loop",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (Wilson)"
+        }
+      ],
+      "latex": "W(k_1)=U_0^dagger U_1 U_1^dagger U_2 ... U_{N-1}^dagger V^(0,2pi) U_0",
+      "role": "topological_winding_observable",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The discretized occupied-subspace Wilson product and reciprocal embedding are printed in the supplement."
+        },
+        {
+          "id": "EQ004-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The computed spectra obey the C2x relation between k1 and 2pi-k1 and show the reported odd winding."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::ContinuumModel.wilson_spectrum",
+        "src/tbg_topology/model.py::wilson_spectrum"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Particle-hole-breaking graphene expansion",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eqs. (HTT-noPH) and (HBB-noPH)"
+        }
+      ],
+      "latex": "H_TT≈3ta k·sigma/2+3ta^2[(k_x^2-k_y^2)sigma_x-2k_x k_y sigma_y]/8+9t'a^2 k^2 sigma_0/4",
+      "role": "particle_hole_breaking_continuum_bands",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The second top-row theta printed as 1.039 degrees differs from the formula-derived 1.029 degrees; this is recorded as a likely caption rounding/typing discrepancy."
+      ],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both layer expansions and all four (t,t') parameter pairs are printed in the supplement."
+        },
+        {
+          "id": "EQ005-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Formula-derived theta/alpha labels agree with the caption except for the explicit 0.010 degree discrepancy noted above."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::ContinuumModel.hamiltonian",
+        "src/tbg_topology/reproduction.py::run_reproduction"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Four-band one-valley tight-binding model",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement TB4-1V Hamiltonian and analytic Gamma/M/K levels"
+        }
+      ],
+      "latex": "H_TB4=Delta mu_z+sigma_x sum_i[t cos(delta_i·k)+t' cos(-2delta_i·k)]-sigma_y sum_i[t sin(delta_i·k)+t' sin(-2delta_i·k)]-2lambda mu_y sigma_z sum_i sin(d_i·k)",
+      "role": "short_range_topological_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The TeX repeats delta_2 in the nearest-neighbour list; C3 closure fixes the third vector uniquely."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, flatness constraints, Delta, and analytic high-symmetry levels are printed in the supplement."
+        },
+        {
+          "id": "EQ006-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Computed Gamma eigenvalues match the printed analytic values to 2.22e-16."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::TB4OneValley"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Eight-band two-valley model and intervalley mass",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (TB8-2V) and the zeta tau_y mu_z sigma_z term"
+        }
+      ],
+      "latex": "H_TB8=tau_0 tensor H_TB4+zeta tau_y mu_z sigma_z",
+      "role": "intervalley_gap_and_wannier_obstruction_removal",
+      "derived_from": [
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The stacked two-valley Hamiltonian and zeta=0.2t perturbation are printed explicitly."
+        },
+        {
+          "id": "EQ007-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The zeta term opens the lower-four-band K gap and removes the winding in the calculated Wilson spectrum."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::TB8TwoValley"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Projection-gauge Wannier construction",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eqs. (proj-1), (proj-2), (psi-tilde), and (HR)"
+        }
+      ],
+      "latex": "|psi_tilde>=|psi_bar>S(k)^(-1/2), S=<psi_bar|psi_bar>; |W_R>=N_k^(-1/2) sum_k exp[-ik·(R+t_s)]|psi_tilde_k>",
+      "role": "localized_two_valley_wannier_density",
+      "derived_from": [
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Projection orbitals, Löwdin orthonormalization, Fourier transform, and c1/c2 are printed."
+        },
+        {
+          "id": "EQ008-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently built frame gives 15.8215 <= det S(k) <= 16.0000, matching the paper's 15.8 to 16 interval."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/reproduction.py::projected_wannier"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Four-band two-valley effective model",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (TB4-2V) and following Upsilon/Lambda definitions"
+        }
+      ],
+      "latex": "H_TB4-2V=Upsilon_-(k) tau_z sigma_0+Re Lambda(k) tau_x sigma_x-Im Lambda(k) tau_x sigma_y",
+      "role": "two_valley_effective_band_structure",
+      "derived_from": [
+        "EQ008"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian, all lattice sums, and tuned parameters are printed in the supplement."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The tuned condition makes the K mass vanish while retaining the formula-derived dispersion."
+        }
+      ],
+      "code_refs": [
+        "src/tbg_topology/model.py::TB4TwoValley"
+      ]
+    }
+  ]
+}

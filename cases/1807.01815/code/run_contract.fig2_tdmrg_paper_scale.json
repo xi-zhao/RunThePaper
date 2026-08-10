@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.01815-fig2-tdmrg-paper-scale-v1",
+  "target_ids": [
+    "T_FIG2B",
+    "T_FIG2C"
+  ],
+  "command": [
+    "python",
+    "scripts/run_fig2_tdmrg.py",
+    "--config",
+    "config/fig2_tdmrg_paper_scale.json",
+    "--resume"
+  ],
+  "inputs": [
+    "src/scar_tdvp/__init__.py",
+    "src/scar_tdvp/fig2_tdmrg.py",
+    "scripts/run_fig2_tdmrg.py",
+    "config/fig2_tdmrg_paper_scale.json",
+    "requirements-paper-scale.txt"
+  ],
+  "parameter_file": "config/fig2_tdmrg_paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "physical_length": 30,
+    "boundary_condition": "periodic",
+    "omega": 1.0,
+    "block_basis": [
+      "00",
+      "01",
+      "10"
+    ],
+    "six_site_subsystem": 6,
+    "panel_b_time_max": 100.0,
+    "panel_c_time_max": 120.0,
+    "sample_time_step": 0.5,
+    "checkpoint_time_interval": 2.0,
+    "diagnostic_time_interval": 5.0,
+    "profiles": {
+      "primary": {
+        "max_bond": 512,
+        "time_step": 0.025,
+        "cutoff": 1e-10
+      },
+      "dt_refined": {
+        "max_bond": 512,
+        "time_step": 0.0125,
+        "cutoff": 1e-11
+      },
+      "bond_refined": {
+        "max_bond": 768,
+        "time_step": 0.025,
+        "cutoff": 1e-11
+      }
+    }
+  },
+  "outputs": [
+    "outputs/paper_scale/fig2_tdmrg/lanes/zero_primary.npz",
+    "outputs/paper_scale/fig2_tdmrg/lanes/zero_dt_refined.npz",
+    "outputs/paper_scale/fig2_tdmrg/lanes/zero_bond_refined.npz",
+    "outputs/paper_scale/fig2_tdmrg/lanes/z2_primary.npz",
+    "outputs/paper_scale/fig2_tdmrg/lanes/z2_dt_refined.npz",
+    "outputs/paper_scale/fig2_tdmrg/lanes/z2_bond_refined.npz",
+    "outputs/paper_scale/fig2_tdmrg/data/T_FIG2BC_tdmrg.npz",
+    "outputs/paper_scale/fig2_tdmrg/checks/fig2_tdmrg_checks.json",
+    "outputs/paper_scale/fig2_tdmrg/checks/generated_data_manifest.json",
+    "outputs/paper_scale/fig2_tdmrg/checks/campaign_state.json"
+  ],
+  "timeout_seconds": 1209600,
+  "environment": {
+    "OMP_NUM_THREADS": "16",
+    "OPENBLAS_NUM_THREADS": "16",
+    "MKL_NUM_THREADS": "16"
+  },
+  "scheduler": {
+    "work_units": 6,
+    "unit_order": [
+      "zero_primary",
+      "zero_dt_refined",
+      "zero_bond_refined",
+      "z2_primary",
+      "z2_dt_refined",
+      "z2_bond_refined"
+    ],
+    "shard_command": [
+      "python",
+      "scripts/run_fig2_tdmrg.py",
+      "--config",
+      "config/fig2_tdmrg_paper_scale.json",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "${ARRAY_COUNT}",
+      "--resume"
+    ],
+    "merge_rule": "After all shards finish, rerun the unsharded command. Digest-matched lane outputs are skipped, then the aggregate and scientific acceptance are written."
+  },
+  "acceptance_criteria": [
+    "The exact blocked-basis equivalence test passes before any campaign: the periodic 15-block nearest-neighbour Hamiltonian is the L=30 PXP ring, not a proxy model.",
+    "All six initial-state/refinement lanes reach t*Omega=120, while the six-site panel is cut at t*Omega=100 and the one-site panel at 120.",
+    "Norm drift and total forbidden-state weight are each at most 1e-6, absolute energy drift is at most 1e-5, product-state entropies vanish, and the entropy bounds 0<=S1<=1 and 0<=S6<=6 hold.",
+    "The maximum curve change under halved time step and increased bond dimension is at most 0.04 bits in each declared refinement comparison.",
+    "The generated curves retain the paper's qualitative separation: the late six-site entropy from the all-zero state exceeds the Z2 result and the late Z2 one-site entropy oscillates more strongly.",
+    "Any stable difference is first classified as reproduction_defect, parameter_ambiguity, insufficient_compute or inconclusive; paper_error_candidate is allowed only when paper_exact, convergence, at least two independent cross-checks, source pinpoint and fresh independent review all pass.",
+    "The generated-data manifest confirms that author code, author arrays, digitized curves, source pixels and PDF pixels were not numerical inputs."
+  ],
+  "compute_status": "insufficient_compute_paper_scale_not_run"
+}

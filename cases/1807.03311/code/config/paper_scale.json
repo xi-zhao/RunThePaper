@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.03311",
+  "run_id": "1807.03311-paper-scale-sharded-v1",
+  "output_root": "outputs/data/paper_scale",
+  "parameters": {
+    "a0_nm": 0.3472,
+    "effective_mass_me": 0.62,
+    "potential_mev": 8.0,
+    "potential_phase_deg": -89.6,
+    "tunneling_mev": -8.5,
+    "plane_wave_cutoff": 5,
+    "convergence_plane_wave_cutoff": 6,
+    "dos_k_grid": 101,
+    "dos_band_count": 4,
+    "dos_broadening_mev": 0.08,
+    "dos_energy_points": 1201,
+    "dos_energy_padding_sigma": 6.0,
+    "theta_sweep": [
+      1.0,
+      3.5,
+      101
+    ],
+    "gap_k_grid": 31,
+    "validation_gap_k_grid": 35,
+    "phase_k_grid": 25,
+    "maximum_bias_mev": 40.0,
+    "bias_scan_points": 161,
+    "overlap_bisection_steps": 12
+  },
+  "acceptance": {
+    "finite_fraction": 1.0,
+    "dos_integral_absolute_error": 0.03,
+    "dos_filling_endpoint_absolute_error": 0.001,
+    "eigensolver_residual_max": 1e-10,
+    "eigensolver_path_max_absolute_difference_mev": 1e-09,
+    "cutoff_anchor_max_absolute_difference_mev": 0.05,
+    "gap_grid_crosscheck_max_absolute_difference_mev": 0.12,
+    "theta1_interval_deg": [
+      1.65,
+      1.85
+    ],
+    "theta2_interval_deg": [
+      2.95,
+      3.35
+    ]
+  },
+  "execution": {
+    "recommended_workers": 16,
+    "recommended_shards": 64,
+    "checkpoint_boundary": "one immutable DOS row or twist-angle condition",
+    "resume": true,
+    "estimated_wall_time": "profile first; up to seven days on 32 CPU cores"
+  },
+  "disclosures": {
+    "parameter_match": "paper physical parameters with declared converged numerical grids",
+    "unpublished_choices": [
+      "momentum-grid density",
+      "DOS broadening and energy grid",
+      "twist-angle sampling density",
+      "bias sampling density"
+    ],
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false,
+    "accelerator": "CPU; the workload is many small irregular Hermitian eigensolves, for which A100 transfer and batching overhead is not yet justified"
+  },
+  "review_policy": {
+    "automatic_paper_error_label": false,
+    "stable_mismatch_initial_class": "inconclusive",
+    "paper_error_candidate_requires": [
+      "paper-exact disclosed parameters",
+      "basis and grid convergence",
+      "two independent scientific checks",
+      "explicit falsification attempt",
+      "precise source claim location",
+      "fresh-context independent review"
+    ]
+  }
+}

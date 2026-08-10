@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "paper_id": "1804.03151",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Moire geometry and first-shell potential",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (1) and the paragraph immediately below it"
+        }
+      ],
+      "latex": "a_M\\simeq a_0/\\theta,\\quad \\Delta(\\mathbf r)=2V\\sum_{j=1}^{3}\\cos(\\mathbf b_j\\cdot\\mathbf r+\\psi)",
+      "role": "moire_geometry_and_external_potential",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) gives the kinetic-plus-periodic-potential model; the following text fixes the six Fourier components by V and psi."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Pairing +b and -b makes Delta real, and the complete three-vector shell is C3 closed."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::MoireGeometry",
+        "src/moire_hubbard/model.py::SingleBandContinuum.potential"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Plane-wave moire Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (2)"
+        }
+      ],
+      "latex": "\\langle\\mathbf k+\\mathbf g'|H|\\mathbf k+\\mathbf g\\rangle=-\\delta_{\\mathbf g'\\mathbf g}\\hbar^2|\\mathbf k+\\mathbf g|^2/(2m^*)+V(\\mathbf g'-\\mathbf g)",
+      "role": "continuum_band_diagonalization",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The matrix element is printed explicitly in main Eq. (2)."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Hermiticity error is zero; cutoff 5 to 6 changes the main path by 0.000987 meV and the supplement path by 0.000183 meV."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::PlaneWaveBasis",
+        "src/moire_hubbard/model.py::SingleBandContinuum.hamiltonian"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Triangular-lattice tight-binding reduction",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (3) and Fig. 2(a,d) discussion"
+        }
+      ],
+      "latex": "H_0=\\sum_{\\tau,\\mathbf R,\\mathbf R'}t(\\mathbf R'-\\mathbf R)c^\\dagger_{\\mathbf R\\tau}c_{\\mathbf R'\\tau}",
+      "role": "extract_first_three_hopping_shells",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (3) defines the triangular-lattice hopping model and the text specifies fitting through third neighbors."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Each shell is represented by its six inversion-related bonds, giving real structure factors 2 sum cos(k dot R)."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::SingleBandContinuum.tight_binding_fit",
+        "src/moire_hubbard/model.py::SingleBandContinuum.tight_binding_energy"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Isolated-band Wannier transform",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraph surrounding Fig. 2(c) and harmonic estimate below Eq. (1)"
+        }
+      ],
+      "latex": "w_{\\mathbf R}(\\mathbf r)=N_k^{-1}\\sum_{\\mathbf k}e^{-i\\mathbf k\\cdot\\mathbf R}\\psi_{\\mathbf k}(\\mathbf r),\\quad a_W\\simeq[\\hbar^2/(\\beta m^*V)]^{1/4}\\sqrt{a_M}",
+      "role": "construct_localized_orbital_from_bloch_states",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that Fig. 2(c) is constructed from isolated-band Bloch states and prints the harmonic localization estimate."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The independently gauge-aligned Bloch sum integrates to unit probability."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::SingleBandContinuum.wannier_amplitude",
+        "src/moire_hubbard/model.py::harmonic_wannier_length_nm"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Screened Coulomb projection",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "image-charge paragraph and main Eq. (4)"
+        }
+      ],
+      "latex": "\\widetilde U(r)=e^2\\epsilon^{-1}[r^{-1}-(r^2+D^2)^{-1/2}],\\quad U_{RR'}=\\iint |w_R(r)|^2\\widetilde U(r-r')|w_{R'}(r')|^2drdr'",
+      "role": "onsite_and_extended_hubbard_interactions",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The image-charge kernel, D=3 nm, projection statement and generalized Hubbard Hamiltonian are printed in the main text."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The Bloch-Wannier FFT projection gives U0 greater than U1 greater than U2 throughout both sweeps."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::screened_interactions"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Density of states and filling-density conversion",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Fig. 2(b) discussion and paragraph below main Eq. (4)"
+        }
+      ],
+      "latex": "g(E)=2A_M^{-1}N_k^{-1}\\sum_{n\\mathbf k}\\delta(E-E_{n\\mathbf k}),\\quad n_M=2/A_M=4/(\\sqrt3a_M^2)",
+      "role": "dos_and_hole_density_axes",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines full emptying density including the twofold valley degeneracy and identifies DOS saddle-point peaks."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "At two degrees the computed full-hole density is 2.5529e12 cm^-2, matching the 2.55 axis increment in Fig. 2(b)."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::SingleBandContinuum.density_of_states_vs_hole_filling"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Strong-coupling exchange expansion",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraph following main Eq. (5)"
+        }
+      ],
+      "latex": "J_1=4t_1^2U_0^{-1}[1-7(t_1/U_0)^2],\\quad J_{2,3}=4t_{2,3}^2/U_0+4t_1^4/U_0^3",
+      "role": "spin_exchange_couplings",
+      "derived_from": [
+        "EQ003",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three perturbative exchange expressions and their retained orders are printed explicitly."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The calculated J2/J1 reaches 0.0604 near three degrees, reproducing the printed spin-liquid threshold crossing."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::exchange_couplings"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Three-quarter-filling Fermi contour",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Fig. 4 caption and 3/4-filling section"
+        }
+      ],
+      "latex": "E_F=Q_{1-n_h/n_M}[E_1(\\mathbf k)],\\quad E_1(\\mathbf k)=E_F,\\quad \\mathbf Q=\\mathbf b_j/2",
+      "role": "fermi_surface_and_nesting",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper identifies the contour at three-quarter hole doping and the first-shell half-reciprocal nesting vectors."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Quantile filling on the independently diagonalized top band gives a closed nearly nested contour at EF=-4.7356 meV."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py::SingleBandContinuum.fermi_contour_map"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Mismatch-controlled WSe2/MoS2 moire model",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (6) and following paragraph"
+        }
+      ],
+      "latex": "\\mathbf b_j\\simeq\\theta\\mathbf G_j\\times\\hat z-\\delta\\mathbf G_j,\\quad a_M\\simeq a_0/\\sqrt{\\theta^2+\\delta^2}",
+      "role": "supplementary_mismatch_system",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the reciprocal-vector relation, mismatch, potential parameters and period formula."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At zero twist the period is 8.5128 nm and the highest-band width is 20.6075 meV, matching the reported about 8.5 nm and about 20 meV."
+        }
+      ],
+      "code_refs": [
+        "src/moire_hubbard/reproduction.py::run"
+      ]
+    }
+  ]
+}

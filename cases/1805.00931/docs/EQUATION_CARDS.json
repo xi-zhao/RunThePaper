@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "paper_id": "1805.00931",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Kicked-Ising Floquet operator",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (1)-(3)"
+        },
+        {
+          "type": "tex_label",
+          "value": "ham, hamiltonians, floquet"
+        }
+      ],
+      "latex": "H_I=\\sum_j(J\\sigma_j^z\\sigma_{j+1}^z+h_j\\sigma_j^z),\\quad H_K=b\\sum_j\\sigma_j^x,\\quad U_{KI}=e^{-iH_K}e^{-iH_I}",
+      "role": "microscopic_floquet_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian pieces, periodic boundary and Floquet ordering are printed explicitly."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "In the z basis H_I is diagonal and exp(-i H_K) factorizes into identical 2x2 rotations."
+        },
+        {
+          "id": "EQ001-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Small-chain construction is unitary to floating-point precision."
+        }
+      ],
+      "numerical_form": "U = kron_j([[cos(b),-i sin(b)],[-i sin(b),cos(b)]]) * exp(-i*(J*sum zz + h dot z))[None,:]",
+      "code_refs": [
+        "src/kicked_ising/model.py::floquet_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Spectral form factor",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. KtraceU"
+        }
+      ],
+      "latex": "K(t)=|\\operatorname{tr}(U_{KI}^t)|^2=|\\sum_n e^{-it\\varphi_n}|^2",
+      "role": "figure_2_observable",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines the integer-time SFF as the squared Floquet trace."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Diagonalizing U turns tr(U^t) into the power sum of its unit-modulus eigenvalues."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For small systems, eigenvalue power sums agree with direct matrix powers."
+        }
+      ],
+      "numerical_form": "abs(sum(eigenvalues**t))**2",
+      "code_refs": [
+        "src/kicked_ising/model.py::spectral_form_factor"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Independent Gaussian longitudinal fields",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. averagedK-average"
+        }
+      ],
+      "latex": "h_j\\sim\\mathcal N(\\bar h,\\sigma^2),\\qquad \\bar K(t)=\\mathbb E_{\\boldsymbol h}[K(t)]",
+      "role": "disorder_ensemble",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The mean, variance and independence across sites are stated explicitly."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The frozen generator seed and empirical sample moments are recorded by the run."
+        }
+      ],
+      "numerical_form": "rng.normal(loc=h_mean, scale=sigma, size=L)",
+      "code_refs": [
+        "src/kicked_ising/reproduction.py::compute_sff_ensemble"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Circular-orthogonal-ensemble form factor",
+      "source_refs": [
+        {
+          "type": "paragraph",
+          "value": "Main text after SFF definition"
+        }
+      ],
+      "latex": "K_{COE}(t)=2t-t\\log(1+2t/N),\\quad 0<t<N",
+      "role": "figure_2_rmt_reference",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The below-Heisenberg-time branch is printed in the Letter."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The continuation used after t=N is continuous at N and approaches N at large t."
+        }
+      ],
+      "numerical_form": "piecewise COE formula at finite N",
+      "code_refs": [
+        "src/kicked_ising/model.py::coe_form_factor"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Space-time dual transfer representation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. dual-transfermatrix"
+        }
+      ],
+      "latex": "\\bar K(t)=\\operatorname{tr}(\\mathbb T^L),\\quad \\mathbb T=(\\widetilde U\\otimes\\widetilde U^*)\\mathbb O_\\sigma",
+      "role": "transfer_matrix_bridge",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper derives the row-wise Gaussian average and spatial transfer matrix."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Row-major vectorization maps U tensor U* to A -> U A U-dagger."
+        },
+        {
+          "id": "EQ005-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Matrix-free action matches an explicit Kronecker matrix at t=3."
+        }
+      ],
+      "numerical_form": "vec(A) -> vec(U * (O_sigma elementwise A) * U.conj().T)",
+      "code_refs": [
+        "src/kicked_ising/model.py::TransferOperator"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Gaussian dephasing contraction",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. O"
+        }
+      ],
+      "latex": "\\mathbb O_\\sigma=\\exp[-\\tfrac12\\sigma^2(M_z\\otimes I-I\\otimes M_z)^2]",
+      "role": "transfer_contraction",
+      "derived_from": [
+        "EQ003",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Gaussian characteristic function gives the printed exponential exactly."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At sigma=0 the factor is identity; for sigma>0 entries are in (0,1]."
+        }
+      ],
+      "numerical_form": "exp(-0.5*sigma**2*(magnetization[:,None]-magnetization[None,:])**2)",
+      "code_refs": [
+        "src/kicked_ising/model.py::TransferOperator"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Transfer-matrix spectral gap",
+      "source_refs": [
+        {
+          "type": "paragraph",
+          "value": "Main Figure 3 definition"
+        }
+      ],
+      "latex": "\\Delta=1-\\max_{\\lambda\\in\\operatorname{spec}(\\mathbb T),|\\lambda|<1}|\\lambda|",
+      "role": "figure_3_observable",
+      "derived_from": [
+        "EQ005",
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Letter defines the gap directly in the Figure 3 discussion."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Projected Arnoldi agrees with complete diagonalization for t<=5."
+        },
+        {
+          "id": "EQ007-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At sigma=0 the transfer operator is unitary and the gap is zero."
+        }
+      ],
+      "numerical_form": "1 - max(abs(eigs(P*T*P))) after formula-derived unit-circle deflation",
+      "code_refs": [
+        "src/kicked_ising/model.py::spectral_gap"
+      ],
+      "open_questions": [
+        "The t=10..15 code/config/checkpoint path is verified by smoke and memory preflight; the final A100 grid remains unexecuted."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Unit-modulus multiplicities and thermodynamic SFF",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. Kodd-Keven and Table I"
+        },
+        {
+          "type": "section",
+          "value": "Supplement Results in the even t case"
+        }
+      ],
+      "latex": "K_\\infty(t)=2t-1\\ (t\\le5\\text{ odd}),\\ 2t\\ (t\\ge7\\text{ odd}),\\ 2t+1\\ (t>11\\text{ even})",
+      "role": "table_1_and_thermodynamic_prediction",
+      "derived_from": [
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The theorem, even-time constructions and all exceptional sectors are explicit in the main text/supplement."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A 2t-by-2t Hilbert-Schmidt Gram matrix computes the dihedral operator rank without using table pixels or author arrays."
+        },
+        {
+          "id": "EQ008-C3",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The code adds only the appendix-derived Z, Z-prime/Z-double-prime and t=6,10 phase-pi sectors."
+        }
+      ],
+      "numerical_form": "dihedral_gram_rank(t) + appendix exception counts",
+      "code_refs": [
+        "src/kicked_ising/model.py::transfer_multiplicities"
+      ],
+      "open_questions": [
+        "The even-time result above t=11 is conjectural in the paper; outputs preserve that label."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Paper numerical algorithms",
+      "source_refs": [
+        {
+          "type": "section",
+          "value": "Supplement Numerical methods"
+        }
+      ],
+      "latex": "\\langle s|U^t|s\\rangle,\\quad U_K=(I\\cos b-i\\sigma_x\\sin b)^{\\otimes L},\\quad v_{n+1}=\\mathbb T v_n",
+      "role": "algorithmic_reproduction_route",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement states direct basis propagation and matrix-free power iteration."
+        },
+        {
+          "id": "EQ009-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At reduced L, full diagonalization evaluates the same trace; at paper L, two independent random-phase trace estimates have an unbiased cross product for the same SFF."
+        },
+        {
+          "id": "EQ009-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Projected restarted Arnoldi uses the same matrix-free diagonal/kick action and agrees with complete small-system diagonalization."
+        }
+      ],
+      "numerical_form": "dense Floquet eigenspectrum for reduced L; unbiased matrix-free random-phase trace for paper L; implicit-projection restarted Arnoldi for T",
+      "code_refs": [
+        "src/kicked_ising/model.py",
+        "src/kicked_ising/paper_scale.py",
+        "src/kicked_ising/reproduction.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

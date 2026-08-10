@@ -1,0 +1,401 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.02414",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "XXZ root-of-unity string content and bare kernels",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text Numerical evaluations; root-of-unity TBA conventions traced through Ref. 23"
+        },
+        {
+          "type": "equation",
+          "value": "Bertini et al., arXiv:1605.09790, Supplementary TBA equations"
+        }
+      ],
+      "latex": "gamma=pi/ell; (n_j,v_j)=(j,+1), j=1,...,ell-1, and (n_ell,v_ell)=(1,-1); a_n^v(lambda)=v sin(n gamma)/[pi(cosh(2 lambda)-v cos(n gamma))]",
+      "role": "root_of_unity_bare_tba",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "At exact roots, analytically zero regular kernels are set to zero rather than evaluated as a floating-point 0/0 limit."
+      ],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The string content, parities, a-kernel, and scattering-kernel sum are printed in the cited TBA supplement."
+        },
+        {
+          "id": "EQ001-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The implemented kernels are even in rapidity and vanish for regular sin(n gamma)=0 terms."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tba.py::RootOfUnityXXZ"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Infinite-temperature filling fractions",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "High-temperature root-of-unity Y-system cited by the paper"
+        },
+        {
+          "type": "equation",
+          "value": "Ilievski and De Nardis, arXiv:1808.09033, Eqs. (3.10)-(3.11) and high-temperature Y-system"
+        }
+      ],
+      "latex": "theta_j=1/(j+1)^2 for j=1,...,ell-2; theta_(ell-1)=1/ell; theta_ell=(ell-1)/ell",
+      "role": "infinite_temperature_half_filling_state",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The boundary Y-functions and their magnetic derivatives determine the final pair; the remaining constants follow the root-of-unity Y-system."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "All fillings lie strictly between zero and one and the computed spin susceptibility converges to 1/4."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tba.py::infinite_temperature_fillings"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Root densities and dressed velocities",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "TBA equation and dressed excitation formulas in Ref. 23 supplementary material"
+        },
+        {
+          "type": "method",
+          "value": "Main text: v_eff and dressed scattering data evaluated on the stationary state"
+        }
+      ],
+      "latex": "a_j=sigma_j rho_j^tot+sum_k T_jk*rho_k; rho_j=theta_j rho_j^tot; v_j^eff rho_j=(2 pi)^(-1)[diag(sigma/theta)+T]^{-1} e'_j",
+      "role": "stationary_tba_and_velocity",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The TBA density equation and dressed velocity definition are printed in the cited GHD derivation."
+        },
+        {
+          "id": "EQ003-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Densities are positive, velocities are odd in rapidity, and the charged-mode maximum speed is stable under grid refinement."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tba.py::solve_stationary_state"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Weak-domain-wall Euler magnetization profile",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text Eq. (6), Euler GHD"
+        },
+        {
+          "type": "equation",
+          "value": "Main text Eq. (13) with diffusion removed"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 1 dashed theoretical curves"
+        }
+      ],
+      "latex": "m_E(x,t)/mu=(1/2) sum_a int d lambda w_a(lambda) sign(v_a^eff(lambda)t-x), w=rho_a(1-theta_a)(h_a^dr)^2/chi",
+      "role": "euler_domain_wall_profile",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not print its rapidity quadrature or spatial plotting grid."
+      ],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Euler equation, partitioning protocol, and Fig. 1 caption fix the observable, times, anisotropy, and initial wall."
+        },
+        {
+          "id": "EQ004-A",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The profile is odd, bounded by plus/minus 1/2, and tends to the initial plateaus outside the light cone."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/reproduction.py::euler_profile"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Dressed scattering kernel",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text Eq. (9) and definition of T^dr below Eq. (5)"
+        },
+        {
+          "type": "equation",
+          "value": "De Nardis et al., arXiv:1812.00767, Eq. for T^dr with quasiparticle parities"
+        }
+      ],
+      "latex": "T^dr=(1+T theta sigma)^(-1) T in the symmetric XXZ sign convention used here",
+      "role": "dressed_two_body_scattering",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that the diffusion kernel is controlled by the dressed two-body scattering kernel; the parity-resolved resolvent is printed in the cited long derivation."
+        },
+        {
+          "id": "EQ005-Y",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The discretized resolvent obeys its defining linear equation and is symmetric to numerical precision."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tba.py::dressed_scattering_kernel"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Spin Onsager coefficient (D C)_zz",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text Eq. (9)"
+        },
+        {
+          "type": "text",
+          "value": "Main text numerical values 0.137, 0.281, 0.744 for ell=3,4,7"
+        },
+        {
+          "type": "equation",
+          "value": "De Nardis et al., arXiv:1812.00767, multi-species symmetric-kernel formula"
+        }
+      ],
+      "latex": "(D C)_zz=(1/2) sum_ab int d lambda d alpha rho_a f_a rho_b f_b |v_a-v_b| (T_ab^dr)^2 [h_b^dr/(sigma_b rho_b^tot)-h_a^dr/(sigma_a rho_a^tot)]^2",
+      "role": "spin_onsager_coefficient",
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The independently converged ell=7 value is about 1.8% below the paper's three-decimal value; no undocumented correction is fitted."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The general Onsager formula and all three XXZ comparison values are printed in the paper."
+        },
+        {
+          "id": "EQ006-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The double integral is non-negative; ell=3 and ell=4 reproduce the printed values within their quoted three-digit precision and ell=7 is reported with its residual."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tba.py::spin_onsager_coefficient"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Projected collective-spin diffusive profile",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text Eq. (13), linearized diffusive GHD"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 1 solid theoretical curves"
+        }
+      ],
+      "latex": "m_proj(x,t)/mu=(1/2) sum_a int d lambda w_a erf[(v_a t-x)/sqrt(2 D_spin t)], D_spin=(D C)_zz/chi",
+      "role": "reduced_collective_mode_diffusion",
+      "derived_from": [
+        "EQ004",
+        "EQ006"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "This is a scalar collective-spin projection of the non-diagonal operator in Eq. (13), not the paper's full spectral diffusion operator."
+      ],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (13) fixes the factor 1/2 in the diffusion term and the paper identifies the solid curves as its prediction."
+        },
+        {
+          "id": "EQ007-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The profile reduces to the Euler result as D_spin tends to zero, remains odd, and conserves the two asymptotic plateaus."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/reproduction.py::projected_diffusive_profile"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Purification TEBD for the weak mixed-state domain wall",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text below Eq. (13): H_XXZ=sum_x[S+_x S-_(x+1)+S-_x S+_(x+1)+(Delta/2)Sz_x Sz_(x+1)]"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 1 caption: Delta=cos(pi/7), mu=0.05, rho_0 proportional to left exp(mu Sz) times right exp(-mu Sz), t=10,20,40"
+        }
+      ],
+      "latex": "|Psi_0>=tensor_x sum_s sqrt(p_x(s)) |s>_phys|s>_anc, p_x(s)=exp[sign(-x) mu s]/Z_x; |Psi(t)>=exp(-i H_XXZ t) tensor I_anc |Psi_0>",
+      "role": "independent_tdmrg_marker_generation",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not report chain length, bond dimension, time step, or truncation threshold for the cited marker calculation; these are controlled by explicit convergence variants rather than guessed as author-identical settings."
+      ],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian, anisotropy, mixed product state, chemical potential, observable, and three times are printed in the paper and caption."
+        },
+        {
+          "id": "EQ008-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The local purification exactly reproduces the normalized exp(plus/minus mu Sz) density matrices; the two-site gate is unitary."
+        },
+        {
+          "id": "EQ008-C",
+          "type": "conservation",
+          "status": "passed",
+          "reason": "The independent small-chain test conserves purification norm and total Sz and verifies checkpoint/resume equivalence."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/tdmrg.py::initial_domain_wall_purification",
+        "src/xxz_diffusion/tdmrg.py::evolve_domain_wall",
+        "scripts/run_tdmrg.py"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Full non-diagonal spectral diffusion evolution",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text after Eq. (9): D=(1-nT)^-1 rho_s D_tilde rho_s^-1 (1-nT)"
+        },
+        {
+          "type": "equation",
+          "value": "Main text kernel formula: rho_s(theta)^2 D_tilde(theta,alpha)=w(theta)delta(theta-alpha)-W(theta,alpha)"
+        },
+        {
+          "type": "equation",
+          "value": "Main text Eq. (13): partial_t n+v_eff partial_x n=(1/2)D_tilde partial_x^2 n"
+        }
+      ],
+      "latex": "W(theta,alpha)=rho_p(theta)(1-n(theta))[T_dr(theta,alpha)]^2|v_eff(theta)-v_eff(alpha)|; w(theta)=int d alpha W(alpha,theta)",
+      "role": "paper_exact_full_spectral_diffusive_profile",
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not print its rapidity, spatial, or time-step grids; the code declares independent convergence variants instead of fitting those discretizations to the source figure."
+      ],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The full W, w, D_tilde kernel and linearized PDE are printed explicitly in the manuscript source."
+        },
+        {
+          "id": "EQ009-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently discretized smoke operator has non-negative-real spectrum up to floating-point residual and a real, odd, bounded profile."
+        },
+        {
+          "id": "EQ009-R",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The magnetic occupation response and readout contract to the independently computed susceptibility."
+        }
+      ],
+      "code_refs": [
+        "src/xxz_diffusion/full_ghd.py::spectral_diffusion_operator",
+        "src/xxz_diffusion/full_ghd.py::evolve_linearized_full_ghd",
+        "scripts/run_full_ghd.py"
+      ]
+    }
+  ]
+}

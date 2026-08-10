@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "paper_id": "1810.00888",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Rydberg-blockaded PXP Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (1), main.tex lines 102-116"
+        }
+      ],
+      "latex": "H=\\sum_j P_{j-1}X_jP_{j+1}",
+      "role": "constrained_many_body_spectrum",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "PBC/OBC boundary terms and blockade projectors are printed explicitly."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Constrained dimensions, Hermiticity, zero diagonal and full-vs-sector spectra pass at L=10."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::build_basis",
+        "src/exact_scars/model.py::build_hamiltonian"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Exact B/C matrix-product scar states",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eqs. (2)-(7); supplement Secs. I and III"
+        }
+      ],
+      "latex": "|Phi_1>=sum Tr[B^{sigma_1}C^{sigma_2}...]|sigma>; |Gamma_{alpha,beta}>=sum v_alpha^T B C ... v_beta |sigma>",
+      "role": "exact_scar_state_construction",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Every B, C and boundary-vector entry is printed in the article."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All four Gamma states satisfy Hpsi=Epsi to below 2e-15 in independent full-basis evaluation."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::mps_matrices",
+        "src/exact_scars/model.py::gamma_state"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Exact OBC local-energy profile",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Sec. VI, formula for <X_(2b-1)>=<X_(2b)>"
+        }
+      ],
+      "latex": "<X_{2b-1}>=<X_{2b}>=sqrt(2)[(-1)^alpha(-1)^b3^{-b}+(-1)^beta(-1)^{Lb-b}3^{-Lb+b-1}]/[1+(-1)^{Lb+alpha+beta}3^{-Lb}]",
+      "role": "main_figure_1_profiles",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "Main text prints decay length 2 ln(3), while this formula implies 2/ln(3) in physical-site units."
+      ],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The finite-L expression is fully printed in Supplemental Sec. VI."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Closed form and direct MPS/full-basis expectations agree within 1.84e-15 at L=18."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::local_x_profile_formula",
+        "src/exact_scars/model.py::local_x_profile"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Bond-dimension-2 SMA/MMA",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main SMA/MMA equations following Fig. 2; supplement Sec. IX"
+        }
+      ],
+      "latex": "|Xi_n>=[|M_n>+(-1)^{Lb+n}T_x|M_n>]/xi_n",
+      "role": "main_figure_2_and_variational_subspace",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "M matrices, symmetry phase and mu1/mu2 are printed."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At L=26: E=-1.314670 and variance=0.026330 versus printed -1.3147 and 0.0263."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::_block2_matrices",
+        "src/exact_scars/model.py::build_trial_family"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Forward scattering approximation",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Sec. VIII, H+ recursion and projected Hamiltonian"
+        }
+      ],
+      "latex": "|n>=(H^+)^n|Z_2>/||(H^+)^n|Z_2>||; H_FSA=P_FSA H P_FSA",
+      "role": "supplement_fsa_overlap_figure",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The full H+ definition and n=0..L construction are printed."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The campaign constructs exactly L+1=27 FSA states and reproduces the annotated overlap sequence."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::build_hplus",
+        "src/exact_scars/model.py::fsa_states"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Bond-dimension-3 SMA/MMA",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Sec. IX.C, N and tilde-N matrices"
+        }
+      ],
+      "latex": "|Upsilon_n>=[|N_n>+(-1)^{Lb+n}T_x|N_n>]/upsilon_n",
+      "role": "supplement_bond3_figures",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "Printed variational parameters are rounded, producing a small tilde-Upsilon energy/variance sensitivity."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All seven N and four tilde-N parameters and all matrix entries are printed."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At L=26 Upsilon1 gives E=1.339591 and variance=0.007220 versus printed 1.3396 and 0.007201."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::_block3_matrices",
+        "src/exact_scars/model.py::build_trial_family"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Half-chain von Neumann entropy",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Sec. X and Figure EEscaling"
+        }
+      ],
+      "latex": "S=-Tr rho_A ln rho_A; rho_A=Tr_B |psi><psi|",
+      "role": "supplement_entropy_scaling",
+      "derived_from": [
+        "EQ001",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The half-chain cut, five state families and L=16..26 range are explicit."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "All compressed Schmidt probabilities normalize to one and all six sizes produce finite entropy."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::entanglement_entropy"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Variational-subspace generalized eigenproblem",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Sec. XI, H_eff v=lambda B v"
+        }
+      ],
+      "latex": "[H_eff]_{nm}=<Xi_n|H|Xi_m>; B_{nm}=<Xi_n|Xi_m>; H_eff v=lambda Bv",
+      "role": "supplement_rediagonalized_overlap_figure",
+      "derived_from": [
+        "EQ001",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The 13-state basis and generalized eigenproblem are printed explicitly."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All 13 generalized eigenstates normalize and reproduce the reported near-ground-state improvement."
+        }
+      ],
+      "code_refs": [
+        "src/exact_scars/model.py::projected_variational_diagonalization"
+      ]
+    }
+  ]
+}

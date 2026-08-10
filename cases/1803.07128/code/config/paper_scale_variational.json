@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "paper_id": "1803.07128",
+  "run_id": "1803.07128-fig8-cutoff-seed-campaign-v1",
+  "output_root": "outputs/data/paper_scale_variational",
+  "parameters": {
+    "variational_c": 1.5,
+    "variational_blocks": 4,
+    "variational_parameter_count": 32,
+    "variational_steps": 5000,
+    "variational_batch_size": 5,
+    "total_samples": 200,
+    "train_samples": 150,
+    "noise": 0.1,
+    "initial_parameter_std": 0.04,
+    "learning_rate": 0.02,
+    "l2_regularization": 0.0001,
+    "cutoffs": [
+      8,
+      12,
+      16,
+      20,
+      24,
+      28,
+      32
+    ],
+    "seeds": [
+      9,
+      19,
+      29
+    ],
+    "variational_grid_points": 121,
+    "grid_padding": 0.25,
+    "prediction_chunk_size": 256,
+    "checkpoint_every_steps": 50
+  },
+  "acceptance": {
+    "dense_crosscheck_cutoff": 4,
+    "maximum_cutoff_retained_probability_min": 0.97,
+    "maximum_cutoff_train_accuracy_min": 0.9,
+    "maximum_cutoff_test_accuracy_min": 0.85,
+    "maximum_cutoff_loss_reduction_ratio_max": 0.3,
+    "final_cutoff_probability_mean_absolute_delta_max": 0.03
+  },
+  "execution": {
+    "device": "auto",
+    "recommended_shards": 21,
+    "parallel_conditions_per_a100": 1,
+    "checkpoint_boundary": "50 optimizer steps within one cutoff/seed condition",
+    "resume": true,
+    "hardware_route": "A100 preferred for cutoff 16 and above; deterministic CPU fallback remains valid",
+    "estimated_wall_time": "profile on A100; allow up to four days for the full 21-condition campaign"
+  },
+  "disclosures": {
+    "paper_fixed": [
+      "squeezing c=1.5",
+      "four circuit blocks and 32 real parameters",
+      "5000 training steps",
+      "batch size five",
+      "printed gate generators and photon-probability readout"
+    ],
+    "paper_omitted_reconstructed": [
+      "dataset seed and noise realization",
+      "Fock cutoff",
+      "parameter initialization",
+      "Adam learning rate and schedule",
+      "L2 coefficient"
+    ],
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false
+  },
+  "review_policy": {
+    "automatic_paper_error_label": false,
+    "stable_mismatch_initial_class": "inconclusive",
+    "paper_error_candidate_requires": [
+      "paper-exact disclosed parameters",
+      "cutoff and optimization convergence",
+      "two independent numerical checks",
+      "explicit falsification attempt",
+      "precise source claim location",
+      "fresh-context independent review"
+    ],
+    "missing_training_metadata_prevents_exact_pixel_adjudication": true
+  }
+}

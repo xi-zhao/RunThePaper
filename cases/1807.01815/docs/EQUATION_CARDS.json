@@ -1,0 +1,410 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.01815",
+  "cards": [
+    {
+      "id": "EQ-H",
+      "title": "Kinetically constrained spin-s Hamiltonian",
+      "latex": "H=\\Omega\\sum_i\\mathcal P S_i^x\\mathcal P,\\quad \\langle n+1|S^x|n\\rangle=\\tfrac12\\sqrt{(2s-n)(n+1)}",
+      "role": "Defines the exact sparse and blocked-MPS quantum dynamics and the level-statistics operator.",
+      "source_refs": [
+        "main Eq. (1)",
+        "main text immediately below Eq. (1)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Enumerate periodic configurations with no adjacent nonzero occupations for exact diagonalization, or pair physical sites into the exact constrained block basis |00>,|01>,|10> for paper-scale MPS evolution; apply the spin flip only when both neighbours are zero.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py",
+        "src/scar_tdvp/fig2_tdmrg.py::blocked_bond_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "EQ-H-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "paper-source/Quantum_ManybodyScar_Main_v16_arxiv.tex:316-337"
+        },
+        {
+          "id": "EQ-H-hermitian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "evidence": "The n-to-n+1 and reverse matrix elements are identical real numbers."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-MPS",
+      "title": "Normalized projected coherent-state MPS",
+      "latex": "|\\psi(\\boldsymbol\\theta)\\rangle=\\mathrm{Tr}(A_1\\cdots A_L),\\quad A_i=\\begin{pmatrix}P_i|\\theta_i\\rangle&Q_i|\\theta_i\\rangle\\\\|0\\rangle_i&0\\end{pmatrix}",
+      "role": "Provides a source-independent way to evaluate the variational state and tangent vectors.",
+      "source_refs": [
+        "main Eqs. (2)-(3)",
+        "Supplement I"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "For occupation n, use amplitude (-i)^n sqrt(C(2s,n)) cos(theta/2)^(2s-n) sin(theta/2)^n in the 2x2 physical MPS matrix and normalize the finite ring explicitly.",
+      "code_refs": [
+        "src/scar_tdvp/tdvp.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-MPS-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "Supplement I, MPS representation and Norm subsections"
+        },
+        {
+          "id": "EQ-MPS-product",
+          "type": "normalization",
+          "status": "passed",
+          "evidence": "At theta_i=0 the trace product has the sole amplitude |00...0> with unit norm."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-FLOW",
+      "title": "Two-site TDVP flow",
+      "latex": "\\dot\\theta_e=f(\\theta_e,\\theta_o),\\quad f(x,y)=\\Omega[1-c_x^{4s-2}+c_x^{4s-2}c_y^{2s}+2s\\,s_x c_x^{6s-1}\\tan(y/2)]",
+      "role": "Generates the phase portraits and undeformed periodic orbits.",
+      "source_refs": [
+        "main Eq. (4)",
+        "Supplement II, Equations of motion"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Evaluate paired odd/even RHS with Omega=1; split integration at coordinate singularities rather than changing the physical state.",
+      "code_refs": [
+        "src/scar_tdvp/tdvp.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-FLOW-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "paper-source/Quantum_ManybodyScar_Main_v16_arxiv.tex:451-461 and supplement:711-734"
+        },
+        {
+          "id": "EQ-FLOW-Z2",
+          "type": "limiting_case",
+          "status": "passed",
+          "evidence": "At (theta_e,theta_o)=(pi,0), dot(theta_e)=Omega and the transverse component vanishes in the regular chart."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-GAMMA",
+      "title": "Intensive TDVP leakage",
+      "latex": "\\gamma=\\|iH|\\psi\\rangle+\\dot\\theta_e|\\partial_e\\psi\\rangle+\\dot\\theta_o|\\partial_o\\psi\\rangle\\|/\\sqrt L",
+      "role": "Quantifies how rapidly exact motion leaves the variational manifold.",
+      "source_refs": [
+        "main Eq. (5)",
+        "Supplement Eq. (S error) and Error calculation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Construct normalized finite-ring MPS and analytic tangent vectors, apply the independently built constrained Hamiltonian, and take the Euclidean residual norm divided by sqrt(L).",
+      "code_refs": [
+        "src/scar_tdvp/tdvp.py",
+        "src/scar_tdvp/constrained.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-GAMMA-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "main lines 470-482 and supplement lines 440-458"
+        },
+        {
+          "id": "EQ-GAMMA-Z2",
+          "type": "limiting_case",
+          "status": "passed",
+          "evidence": "At the Neel product point H|psi> is exactly the collective tangent in the regular chart, so gamma tends to zero."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-R",
+      "title": "Adjacent-gap ratio",
+      "latex": "r=\\langle\\min(s_n,s_{n-1})/\\max(s_n,s_{n-1})\\rangle,\\quad s_n=E_{n+1}-E_n",
+      "role": "Tests the crossover from Poisson to GOE level statistics.",
+      "source_refs": [
+        "main Fig. 2(a) caption"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Diagonalize the k=0, inversion-even block, sort energies, remove only machine-zero gaps, and average adjacent ratios.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-R-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "main Fig. 2 caption"
+        },
+        {
+          "id": "EQ-R-bounds",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "evidence": "Every ratio lies in [0,1]; reference ensemble means are approximately 0.386 and 0.536."
+        }
+      ],
+      "open_questions": [
+        "The exact L list used for each spin in Fig. 2(a) is not printed."
+      ]
+    },
+    {
+      "id": "EQ-ENT",
+      "title": "Subsystem entanglement entropy",
+      "latex": "\\rho_A=\\mathrm{Tr}_{\\bar A}|\\psi\\rangle\\langle\\psi|,\\quad S_A=-\\mathrm{Tr}(\\rho_A\\log_2\\rho_A)",
+      "role": "Generates Fig. 2(b,c) from independently evolved periodic L=30 state amplitudes.",
+      "source_refs": [
+        "main Fig. 2 caption",
+        "Supplement IV"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "For reduced exact evidence, expand translation-orbit coefficients and trace equal environment configurations. For the paper-scale lane, contract the checkpointed blocked MPS to the three-block and one-block reduced density matrices, trace the unobserved spin inside the one-block matrix, and diagonalize both.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py",
+        "src/scar_tdvp/fig2_tdmrg.py::observe_entropies"
+      ],
+      "checks": [
+        {
+          "id": "EQ-ENT-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "main Fig. 2 caption; Supplement IV explicitly uses log base 2"
+        },
+        {
+          "id": "EQ-ENT-product",
+          "type": "limiting_case",
+          "status": "passed",
+          "evidence": "A product-state amplitude tensor has rank-one rho_A and S_A=0."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-THERM",
+      "title": "Constrained infinite-temperature local magnetization",
+      "latex": "\\langle S_i^z\\rangle_{\\infty}=-s\\frac{-1+4s+\\sqrt{1+8s}}{1+8s+\\sqrt{1+8s}}",
+      "role": "Supplies a non-fitted thermalization check for the zero-state quenches.",
+      "source_refs": [
+        "Supplement IV, final boxed equation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Evaluate directly for s=1/2,1,2 and compare long-time zero-state averages.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py",
+        "src/scar_tdvp/reproduction.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-THERM-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "supplement lines 947-959"
+        },
+        {
+          "id": "EQ-THERM-values",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "evidence": "Direct substitution gives -0.2236068, -0.5, and -1.05317 for s=1/2,1,2."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-DEF-H",
+      "title": "Deformed constrained Hamiltonian",
+      "latex": "H_h=\\Omega\\sum_i\\mathcal P S_i^x\\mathcal P+h\\sum_i(P_{i-1}S_i^xP_{i+1}S_{i+2}^z+S_{i-2}^zP_{i-1}S_i^xP_{i+1})",
+      "role": "Defines the exact deformed generator used to evaluate Supplement Fig. S2 residuals.",
+      "source_refs": [
+        "Supplement V, first displayed equation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Modify each allowed spin-1/2 flip by the two next-nearest Sz eigenvalues, then independently project the matrix Hamiltonian onto the two MPS tangents.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py",
+        "src/scar_tdvp/tdvp.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-DEF-H-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "Supplement V prints the Hamiltonian immediately before the deformed MPS equations."
+        },
+        {
+          "id": "EQ-DEF-H-projection",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "evidence": "The independently constructed matrix Hamiltonian projects to the printed deformed flow within 3.9e-4 at L=12."
+        }
+      ],
+      "open_questions": [
+        "The generated converged residual does not reproduce the Fig. S2 minimum near h/Omega=0.045, while the supplement omits the closed deformed residual construction and numerical orbit-integral procedure. Protocol-v2 therefore assigns parameter_ambiguity; paper_error_candidate is blocked by paper_exact=false and fresh_independent_review=false."
+      ]
+    },
+    {
+      "id": "EQ-DEF-FLOW",
+      "title": "Deformed s=1/2 TDVP flow",
+      "latex": "\\dot\\theta_e=\\Omega\\sec(\\theta_o/2)[c_o^2+c_e^2s_es_o]+h\\sec(\\theta_o/2)[\\cos\\theta_e c_o^2+c_e^2\\cos\\theta_o s_es_o],\\quad(e\\leftrightarrow o)",
+      "role": "Generates Figs. S1-S2 for the deformed Hamiltonian.",
+      "source_refs": [
+        "Supplement V"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Use the printed four h/Omega values for S1 and h/Omega=0..0.08 for S2; preserve coordinate-chart jumps.",
+      "code_refs": [
+        "src/scar_tdvp/tdvp.py"
+      ],
+      "checks": [
+        {
+          "id": "EQ-DEF-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "supplement lines 963-990"
+        },
+        {
+          "id": "EQ-DEF-h0",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "evidence": "Expanding sec(theta_o/2)[cos^2(theta_o/2)+cos^2(theta_e/2)sin(theta_e/2)sin(theta_o/2)] equals EQ-FLOW for s=1/2."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MTH-T2",
+      "title": "Translation-by-two orbit basis",
+      "statement": "For an orbit alpha of size p_alpha, |alpha>=p_alpha^{-1/2} sum_{x in alpha}|x>; a transition sum A from one representative alpha to orbit beta gives H_{beta,alpha}=sqrt(p_alpha/p_beta) A.",
+      "role": "Makes reduced exact product-state dynamics fit in local memory without changing the quantum model.",
+      "source_refs": [
+        "Main Figs. 1b, 2b-c, and 4b,d use two-site-periodic initial states and periodic boundaries"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Build exact T^2 orbits, normalized orbit states, and parity-averaged local observables.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py"
+      ],
+      "checks": [
+        {
+          "id": "MTH-T2-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "main text states theta_i=theta_{i+2}; all quench states have period one or two"
+        },
+        {
+          "id": "MTH-T2-norm",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "evidence": "Disjoint product states make every normalized orbit vector unit norm; edge counting makes the reduced Hamiltonian Hermitian."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MTH-BLOCK-TDMRG",
+      "title": "Exact pair blocking and finite-MPS time evolution",
+      "statement": "In the pair basis |00>,|01>,|10>, H=sum_j[X_right(j) P_left(j+1)+P_right(j) X_left(j+1)]; on the invariant globally constrained subspace the periodic sum is exactly the physical PXP ring, and a symmetric product formula evolves an MPS with controlled time-step and bond-dimension refinements.",
+      "role": "Provides the scalable paper-scale path for the periodic L=30 six-site and one-site entropies in Main Fig. 2(b,c).",
+      "source_refs": [
+        "Main Eq. (1)",
+        "Main Fig. 2(b,c) caption"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Use 15 three-state blocks, periodic bond gates, max bond dimensions 512/768, time steps 0.025/0.0125, digest-bound checkpoints every 2/Omega, and base-2 reduced-density-matrix entropies through t*Omega=100/120.",
+      "code_refs": [
+        "src/scar_tdvp/fig2_tdmrg.py",
+        "scripts/run_fig2_tdmrg.py"
+      ],
+      "checks": [
+        {
+          "id": "MTH-BLOCK-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "Main Eq. (1) gives the projected spin-flip Hamiltonian and the Main Fig. 2 caption fixes periodic L=30 and the entropy/time ranges."
+        },
+        {
+          "id": "MTH-BLOCK-exact",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "evidence": "tests/test_fig2_tdmrg.py compares the blocked periodic Hamiltonian with the independently enumerated physical constrained Hamiltonian to 1e-14."
+        },
+        {
+          "id": "MTH-TDMRG-exact",
+          "type": "small_system_equivalence",
+          "status": "passed",
+          "evidence": "tests/test_fig2_tdmrg.py compares the symmetric MPS product formula with dense periodic evolution."
+        },
+        {
+          "id": "MTH-TDMRG-resume",
+          "type": "restart_identity",
+          "status": "passed",
+          "evidence": "tests/test_fig2_tdmrg.py verifies checkpoint/resume and uninterrupted smoke curves agree to 2e-12."
+        },
+        {
+          "id": "MTH-TDMRG-shards",
+          "type": "campaign_contract",
+          "status": "passed",
+          "evidence": "tests/test_fig2_tdmrg.py executes all six smoke shards, merges their digest-matched outputs, and verifies a subsequent resume skips every lane."
+        },
+        {
+          "id": "MTH-TDMRG-constraint",
+          "type": "physical_invariant",
+          "status": "passed",
+          "evidence": "The independent forbidden-pair contraction matches dense evaluation below 1e-11; the final L=8 smoke keeps total forbidden-state weight below 4.12e-12."
+        }
+      ],
+      "open_questions": [
+        "The paper fixes L=30 and the plotted time ranges but does not report its numerical time step, bond dimension, truncation cutoff, or even an explicit tensor-network evolution method; the independent campaign therefore declares and refines all three controls rather than attributing them to the authors."
+      ]
+    },
+    {
+      "id": "MTH-DIH",
+      "title": "Momentum-zero inversion-even orbit basis",
+      "statement": "Equal-weight normalized orbits of the dihedral translation/reflection group span the k=0, inversion-even sector used in Fig. 2(a).",
+      "role": "Implements the explicitly named level-statistics symmetry sector.",
+      "source_refs": [
+        "Main Fig. 2(a) caption"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Enumerate dihedral orbits, build the exact projected Hamiltonian by orbit edge counting, then diagonalize the reduced dense matrix.",
+      "code_refs": [
+        "src/scar_tdvp/constrained.py"
+      ],
+      "checks": [
+        {
+          "id": "MTH-DIH-source",
+          "type": "source_trace",
+          "status": "passed",
+          "evidence": "Fig. 2(a) explicitly specifies momentum zero and inversion symmetry"
+        },
+        {
+          "id": "MTH-DIH-projector",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "evidence": "Equal-weight group averaging projects onto the trivial translation and reflection representation."
+        }
+      ],
+      "open_questions": [
+        "The paper does not list every system size used in the plotted sequence."
+      ]
+    }
+  ]
+}

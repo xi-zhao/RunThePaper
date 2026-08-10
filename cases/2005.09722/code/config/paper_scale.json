@@ -1,0 +1,372 @@
+{
+  "schema_version": 2,
+  "paper_id": "2005.09722",
+  "mode": "paper_scale_code_ready",
+  "parameters": {
+    "campaign_contract_sha256": "bbebb03d0eae7754c1abf2f063e8a1ab75de606d211db07ba7476c5bcc997d0b",
+    "seed_base": 200509722000000,
+    "lag_seed_offset": 1000000000,
+    "dt": 0.05,
+    "steady_state": {
+      "gamma_time_product": 6.0,
+      "minimum": 20.0,
+      "maximum": 150.0,
+      "gamma_zero_time": 60.0
+    },
+    "histogram": {
+      "minimum": 0.0,
+      "maximum": 100.0,
+      "bins": 400
+    },
+    "bkt_transform": {
+      "gamma_c": 0.31,
+      "alpha": 3.99,
+      "status": "independent_pilot_choice_not_author_exact"
+    }
+  },
+  "execution": {
+    "output_root": "outputs/data/paper_scale",
+    "default_backend": "numpy",
+    "checkpoint_after_each_trajectory": true,
+    "resume_requires_config_and_record_hash_match": true,
+    "persist_full_states": false
+  },
+  "smoke": {
+    "length": 8,
+    "gamma": 0.5,
+    "t_final": 0.1,
+    "purpose": "exercise every family without changing paper-scale declarations"
+  },
+  "target_map": {
+    "T001": "regular_qsd",
+    "T002": "regular_qsd",
+    "T003": "regular_qsd",
+    "T004": "regular_qsd",
+    "T005": "regular_qsd",
+    "T006": "regular_qsd",
+    "T007": "regular_qsd",
+    "T008": "regular_qsd",
+    "T009": "regular_qsd",
+    "T010": "regular_qsd",
+    "T011": "regular_qsd",
+    "T012": "regular_qsd",
+    "T013": "regular_qsd",
+    "T014": "regular_qsd",
+    "T015": "regular_qsd",
+    "T016": "regular_qsd",
+    "T017": "regular_qsd",
+    "T018": "time_qsd",
+    "T019": "quantum_jump",
+    "T020": "quantum_jump",
+    "T021": "quantum_jump",
+    "T022": "qsdc_control",
+    "T023": "autocorrelation",
+    "T024": "density_identity",
+    "T025": "random_hopping",
+    "T026": "histogram_qsd",
+    "T027": "histogram_qsd",
+    "T028": "histogram_qsd",
+    "T029": "histogram_qsdc",
+    "T030": "histogram_qsdc",
+    "T031": "histogram_qsdc"
+  },
+  "families": {
+    "regular_qsd": {
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017"
+      ],
+      "sizes": [
+        200,
+        400,
+        600,
+        800
+      ],
+      "gammas": [
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.5,
+        0.6,
+        0.8,
+        1.0,
+        2.0,
+        4.0,
+        6.0
+      ],
+      "trajectories": 100,
+      "shards": 10,
+      "subsystem_points": 24,
+      "distance_points": 28,
+      "cross_ratio": {
+        "length": 400,
+        "gammas": [
+          0.25,
+          6.0
+        ],
+        "blocks": [
+          4,
+          8,
+          12,
+          16,
+          24,
+          32
+        ],
+        "gaps": [
+          2,
+          4,
+          8,
+          12,
+          16,
+          24,
+          32,
+          48,
+          64
+        ]
+      },
+      "parameter_provenance": "printed sizes and dt; ensemble count, gamma mesh, fit grid, and random seed are declared independent choices"
+    },
+    "time_qsd": {
+      "target_ids": [
+        "T018"
+      ],
+      "length": 800,
+      "gammas": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.35,
+        0.5,
+        0.8,
+        1.0,
+        2.0,
+        4.0,
+        6.0
+      ],
+      "t_final": 150.0,
+      "sample_times": [
+        0.0,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        15.0,
+        20.0,
+        30.0,
+        40.0,
+        60.0,
+        80.0,
+        100.0,
+        125.0,
+        150.0
+      ],
+      "trajectories": 50,
+      "shards": 10,
+      "parameter_provenance": "printed L=800 and dt; ensemble count and random seed are independent choices"
+    },
+    "quantum_jump": {
+      "target_ids": [
+        "T019",
+        "T020",
+        "T021"
+      ],
+      "length": 200,
+      "gammas": [
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.8,
+        1.0,
+        2.0
+      ],
+      "trajectories": 100,
+      "shards": 10,
+      "subsystem_points": 24,
+      "steady_time_max": 80.0,
+      "parameter_provenance": "printed L=200; ensemble count, gamma mesh, and random seed are independent choices"
+    },
+    "qsdc_control": {
+      "target_ids": [
+        "T022"
+      ],
+      "length": 400,
+      "gammas": [
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.35,
+        0.5,
+        0.8,
+        1.0,
+        2.0,
+        4.0,
+        6.0
+      ],
+      "trajectories": 100,
+      "shards": 10,
+      "parameter_provenance": "printed L=400; ensemble count, gamma mesh, and random seed are independent choices"
+    },
+    "autocorrelation": {
+      "target_ids": [
+        "T023"
+      ],
+      "length": 400,
+      "gammas": [
+        0.15,
+        0.5,
+        2.0,
+        6.0
+      ],
+      "taus": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0,
+        1.5,
+        2.0,
+        3.0,
+        5.0,
+        8.0,
+        12.0,
+        20.0,
+        35.0,
+        60.0,
+        100.0
+      ],
+      "trajectories": 100,
+      "shards": 10,
+      "parameter_provenance": "printed L=400; ensemble count, lag mesh, gamma mesh, and random seed are independent choices"
+    },
+    "density_identity": {
+      "target_ids": [
+        "T024"
+      ],
+      "length": 400,
+      "gamma": 0.35,
+      "groups": [
+        "product",
+        "density_density"
+      ],
+      "trajectories": 250,
+      "shards": 25,
+      "distance_points": 28,
+      "parameter_provenance": "printed independent 250+250 construction and L=400; gamma, distance mesh, and random seed are independent choices"
+    },
+    "random_hopping": {
+      "target_ids": [
+        "T025"
+      ],
+      "length": 200,
+      "gammas": [
+        0.02,
+        0.05,
+        0.075,
+        0.1,
+        0.2,
+        0.5
+      ],
+      "trajectories": 100,
+      "shards": 10,
+      "subsystem_points": 24,
+      "steady_time_max": 200.0,
+      "update_interval": 1.0,
+      "parameter_provenance": "printed L=200 and binary update rule; ensemble count, gamma mesh, and random seed are independent choices"
+    },
+    "histogram_qsd": {
+      "target_ids": [
+        "T026",
+        "T027",
+        "T028"
+      ],
+      "length": 200,
+      "gammas": [
+        0.25,
+        2.0,
+        6.0
+      ],
+      "trajectories": 5000,
+      "shards": 50,
+      "parameter_provenance": "printed L=200, gamma values, and 5000 trajectories; binning and random seed are independent choices"
+    },
+    "histogram_qsdc": {
+      "target_ids": [
+        "T029",
+        "T030",
+        "T031"
+      ],
+      "length": 200,
+      "gammas": [
+        0.25,
+        2.0,
+        6.0
+      ],
+      "trajectories": 5000,
+      "shards": 50,
+      "parameter_provenance": "printed L=200, gamma values, and 5000 trajectories; binning and random seed are independent choices"
+    }
+  },
+  "backend_benchmark": {
+    "candidates": [
+      "numpy",
+      "cupy"
+    ],
+    "lengths": [
+      200,
+      400,
+      800
+    ],
+    "gamma": 0.25,
+    "dt": 0.05,
+    "steps": 20,
+    "seed": 200509722,
+    "parity_tolerance": 1e-10,
+    "smoke_length": 12,
+    "smoke_steps": 2,
+    "paper_machine": "single NVIDIA A100 80GB, CUDA 12, 16 vCPU, 64 GiB host RAM, 100 GiB persistent storage"
+  },
+  "honesty": {
+    "author_numeric_arrays_used": false,
+    "source_pixels_used_as_numeric_input": false,
+    "author_code_used": false,
+    "paper_exact_claim": false,
+    "unpublished_inputs": [
+      "random seeds",
+      "most ensemble counts",
+      "complete gamma grids",
+      "steady-state stopping rule",
+      "fit windows",
+      "histogram bin edges"
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.02414",
+  "target_id": "T003",
+  "paper_parameters": {
+    "ell": 7,
+    "delta": 0.9009688679024191,
+    "domain_wall_mu": 0.05,
+    "times": [
+      0.1,
+      0.2
+    ],
+    "hamiltonian": "sum_x [S+_x S-_(x+1) + S-_x S+_(x+1) + (Delta/2) Sz_x Sz_(x+1)]",
+    "initial_density_matrix": "product weak domain wall",
+    "boundary_condition": "open"
+  },
+  "profiles": {
+    "smoke": {
+      "description": "Tiny algorithm and checkpoint verification; not scientific evidence.",
+      "variants": [
+        {
+          "id": "smoke_L8_chi256_dt01",
+          "role": "CI smoke",
+          "chain_length": 8,
+          "max_bond": 256,
+          "time_step": 0.1,
+          "relative_cutoff": 1e-12,
+          "backend": "numpy",
+          "checkpoint_every_steps": 1
+        }
+      ],
+      "comparisons": []
+    }
+  },
+  "acceptance": {
+    "maximum_norm_drift": 1e-10,
+    "maximum_single_update_discarded_weight": 1e-10,
+    "edge_sites": 1,
+    "maximum_boundary_plateau_error": 0.02,
+    "required_snapshot_times": [
+      0.1,
+      0.2
+    ],
+    "scientific_rule": "Smoke-only algorithm validation."
+  },
+  "provenance_policy": {
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false,
+    "paper_parameters_only": true
+  }
+}

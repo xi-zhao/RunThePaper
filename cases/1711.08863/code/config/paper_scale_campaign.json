@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_id": "1711.08863-paper-scale-campaign-v1",
+  "target_ids": [
+    "T001"
+  ],
+  "parameters": {
+    "gamma": 1.0,
+    "phi_min": 0.0,
+    "phi_max": 3.141592653589793,
+    "phi_points": 1001
+  },
+  "paper_parameter_mapping": {
+    "gamma": "All plotted coefficients are normalized by the common bare rate gamma, so gamma=1 fixes units only.",
+    "phi_interval": "Main Fig. 2 axes span 0 <= phi <= pi.",
+    "phi_points": "The paper gives continuous analytic curves but no author sampling count; 1001 is a reproduction render grid and is not claim-relevant.",
+    "series": "Main Fig. 2 caption and Table I define four exchange, five individual-decay, and four collective-decay curves."
+  },
+  "campaign": {
+    "shard_count": 8,
+    "resume": true,
+    "checkpoint_policy": "one immutable fingerprinted NPZ per contiguous phase shard"
+  },
+  "validation": {
+    "max_abs_residual": 1e-12,
+    "special_point_tolerance": 1e-12,
+    "refinement_factor": 2
+  },
+  "machine": {
+    "scale": "paper_exact",
+    "minimum_cpu_cores": 1,
+    "minimum_memory_gb": 1,
+    "recommended_cpu_cores": 2,
+    "recommended_memory_gb": 2,
+    "accelerator_required": false,
+    "scheduler_array": "optional; invoke --shard-index 0..7, then --aggregate-only",
+    "walltime_minutes": 2
+  },
+  "outputs": {
+    "checkpoint_dir": "outputs/checks/checkpoints/main_fig2_paper_scale_campaign",
+    "dataset": "outputs/data/main_fig2_paper_scale_campaign.csv",
+    "acceptance": "outputs/checks/main_fig2_paper_scale_acceptance.json",
+    "manifest": "outputs/checks/main_fig2_paper_scale_manifest.json",
+    "state": "outputs/checks/main_fig2_paper_scale_state.json"
+  }
+}

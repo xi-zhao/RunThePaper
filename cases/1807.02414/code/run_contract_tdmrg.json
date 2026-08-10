@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.02414-T003-paper-scale-tdmrg",
+  "target_ids": [
+    "T003"
+  ],
+  "working_directory": "workspace",
+  "command": [
+    "python",
+    "scripts/run_tdmrg.py",
+    "--config",
+    "config/tdmrg_paper_scale.json",
+    "--profile",
+    "final",
+    "--resume"
+  ],
+  "inputs": [
+    "src/xxz_diffusion/__init__.py",
+    "src/xxz_diffusion/backend.py",
+    "src/xxz_diffusion/tdmrg.py",
+    "scripts/run_tdmrg.py",
+    "config/tdmrg_paper_scale.json"
+  ],
+  "parameter_file": "config/tdmrg_paper_scale.json",
+  "parameter_selector": "paper_parameters",
+  "expected_parameters": {
+    "ell": 7,
+    "delta": 0.9009688679024191,
+    "domain_wall_mu": 0.05,
+    "times": [
+      10.0,
+      20.0,
+      40.0
+    ],
+    "hamiltonian": "sum_x [S+_x S-_(x+1) + S-_x S+_(x+1) + (Delta/2) Sz_x Sz_(x+1)]",
+    "initial_density_matrix": "product_{x<0} exp(mu Sz_x) product_{x>0} exp(-mu Sz_x), locally normalized",
+    "boundary_condition": "open"
+  },
+  "outputs": [
+    "outputs/data/T003_tdmrg_final_baseline_L256_chi512_dt005.npz",
+    "outputs/data/T003_tdmrg_final_timestep_L256_chi512_dt0025.npz",
+    "outputs/data/T003_tdmrg_final_bond_L256_chi768_dt005.npz",
+    "outputs/data/T003_tdmrg_final_size_L320_chi512_dt005.npz",
+    "outputs/checks/T003_tdmrg_final_checks.json",
+    "outputs/checks/T003_tdmrg_final_manifest.json"
+  ],
+  "environment": {},
+  "resource_request": {
+    "accelerator": "A100",
+    "gpu_memory_gb": 80,
+    "cpu_cores": 8,
+    "checkpoint_storage_gb": 50
+  },
+  "timeout_seconds": 172800,
+  "resume_policy": "Each convergence variant has a self-describing MPS checkpoint under outputs/checkpoints/T003_tdmrg/final/.",
+  "acceptance_source": "config/tdmrg_paper_scale.json#acceptance",
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "run_id": "1803.07128-independent-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "src/qml_feature_space/__init__.py",
+    "src/qml_feature_space/model.py",
+    "src/qml_feature_space/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "",
+  "expected_parameters": {
+    "schema_version": 1,
+    "paper_id": "1803.07128",
+    "paper_parameters": {
+      "kernel_c_values": [
+        1.0,
+        1.5,
+        2.0
+      ],
+      "perceptron_c": 1.5,
+      "perceptron_epochs": [
+        1,
+        500,
+        5000
+      ],
+      "variational_c": 1.5,
+      "variational_blocks": 4,
+      "variational_parameter_count": 32,
+      "variational_steps": 5000,
+      "variational_batch_size": 5,
+      "source": "Fig. 4--8 captions and printed squeezing/gate equations"
+    },
+    "reconstructed_benchmarks": {
+      "svm": {
+        "seed": 19,
+        "top_total_samples": 200,
+        "top_train_samples": 50,
+        "circles_factor": 0.5,
+        "circles_noise": 0.1,
+        "moons_noise": 0.12,
+        "blob_centers": [
+          [
+            -0.75,
+            -0.75
+          ],
+          [
+            0.75,
+            0.75
+          ]
+        ],
+        "blob_std": 0.55,
+        "bottom_total_samples": 600,
+        "bottom_train_samples": 500,
+        "bottom_extent": 2.0,
+        "bottom_label_frequency": 4.0,
+        "status": "missing paper seed, noise, generator, and SVC regularization metadata"
+      },
+      "perceptron": {
+        "seed": 19,
+        "total_samples": 90,
+        "train_samples": 70,
+        "centers": [
+          [
+            -0.8,
+            -0.8
+          ],
+          [
+            0.8,
+            0.8
+          ]
+        ],
+        "cluster_std": 1.15,
+        "status": "missing paper seed, blob generator parameters, and Fock cutoff"
+      },
+      "variational": {
+        "seed": 9,
+        "total_samples": 200,
+        "train_samples": 150,
+        "noise": 0.1,
+        "initial_parameter_std": 0.04,
+        "learning_rate": 0.02,
+        "l2_regularization": 0.0001,
+        "optimizer": "Adam (adaptive per-parameter learning rates)",
+        "real_displacement_parameter": true,
+        "status": "missing paper seed, noise, initialization, learning-rate schedule, regularization coefficient, and Fock cutoff"
+      }
+    },
+    "numerics": {
+      "surface_grid_points": 121,
+      "decision_grid_points": 121,
+      "perceptron_even_fock_terms": 14,
+      "variational_fock_cutoff": 8,
+      "variational_grid_points": 91
+    }
+  },
+  "outputs": [
+    "outputs/data/T001_fig4_squeezing_kernel.npz",
+    "outputs/data/T002_fig5_svm_boundaries.npz",
+    "outputs/data/T003_fig6_fock_perceptron.npz",
+    "outputs/data/T004_fig8_variational_classifier.npz",
+    "outputs/checks/scientific_formula_checks.json",
+    "outputs/checks/convergence.json",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

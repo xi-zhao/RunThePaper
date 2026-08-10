@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "profile": "paper_scale",
+  "run_id": "1805.00931-paper-scale-v1",
+  "parameters": {
+    "model": {
+      "J": 0.7853981633974483,
+      "b": 0.7853981633974483
+    },
+    "fig2": {
+      "L": 15,
+      "paper_L": 15,
+      "h_mean": 0.6,
+      "sigmas": [
+        0.15707963267948966,
+        0.3141592653589793,
+        314.1592653589793
+      ],
+      "disorder_realizations": 9490,
+      "paper_disorder_realizations": 9490,
+      "t_min": 1,
+      "t_max": 1000,
+      "seed": 180500931,
+      "trace_estimator": {
+        "method": "independent_random_phase_cross",
+        "probe_group_size": 256,
+        "backend": "cupy",
+        "dtype": "complex64",
+        "butterfly_chunk_size": 1024,
+        "norm_check_interval": 100,
+        "checkpoint_every_realizations": 1
+      }
+    },
+    "fig3_left": {
+      "h_mean": 0.0,
+      "times": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "sigmas": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "grid_provenance": "uniform reconstruction of the paper's plotted sigma range; the author point grid is not disclosed"
+    },
+    "fig3_right": {
+      "t": 13,
+      "h_means": [
+        0.0,
+        0.1,
+        0.3,
+        0.6,
+        0.9,
+        1.2
+      ],
+      "sigmas": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8
+      ],
+      "grid_provenance": "uniform reconstruction of the paper's plotted sigma range; the author point grid is not disclosed"
+    },
+    "solver": {
+      "method": "restarted_arnoldi",
+      "backend": "cupy",
+      "dtype": "complex64",
+      "krylov_dimension": 5,
+      "residual_tolerance": 3e-05,
+      "eigenvalue_tolerance": 5e-06,
+      "stable_iterations": 2,
+      "max_iterations": 1600,
+      "seeds": [
+        264101,
+        264102
+      ],
+      "dephasing_block_rows": 16,
+      "butterfly_chunk_size": 1024,
+      "projection_block_rows": 16,
+      "checkpoint_every_iterations": 10,
+      "checkpoint_chunk_elements": 8388608,
+      "memory_limit_gib": 80.0
+    }
+  },
+  "execution": {
+    "output_root": "outputs",
+    "output_namespace": "paper_scale",
+    "checkpoint_root": "outputs/checkpoints/paper_scale",
+    "sff_shards": 949,
+    "gap_shards": 18,
+    "scheduler_contract": "Run one target family and shard index per A100 job. After every family shard is complete, invoke T001,T002,T003,T004 together without --shard-index and with --resume to merge the shared outputs and validate all four targets."
+  },
+  "acceptance": {
+    "sff": {
+      "field_mean_absolute": 0.02,
+      "field_variance_absolute": 0.03,
+      "maximum_norm_drift": 0.002,
+      "minimum_split_agreement_fraction": 0.9,
+      "minimum_distinct_checkpoint_hashes": 2
+    },
+    "gap": {
+      "maximum_residual": 3e-05,
+      "seed_agreement_absolute": 0.002,
+      "protected_rank_must_match_table_inventory": true,
+      "positive_sigma_requires_subunit_mode": true
+    }
+  }
+}

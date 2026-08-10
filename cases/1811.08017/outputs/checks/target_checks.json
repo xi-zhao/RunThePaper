@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "paper_id": "1811.08017",
+  "status": "passed",
+  "parameters": {
+    "parameter_source": "Main Figures 2 and 4 headers plus captions and Appendix equations",
+    "molecules": [
+      {
+        "name": "propane",
+        "qubits": 46,
+        "lambda_one": 426.61,
+        "lambda_max": 6.58466,
+        "terms": 241582
+      },
+      {
+        "name": "carbon dioxide",
+        "qubits": 54,
+        "lambda_one": 608.414,
+        "lambda_max": 10.3658,
+        "terms": 113959
+      },
+      {
+        "name": "ethane",
+        "qubits": 60,
+        "lambda_one": 768.138,
+        "lambda_max": 4.07041,
+        "terms": 467403
+      }
+    ],
+    "fig2": {
+      "epsilon": 0.001,
+      "time_min": 100.0,
+      "time_max": 100000000.0,
+      "points": 121,
+      "audit_time": 6000.0,
+      "suzuki_order_indices": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "fig4": {
+      "energy_precision": 0.0001,
+      "failure_max": 0.1,
+      "failure_min": 1e-05,
+      "points": 121,
+      "audit_failure_probability": 0.05
+    },
+    "checks": {
+      "paper_phase_speedups": {
+        "propane": 1406.0,
+        "carbon dioxide": 304.0,
+        "ethane": 789.0
+      }
+    }
+  },
+  "speedups": {
+    "propane": {
+      "fig2_t6000": 1585.0849345216884,
+      "fig2_selected_order": 4.0,
+      "fig4_pf_0_05": 1405.5120347784025
+    },
+    "carbon dioxide": {
+      "fig2_t6000": 305.7885060877967,
+      "fig2_selected_order": 4.0,
+      "fig4_pf_0_05": 303.7180153867859
+    },
+    "ethane": {
+      "fig2_t6000": 1003.1617306263324,
+      "fig2_selected_order": 4.0,
+      "fig4_pf_0_05": 788.7314884849301
+    }
+  },
+  "checks": {
+    "all_minimal_integer_bounds": {
+      "passed": true,
+      "by_molecule": {
+        "propane": {
+          "qdrift": true,
+          "first_order_deterministic": true,
+          "selected_higher_order_random": true
+        },
+        "carbon dioxide": {
+          "qdrift": true,
+          "first_order_deterministic": true,
+          "selected_higher_order_random": true
+        },
+        "ethane": {
+          "qdrift": true,
+          "first_order_deterministic": true,
+          "selected_higher_order_random": true
+        }
+      }
+    },
+    "phase_speedups_match_paper": {
+      "passed": true,
+      "computed": {
+        "propane": 1405.5120347784025,
+        "carbon dioxide": 303.7180153867859,
+        "ethane": 788.7314884849301
+      },
+      "paper": {
+        "propane": 1406.0,
+        "carbon dioxide": 304.0,
+        "ethane": 789.0
+      }
+    },
+    "fig2_carbon_and_ethane_speedups_match_body": {
+      "passed": true,
+      "computed": {
+        "carbon dioxide": 305.7885060877967,
+        "ethane": 1003.1617306263324
+      }
+    },
+    "fig2_propane_matches_abstract_not_body": {
+      "passed": true,
+      "computed": 1585.0849345216884,
+      "abstract_value": 1591.0,
+      "body_value": 591.0,
+      "interpretation": "The body value 591x is inconsistent with the printed parameters and the paper abstract; 1591x is the consistent value."
+    },
+    "expected_power_law_slopes": {
+      "passed": true,
+      "fig2_qdrift_time_exponent": 2.0,
+      "fig4_qdrift_failure_exponent": -3.0,
+      "fig4_random_trotter_failure_exponent": -2.0
+    }
+  }
+}

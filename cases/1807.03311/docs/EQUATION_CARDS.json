@@ -1,0 +1,330 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.03311",
+  "cards": [
+    {
+      "id": "EQ001",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraphs surrounding Eq. (4) and Fig. 2(a)"
+        }
+      ],
+      "latex": "a_M=a_0/theta; b_j dot r = G_j dot (theta z cross r); kappa_+-kappa_- are adjacent MBZ corners",
+      "role": "moire_geometry_and_momentum_gauge",
+      "derived_from": [],
+      "title": "Moire geometry and momentum gauge",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The local-displacement map, moire period and MBZ corners are printed around main Eq. (4)."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "B_i dot A_j=2 pi delta_ij and a_M=16.58 nm at 1.2 degrees."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::MoireGeometry"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (2)"
+        }
+      ],
+      "latex": "Delta_l(r)=2V sum_{j=1,3,5} cos(b_j dot r+l psi)",
+      "role": "layer_dependent_moire_potential",
+      "derived_from": [
+        "EQ001"
+      ],
+      "title": "Layer-dependent moire potential",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (2) prints the complete lowest-harmonic potential and layer sign."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Delta_t(r)=Delta_b(-r) and the Fourier shell is C3 closed."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::TwoBandContinuum.hamiltonian",
+        "src/twisted_tmd/model.py::pseudospin_field"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (3)"
+        }
+      ],
+      "latex": "Delta_T(r)=w(1+exp(-i b_2 dot r)+exp(-i b_3 dot r))",
+      "role": "interlayer_tunneling",
+      "derived_from": [
+        "EQ001"
+      ],
+      "title": "Interlayer tunneling harmonics",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (3) prints all three tunneling harmonics."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Delta_T(0)=3w=-25.5 meV and the Hamiltonian is Hermitian."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::TwoBandContinuum.hamiltonian",
+        "src/twisted_tmd/model.py::pseudospin_field"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (4)"
+        }
+      ],
+      "latex": "H=[[-hbar^2(k-kappa_+)^2/(2m*)+Delta_b,Delta_T],[Delta_T^dagger,-hbar^2(k-kappa_-)^2/(2m*)+Delta_t]]",
+      "role": "two_band_continuum_spectrum",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003"
+      ],
+      "title": "Two-band moire continuum Hamiltonian",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4) prints both kinetic shifts and all potential blocks."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Hermiticity error is zero; kappa_+ and kappa_- spectra are degenerate; cutoff convergence is recorded."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::TwoBandContinuum"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eqs. (5)-(6)"
+        }
+      ],
+      "latex": "Delta=(Re Delta_T^dagger,Im Delta_T^dagger,(Delta_b-Delta_t)/2); N_w=(1/(4pi))int Delta dot(partial_x Delta cross partial_y Delta)/|Delta|^3=-1",
+      "role": "pseudospin_skyrmion",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "title": "Pseudospin field and winding",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (5)-(6) print the field components and winding integral."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Periodic 151x151 integration gives N_w=-0.9969."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::pseudospin_field",
+        "src/twisted_tmd/model.py::pseudospin_winding"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Fig. 3 discussion and Fig. 4 caption"
+        }
+      ],
+      "latex": "Omega_n=-2 Im sum_{m!=n}<n|dH/dkx|m><m|dH/dky|n>/(E_n-E_m)^2; C=(1/(2pi))int_MBZ Omega; epsilon_ij=min(E_i)-max(E_j)",
+      "role": "berry_chern_dos_and_global_gaps",
+      "derived_from": [
+        "EQ004"
+      ],
+      "title": "Berry curvature, Chern number, DOS and global gaps",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text and Fig. 4 caption define Chern integration and adjacent-band gaps."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At 1.2 degrees the first two Chern integrals are -0.978 and +0.976."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::TwoBandContinuum.berry_curvature",
+        "src/twisted_tmd/model.py::TwoBandContinuum.global_gaps"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "main Eq. (7)"
+        }
+      ],
+      "latex": "H_TB=t0 sum_NN c^dagger_{R,l,s}c_{R',-l,s}+t1 sum_NNN exp(i s kappa_l dot a_M)c^dagger_{R+a_M,l,s}c_{R,l,s}",
+      "role": "kane_mele_comparison",
+      "derived_from": [
+        "EQ001"
+      ],
+      "title": "Kane-Mele tight-binding reduction",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (7) and the Fig. 3 caption print the hopping structure and values."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The three NN and six NNN structure factors implement the printed bond phases; only the arbitrary energy zero is aligned."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::kane_mele_bands"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "four-band model with remote conduction bands"
+        }
+      ],
+      "latex": "h_l=diag(Delta_g+Delta_lc,Delta_lv)+exp(-il theta xi_z/4)[hbar v_F(k-kappa_l) dot xi]exp(il theta xi_z/4)",
+      "role": "massive_dirac_remote_conduction_check",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003"
+      ],
+      "title": "Remote-conduction massive-Dirac model",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the intralayer matrices, all tunneling phases and parameters."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Four-band matrix is Hermitian and 2(hbar v_F|kappa|/Delta_g)^2=0.00732."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::DiracFourBandModel"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "remote spin-split valence bands"
+        }
+      ],
+      "latex": "h_l=diag(-hbar^2k^2/(2m*)+Delta_l,up,-Delta_SOC-hbar^2k^2/(2m*)+Delta_l,down), with harmonic spin-mixing T(r)",
+      "role": "remote_spin_mixing_check",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003"
+      ],
+      "title": "Remote spin-split valence model",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the spin blocks, symmetry constraint and all fitted parameters."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Layer x spin matrix is Hermitian and the top bands remain close to the two-band spectrum."
+        }
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py::SpinMixedModel"
+      ]
+    }
+  ]
+}

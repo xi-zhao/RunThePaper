@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "contract_kind": "external_paper_scale_preparation",
+  "run_id": "1807.10676-dft-deck-preparation-v2",
+  "implementation_id": "paper_scale_dft",
+  "target_ids": [
+    "D001",
+    "D002",
+    "D003",
+    "D004",
+    "D005",
+    "D006",
+    "D007",
+    "D008",
+    "D009",
+    "D010",
+    "D011",
+    "D012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_dft_campaign.py",
+    "--config",
+    "config/dft_paper_scale.json"
+  ],
+  "phases": {
+    "prepare": [
+      "python",
+      "scripts/run_dft_campaign.py",
+      "--config",
+      "config/dft_paper_scale.json",
+      "prepare",
+      "--campaign-root",
+      "outputs/checks/dft_paper_scale"
+    ],
+    "preflight": [
+      "python",
+      "scripts/run_dft_campaign.py",
+      "--config",
+      "config/dft_paper_scale.json",
+      "preflight",
+      "--campaign-root",
+      "outputs/checks/dft_paper_scale",
+      "--available-cpus",
+      "72",
+      "--available-memory-gib",
+      "2048",
+      "--acknowledge-unpinned-potcar"
+    ],
+    "execute_job_template": [
+      "python",
+      "scripts/run_dft_campaign.py",
+      "--config",
+      "config/dft_paper_scale.json",
+      "run-job",
+      "--campaign-root",
+      "outputs/checks/dft_paper_scale",
+      "--job-id",
+      "<job-id>",
+      "--available-cpus",
+      "72",
+      "--available-memory-gib",
+      "2048",
+      "--acknowledge-unpinned-potcar",
+      "--resume"
+    ],
+    "analyze": [
+      "python",
+      "scripts/run_dft_campaign.py",
+      "--config",
+      "config/dft_paper_scale.json",
+      "analyze",
+      "--campaign-root",
+      "outputs/checks/dft_paper_scale"
+    ]
+  },
+  "inputs": [
+    "src/tbg_topology/dft_campaign.py",
+    "scripts/run_dft_campaign.py",
+    "config/dft_paper_scale.json"
+  ],
+  "parameter_file": "config/dft_paper_scale.json",
+  "parameter_selector": "paper_method",
+  "expected_parameters": {
+    "code_family": "VASP",
+    "exchange_correlation": "LDA Perdew-Zunger/Ceperley-Alder",
+    "paw": true,
+    "encut_ev": 300.0,
+    "spin_orbit_coupling": false,
+    "lattice_constant_angstrom": 2.456,
+    "base_interlayer_distance_angstrom": 3.35,
+    "relaxation": false,
+    "commensurate_index_formula": "theta_i=acos((3*i^2+3*i+0.5)/(3*i^2+3*i+1))",
+    "source_refs": [
+      "paper-source/TBG_arXiv_v2.1.tex:195-201",
+      "paper-source/TBG_arXiv_v2.1.tex:1454-1482",
+      "paper-source/10-1.pdf",
+      "paper-source/10-9.pdf",
+      "paper-source/10-86.pdf",
+      "paper-source/10-83.pdf",
+      "paper-source/10-8.pdf"
+    ],
+    "known_metadata_gap": "The paper does not identify the exact carbon PAW dataset, POTCAR checksum, VASP version, SCF meshes, or convergence thresholds. A chosen LDA PAW asset must therefore be hashed and disclosed; such a run is independent paper-scale reproduction, not author-binary equivalence."
+  },
+  "external_assets": [
+    {
+      "id": "licensed_vasp_executable",
+      "environment_variable": "VASP_COMMAND",
+      "repository_policy": "must_not_be_committed"
+    },
+    {
+      "id": "carbon_lda_potcar",
+      "environment_variable": "VASP_C_POTCAR",
+      "paper_identity_status": "not_reported",
+      "runtime_policy": "single Carbon dataset with LEXCH=CA and ZVAL=4; explicit acknowledgement and actual SHA-256 required",
+      "repository_policy": "must_not_be_committed"
+    }
+  ],
+  "machine": {
+    "scheduler": "slurm",
+    "cpus_per_task": 72,
+    "memory_gib": 2048,
+    "gpus": 0,
+    "durable_storage_gib": 500,
+    "checkpoint_files": [
+      "WAVECAR",
+      "CHGCAR",
+      "CONTCAR",
+      "vasprun.xml",
+      "OUTCAR"
+    ]
+  },
+  "outputs": [
+    "outputs/checks/dft_paper_scale/campaign_manifest.json",
+    "outputs/checks/dft_paper_scale/checks/deck_readiness.json",
+    "outputs/checks/dft_paper_scale/slurm/submit.slurm"
+  ],
+  "timeout_seconds": 3600,
+  "environment": {
+    "OMP_NUM_THREADS": "1"
+  },
+  "acceptance_ref": "config/dft_paper_scale.json#/acceptance",
+  "numerical_input_policy": {
+    "raw_directory_allowed": false,
+    "reference_figures_allowed": false,
+    "source_pixels_allowed": false,
+    "author_code_allowed": false,
+    "author_numerical_arrays_allowed": false
+  },
+  "attestation_boundary": "This isolated contract attests deterministic deck preparation only, not D001-D012 scientific completion. Scientific DFT outputs require all 11 external-run receipts to bind one config/deck set, resolved VASP executable SHA-256 and version, validated Carbon-LDA POTCAR metadata/SHA-256, 72-CPU/2048-GiB allocation, OUTCAR/EIGENVAL hashes, and the final acceptance result."
+}

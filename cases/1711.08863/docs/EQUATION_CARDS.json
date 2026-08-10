@@ -1,0 +1,188 @@
+{
+  "schema_version": 1,
+  "paper_id": "1711.08863",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Two-atom waveguide master equation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:ME2Atoms"
+        }
+      ],
+      "latex": "\\dot\\rho=-i[\\omega'_a\\sigma_z^a/2+\\omega'_b\\sigma_z^b/2+g(\\sigma_-^a\\sigma_+^b+\\sigma_+^a\\sigma_-^b),\\rho]+\\Gamma_a\\mathcal D[\\sigma_-^a]\\rho+\\Gamma_b\\mathcal D[\\sigma_-^b]\\rho+\\Gamma_{\\rm coll}(\\sigma_-^a\\rho\\sigma_+^b-\\{\\sigma_+^a\\sigma_-^b,\\rho\\}/2+\\mathrm{H.c.})",
+      "role": "physical_meaning_of_plotted_coefficients",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The same coefficient meanings are stated in the main text and derived by SLH composition in the supplement."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Hermitian exchange, individual Lindblad terms, and the Hermitian-conjugate collective term have the printed operator structure."
+        }
+      ],
+      "numerical_form": "The runner evaluates g, Gamma_a, Gamma_b, and Gamma_coll as functions of phase; it does not integrate rho.",
+      "code_refs": [
+        "src/giant_atoms/model.py::Coefficients"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "General connection-point coefficient sums",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2) and definitions immediately below"
+        },
+        {
+          "type": "supplement",
+          "value": "Derivation of the most general master equation"
+        }
+      ],
+      "latex": "g_{jk}=\\frac12\\sum_{n,m}\\sqrt{\\gamma_{j_n}\\gamma_{k_m}}\\sin\\varphi_{j_n,k_m},\\quad \\Gamma_j=\\sum_{n,m}\\sqrt{\\gamma_{j_n}\\gamma_{j_m}}\\cos\\varphi_{j_n,j_m},\\quad \\Gamma_{{\\rm coll},jk}=\\sum_{n,m}\\sqrt{\\gamma_{j_n}\\gamma_{k_m}}\\cos\\varphi_{j_n,k_m}",
+      "role": "independent_geometry_generator",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three sums and the Lamb-shift sum are printed in the main paper and derived in the supplement."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For labels at equally spaced positions, pair distances alone determine every sine and cosine contribution."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently enumerated point-pair sums agree with every Table-I closed form to 8.9e-16 on the 1001-point grid."
+        }
+      ],
+      "numerical_form": "Enumerate all intra-atom and inter-atom point pairs for orderings ab, aabb, abab, and abba.",
+      "code_refs": [
+        "src/giant_atoms/model.py::coefficients_from_ordering"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Equal-spacing Table-I coefficients",
+      "source_refs": [
+        {
+          "type": "table",
+          "value": "Main Table I"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 2 caption"
+        }
+      ],
+      "latex": "g_{abab}=\\frac{\\gamma}{2}(3\\sin\\varphi+\\sin3\\varphi),\\quad \\Gamma_{j,abab}=2\\gamma(1+\\cos2\\varphi),\\quad \\Gamma_{{\\rm coll},abab}=\\gamma(3\\cos\\varphi+\\cos3\\varphi)",
+      "role": "closed_form_main_figure_curves",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Table I prints the small, separate, braided, and nested coefficients used by Main Fig. 2."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Grouping equal pair distances in EQ002 gives the multiplicities 1+2+1 for aabb, 3+1 for abab, and 2+2 for abba."
+        },
+        {
+          "id": "EQ003-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All 13 visible curves are generated from these expressions over 0 <= phi <= pi at gamma=1."
+        }
+      ],
+      "numerical_form": "Vectorized trigonometric closed forms in table_coefficients(ordering, phi, gamma).",
+      "code_refs": [
+        "src/giant_atoms/model.py::table_coefficients"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Decoherence-free braided interaction",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Discussion following Main Fig. 2"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "eq:gBraidedAtoms"
+        }
+      ],
+      "latex": "\\varphi=\\pi/2:\\quad \\Gamma_a=\\Gamma_b=\\Gamma_{\\rm coll}=0,\\qquad g=\\gamma",
+      "role": "central_scientific_claim_check",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states the braided zero-decay/nonzero-exchange result and the supplement derives it as Eq. gBraidedAtoms."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution into the braided Table-I expressions cancels all decay terms and leaves g/gamma=1."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At phi=pi, the separate and nested zero-decay points instead have zero exchange, matching the paper's topology distinction."
+        },
+        {
+          "id": "EQ004-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The frozen grid contains pi/2 exactly and the target check records the expected four values."
+        }
+      ],
+      "numerical_form": "Evaluate the frozen arrays at phi=pi/2 and compare against (g, Gamma_a, Gamma_b, Gamma_coll)=(1,0,0,0).",
+      "code_refs": [
+        "src/giant_atoms/reproduction.py::scientific_checks"
+      ],
+      "open_questions": []
+    }
+  ]
+}

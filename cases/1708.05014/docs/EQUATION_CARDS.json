@@ -1,0 +1,286 @@
+{
+  "schema_version": 1,
+  "paper_id": "1708.05014",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Collective-spin algebra and ladder operators",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraph preceding Eq. (2)"
+        }
+      ],
+      "latex": "S^alpha=(1/2) sum_j sigma_j^alpha, S_-=S^x-iS^y, S_+=S^x+iS^y",
+      "role": "finite_symmetric_spin_basis",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The collective operators and S=N_b/2 symmetric sector are explicit."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "source_typo_resolution",
+          "status": "passed",
+          "reason": "The TeX omits i in S±; Eq. (S6), standard spin algebra, and the dissipator require S±=Sx±iSy."
+        },
+        {
+          "id": "EQ001-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The implementation satisfies [Sx,Sy]=iSz to roundoff."
+        }
+      ],
+      "numerical_form": "(N+1)-dimensional spin-S matrices with ladder coefficient sqrt(S(S+1)-m(m-1))",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::spin_operators"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Collective Lindblad master equation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2); Supplement Eq. (S1)"
+        }
+      ],
+      "latex": "dot rho=-i[H_b,rho]+(kappa/S)(S_-rho S_+ - {S_+S_-,rho}/2)",
+      "role": "quantum_dynamics_and_liouvillian",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, jump operator and kappa/S scaling are printed in both main and supplement."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Column vectorization uses vec(AXB)=(B^T kron A)vec(X)."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The trace functional annihilates the assembled Liouvillian."
+        }
+      ],
+      "numerical_form": "sparse (N+1)^2 by (N+1)^2 Liouvillian in the fully symmetric sector",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::liouvillian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Finite-size magnetization dynamics and Fourier spectrum",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 1(c) and Fig. 4 left"
+        }
+      ],
+      "latex": "rho(t)=exp(Lt)rho(0), <S^z(t)>=Tr[S^z rho(t)], F(omega)=|FFT(<S^z>/N_b)|",
+      "role": "time_and_frequency_observables",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states that all spins begin aligned along +x."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Sparse exponential propagation preserves trace and produces real magnetization."
+        }
+      ],
+      "numerical_form": "scipy.sparse.linalg.expm_multiply followed by a deterministic FFT",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::magnetization_dynamics",
+        "src/boundary_time_crystal/reproduction.py::_compute_quantum_targets"
+      ],
+      "open_questions": [
+        "Finite-N curves use N=8,12,16 instead of the paper N=40,80,160; the thermodynamic curve is paper-exact semiclassically."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Liouvillian spectrum, decay rates and finite-size scaling",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Figs. 2-4; Supplement Figs. S3-S4"
+        }
+      ],
+      "latex": "L r_j=lambda_j r_j; gap=-Re(lambda_j); eta=-Re(lambda_osc)",
+      "role": "spectral_targets",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines ordering by real part, the imaginary bands, and identifies eta with the leading oscillatory mode."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every sparse eigenpair is checked by ||Lv-lambda v||/||v||."
+        }
+      ],
+      "numerical_form": "dense full spectrum at reduced N and Arnoldi leading spectrum for scaling",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::full_spectrum",
+        "src/boundary_time_crystal/model.py::leading_spectrum"
+      ],
+      "open_questions": [
+        "Paper N=36 full clouds and larger scaling sizes are represented by transparent reduced-scale runs."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Unique finite-N steady state and collective moments",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Supplement Fig. S2"
+        }
+      ],
+      "latex": "L rho_ss=0, Tr rho_ss=1; source panel curves follow (<tilde S_alpha>/N_b)^2 despite the variance wording",
+      "role": "steady_state_phase_diagram",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The caption calls the right panel variances, while its polarized-limit value and curve shapes identify the displayed quantity as squared Pauli-normalized means; centered variance, second moment, and squared mean are all retained for falsification."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A trace row replaces one dependent Liouvillian row; stationarity, trace, Hermiticity, and positivity are checked."
+        }
+      ],
+      "numerical_form": "sparse trace-constrained solve in the symmetric sector",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::steady_state"
+      ],
+      "open_questions": [
+        "Generated N=24 is reduced from the paper N=600."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Thermodynamic semiclassical equations",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (S7)"
+        }
+      ],
+      "latex": "dot m_x=-2 omega_z m_y m_z+kappa m_x m_z; dot m_y=2(omega_z-omega_x)m_xm_z-omega_0m_z+kappa m_y m_z; dot m_z=omega_0m_y-kappa(m_x^2+m_y^2)+2omega_xm_xm_y",
+      "role": "thermodynamic_dynamics_and_phase_portraits",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S7) prints the three thermodynamic equations implemented here."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Factorizing reduced-spin products as S approaches infinity gives the printed equations, and direct substitution gives d(mx^2+my^2+mz^2)/dt=0."
+        },
+        {
+          "id": "EQ006-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "DOP853 trajectories record maximum norm drift."
+        }
+      ],
+      "numerical_form": "adaptive DOP853 integration on the unit Bloch sphere",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::semiclassical_rhs",
+        "src/boundary_time_crystal/model.py::semiclassical_trajectory"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Phase-space coordinates and conserved R",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eqs. (S8)-(S14)"
+        }
+      ],
+      "latex": "Q=m_z, m_x=sqrt(1-Q^2)cos(2P), m_y=sqrt(1-Q^2)sin(2P); R=2omega_z log(A^2+B^2)+2kappa atan2(B,A)",
+      "role": "supplement_phase_space_and_branch_cut",
+      "derived_from": [
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Coordinates, conserved quantity, branch ambiguity, and branch-cut equation are printed in the supplement."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Contours are evaluated from the closed formula; trajectory curves come independently from Eq. (S7)."
+        }
+      ],
+      "numerical_form": "Q=mz, P=atan2(my,mx)/2 and principal-branch atan2 conserved field",
+      "code_refs": [
+        "src/boundary_time_crystal/model.py::qp_coordinates",
+        "src/boundary_time_crystal/model.py::conserved_r_omega_z"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": 2,
+  "profile": "paper_scale_smoke",
+  "run_id": "1805.00931-paper-scale-smoke-v1",
+  "parameters": {
+    "model": {
+      "J": 0.7853981633974483,
+      "b": 0.7853981633974483
+    },
+    "fig2": {
+      "L": 3,
+      "paper_L": 15,
+      "h_mean": 0.6,
+      "sigmas": [
+        0.15707963267948966,
+        0.3141592653589793,
+        314.1592653589793
+      ],
+      "disorder_realizations": 6,
+      "paper_disorder_realizations": 9490,
+      "t_min": 1,
+      "t_max": 6,
+      "seed": 180500931,
+      "trace_estimator": {
+        "method": "independent_random_phase_cross",
+        "probe_group_size": 2,
+        "backend": "numpy",
+        "dtype": "complex128",
+        "butterfly_chunk_size": 16,
+        "norm_check_interval": 2,
+        "checkpoint_every_realizations": 1
+      }
+    },
+    "fig3_left": {
+      "h_mean": 0.0,
+      "times": [
+        3,
+        4
+      ],
+      "sigmas": [
+        0.0,
+        0.4
+      ]
+    },
+    "fig3_right": {
+      "t": 4,
+      "h_means": [
+        0.0,
+        0.3
+      ],
+      "sigmas": [
+        0.0,
+        0.4
+      ]
+    },
+    "solver": {
+      "method": "restarted_arnoldi",
+      "backend": "numpy",
+      "dtype": "complex128",
+      "krylov_dimension": 12,
+      "residual_tolerance": 0.0005,
+      "eigenvalue_tolerance": 0.0001,
+      "stable_iterations": 2,
+      "max_iterations": 120,
+      "seeds": [
+        264101,
+        264102
+      ],
+      "dephasing_block_rows": 8,
+      "butterfly_chunk_size": 16,
+      "projection_block_rows": 8,
+      "checkpoint_every_iterations": 2,
+      "checkpoint_chunk_elements": 4096,
+      "memory_limit_gib": 1.0
+    }
+  },
+  "execution": {
+    "output_root": "outputs",
+    "output_namespace": "smoke/paper_scale",
+    "checkpoint_root": "outputs/checkpoints/paper_scale_smoke",
+    "sff_shards": 2,
+    "gap_shards": 2
+  },
+  "acceptance": {
+    "sff": {
+      "field_mean_absolute": 1.0,
+      "field_variance_absolute": 1.0,
+      "maximum_norm_drift": 1e-10,
+      "minimum_split_agreement_fraction": 0.0,
+      "minimum_distinct_checkpoint_hashes": 2
+    },
+    "gap": {
+      "maximum_residual": 0.0005,
+      "seed_agreement_absolute": 0.02,
+      "protected_rank_must_match_table_inventory": true,
+      "positive_sigma_requires_subunit_mode": true
+    }
+  }
+}

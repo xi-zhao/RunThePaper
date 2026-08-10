@@ -1,0 +1,220 @@
+{
+  "schema_version": 2,
+  "paper_id": "1910.00020",
+  "mode": "paper_scale_code_ready",
+  "parameters": {
+    "seed_base": 191000200000,
+    "critical_rate_main": 0.1598,
+    "critical_rate_correlations": 0.1596,
+    "volume_rate": 0.08,
+    "off_critical_rates": [
+      0.08,
+      0.24
+    ],
+    "nu": 1.3,
+    "beta_surface": 0.45,
+    "eta_bulk": 0.22,
+    "eta_parallel_1": 0.74,
+    "eta_parallel_2": 0.67,
+    "eta_parallel_3": 0.58,
+    "supp_eta_one": 0.7,
+    "supp_eta_four": 0.76,
+    "gate_ensemble": "uniform two-qubit Clifford modulo Pauli phases",
+    "measurement_basis": "Z"
+  },
+  "execution": {
+    "output_root": "outputs/data/paper_scale",
+    "checkpoint_after_each_trajectory": true,
+    "resume_requires_config_hash": true,
+    "persist_full_states": false,
+    "recommended_backend": "numpy_cpu_process_shards",
+    "hardware_note": "The branch-heavy GF(2) tableau updates are CPU-oriented. Use the institute high-CPU profile; an A100 is not silently claimed to accelerate this implementation."
+  },
+  "targets": {
+    "T001": {
+      "sizes": [
+        4,
+        8,
+        16,
+        64,
+        128,
+        256
+      ],
+      "measurement_rates": [
+        0.08,
+        0.09,
+        0.1,
+        0.11,
+        0.12,
+        0.13,
+        0.14,
+        0.145,
+        0.15,
+        0.1525,
+        0.155,
+        0.1575,
+        0.159,
+        0.1598,
+        0.161,
+        0.1625,
+        0.165,
+        0.1675,
+        0.17,
+        0.175,
+        0.18,
+        0.19,
+        0.2
+      ],
+      "encoding_layers_per_L": 2,
+      "measured_layers_per_L": 2,
+      "trajectories": 4096,
+      "shards": 256,
+      "parameter_provenance": "All plotted sizes are read from Main Fig. 1(b); the dense p mesh and ensemble count are declared independent choices because the paper does not publish them."
+    },
+    "T002": {
+      "L": 64,
+      "duration": 30,
+      "trajectories": 131072,
+      "shards": 512,
+      "parameter_provenance": "L and duration are printed in Main Fig. 2(a); the ensemble count is an independent choice resolving probabilities down to the plotted 1e-5 scale."
+    },
+    "T003": {
+      "L": 64,
+      "duration": 64,
+      "cutoffs": [
+        10,
+        20,
+        "full"
+      ],
+      "measurement_rates": [
+        0.08,
+        0.24
+      ],
+      "trajectories": 32768,
+      "shards": 256,
+      "conditioning": "exact_mixed_stabilizer_partial_record",
+      "random_coupling": "common circuit stream across cutoffs at fixed rate",
+      "parameter_provenance": "L, time range, cutoffs, and rates are printed in Main Fig. 2(b); the ensemble count is an independent choice."
+    },
+    "T004": {
+      "sizes": [
+        32,
+        64,
+        128,
+        256
+      ],
+      "measurement_rates": [
+        0.05,
+        0.06,
+        0.07,
+        0.08,
+        0.09,
+        0.1,
+        0.11,
+        0.12,
+        0.13,
+        0.14,
+        0.145,
+        0.15,
+        0.152,
+        0.154,
+        0.156,
+        0.158,
+        0.159
+      ],
+      "post_layers_per_L": 2,
+      "trajectories": 8192,
+      "shards": 256,
+      "parameter_provenance": "Sizes and p range are read from Main Fig. 3(a); the exact p mesh, fit weights, and ensemble count are independent choices."
+    },
+    "T005": {
+      "sizes": [
+        16,
+        32,
+        64,
+        128
+      ],
+      "post_layers_per_L": 8,
+      "scaled_time_points": 129,
+      "trajectories": 8192,
+      "shards": 256,
+      "parameter_provenance": "Sizes, geometries, t0/L, critical rate, and exponents are printed in Main Fig. 3(b); ensemble count is independent."
+    },
+    "T006": {
+      "sizes": [
+        16,
+        32,
+        64,
+        128
+      ],
+      "post_layers_per_L": 8,
+      "scaled_time_points": 129,
+      "trajectories": 8192,
+      "shards": 256,
+      "parameter_provenance": "Sizes, geometries, t0/L, critical rate, and exponents are printed in Main Fig. 3(c); ensemble count is independent."
+    },
+    "T007": {
+      "L": 64,
+      "pre_layers_per_L": 4,
+      "duration": 30,
+      "preparation_modes": [
+        "volume_law",
+        "pseudorandom"
+      ],
+      "trajectories": 131072,
+      "shards": 512,
+      "parameter_provenance": "L, t0, post-quench rate, and both preparation protocols are printed in Supplement Fig. S1; ensemble count is independent."
+    },
+    "T008": {
+      "sizes": [
+        16,
+        32,
+        64,
+        128,
+        256,
+        512
+      ],
+      "reference_counts": [
+        1,
+        4
+      ],
+      "post_layers_per_L": 8,
+      "trajectories": 4096,
+      "shards": 256,
+      "parameter_provenance": "Sizes, critical rate, reference counts, and time range are printed in Supplement Fig. S2; ensemble count and fit window are independent."
+    }
+  },
+  "smoke": {
+    "trajectories": 2,
+    "shards": 1,
+    "max_L": 8,
+    "max_duration": 4,
+    "purpose": "Exercise every physical channel, checkpoint, and aggregation path without changing paper-scale declarations."
+  },
+  "honesty": {
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numeric_input": false,
+    "paper_exact_claim": false,
+    "unpublished_inputs": [
+      "trajectory counts",
+      "random seeds",
+      "exact finite-size sampling weights",
+      "exact p meshes outside printed labels",
+      "fit windows"
+    ]
+  },
+  "review_policy": {
+    "stable_mismatch_default": "inconclusive",
+    "paper_error_candidate_requires": [
+      "paper-scale parameters",
+      "frozen independent data",
+      "sampling and finite-size convergence",
+      "two independent scientific checks",
+      "explicit falsification attempt",
+      "pinpointed source discrepancy",
+      "fresh-context independent review"
+    ],
+    "forbidden_response": "Do not tune physical parameters or numerical arrays merely to move a stable mismatch toward the paper."
+  }
+}

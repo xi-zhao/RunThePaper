@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.02414",
+  "target_id": "T001_FULL_OPERATOR",
+  "paper_parameters": {
+    "ell": 7,
+    "delta": 0.9009688679024191,
+    "domain_wall_mu": 0.05,
+    "times": [
+      10.0,
+      20.0,
+      40.0
+    ],
+    "equation": "partial_t n + v_eff partial_x n = (1/2) D_tilde partial_x^2 n",
+    "initial_response": "delta n = plus/minus n(1-n) h_dr times mu"
+  },
+  "profiles": {
+    "final": {
+      "variants": [
+        {
+          "id": "baseline_r192_x2048_dt01",
+          "rapidity_cutoff": 8.0,
+          "rapidity_points": 192,
+          "x_min": -64.0,
+          "x_max": 64.0,
+          "x_points": 2048,
+          "time_step": 0.1,
+          "backend": "cupy"
+        },
+        {
+          "id": "time_r192_x2048_dt005",
+          "rapidity_cutoff": 8.0,
+          "rapidity_points": 192,
+          "x_min": -64.0,
+          "x_max": 64.0,
+          "x_points": 2048,
+          "time_step": 0.05,
+          "backend": "cupy"
+        },
+        {
+          "id": "rapidity_r256_x2048_dt01",
+          "rapidity_cutoff": 8.0,
+          "rapidity_points": 256,
+          "x_min": -64.0,
+          "x_max": 64.0,
+          "x_points": 2048,
+          "time_step": 0.1,
+          "backend": "cupy"
+        },
+        {
+          "id": "space_r192_x3072_dt01",
+          "rapidity_cutoff": 8.0,
+          "rapidity_points": 192,
+          "x_min": -64.0,
+          "x_max": 64.0,
+          "x_points": 3072,
+          "time_step": 0.1,
+          "backend": "cupy"
+        }
+      ],
+      "comparisons": [
+        {
+          "id": "time_step_convergence",
+          "left": "baseline_r192_x2048_dt01",
+          "right": "time_r192_x2048_dt005",
+          "threshold": 0.01
+        },
+        {
+          "id": "rapidity_convergence",
+          "left": "baseline_r192_x2048_dt01",
+          "right": "rapidity_r256_x2048_dt01",
+          "threshold": 0.015
+        },
+        {
+          "id": "space_convergence",
+          "left": "baseline_r192_x2048_dt01",
+          "right": "space_r192_x3072_dt01",
+          "threshold": 0.01
+        }
+      ]
+    }
+  },
+  "acceptance": {
+    "maximum_oddness_residual": 0.002,
+    "maximum_plateau_error": 0.002,
+    "maximum_profile_imaginary_residual": 1e-08,
+    "minimum_diffusion_eigenvalue_real": -1e-08,
+    "maximum_diffusion_eigenvalue_imag": 1e-08,
+    "scientific_rule": "Full spectral-operator profiles at t=10,20,40 must pass time-step, rapidity-grid, and spatial-grid convergence."
+  },
+  "provenance_policy": {
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false
+  }
+}

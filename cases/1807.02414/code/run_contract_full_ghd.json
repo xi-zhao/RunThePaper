@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.02414-T001-full-spectral-GHD",
+  "target_ids": [
+    "T001"
+  ],
+  "working_directory": "workspace",
+  "command": [
+    "python",
+    "scripts/run_full_ghd.py",
+    "--config",
+    "config/full_ghd_paper_scale.json",
+    "--profile",
+    "final"
+  ],
+  "inputs": [
+    "src/xxz_diffusion/__init__.py",
+    "src/xxz_diffusion/backend.py",
+    "src/xxz_diffusion/tba.py",
+    "src/xxz_diffusion/full_ghd.py",
+    "scripts/run_full_ghd.py",
+    "config/full_ghd_paper_scale.json"
+  ],
+  "parameter_file": "config/full_ghd_paper_scale.json",
+  "parameter_selector": "paper_parameters",
+  "expected_parameters": {
+    "ell": 7,
+    "delta": 0.9009688679024191,
+    "domain_wall_mu": 0.05,
+    "times": [
+      10.0,
+      20.0,
+      40.0
+    ],
+    "equation": "partial_t n + v_eff partial_x n = (1/2) D_tilde partial_x^2 n",
+    "initial_response": "delta n = plus/minus n(1-n) h_dr times mu"
+  },
+  "outputs": [
+    "outputs/data/T001_full_ghd_final_baseline_r192_x2048_dt01.npz",
+    "outputs/data/T001_full_ghd_final_time_r192_x2048_dt005.npz",
+    "outputs/data/T001_full_ghd_final_rapidity_r256_x2048_dt01.npz",
+    "outputs/data/T001_full_ghd_final_space_r192_x3072_dt01.npz",
+    "outputs/checks/T001_full_ghd_final_checks.json",
+    "outputs/checks/T001_full_ghd_final_manifest.json"
+  ],
+  "environment": {},
+  "resource_request": {
+    "accelerator": "A100",
+    "gpu_memory_gb": 80,
+    "cpu_cores": 16
+  },
+  "timeout_seconds": 172800,
+  "acceptance_source": "config/full_ghd_paper_scale.json#acceptance",
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}
