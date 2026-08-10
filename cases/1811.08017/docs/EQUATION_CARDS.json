@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "paper_id": "1811.08017",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Hamiltonian resource parameters",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eq. (1) and Fig. 2/4 headers"
+        }
+      ],
+      "latex": "H=\\sum_{j=1}^{L}h_jH_j,\\quad \\lambda=\\sum_j h_j,\\quad \\Lambda=\\max_j h_j,\\quad \\|H_j\\|=1",
+      "role": "paper_parameter_definition",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ001-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Definitions are traced to Main Eq. (1), while all three (lambda, Lambda, L) tuples are printed above both numerical figures."
+        },
+        {
+          "id": "EQ001-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every molecular tuple is positive and is shared unchanged by the Fig. 2 and Fig. 4 calculations."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::Molecule"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Exact qDRIFT composed-channel bound",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eqs. (8)-(9)"
+        },
+        {
+          "type": "appendix_equation",
+          "value": "qDRIFT diamond-distance derivation"
+        }
+      ],
+      "latex": "\\epsilon_{qD}(N)\\leq \\frac{2\\lambda^2t^2}{N}\\exp\\left(\\frac{2\\lambda t}{N}\\right)",
+      "role": "fig2_qdrift_curve",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ002-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The bound is traced to Main Eqs. (8)-(9) and its appendix derivation."
+        },
+        {
+          "id": "EQ002-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A float bracket followed by 60-digit Decimal refinement returns the smallest integer N satisfying the printed bound, and N-1 fails."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::qdrift_gate_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "First-order deterministic and random Trotter bounds",
+      "source_refs": [
+        {
+          "type": "appendix_equation",
+          "value": "Appendix Bounding higher order error terms, first-order block"
+        }
+      ],
+      "latex": "a_T=\\frac{(L\\Lambda t)^2}{r^2}e^{\\Lambda t/r},\\quad b_T=\\frac{(L\\Lambda t)^3}{3r^3}e^{\\Lambda t/r},\\quad \\epsilon_{det}\\leq\\frac r2a_T,\\quad \\epsilon_{rnd}\\leq\\frac r2(a_T^2+2b_T)",
+      "role": "fig2_first_order_curves",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ003-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both first-order error laws are traced to the appendix first-order block."
+        },
+        {
+          "id": "EQ003-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At the t=6000 audit point, 60-digit Decimal evaluation proves that the chosen r passes and r-1 fails."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::first_order_gate_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Higher-order Suzuki deterministic and random bounds",
+      "source_refs": [
+        {
+          "type": "appendix_equation",
+          "value": "Appendix higher-order a_2k and b_2k equations"
+        },
+        {
+          "type": "figure_caption",
+          "value": "Main Fig. 2, best of first four orders"
+        }
+      ],
+      "latex": "a_{2k}=2\\frac{[2\\cdot5^{k-1}L\\Lambda t]^{2k+1}}{(2k+1)!r^{2k+1}}e^{2\\cdot5^{k-1}\\Lambda t/r},\\quad b_{2k}=\\frac{[2\\cdot5^{k-1}\\Lambda t]^{2k+1}L^{2k}}{(2k-1)!r^{2k+1}}e^{2\\cdot5^{k-1}\\Lambda t/r}",
+      "role": "fig2_higher_order_curves",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ004-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The higher-order bounds and declared order set are traced to the appendix and Fig. 2 caption."
+        },
+        {
+          "id": "EQ004-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Orders 2,4,6,8 are all boundary-refined with 60-digit Decimal evaluation before the minimum gate count is selected at each time."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::suzuki_gate_count",
+        "src/qdrift_resources/model.py::higher_order_gate_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "qDRIFT phase-estimation resource law",
+      "source_refs": [
+        {
+          "type": "appendix_equation",
+          "value": "Appendix Eq. (E14)"
+        }
+      ],
+      "latex": "N_{qD}\\simeq133\\frac{\\lambda^2}{\\delta_E^2P_f^3}",
+      "role": "fig4_qdrift_curve",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ005-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The qDRIFT phase-estimation law is traced to Appendix Eq. (E14)."
+        },
+        {
+          "id": "EQ005-SCALE",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Halving P_f multiplies the bound by eight, as required by the P_f^-3 law."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::phase_estimation_counts"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Random second-order Trotter phase-estimation resource law",
+      "source_refs": [
+        {
+          "type": "appendix_equation",
+          "value": "Appendix Eq. (E28)"
+        }
+      ],
+      "latex": "N_T\\simeq69\\frac{L^2\\Lambda^{3/2}}{\\delta_E^{3/2}P_f^2}",
+      "role": "fig4_trotter_curve",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQ006-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The randomized second-order phase-estimation law is traced to Appendix Eq. (E28)."
+        },
+        {
+          "id": "EQ006-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At P_f=0.05 the three independently evaluated qDRIFT-to-Trotter ratios round to 1406, 304 and 789 as printed."
+        }
+      ],
+      "code_refs": [
+        "src/qdrift_resources/model.py::phase_estimation_counts"
+      ],
+      "open_questions": []
+    }
+  ]
+}

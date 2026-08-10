@@ -1,0 +1,340 @@
+{
+  "schema_version": 1,
+  "paper_id": "1709.03478",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Continuum bichromatic Hamiltonian",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "equ_ham"
+        }
+      ],
+      "latex": "H/E_r^p=-pi^{-2} partial_s^2+(v_p/2)cos(2 pi s)+(v_d/2)cos(2 pi alpha s+phi)",
+      "role": "Defines the independently solved physical model.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main-text Eq. (1) in paper-source/SPME.tex."
+        },
+        {
+          "id": "EQC001_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "s=x/(lambda_p/2) gives the kinetic coefficient 1/pi^2 in primary-recoil units."
+        }
+      ],
+      "numerical_form": "continuum_tridiagonal(parameters)",
+      "code_refs": [
+        "src/reproduce_spme.py::continuum_tridiagonal"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Second-order real-space discretization",
+      "source_refs": [
+        {
+          "type": "paper_method",
+          "value": "real-space discretization described in arXiv:1704.04498"
+        }
+      ],
+      "latex": "(H psi)_j=2c psi_j-c(psi_{j-1}+psi_{j+1})+V_j psi_j; c=(pi h)^{-2}",
+      "role": "Produces the tridiagonal matrix used by every target.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The linked theory paper states that the continuum coordinate is discretized on a converged fine mesh."
+        },
+        {
+          "id": "EQC002_free",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The stencil has O(h^2) convergence to the free-particle dispersion."
+        }
+      ],
+      "numerical_form": "scipy.linalg.eigh_tridiagonal diagonal/off-diagonal arrays",
+      "code_refs": [
+        "src/reproduce_spme.py::continuum_tridiagonal",
+        "tests/test_reproduce_spme.py"
+      ],
+      "open_questions": [
+        "The paper does not report its mesh density."
+      ]
+    },
+    {
+      "id": "EQC003",
+      "title": "Tunnelling-time conversion",
+      "source_refs": [
+        {
+          "type": "caption",
+          "value": "Main Fig. 2: tau=hbar/J"
+        }
+      ],
+      "latex": "theta_a=(E_a/E_r^p)(t/tau)/(J/E_r^p)",
+      "role": "Maps paper times in tau to spectral phases.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 2 caption defines tau=hbar/J."
+        },
+        {
+          "id": "EQC003_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "E t/hbar=(E/E_r)(t/tau)/(J/E_r)."
+        }
+      ],
+      "numerical_form": "phase_time = time_tau / hopping_over_recoil",
+      "code_refs": [
+        "src/reproduce_spme.py::primary_hopping",
+        "src/reproduce_spme.py::spectral_expectation"
+      ],
+      "open_questions": [
+        "The target paper does not report a numerical J table; J is independently calculated from the primary band."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "Charge-density-wave imbalance",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "I=(N_e-N_o)/(N_e+N_o)"
+        }
+      ],
+      "latex": "I(t)=Tr[W_eo rho(t)]/Tr[rho(t)]",
+      "role": "Detects any localized spectral fraction.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Definition is stated in the main text."
+        },
+        {
+          "id": "EQC004_initial",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A pure one-parity CDW gives I(0)=1."
+        }
+      ],
+      "numerical_form": "imbalance_expectation(eigensystem, cdw_projector, time)",
+      "code_refs": [
+        "src/reproduce_spme.py::prepare_cdw",
+        "src/reproduce_spme.py::spectral_expectation"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Center-third edge density",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "D=1-N_c/N"
+        }
+      ],
+      "latex": "D(t)=1-N_c(t)/N_c(0); N_c(t)=Tr[W_c U(t)P_c U^dagger(t)]",
+      "role": "Detects any extended spectral fraction.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main text defines the initially populated center third and D=1-Nc/N."
+        },
+        {
+          "id": "EQC005_bounds",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Normalizing by the same projected representation's Nc(0) gives D(0)=0 and removes lowest-band truncation leakage."
+        }
+      ],
+      "numerical_form": "1 - center_probability(t)",
+      "code_refs": [
+        "src/reproduce_spme.py::prepare_center_third_eigenstates",
+        "src/reproduce_spme.py::spectral_expectation"
+      ],
+      "open_questions": [
+        "The target paper does not state every boundary-condition detail for the center-third preparation."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "Spectral one-body propagation",
+      "source_refs": [
+        {
+          "type": "standard_identity",
+          "value": "spectral theorem for a real symmetric single-particle Hamiltonian"
+        }
+      ],
+      "latex": "<W>_t=sum_ab W'_ab R'_ba exp[i(lambda_a-lambda_b)t]; overline{<W>}=sum_a W'_aa R'_aa",
+      "role": "Propagates finite-time projectors and evaluates stationary diagonal-ensemble curves without an author code path.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper specifies unitary time evolution under Eq. (1)."
+        },
+        {
+          "id": "EQC006_t0",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At t=0 the contraction reduces to Tr(W rho0); its infinite-time average retains only equal-energy diagonal terms."
+        }
+      ],
+      "numerical_form": "spectral_expectation(evals, observable_eigenbasis, rho_eigenbasis, time)",
+      "code_refs": [
+        "src/reproduce_spme.py::spectral_expectation",
+        "src/reproduce_spme.py::dephased_expectation"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "FWHM and RMS cloud observables",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Comparison of different observables for the expansion"
+        }
+      ],
+      "latex": "r_rms=sqrt(sum_i (i-i_c)^2 n_i / sum_i n_i)",
+      "role": "Generates Supplementary Fig. S1 cloud-size panels.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement defines FWHM and describes the RMS observable; its displayed right-hand expression omits the stated square root."
+        },
+        {
+          "id": "EQC007_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The implemented outer square root returns a length in sites."
+        }
+      ],
+      "numerical_form": "cloud_observables(site_density)",
+      "code_refs": [
+        "src/reproduce_spme.py::cloud_observables"
+      ],
+      "open_questions": [
+        "The supplement's printed RMS equation is internally inconsistent; the standard dimensionally correct form is used."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Gaussian-beam tube averaging proxy",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Averaging over neighboring tubes"
+        }
+      ],
+      "latex": "<O>_tube=sum_ij (4 w_i w_j/pi) O(f_ij V_p,f_ij V_d), f_ij=exp[-(w_y^2 u_i^2+w_z^2 v_j^2)/w_b^2]",
+      "role": "Tests the reported broadening caused by correlated depth reduction away from the central tube.",
+      "derived_from": [
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement reports w=150 um, wy=42 um, wz=12 um and atom-number weighting."
+        },
+        {
+          "id": "EQC008_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Deterministic quadrature weights are nonnegative and normalized."
+        }
+      ],
+      "numerical_form": "order-(8,4) product Gauss-Hermite beam-depth quadrature (eight merged nodes) with an order-(10,6) fifteen-node convergence profile",
+      "code_refs": [
+        "src/paper_scale_campaign.py::derived_tube_nodes",
+        "src/paper_scale_campaign.py::_tables_for_profile"
+      ],
+      "open_questions": [
+        "Exact per-tube atom histogram, fitted-width convention and lattice-beam alignment are not published; affected rows remain a method-derived proxy."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Numerical phase-boundary threshold",
+      "source_refs": [
+        {
+          "type": "caption",
+          "value": "Main Fig. 3: I and D cross 0.015"
+        }
+      ],
+      "latex": "V_I=first V_d with I(V_d)>=0.015; V_D=first V_d with D(V_d)<=0.015",
+      "role": "Builds Main Fig. 4 from frozen generated sweeps.",
+      "derived_from": [
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Threshold rule is explicit in the Fig. 3 caption."
+        }
+      ],
+      "numerical_form": "linear crossing interpolation on generated Vd grid",
+      "code_refs": [
+        "src/reproduce_spme.py::threshold_crossing"
+      ],
+      "open_questions": []
+    }
+  ]
+}

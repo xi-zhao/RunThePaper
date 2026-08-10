@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "run_id": "1910.00020-paper-scale-sharded-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "run-all",
+    "--config",
+    "config/paper_scale.json",
+    "--acceptance",
+    "config/paper_scale_acceptance.json",
+    "--workers",
+    "16"
+  ],
+  "inputs": [
+    "src/measurement_criticality/__init__.py",
+    "src/measurement_criticality/stabilizer.py",
+    "src/measurement_criticality/reproduction.py",
+    "src/measurement_criticality/paper_scale.py",
+    "src/measurement_criticality/assessment.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json",
+    "config/paper_scale_acceptance.json",
+    "requirements.txt"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "seed_base": 191000200000,
+    "critical_rate_main": 0.1598,
+    "critical_rate_correlations": 0.1596,
+    "volume_rate": 0.08,
+    "off_critical_rates": [
+      0.08,
+      0.24
+    ],
+    "nu": 1.3,
+    "beta_surface": 0.45,
+    "eta_bulk": 0.22,
+    "eta_parallel_1": 0.74,
+    "eta_parallel_2": 0.67,
+    "eta_parallel_3": 0.58,
+    "supp_eta_one": 0.7,
+    "supp_eta_four": 0.76,
+    "gate_ensemble": "uniform two-qubit Clifford modulo Pauli phases",
+    "measurement_basis": "Z"
+  },
+  "outputs": [
+    "outputs/data/paper_scale/plan.json",
+    "outputs/data/paper_scale/run_summary.json",
+    "outputs/data/paper_scale/aggregate_manifest.json",
+    "outputs/data/paper_scale/aggregates/T001.npz",
+    "outputs/data/paper_scale/aggregates/T001.manifest.json",
+    "outputs/data/paper_scale/aggregates/T002.npz",
+    "outputs/data/paper_scale/aggregates/T002.manifest.json",
+    "outputs/data/paper_scale/aggregates/T003.npz",
+    "outputs/data/paper_scale/aggregates/T003.manifest.json",
+    "outputs/data/paper_scale/aggregates/T004.npz",
+    "outputs/data/paper_scale/aggregates/T004.manifest.json",
+    "outputs/data/paper_scale/aggregates/T005.npz",
+    "outputs/data/paper_scale/aggregates/T005.manifest.json",
+    "outputs/data/paper_scale/aggregates/T006.npz",
+    "outputs/data/paper_scale/aggregates/T006.manifest.json",
+    "outputs/data/paper_scale/aggregates/T007.npz",
+    "outputs/data/paper_scale/aggregates/T007.manifest.json",
+    "outputs/data/paper_scale/aggregates/T008.npz",
+    "outputs/data/paper_scale/aggregates/T008.manifest.json",
+    "outputs/data/paper_scale/checks/scientific_assessment.json"
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "paper_machine": {
+    "recommended_profile": "institute high-CPU profile",
+    "reason": "GF(2) stabilizer updates are branch-heavy and this implementation does not pretend the A100 provides acceleration",
+    "parallelism": "one independent condition/shard per CPU process",
+    "persistent_storage": "user home only"
+  },
+  "resume_contract": {
+    "direct_entrypoint": "python scripts/run_paper_scale.py run-shard --config config/paper_scale.json --condition <condition-id> --shard <index>",
+    "checkpoint_boundary": "after every completed trajectory via atomic replacement",
+    "identity": "config hash, condition hash, shard id, and exact global trajectory-id prefix",
+    "aggregation_gate": "all trajectory ids 0..N-1 must occur exactly once"
+  }
+}

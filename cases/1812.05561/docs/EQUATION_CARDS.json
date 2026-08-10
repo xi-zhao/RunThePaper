@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "paper_id": "1812.05561",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Constrained PXP Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        }
+      ],
+      "latex": "H_0=\\sum_{i=1}^N \\mathcal C\\sigma_i^x\\mathcal C",
+      "role": "unperturbed_constrained_hamiltonian",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) prints the globally projected spin-flip Hamiltonian."
+        },
+        {
+          "id": "EQ001-H",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently assembled sparse matrix is real symmetric and connects only blockade-allowed configurations."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::HamiltonianFamily.build",
+        "src/scar_reproduction.py::HamiltonianFamily.matrix",
+        "src/mps_dmrg.py::open_pxp_mpo"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Quasi-local deformation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (2)-(3)"
+        }
+      ],
+      "latex": "\\delta H_R=-\\sum_i\\sum_{d=2}^R h_d\\mathcal C\\sigma_i^x\\mathcal C(\\sigma_{i-d}^z+\\sigma_{i+d}^z)",
+      "role": "deformed_pxp_hamiltonian",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (3) fixes the sign, distance sum and two z-neighbour factors."
+        },
+        {
+          "id": "EQ002-H",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The deformation preserves Hermiticity and the blockade basis."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::HamiltonianFamily.build",
+        "src/scar_reproduction.py::HamiltonianFamily.matrix",
+        "src/mps_dmrg.py::open_pxp_mpo"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Golden-ratio coupling ansatz",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4)"
+        }
+      ],
+      "latex": "h_d=h_0(\\phi^{d-1}-\\phi^{-(d-1)})^{-2},\\quad \\phi=(1+\\sqrt5)/2",
+      "role": "distance_dependent_couplings",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4) gives the full distance dependence and golden-ratio convention."
+        },
+        {
+          "id": "EQ003-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Positive couplings decrease monotonically and exponentially with distance."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::ansatz_couplings"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Emergent-SU(2) coupling constraint",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (6) and Supplement Sec. constraint on perturbation strengths"
+        }
+      ],
+      "latex": "(1-h)(1-h-16\\sum_{n\\ge1}h_{2n})=16\\sum_{n\\ge1}h_{2n}^2,\\quad h=2\\sum_{n\\ge2}h_n(-1)^n",
+      "role": "fix_h0_gap_and_period",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (6) and the supplement derive the constraint by imposing harmonic H^z spacing on |0> and |1>."
+        },
+        {
+          "id": "EQ004-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "An independent Brent root gives h0 near 0.0506656 with residual below numerical precision."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::su2_constraint",
+        "src/scar_reproduction.py::solve_h0",
+        "src/scar_reproduction.py::harmonic_gap_and_period"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Loschmidt echo and half-chain entropy",
+      "source_refs": [
+        {
+          "type": "definition",
+          "value": "Main text before Fig. 1 and Fig. 1 caption"
+        }
+      ],
+      "latex": "g(t)=|\\langle\\mathbb Z_2|e^{-iHt}|\\mathbb Z_2\\rangle|^2,\\quad S_A=-\\mathrm{Tr}(\\rho_A\\ln\\rho_A)",
+      "role": "dynamical_observables",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text defines g(t); Fig. 1 specifies half-chain entropy and Schmidt probabilities."
+        },
+        {
+          "id": "EQ005-I",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At t=0 fidelity is one, entropy is zero, and Schmidt probabilities normalize to one."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py::run_main_figure_1",
+        "src/paper_scale.py::run_t001",
+        "src/scar_reproduction.py::Bipartition"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Symmetry-resolved adjacent-gap ratio",
+      "source_refs": [
+        {
+          "type": "definition",
+          "value": "Main text around Fig. 2(b)"
+        }
+      ],
+      "latex": "r_i=\\min(\\delta_i,\\delta_{i+1})/\\max(\\delta_i,\\delta_{i+1}),\\quad \\delta_i=E_{i+1}-E_i",
+      "role": "bulk_level_statistics",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text prints the adjacent-gap ratio and the GOE/Poisson reference values."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Ratios remain in [0,1] and are evaluated only after resolving translation and inversion sectors."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::sector_hamiltonian",
+        "src/scar_reproduction.py::sector_hamiltonian_sparse",
+        "src/scar_reproduction.py::level_statistics",
+        "src/paper_scale.py::run_t002"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Forward-scattering SU(2) representation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (5), Fig. 3 and FSA recursion in main text"
+        }
+      ],
+      "latex": "|k\\rangle\\propto H^+|k-1\\rangle,\\quad P_\\mathcal K[H^z,H^\\pm]P_\\mathcal K\\approx\\pm\\Delta P_\\mathcal KH^\\pm P_\\mathcal K,\\quad \\langle k+1|H^+|k\\rangle\\propto\\sqrt{(N-k)(k+1)}",
+      "role": "emergent_su2_diagnostics",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text defines the FSA recursion and Eq. (5) states the projected algebra."
+        },
+        {
+          "id": "EQ007-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Recursive FSA vectors are normalized; beta and H^z-spacing deviations are measured explicitly."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::fsa_basis",
+        "src/scar_reproduction.py::fsa_diagnostics",
+        "src/paper_scale.py::_streaming_fsa"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Intensive revival infidelity and decay rate",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Sec. scaling analysis, equation preceding Fig. scaling"
+        }
+      ],
+      "latex": "\\tilde g_m=g_m^{1/N},\\quad \\Gamma(m)=(1-\\tilde g_m)/m\\approx(1-g_m)/(Nm)",
+      "role": "late_time_scaling_observables",
+      "derived_from": [
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The executed reduced run samples the analytic period; the unexecuted paper-scale lane locally maximizes every revival through m=1000."
+      ],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints both the exact intensive rate and its small-infidelity approximation."
+        },
+        {
+          "id": "EQ008-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Generated fidelities are clipped to [0,1] before taking the N-th root."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py::run_supp_figure_s3",
+        "src/paper_scale.py::run_t006"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Exact-scar toy Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (7) and Supplement numerical toy-model section"
+        }
+      ],
+      "latex": "H_{toy}=\\frac{\\Omega}{2}\\sum_i\\sigma_i^x+\\sum_iV_{i-1,i+2}P_{i,i+1},\\quad P_{i,i+1}=(1-\\vec\\sigma_i\\cdot\\vec\\sigma_{i+1})/4",
+      "role": "embedded_exact_scar_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper reports only the Gaussian distribution, not the random realization; this case fixes and discloses a new seed."
+      ],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (7) fixes the projector-embedded form; the supplement fixes Omega=1 and Gaussian standard deviation 1/4."
+        },
+        {
+          "id": "EQ009-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The constructed matrix is Hermitian and the polarized-state return is unity at integer periods."
+        }
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py::toy_hamiltonian",
+        "src/scar_reproduction.py::toy_hamiltonian_sparse",
+        "src/scar_reproduction.py::toy_diagnostics",
+        "src/paper_scale.py::run_t009"
+      ]
+    }
+  ]
+}

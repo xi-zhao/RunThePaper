@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.02414",
+  "target_id": "T003",
+  "paper_parameters": {
+    "ell": 7,
+    "delta": 0.9009688679024191,
+    "domain_wall_mu": 0.05,
+    "times": [
+      10.0,
+      20.0,
+      40.0
+    ],
+    "hamiltonian": "sum_x [S+_x S-_(x+1) + S-_x S+_(x+1) + (Delta/2) Sz_x Sz_(x+1)]",
+    "initial_density_matrix": "product_{x<0} exp(mu Sz_x) product_{x>0} exp(-mu Sz_x), locally normalized",
+    "boundary_condition": "open"
+  },
+  "profiles": {
+    "final": {
+      "description": "Paper-time convergence campaign; all four variants must pass before comparing independently generated tDMRG markers with the paper curves.",
+      "variants": [
+        {
+          "id": "baseline_L256_chi512_dt005",
+          "role": "primary paper-time profile",
+          "chain_length": 256,
+          "max_bond": 512,
+          "time_step": 0.05,
+          "relative_cutoff": 1e-10,
+          "backend": "cupy",
+          "checkpoint_every_steps": 20
+        },
+        {
+          "id": "timestep_L256_chi512_dt0025",
+          "role": "second-order Trotter convergence",
+          "chain_length": 256,
+          "max_bond": 512,
+          "time_step": 0.025,
+          "relative_cutoff": 1e-10,
+          "backend": "cupy",
+          "checkpoint_every_steps": 40
+        },
+        {
+          "id": "bond_L256_chi768_dt005",
+          "role": "bond-dimension convergence",
+          "chain_length": 256,
+          "max_bond": 768,
+          "time_step": 0.05,
+          "relative_cutoff": 1e-11,
+          "backend": "cupy",
+          "checkpoint_every_steps": 20
+        },
+        {
+          "id": "size_L320_chi512_dt005",
+          "role": "finite-size and boundary-reflection convergence",
+          "chain_length": 320,
+          "max_bond": 512,
+          "time_step": 0.05,
+          "relative_cutoff": 1e-10,
+          "backend": "cupy",
+          "checkpoint_every_steps": 20
+        }
+      ],
+      "comparisons": [
+        {
+          "id": "time_step_convergence",
+          "left": "baseline_L256_chi512_dt005",
+          "right": "timestep_L256_chi512_dt0025",
+          "metric": "normalized_rms",
+          "threshold": 0.02
+        },
+        {
+          "id": "bond_convergence",
+          "left": "baseline_L256_chi512_dt005",
+          "right": "bond_L256_chi768_dt005",
+          "metric": "normalized_rms",
+          "threshold": 0.02
+        },
+        {
+          "id": "finite_size_convergence",
+          "left": "baseline_L256_chi512_dt005",
+          "right": "size_L320_chi512_dt005",
+          "metric": "normalized_rms",
+          "threshold": 0.02
+        }
+      ]
+    }
+  },
+  "acceptance": {
+    "maximum_norm_drift": 1e-05,
+    "maximum_single_update_discarded_weight": 1e-08,
+    "edge_sites": 8,
+    "maximum_boundary_plateau_error": 0.002,
+    "required_snapshot_times": [
+      10.0,
+      20.0,
+      40.0
+    ],
+    "scientific_rule": "All three paper times must pass independent dt, bond-dimension, and finite-size convergence before the markers can be called reproduced."
+  },
+  "provenance_policy": {
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false,
+    "paper_parameters_only": true
+  }
+}

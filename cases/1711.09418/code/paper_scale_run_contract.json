@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "run_id": "1711.09418-paper-scale-resumable-v1",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "working_directory": "workspace",
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--profile",
+    "paper",
+    "--resume",
+    "run-all"
+  ],
+  "inputs": [
+    "src/symmetry_entanglement/__init__.py",
+    "src/symmetry_entanglement/model.py",
+    "src/symmetry_entanglement/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "scientific_parameters",
+  "expected_parameters": {
+    "subsystem_length": 10000,
+    "filling": 0.5,
+    "luttinger_k": 1.0,
+    "active_correlation_modes": 96,
+    "fig2_delta_min": -5,
+    "fig2_delta_max": 5,
+    "fig3_selected_modes": 24,
+    "fig3_sectors": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "fig3_rank_max": 1000,
+    "fig3_x_max": 10.0,
+    "fig3_analytic_points": 501,
+    "quadrature_nodes": 512
+  },
+  "expected_outputs": [
+    "outputs/paper_scale/data/fig2_charge_resolved.csv",
+    "outputs/paper_scale/data/single_particle_spectrum.csv",
+    "outputs/paper_scale/data/fig3_spectrum_numeric.csv",
+    "outputs/paper_scale/data/fig3_spectrum_analytic.csv",
+    "outputs/paper_scale/checks/acceptance.json",
+    "outputs/paper_scale/checks/backend_benchmark.json",
+    "outputs/paper_scale/checks/manifest.json",
+    "outputs/paper_scale/run_summary.json"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  },
+  "checkpoint_resume": {
+    "enabled": true,
+    "resume_flag": "--resume",
+    "checkpoint_root": "outputs/paper_scale/checkpoints",
+    "identity_binding": "effective config hash plus correlation-eigenvalue array hash"
+  },
+  "sharding": {
+    "prepare_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "--resume",
+      "prepare"
+    ],
+    "numeric_job_array_template": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "--resume",
+      "fig3-shard",
+      "--shard-index",
+      "${SHARD_INDEX}",
+      "--num-shards",
+      "16"
+    ],
+    "analytic_job_array_template": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "--resume",
+      "analytic-shard",
+      "--shard-index",
+      "${SHARD_INDEX}",
+      "--num-shards",
+      "4"
+    ],
+    "aggregate_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "--resume",
+      "aggregate"
+    ],
+    "benchmark_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "benchmark"
+    ],
+    "accept_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--profile",
+      "paper",
+      "accept"
+    ]
+  },
+  "acceptance_source": "config/paper_scale.json#targets",
+  "evidence_boundary": "This contract is a code-ready rerun channel. The historical v2 isolated run remains the accepted paper-exact evidence; smoke execution of this new channel does not replace its attestation or satisfy fresh protocol-v2 review."
+}

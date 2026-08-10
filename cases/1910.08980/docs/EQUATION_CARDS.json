@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "paper_id": "1910.08980",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Signed Ising objective",
+      "latex": "H(J)=\\sum_{(u,v)\\in E}J_{uv}Z_uZ_v,\\quad J_{uv}\\in\\{-1,+1\\}",
+      "role": "Defines every independently generated benchmark instance and its exact objective.",
+      "source_refs": [
+        "main Eq. (14)",
+        "Appendix Eq. (C8)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/rqaoa.py::ising_energy",
+        "src/rqaoa.py::random_signed_regular_instance"
+      ],
+      "checks": [
+        {
+          "id": "EQ001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The signed Ising Hamiltonian, cubic graph ensemble, and J=±1 domain are explicit in Eq. (14) and the Fig. 1 caption."
+        },
+        {
+          "id": "EQ001-degree",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Each generated graph has 3n/2 edges, degree three at every vertex, and only signed unit weights."
+        }
+      ],
+      "open_questions": [
+        "The paper does not publish the 32 graph/coupling instances or their random seeds."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Level-1 QAOA state and approximation ratio",
+      "latex": "|\\Psi_H(\\beta,\\gamma)\\rangle=e^{i\\beta\\sum_jX_j}e^{i\\gamma H}|+^n\\rangle,\\quad r_{\\rm QAOA}=\\max_{\\beta,\\gamma}\\langle H\\rangle/E_{\\max}",
+      "role": "Defines the blue-bar variational expectation divided by the exact Ising maximum.",
+      "source_refs": [
+        "Appendix Eq. (A1)",
+        "main Fig. 1 caption"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/rqaoa.py::optimize_qaoa1",
+        "src/rqaoa.py::exact_ising_max"
+      ],
+      "checks": [
+        {
+          "id": "EQ002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The state order and variational objective are explicit in Appendix A; the denominator is explicit in the Fig. 1 caption."
+        },
+        {
+          "id": "EQ002-beta",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "At fixed gamma the energy is A sin^2(2 beta)+B cos(2 beta)sin(2 beta), whose global beta maximum is analytic."
+        },
+        {
+          "id": "EQ002-exact",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The zero-gap MILP optimum agrees with exhaustive enumeration on a signed 8-spin cubic graph."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Closed-form level-1 edge correlation",
+      "latex": "M_{uv}=\\frac{s^2}{2}\\prod_{p\\ne u,v}\\cos[2\\gamma(J_{up}-J_{vp})]-\\frac{s^2}{2}\\prod_{p\\ne u,v}\\cos[2\\gamma(J_{up}+J_{vp})]+cs\\sin(2\\gamma J_{uv})\\left(\\prod_{p\\ne u,v}\\cos(2\\gamma J_{up})+\\prod_{p\\ne u,v}\\cos(2\\gamma J_{vp})\\right)",
+      "role": "Computes every QAOA energy term and every RQAOA rounding correlation without a quantum simulator.",
+      "source_refs": [
+        "Appendix C, Lemma 4, Eq. (C9)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/rqaoa.py::qaoa1_coefficients",
+        "src/rqaoa.py::qaoa1_at_gamma"
+      ],
+      "checks": [
+        {
+          "id": "EQ003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Every factor and sign is transcribed from Appendix C Eq. (C9), with gamma restored by J→gamma J as stated below the lemma."
+        },
+        {
+          "id": "EQ003-statevector",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "All active-edge correlations agree with direct four-qubit statevector evolution to 2e-12."
+        },
+        {
+          "id": "EQ003-gamma",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Integer couplings make gamma in [0,pi] a complete period after recursive contractions."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "RQAOA correlation rounding",
+      "latex": "(i,j)=\\arg\\max_{(u,v)\\in E}|M_{uv}|,\\qquad Z_j=\\operatorname{sgn}(M_{ij})Z_i",
+      "role": "Eliminates one variable and merges its incident couplings into the retained variable.",
+      "source_refs": [
+        "main Eq. (15)",
+        "Appendix C pseudocode"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/rqaoa.py::run_rqaoa1"
+      ],
+      "checks": [
+        {
+          "id": "EQ004-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The maximum-correlation choice, sign constraint, coupling substitution, and recursive cutoff are explicit in the main text and Appendix C pseudocode."
+        },
+        {
+          "id": "EQ004-energy",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "At every completed recursion, reconstructed original energy equals reduced optimum plus accumulated constant shift."
+        },
+        {
+          "id": "EQ004-cutoff",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The recursion stops at n_c=8 for n=32 and n_c=30 for n=100."
+        }
+      ],
+      "open_questions": [
+        "The paper permits arbitrary tie breaking; this case deterministically chooses the first maximum in sorted edge order."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Exact Ising normalization",
+      "latex": "E_{\\max}=\\max_{z\\in\\{-1,+1\\}^n}\\sum_{u<v}J_{uv}z_uz_v,\\qquad r=E_{\\rm algorithm}/E_{\\max}",
+      "role": "Normalizes both algorithms by a separately proved exact optimum.",
+      "source_refs": [
+        "main Fig. 1 caption"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/rqaoa.py::exact_ising_max"
+      ],
+      "checks": [
+        {
+          "id": "EQ005-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The exact maximization denominator and algorithm-output ratio are stated in the Fig. 1 caption."
+        },
+        {
+          "id": "EQ005-xor",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "With d_uv=b_u XOR b_v, J_uv z_u z_v=J_uv(1-2d_uv), giving the binary MILP objective."
+        },
+        {
+          "id": "EQ005-gap",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Final runs require solver success and zero reported MIP gap."
+        }
+      ],
+      "open_questions": []
+    }
+  ]
+}

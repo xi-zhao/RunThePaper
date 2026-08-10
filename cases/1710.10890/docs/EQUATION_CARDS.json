@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "paper_id": "1710.10890",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Published scattering-length parameterization",
+      "source_refs": [
+        {
+          "type": "caption",
+          "value": "Main Fig. 1(a) and Ref. 19"
+        },
+        {
+          "type": "table",
+          "value": "Cikojevic et al., Phys. Rev. A 102, 033335 (2020), Table I"
+        }
+      ],
+      "latex": "a_{ij}(B)=\\sum_{k=1}^{3}a_{ij,k}\\prod_{l\\ne k}\\frac{B-B_l}{B_k-B_l}",
+      "role": "scattering_lengths_from_independent_published_rows",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The original coupled-channel potential/model is not fully printed in the target paper."
+      ],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The three parameter rows are printed in the cited primary-source table and the target paper identifies the same coupled-channel model."
+        },
+        {
+          "id": "EQ001-T",
+          "type": "table_identity",
+          "status": "passed",
+          "reason": "The interpolant returns all nine published table values to floating-point precision."
+        },
+        {
+          "id": "EQ001-Z",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reconstructed delta-a zero lies near the independently printed B_c=56.85 G."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/model.py::ScatteringModel"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Effective attraction and locked density ratio",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Main text following Fig. 1"
+        }
+      ],
+      "latex": "\\delta a=a_{12}+\\sqrt{a_{11}a_{22}},\\qquad n_1/n_2=\\sqrt{a_{22}/a_{11}}",
+      "role": "phase_sign_and_population_equilibrium",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both relations are explicitly printed in the main text."
+        },
+        {
+          "id": "EQ002-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The generated ratio remains positive and delta-a changes sign only once in the plotted interval."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/model.py::interaction_properties"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Coupled Gross-Pitaevskii and LHY functional",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eqs. (3)--(6)"
+        }
+      ],
+      "latex": "i\\hbar\\partial_t\\psi_i=[-\\hbar^2\\nabla^2/(2m)+V+g_{ii}n_i+g_{12}n_j+\\frac{32g_{ii}}{3\\sqrt\\pi}(a_{11}n_1+a_{22}n_2)^{3/2}]\\psi_i",
+      "role": "microscopic_evolution_and_energy_balance",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The per-curve atom numbers and therefore the author's exact initial arrays for Main Fig. 4 are not published; the stated preparation procedure is independently implementable."
+      ],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The coupled GPE, GP energy, LHY energy, and its functional derivative are printed consecutively in the supplement."
+        },
+        {
+          "id": "EQ003-D",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating the printed simplified LHY energy reproduces the printed chemical-potential term."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/model.py::equilibrium_scales",
+        "src/quantum_droplets/coupled_gpe.py::lhy_energy_density",
+        "src/quantum_droplets/coupled_gpe.py::lhy_chemical_potentials"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Equilibrium densities and physical length scale",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Petrov, Phys. Rev. Lett. 115, 155302 (2015), Eqs. for n_i^(0) and xi"
+        }
+      ],
+      "latex": "n_i^{(0)}=\\frac{25\\pi}{1024}\\frac{\\delta a^2}{a_{11}a_{22}\\sqrt{a_{ii}}(\\sqrt{a_{11}}+\\sqrt{a_{22}})^5},\\quad \\xi^2=\\frac{384}{25\\pi^2}\\frac{a_{11}a_{22}(\\sqrt{a_{11}}+\\sqrt{a_{22}})^6}{|\\delta a|^3}",
+      "role": "map_universal_droplet_to_physical_units",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The equilibrium-density expression is printed in Petrov and the length rescaling is printed in the same derivation cited by the target paper."
+        },
+        {
+          "id": "EQ004-R",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The density ratio from n_i^(0) equals sqrt(a22/a11)."
+        },
+        {
+          "id": "EQ004-U",
+          "type": "dimensional_analysis",
+          "status": "passed",
+          "reason": "n_i^(0) has inverse-volume units and xi has length units."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/model.py::equilibrium_scales"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Universal stationary droplet equation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Petrov, Phys. Rev. Lett. 115, 155302 (2015), dimensionless GP equation"
+        }
+      ],
+      "latex": "-\\frac12\\tilde\\nabla^2\\phi-3\\phi^3+\\frac52\\phi^4-\\tilde\\mu\\phi=0,\\qquad \\tilde N=\\int d^3\\tilde r\\,\\phi^2",
+      "role": "dimensionless_radial_profile",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The dimensionless stationary equation and normalization are printed in Petrov's derivation cited by the target paper."
+        },
+        {
+          "id": "EQ005-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At mu=-0.061 the radial BVP returns N_tilde=18.649, matching the printed 18.65 fold."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/model.py::solve_radial_profile"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Critical numbers and observable size",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Petrov stability discussion: N_tilde,c=18.65 and zero-energy threshold 22.55"
+        },
+        {
+          "type": "caption",
+          "value": "Main Fig. 3(a,b)"
+        }
+      ],
+      "latex": "N_c=(n_1^{(0)}+n_2^{(0)})\\xi^3\\tilde N_c,\\qquad \\sigma=\\xi\\sqrt{\\langle\\tilde r^2\\rangle/3}",
+      "role": "critical_phase_boundary_and_width",
+      "derived_from": [
+        "EQ004",
+        "EQ005"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not state how the radial theory density was mapped to the plotted experimental 1/e^2 Gaussian width."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Petrov explicitly prints the 18.65 instability and 22.55 zero-energy thresholds used by the target-paper curves."
+        },
+        {
+          "id": "EQ006-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The 22.55 profile has zero energy within the solver tolerance and is narrower than the 18.65 metastability fold."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/reproduction.py::critical_curves"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Time-averaged optical levitation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eqs. (1)--(2) and Fig. S1 text"
+        }
+      ],
+      "latex": "z_0(t)=A(2\\sqrt{|1-2t/T|}-1)+C,\\quad V(z)=T^{-1}\\int_0^T V_0e^{-2(z-z_0)^2/w_z^2}dt,\\quad |V'(0)|=mg,\\quad \\omega_z^{(\\mathrm{plot})}=\\operatorname{sgn}[-V''(z)]\\sqrt{|V''(z)|/m}",
+      "role": "levitating_potential_and_curvature",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The modulation trajectory, Gaussian period average, and all numerical parameters are printed in the supplement."
+        },
+        {
+          "id": "EQ007-G",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The generated central optical gradient cancels gravity to better than 1e-4 relative error."
+        },
+        {
+          "id": "EQ007-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Using the source panel's signed force-gradient convention, the curvature is positive at -15 micrometres, negative at +15 micrometres, and has magnitude about 20 Hz."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/reproduction.py::levitation_curves"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Thomas-Fermi expansion scaling",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Supplement Fig. S2: GPE free and 12 Hz confined evolution"
+        }
+      ],
+      "latex": "\\ddot b_i=\\omega_{i,0}^2/(b_i b_xb_yb_z)-\\omega_{i,f}^2b_i,\\qquad R_i(t)=R_i(0)b_i(t)",
+      "role": "supplementary_expansion_proxy",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The atom number of the Supplement Fig. S2 calibration condensate is not printed."
+      ],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement states that the two curves are GPE evolutions in free space and with 12 Hz vertical confinement, and prints the initial trap/scattering parameters elsewhere."
+        },
+        {
+          "id": "EQ008-I",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "b_i(0)=1 and db_i/dt(0)=0."
+        },
+        {
+          "id": "EQ008-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The free curve expands faster than the 12 Hz confined curve after release."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/reproduction.py::expansion_proxy"
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Method-faithful 3D split-step dynamics and observables",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Supplement Numerical simulations: state-2 trapped ground state, instantaneous 50/50 transfer, and split-step Fourier evolution"
+        },
+        {
+          "type": "text",
+          "value": "Main text definition sigma=sqrt(sigma_x sigma_z), with sigma_i the 1/e^2 Gaussian half width"
+        },
+        {
+          "type": "caption",
+          "value": "Supplement Fig. S2: vertical Thomas-Fermi radius R_z"
+        }
+      ],
+      "latex": "e^{-i\\hat H\\Delta t/\\hbar}=e^{-i\\hat T\\Delta t/(2\\hbar)}e^{-i\\hat U[n_1,n_2]\\Delta t/\\hbar}e^{-i\\hat T\\Delta t/(2\\hbar)}+O(\\Delta t^3),\\quad \\sigma=2\\sqrt{\\mathrm{RMS}_x\\mathrm{RMS}_z},\\quad R_z^{(TF)}=\\sqrt7\\,\\mathrm{RMS}_z",
+      "role": "main_fig4_and_supp_s2_method_faithful_dynamics",
+      "derived_from": [
+        "EQ003",
+        "EQ007"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The per-curve initial atom numbers for Main Fig. 4 are not printed.",
+        "The atom number of the Supplement Fig. S2 calibration condensate is not printed.",
+        "The paper does not state the density-to-Gaussian fitting algorithm used for its simulated Main Fig. 4 widths."
+      ],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement explicitly specifies the initial state preparation, coupled local-LHY equations, split-step technique, no-loss Fig. 4 evolution, and free/12 Hz S2 comparison."
+        },
+        {
+          "id": "EQ009-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The LHY chemical potentials agree with finite differences of the independently implemented LHY energy density on the smoke path."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "convergence_plan",
+          "status": "code_ready_unrun",
+          "reason": "The paper-scale contract requires 512^3 production, 640^3 spatial refinement, and a halved time step, with scenario-specific boxes that contain the 25 ms droplet and 12 ms expansion trajectories."
+        },
+        {
+          "id": "EQ009-B",
+          "type": "boundary_condition",
+          "status": "code_ready_unrun",
+          "reason": "Acceptance rejects trajectories whose outer 10% FFT-box shell contains 1e-4 or more of the norm."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_droplets/coupled_gpe.py::run_split_step_scenario",
+        "src/quantum_droplets/paper_scale.py::aggregate_campaign",
+        "scripts/run_paper_scale.py"
+      ]
+    }
+  ]
+}

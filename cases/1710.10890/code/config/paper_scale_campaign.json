@@ -1,0 +1,461 @@
+{
+  "schema_version": 2,
+  "paper_id": "1710.10890",
+  "status": "paper_scale_ready",
+  "artifact_stage": "planned_paper_scale",
+  "reason_unrun": "The full 3D coupled-GPE production and two refinement campaigns require CUDA FFT resources beyond the local 16 GiB M4 host. Only the same-path NumPy smoke profile is run locally.",
+  "parameters": {
+    "contract_parameters": {
+      "schema_version": 1,
+      "task_count": 12,
+      "campaign_ids": [
+        "production",
+        "grid_refinement",
+        "time_refinement"
+      ],
+      "production_grid_shape": [
+        512,
+        512,
+        512
+      ],
+      "grid_refinement_shape": [
+        640,
+        640,
+        640
+      ],
+      "main_fig4_box_lengths_micrometre": [
+        128.0,
+        128.0,
+        128.0
+      ],
+      "main_fig4_duration_millisecond": 25.0,
+      "supp_s2_box_lengths_micrometre": [
+        224.0,
+        224.0,
+        224.0
+      ],
+      "supp_s2_duration_millisecond": 12.0,
+      "production_real_time_step_microsecond": 2.0,
+      "time_refinement_real_time_step_microsecond": 1.0,
+      "main_fig4_magnetic_fields_gauss": [
+        56.45,
+        56.64
+      ],
+      "assumed_initial_atom_number": 400000,
+      "supp_s2_scattering_length_bohr": 7.5,
+      "supp_s2_vertical_confinement_hz": 12.0,
+      "source_boundary": "published scalar parameters and equations only; no author code, author numerical arrays, or source pixels"
+    },
+    "base_theory_config": "config/paper_theory.json",
+    "model": {
+      "equilibrium": "Petrov universal radial LHY droplet equation",
+      "main_fig4": "three-dimensional two-component GPE with local-density two-species LHY term",
+      "supp_s2": "three-dimensional single-component mean-field GPE",
+      "preparation": "imaginary-time state-2 trap ground state followed by the paper's instantaneous 50/50 transfer",
+      "propagator": "second-order Strang split-step Fourier method",
+      "size_observable": "two times the one-axis RMS widths, combined as 2*sqrt(rms_x*rms_z), which is the 1/e^2 half-width for a Gaussian",
+      "size_observable_status": "method-derived reconstruction because the paper does not state how its numerical density was converted to the plotted Gaussian width"
+    },
+    "profiles": {
+      "production": {
+        "backend": "cupy",
+        "complex_dtype": "complex64",
+        "grid": {
+          "shape": [
+            512,
+            512,
+            512
+          ],
+          "lengths_micrometre": [
+            128.0,
+            128.0,
+            128.0
+          ]
+        },
+        "imaginary_time": {
+          "step_microsecond": 1.0,
+          "maximum_steps": 4000,
+          "check_every_steps": 50,
+          "density_relative_tolerance": 2e-07,
+          "require_convergence": true
+        },
+        "real_time": {
+          "step_microsecond": 2.0,
+          "duration_millisecond": 25.0,
+          "output_every_steps": 50,
+          "checkpoint_every_steps": 500
+        }
+      },
+      "grid_refinement": {
+        "backend": "cupy",
+        "complex_dtype": "complex64",
+        "grid": {
+          "shape": [
+            640,
+            640,
+            640
+          ],
+          "lengths_micrometre": [
+            128.0,
+            128.0,
+            128.0
+          ]
+        },
+        "imaginary_time": {
+          "step_microsecond": 1.0,
+          "maximum_steps": 5000,
+          "check_every_steps": 50,
+          "density_relative_tolerance": 1e-07,
+          "require_convergence": true
+        },
+        "real_time": {
+          "step_microsecond": 2.0,
+          "duration_millisecond": 25.0,
+          "output_every_steps": 50,
+          "checkpoint_every_steps": 500
+        }
+      },
+      "time_refinement": {
+        "backend": "cupy",
+        "complex_dtype": "complex64",
+        "grid": {
+          "shape": [
+            512,
+            512,
+            512
+          ],
+          "lengths_micrometre": [
+            128.0,
+            128.0,
+            128.0
+          ]
+        },
+        "imaginary_time": {
+          "step_microsecond": 0.5,
+          "maximum_steps": 6000,
+          "check_every_steps": 100,
+          "density_relative_tolerance": 1e-07,
+          "require_convergence": true
+        },
+        "real_time": {
+          "step_microsecond": 1.0,
+          "duration_millisecond": 25.0,
+          "output_every_steps": 100,
+          "checkpoint_every_steps": 1000
+        }
+      }
+    },
+    "scenarios": {
+      "fig4_B56p45": {
+        "target_id": "T008",
+        "kind": "main_fig4_coupled_lhy",
+        "magnetic_field_gauss": 56.45,
+        "initial_total_atom_number": 400000,
+        "initial_atom_number_status": "paper_maximum_assumption; exact plotted curve value is not published",
+        "initial_component": "2",
+        "initial_trap_hz": [
+          250.0,
+          240.0,
+          280.0
+        ],
+        "post_transfer_fraction_1": 0.5,
+        "single_component": false,
+        "include_lhy": true,
+        "release_potential": "levitation",
+        "residual_vertical_hz": 0.0,
+        "levitation": {
+          "wavelength_nanometre": 1064.0,
+          "waist_micrometre": 23.0,
+          "amplitude_micrometre": 50.0,
+          "offset_micrometre": 7.0,
+          "modulation_frequency_hz": 4000.0,
+          "quadrature_samples": 20001,
+          "residual_xy_hz": [
+            2.2,
+            7.0
+          ]
+        },
+        "interaction": {
+          "mode": "scattering_model",
+          "magnetic_field_gauss": 56.45
+        },
+        "parameter_status": "proxy_model"
+      },
+      "fig4_B56p64": {
+        "target_id": "T008",
+        "kind": "main_fig4_coupled_lhy",
+        "magnetic_field_gauss": 56.64,
+        "initial_total_atom_number": 400000,
+        "initial_atom_number_status": "paper_maximum_assumption; exact plotted curve value is not published",
+        "initial_component": "2",
+        "initial_trap_hz": [
+          250.0,
+          240.0,
+          280.0
+        ],
+        "post_transfer_fraction_1": 0.5,
+        "single_component": false,
+        "include_lhy": true,
+        "release_potential": "levitation",
+        "residual_vertical_hz": 0.0,
+        "levitation": {
+          "wavelength_nanometre": 1064.0,
+          "waist_micrometre": 23.0,
+          "amplitude_micrometre": 50.0,
+          "offset_micrometre": 7.0,
+          "modulation_frequency_hz": 4000.0,
+          "quadrature_samples": 20001,
+          "residual_xy_hz": [
+            2.2,
+            7.0
+          ]
+        },
+        "interaction": {
+          "mode": "scattering_model",
+          "magnetic_field_gauss": 56.64
+        },
+        "parameter_status": "proxy_model"
+      },
+      "s2_free": {
+        "target_id": "T007",
+        "kind": "supp_s2_single_component_gpe",
+        "initial_total_atom_number": 400000,
+        "initial_atom_number_status": "paper preparation maximum assumption; calibration-cloud atom number is not published",
+        "initial_component": "2",
+        "initial_trap_hz": [
+          250.0,
+          240.0,
+          280.0
+        ],
+        "post_transfer_fraction_1": 0.0,
+        "single_component": true,
+        "include_lhy": false,
+        "release_potential": "free",
+        "residual_vertical_hz": 0.0,
+        "interaction": {
+          "mode": "explicit",
+          "a11_bohr": 7.5,
+          "a22_bohr": 7.5,
+          "a12_bohr": 0.0
+        },
+        "profile_overrides": {
+          "production": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          },
+          "grid_refinement": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          },
+          "time_refinement": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          }
+        },
+        "parameter_status": "proxy_model"
+      },
+      "s2_confined_12Hz": {
+        "target_id": "T007",
+        "kind": "supp_s2_single_component_gpe",
+        "initial_total_atom_number": 400000,
+        "initial_atom_number_status": "paper preparation maximum assumption; calibration-cloud atom number is not published",
+        "initial_component": "2",
+        "initial_trap_hz": [
+          250.0,
+          240.0,
+          280.0
+        ],
+        "post_transfer_fraction_1": 0.0,
+        "single_component": true,
+        "include_lhy": false,
+        "release_potential": "harmonic_vertical",
+        "residual_vertical_hz": 12.0,
+        "interaction": {
+          "mode": "explicit",
+          "a11_bohr": 7.5,
+          "a22_bohr": 7.5,
+          "a12_bohr": 0.0
+        },
+        "profile_overrides": {
+          "production": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          },
+          "grid_refinement": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          },
+          "time_refinement": {
+            "grid": {
+              "lengths_micrometre": [
+                224.0,
+                224.0,
+                224.0
+              ]
+            },
+            "real_time": {
+              "duration_millisecond": 12.0
+            }
+          }
+        },
+        "parameter_status": "proxy_model"
+      }
+    },
+    "campaigns": [
+      {
+        "campaign_id": "production",
+        "profile_id": "production",
+        "scenario_ids": [
+          "fig4_B56p45",
+          "fig4_B56p64",
+          "s2_free",
+          "s2_confined_12Hz"
+        ],
+        "purpose": "Primary method-faithful three-dimensional theory trajectories."
+      },
+      {
+        "campaign_id": "grid_refinement",
+        "profile_id": "grid_refinement",
+        "scenario_ids": [
+          "fig4_B56p45",
+          "fig4_B56p64",
+          "s2_free",
+          "s2_confined_12Hz"
+        ],
+        "purpose": "Independent spatial refinement from 512^3 to 640^3."
+      },
+      {
+        "campaign_id": "time_refinement",
+        "profile_id": "time_refinement",
+        "scenario_ids": [
+          "fig4_B56p45",
+          "fig4_B56p64",
+          "s2_free",
+          "s2_confined_12Hz"
+        ],
+        "purpose": "Independent imaginary- and real-time step halving at fixed production grid."
+      }
+    ],
+    "radial_crosscheck": {
+      "metastable_mu": -0.061,
+      "stable_mu_bracket": [
+        -0.14,
+        -0.12
+      ],
+      "production": {
+        "radius_max": 24.0,
+        "initial_nodes": 1800,
+        "tolerance": 2e-08,
+        "max_nodes": 50000
+      },
+      "reference": {
+        "radius_max": 28.0,
+        "initial_nodes": 4000,
+        "tolerance": 1e-08,
+        "max_nodes": 150000
+      },
+      "relative_tolerance": 0.0002
+    },
+    "crosschecks": {
+      "lhy_density_pairs_m3": [
+        [
+          1e+20,
+          1e+20
+        ],
+        [
+          5e+20,
+          3e+20
+        ],
+        [
+          1e+21,
+          7e+20
+        ]
+      ],
+      "required_independent_methods": [
+        "LHY energy finite-difference derivative",
+        "radial Pohozaev scaling identity",
+        "3D spatial-grid refinement",
+        "3D time-step refinement"
+      ]
+    },
+    "acceptance": {
+      "norm_relative_drift_maximum": 0.0001,
+      "boundary_mass_fraction_maximum": 0.0001,
+      "dynamic_curve_relative_tolerance": 0.08,
+      "maximum_physical_size_micrometre": 60.0,
+      "required_static_dimensionless_numbers": {
+        "metastability_fold": 18.65,
+        "zero_energy_threshold": 22.55
+      },
+      "paper_review_rule": "Only protocol-v2 paper-exact, frozen, converged, dual-independent, freshly reviewed evidence can emit paper_error_candidate; otherwise use inconclusive or reproduction_defect."
+    },
+    "machine": {
+      "scheduler": "SLURM job array",
+      "recommended_nodes": 4,
+      "gpus_per_node": 1,
+      "gpu_model": "NVIDIA A100 80GB or H100 80GB",
+      "cpu_cores_per_node": 64,
+      "host_memory_gib_per_node": 256,
+      "shared_scratch_gib": 2048,
+      "job_array_tasks": 12,
+      "maximum_concurrent_tasks": 4,
+      "walltime_hours_per_task": 72,
+      "checkpoint_interval_simulated_millisecond": 1.0,
+      "blas_threads_per_task": 1,
+      "required_python_assets": [
+        "numpy",
+        "scipy",
+        "matplotlib",
+        "cupy matching the host CUDA version"
+      ]
+    },
+    "source_boundary": {
+      "author_code_used": false,
+      "author_numerical_arrays_used": false,
+      "source_pixels_used_as_numerical_input": false,
+      "raw_directory_is_input": false,
+      "reference_figures_are_inputs": false,
+      "published_scalar_parameters_and_equations_only": true
+    }
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "run_id": "1804.03151-paper-scale-sharded-v1",
+  "target_ids": [
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T011",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "run-all",
+    "--config",
+    "config/paper_scale.json",
+    "--workers",
+    "16"
+  ],
+  "inputs": [
+    "src/moire_hubbard/model.py",
+    "src/moire_hubbard/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "a0_nm": 0.332,
+    "effective_mass_me": 0.35,
+    "band_twist_deg": 2.0,
+    "cutoff": 7,
+    "validation_cutoff": 8,
+    "fit_k_grid": 31,
+    "dos_k_grid": 101,
+    "dos_band_count": 4,
+    "dos_broadening_mev": 0.16,
+    "dos_filling_points": 801,
+    "wannier_k_grid": 15,
+    "wannier_real_grid": 201,
+    "wannier_span_moire_periods": 1.45,
+    "interaction_k_grid": 9,
+    "interaction_real_grid": 161,
+    "interaction_span_moire_periods": 1.8,
+    "fermi_grid": 301,
+    "fermi_hole_filling": 0.75,
+    "screening_separation_nm": 3.0,
+    "dielectric_constant": 10.0,
+    "main_a_moire_sweep": [
+      5.5,
+      19.0,
+      96
+    ],
+    "supplement_a_moire_sweep": [
+      7.0,
+      8.5,
+      64
+    ],
+    "main_system": {
+      "material": "WSe2/MoSe2 AA",
+      "potential_mev": 6.6,
+      "phase_deg": -94.0
+    },
+    "supplement_system": {
+      "material": "WSe2/MoS2 AA",
+      "mismatch": 0.039,
+      "potential_mev": 5.1,
+      "phase_deg": -71.0
+    }
+  },
+  "outputs": [
+    "outputs/data/paper_scale/plan.json",
+    "outputs/data/paper_scale/run_summary.json",
+    "outputs/data/paper_scale/aggregates/T003_main_fig2b_dos.npz",
+    "outputs/data/paper_scale/aggregates/T003_main_fig2b_dos.manifest.json",
+    "outputs/data/paper_scale/aggregates/T004_main_fig2c_wannier.npz",
+    "outputs/data/paper_scale/aggregates/T004_main_fig2c_wannier.manifest.json",
+    "outputs/data/paper_scale/aggregates/T005_main_fig2d_hopping.npz",
+    "outputs/data/paper_scale/aggregates/T005_main_fig2d_hopping.manifest.json",
+    "outputs/data/paper_scale/aggregates/T006_main_fig3a_interactions.npz",
+    "outputs/data/paper_scale/aggregates/T006_main_fig3a_interactions.manifest.json",
+    "outputs/data/paper_scale/aggregates/T007_main_fig3b_exchange.npz",
+    "outputs/data/paper_scale/aggregates/T007_main_fig3b_exchange.manifest.json",
+    "outputs/data/paper_scale/aggregates/T008_main_fig4a_fermi_contour.npz",
+    "outputs/data/paper_scale/aggregates/T008_main_fig4a_fermi_contour.manifest.json",
+    "outputs/data/paper_scale/aggregates/T011_supp_fig5c_hopping.npz",
+    "outputs/data/paper_scale/aggregates/T011_supp_fig5c_hopping.manifest.json",
+    "outputs/data/paper_scale/aggregates/T012_supp_fig5d_interactions.npz",
+    "outputs/data/paper_scale/aggregates/T012_supp_fig5d_interactions.manifest.json",
+    "outputs/data/paper_scale/checks/scientific_assessment.json",
+    "outputs/data/paper_scale/checks/crosscheck.json",
+    "outputs/data/paper_scale/aggregate_manifest.json"
+  ],
+  "timeout_seconds": 172800,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "paper_machine": {
+    "accelerator": "none required",
+    "host_cpu": "32 physical CPU cores",
+    "host_memory_gib": 128,
+    "persistent_storage_gib": 100,
+    "python": "3.11 or newer"
+  },
+  "resume_contract": {
+    "direct_entrypoint": "python scripts/run_paper_scale.py run-shard --config config/paper_scale.json --shard-index 0 --shard-count 128 --workers 1",
+    "checkpoint_boundary": "each immutable condition writes an atomic NPZ and manifest",
+    "resume_validation": "config hash, implementation hash, condition identity, and NPZ hash must match",
+    "aggregate_entrypoint": "python scripts/run_paper_scale.py aggregate --config config/paper_scale.json"
+  }
+}

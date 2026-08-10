@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "run_id": "1910.08980-paper-protocol-v2",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_protocol.json"
+  ],
+  "inputs": [
+    "src/rqaoa.py",
+    "src/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/paper_protocol.json",
+    "config/matplotlib/fontlist-v390.json"
+  ],
+  "parameter_file": "config/paper_protocol.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "degree": 3,
+    "coupling_values": [
+      -1,
+      1
+    ],
+    "instances_per_size": 16,
+    "master_seed": 191008981,
+    "sizes": [
+      {
+        "n": 32,
+        "cutoff": 8
+      },
+      {
+        "n": 100,
+        "cutoff": 30
+      }
+    ],
+    "gamma_period": [
+      0.0,
+      3.141592653589793
+    ],
+    "gamma_grid_points": 129,
+    "gamma_local_candidates": 6,
+    "beta_optimization": "analytic_global_maximum_at_fixed_gamma",
+    "exact_solver": "scipy_milp_highs_zero_gap",
+    "exact_time_limit_seconds": 300.0
+  },
+  "outputs": [
+    "outputs/data/main_fig1_n32.csv",
+    "outputs/data/main_fig1_n32_traces.json",
+    "outputs/data/main_fig1_n32_instances.npz",
+    "outputs/data/main_fig1_n100.csv",
+    "outputs/data/main_fig1_n100_traces.json",
+    "outputs/data/main_fig1_n100_instances.npz",
+    "outputs/figures/main_fig1_n32.png",
+    "outputs/figures/main_fig1_n100.png",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/runtime.json"
+  ],
+  "timeout_seconds": 1200,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

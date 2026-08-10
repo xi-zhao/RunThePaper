@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "1710.10890-independent-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_theory.json"
+  ],
+  "inputs": [
+    "src/quantum_droplets/__init__.py",
+    "src/quantum_droplets/model.py",
+    "src/quantum_droplets/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/paper_theory.json"
+  ],
+  "parameter_file": "config/paper_theory.json",
+  "parameter_selector": "disclosures",
+  "expected_parameters": {
+    "author_code_used": false,
+    "author_numerical_arrays_used": false,
+    "source_pixels_used_as_numerical_input": false,
+    "raw_directory_is_input": false,
+    "reference_figures_are_inputs": false,
+    "T001_to_T005_parameter_match": "paper_subset",
+    "T006_parameter_match": "paper_exact",
+    "T007_parameter_match": "proxy_model",
+    "gpu": "not used; the exact targets are one-dimensional BVP/ODE/quadrature workloads"
+  },
+  "outputs": [
+    "outputs/data/T001_scattering_lengths.npz",
+    "outputs/data/T002_phase_boundary.npz",
+    "outputs/data/T003_population_ratio.npz",
+    "outputs/data/T004_critical_number.npz",
+    "outputs/data/T005_critical_size.npz",
+    "outputs/data/T006_levitation.npz",
+    "outputs/data/T007_expansion_proxy.npz",
+    "outputs/checks/scientific_formula_checks.json",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/convergence.json",
+    "outputs/checks/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

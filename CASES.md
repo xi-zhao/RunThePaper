@@ -73,6 +73,25 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2412.14271`](cases/2412.14271/README.md) | Two-photon Dicke model, dissipative phase transitions, quantum trajectories, and nonlinear stability | Feature-level numerical reproduction with a documented equation-level discrepancy | 46.71 |
 | [`physics-0206018`](cases/physics-0206018/README.md) | Boundary-integral scattering, resonances, and near- and far-field reconstruction in dielectric microcavities | Reduced-scale reproduction of all numerical figures | 50.49 |
 | [`2608.03987`](cases/2608.03987/README.md) | Realification cost laws and contraction-order transferability for quantum-circuit tensor networks | Independent numerical feature reproduction (Figure 8 exact; Figure 9 partial) | 72.00 |
+| [`1708.05014`](cases/1708.05014/README.md) | Independent scientific reproduction of Boundary time crystals | Partial scientific reproduction | 69.29 |
+| [`1709.03478`](cases/1709.03478/README.md) | Independent scientific reproduction of Exploring the Single-Particle Mobility Edge in a One-Dimensional Quasiperiodic Optical Lattice | Partial scientific reproduction | 63.55 |
+| [`1710.10890`](cases/1710.10890/README.md) | Independent scientific reproduction of Self-Bound Quantum Droplets of Atomic Mixtures in Free Space | Partial scientific reproduction | 61.32 |
+| [`1711.08863`](cases/1711.08863/README.md) | Independent scientific reproduction of Decoherence-Free Interaction between Giant Atoms in Waveguide QED | Scientific reproduction — independent review pending | 80.64 |
+| [`1711.09418`](cases/1711.09418/README.md) | Independent scientific reproduction of Symmetry-resolved entanglement in many-body systems | Scientific reproduction — independent review pending | 90.00 |
+| [`1803.07128`](cases/1803.07128/README.md) | Independent scientific reproduction of Quantum machine learning in feature Hilbert spaces | Partial scientific reproduction | 70.00 |
+| [`1804.03151`](cases/1804.03151/README.md) | Independent scientific reproduction of Hubbard model physics in transition metal dichalcogenide moire bands | Partial scientific reproduction | 70.00 |
+| [`1805.00931`](cases/1805.00931/README.md) | Independent scientific reproduction of Exact Spectral Form Factor in a Minimal Model of Many-Body Quantum Chaos | Partial scientific reproduction | 75.01 |
+| [`1807.01815`](cases/1807.01815/README.md) | Independent scientific reproduction of Periodic Orbits, Entanglement, and Quantum Many-Body Scars in Constrained Models: Matrix Product State Approach | Partial scientific reproduction | 67.08 |
+| [`1807.02414`](cases/1807.02414/README.md) | Independent scientific reproduction of Hydrodynamic Diffusion in Integrable Systems | Partial scientific reproduction | 84.36 |
+| [`1807.03311`](cases/1807.03311/README.md) | Independent scientific reproduction of Topological insulators in twisted transition metal dichalcogenide homobilayers | Partial scientific reproduction | 70.00 |
+| [`1807.10084`](cases/1807.10084/README.md) | Independent scientific reproduction of Nonreciprocal Photon Blockade | Scientific reproduction — visual review pending | 82.24 |
+| [`1807.10676`](cases/1807.10676/README.md) | Independent scientific reproduction of All "Magic Angles" Are "Stable" Topological | Partial scientific reproduction | 69.77 |
+| [`1810.00888`](cases/1810.00888/README.md) | Independent scientific reproduction of Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain | Scientific reproduction — independent review pending | 80.33 |
+| [`1811.08017`](cases/1811.08017/README.md) | Independent scientific reproduction of A random compiler for fast Hamiltonian simulation | Scientific reproduction — independent review pending | 90.00 |
+| [`1812.05561`](cases/1812.05561/README.md) | Independent scientific reproduction of Emergent SU(2) dynamics and perfect quantum many-body scars | Partial scientific reproduction | 66.65 |
+| [`1910.00020`](cases/1910.00020/README.md) | Independent scientific reproduction of Scalable probes of measurement-induced criticality | Partial scientific reproduction | 69.34 |
+| [`1910.08980`](cases/1910.08980/README.md) | Independent scientific reproduction of Obstacles to State Preparation and Variational Optimization from Symmetry Protection | Partial scientific reproduction | 89.00 |
+| [`2005.09722`](cases/2005.09722/README.md) | Independent scientific reproduction of Entanglement transition in a monitored free fermion chain -- from extended criticality to area law | Partial scientific reproduction | 67.02 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

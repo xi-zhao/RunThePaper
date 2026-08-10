@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "run_id": "1810.00888-paper-exact-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_scale.json",
+    "--output",
+    "outputs"
+  ],
+  "inputs": [
+    "src/exact_scars/__init__.py",
+    "src/exact_scars/model.py",
+    "src/exact_scars/campaign.py",
+    "scripts/run_reproduction.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile_length": 50,
+    "profile_crosscheck_length": 18,
+    "obc_spectrum_length": 18,
+    "periodic_spectrum_length": 26,
+    "entropy_lengths": [
+      16,
+      18,
+      20,
+      22,
+      24,
+      26
+    ],
+    "trial_batch_size": 4096
+  },
+  "outputs": [
+    "outputs/data/T001_profiles.npz",
+    "outputs/data/T002_profiles.npz",
+    "outputs/data/T003_obc_tower.npz",
+    "outputs/data/T004_overlaps.npz",
+    "outputs/data/T005_fsa.npz",
+    "outputs/data/T006_overlaps.npz",
+    "outputs/data/T007_overlaps.npz",
+    "outputs/data/T008_entropy.csv",
+    "outputs/data/T009_rediagonalized.npz",
+    "outputs/checks/profile_formula_crosscheck.json",
+    "outputs/checks/run_manifest.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

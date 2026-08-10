@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "protocol_version": 2,
+  "paper_id": "1711.08863",
+  "audit_role": "reproducer_pre_review_falsification",
+  "status": "passed",
+  "paper_assessment": "inconclusive",
+  "assessment_reason": "The reproducer's checks support Main Fig. 2 and expose one likely supplementary operator-label typo, but no fresh-context inventory-first review has validated either conclusion.",
+  "satisfies_independent_review_gate": false,
+  "source_boundary": {
+    "author_code_used": false,
+    "author_arrays_used": false,
+    "source_pixels_used_as_numeric_input": false
+  },
+  "classification_policy": {
+    "paper_error_candidate_requires": [
+      "paper-exact parameters",
+      "frozen independent data",
+      "convergence evidence",
+      "two distinct passing independent cross-check methods",
+      "source pinpoint and complete discrepancy record",
+      "explicit falsification of the paper claim",
+      "fresh-context protocol-v2 review"
+    ],
+    "weaker_outcomes": [
+      "reproduction_defect",
+      "parameter_ambiguity",
+      "insufficient_compute",
+      "inconclusive"
+    ]
+  },
+  "target_audits": [
+    {
+      "target_id": "T001",
+      "paper_item": "Main Fig. 2 and Table I",
+      "protocol_v2_assessment": "inconclusive",
+      "provisional_scientific_result": "paper_supported_by_reproduction",
+      "paper_error_candidate": false,
+      "source_pinpoints": [
+        "GiantAtoms_arXiv.tex:149-183 (Table I)",
+        "GiantAtoms_arXiv.tex:190-206 (Fig. 2 caption and interpretation)",
+        "SuppMat_arXiv.tex:716-749 (braided-atom proof)"
+      ],
+      "convergence": {
+        "method": "1001-point versus 2001-point shared-grid invariance",
+        "max_abs_residual": 0.0,
+        "tolerance": 1e-12,
+        "passed": true
+      },
+      "independent_checks": [
+        {
+          "method": "alternative_implementation",
+          "claim": "General connection-point sums reproduce every Table-I closed form.",
+          "result": "passed",
+          "max_abs_residual": 8.881784197001252e-16,
+          "tolerance": 1e-12
+        },
+        {
+          "method": "limiting_case",
+          "claim": "At phi=pi/2 braided atoms retain g/gamma=1 at zero decay.",
+          "result": "passed",
+          "observed": {
+            "g_over_gamma": 1.0,
+            "gamma_a_over_gamma": 0.0,
+            "gamma_b_over_gamma": 0.0,
+            "gamma_coll_over_gamma": 0.0
+          }
+        },
+        {
+          "method": "caption_inventory",
+          "claim": "The Fig. 2 caption implies 4 solid + 5 dashed + 4 dotted curves.",
+          "result": "passed",
+          "visible_curve_count": 13
+        }
+      ],
+      "falsification_attempts": [
+        {
+          "hypothesis": "Table-I topology multiplicities disagree with the general Eq. (2) pair sums.",
+          "method": "Evaluate both implementations on the full paper phase interval.",
+          "result": "survived"
+        },
+        {
+          "hypothesis": "Zero braided decay also forces the exchange interaction to zero.",
+          "method": "Evaluate all four coefficients at phi=pi/2.",
+          "result": "survived"
+        }
+      ],
+      "remaining_gate": "fresh-context protocol-v2 review"
+    }
+  ],
+  "discrepancies": [
+    {
+      "discrepancy_id": "SUPP-ME2-MIRROR-OPERATOR-LABEL",
+      "scope": "supplementary symbolic equation; not a numerical figure target",
+      "protocol_v2_assessment": "inconclusive",
+      "likely_failure_type": "paper_symbol_typo",
+      "paper_error_candidate": false,
+      "failure_attribution": {
+        "reproduction_defect": {
+          "applies": false,
+          "reason": "The mismatch is present in the published source and is reproduced by two checks independent of the Fig. 2 generator."
+        },
+        "parameter_ambiguity": {
+          "applies": false,
+          "reason": "The disputed object is an atom label, not an unspecified numerical parameter."
+        },
+        "insufficient_compute": {
+          "applies": false,
+          "reason": "The analytic expansion and two-qubit limiting case run locally."
+        },
+        "inconclusive": {
+          "applies": true,
+          "reason": "A fresh-context protocol-v2 reviewer has not yet confirmed the source-level discrepancy."
+        }
+      },
+      "paper_claim": "In Eq. ME2AtomsMirror, the gamma_2[1+cos(phi_1+2phi_2)] term is printed with D[sigma_-^a].",
+      "independent_result": "The preceding collapse amplitude attaches that coefficient to sigma_-^b; the term must therefore be D[sigma_-^b].",
+      "paper_source_ref": "SuppMat_arXiv.tex:286-295, equation label eq:ME2AtomsMirror",
+      "published_pdf_ref": "paper.txt:841-857, Supplement Eq. (S21)",
+      "observed_gap": "atom label a is printed where two independent checks require b",
+      "uncertainty_or_tolerance_basis": "operator identity; numerical limiting-case tolerance 1e-14",
+      "independent_checks": [
+        {
+          "method": "analytic_rederivation",
+          "result": "passed",
+          "details": {
+            "passed": true,
+            "a_coefficient_residual": 4.440892098500626e-16,
+            "b_coefficient_residual": 0.0,
+            "operator_mapping": "amplitude_a multiplies sigma_-^a; amplitude_b multiplies sigma_-^b"
+          }
+        },
+        {
+          "method": "limiting_case",
+          "result": "passed",
+          "details": {
+            "passed": true,
+            "correct_b_operator_excited_b_derivative": -2.0,
+            "printed_a_operator_excited_b_derivative": 0.0
+          }
+        }
+      ],
+      "falsification_attempt": {
+        "hypothesis": "The printed D[sigma_-^a] gamma_2 term is consistent with the preceding L_tot.",
+        "method": "Set gamma_1=0 and compare excited-b population derivatives.",
+        "result": "falsified"
+      },
+      "impact": "Likely local typographical error. Table I lists the gamma_2 coefficient for atom b correctly, and the Fig. 2 reproduction evaluates coefficients without integrating this misprinted operator equation.",
+      "candidate_blockers": [
+        "fresh_context_review_missing",
+        "symbolic_non_target_has_no_paper_exact_numeric_parameter_contract"
+      ]
+    }
+  ],
+  "editorial_findings": [
+    {
+      "finding_id": "MAIN-FIG4-CROSSREF",
+      "classification": "editorial_cross_reference_defect",
+      "protocol_v2_assessment": "inconclusive",
+      "source_ref": "GiantAtoms_arXiv.tex:247",
+      "finding": "The all-to-all paragraph points the triangular graph and circuit to Fig. 3(b,c), although that paragraph and the assets identify Fig. 4(b,c).",
+      "numeric_impact": "none"
+    },
+    {
+      "finding_id": "SUPP-BRAIDED-SUBSECTION-NOUN",
+      "classification": "editorial_topology_label_defect",
+      "protocol_v2_assessment": "inconclusive",
+      "source_ref": "SuppMat_arXiv.tex:716-721",
+      "finding": "The Braided giant atoms subsection begins 'For separate giant atoms' while citing and using the braided master equation.",
+      "numeric_impact": "none"
+    }
+  ]
+}

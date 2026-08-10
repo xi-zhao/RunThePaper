@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "run_id": "1812.05561-paper-scale-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_scale.json",
+    "--targets",
+    "T001,T002,T003,T004,T005,T006,T007,T008,T009",
+    "--resume"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/scar_reproduction.py",
+    "src/mps_dmrg.py",
+    "src/paper_scale.py",
+    "scripts/run_reproduction.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "T001": "N=32 dynamics; N=20,R=10 optimization",
+    "T002": "symmetry-resolved full spectra through N=32",
+    "T003": "streaming FSA through k=32",
+    "T004": "open N=60 DMRG, R=1..8, SVD cutoff 1e-16",
+    "T005": "four optimization objectives at inferred N=20,R=10",
+    "T006": "N=22..32, local maxima through m=1000, fits 5..60 and 200..1000",
+    "T007": "N=30 k=0 inversion-even full eigenstate clouds",
+    "T008": "central-scar interior eigensolves through N=32",
+    "T009": "N=14, Omega=1, three disclosed independent Gaussian seeds"
+  },
+  "outputs": [
+    "outputs/paper_scale/data/T001_main_figure_1.npz",
+    "outputs/paper_scale/data/T002_main_figure_2.npz",
+    "outputs/paper_scale/data/T003_main_figure_3.npz",
+    "outputs/paper_scale/data/T004_supp_figure_s1.npz",
+    "outputs/paper_scale/data/T005_supp_figure_s2.npz",
+    "outputs/paper_scale/data/T006_supp_figure_s3.npz",
+    "outputs/paper_scale/data/T007_supp_figure_s4.npz",
+    "outputs/paper_scale/data/T008_supp_figure_s5.npz",
+    "outputs/paper_scale/data/T009_supp_figure_s6.npz",
+    "outputs/paper_scale/checks/target_checks.json",
+    "outputs/paper_scale/checks/runtime_profile.json",
+    "outputs/paper_scale/checks/generated_data_manifest.json",
+    "outputs/paper_scale/checks/campaign_state.json"
+  ],
+  "timeout_seconds": 1209600,
+  "environment": {
+    "OMP_NUM_THREADS": "32",
+    "OPENBLAS_NUM_THREADS": "32",
+    "MKL_NUM_THREADS": "32"
+  },
+  "scheduler": {
+    "work_units": 59,
+    "shard_command": [
+      "python",
+      "scripts/run_reproduction.py",
+      "--config",
+      "config/paper_scale.json",
+      "--targets",
+      "T001,T002,T003,T004,T005,T006,T007,T008,T009",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "${ARRAY_COUNT}",
+      "--resume"
+    ],
+    "merge_rule": "After every scheduler shard completes, run the main command again. It skips digest-matched units, aggregates targets, and evaluates scientific acceptance."
+  },
+  "acceptance_criteria": [
+    "All 59 config-digest-bound work units complete and all nine aggregate NPZ files exist.",
+    "T001 uses N=32 dynamics and N=20,R=10 optimization; T002/T003 reach N=32; T004 uses open N=60,R=1..8 DMRG; T006 covers N=22..32 through m=1000; T007 reaches N=30; T008 reaches N=32; T009 uses N=14.",
+    "Every target passes the numerical thresholds under acceptance.T001..T009 in config/paper_scale.json, including eigensolver/DMRG convergence and local-peak resolution.",
+    "Any stable failed paper comparison is assigned only after the ordered four-way audit: implementation/contract, numerical convergence/finite size, missing/ambiguous paper input, then potential source/claim discrepancy with fresh independent review.",
+    "The generated-data manifest confirms that author code, author numerical arrays, digitized curves, source pixels and PDF pixels were not numerical inputs.",
+    "T009 is accepted only as a disclosed independent ensemble realization because the paper omits its random seed; no pointwise author-realization claim is made."
+  ],
+  "compute_status": "not_run_requires_high_memory_cpu_campaign"
+}

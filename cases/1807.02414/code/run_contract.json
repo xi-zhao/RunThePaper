@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.02414-independent-v5",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "src/xxz_diffusion/__init__.py",
+    "src/xxz_diffusion/tba.py",
+    "src/xxz_diffusion/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "",
+  "expected_parameters": {
+    "schema_version": 1,
+    "paper_id": "1807.02414",
+    "paper_parameters": {
+      "profile_ell": 7,
+      "domain_wall_mu": 0.05,
+      "times": [
+        10.0,
+        20.0,
+        40.0
+      ],
+      "diffusion_ell_values": [
+        3,
+        4,
+        7
+      ]
+    },
+    "numerics": {
+      "rapidity_cutoff": 8.0,
+      "rapidity_points": 384,
+      "profile_x_min": -25.0,
+      "profile_x_max": 25.0,
+      "profile_x_points": 1001,
+      "convergence_points": [
+        192,
+        256,
+        384
+      ]
+    },
+    "validation_references": {
+      "printed_onsager_values": {
+        "3": 0.137,
+        "4": 0.281,
+        "7": 0.744
+      },
+      "comparison_only": true
+    },
+    "provenance_policy": {
+      "author_code_used": false,
+      "author_numerical_arrays_used": false,
+      "source_pixels_used_as_numerical_input": false,
+      "source_vector_coordinates_used_as_numerical_input": false
+    }
+  },
+  "outputs": [
+    "outputs/data/T001_fig1_domain_wall.npz",
+    "outputs/data/T002_diffusion_constants.json",
+    "outputs/checks/scientific_formula_checks.json",
+    "outputs/checks/convergence.json",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

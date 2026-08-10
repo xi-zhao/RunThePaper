@@ -1,0 +1,225 @@
+{
+  "schema_version": 1,
+  "paper_id": "1711.09418",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Half-filled free-fermion correlation kernel",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraph before Main Fig. 2"
+        },
+        {
+          "type": "printed_formula",
+          "value": "C_ij formula in the free-fermion check"
+        }
+      ],
+      "latex": "C_{ij}=\\langle c_i^\\dagger c_j\\rangle=\\frac{\\sin[\\pi(i-j)/2]}{\\pi(i-j)},\\qquad C_{ii}=1/2",
+      "role": "independent_lattice_input",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the infinite half-filled tight-binding kernel and L=10000."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The diagonal limit is 1/2 and even nonzero separations vanish."
+        },
+        {
+          "id": "EQ001-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The computed transition eigenvalues are particle-hole symmetric and saturate near 0 and 1."
+        }
+      ],
+      "numerical_form": "Construct the real symmetric Toeplitz matrix from its first column and diagonalize the 96 central eigenvalues.",
+      "code_refs": [
+        "src/symmetry_entanglement/model.py::correlation_eigenvalues"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Charge-resolved moments and Fourier projection",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eqs. (2)-(4)"
+        }
+      ],
+      "latex": "s_n(\\alpha)=\\mathrm{Tr}(\\rho_A^n e^{i\\alpha N_A}),\\qquad s_n(N_A)=\\int_{-\\pi}^{\\pi}\\frac{d\\alpha}{2\\pi}s_n(\\alpha)e^{-i\\alpha N_A}",
+      "role": "charge_sector_definition",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The charged moment and Fourier projection are printed explicitly."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For independent fermion modes, polynomial convolution is exactly the Fourier coefficient extraction."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Resolved probabilities sum to one and resolved entropy contributions sum to the mode entropy."
+        }
+      ],
+      "numerical_form": "Convolve each mode's empty/occupied probabilities while propagating -p log p entropy weights by charge.",
+      "code_refs": [
+        "src/symmetry_entanglement/model.py::resolved_probability_and_entropy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "CFT charge distribution and resolved entropy",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eqs. (6)-(8)"
+        },
+        {
+          "type": "figure_caption",
+          "value": "Main Fig. 2"
+        }
+      ],
+      "latex": "s_n(\\alpha)=s_n(0)L^{-\\frac{2K}{n}(\\alpha/2\\pi)^2},\\quad P(N_A)\\simeq\\frac{e^{-\\Delta N_A^2/(2\\sigma^2)}}{\\sqrt{2\\pi\\sigma^2}}",
+      "role": "fig2_parameter_free_analytic_curves",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The charged-moment scaling and Gaussian sector form are printed in the paper."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating the Fourier-projected moment at n=1 gives the resolved entropy contribution."
+        },
+        {
+          "id": "EQ003-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The analytic curves are even in Delta N and agree with the independent lattice calculation over all 11 displayed charges."
+        }
+      ],
+      "numerical_form": "Use K=1, sigma^2=[ln(2L)+gamma_E+1]/pi^2 and the known free-fermion entropy constant, without fitting.",
+      "code_refs": [
+        "src/symmetry_entanglement/model.py::analytic_charge_curves"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Free-fermion many-body entanglement spectrum",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "free-fermion product spectrum before Main Fig. 2"
+        },
+        {
+          "type": "figure_caption",
+          "value": "Main Fig. 3, 24 closest-to-zero modes"
+        }
+      ],
+      "latex": "\\rho_A=\\bigotimes_l[(1-f_l)|0_l\\rangle\\langle0_l|+f_l|1_l\\rangle\\langle1_l|],\\qquad f_l=(e^{\\varepsilon_l}+1)^{-1}",
+      "role": "fig3_independent_numeric_spectrum",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Gaussian product spectrum and the 24-mode construction are stated explicitly."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Enumerating binary occupations gives every many-body eigenvalue and its charge sector."
+        },
+        {
+          "id": "EQ004-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The sector onset grows monotonically with absolute Delta N, consistent with the printed Delta N squared cost."
+        }
+      ],
+      "numerical_form": "Enumerate all 2^24 occupations of the closest-to-zero entanglement modes and rank eigenvalues in sectors Delta N=0...5.",
+      "code_refs": [
+        "src/symmetry_entanglement/model.py::enumerate_many_body_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Charge-resolved integrated spectrum",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eq. (11)"
+        }
+      ],
+      "latex": "n(\\lambda,N_A)=\\int_0^\\pi\\frac{d\\alpha}{\\pi}\\cos(\\alpha\\Delta N_A)I_0\\!\\left(2\\sqrt{r(\\alpha)\\ln\\frac1{\\lambda_{\\max}}\\ln\\frac{\\lambda_{\\max}}{\\lambda}}\\right),\\ r(\\alpha)=1-3K\\alpha^2/\\pi^2",
+      "role": "fig3_analytic_reference",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Bessel-integral formula and r(alpha) are printed as Main Eq. (11)."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Summing all charge sectors reduces to I0(x), the Calabrese-Lefevre all-sector curve."
+        },
+        {
+          "id": "EQ005-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Gauss-Legendre quadrature reproduces the all-sector I0 curve to 1.2e-13."
+        }
+      ],
+      "numerical_form": "Evaluate the alpha integral with 512-point Gauss-Legendre quadrature on 501 x values.",
+      "code_refs": [
+        "src/symmetry_entanglement/model.py::analytic_integrated_spectrum"
+      ],
+      "open_questions": []
+    }
+  ]
+}

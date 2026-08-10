@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "paper_id": "1910.00020",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Trajectory-conditioned quantum order parameter",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text, equation defining S_Q after the reference-environment density matrix"
+        }
+      ],
+      "latex": "S_Q=S(\\rho_R)-I(R:E)=\\sum_{\\vec m}p_{\\vec m}S(\\rho_{R\\vec m})",
+      "role": "reference_qubit_order_parameter",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text explicitly identifies coherent information with the trajectory-averaged reference entropy."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A Bell reference has one bit of entropy and a Z measurement of its partner reduces it to zero."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/stabilizer.py::StabilizerState.entropy",
+        "src/measurement_criticality/reproduction.py::_one_reference_survival"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Pure-stabilizer subsystem entropy",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text stabilizer-circuit method and standard binary stabilizer reduction"
+        }
+      ],
+      "latex": "S(A)=\\operatorname{rank}_{\\mathbb F_2}(G_A)-|A|",
+      "role": "exact_stabilizer_entropy_evaluator",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text explicitly specifies efficient stabilizer-circuit simulation for the reference entropies."
+        },
+        {
+          "id": "EQ002-D",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For a pure n-generator stabilizer state, the rank of restricted generators gives the number of independent Pauli constraints crossing the bipartition."
+        },
+        {
+          "id": "EQ002-V",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Random Clifford/measurement sequences preserve an independent commuting n-generator tableau."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/stabilizer.py::gf2_rank",
+        "src/measurement_criticality/stabilizer.py::StabilizerState.entropy"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Finite-size transition scaling",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main-text scaling equation following Fig. 1"
+        }
+      ],
+      "latex": "\\langle S_Q\\rangle=F[(p-p_c)L^{1/\\nu},t/L]",
+      "role": "critical_point_and_nu_scaling",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not publish trajectory counts or random seeds."
+      ],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The finite-size scaling form and the reported p_c and nu are printed immediately after Fig. 1."
+        },
+        {
+          "id": "EQ003-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent reduced-size curves cross at p=0.16, consistent with the printed p_c=0.1598(5)."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/reproduction.py::_run_transition"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Measurement-resolved decoding light cone",
+      "source_refs": [
+        {
+          "type": "caption",
+          "value": "Main Fig. 2(a) and Supplement Fig. S1 captions"
+        }
+      ],
+      "latex": "\\Delta S_Q(x,t)=S_Q^{\\mathrm{before}}-S_Q^{\\mathrm{after\\ measurement\\ at\\ }(x,t)}",
+      "role": "purification_event_density",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The caption does not state whether zero-event bins are floored before logarithmic rendering."
+      ],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 2(a) and Fig. S1 define the heatmap as the average reference-entropy change due to a measurement at each space-time point."
+        },
+        {
+          "id": "EQ004-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "98.97% of generated purification weight lies inside the one-site-per-layer causal cone."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/reproduction.py::_decoding_heatmap"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Surface order-parameter scaling",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text discussion of Fig. 3(a)"
+        }
+      ],
+      "latex": "\\langle S_Q\\rangle\\sim|p-p_c|^{\\beta_s}",
+      "role": "surface_exponent",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The fit window and sample weights are not published."
+      ],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Fig. 3(a) discussion explicitly gives the surface-order power law and beta_s=0.45(2)."
+        },
+        {
+          "id": "EQ005-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reduced-size fit gives beta_s=0.551; the paper reports 0.45(2), with finite-size drift disclosed."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/reproduction.py::_run_surface_order"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Reference mutual-information scaling",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text equation preceding the Fig. 3(b,c) discussion"
+        }
+      ],
+      "latex": "\\langle I_{xy}\\rangle=|x-y|^{-\\eta}G[(t-t_0)/L]",
+      "role": "bulk_and_surface_two_point_functions",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "Published trajectory counts and finite-size weights are absent."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text prints the reference mutual-information scaling function and the four reported exponents."
+        },
+        {
+          "id": "EQ006-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All four independently simulated mutual-information branches are nonnegative, start at zero, and develop finite peaks."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/reproduction.py::_two_reference_curve",
+        "src/measurement_criticality/stabilizer.py::StabilizerState.mutual_information"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Critical purification dynamics",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Supplement Eq. (S1)"
+        }
+      ],
+      "latex": "\\langle S(\\rho)\\rangle=t^{-\\eta_{\\parallel}/2}F(t/L)",
+      "role": "one_and_four_reference_purification",
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The supplement omits sampling counts and exact exponent-fit windows."
+      ],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S1) prints the critical purification scaling form for one and four reference qubits."
+        },
+        {
+          "id": "EQ007-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Both one- and four-reference entropies decay; the one-reference reduced-scale exponent is 0.641 versus the reported 0.70(2)."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/reproduction.py::_run_supp_purification"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Entropy conditioned on an incomplete measurement record",
+      "source_refs": [
+        {
+          "type": "definition",
+          "value": "Main Fig. 2(b) caption and main-text statement that outcomes are retained only inside a spatial cutoff"
+        },
+        {
+          "type": "derivation",
+          "value": "Mixed-stabilizer reduction derived from the printed conditional entropy S_Q"
+        }
+      ],
+      "latex": "S(R\\mid M_A)=|R|-\\dim S_R,\\quad \\dim S_R=r-\\operatorname{rank}_{\\mathbb F_2}(G_Q),\\quad \\mathcal D_Z(\\rho)=\\tfrac12(\\rho+Z\\rho Z)",
+      "role": "exact_partial_record_conditional_entropy",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper fixes the physical circuit and says only measurement outcomes inside the spatial bound are recorded; measurements outside the record therefore remain physical and must be marginalized."
+        },
+        {
+          "id": "EQ008-D",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For a rank-r mixed stabilizer group, the subgroup supported only on R is the kernel of restriction to Q, with dimension r-rank(G_Q)."
+        },
+        {
+          "id": "EQ008-N",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "For a Bell pair, an unrecorded Z measurement leaves S(R)=1, while conditioning on the outcome gives S(R)=0; the full-record mixed implementation matches the pure-trajectory implementation."
+        }
+      ],
+      "code_refs": [
+        "src/measurement_criticality/stabilizer.py::MixedStabilizerState",
+        "src/measurement_criticality/reproduction.py::_cutoff_curve",
+        "src/measurement_criticality/paper_scale.py::_partial_record_curve"
+      ]
+    }
+  ]
+}

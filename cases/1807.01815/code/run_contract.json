@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.01815-independent-v3",
+  "target_ids": [
+    "T_FIG1A",
+    "T_FIG1B",
+    "T_FIG2A",
+    "T_FIG2B",
+    "T_FIG2C",
+    "T_FIG4A",
+    "T_FIG4B",
+    "T_FIG4C",
+    "T_FIG4D",
+    "T_FIGS1_HM020",
+    "T_FIGS1_H000",
+    "T_FIGS1_H020",
+    "T_FIGS1_H040",
+    "T_FIGS2A",
+    "T_FIGS2B"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/reduced_scale.json"
+  ],
+  "inputs": [
+    "src/scar_tdvp/__init__.py",
+    "src/scar_tdvp/constrained.py",
+    "src/scar_tdvp/tdvp.py",
+    "src/scar_tdvp/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/reduced_scale.json"
+  ],
+  "parameter_file": "config/reduced_scale.json",
+  "parameter_selector": "",
+  "expected_parameters": {
+    "schema_version": 1,
+    "paper_id": "1807.01815",
+    "scope": "reduced_scale_feature_reproduction",
+    "paper_parameters": {
+      "omega": 1.0,
+      "fig1_spin": 0.5,
+      "fig1_lengths": [
+        30,
+        32
+      ],
+      "fig1_time_max": 300.0,
+      "fig2_entropy_length": 30,
+      "fig2_six_site_time_max": 100.0,
+      "fig2_one_site_time_max": 120.0,
+      "fig4_spin1_lengths": [
+        20,
+        22
+      ],
+      "fig4_spin2_lengths": [
+        14,
+        16
+      ],
+      "fig4_time_max": 300.0,
+      "figs1_h_over_omega": [
+        -0.2,
+        0.0,
+        0.2,
+        0.4
+      ],
+      "figs2_h_over_omega": [
+        0.0,
+        0.01,
+        0.02,
+        0.03,
+        0.04,
+        0.045,
+        0.05,
+        0.06,
+        0.07,
+        0.08
+      ],
+      "source": "main and supplemental captions plus printed equations"
+    },
+    "generated_parameters": {
+      "tdvp_grid_points": 45,
+      "tdvp_residual_ring_lengths": {
+        "0.5": 12,
+        "1.0": 8,
+        "2.0": 6
+      },
+      "dynamics": {
+        "fig1_lengths": [
+          18,
+          20
+        ],
+        "fig4_spin1_lengths": [
+          12,
+          14
+        ],
+        "fig4_spin2_lengths": [
+          10,
+          12
+        ],
+        "time_max": 300.0,
+        "time_step": 0.5
+      },
+      "level_statistics": {
+        "0.5": [
+          14,
+          16,
+          18,
+          20
+        ],
+        "1.0": [
+          10,
+          12,
+          14,
+          16
+        ],
+        "2.0": [
+          8,
+          10,
+          12
+        ]
+      },
+      "entropy": {
+        "length": 18,
+        "time_max": 120.0,
+        "time_step": 1.0
+      },
+      "deformed_residual_ring_lengths": [
+        10,
+        12,
+        14
+      ],
+      "deformed_orbit_samples": 360
+    },
+    "seeds": [],
+    "notes": "All calculations are deterministic. Exact dynamics use reduced system sizes because the printed sizes require multi-million-state bases and long-time Krylov propagation beyond the 16 GiB local campaign budget."
+  },
+  "outputs": [
+    "outputs/data/T_FIG1_tdvp.npz",
+    "outputs/data/T_FIG1_dynamics.npz",
+    "outputs/data/T_FIG2.npz",
+    "outputs/data/T_FIG4_tdvp.npz",
+    "outputs/data/T_FIG4_dynamics.npz",
+    "outputs/data/T_FIGS1.npz",
+    "outputs/data/T_FIGS2.npz",
+    "outputs/checks/scientific_formula_checks.json",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/convergence.json",
+    "outputs/checks/paper_claim_audit.json",
+    "outputs/checks/generated_data_manifest.json"
+  ],
+  "acceptance_criteria": [
+    "All independently evaluated formula checks pass and every numerical target other than the declared Supplement Fig. S2 stable difference passes its feature-level check.",
+    "The formal paper_claim_audit.json actively tests the paper's equations, main claims and captions and classifies every open boundary under protocol-v2.",
+    "A stable difference is first assigned to reproduction_defect, parameter_ambiguity, insufficient_compute or inconclusive; paper_error_candidate is allowed only when paper_exact, convergence, at least two independent cross-checks, source pinpoint and fresh independent review all pass.",
+    "Supplement Fig. S2 remains parameter_ambiguity and is not a paper_error_candidate while the closed deformed residual procedure is omitted and fresh independent review is absent.",
+    "The generated-data manifest confirms that author code, author arrays, source pixels and PDF pixels were not numerical inputs."
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

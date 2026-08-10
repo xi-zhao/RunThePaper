@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.01815-main-paper-scale-v1",
+  "target_ids": [
+    "T_FIG1A",
+    "T_FIG1B",
+    "T_FIG2A",
+    "T_FIG4A",
+    "T_FIG4B",
+    "T_FIG4C",
+    "T_FIG4D"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--resume",
+    "--aggregate"
+  ],
+  "inputs": [
+    "src/scar_tdvp/__init__.py",
+    "src/scar_tdvp/constrained.py",
+    "src/scar_tdvp/tdvp.py",
+    "src/scar_tdvp/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "omega": 1.0,
+    "quench_time_max": 300.0,
+    "quench_time_step": 0.5,
+    "fig1_candidate_lengths": [
+      30,
+      32
+    ],
+    "fig4_spin1_candidate_lengths": [
+      20,
+      22
+    ],
+    "fig4_spin2_candidate_lengths": [
+      14,
+      16
+    ],
+    "fig1_fig4_size_source_status": "not_reported_parameter_ambiguity",
+    "fig2a_sector": "momentum-zero inversion-symmetric",
+    "fig2a_size_sequence_status": "not_reported_parameter_ambiguity"
+  },
+  "outputs": [
+    "outputs/paper_scale/main/data/T_FIG1A_tdvp.npz",
+    "outputs/paper_scale/main/data/T_FIG1B_quench.npz",
+    "outputs/paper_scale/main/data/T_FIG2A_level_statistics.npz",
+    "outputs/paper_scale/main/data/T_FIG4AC_tdvp.npz",
+    "outputs/paper_scale/main/data/T_FIG4B_quench.npz",
+    "outputs/paper_scale/main/data/T_FIG4D_quench.npz",
+    "outputs/paper_scale/main/checks/backend_parity.json",
+    "outputs/paper_scale/main/checks/paper_scale_acceptance.json",
+    "outputs/paper_scale/main/checks/generated_data_manifest.json",
+    "outputs/paper_scale/main/checks/campaign_state.json"
+  ],
+  "timeout_seconds": 1209600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "scheduler": {
+    "work_units": 30,
+    "shard_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "${ARRAY_COUNT}",
+      "--resume"
+    ],
+    "merge_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--aggregate-only",
+      "--resume"
+    ],
+    "resume_rule": "Only config-digest-matched scalar/state checkpoints and completed size lanes are accepted. Aggregation fails closed until all 30 units exist."
+  },
+  "acceptance_criteria": [
+    "All 30 deterministic units complete and aggregation accepts only config-digest-matched lane outputs.",
+    "Streaming Krylov magnetization agrees with a batched small-system oracle within 2e-12, while norm and energy drift remain below 1e-8 in every frozen candidate-size quench lane.",
+    "TDVP periods and integrated leakages satisfy the printed anchors, and the last two independently evaluated finite-ring residual estimates satisfy the declared convergence threshold.",
+    "Every candidate Fig. 2(a) symmetry block is Hermitian and yields a finite r statistic; the omitted plotted L sequence remains parameter_ambiguity and is never promoted to paper_exact.",
+    "The candidate-size quench lanes cover the paper's visible t*Omega=0..300 range and retain the declared thermal-relaxation and Z2-revival features for spins 1/2, 1, and 2; missing L provenance prevents paper_exact promotion.",
+    "No author code, author arrays, digitized curves, source pixels, or PDF pixels enter the numerical runner.",
+    "A stable difference is first classified as reproduction_defect, parameter_ambiguity, insufficient_compute, or inconclusive; paper_error_candidate additionally requires paper-exact inputs, convergence, two independent cross-checks, source pinpoint, and a fresh protocol-v2 review."
+  ],
+  "compute_status": "code_ready_256GiB_30_unit_campaign_not_run"
+}

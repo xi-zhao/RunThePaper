@@ -1,0 +1,299 @@
+{
+  "schema_version": 1,
+  "paper_id": "1803.07128",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Squeezed-vacuum Fock expansion",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Sec. III, squeezed-vacuum expansion immediately before Eq. (6)"
+        }
+      ],
+      "latex": "|(r,phi)> = sech(r)^{1/2} sum_{n>=0} sqrt((2n)!)/(2^n n!) (-e^{i phi} tanh r)^n |2n>",
+      "role": "squeezed_vacuum_feature_state",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The squeezed-vacuum expansion and phase convention are printed before Eq. (6)."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A 120-even-term independent Fock sum is used to verify Eq. (8)."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/model.py::truncated_squeezed_state",
+        "src/qml_feature_space/variational_scale.py::squeezed_product_states"
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Multimode phase-encoding feature map",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (6) and following displayed product state"
+        }
+      ],
+      "latex": "phi(x)=|(c,x_1)> tensor ... tensor |(c,x_N)>",
+      "role": "multimode_phase_encoding_feature_map",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (6) and the following display print the product-state map."
+        },
+        {
+          "id": "EQ002-T",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Implementation forms the two-mode tensor product before taking its real subspace."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/model.py::real_fock_features",
+        "src/qml_feature_space/variational_scale.py::squeezed_product_states"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Closed-form squeezing overlap",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (7)--(8)"
+        }
+      ],
+      "latex": "< (c,x)|(c,x') > = sech(c)/sqrt(1-e^{i(x'-x)} tanh^2(c)); kappa(x,x';c)=prod_i <(c,x_i)|(c,x'_i)>",
+      "role": "complex_squeezing_overlap",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (7)--(8) print the product kernel and single-mode overlap."
+        },
+        {
+          "id": "EQ003-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The closed form agrees with an independently summed 120-term Fock expansion below 1e-9."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/model.py::single_mode_overlap"
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Real positive-semidefinite squeezing kernel",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Sec. II.C: complex amplitudes give a real kernel by taking the absolute square"
+        }
+      ],
+      "latex": "K_R(x,x')=|<phi(x)|phi(x')>|^2",
+      "role": "real_psd_svc_kernel",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Sec. II.C explicitly prescribes the absolute square for complex feature amplitudes."
+        },
+        {
+          "id": "EQ004-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The generated Gram matrix is symmetric, unit diagonal, and positive semidefinite."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/model.py::squeezing_kernel"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "SVC representer decision function",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Fig. 5 caption and Sec. III.C implicit classifier"
+        }
+      ],
+      "latex": "f(x)=sum_m alpha_m y_m K_R(x_m,x)+b",
+      "role": "support_vector_decision_function",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper does not publish random seeds, dataset noise, the lower-row generator, or SVC regularization."
+      ],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 5 caption specifies SVC with the custom overlap kernel and sample counts."
+        },
+        {
+          "id": "EQ005-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All three named mini-benchmarks exceed the declared reconstructed test-accuracy floor and capacity rises with c."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/reproduction.py::_run_svm"
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Real-subspace Fock perceptron",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Fig. 6 caption and Appendix B linear-separability proof"
+        }
+      ],
+      "latex": "w_{t+1}=w_t+eta y_m Re[phi(x_m)] for a misclassified sample",
+      "role": "real_fock_space_perceptron",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper omits the blob generator, seed, and simulator Fock cutoff."
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 6 caption fixes c, sample counts, real-subspace restriction, no regularization, and three epochs."
+        },
+        {
+          "id": "EQ006-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reconstructed training set reaches unit training accuracy while held-out accuracy remains imperfect."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/reproduction.py::_run_perceptron"
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Four-block continuous-variable variational circuit",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Fig. 7(c) and gate equations in Sec. III.C"
+        }
+      ],
+      "latex": "W(theta)=[V_1 V_2 P_1 P_2 D_1 D_2 BS]^4",
+      "role": "four_block_variational_cv_circuit",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The paper omits the displacement convention, initialization, and Fock cutoff; 32 printed parameters imply one real displacement parameter per mode and block."
+      ],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 7(c) and Sec. III.C print the gate order and generators; Fig. 8 text fixes four blocks and 32 parameters."
+        },
+        {
+          "id": "EQ007-U",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "All gates are exponentials of the printed finite-Fock generators; four blocks use 32 real parameters."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/reproduction.py::_run_variational",
+        "src/qml_feature_space/variational_scale.py::FactorizedCVCircuit"
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Photon-probability classifier output",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Sec. III.C output normalization before Fig. 8"
+        }
+      ],
+      "latex": "p(y=0,1)=(p(2,0),p(0,2))/(p(2,0)+p(0,2))",
+      "role": "variational_classifier_measurement",
+      "derived_from": [
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The adaptive learning-rate schedule and L2 coefficient are not printed."
+      ],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Sec. III.C prints the p(2,0)/p(0,2) normalization and Fig. 8 caption prints the training schedule."
+        },
+        {
+          "id": "EQ008-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent 5000-step training reduces loss by more than 80% and exceeds 0.9 held-out accuracy."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/reproduction.py::_run_variational",
+        "src/qml_feature_space/variational_scale.py::FactorizedCVCircuit.probabilities"
+      ]
+    }
+  ]
+}

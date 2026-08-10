@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "paper_id": "1711.09418",
+  "profile": "paper_scale",
+  "parameter_source": {
+    "T001": "Main-text paragraph and caption of Fig. 2: infinite half-filled tight-binding chain, L=10000, K=1, displayed Delta N=-5,...,5.",
+    "T002": "Main-text Eq. (11) and caption of Fig. 3: same L=10000 system, exactly 24 closest-to-zero entanglement modes, sectors 0,...,5, rank window 1,...,1000 and x<=10."
+  },
+  "scientific_parameters": {
+    "subsystem_length": 10000,
+    "filling": 0.5,
+    "luttinger_k": 1.0,
+    "active_correlation_modes": 96,
+    "fig2_delta_min": -5,
+    "fig2_delta_max": 5,
+    "fig3_selected_modes": 24,
+    "fig3_sectors": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "fig3_rank_max": 1000,
+    "fig3_x_max": 10.0,
+    "fig3_analytic_points": 501,
+    "quadrature_nodes": 512
+  },
+  "execution": {
+    "implementation_version": "paper-scale-v1",
+    "output_root": "outputs/paper_scale",
+    "spectrum_shards": 16,
+    "analytic_shards": 4,
+    "state_chunk_size": 131072,
+    "checkpoint_every_modes": 8,
+    "dtype": "float64",
+    "blas_threads": 4,
+    "resume_policy": "Every completed eigenspectrum, recurrence block, state-space shard, and quadrature shard is hash-bound to the effective config. --resume reuses only matching checkpoints.",
+    "aggregation_policy": "Require canonical, nonoverlapping shard bounds covering exactly 2^24 states; merge per-shard exact top-1000 weights for each displayed sector."
+  },
+  "targets": {
+    "T001": {
+      "paper_item": "Main Fig. 2",
+      "machine_acceptance": {
+        "minimum_logical_cpus": 4,
+        "minimum_ram_gib": 16,
+        "minimum_free_disk_gib": 3,
+        "accelerator": "not required",
+        "software": "Python 3.11+, NumPy and SciPy with a 64-bit BLAS/LAPACK backend"
+      },
+      "acceptance_criteria": [
+        "Load exactly L=10000, half filling, K=1, 96 central correlation modes and Delta N=-5,...,5 from this config.",
+        "Require correlation-window saturation below 1e-13 and above 1-1e-13, particle-hole residual below 5e-11, probability normalization within 1e-12, and resolved-vs-mode entropy within 1e-11.",
+        "Require the 88-to-96 active-mode convergence residual below 5e-12 for probability and 5e-11 for resolved entropy.",
+        "Require SciPy subset-eigensolver parity against an independent full NumPy eigensolve below 1e-11 on the smoke matrix.",
+        "The final CSV must be generated from formula-derived numerics; paper pixels, author arrays and author code are forbidden inputs."
+      ]
+    },
+    "T002": {
+      "paper_item": "Main Fig. 3",
+      "machine_acceptance": {
+        "minimum_logical_cpus": 4,
+        "minimum_ram_gib": 16,
+        "minimum_free_disk_gib": 3,
+        "accelerator": "not required; 16 CPU shards may run sequentially or as a shared-filesystem job array",
+        "software": "Python 3.11+, NumPy and SciPy with a 64-bit BLAS/LAPACK backend"
+      },
+      "acceptance_criteria": [
+        "Load exactly 24 closest-to-zero modes, sectors Delta N=0,...,5, rank_max=1000, x_max=10, 501 analytic points and 512 quadrature nodes.",
+        "Require 16 canonical state shards to cover all 16,777,216 occupations exactly once; aggregation may retain only the exact per-sector global top-1000 weights.",
+        "Require streaming-sharded and monolithic enumeration parity below 1e-12 on an independently configured 12-mode smoke problem.",
+        "Require the all-sector analytic curve to equal I0(x) within 2e-12 and 256-to-512-node quadrature convergence below 2e-9.",
+        "Require monotonically increasing sector onsets for scientific identities 0,...,5; no run may promote the published-label discrepancy beyond inconclusive."
+      ]
+    }
+  },
+  "profiles": {
+    "smoke": {
+      "scientific_parameters": {
+        "subsystem_length": 64,
+        "active_correlation_modes": 32,
+        "fig2_delta_min": -3,
+        "fig2_delta_max": 3,
+        "fig3_selected_modes": 12,
+        "fig3_sectors": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "fig3_rank_max": 128,
+        "fig3_x_max": 8.0,
+        "fig3_analytic_points": 65,
+        "quadrature_nodes": 128
+      },
+      "execution": {
+        "output_root": "outputs/paper_scale_smoke",
+        "spectrum_shards": 3,
+        "analytic_shards": 2,
+        "state_chunk_size": 257,
+        "checkpoint_every_modes": 5,
+        "blas_threads": 1
+      }
+    }
+  },
+  "trusted_historical_run": {
+    "run_id": "1711.09418-paper-exact-v2",
+    "scope": "Existing isolated paper-exact run retained without rerun by this campaign task.",
+    "elapsed_seconds": 108.003,
+    "fig2_csv_sha256": "de8daf5b43aae48e9980a9712e2f4d3a34fd3355dcefa8350597c500f1678570",
+    "fig3_numeric_csv_sha256": "88db37e58dadddbeda69ad5736d8f966e8bbccc622da8ce96a69022ff6e3899f",
+    "fig3_analytic_csv_sha256": "5e48daab3942d1d545e53a9d77699dd3a8f318ca161cd21e1d84bb37402fb672",
+    "use_policy": "Hashes are audit evidence only and never numerical inputs to this runner."
+  },
+  "review_protocol": {
+    "schema": "protocol-v2",
+    "paper_error_candidate_emitted": false,
+    "current_figure3_legend_assessment": "inconclusive",
+    "missing_before_paper_error_candidate": [
+      "fresh inventory-first independent review validated by the protocol-v2 Harness",
+      "an explicit falsification attempt against the printed 5,6 labels",
+      "a discrepancy record with strict paper claim, independent result, quantified gap and tolerance basis",
+      "reviewer confirmation that reproduction defects, branch-definition ambiguity and compute limits are excluded"
+    ]
+  }
+}

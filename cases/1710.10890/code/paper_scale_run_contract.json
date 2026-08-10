@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "run_id": "1710.10890-paper-scale-v1",
+  "target_ids": [
+    "T007",
+    "T008"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale_campaign.json",
+    "--action",
+    "run",
+    "--resume",
+    "--finalize"
+  ],
+  "inputs": [
+    "src/quantum_droplets/__init__.py",
+    "src/quantum_droplets/model.py",
+    "src/quantum_droplets/reproduction.py",
+    "src/quantum_droplets/coupled_gpe.py",
+    "src/quantum_droplets/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_theory.json",
+    "config/paper_scale_campaign.json",
+    "mplconfig/.gitkeep"
+  ],
+  "parameter_file": "config/paper_scale_campaign.json",
+  "parameter_selector": "parameters.contract_parameters",
+  "expected_parameters": {
+    "schema_version": 1,
+    "task_count": 12,
+    "campaign_ids": [
+      "production",
+      "grid_refinement",
+      "time_refinement"
+    ],
+    "production_grid_shape": [
+      512,
+      512,
+      512
+    ],
+    "grid_refinement_shape": [
+      640,
+      640,
+      640
+    ],
+    "main_fig4_box_lengths_micrometre": [
+      128.0,
+      128.0,
+      128.0
+    ],
+    "main_fig4_duration_millisecond": 25.0,
+    "supp_s2_box_lengths_micrometre": [
+      224.0,
+      224.0,
+      224.0
+    ],
+    "supp_s2_duration_millisecond": 12.0,
+    "production_real_time_step_microsecond": 2.0,
+    "time_refinement_real_time_step_microsecond": 1.0,
+    "main_fig4_magnetic_fields_gauss": [
+      56.45,
+      56.64
+    ],
+    "assumed_initial_atom_number": 400000,
+    "supp_s2_scattering_length_bohr": 7.5,
+    "supp_s2_vertical_confinement_hz": 12.0,
+    "source_boundary": "published scalar parameters and equations only; no author code, author numerical arrays, or source pixels"
+  },
+  "outputs": [
+    "outputs/data/static_equilibrium.csv",
+    "outputs/data/main_fig4_dynamics.csv",
+    "outputs/data/supp_s2_dynamics.csv",
+    "outputs/checks/paper_scale_campaign_manifest.json",
+    "outputs/checks/scientific_acceptance.json",
+    "outputs/checks/convergence.json",
+    "outputs/checks/crosschecks.json",
+    "outputs/checks/paper_review_assessment.json",
+    "outputs/figures/theory_campaign.png"
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "PYTHONHASHSEED": "0",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MPLCONFIGDIR": "mplconfig"
+  }
+}

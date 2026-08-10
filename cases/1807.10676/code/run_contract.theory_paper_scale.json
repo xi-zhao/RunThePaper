@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.10676-theory-paper-scale-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_theory_paper_scale.py",
+    "--config",
+    "config/theory_paper_scale.json",
+    "--resume"
+  ],
+  "inputs": [
+    "src/tbg_topology/__init__.py",
+    "src/tbg_topology/model.py",
+    "src/tbg_topology/reproduction.py",
+    "src/tbg_topology/paper_scale.py",
+    "scripts/run_theory_paper_scale.py",
+    "config/theory_paper_scale.json"
+  ],
+  "parameter_file": "config/theory_paper_scale.json",
+  "parameter_selector": "paper_parameters",
+  "expected_parameters": {
+    "interlayer_w_ev": 0.11,
+    "v_f_k_ev": 19.81,
+    "first_magic_alpha": 0.605,
+    "fixed_theta_deg": 1.085,
+    "reported_magic_alphas": [
+      0.605,
+      1.28,
+      1.83,
+      2.71,
+      3.3,
+      3.82
+    ],
+    "gapped_phase_alphas": [
+      0.5695,
+      0.65,
+      1.83,
+      3.1
+    ],
+    "supplement_band_alphas": [
+      0.5695,
+      0.605,
+      0.65,
+      1.28,
+      1.83,
+      2.71,
+      3.1,
+      3.3,
+      3.82
+    ],
+    "magic_generation_alphas": [
+      0.53,
+      0.55,
+      0.5695,
+      0.59,
+      0.5931,
+      0.605
+    ],
+    "ph_breaking_sets": [
+      {
+        "t_ev": -2.97,
+        "t_prime_ev": -0.073
+      },
+      {
+        "t_ev": -2.79,
+        "t_prime_ev": -0.68
+      },
+      {
+        "t_ev": -2.92,
+        "t_prime_ev": 0.223
+      },
+      {
+        "t_ev": -2.89,
+        "t_prime_ev": 0.242
+      }
+    ],
+    "tb4": {
+      "t": 1.0,
+      "t_prime": -0.3333333333333333,
+      "lambda": 0.3849001794597505,
+      "delta": 0.15
+    },
+    "tb4_two_valley": {
+      "delta_minus": 0.1174,
+      "t_minus": 0.011,
+      "t_prime_minus": -0.011,
+      "lambda_1": 0.01842,
+      "lambda_2": 0.00509
+    },
+    "intervalley_zeta": 0.2,
+    "paper_parameter_source": "main Fig. 1 caption and Supplement Eqs. (M-model-1), (HTT-noPH), (HBB-noPH), (TB8-2V), (TB4-2V)"
+  },
+  "outputs": [
+    "outputs/data/paper_scale_theory/T001_main_fig1a_velocity.npz",
+    "outputs/data/paper_scale_theory/T002_main_fig1b_wilson.npz",
+    "outputs/data/paper_scale_theory/T003_main_fig2b_tb4_bands.npz",
+    "outputs/data/paper_scale_theory/T004_main_fig2c_tb4_wilson.npz",
+    "outputs/data/paper_scale_theory/T005_supp_fig2a_levels.npz",
+    "outputs/data/paper_scale_theory/T006_supp_fig3_bands.npz",
+    "outputs/data/paper_scale_theory/T007_supp_fig4a_gamma_levels.npz",
+    "outputs/data/paper_scale_theory/T008_supp_fig5_magic_generation.npz",
+    "outputs/data/paper_scale_theory/T009_supp_fig6_ph_breaking.npz",
+    "outputs/data/paper_scale_theory/T010_supp_fig7_wilson.npz",
+    "outputs/data/paper_scale_theory/T011_supp_fig9_tb8.npz",
+    "outputs/data/paper_scale_theory/T012_supp_fig10_tb4_2v.npz",
+    "outputs/checks/paper_scale_theory/scientific_formula_checks.json",
+    "outputs/checks/paper_scale_theory/convergence.json",
+    "outputs/checks/paper_scale_theory/target_checks.json",
+    "outputs/checks/paper_scale_theory/generated_data_manifest.json",
+    "outputs/checks/paper_scale_theory/campaign_state.json"
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "OMP_NUM_THREADS": "32",
+    "OPENBLAS_NUM_THREADS": "32",
+    "VECLIB_MAXIMUM_THREADS": "32"
+  },
+  "execution_boundary": {
+    "production_run_completed": false,
+    "paper_exact_claimed": false,
+    "reason": "The paper omits exact reciprocal cutoffs, momentum grids, and author arrays; this code-ready campaign freezes independently reconstructed production settings.",
+    "resume": "A completed campaign is reused only when the full config hash and every declared output hash match. Interrupted serial calculations rerun inside the isolated paper-scale namespace without overwriting the attested feature data."
+  }
+}
