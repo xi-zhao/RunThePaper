@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "run_id": "2105.08076-feature-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/feature.json"
+  ],
+  "inputs": [
+    "src/dark_state_fermions/__init__.py",
+    "src/dark_state_fermions/gaussian.py",
+    "src/dark_state_fermions/observables.py",
+    "src/dark_state_fermions/scaling.py",
+    "src/dark_state_fermions/theory.py",
+    "src/dark_state_fermions/audit.py",
+    "src/dark_state_fermions/rendering.py",
+    "src/dark_state_fermions/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/feature.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/feature.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "seed_base": 210508076,
+    "seed_stride": 1000,
+    "sizes": [
+      24,
+      32,
+      48,
+      64,
+      80,
+      96
+    ],
+    "p_values": [
+      1.15,
+      1.25,
+      1.4,
+      1.6,
+      2.0,
+      3.0,
+      5.0
+    ],
+    "gamma_values": [
+      0.3,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "exponent_gamma_values": [
+      0.3,
+      1.0,
+      1.5
+    ],
+    "central_charge_gamma_values": [
+      0.3,
+      1.5
+    ],
+    "dynamics": {
+      "dt": 0.05,
+      "burn_time": 20.0,
+      "sample_time": 4.0,
+      "sample_interval": 1.0,
+      "trajectories": 4,
+      "entropy_origins": 2
+    },
+    "representative_cases": [
+      {
+        "physics_phase": "algebraic",
+        "caption_phase": "CFT",
+        "gamma": 0.3,
+        "p": 1.25
+      },
+      {
+        "physics_phase": "CFT",
+        "caption_phase": "algebraic",
+        "gamma": 0.3,
+        "p": 5.0
+      },
+      {
+        "physics_phase": "area_law",
+        "caption_phase": "area_law",
+        "gamma": 2.0,
+        "p": 5.0
+      }
+    ]
+  },
+  "outputs": [
+    "outputs/data/ensemble_summary.csv",
+    "outputs/data/T001_phase_map.csv",
+    "outputs/data/T002_correlation_exponent.csv",
+    "outputs/data/T003_entropy_exponent.csv",
+    "outputs/data/T004_entropy_size.csv",
+    "outputs/data/T005_correlation_size.csv",
+    "outputs/data/T006_effective_central_charge.csv",
+    "outputs/data/T007_algebraic_scaling.csv",
+    "outputs/data/T008_subsystem_entropy.csv",
+    "outputs/data/T009_subsystem_correlation.csv",
+    "outputs/figures/T001_main_fig1c.png",
+    "outputs/figures/T002_main_fig1d.png",
+    "outputs/figures/T003_main_fig1e.png",
+    "outputs/figures/T004_main_fig2a.png",
+    "outputs/figures/T005_main_fig2b.png",
+    "outputs/figures/T006_main_fig3a.png",
+    "outputs/figures/T007_main_fig3b.png",
+    "outputs/figures/T008_supp_fig1a.png",
+    "outputs/figures/T009_supp_fig1b.png",
+    "outputs/checks/target_checks.json",
+    "outputs/checks/paper_consistency_checks.json",
+    "outputs/checks/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

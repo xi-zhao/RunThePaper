@@ -92,6 +92,19 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`1910.08980`](cases/1910.08980/README.md) | Independent scientific reproduction of Obstacles to State Preparation and Variational Optimization from Symmetry Protection | Partial scientific reproduction | 89.00 |
 | [`2005.09722`](cases/2005.09722/README.md) | Independent scientific reproduction of Entanglement transition in a monitored free fermion chain -- from extended criticality to area law | Partial scientific reproduction | 67.02 |
 | [`1810.00888`](cases/1810.00888/README.md) | Independent scientific reproduction of Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain | Scientific reproduction — paper-error candidates identified | 80.33 |
+| [`2608.05312`](cases/2608.05312/README.md) | Open-system dark-state rescue, cavity transport, and finite-temperature mechanism competition | Feature-level numerical reproduction (10/10 executable targets; QCLE input-blocked) | 83.40 |
+| [`2401.05830`](cases/2401.05830/README.md) | Independent scientific reproduction of Inverse Mpemba Effect Demonstrated on a Single Trapped Ion Qubit | Partial scientific reproduction | 90.00 |
+| [`2305.15556`](cases/2305.15556/README.md) | Independent scientific reproduction of Optimal Generators for Quantum Sensing | Scientific reproduction — independent review pending | 90.00 |
+| [`2402.14814`](cases/2402.14814/README.md) | Independent scientific reproduction of Realization of a Laughlin State of Two Rapidly Rotating Fermions | Partial scientific reproduction | 83.83 |
+| [`2409.18176`](cases/2409.18176/README.md) | Independent scientific reproduction of Tuning Transport in Solid-State Bose-Fermi Mixtures by Feshbach Resonances | Partial scientific reproduction | 54.90 |
+| [`2105.08076`](cases/2105.08076/README.md) | Independent scientific reproduction of Measurement-Induced Dark State Phase Transitions in Long-Ranged Fermion Systems | Partial scientific reproduction | 60.15 |
+| [`2406.13410`](cases/2406.13410/README.md) | Independent scientific reproduction of Exploring Atom-Ion Feshbach Resonances below the s-Wave Limit | Partial scientific reproduction | 70.00 |
+| [`2211.15015`](cases/2211.15015/README.md) | Independent scientific reproduction of Discontinuous Shear Thickening in Biological Tissue Rheology | Partial scientific reproduction | 26.91 |
+| [`PhysRevLett.133.191801`](cases/PhysRevLett.133.191801/README.md) | Independent scientific reproduction of New Constraints on Axion-Mediated Spin Interactions Using Magnetic Amplification | Partial scientific reproduction | 51.07 |
+| [`PhysRevLett.132.113001`](cases/PhysRevLett.132.113001/README.md) | Independent scientific reproduction of Precision-Spectroscopic Determination of the Binding Energy of a Two-Body Quantum System: The Hydrogen Atom and the Proton-Size Puzzle | Partial scientific reproduction | 66.00 |
+| [`2404.08378`](cases/2404.08378/README.md) | Independent scientific reproduction of On-Chip Quantum Interference between Independent Lithium Niobate-on-Insulator Photon-Pair Sources | Partial scientific reproduction | 65.00 |
+| [`2406.07531`](cases/2406.07531/README.md) | Independent scientific reproduction of Interacting-Bath Dynamical Embedding for Capturing Nonlocal Electron Correlation in Solids | Partial scientific reproduction | 16.00 |
+| [`2101.12558`](cases/2101.12558/README.md) | Independent scientific reproduction of Electronic correlations at paramagnetic (001) and (110) NiO surfaces: Charge-transfer and Mott-Hubbard-type gaps at the surface and subsurface of (110) NiO | Partial scientific reproduction | 16.00 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

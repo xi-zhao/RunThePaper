@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "run_id": "2105.08076-paper-scale-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--mode",
+    "run-all",
+    "--backend",
+    "auto",
+    "--resume"
+  ],
+  "inputs": [
+    "src/dark_state_fermions/__init__.py",
+    "src/dark_state_fermions/gaussian.py",
+    "src/dark_state_fermions/observables.py",
+    "src/dark_state_fermions/scaling.py",
+    "src/dark_state_fermions/theory.py",
+    "src/dark_state_fermions/torch_backend.py",
+    "src/dark_state_fermions/rendering.py",
+    "src/dark_state_fermions/reproduction.py",
+    "src/dark_state_fermions/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "contract_parameters",
+  "expected_parameters": {
+    "campaign": "450 hash-bound conditions spanning all nine numerical panels",
+    "phase_map": "L=600, 18 p values, 11 gamma values, 64 trajectories",
+    "exponent_scaling": "L=200/400/600/800, 18 p values, gamma=0.3/1/1.5, 96 trajectories",
+    "representative_profiles": "L through 1600 for all three printed parameter pairs, 128 trajectories",
+    "convergence": "L=400, all three phases, dt=0.04/0.02/0.01, 64 trajectories",
+    "backend": "A100 Torch CUDA complex128 batches with NumPy CPU reference"
+  },
+  "outputs": [
+    "outputs/checks/paper_scale/plan.json",
+    "outputs/data/paper_scale/T001_phase_map.csv",
+    "outputs/data/paper_scale/T002_correlation_exponent.csv",
+    "outputs/data/paper_scale/T003_entropy_exponent.csv",
+    "outputs/data/paper_scale/T004_entropy_size.csv",
+    "outputs/data/paper_scale/T005_correlation_size.csv",
+    "outputs/data/paper_scale/T006_effective_central_charge.csv",
+    "outputs/data/paper_scale/T007_algebraic_scaling.csv",
+    "outputs/data/paper_scale/T008_subsystem_entropy.csv",
+    "outputs/data/paper_scale/T009_subsystem_correlation.csv",
+    "outputs/figures/paper_scale/T001_main_fig1c.png",
+    "outputs/figures/paper_scale/T002_main_fig1d.png",
+    "outputs/figures/paper_scale/T003_main_fig1e.png",
+    "outputs/figures/paper_scale/T004_main_fig2a.png",
+    "outputs/figures/paper_scale/T005_main_fig2b.png",
+    "outputs/figures/paper_scale/T006_main_fig3a.png",
+    "outputs/figures/paper_scale/T007_main_fig3b.png",
+    "outputs/figures/paper_scale/T008_supp_fig1a.png",
+    "outputs/figures/paper_scale/T009_supp_fig1b.png",
+    "outputs/checks/paper_scale/convergence.csv",
+    "outputs/checks/paper_scale/target_acceptance.json",
+    "outputs/checks/paper_scale/campaign_manifest.json"
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "8",
+    "OPENBLAS_NUM_THREADS": "8",
+    "MKL_NUM_THREADS": "8",
+    "PYTHONHASHSEED": "0"
+  },
+  "scheduler": {
+    "work_units": 450,
+    "shard_count": 32,
+    "shard_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--mode",
+      "run-shard",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "32",
+      "--backend",
+      "auto",
+      "--resume"
+    ],
+    "aggregate_command": [
+      "python",
+      "scripts/run_paper_scale.py",
+      "--config",
+      "config/paper_scale.json",
+      "--mode",
+      "aggregate"
+    ]
+  },
+  "acceptance_criteria": [
+    "All 450 config-and-implementation-hash-bound conditions complete with no missing or overlapping scheduler assignment.",
+    "Every numerical target T001-T009 is regenerated at the printed system-size regime from the monitored Gaussian solver and dark-state formulas.",
+    "The dt=0.04/0.02/0.01 three-phase campaign satisfies the five-percent convergence envelope.",
+    "A100 execution uses batched Torch complex128 QR/FFT; NumPy remains the independent CPU reference and gamma=0 parity test.",
+    "No author code, author numerical arrays, curve digitization, source figures, or PDF pixels enter a numerical process."
+  ],
+  "compute_status": "code_ready_a100_campaign_not_run"
+}

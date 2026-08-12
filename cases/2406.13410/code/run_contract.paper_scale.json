@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "run_id": "2406.13410-paper-scale-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012",
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--mode",
+    "run-all",
+    "--backend",
+    "auto",
+    "--resume"
+  ],
+  "inputs": [
+    "src/atom_ion_feshbach/__init__.py",
+    "src/atom_ion_feshbach/statistics.py",
+    "src/atom_ion_feshbach/trap.py",
+    "src/atom_ion_feshbach/md.py",
+    "src/atom_ion_feshbach/classical.py",
+    "src/atom_ion_feshbach/polarization.py",
+    "src/atom_ion_feshbach/recombination.py",
+    "src/atom_ion_feshbach/rendering.py",
+    "src/atom_ion_feshbach/reproduction.py",
+    "src/atom_ion_feshbach/torch_backend.py",
+    "src/atom_ion_feshbach/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "campaign",
+  "expected_parameters": {
+    "data_root": "outputs/data/paper_scale",
+    "checks_root": "outputs/checks/paper_scale",
+    "shards": 32,
+    "trajectories_per_shard": 8192,
+    "shard_seed_stride": 1000003,
+    "field_seed_stride": 10007,
+    "recommended_backend": "cuda",
+    "recommended_hardware": "NVIDIA A100 with at least 40 GiB VRAM; CPU fallback is scientifically equivalent but slower",
+    "acceptance": [
+      "All 32 hash-bound shards complete exactly once or resume from matching config and implementation hashes.",
+      "Each of seven printed energy conditions contains exactly 262144 independent float64 ion trajectories after aggregation.",
+      "The collision campaign executes 800 elastic rf-phase updates per trajectory and reports stationary-drift diagnostics.",
+      "The 121-point per-wave polarization ODE grid satisfies unitarity, threshold slopes, and analytic 1/9/36 E_s barrier checks.",
+      "All 17 target checks pass after 131072-sample three-body averaging per condition.",
+      "No author code, author numerical arrays, raw inputs, reference figures, or source pixels enter any scientific runner."
+    ]
+  },
+  "outputs": [
+    "outputs/checks/paper_scale/plan.json",
+    "outputs/data/paper_scale/aggregated/md_velocity_samples.npz",
+    "outputs/data/paper_scale/T001_number_variance.csv",
+    "outputs/data/paper_scale/T017_dimer_coupling.csv",
+    "outputs/figures/paper_scale/T003_main_fig3a.png",
+    "outputs/figures/paper_scale/T017_appendix_fig8.png",
+    "outputs/checks/paper_scale/target_checks.json",
+    "outputs/checks/paper_scale/generated_data_manifest.json",
+    "outputs/checks/paper_scale/campaign_manifest.json",
+    "outputs/checks/paper_scale/target_acceptance.json"
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

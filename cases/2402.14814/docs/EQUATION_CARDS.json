@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "paper_id": "2402.14814",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Rotating two-dimensional oscillator spectrum",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S1)-(S2) and Fig. S1"
+        }
+      ],
+      "latex": "E_{n,m}/(hbar omega)=n+1-m Omega_rot/omega",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S1)-(S2) print the rotating-frame Hamiltonian and spectrum used here."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The rotating-frame unitary contributes -Omega_rot L_z."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At Omega_rot=omega every n=m LLL state has energy hbar omega."
+        }
+      ],
+      "numerical_form": "Enumerate allowed m=-n,-n+2,...,n and evaluate the closed energy expression.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::ho_energy",
+        "src/laughlin_reproduction/model.py::ho_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Lowest-Landau-level orbital density",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (S3)"
+        }
+      ],
+      "latex": "rho_m(p)=p^(2m) exp(-p^2)/(pi m!)",
+      "role": "wavefunction",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S3) prints the normalized LLL orbital used by every density target."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Two-dimensional quadrature integrates each implemented orbital to one."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "extremum",
+          "status": "passed",
+          "reason": "The m=2 radial density peaks at sqrt(2) p_HO."
+        }
+      ],
+      "numerical_form": "Evaluate the k=0 Laguerre orbital directly on Cartesian and radial grids.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::ho_density_2d",
+        "src/laughlin_reproduction/model.py::radial_density_units"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Two-particle nu=1/2 Laughlin decomposition",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (1), (2a), (2b); Supplement Eqs. (S5)-(S9)"
+        }
+      ],
+      "latex": "|psi_1/2>=|0>_com|2>_rel=(|0>|2>+|2>|0>)/2-|1>|1>/sqrt(2)",
+      "role": "wavefunction",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (1), (2a), and (2b) print both COM/relative and single-particle decompositions."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Squared coefficients sum to one."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "coordinate_transform",
+          "status": "passed",
+          "reason": "z_up-z_down=sqrt(2) z_rel leaves COM in m=0 and relative motion in m=2."
+        }
+      ],
+      "numerical_form": "Construct exact one-particle marginals and COM/relative densities from normalized LLL orbitals.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::laughlin_single_particle_density",
+        "src/laughlin_reproduction/model.py::laughlin_single_particle_radial"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Ideal Laughlin-state Rabi observable",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 2(d) caption and Eq. (2b)"
+        }
+      ],
+      "latex": "n0(t)=1.25+0.75 cos(2 pi f_R t), f_R=0.42 kHz",
+      "role": "dynamics",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Fig. 2(d), its caption, and Eq. (2b) fix the rate and occupation endpoints."
+        },
+        {
+          "id": "EQ004-C0B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The closed prediction stays within the printed 0.5 and 2.0 limits and has period 1/0.42 ms."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "endpoint",
+          "status": "passed",
+          "reason": "The curve reaches the printed limits 2 and 0.5."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "frequency",
+          "status": "passed",
+          "reason": "The period is the reciprocal of the printed 0.42 kHz Rabi rate."
+        }
+      ],
+      "numerical_form": "Evaluate the closed two-level cosine on the printed 0-10 ms range.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::rabi_occupation"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Relative-angle correlation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text after Fig. 4(c) and Supplement angle-correlation derivation"
+        }
+      ],
+      "latex": "g_1/2(phi)=[6-3 pi cos(phi)+4 cos^2(phi)]/(16 pi)",
+      "role": "observable",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text prints the full relative-angle expression immediately after Fig. 4(c)."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Integral over 0 to 2pi is one."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "extremum",
+          "status": "passed",
+          "reason": "The maximum is at relative angle pi."
+        }
+      ],
+      "numerical_form": "Evaluate the closed expression on a uniform angular grid.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::angle_correlation"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Confined contact-interaction spectrum",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (S10), Fig. S2(a), and accompanying method"
+        }
+      ],
+      "latex": "H=H_com+H_rel, H_rel=H_HO+g delta^3(r_rel)",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S10) fixes the contact Hamiltonian while the missing field map is separately disclosed."
+        },
+        {
+          "id": "EQ006-C0B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The bracketed branch solve is continuous and returns the noninteracting level at the reconstructed zero crossing."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "selection_rule",
+          "status": "passed",
+          "reason": "Only relative m=0 states acquire a zero-range interaction shift."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "zero_crossing",
+          "status": "passed",
+          "reason": "The reconstructed confined-delta branch returns to the noninteracting level at the Feshbach zero crossing."
+        }
+      ],
+      "numerical_form": "Solve the even-parity confined-delta gamma-function equation using published lithium-6 resonance constants.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::interaction_shift"
+      ],
+      "open_questions": [
+        "The paper does not print the full coupled-channel B-to-energy map; T009-T011 therefore use a disclosed proxy model."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Gaussian tweezer quartic coupling",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S11)-(S12), Fig. S2(b), and printed basis transformations"
+        }
+      ],
+      "latex": "alpha=-(l_HO/W)^2/2, Vc/(hbar omega)=2 alpha r_com^2 r_rel^2+(alpha/2) z_com^2 z_rel*^2+h.c.",
+      "role": "perturbation",
+      "derived_from": [
+        "EQ002",
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S11)-(S12) and the printed basis transformations fix the implemented quartic matrix."
+        },
+        {
+          "id": "EQ007-C0B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The derived M=2 zero-crossing gap is 2|alpha|=0.0247545, or about 1.39 kHz at the printed trap frequency."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "series_expansion",
+          "status": "passed",
+          "reason": "Eliminating the Gaussian power through the harmonic curvature yields alpha=-(l_HO/W)^2/2."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "basis_parity",
+          "status": "passed",
+          "reason": "The printed M=4 transformation is orthogonal to floating-point precision."
+        },
+        {
+          "id": "EQ007-C3",
+          "type": "gap",
+          "status": "passed",
+          "reason": "At zero interaction the M=2 gap equals 2|alpha|, about 1.39 kHz."
+        }
+      ],
+      "numerical_form": "Transform diagonal single-particle quartic moments into COM/relative M=2 and M=4 matrices and diagonalize.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::two_particle_spectrum"
+      ],
+      "open_questions": [
+        "Interaction-dependent quartic moments of the omitted coupled-channel state are not printed."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Rotating Laguerre-Gaussian drive",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S13)-(S14) and Fig. S2(c)"
+        }
+      ],
+      "latex": "|psi(t)>=exp[-i(H+Vp(0)-Omega Lz/2)t/hbar]|0_com,0_rel^B>",
+      "role": "dynamics",
+      "derived_from": [
+        "EQ006",
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S13)-(S14) fix the rotating-frame evolution; the omitted drive magnitude is explicitly treated as a proxy."
+        },
+        {
+          "id": "EQ008-C0B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Hermitian eigendecomposition preserves norm and the occupation remains in its physical bounds."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "unitarity",
+          "status": "passed",
+          "reason": "The reconstructed three-state propagation preserves norm."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "observable_bounds",
+          "status": "passed",
+          "reason": "Ground-orbital occupation stays within 0.5 and 2."
+        }
+      ],
+      "numerical_form": "Diagonalize a three-state rotating-frame Hamiltonian for every magnetic field and excitation frequency.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::driven_occupation"
+      ],
+      "open_questions": [
+        "The Fig. S2(c) drive amplitude is not printed; the main-text Rabi rate is used only as an explicit proxy."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Anisotropy-driven +/-2 Ramsey dynamics",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Fig. S3 and time-evolution section"
+        }
+      ],
+      "latex": "|+->=(|2>+/-|-2>)/sqrt(2), |psi(t)>=cos(delta t/2)|2>-i sin(delta t/2)|-2>",
+      "role": "dynamics",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Fig. S3 and the adjacent time-evolution section print the basis, frequencies, and coherence times."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The coherent state and every generated density integrate to one."
+        },
+        {
+          "id": "EQ009-C2",
+          "type": "quarter_period",
+          "status": "passed",
+          "reason": "Quarter periods alternate circular and four-lobed relative densities as described."
+        }
+      ],
+      "numerical_form": "Evaluate the exact two-level state at four quarter periods and normalized damped fit curves at printed frequencies/coherence times.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::ramsey_occupation",
+        "src/laughlin_reproduction/model.py::evolving_relative_density"
+      ],
+      "open_questions": [
+        "The fit contrast and phase are not printed, so normalized unit contrast is a display convention."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Gaussian imaging kernels",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Fig. S6(b-c) legends and imaging-resolution paragraph"
+        }
+      ],
+      "latex": "I_q(x)=exp[-x^2/(2 sigma_q^2)]",
+      "role": "measurement_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Fig. S6(b-c) prints all four Gaussian sigma values in the legends."
+        },
+        {
+          "id": "EQ010-C0B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every generated profile is positive, unit-height, and has the declared standard deviation."
+        },
+        {
+          "id": "EQ010-C1",
+          "type": "printed_anchor",
+          "status": "passed",
+          "reason": "All four sigma values are taken from the figure legends and reproduced directly."
+        }
+      ],
+      "numerical_form": "Evaluate unit-height Gaussian profiles on the printed -300 to 300 micrometer range.",
+      "code_refs": [
+        "src/laughlin_reproduction/model.py::gaussian_profile"
+      ],
+      "open_questions": []
+    }
+  ]
+}

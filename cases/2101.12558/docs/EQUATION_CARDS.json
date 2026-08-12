@@ -1,0 +1,364 @@
+{
+  "schema_version": 1,
+  "paper_id": "2101.12558",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Wannier-projected Kohn-Sham Hamiltonian",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text, computational method: Ni 3d/O 2p atomic-centered Wannier basis"
+        }
+      ],
+      "latex": "H^{KS}_{mm'}(k)=\\langle w_{mk}|\\hat H_{KS}|w_{m'k}\\rangle",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The PBE plane-wave to Ni 3d/O 2p Wannier construction is stated explicitly."
+        },
+        {
+          "id": "EQC001-HERM",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The independent parser and Fourier interpolator reject a non-Hermitian H(k)."
+        }
+      ],
+      "numerical_form": "Parse public Wannier90 H(R), divide by degeneracy, and Fourier sum on each declared k point.",
+      "code_refs": [
+        "src/nio_dmft/qe.py::parse_wannier_hr",
+        "src/nio_dmft/qe.py::hamiltonian_from_hr"
+      ],
+      "open_questions": [
+        "The exact projector gauge and disentanglement window are not printed."
+      ]
+    },
+    {
+      "id": "EQC002",
+      "title": "Interacting lattice Green function",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text, fully charge-self-consistent DFT+DMFT method"
+        }
+      ],
+      "latex": "G(k,z)=[(z+\\mu)I-H^{KS}(k)-P^\\dagger(\\Sigma(z)-V_{DC})P]^{-1}",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The multi-site DFT+DMFT Dyson construction follows the stated method."
+        },
+        {
+          "id": "EQC002-DYSON",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent layered-model tests preserve Hermiticity, inversion symmetry, and retarded causality."
+        }
+      ],
+      "numerical_form": "Embed one local self-energy block per inequivalent Ni layer and invert the orbital matrix independently for every k and frequency.",
+      "code_refs": [
+        "src/nio_dmft/self_consistency.py::lattice_green_and_local_blocks",
+        "src/nio_dmft/self_consistency.py::embed_group_self_energy"
+      ],
+      "open_questions": [
+        "The exact layer-to-projector mapping is not published."
+      ]
+    },
+    {
+      "id": "EQC003",
+      "title": "DMFT local projection and Weiss field",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text, one impurity per inequivalent Ni site"
+        }
+      ],
+      "latex": "G_i(z)=N_k^{-1}\\sum_k P_iG(k,z)P_i^\\dagger,\\quad \\mathcal G_{0,i}^{-1}=G_i^{-1}+\\Sigma_i",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The article assigns one impurity to each inequivalent Ni layer; the local projection and Weiss update are the standard DMFT closure."
+        },
+        {
+          "id": "EQC003-PROJ",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Layer blocks are averaged over k before the scalar/matrix Weiss update."
+        },
+        {
+          "id": "EQC003-INV",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Symmetry-related top and bottom layers converge to equal occupancies below 1e-15 in validation."
+        }
+      ],
+      "numerical_form": "Project the k-averaged Green function into each inequivalent Ni d block and apply the matrix Dyson equation.",
+      "code_refs": [
+        "src/nio_dmft/self_consistency.py::lattice_green_and_local_blocks",
+        "src/nio_dmft/self_consistency.py::run_multisite_dmft"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Density-density Slater-Kanamori interaction and CT-HYB",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text: density-density U=10 eV, J=1 eV and CT-HYB"
+        }
+      ],
+      "latex": "H_U=U\\sum_m n_{m\\uparrow}n_{m\\downarrow}+(U-2J)\\sum_{m\\ne m'}n_{m\\uparrow}n_{m'\\downarrow}+(U-3J)\\sum_{m<m',\\sigma}n_{m\\sigma}n_{m'\\sigma}",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "U, J, density-density restriction, temperature, and CT-HYB are printed."
+        },
+        {
+          "id": "EQC004-MAT",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Tests independently verify U, U-2J, and U-3J flavor matrix entries."
+        }
+      ],
+      "numerical_form": "Build the ten-flavor Ni d density interaction and execute independent public TRIQS/cthyb chains for each inequivalent layer.",
+      "code_refs": [
+        "src/nio_dmft/cthyb.py::density_density_kanamori_matrix",
+        "src/nio_dmft/cthyb.py::solve_impurity_triqs"
+      ],
+      "open_questions": [
+        "The paper does not report cycles, seeds, average sign, estimators, or autocorrelation controls."
+      ]
+    },
+    {
+      "id": "EQC005",
+      "title": "Fully localized limit double counting",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text: fully localized double-counting correction"
+        }
+      ],
+      "latex": "V_{DC}=U(N_d-1/2)-J(N_d/2-1/2)",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The fully localized limit convention is stated."
+        },
+        {
+          "id": "EQC005-NUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent tests verify the occupancy-dependent scalar formula."
+        }
+      ],
+      "numerical_form": "Update V_DC from the layer-resolved d occupancy at every DMFT iteration.",
+      "code_refs": [
+        "src/nio_dmft/dmft.py::fll_double_counting"
+      ],
+      "open_questions": [
+        "The paper does not print converged layer occupancies at full precision."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "Charge feedback fixed point",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text: fully charge self-consistent implementation"
+        }
+      ],
+      "latex": "\\rho^{(n+1)}=\\mathcal M[\\rho^{(n)},G^{(n)},\\Sigma^{(n)}]",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC001",
+        "EQC002",
+        "EQC003",
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC006-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Full charge self-consistency is required by the article and by the execution contract."
+        },
+        {
+          "id": "EQC006-BOUNDARY",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The production runner owns the outer fixed point and fails closed when the unpublished plane-wave density-injection seam is absent."
+        }
+      ],
+      "numerical_form": "Iterate QE charge density, Wannier Hamiltonian, layer impurity solutions, and density correction until charge and self-energy tolerances both pass.",
+      "code_refs": [
+        "scripts/run_paper_scale.py::execute_unit",
+        "config/paper_scale.json#charge_feedback"
+      ],
+      "open_questions": [
+        "The plane-wave density-injection convention, exact mixing schedule, and convergence history are not published."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Spectral functions and orbital projections",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Figs. 1,2,4,5 and Supplement Figs. S1,S2"
+        }
+      ],
+      "latex": "A(k,\\omega)=-\\pi^{-1}\\operatorname{Im}\\operatorname{Tr}G(k,\\omega+i0^+),\\quad A_{i\\alpha}(\\omega)=-\\pi^{-1}\\operatorname{Im}G_{i\\alpha,i\\alpha}",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQC002",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly reports k-resolved and layer/orbital-resolved spectra using MaxEnt and Pade."
+        },
+        {
+          "id": "EQC007-SUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent retarded spectra are nonnegative and satisfy the finite-window sum rule within 0.7 percent."
+        }
+      ],
+      "numerical_form": "Continue independently by MaxEnt and rational Pade, solve retarded Dyson, then trace or select layer/orbital blocks without pixel sampling.",
+      "code_refs": [
+        "src/nio_dmft/maxent.py::maximum_entropy_continue",
+        "src/nio_dmft/observables.py::rational_continue",
+        "src/nio_dmft/paper_scale.py::build_paper_observables"
+      ],
+      "open_questions": [
+        "MaxEnt covariance/default model and final plotting broadening are not printed."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Imaginary-time local spin correlation",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Figs. 3 and 6"
+        }
+      ],
+      "latex": "\\chi_i(\\tau)=\\langle m_{z,i}(\\tau)m_{z,i}(0)\\rangle",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The definition and layer/orbital curves are printed in the article."
+        },
+        {
+          "id": "EQC008-KMS",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The exact atomic validator obeys chi(tau)=chi(beta-tau) to machine precision."
+        }
+      ],
+      "numerical_form": "Accumulate spin-density correlators during CT-HYB and verify the equilibrium imaginary-time reflection symmetry.",
+      "code_refs": [
+        "src/nio_dmft/cthyb.py::solve_impurity_triqs",
+        "src/nio_dmft/observables.py::imaginary_time_symmetry_error"
+      ],
+      "open_questions": [
+        "The precise CT-HYB correlation estimator and binning are not printed."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Symmetric slab surface energy",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main text surface-energy comparison"
+        }
+      ],
+      "latex": "\\gamma=(E_{slab}-N E_{bulk})/(2A)",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQC001",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper reports DMFT and GGA surface energies for both orientations."
+        },
+        {
+          "id": "EQC009-UNIT",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A constructed 59 meV/A^2 symmetric-slab excess is recovered to machine precision."
+        }
+      ],
+      "numerical_form": "Subtract the matched bulk reference at equal stoichiometry and divide by two equivalent surface areas.",
+      "code_refs": [
+        "src/nio_dmft/observables.py::surface_energy"
+      ],
+      "open_questions": [
+        "The paper does not publish full-precision slab and bulk total energies."
+      ]
+    }
+  ]
+}

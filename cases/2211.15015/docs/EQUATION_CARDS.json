@@ -1,0 +1,380 @@
+{
+  "schema_version": 1,
+  "paper_id": "2211.15015",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Vertex-model elastic energy",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        }
+      ],
+      "latex": "E=\\frac12\\sum_c[\\kappa_A(A_c-A_{0c})^2+\\kappa_P(P_c-P_{0c})^2]",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The energy and all moduli are printed in the model section and parameter table."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A cell at both target values contributes zero energy and every contribution is nonnegative."
+        }
+      ],
+      "numerical_form": "Compute unwrapped toroidal polygon areas/perimeters in float64 and sum the two quadratic penalties.",
+      "code_refs": [
+        "src/tissue_rheology/geometry.py",
+        "src/tissue_rheology/model.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Exact polygon energy gradient",
+      "source_refs": [
+        {
+          "type": "appendix",
+          "value": "Appendix Eqs. (A1)--(A20)"
+        }
+      ],
+      "latex": "\\mathbf F_i^c=-\\kappa_A(A-A_0)\\nabla_i A-\\kappa_P(P-P_0)\\nabla_iP",
+      "role": "dynamical_method",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The appendix derives area and perimeter contributions from the same elastic energy, including the one-half area-edge factor."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Shoelace-area and edge-length derivatives give the appendix factor one half per area edge."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A preimplementation central-difference calculation on independent convex polygons agrees with the shoelace/perimeter derivative to 3.9e-10; the production implementation must repeat this regression."
+        }
+      ],
+      "numerical_form": "Accumulate each cell's analytic area/perimeter gradient onto its incident vertices.",
+      "code_refs": [
+        "src/tissue_rheology/geometry.py::polygon_observables",
+        "src/tissue_rheology/model.py::elastic_forces"
+      ],
+      "open_questions": [
+        "Main-text prose omits the appendix factor one half; fresh-context review is required."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Overdamped sheared vertex dynamics",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2)"
+        }
+      ],
+      "latex": "\\dot{\\mathbf r}_j=\\zeta^{-1}(\\mathbf F_j+v\\sum_{c\\ni j}w_{cj}\\hat{\\mathbf n}_c)+\\dot\\gamma y_j\\hat{\\mathbf x}",
+      "role": "dynamical_method",
+      "derived_from": [
+        "EQ002",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Drag, shear term, Lees--Edwards boundary, and zeta=1 are printed."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For zero activity and shear, dr/dt=-grad(E)/zeta gives dE/dt=-|grad(E)|^2/zeta, so the continuous dynamics is dissipative."
+        }
+      ],
+      "numerical_form": "Integrate nonaffine motion in reduced coordinates while evolving and periodically remapping the sheared box matrix.",
+      "code_refs": [
+        "src/tissue_rheology/model.py::step"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Rotational diffusion",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (3)--(4)"
+        }
+      ],
+      "latex": "d\\theta_c=\\sqrt{2D_r}dW_c",
+      "role": "stochastic_method",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The noise covariance and Dr=0.5 are printed."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Scaling a standard normal increment by sqrt(2 Dr dt) gives exactly the printed covariance in the Euler--Maruyama discretization."
+        }
+      ],
+      "numerical_form": "Euler--Maruyama angular increments from a reproducible NumPy generator.",
+      "code_refs": [
+        "src/tissue_rheology/model.py::step"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Active-force weighting",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (5)"
+        }
+      ],
+      "latex": "w_{cj}=l_{cj}/(12L_{Tj})",
+      "role": "dynamical_method",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The numerator and denominator are explicitly defined next to Eq. (5)."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At a trivalent vertex each of the three physical edges contributes to two cell-local incident sums, so sum(l_c)=2 L_T and the printed weights sum to 1/6."
+        }
+      ],
+      "numerical_form": "Evaluate local incident edge lengths from the current toroidal tiling; do not renormalize the printed factor 12.",
+      "code_refs": [
+        "src/tissue_rheology/model.py::active_forces"
+      ],
+      "open_questions": [
+        "The printed weights sum to one sixth for an ideal trivalent vertex; this is retained rather than silently changed."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "T1 neighbor exchange",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Model paragraph following Eq. (5)"
+        }
+      ],
+      "latex": "(\\alpha\\beta\\gamma,\\alpha\\beta\\delta)\\to(\\alpha\\gamma\\delta,\\beta\\gamma\\delta)",
+      "role": "topological_method",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cell-incidence transition and lT1=0.07 are printed."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The incidence replacement removes one alpha-beta edge and adds one gamma-delta edge without changing V, E, or F; trivalence and the torus Euler characteristic are preserved."
+        }
+      ],
+      "numerical_form": "Flip a short edge, update four ordered cell cycles, and place the new edge perpendicular to the old one.",
+      "code_refs": [
+        "src/tissue_rheology/topology.py::perform_t1"
+      ],
+      "open_questions": [
+        "The post-flip edge length is not printed and must be convergence-tested."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Cell virial stress",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (6)"
+        }
+      ],
+      "latex": "S_{\\alpha\\beta}=A^{-1}\\sum_iF_{i\\alpha}r_{i\\beta}",
+      "role": "observable_model",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The per-cell stress and averaging protocol are printed."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The sum of forces contributed by one translationally invariant polygon energy is zero, so adding a common offset to all r_i leaves the virial unchanged."
+        }
+      ],
+      "numerical_form": "Compute each periodic cell in a locally unwrapped frame, then average its xy virial over cells, strain window, and seeds.",
+      "code_refs": [
+        "src/tissue_rheology/model.py::cell_stress"
+      ],
+      "open_questions": [
+        "Exact steady-state discard and averaging strain are not printed."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Newtonian viscosity and VFT fit",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Figs. 2--3"
+        }
+      ],
+      "latex": "\\eta=\\lim_{\\dot\\gamma\\to0}\\sigma/\\dot\\gamma,\\quad\\eta\\sim\\exp[1/(v-v_c)]",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The definition and VFT form are printed in the Fig. 3 caption/text."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Taking log eta makes the reported VFT form linear in 1/(v-v_c) conditional on v_c; the numerical fit must still report leave-one-out stability."
+        }
+      ],
+      "numerical_form": "Fit only declared low-rate points; never infer fit windows from source pixels.",
+      "code_refs": [
+        "src/tissue_rheology/analysis.py"
+      ],
+      "open_questions": [
+        "The paper does not print the exact fit window or all shear rates."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Shear-thickening slope criteria",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Text defining thickening/thinning and Fig. 6"
+        }
+      ],
+      "latex": "G=d\\log\\sigma/d\\log\\dot\\gamma;\\ G_{thick}>1.2,\\ G_{thin}<0.9",
+      "role": "classification_rule",
+      "derived_from": [
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "epsilon=0.2 and delta=0.1 are explicitly printed."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Centered finite differences in log coordinates return exactly one for a Newtonian sigma proportional to gamma_dot; target acceptance separately quantifies grid sensitivity."
+        }
+      ],
+      "numerical_form": "Use centered log derivatives in the interior and one-sided endpoints; report grid-limited Gmax.",
+      "code_refs": [
+        "src/tissue_rheology/analysis.py::log_slope"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Peclet scaling collapse",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 7"
+        }
+      ],
+      "latex": "Pe=\\dot\\gamma\\tau_f,\\quad\\tau_f\\propto\\eta/v^2,\\quad1/\\dot\\gamma_{thick}\\propto\\eta/v^2",
+      "role": "scientific_claim",
+      "derived_from": [
+        "EQ008",
+        "EQ009"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The proposed rescaling and proportionality are printed in the Fig. 7 caption/text."
+        },
+        {
+          "id": "EQ010-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "If thickening occurs at Pe=1 and tau_f is proportional to eta/v^2, algebra gives the printed inverse-onset relation; empirical target acceptance compares it with alternatives."
+        }
+      ],
+      "numerical_form": "Regress in log space with uncertainty and compare preregistered alternative scalings.",
+      "code_refs": [
+        "src/tissue_rheology/analysis.py::peclet_collapse"
+      ],
+      "open_questions": [
+        "The v^-2 factor is motivated empirically rather than derived from the microscopic dynamics."
+      ]
+    }
+  ]
+}

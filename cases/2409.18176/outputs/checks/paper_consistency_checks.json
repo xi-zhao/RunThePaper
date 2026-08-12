@@ -1,0 +1,132 @@
+{
+  "schema_version": 2,
+  "paper_id": "2409.18176",
+  "status": "inconclusive",
+  "protocol": "inventory_first_two_method_falsification",
+  "paper_error_candidate_emitted": false,
+  "findings": [
+    {
+      "finding_id": "DISC_T_MATRIX_SIGN",
+      "classification": "inconclusive",
+      "targets": [
+        "T001"
+      ],
+      "source_pinpoints": [
+        "Supplement microscopic-model paragraph containing the logarithmic T matrix",
+        "Main Fig. 1(b) right panel"
+      ],
+      "observation": "With the explicitly negative bound-state energy E_t^0, the logarithmic and pole-denominator presentations imply different detuning signs; the plotting linewidth and parameter set are not printed.",
+      "independent_checks": [
+        {
+          "method": "analytic continuation of the two-dimensional logarithm",
+          "status": "passed",
+          "evidence": "EQUATION_CARDS.json#EQ002"
+        },
+        {
+          "method": "independent numerical evaluation of all labelled sign conventions",
+          "status": "passed",
+          "evidence": "outputs/data/T001_scattering_amplitude.csv"
+        }
+      ],
+      "falsification_attempts": [
+        "Retain each plausible sign convention instead of choosing the one that resembles the source panel.",
+        "Search the manuscript text and caption for a linewidth or Fig. 1(b) parameter set; none is printed."
+      ],
+      "impact": "T001 is capped at proxy_model and does not affect the transport solver's fitted physical parameters.",
+      "remaining_gates": [
+        "fresh-context review",
+        "author clarification or erratum search"
+      ]
+    },
+    {
+      "finding_id": "DISC_HYDRO_MASS_FACTOR",
+      "classification": "inconclusive",
+      "targets": [
+        "T006",
+        "T007",
+        "T008"
+      ],
+      "source_pinpoints": [
+        "Main-text three-fluid velocity equations immediately after Fig. 4",
+        "Supplement Eqs. (41)-(43), definitions of A_i and B_i"
+      ],
+      "observation": "The nested denominators printed in the closed solution add alpha*n terms to frequency terms without the mass divisions present in the velocity equations. A dimensionally corrected closed form is algebraically identical to the direct 3x3 solve; the literal printed form is not.",
+      "independent_checks": [
+        {
+          "method": "direct complex 3x3 solve of the main-text velocity equations",
+          "status": "passed",
+          "metric": {
+            "direct_vs_corrected_closed_max_abs": 1.6653345369377348e-16
+          },
+          "evidence": "outputs/checks/target_checks.json"
+        },
+        {
+          "method": "literal independent evaluation of the supplemental closed form",
+          "status": "passed",
+          "metric": {
+            "direct_vs_literal_printed_max_abs": 0.0019522290557994725
+          },
+          "evidence": "outputs/checks/target_checks.json"
+        },
+        {
+          "method": "dimensional analysis in the paper's printed alpha units m0/(n0 tau0)",
+          "status": "passed",
+          "evidence": "FORMULA_VERIFICATION.md"
+        }
+      ],
+      "falsification_attempts": [
+        "Test whether the printed alpha units absorb the missing species masses; they retain an explicit mass and therefore do not turn alpha*n directly into a frequency.",
+        "Compare the literal and corrected forms over the entire published frequency domain, not only at omega=0.",
+        "Keep the discrepancy below paper-error-candidate status because a fresh reviewer has not yet checked alternate notation conventions."
+      ],
+      "impact": "The corrected formula is used only as an analytic cross-check. The blind kinetic mismatch in T006/T008 remains a reproduction failure and is not blamed on this source discrepancy.",
+      "remaining_gates": [
+        "fresh-context symbolic review",
+        "second independent derivation",
+        "author clarification or erratum search"
+      ]
+    },
+    {
+      "finding_id": "DISC_KUBO_BOLTZMANN_SCALE",
+      "classification": "reproduction_discrepancy",
+      "targets": [
+        "T009"
+      ],
+      "source_pinpoints": [
+        "Supplement Eqs. (39)-(40)",
+        "Supplement Fig. 6 caption: difference is a few percent of background resistivity"
+      ],
+      "observation": "The blind independent Kubo lane minus the Galerkin Boltzmann lane reaches 11.27764036984407 in rho0 units rather than the stated few-percent scale.",
+      "independent_checks": [
+        {
+          "method": "broadened retarded self-energy and Kubo energy quadrature",
+          "status": "passed_internal_checks",
+          "evidence": "src/bose_fermi_transport/kubo.py"
+        },
+        {
+          "method": "positive-semidefinite Galerkin Boltzmann collision solve",
+          "status": "passed_internal_checks",
+          "metric": {
+            "minimum_collision_eigenvalue": -8.924163314177997e-18,
+            "momentum_residual_max": 1.3887947995300147e-18
+          },
+          "evidence": "outputs/checks/target_checks.json"
+        }
+      ],
+      "falsification_attempts": [
+        "Check the zero-coupling Drude limit independently in both lanes.",
+        "Compare Galerkin against a separate direct collocation implementation at anchor points.",
+        "Do not infer the paper's unprinted cutoff, grid, delta treatment, or closure from source pixels."
+      ],
+      "impact": "T009 fails scientific acceptance and the full case remains feature_not_accepted.",
+      "remaining_gates": [
+        "execute the frozen paper-scale cutoff/grid campaign",
+        "second Kubo regularization",
+        "resolve Galerkin-collocation anchor gaps",
+        "fresh-context independent review"
+      ]
+    }
+  ],
+  "conclusion": "mixed_inconclusive",
+  "review_status": "fresh_context_missing"
+}

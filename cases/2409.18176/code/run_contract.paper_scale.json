@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "2409.18176-paper-scale",
+  "target_ids": [
+    "T002",
+    "T003",
+    "T004",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--shard-index",
+    "0",
+    "--shard-count",
+    "16"
+  ],
+  "inputs": [
+    "src/bose_fermi_transport/thermodynamics.py",
+    "src/bose_fermi_transport/kinetic.py",
+    "src/bose_fermi_transport/collocation.py",
+    "src/bose_fermi_transport/kubo.py",
+    "src/bose_fermi_transport/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/feature.json",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "outputs": [
+    "outputs/paper_scale/plan.json",
+    "outputs/paper_scale/manifest.json",
+    "outputs/paper_scale/convergence.json",
+    "outputs/paper_scale/target_acceptance.json"
+  ],
+  "timeout_seconds": 86400,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

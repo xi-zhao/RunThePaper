@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevLett.132.113001",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Same-n hydrogen position matrix",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main Fig. 1 Stark Hamiltonian and standard hydrogen parabolic-state algebra"
+        }
+      ],
+      "latex": "<n,l,m|z/a0|n,l+1,m> = (3n/2) sqrt({[n^2-(l+1)^2][(l+1)^2-m^2]}/{[4(l+1)^2-1]})",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that the Stark Hamiltonian is diagonalized in the hydrogenic basis."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For n=20 and 24 the matrix eigenvalues equal the exact parabolic values 3nk/2 to below 1e-12 a0."
+        }
+      ],
+      "numerical_form": "Construct the real symmetric tridiagonal matrix at fixed n and m_l.",
+      "code_refs": [
+        "src/hydrogen_metrology/stark.py::same_n_z_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Linear hydrogen Stark energy",
+      "source_refs": [
+        {
+          "type": "result",
+          "value": "Main Fig. 1 and cited Stark-state method"
+        }
+      ],
+      "latex": "Delta E^(1)_(nkm) = (3/2) n k e a0 F",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper and its cited Stark-state method use the standard first-order hydrogen Stark energy."
+        },
+        {
+          "id": "EQ002-C0",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Diagonalizing EQ001 yields the complete allowed k sequence at fixed m."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The k=0 first-order shift vanishes."
+        }
+      ],
+      "numerical_form": "Use the exact eigenvalue sequence to cross-check the numerical diagonalization.",
+      "code_refs": [
+        "src/hydrogen_metrology/stark.py::expected_linear_stark_eigenvalues"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Leading reduced-mass Dirac correction",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Supplemental field-free corrections described in the main text; standard hydrogen Dirac expansion"
+        }
+      ],
+      "latex": "Delta nu_(nj) = -(R_H c) alpha^2 n^(-3) [(j+1/2)^(-1)-3/(4n)]",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text identifies field-free relativistic/QED corrections and the implemented leading term is the standard Dirac expansion."
+        },
+        {
+          "id": "EQ003-C0",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "R_H c supplies frequency and the remaining factors are dimensionless."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The correction decays as n^-3 and becomes smaller for high-l states."
+        }
+      ],
+      "numerical_form": "Evaluate the diagonal l,j correction and Clebsch-weight it in a fixed m_l,m_s basis.",
+      "code_refs": [
+        "src/hydrogen_metrology/stark.py::dirac_diagonal_hz",
+        "src/hydrogen_metrology/stark.py::field_free_level_rows"
+      ],
+      "open_questions": [
+        "Higher-order QED, finite-size, and exact supplemental hyperfine entries are not recovered from this leading model."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Second-order inter-manifold Stark correction",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Standard hydrogen Stark expansion used for the supplemental 0.4 and 0.8 V/cm table"
+        }
+      ],
+      "latex": "Delta E^(2) = -(n^4/16)[17n^2-3k^2-9m^2+19]F^2",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cited Stark treatment includes coupling to neighboring n manifolds; this is the standard closed second-order hydrogen expression."
+        },
+        {
+          "id": "EQ004-C0",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The correction vanishes at zero field."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "scaling_check",
+          "status": "passed",
+          "reason": "Doubling the field from 0.4 to 0.8 V/cm increases the correction exactly fourfold."
+        }
+      ],
+      "numerical_form": "Convert F to atomic units and the energy to Hz with E_h/h.",
+      "code_refs": [
+        "src/hydrogen_metrology/stark.py::intermanifold_quadratic_shift_hz"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Declared high-n hyperfine branch estimate",
+      "source_refs": [
+        {
+          "type": "declared_assumption",
+          "value": "Ground-state HFS scaled as 6/n^5 to resolve the five printed high-n branches"
+        }
+      ],
+      "latex": "Delta nu_hfs(n) = 6 nu_HFS(1S) n^(-5) c_branch",
+      "role": "declared_approximation",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper resolves five high-n hyperfine-Stark branches; the n^-5 rule is explicitly declared as the local reconstruction assumption."
+        },
+        {
+          "id": "EQ005-C0",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The approximation is isolated to close-branch resolution and never used to infer the gross Stark scale."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "post_freeze_reference",
+          "status": "passed",
+          "reason": "Across 20 printed table entries the full model differs by at most 2.16 kHz."
+        }
+      ],
+      "numerical_form": "Apply fixed rational branch factors after the independently generated Dirac-plus-Stark energy.",
+      "code_refs": [
+        "src/hydrogen_metrology/stark.py::hyperfine_branch_offset_hz"
+      ],
+      "open_questions": [
+        "Exact branch-resolved hyperfine coefficients require the inaccessible formal supplement."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Asymmetric double-Doppler line component",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Cited method paper arXiv:2309.12721, Eqs. (4)-(5)"
+        }
+      ],
+      "latex": "S_i(nu) = A_i exp[-(nu-nu_i)^2/(2 sigma_i^2)] {1+erf[s_i gamma(nu-nu_i)/(sqrt(2) sigma_i)]}",
+      "role": "line_shape",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cited method paper prints the Gaussian-error-function line model."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At gamma=0 each component becomes Gaussian; the code generates exactly six components for k=-2,0,+2 and two Doppler directions."
+        }
+      ],
+      "numerical_form": "Evaluate six components on a 2001-point detuning grid and normalize only the total amplitude.",
+      "code_refs": [
+        "src/hydrogen_metrology/spectra.py::calculated_spectrum"
+      ],
+      "open_questions": [
+        "The measured black spectrum and exact fitted covariance are not deposited."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Appendix Stark and Doppler regressions",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Appendix A, Eqs. (A1)-(A2)"
+        }
+      ],
+      "latex": "Delta nu_F = b F^2; Delta nu_D = a nu_D",
+      "role": "regression_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints b=-0.3(3.5) kHz/(V/cm)^2 and a=-0.9(1.8) kHz/MHz."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The endpoint uncertainty bands are propagated directly from the printed slope errors."
+        }
+      ],
+      "numerical_form": "Generate the theoretical trend and one-sigma band without fabricating measurement points.",
+      "code_refs": [
+        "src/hydrogen_metrology/metrology.py::regression_curves"
+      ],
+      "open_questions": [
+        "Point-level field and Doppler scans are unavailable."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Independent uncertainty quadrature",
+      "source_refs": [
+        {
+          "type": "table",
+          "value": "Main Table I"
+        }
+      ],
+      "latex": "sigma_listed = (sum_i sigma_i^2)^(1/2)",
+      "role": "uncertainty_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Table I prints each correction and statistical/systematic uncertainty component."
+        },
+        {
+          "id": "EQ008-C0",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Printed rows give 2.884 kHz statistical and 1.241 kHz systematic quadrature."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "closure_check",
+          "status": "passed",
+          "reason": "The code exposes positive residual components needed to reach the reported 3.7 and 1.8 kHz totals rather than silently forcing closure."
+        }
+      ],
+      "numerical_form": "Keep printed rows and report residual unlisted components separately.",
+      "code_refs": [
+        "src/hydrogen_metrology/metrology.py::uncertainty_closure"
+      ],
+      "open_questions": [
+        "The main table does not itemize every contribution to the final totals."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Ground-state binding-frequency assembly",
+      "source_refs": [
+        {
+          "type": "result",
+          "value": "Main text final binding-frequency paragraph"
+        }
+      ],
+      "latex": "nu_bind(1S) = nu_ion(2S) + nu_(1S-2S) + nu_HFS(1S)",
+      "role": "claim_arithmetic",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text prints the three-frequency assembly and final 1S binding frequency."
+        },
+        {
+          "id": "EQ009-C0",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Forty-digit decimal arithmetic avoids float loss at the 3.3e15-Hz scale."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "rounding_check",
+          "status": "passed",
+          "reason": "Rounded printed inputs differ from the printed final value by 52.23 Hz, compatible with hidden guard digits."
+        }
+      ],
+      "numerical_form": "Add the three printed decimal frequencies without binary floating-point conversion.",
+      "code_refs": [
+        "src/hydrogen_metrology/metrology.py::binding_frequency_from_printed_inputs"
+      ],
+      "open_questions": [
+        "Unrounded internal experimental values are unavailable, so the 52.23-Hz difference is inconclusive rather than a paper error."
+      ]
+    }
+  ]
+}

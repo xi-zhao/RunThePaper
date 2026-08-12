@@ -1,0 +1,417 @@
+{
+  "schema_version": 1,
+  "paper_id": "2401.05830",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Figure-consistent driven-qubit GKSL generator",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (1)-(2)"
+        }
+      ],
+      "latex": "\\dot\\rho=-\\frac{i\\Omega}{2}[\\sigma_x,\\rho]+2\\alpha\\gamma\\,\\mathcal D[\\sigma_-]\\rho+2(1-\\alpha)\\gamma\\,\\mathcal D[|\\uparrow\\rangle\\langle\\uparrow|]\\rho,\\quad \\mathcal D[A]\\rho=A\\rho A^\\dagger-\\tfrac12\\{A^\\dagger A,\\rho\\}",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four-component Supplemental matrix and Supplemental component equations uniquely define this doubled-rate GKSL generator and are the equations used by every theory figure."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The commutator and both GKSL dissipators are trace preserving; positive printed rates make the map completely positive."
+        },
+        {
+          "id": "EQ001-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For Omega=0 and alpha>0 the up-state population decays to the down state while coherences vanish."
+        }
+      ],
+      "numerical_form": "Construct the 4x4 column-vectorized Liouvillian from H=Omega*sigma_x/2 and collapse operators sqrt(2*alpha*gamma)*sigma_minus and sqrt(2*(1-alpha)*gamma)*projector_up; expose the literal Main Eq. (1)-(2) rates separately as a falsification comparator.",
+      "code_refs": [
+        "src/inverse_mpemba/liouvillian.py::liouvillian",
+        "src/inverse_mpemba/liouvillian.py::propagate_density"
+      ],
+      "open_questions": [
+        "Main Eqs. (1)-(2), with the paper's explicitly standard dissipator convention, contain rates smaller by exactly two than the Supplemental matrix/Bloch equations. The theory figures follow the Supplemental convention. This is retained as an inconclusive paper-consistency discrepancy pending fresh review.",
+        "A main-text experimental paragraph separately writes H=Omega*sigma_x, whereas Main Eq. (1), the Supplemental matrix, and the standard Rabi convention require H=Omega*sigma_x/2."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Affine Bloch-vector dynamics",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (3)-(6)"
+        }
+      ],
+      "latex": "\\dot x=-\\gamma x,\\qquad \\dot y=-\\gamma y-\\Omega z,\\qquad \\dot z=\\Omega y-2\\alpha\\gamma(1+z)",
+      "role": "numerical_dynamics",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (3)-(6) explicitly define the Bloch coordinates and all three affine ODE components."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting rho=(I+x sigma_x+y sigma_y+z sigma_z)/2 into EQ001 yields every printed component and affine term."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "Bloch propagation will be checked pointwise against a separately assembled 4x4 density-matrix Liouvillian."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The x component decouples and decays exactly as exp(-gamma t), matching the printed lambda_x mode."
+        }
+      ],
+      "numerical_form": "For Omega=1 use A=[[-gamma,-1],[1,-2*alpha*gamma]] and b=[0,-2*alpha*gamma] on r2=(y,z).",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::bloch_generator",
+        "src/inverse_mpemba/model.py::propagate_bloch"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Steady state and elliptical locus",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (5)-(8)"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 2 left and Supplement Fig. 2"
+        }
+      ],
+      "latex": "x^*=0,\\quad y^*=\\frac{2\\alpha\\gamma'}{1+2\\alpha\\gamma'^2},\\quad z^*=-\\frac{2\\alpha\\gamma'^2}{1+2\\alpha\\gamma'^2},\\quad \\left(\\sqrt{\\frac{2}{\\alpha}}y^*\\right)^2+(2z^*+1)^2=1",
+      "role": "steady_state_locus",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (5)-(8) print the steady state, dimensionless form, and ellipse identity used by the figures."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Solving A r* + b=0 gives the displayed rational functions and eliminating gamma' gives the ellipse identity."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "residual",
+          "status": "passed",
+          "reason": "The paper-scale runner requires max norm of A r*+b below 1e-12 across every figure grid."
+        },
+        {
+          "id": "EQ003-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "gamma' to zero approaches the Bloch-sphere origin; gamma' to infinity approaches the south pole."
+        }
+      ],
+      "numerical_form": "Evaluate the closed rational functions directly in float64 and cross-check against a linear solve of the affine fixed-point equation.",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::steady_state",
+        "src/inverse_mpemba/model.py::steady_state_by_solve"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Relaxation rates, modes, and bifurcation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4)"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Fig. 1 and Eqs. (9)-(10)"
+        }
+      ],
+      "latex": "\\frac{\\lambda_{\\pm}}{\\gamma}=-\\left(\\alpha+\\tfrac12\\pm\\sqrt{(\\alpha-\\tfrac12)^2-\\gamma'^{-2}}\\right),\\quad \\frac{\\lambda_x}{\\gamma}=-1,\\quad \\gamma'_b=|\\alpha-\\tfrac12|^{-1}",
+      "role": "relaxation_spectrum",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4) and Supplemental Eqs. (9)-(10) specify the eigenvalues, eigenvectors, and left-mode definition."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The roots of det(A-lambda I) give the printed pair; the discriminant vanishes at gamma'_b."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "Analytic rates will be compared to numpy.linalg.eigvals of the Bloch generator across and on both sides of the bifurcation."
+        },
+        {
+          "id": "EQ004-C3",
+          "type": "stability",
+          "status": "passed",
+          "reason": "For alpha in [0,1] and positive gamma', every nonzero mode has nonpositive real part."
+        }
+      ],
+      "numerical_form": "Use complex square roots below the bifurcation and record real parts; label lambda_plus as the fast branch (more negative above the bifurcation) and lambda_minus as the slow branch.",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::relaxation_rates",
+        "src/inverse_mpemba/model.py::bifurcation_temperature"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Slow-mode amplitude and strong inverse-Mpemba initial state",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main strong-ME equation below Eq. (4)"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (9)-(11)"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 2 right"
+        }
+      ],
+      "latex": "\\gamma'_{i,\\mathrm{SME}}=\\gamma'_f\\left[\\alpha-\\tfrac12-\\sqrt{(\\alpha-\\tfrac12)^2-\\gamma_f'^{-2}}\\right],\\qquad a_-(\\gamma'_{i,\\mathrm{SME}},\\gamma'_f)=0",
+      "role": "strong_effect_condition",
+      "derived_from": [
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper gives both the explicit a_- expression and the closed strong-effect initial temperature."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of gamma'_{i,SME} into Supplemental Eq. (11) cancels the slow amplitude."
+        },
+        {
+          "id": "EQ005-C3",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "A separate dual-eigenvector projection of the initial displacement must have a slow component below 1e-11 at the same root."
+        },
+        {
+          "id": "EQ005-C4",
+          "type": "numeric_anchor",
+          "status": "passed",
+          "reason": "alpha=0.94 and gamma'_f=15 give gamma'_{i,SME}=0.0761974279, consistent with the paper's approximately 0.07."
+        }
+      ],
+      "numerical_form": "Evaluate Supplemental Eq. (11) for the displayed paper normalization; independently solve the two-mode decomposition only to verify the invariant zero and sign change.",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::slow_mode_coefficient",
+        "src/inverse_mpemba/model.py::strong_initial_temperature",
+        "src/inverse_mpemba/model.py::modal_coefficients"
+      ],
+      "open_questions": [
+        "A modal coefficient depends on eigenvector normalization; the plotted absolute a_- follows Supplemental Eq. (11), while physical zero crossings and products a_n v_n are normalization invariant."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Exact relaxation, distance, crossing, and maximum advantage",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3) and definition of d_ss"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 4 and Supplement Figs. 4-5"
+        }
+      ],
+      "latex": "\\delta r(t)=e^{A_f t}[r^{ss}(\\gamma'_i)-r^{ss}(\\gamma'_f)],\\quad d_{ss}(t)=\\|\\delta r(t)\\|_2,\\quad d_C(t_{cross})=d_H(t_{cross})",
+      "role": "observable_and_sweep",
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (3), the d_ss definition, and Supplement Sec. 3 explicitly define the propagated state, distance crossing, and post-crossing comparison."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Subtracting the final fixed point removes the affine term, leaving the exact homogeneous matrix exponential."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "Bloch-space distances will be compared with density matrices propagated by the independent 4x4 Liouvillian."
+        },
+        {
+          "id": "EQ006-C3",
+          "type": "root_and_extremum",
+          "status": "passed",
+          "reason": "Crossings are bracketed before Brent solving, and maximal post-crossing advantage is checked against a dense-grid maximum."
+        },
+        {
+          "id": "EQ006-C4",
+          "type": "numeric_anchor",
+          "status": "passed",
+          "reason": "For alpha=0.94, gamma'_f=15, gamma'_{i,H}=0.77, the crossing-time minimum lies near gamma'_{i,SME} and the maximum advantage is about 0.084, matching Supplement Fig. 5."
+        }
+      ],
+      "numerical_form": "Set Omega=1, evaluate scipy.linalg.expm(A*t), solve the first nontrivial sign change with scipy.optimize.brentq, and maximize d_H-d_C with bounded scalar optimization.",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::propagate_bloch",
+        "src/inverse_mpemba/model.py::distance_to_final",
+        "src/inverse_mpemba/model.py::crossing_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Steady-state pure-state mixture for direct preparation",
+      "source_refs": [
+        {
+          "type": "paragraph",
+          "value": "Main text following Fig. 4"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement text following Eq. (8)"
+        }
+      ],
+      "latex": "p=\\frac{2\\alpha\\gamma'\\sqrt{1+\\gamma'^2}}{1+2\\alpha\\gamma'^2},\\quad \\theta=-\\arctan\\gamma',\\quad \\rho^{ss}=\\frac{1-p}{2}|+\\theta\\rangle\\langle+\\theta|+\\frac{1+p}{2}|-\\theta\\rangle\\langle-\\theta|",
+      "role": "state_preparation_mapping",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text and Supplemental paragraph after Eq. (8) print p, theta, the pure states, and mixture weights."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "p=sqrt(y*^2+z*^2) and theta=atan2(z*,y*) reduce to the printed expressions."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "physicality",
+          "status": "passed",
+          "reason": "The analytic steady-state locus stays inside the Bloch sphere, so 0<=p<=1 and both mixture weights are probabilities."
+        }
+      ],
+      "numerical_form": "Compute p and theta from the independently evaluated steady state; this is a consistency check only because the Main Fig. 5 experimental arrays are unavailable.",
+      "code_refs": [
+        "src/inverse_mpemba/model.py::preparation_parameters"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Literal main-text GKSL rates used as a falsification comparator",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (1)-(2) and the printed definition of L_A"
+        }
+      ],
+      "latex": "\\dot\\rho_{\\mathrm{main}}=-\\frac{i\\Omega}{2}[\\sigma_x,\\rho]+\\alpha\\gamma\\,\\mathcal D[\\sigma_-]\\rho+(1-\\alpha)\\gamma\\,\\mathcal D[|\\uparrow\\rangle\\langle\\uparrow|]\\rho",
+      "role": "paper_consistency_falsification",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ008-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The rates and standard dissipator normalization are printed unambiguously together in Main Eqs. (1)-(2)."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct expansion gives dot y=-(gamma/2)y-Omega z and dot z=Omega y-alpha gamma(1+z), exactly half the dissipative coefficients of Supplement Eq. (4)."
+        },
+        {
+          "id": "EQ008-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At fixed printed gamma'=gamma/Omega, its steady-state locus equals the Supplemental locus evaluated at gamma'/2, producing a factor-two temperature-axis mismatch rather than a numerical-solver ambiguity."
+        }
+      ],
+      "numerical_form": "Construct a second 4x4 Liouvillian with sqrt(alpha*gamma) and sqrt((1-alpha)*gamma) collapse amplitudes; use it only for discrepancy quantification, never as the figure generator.",
+      "code_refs": [
+        "src/inverse_mpemba/liouvillian.py::liouvillian_literal_main",
+        "src/inverse_mpemba/reproduction.py::paper_consistency_checks"
+      ],
+      "open_questions": [
+        "The most economical correction is to insert a factor two in both Main Eq. (2) rates, but lifecycle classification requires fresh inventory-first review and explicit alternative-explanation falsification."
+      ]
+    }
+  ]
+}

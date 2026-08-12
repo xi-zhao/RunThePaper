@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevLett.133.191801",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Pseudoscalar dipole-dipole interaction",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1), page 2"
+        }
+      ],
+      "latex": "V_{ps-ps}=\\frac{g_{ps}^{n}g_{ps}^{n}}{16\\pi m_n^2}\\left[(\\hat\\sigma_I\\cdot\\hat\\sigma_{II})(m_a/r^2+1/r^3)-(\\hat\\sigma_I\\cdot\\hat r)(\\hat\\sigma_{II}\\cdot\\hat r)(m_a^2/r+3m_a/r^2+3/r^3)\\right]e^{-m_ar}",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete tensor potential is printed in Eq. (1)."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For transverse spins and separation the anisotropic projection vanishes, leaving (m/r^2+1/r^3)exp(-mr)."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "In natural units the mass/r^2 and 1/r^3 terms divided by m_n^2 have energy dimension."
+        }
+      ],
+      "numerical_form": "Evaluate the transverse Yukawa kernel directly and by finite-volume quadrature when cell geometry is supplied.",
+      "code_refs": [
+        "src/axion_spin/axion.py::transverse_kernel"
+      ],
+      "open_questions": [
+        "Cell dimensions and finite-volume layout are only in inaccessible Supplemental Material."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Rotating free-decay source field",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2), page 2"
+        }
+      ],
+      "latex": "\\mathbf B(t)=|B_p|N_{II}^*e^{-t/T_{II}^*}[\\cos(2\\pi\\nu_{II}t)\\hat x+\\sin(2\\pi\\nu_{II}t)\\hat y]",
+      "role": "input_signal",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (2) prints the rotating exponentially decaying source field."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The transverse magnitude starts at |Bp|N* and vanishes exponentially."
+        }
+      ],
+      "numerical_form": "Generate orthogonal quadratures on a declared time grid.",
+      "code_refs": [
+        "src/axion_spin/signals.py::rotating_free_decay"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Noble-gas transfer function",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3), page 3"
+        }
+      ],
+      "latex": "\\tilde{\\mathbf B}(\\nu)=\\eta\\frac{1/T_I^*}{i2\\pi(\\nu-\\nu_I)+1/T_I^*}\\begin{pmatrix}1&1\\\\-1&1\\end{pmatrix}\\mathbf B(\\nu)",
+      "role": "linear_response",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Lorentzian response and quadrature matrix are printed in Eq. (3)."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The scalar gain equals eta on resonance and rolls off as inverse detuning."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The printed operating point is nuI=5.360 Hz, TI*=7.63 s, eta about 145."
+        }
+      ],
+      "numerical_form": "Evaluate the transfer matrix in frequency space and an equivalent causal complex-envelope ODE.",
+      "code_refs": [
+        "src/axion_spin/transfer.py"
+      ],
+      "open_questions": [
+        "The supplement contains additional drive examples and calibration details."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Resonant free-decay sensor response",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4), page 3"
+        }
+      ],
+      "latex": "\\tilde B_y(t)=2\\eta|B_p|N_{II}^*\\frac{e^{-t/T_I^*}-e^{-t/T_{II}^*}}{1-T_I^*/T_{II}^*}\\cos(2\\pi\\nu_It+\\phi)",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete closed response is printed in Eq. (4)."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The response is zero at t=0 and decays to zero at late time."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The TI*=TII* removable limit is proportional to t exp(-t/TI*)."
+        }
+      ],
+      "numerical_form": "Use a stable expm1-based expression near equal coherence times.",
+      "code_refs": [
+        "src/axion_spin/signals.py::resonant_free_decay_response"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Magnetic amplification factor",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Amplification paragraph below Eq. (3), page 3"
+        }
+      ],
+      "latex": "\\eta=4\\pi\\kappa_0M_IP_{0I}\\gamma_nT_I^*/3",
+      "role": "parameter_model",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the formula and kappa0=493+/-31."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently used measured result eta about 145 is retained as a paper parameter, not inferred from pixels."
+        }
+      ],
+      "numerical_form": "Evaluate eta when M, polarization and gyromagnetic ratio are supplied; use the measured eta for main-text reproduction.",
+      "code_refs": [
+        "src/axion_spin/transfer.py::amplification_factor"
+      ],
+      "open_questions": [
+        "The main text does not print all factors needed to recompute eta from first principles."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "PSD-weighted optimal template filter",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (5) and preceding definition, page 4"
+        }
+      ],
+      "latex": "\\Omega(\\nu)=\\alpha\\tilde B_y^*(\\nu)/S_n(\\nu),\\qquad B_y^{exp}(t)=\\int e^{i2\\pi\\nu t}\\Omega(\\nu)\\tilde B_y(\\nu)d\\nu",
+      "role": "estimator",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The filter and inverse transform are printed in Eq. (5)."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Choose alpha so a unit-amplitude injected template is recovered with unit peak."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "independent_method",
+          "status": "passed",
+          "reason": "Direct weighted least squares and FFT correlation are algebraically equivalent and will be cross-checked."
+        }
+      ],
+      "numerical_form": "FFT correlation with an explicit one-sided PSD and a direct weighted least-squares parity path.",
+      "code_refs": [
+        "src/axion_spin/filtering.py"
+      ],
+      "open_questions": [
+        "The measured PSD and raw 60-second records are unpublished."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Independent-error combination",
+      "source_refs": [
+        {
+          "type": "result",
+          "value": "Systematic-error paragraph and Fig. 4(a), page 5"
+        }
+      ],
+      "latex": "\\sigma_{tot}=\\sqrt{\\sigma_{stat}^2+\\sigma_{sys}^2}",
+      "role": "statistical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that independent systematic factors are combined in quadrature."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "140 aT statistical and 45 aT systematic uncertainties give 147.06 aT total."
+        }
+      ],
+      "numerical_form": "Combine declared independent components and preserve separate statistical/systematic outputs.",
+      "code_refs": [
+        "src/axion_spin/statistics.py::combine_independent_uncertainties"
+      ],
+      "open_questions": [
+        "Individual systematic components are in inaccessible Supplemental Material."
+      ]
+    }
+  ]
+}

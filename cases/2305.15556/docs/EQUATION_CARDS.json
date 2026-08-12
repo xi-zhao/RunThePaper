@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "paper_id": "2305.15556",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Pure-state quantum Fisher information matrix",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main equations following Eq. (3)"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S34), (S43)"
+        }
+      ],
+      "latex": "\\mathcal F_{\\mu\\nu}=2\\langle\\{G_\\mu,G_\\nu\\}\\rangle-4\\langle G_\\mu\\rangle\\langle G_\\nu\\rangle=4\\,\\mathrm{Re}[\\langle G_\\mu\\psi|G_\\nu\\psi\\rangle-\\langle G_\\mu\\rangle\\langle G_\\nu\\rangle]",
+      "role": "observable",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text and supplement print the covariance form for pure states."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding the anticommutator gives four times the real covariance Gram matrix."
+        },
+        {
+          "id": "EQ001-C3",
+          "type": "positivity",
+          "status": "passed",
+          "reason": "The covariance Gram construction is positive semidefinite for Hermitian generators."
+        }
+      ],
+      "numerical_form": "Apply every sparse generator to the normalized state once, assemble four times the real centered Gram matrix, and symmetrize before diagonalization.",
+      "code_refs": [
+        "src/optimal_generators/model.py::qfim"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Optimal generator from the QFIM eigenproblem",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3)"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement final paragraphs of Sec. IV.C"
+        }
+      ],
+      "latex": "\\mathbf F\\,\\mathcal O=\\lambda_{\\max}\\mathcal O,\\quad \\sum_\\mu(\\mathcal O^\\mu)^2=1,\\quad \\mathcal G=\\sum_\\mu\\mathcal O^\\mu G_\\mu",
+      "role": "optimization_rule",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (3) prints the eigenproblem and the surrounding text fixes coefficient normalization and generator interpretation."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Rayleigh-Ritz gives max_{||O||=1} O^T F O=lambda_max."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "degeneracy",
+          "status": "passed",
+          "reason": "For repeated lambda_max, the projector onto the leading eigenspace is unique although individual vectors are not."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "residual",
+          "status": "passed",
+          "reason": "The runner requires ||F O-lambda O|| below tolerance for every stored representative."
+        }
+      ],
+      "numerical_form": "Use a symmetric eigensolver in descending order; track signs only for isolated eigenvalues and record projectors for degenerate clusters.",
+      "code_refs": [
+        "src/optimal_generators/model.py::qfim_eigensystem",
+        "src/optimal_generators/model.py::tracked_optimal_generator"
+      ],
+      "open_questions": [
+        "Main Fig. 2(b) does not specify the eigenvector gauge inside early-time degeneracies; coefficient-level pixel equality is therefore not a scientific invariant."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Fixed-N symmetric boson representation and SU(n) basis",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (9)"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Sec. I and Eq. (S44)"
+        }
+      ],
+      "latex": "a_i^\\dagger a_j|\\ldots,n_i,\\ldots,n_j,\\ldots\\rangle=\\sqrt{(n_i+1)n_j}|\\ldots,n_i+1,\\ldots,n_j-1,\\ldots\\rangle,\\quad \\mathrm{Tr}(G_\\mu G_\\nu)=C\\delta_{\\mu\\nu}",
+      "role": "representation",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (9), Supplement Sec. I, and Eq. (S44) specify the operator list, construction, and equal trace norm."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "commutator",
+          "status": "passed",
+          "reason": "Direct occupation-basis construction obeys [a_i^dagger a_j,a_k^dagger a_l]=delta_jk a_i^dagger a_l-delta_il a_k^dagger a_j."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "orthogonality",
+          "status": "passed",
+          "reason": "The 15 printed SU(4) generators have a diagonal equal-norm trace Gram matrix."
+        },
+        {
+          "id": "EQ003-C3",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The N=20 four-mode symmetric basis contains C(23,3)=1771 states."
+        }
+      ],
+      "numerical_form": "Enumerate all nonnegative occupations summing to N and build sparse bilinear matrices with exact square-root amplitudes.",
+      "code_refs": [
+        "src/optimal_generators/bosons.py::FixedNBosons",
+        "src/optimal_generators/model.py::su4_operator_basis"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "One-axis twisting evolution and Husimi probability",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (6)-(7)"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 1(a-b)"
+        }
+      ],
+      "latex": "|\\psi(\\tau)\\rangle=e^{-i\\tau J_z^2}|\\pi/2,0\\rangle,\\quad Q(\\theta,\\phi;\\tau)=|\\langle\\theta,\\phi|\\psi(\\tau)\\rangle|^2,\\quad \\tau=\\chi t",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (6)-(7) and the Fig. 1 caption specify the coherent state, Hamiltonian, and both plotted times."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The binomial coherent state and diagonal phase evolution both preserve unit norm."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At tau=0 the Husimi maximum is at theta=pi/2, phi=0 and the QFIM spectrum is (N,N,0)."
+        },
+        {
+          "id": "EQ004-C3",
+          "type": "parameter_anchor",
+          "status": "passed",
+          "reason": "The squeezed panel uses the printed tau=N^(-2/3) with N=20."
+        }
+      ],
+      "numerical_form": "Use exact binomial amplitudes in the Jz number basis and phase each component by exp[-i tau m^2]; evaluate coherent-state overlaps on a declared spherical grid.",
+      "code_refs": [
+        "src/optimal_generators/model.py::oat_state",
+        "src/optimal_generators/model.py::husimi_q"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Analytic OAT QFI and optimal-axis angle",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (8) and paragraph below"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 1(c-d)"
+        }
+      ],
+      "latex": "F_{\\mathrm{OAT}}=N+\\frac{N(N-1)}4\\left(A+\\sqrt{A^2+B^2}\\right),\\ A=1-\\cos^{N-2}(2\\tau),\\ B=4\\sin\\tau\\cos^{N-2}\\tau,\\ \\delta=\\tfrac12\\arctan2(B,A)",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ001",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (8) and the following paragraph print A, B, F_OAT, and the half-angle expression."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "numeric_parity",
+          "status": "passed",
+          "reason": "On the stated initial-squeezing interval the analytic curve must agree with the largest numerical QFIM eigenvalue."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At tau=0, A=B=0 and F_OAT=N."
+        },
+        {
+          "id": "EQ005-C3",
+          "type": "axis",
+          "status": "passed",
+          "reason": "The analytic yz-plane axis is compared with the numerical leading eigenspace before the later branch jump."
+        }
+      ],
+      "numerical_form": "Evaluate the closed formula in float64 and use atan2 rather than atan to preserve the printed branch continuously.",
+      "code_refs": [
+        "src/optimal_generators/model.py::oat_analytic_qfi",
+        "src/optimal_generators/model.py::oat_analytic_axis"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Three-axis SU(4) twisting",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (10) and explicit initial ket"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S12)-(S18)"
+        },
+        {
+          "type": "figure",
+          "value": "Main Fig. 2"
+        }
+      ],
+      "latex": "H/(\\hbar\\chi)=(Q^++\\Sigma^+)(Q^-+\\Sigma^-),\\quad |\\psi_0\\rangle=e^{-iJ_y\\pi/\\sqrt2}(u^\\dagger)^N|0\\rangle/\\sqrt{N!}",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (10), the explicit initial ket, and Supplement Eqs. (S12)-(S18) jointly fix all operators and conventions."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "hermiticity",
+          "status": "passed",
+          "reason": "The Hamiltonian is R R^dagger with R=Q^++Sigma^+ and is Hermitian positive semidefinite."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "state_identity",
+          "status": "passed",
+          "reason": "Acting on all-u particles, the printed rotation produces the normalized coherent state (u^dagger+c^dagger)^N/sqrt(2^N N!)."
+        },
+        {
+          "id": "EQ006-C3",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Sparse exponential propagation preserves norm over the entire tau in [0,pi/2] range."
+        },
+        {
+          "id": "EQ006-C4",
+          "type": "backend_parity",
+          "status": "passed",
+          "reason": "Sparse expm_multiply is compared against dense expm for small N."
+        }
+      ],
+      "numerical_form": "Build the 1771-dimensional sparse Hamiltonian in the fixed-N four-mode basis and propagate all requested times with scipy.sparse.linalg.expm_multiply.",
+      "code_refs": [
+        "src/optimal_generators/model.py::su4_hamiltonian",
+        "src/optimal_generators/model.py::su4_initial_state",
+        "src/optimal_generators/model.py::evolve_su4"
+      ],
+      "open_questions": [
+        "The prose calls the explicit initial ket a simultaneous J_x and K_y eigenstate, but direct evaluation identifies J_x and K_z. This is kept as an inconclusive consistency discrepancy pending fresh review."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Multiparameter eigenvalue anchors and commuting generators",
+      "source_refs": [
+        {
+          "type": "paragraph",
+          "value": "Main multiparameter-estimation paragraph following Fig. 2"
+        }
+      ],
+      "latex": "\\lambda_1/N^2=0.307,\\quad \\lambda_3/N^2=0.189,\\quad \\lambda_8/N^2=0.117\\quad\\text{at }\\tau=\\pi/4",
+      "role": "quantitative_anchor",
+      "derived_from": [
+        "EQ001",
+        "EQ006"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main multiparameter paragraph prints the three eigenvalue ratios, time, and associated generator forms."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "numeric_anchor",
+          "status": "passed",
+          "reason": "The independently generated sorted QFIM eigenvalues will be checked against all three printed ratios."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "commutator",
+          "status": "passed",
+          "reason": "Representative operators from the three reported eigenspaces are checked for mutual commutation within degeneracy-aware tolerance."
+        }
+      ],
+      "numerical_form": "Interpolate or include tau=pi/4 exactly in the time grid and compare sorted eigenvalues divided by N^2 to the printed three-decimal anchors.",
+      "code_refs": [
+        "src/optimal_generators/reproduction.py::science_checks"
+      ],
+      "open_questions": []
+    }
+  ]
+}

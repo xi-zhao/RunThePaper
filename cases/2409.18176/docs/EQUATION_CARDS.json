@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "paper_id": "2409.18176",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Effective hole-exciton-trion Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1) and model paragraph immediately before it"
+        }
+      ],
+      "latex": "H=H_h+H_x+H_t+g\\int(m^\\dagger c x+\\mathrm{h.c.}),\\quad m_t=m_h+m_x",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) prints all dispersions, the conversion vertex, and the mass relation."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Each quadratic dispersion and detuning has energy units; the two-dimensional vertex has energy times length."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symmetry",
+          "status": "passed",
+          "reason": "The conversion term preserves total momentum and total hole/exciton constituent numbers."
+        }
+      ],
+      "numerical_form": "Evaluate three isotropic quadratic dispersions and the on-shell h+x<->t constraint in units of E_F^h and p_F^h.",
+      "code_refs": [
+        "src/bose_fermi_transport/thermodynamics.py::ModelParameters",
+        "src/bose_fermi_transport/kinetic.py::on_shell_geometry"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Two-dimensional vacuum scattering amplitude",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Microscopic model section, equations following the Lippmann-Schwinger relation"
+        }
+      ],
+      "latex": "f(E)=-2m_{red}T(E),\\quad T(E)\\simeq-2\\pi t^2/[m_{red}\\Delta^2\\log((E-\\Delta)/E_t^0)]",
+      "role": "observable",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the f-to-T relation, logarithmic T matrix, pole approximation, and matched vertex."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "analytic_continuation",
+          "status": "passed",
+          "reason": "The continuum branch contributes the required imaginary pi to the logarithm."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "consistency",
+          "status": "not_applicable",
+          "reason": "For the explicitly negative E_t^0, the caption/first logarithmic expression and the following pole denominator use incompatible detuning signs; no linewidth or Fig. 1(b) parameter set is printed. This caps parameter provenance rather than blocking evaluation of the two printed formulas."
+        }
+      ],
+      "numerical_form": "Evaluate both labelled sign conventions on a dimensionless energy grid; never infer a pole or width from source pixels.",
+      "code_refs": [
+        "src/bose_fermi_transport/scattering.py::scattering_amplitude"
+      ],
+      "open_questions": [
+        "Which sign convention and parameter set generated Main Fig. 1(b)?",
+        "What finite linewidth caps its plotted peak?"
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Chemical equilibrium and ideal two-dimensional densities",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Main model paragraphs: fixed injected densities and mu_h+mu_x=mu_t"
+        }
+      ],
+      "latex": "mu_h=E_F^h,\\ n_x=-m_x k_BT\\log(1-e^{mu_x/k_BT})/(2pi hbar^2),\\ mu_t=mu_h+mu_x",
+      "role": "parameter_closure",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text fixes E_F^h and n_x and imposes chemical equilibrium."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The implemented Fermi/Bose densities follow by analytic integration of quadratic 2D dispersions."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The primary lane inverts the printed free-exciton density and checks mu_t=mu_h+mu_x; a separately labelled conserved-total sensitivity lane is also implemented."
+        }
+      ],
+      "numerical_form": "Set mu_h=E_F^h, analytically invert n_x for mu_x, and set mu_t=mu_h+mu_x; optionally solve the conserved-total sensitivity system.",
+      "code_refs": [
+        "src/bose_fermi_transport/thermodynamics.py::solve_equilibrium"
+      ],
+      "open_questions": [
+        "The manuscript does not explicitly state whether n_x denotes the free or total exciton-constituent density; the primary lane uses the printed free-species parameterization and retains the alternative as sensitivity."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Linearized coupled Boltzmann equations",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (17)-(32)"
+        }
+      ],
+      "latex": "(tau_i^{-1}+iOmega)phi_i=I_i^{lin}[phi_h,phi_x,phi_t]+S_i",
+      "role": "numerical_method",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the three collision equations and their matrix reduction."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "detailed_balance",
+          "status": "passed",
+          "reason": "Substitution of equilibrium Bose/Fermi functions cancels each forward/reverse reaction factor."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "angular_reduction",
+          "status": "passed",
+          "reason": "Rotational invariance closes the driven response in the l=1 cosine harmonic, and the quadratic energy delta has two analytic angular roots."
+        },
+        {
+          "id": "EQ004-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At g=0 the matrix becomes diagonal: holes are Drude and neutral drag is zero."
+        }
+      ],
+      "numerical_form": "Assemble the l=1 radial collocation matrix using analytic angular delta roots, solve it at each detuning/temperature/frequency, and integrate the currents.",
+      "code_refs": [
+        "src/bose_fermi_transport/kinetic.py::assemble_operator",
+        "src/bose_fermi_transport/kinetic.py::solve_transport"
+      ],
+      "open_questions": [
+        "The source omits its momentum grid, cutoff, interpolation, and delta regularization; convergence is therefore reconstructed and machine-attested separately."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "On-shell hole rate and resonance detuning",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (2)-(3)"
+        }
+      ],
+      "latex": "Im Sigma_h^R=g^2\\int_k(n_F(epsilon_t)+n_B(omega_k))2pi delta(omega_k+epsilon_h-epsilon_t),\\quad Delta_*=2mu_h/3",
+      "role": "observable",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (2)-(3) print the rate and resonance condition."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Equal hole and trion Fermi radii with m_t=3m_h gives Delta_star=(2/3)mu_h."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "positivity",
+          "status": "passed",
+          "reason": "The physical decay rate -2 Im Sigma^R is nonnegative on the allowed phase space."
+        }
+      ],
+      "numerical_form": "Use the same analytic angular root/Jacobian as EQ004 and convert the energy rate to ps^-1 with hbar.",
+      "code_refs": [
+        "src/bose_fermi_transport/kinetic.py::hole_scattering_rate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Species conductivities",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (20), conductivities from phi"
+        }
+      ],
+      "latex": "sigma^i(Omega)E=e\\int d^2k/(2pi)^2 v_i(k)phi_i(k)",
+      "role": "observable",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the current integral and all normalizations used in the captions."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The normalized hole integral returns one for tau_h=tau_0 and the neutral integrals vanish."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "parity",
+          "status": "passed",
+          "reason": "Only the l=1 departure contributes to the longitudinal current; all other angular harmonics integrate to zero."
+        }
+      ],
+      "numerical_form": "Apply radial quadrature to the velocity-weighted l=1 solutions and divide by the printed background Drude conductivity.",
+      "code_refs": [
+        "src/bose_fermi_transport/kinetic.py::conductivities"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Leading-order Kubo conductivity",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (39)-(40)"
+        }
+      ],
+      "latex": "sigma_{xx}^h h/e^2=\\int_{-mu}^{infty}d xi (xi+mu)(-n_F'(xi))tau_{tot}(xi)",
+      "role": "independent_cross_check",
+      "derived_from": [
+        "EQ001",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the retarded self-energy, finite background widths, and final dc integral."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With interaction self-energy removed, tau_tot=tau_0 and the Drude result is recovered."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "method_independence",
+          "status": "passed",
+          "reason": "The Kubo quadrature does not import or reuse the Boltzmann operator matrix."
+        }
+      ],
+      "numerical_form": "Integrate the broadened retarded self-energy over polar momentum and then perform the printed energy integral.",
+      "code_refs": [
+        "src/bose_fermi_transport/kubo.py::kubo_resistivity"
+      ],
+      "open_questions": [
+        "The paper's exact energy/momentum cutoffs and quadrature are not printed."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Three-fluid ac conductivities",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (41)-(43) and fitted-parameter paragraph"
+        }
+      ],
+      "latex": "dot v_i+v_i/tau_i=-\\sum_{j ne i}alpha_{ij}n_j(v_i-v_j)/m_i+delta_{ih}eE/m_h",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ003",
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text prints the velocity equations and the supplement prints the closed solution and all six fit coefficients."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct solution of the 3x3 velocity matrix is compared pointwise with the printed closed form."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "causality",
+          "status": "passed",
+          "reason": "The dissipative real part is even and the reactive imaginary part is odd in frequency under the chosen Fourier convention."
+        }
+      ],
+      "numerical_form": "Solve the complex 3x3 velocity matrix over the printed -0.8 to 0.8 meV frequency domain and normalize all currents by sigma_0^h.",
+      "code_refs": [
+        "src/bose_fermi_transport/hydrodynamic.py::conductivities_direct",
+        "src/bose_fermi_transport/hydrodynamic.py::conductivities_closed"
+      ],
+      "open_questions": [
+        "The fitted operating-point species densities are not printed; this case supplies them from EQ003 and keeps paper_subset status."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Acoustic-phonon resistivity crossover",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Main Fig. 3 caption and paragraph following its three temperature regimes"
+        }
+      ],
+      "latex": "rho_{ph}=2pi/(mu_h e^2 tau_{ph}),\\quad T_{BG}=2hbar v_s p_F^h approximately 10 K",
+      "role": "auxiliary_model",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ009-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states the background form, approximately 10 K crossover, and high-temperature linear behavior."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The declared interpolation is strongly suppressed below T_BG and becomes linear above it."
+        },
+        {
+          "id": "EQ009-C2",
+          "type": "parameter_completeness",
+          "status": "not_applicable",
+          "reason": "The numerical tau_ph calibration is delegated to external references and is not printed in this paper; the formula remains open only for an explicitly configured proxy."
+        }
+      ],
+      "numerical_form": "Use an explicitly configured Bloch-Gruneisen interpolation only as a proxy overlay; it cannot promote T005 to paper-exact.",
+      "code_refs": [
+        "src/bose_fermi_transport/phonons.py::phonon_resistivity"
+      ],
+      "open_questions": [
+        "What material constants and normalization were used for the inset's tau_ph?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,773 @@
+{
+  "schema_version": 1,
+  "paper_id": "2406.13410",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Poisson resonance number variance",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 2(a) and statistical-analysis text"
+        }
+      ],
+      "latex": "\\Sigma^2_{\\mathrm P}(L)=\\operatorname{Var}N_L=L",
+      "role": "analytic_reference",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper identifies the dashed line as Poisson-distributed resonances and defines the interval mean count."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A Poisson count has equal mean and variance by its probability-generating function."
+        }
+      ],
+      "numerical_form": "Evaluate Sigma2=L on the declared mean-count grid.",
+      "code_refs": [
+        "src/atom_ion_feshbach/statistics.py::poisson_number_variance"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "GOE number variance from the two-level cluster function",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 2(a), Wigner-Dyson comparison"
+        }
+      ],
+      "latex": "\\Sigma^2_{\\rm GOE}(L)=L-2\\int_0^L(L-s)Y_{2,\\rm GOE}(s)\\,ds",
+      "role": "analytic_reference",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The caption and text require the Wigner-Dyson/GOE number-variance comparator."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integrating the connected two-level correlation over an interval gives the count-variance identity."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The result begins at zero, has unit initial slope, and grows logarithmically rather than linearly at large L."
+        }
+      ],
+      "numerical_form": "Quadrature of the standard unfolded GOE cluster function with a small-s series at the removable singularity.",
+      "code_refs": [
+        "src/atom_ion_feshbach/statistics.py::goe_number_variance"
+      ],
+      "open_questions": [
+        "The paper does not state whether its plotted Wigner-Dyson variance uses exact GOE correlations or a finite random-matrix sample; both will be cross-checked."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Poisson and Wigner nearest-neighbor spacing laws",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 2(b)"
+        }
+      ],
+      "latex": "P_{\\rm P}(s)=e^{-s},\\qquad P_{\\rm W}(s)=\\frac{\\pi s}{2}e^{-\\pi s^2/4}",
+      "role": "analytic_reference",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 2(b) names Poisson and Wigner-Dyson distributions for normalized spacings."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Both densities integrate to one and have unit mean spacing."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Poisson permits P(0)=1 while the Wigner surmise has linear level repulsion."
+        }
+      ],
+      "numerical_form": "Evaluate both normalized densities on a common nonnegative spacing grid.",
+      "code_refs": [
+        "src/atom_ion_feshbach/statistics.py::spacing_distributions"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Quadratic excess ion energy",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main energy-scaling equation and Appendix tuning section"
+        }
+      ],
+      "latex": "E_{\\rm ion}=E_{\\min}+\\Delta E_{\\rm ion}=E_{\\min}+\\alpha\\mathcal E_{\\rm dc}^2",
+      "role": "observable_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The equation and alpha_sim=10(1) mK/(V/m)^2 are printed in the main text and appendix."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "alpha times electric-field squared has energy units."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At compensated field the excess term vanishes and Eion=Emin."
+        }
+      ],
+      "numerical_form": "Report ensemble median kinetic energy and fit it against field squared without a linear term.",
+      "code_refs": [
+        "src/atom_ion_feshbach/trap.py::quadratic_energy",
+        "src/atom_ion_feshbach/md.py::fit_energy_scaling"
+      ],
+      "open_questions": [
+        "The paper withholds the numerical MD arrays and convergence settings."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Isolated-ion excess-micromotion coefficient",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendix Eq. (Berkeland excess micromotion)"
+        }
+      ],
+      "latex": "\\alpha_{\\mathrm{theo},i}=\\frac{4}{m}\\left[\\frac{e q_i}{(2a_i+q_i^2)\\Omega_{\\rm rf}}\\right]^2",
+      "role": "independent_cross_check",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The appendix prints the expression and alpha_theo,y=16.4(10) mK/(V/m)^2."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The squared driven-velocity response divided by mass gives energy per field squared."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated-ion prediction exceeds the interacting median coefficient, matching the stated 60 percent difference."
+        }
+      ],
+      "numerical_form": "Evaluate the printed expression when complete Mathieu parameters are supplied; otherwise preserve the printed value as a cross-check only.",
+      "code_refs": [
+        "src/atom_ion_feshbach/trap.py::micromotion_alpha"
+      ],
+      "open_questions": [
+        "The exact a_y and q_y used for the quoted number are not printed."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Independent atom-ion collision update",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Appendix: Tuning the ion excess kinetic energy"
+        }
+      ],
+      "latex": "\\mathbf V=\\frac{m_i\\mathbf v_i+m_a\\mathbf v_a}{m_i+m_a},\\quad \\mathbf v_i'=\\mathbf V+\\frac{m_a}{m_i+m_a}\\,R(\\mathbf v_i-\\mathbf v_a)",
+      "role": "dynamical_method",
+      "derived_from": [
+        "EQ004",
+        "EQ005"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The appendix requires 3D scattering, thermal atoms, radial rf drive, repeated collisions, and a steady-state median."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The isotropic COM-frame rotation conserves two-body momentum and kinetic energy exactly for each elastic collision."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With zero driven micromotion repeated collisions cool toward the thermal bath; radial drive creates anisotropic heavy tails."
+        }
+      ],
+      "numerical_form": "Event-driven 3D Langevin-collision chain with random rf phase, thermal Li velocities, isotropic COM scattering, and explicit checkpointable ensembles.",
+      "code_refs": [
+        "src/atom_ion_feshbach/md.py"
+      ],
+      "open_questions": [
+        "C6, launch radius, exact Mathieu parameters, collision timing law, and author trajectory count are not printed; the independent event model is reconstructed rather than paper exact."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Static field to harmonic displacement",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Main Fig. 4 displacement axis and Appendix rf-confinement discussion"
+        }
+      ],
+      "latex": "\\Delta y=\\frac{e\\mathcal E_{\\rm dc}}{m_i\\omega_y^2}",
+      "role": "coordinate_transform",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper uses a dc field to displace a singly charged ion and prints the radial secular frequencies."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Force balance eE=m omega^2 y gives the mapping."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Electric force divided by harmonic stiffness has length units."
+        }
+      ],
+      "numerical_form": "Map between the lower displacement axis and upper electric-field/energy axes using the printed ion mass and secular frequency.",
+      "code_refs": [
+        "src/atom_ion_feshbach/trap.py::field_to_displacement"
+      ],
+      "open_questions": [
+        "The plotted radial direction is treated as the printed approximately 66 kHz confinement."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Gaussian atomic density profile",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 4 and density-profile paragraph"
+        }
+      ],
+      "latex": "n(y)=n_0\\exp[-(y-\\mu)^2/(2\\sigma^2)],\\quad \\sigma=8.2(4)\\,\\mu\\mathrm m,\\;\\mu=4.9(3)\\,\\mu\\mathrm m",
+      "role": "input_model",
+      "derived_from": [
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The text prints sigma, FWHM, and center offset and identifies the solid line as Gaussian."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "2 sqrt(2 ln 2) sigma gives 19.31 micrometers, consistent with the printed 19.4(8)."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The profile is represented as n/n0, so no unpublished absolute marker normalization is required."
+        }
+      ],
+      "numerical_form": "Evaluate the normalized Gaussian on a displacement grid and keep n0 as a separately declared physical parameter for loss rates.",
+      "code_refs": [
+        "src/atom_ion_feshbach/classical.py::gaussian_density"
+      ],
+      "open_questions": [
+        "The exact peak density during Fig. 4 is not tabulated; the typical 5e11 cm^-3 value is declared as reconstructed when used."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Classical three-body recombination survival",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendix: Classical description of three-body recombination loss"
+        }
+      ],
+      "latex": "\\gamma_l=k_3n^2(E_0+\\Delta E_{\\rm ion})^{-3/4},\\qquad P_{\\rm surv}=e^{-\\gamma_l t_{\\rm int}}",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ004",
+        "EQ008"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The appendix prints the loss law, E0=4.5(8) mK times 3/2 kB, and k3 at 10 mK; the methods print exponential survival."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The temperature-normalized k3 convention times density squared gives an inverse time."
+        },
+        {
+          "id": "EQ009-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Loss weakens as E^-3/4 at high energy and vanishes with density or interaction time."
+        }
+      ],
+      "numerical_form": "Use the quoted k3 normalization at 10 mK, local Gaussian density, E0, and 200 ms interaction to generate the classical branch.",
+      "code_refs": [
+        "src/atom_ion_feshbach/classical.py::classical_survival"
+      ],
+      "open_questions": [
+        "The figure-specific peak density is not printed, so absolute survival remains reconstructed while the scaling is fixed."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Dimensionless polarization-potential radial equation",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Quantum recombination model and Appendix Fig. 8"
+        }
+      ],
+      "latex": "u_l''(x)+[\\epsilon-l(l+1)/x^2+1/x^4]u_l(x)=0,\\quad x=r/R^*,\\;\\epsilon=E/E_s",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper specifies the long-range charge-induced-dipole 1/R^4 interaction and E_s=8.8 microkelvin."
+        },
+        {
+          "id": "EQ010-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Scaling the -C4/r^4 radial Schrodinger equation by R*=sqrt(2 mu C4/hbar^2) gives the stated dimensionless form."
+        },
+        {
+          "id": "EQ010-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At large x the equation reduces to free spherical waves; at small x the attractive 1/x^4 term dominates."
+        }
+      ],
+      "numerical_form": "Integrate the complex radial equation from an incoming absorbing WKB boundary to an asymptotic matching radius.",
+      "code_refs": [
+        "src/atom_ion_feshbach/polarization.py::integrate_radial"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Partial-wave barrier energies",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Appendix Fig. 8 vertical barrier guides"
+        }
+      ],
+      "latex": "E_l/E_s=[l(l+1)]^2/4",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ010"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ011-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendix Fig. 8 marks the partial-wave barrier heights where coupling saturates."
+        },
+        {
+          "id": "EQ011-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Maximizing l(l+1)/x^2-1/x^4 gives x_b^2=2/[l(l+1)] and barrier [l(l+1)]^2/4."
+        },
+        {
+          "id": "EQ011-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The formula yields 1, 9, and 36 E_s for p, d, and f waves."
+        }
+      ],
+      "numerical_form": "Generate barrier guides directly from l without fitting the source figure.",
+      "code_refs": [
+        "src/atom_ion_feshbach/polarization.py::barrier_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ012",
+      "title": "Universal short-range capture probability",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Quantum defect function C^-2(k), Appendix Fig. 8"
+        }
+      ],
+      "latex": "C_l^{-2}(E)=P_l(E)=1-|S_l(E)|^2",
+      "role": "dimer_coupling",
+      "derived_from": [
+        "EQ010"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ012-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines Gamma(k)=Gamma_m C_l^-2(k), threshold k^(2l+1), and saturation to unity."
+        },
+        {
+          "id": "EQ012-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "An incoming-only short-range boundary makes lost flux 1-|S|^2 and therefore constrains the coupling to [0,1]."
+        },
+        {
+          "id": "EQ012-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Independent log-log solutions recover k^(2l+1) at threshold and approach unity above the barrier."
+        }
+      ],
+      "numerical_form": "Match the propagated solution and derivative to incoming/outgoing Riccati-Hankel waves and compute flux loss.",
+      "code_refs": [
+        "src/atom_ion_feshbach/polarization.py::capture_probability"
+      ],
+      "open_questions": [
+        "The paper withholds its exact quantum-defect numerical implementation and energy grid."
+      ]
+    },
+    {
+      "id": "EQ013",
+      "title": "Universal atom-dimer Langevin rate",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Quantum recombination model paragraph on K(k)"
+        }
+      ],
+      "latex": "\\mathcal K(E)=v(E)\\frac{\\pi}{k^2}\\sum_l(2l+1)P_l(E)",
+      "role": "inelastic_rate",
+      "derived_from": [
+        "EQ012"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ013-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that K(k) is the parameter-free universal quantum-Langevin atom-molecule reaction rate."
+        },
+        {
+          "id": "EQ013-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Velocity times partial-wave loss cross section has volume-per-time units."
+        },
+        {
+          "id": "EQ013-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The s-wave contribution tends to the universal low-energy constant while higher waves turn on near their barriers."
+        }
+      ],
+      "numerical_form": "Sum independently computed capture probabilities with degeneracy and multiply by relative velocity.",
+      "code_refs": [
+        "src/atom_ion_feshbach/recombination.py::universal_rate"
+      ],
+      "open_questions": [
+        "The atom-dimer polarization scale is not printed; the dimensionless energy dependence is fixed while its absolute scale is declared reconstructed."
+      ]
+    },
+    {
+      "id": "EQ014",
+      "title": "Resonant recombination cross section",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main quantum recombination model equation"
+        }
+      ],
+      "latex": "\\sigma(k)=\\frac{\\pi}{k^2}\\frac{\\Gamma(k)\\mathcal K(k)n}{(\\varepsilon-\\varepsilon_{\\rm res})^2/\\hbar^2+[\\Gamma(k)+\\mathcal K(k)n]^2/4}",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ012",
+        "EQ013"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ014-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cross section is printed verbatim in the main text."
+        },
+        {
+          "id": "EQ014-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The Lorentzian rate ratio is dimensionless and pi/k^2 supplies area."
+        },
+        {
+          "id": "EQ014-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The cross section vanishes if either dimer formation or secondary reaction is turned off and is Lorentzian in detuning."
+        }
+      ],
+      "numerical_form": "Evaluate with Gamma=Gamma_m C_l^-2, universal K, local density, and magnetic detuning.",
+      "code_refs": [
+        "src/atom_ion_feshbach/recombination.py::resonant_cross_section"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ015",
+      "title": "Magnetic detuning of the dimer state",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Definition below the recombination cross section"
+        }
+      ],
+      "latex": "\\varepsilon_{\\rm res}=\\delta\\mu(B-B_{\\rm res})",
+      "role": "coordinate_transform",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ015-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the definition and reports delta mu=1.86 MHz/G for the s-wave fit and 0.35 MHz/G for the f-wave model."
+        },
+        {
+          "id": "EQ015-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Relative magnetic moment in frequency per field times field detuning gives frequency/energy detuning."
+        },
+        {
+          "id": "EQ015-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At B=B_res the bare detuning vanishes."
+        }
+      ],
+      "numerical_form": "Convert magnetic-field grids to angular-frequency detuning using the declared delta-mu convention.",
+      "code_refs": [
+        "src/atom_ion_feshbach/recombination.py::magnetic_detuning"
+      ],
+      "open_questions": [
+        "The f-wave short-range coupling Gamma_m and zero-energy bare B_res are not printed and must be reconstructed for qualitative spectra."
+      ]
+    },
+    {
+      "id": "EQ016",
+      "title": "Three-body relative kinetic energy and velocity averaging",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Quantum model averaging paragraph and MD appendix"
+        }
+      ],
+      "latex": "E_{\\rm rel}=\\sum_{j=1}^3\\frac{m_j}{2}|\\mathbf v_j-\\mathbf V_{\\rm cm}|^2,\\quad \\langle\\gamma\\rangle=\\mathbb E[\\sigma(k)nv]",
+      "role": "sampling_method",
+      "derived_from": [
+        "EQ006",
+        "EQ014"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ016-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper requires averaging over nonthermal ion and thermal atom velocity distributions in the three-body relative frame."
+        },
+        {
+          "id": "EQ016-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Subtracting the center-of-mass velocity exactly separates translational and internal kinetic energy."
+        },
+        {
+          "id": "EQ016-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For equal velocities the relative energy vanishes; a zero-temperature heavy ion reduces to the familiar reduced-mass two-body energy for one atom."
+        }
+      ],
+      "numerical_form": "Sample one steady ion velocity and two independent 700-nK Li velocities, remove the three-body COM motion, and average rate/spectrum values reproducibly.",
+      "code_refs": [
+        "src/atom_ion_feshbach/recombination.py::sample_three_body_energy"
+      ],
+      "open_questions": [
+        "The author sample count, random seeds, and exact MD distributions are withheld."
+      ]
+    },
+    {
+      "id": "EQ017",
+      "title": "Threshold laws, peak regimes, and survival",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Quantum recombination model scaling discussion and experimental methods"
+        }
+      ],
+      "latex": "\\gamma_l\\propto k^{2l}\\;(\\Gamma\\ll\\mathcal Kn),\\quad k^{-1}\\;(\\Gamma=\\Gamma_m),\\quad k^{-2(l+1)}\\;(\\Gamma\\gg\\mathcal Kn),\\qquad P_{\\rm surv}=e^{-\\langle\\gamma_l\\rangle t}",
+      "role": "acceptance_reference",
+      "derived_from": [
+        "EQ012",
+        "EQ013",
+        "EQ014",
+        "EQ016"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ017-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three asymptotic laws are stated in the main text and exponential survival is stated in the methods."
+        },
+        {
+          "id": "EQ017-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of C_l^-2 proportional to k^(2l+1), v proportional to k, and the dominant denominator term yields the three printed powers."
+        },
+        {
+          "id": "EQ017-C2",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Nonnegative rates produce survival in [0,1] and peak loss at an intermediate energy for higher l."
+        }
+      ],
+      "numerical_form": "Use asymptotic log-slope tests and probability bounds as machine acceptance for every model branch.",
+      "code_refs": [
+        "src/atom_ion_feshbach/recombination.py",
+        "src/atom_ion_feshbach/audit.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ018",
+      "title": "Printed higher-partial-wave resonance-position trend",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 6(h), caption, and higher-partial-wave text"
+        }
+      ],
+      "latex": "B_{\\rm fit}(x)=B_*+[4.4(4)\\,{\\rm mG}/{\\mu\\rm K}](195\\,{\\mu\\rm K})x,\\quad x=\\Delta E_{\\rm ion}/\\Delta E_{s,\\rm ion}",
+      "role": "analytic_reference",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ018-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The caption and text print the 4.4(4) mG/microkelvin slope, the seven normalized energies, and position anchors near 320.41, 320.59, and 321.53 G."
+        },
+        {
+          "id": "EQ018-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Slope times the effective-temperature energy axis produces a magnetic-field shift."
+        },
+        {
+          "id": "EQ018-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Using B*=320.0 G gives 321.55 G at x=1.81, consistent with the printed 321.53(3) G anchor without reading pixels."
+        }
+      ],
+      "numerical_form": "Evaluate the printed linear slope on the seven declared x values; retain independently reconstructed quantum-model peak positions only as a diagnostic column.",
+      "code_refs": [
+        "src/atom_ion_feshbach/reproduction.py"
+      ],
+      "open_questions": [
+        "The fit intercept is not printed directly; 320.0 G is reconstructed from the textual anchors and is not paper-exact."
+      ]
+    }
+  ]
+}

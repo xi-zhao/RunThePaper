@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "paper_id": "2406.07531",
+  "execution_contract": {
+    "profile": "paper_scale_reconstructed_inputs",
+    "working_directory": "workspace",
+    "shard_count": 16,
+    "checkpoint_resume": true,
+    "paper_parameters_executed": false
+  },
+  "solver_contract": {
+    "many_body_method": "EOM-CCSD real-axis Green function",
+    "mean_field_backend": "independent PySCF periodic KRKS/KRHF",
+    "validation_backend": "independent exact Lehmann diagonalization on small systems",
+    "stages": [
+      "mean_field",
+      "iao_pao_local_basis",
+      "density_matrix_bath",
+      "green_function_bath",
+      "dmp2_natural_orbital_bath",
+      "project_interacting_hamiltonian",
+      "embedded_ccgf",
+      "democratic_self_energy_assembly",
+      "gw_replacement",
+      "dyson_observables"
+    ],
+    "source_pixels_allowed": false,
+    "author_code_allowed": false,
+    "author_numeric_arrays_allowed": false,
+    "fail_closed_rules": [
+      "No spectrum is emitted unless every upstream tensor has a config-bound hash.",
+      "Missing CCGF or GW production backends stop the unit; no proxy self-energy is accepted.",
+      "Printed paper values are comparison anchors after freeze and never fitting targets.",
+      "Missing supplement tables cannot be recreated by digitization."
+    ]
+  },
+  "bath_selection": {
+    "density_svd_threshold": 1e-10,
+    "green_frequency_min_ev": -20.0,
+    "green_frequency_max_ev": 20.0,
+    "green_frequency_points": 401,
+    "green_broadening_ev": 0.1,
+    "green_svd_threshold": 1e-07,
+    "natural_occupation_threshold": 1e-06,
+    "low_virtual_count": 16,
+    "parameter_status": "reconstructed because production thresholds and grids are not printed"
+  },
+  "spectral_grid": {
+    "frequency_min_ev": -20.0,
+    "frequency_max_ev": 20.0,
+    "frequency_points": 4001,
+    "broadening_ev": 0.08,
+    "parameter_status": "reconstructed because production grids are not printed"
+  },
+  "materials": {
+    "Si": {
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "structure": {
+        "source": "standard diamond structure reconstructed independently; not printed in the main article",
+        "lattice_angstrom": [
+          [
+            0.0,
+            2.7155,
+            2.7155
+          ],
+          [
+            2.7155,
+            0.0,
+            2.7155
+          ],
+          [
+            2.7155,
+            2.7155,
+            0.0
+          ]
+        ],
+        "atoms": [
+          {
+            "element": "Si",
+            "cartesian_angstrom": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "element": "Si",
+            "cartesian_angstrom": [
+              1.35775,
+              1.35775,
+              1.35775
+            ]
+          }
+        ]
+      },
+      "basis": {
+        "Si": "gth-cc-pvtz"
+      },
+      "pseudopotential": {
+        "Si": "gth-hf-rev"
+      },
+      "kmesh": [
+        4,
+        4,
+        4
+      ],
+      "references": [
+        "PBE",
+        "HF"
+      ],
+      "embedding_orbitals": [
+        110,
+        130,
+        150,
+        170,
+        190,
+        210
+      ],
+      "paper_anchors": {
+        "g0w0_pbe_gamma_x_gap_ev": 1.15,
+        "g0w0_hf_gamma_x_gap_ev": 1.86,
+        "paper_gap_error_at_210_ev": 0.04,
+        "paper_starting_point_spread_at_210_ev": 0.08
+      }
+    },
+    "BN": {
+      "target_ids": [
+        "T003"
+      ],
+      "structure": {
+        "source": "standard monolayer hBN structure with independent 20 Angstrom vacuum reconstruction",
+        "lattice_angstrom": [
+          [
+            2.504,
+            0.0,
+            0.0
+          ],
+          [
+            -1.252,
+            2.168639,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            20.0
+          ]
+        ],
+        "atoms": [
+          {
+            "element": "B",
+            "cartesian_angstrom": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "element": "N",
+            "cartesian_angstrom": [
+              1.252,
+              0.72288,
+              0.0
+            ]
+          }
+        ]
+      },
+      "basis": {
+        "B": "gth-dzvp",
+        "N": "gth-dzvp"
+      },
+      "pseudopotential": {
+        "B": "gth-pade",
+        "N": "gth-pade"
+      },
+      "kmesh": [
+        6,
+        6,
+        1
+      ],
+      "references": [
+        "HF"
+      ],
+      "embedding_orbitals": [
+        200
+      ],
+      "paper_anchors": {
+        "comparison_methods": [
+          "EOM-CCSD",
+          "HF+DMFT",
+          "HF+ibDET",
+          "GW+ibDET"
+        ]
+      }
+    },
+    "MgO": {
+      "target_ids": [
+        "T004"
+      ],
+      "structure": {
+        "source": "standard rocksalt structure reconstructed independently; lattice constant not printed in the main article",
+        "lattice_angstrom": [
+          [
+            0.0,
+            2.106,
+            2.106
+          ],
+          [
+            2.106,
+            0.0,
+            2.106
+          ],
+          [
+            2.106,
+            2.106,
+            0.0
+          ]
+        ],
+        "atoms": [
+          {
+            "element": "Mg",
+            "cartesian_angstrom": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "element": "O",
+            "cartesian_angstrom": [
+              2.106,
+              2.106,
+              2.106
+            ]
+          }
+        ]
+      },
+      "basis": {
+        "Mg": "cc-pvtz",
+        "O": "cc-pvtz"
+      },
+      "pseudopotential": {},
+      "kmesh": [
+        6,
+        6,
+        6
+      ],
+      "references": [
+        "PBE"
+      ],
+      "embedding_orbitals": [
+        230
+      ],
+      "paper_anchors": {
+        "gw_ibdet_gap_ev": 8.22,
+        "g0w0_pbe_gap_ev": 7.43,
+        "eom_ccsd_gap_ev": 8.34
+      }
+    },
+    "SrTiO3": {
+      "target_ids": [
+        "T005"
+      ],
+      "structure": {
+        "source": "standard cubic perovskite structure reconstructed independently; lattice constant not printed in the main article",
+        "lattice_angstrom": [
+          [
+            3.905,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            3.905,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            3.905
+          ]
+        ],
+        "atoms": [
+          {
+            "element": "Sr",
+            "cartesian_angstrom": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          {
+            "element": "Ti",
+            "cartesian_angstrom": [
+              1.9525,
+              1.9525,
+              1.9525
+            ]
+          },
+          {
+            "element": "O",
+            "cartesian_angstrom": [
+              1.9525,
+              1.9525,
+              0.0
+            ]
+          },
+          {
+            "element": "O",
+            "cartesian_angstrom": [
+              1.9525,
+              0.0,
+              1.9525
+            ]
+          },
+          {
+            "element": "O",
+            "cartesian_angstrom": [
+              0.0,
+              1.9525,
+              1.9525
+            ]
+          }
+        ]
+      },
+      "basis": {
+        "Sr": "gth-dzvp-molopt-sr",
+        "Ti": "def2-tzvp",
+        "O": "def2-svp"
+      },
+      "pseudopotential": {
+        "Sr": "gth-hf-rev"
+      },
+      "kmesh": [
+        6,
+        6,
+        6
+      ],
+      "references": [
+        "PBE"
+      ],
+      "embedding_orbitals": [
+        210
+      ],
+      "paper_anchors": {
+        "r_gamma_gap_ev": 3.24,
+        "gamma_gamma_gap_ev": 3.74,
+        "experimental_indirect_gap_ev": 3.25,
+        "g0w0_pbe_gap_ev": 3.62
+      }
+    },
+    "Na": {
+      "target_ids": [
+        "T006",
+        "T007",
+        "T008",
+        "T009"
+      ],
+      "structure": {
+        "source": "standard bcc structure reconstructed independently; lattice constant not printed in the main article",
+        "lattice_angstrom": [
+          [
+            -2.1125,
+            2.1125,
+            2.1125
+          ],
+          [
+            2.1125,
+            -2.1125,
+            2.1125
+          ],
+          [
+            2.1125,
+            2.1125,
+            -2.1125
+          ]
+        ],
+        "atoms": [
+          {
+            "element": "Na",
+            "cartesian_angstrom": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          }
+        ]
+      },
+      "basis": {
+        "Na": "gth-cc-pvtz"
+      },
+      "pseudopotential": {
+        "Na": "gth-hf-rev"
+      },
+      "kmesh": [
+        8,
+        8,
+        8
+      ],
+      "references": [
+        "PBE"
+      ],
+      "embedding_orbitals": [
+        225
+      ],
+      "paper_anchors": {
+        "pbe_bandwidth_ev": 3.41,
+        "g0w0_pbe_bandwidth_ev": 3.2,
+        "local_gw_ibdet_bandwidth_ev": 3.11,
+        "full_gw_ibdet_bandwidth_ev": 2.84,
+        "arpes_bandwidth_range_ev": [
+          2.65,
+          2.78
+        ],
+        "nonlocal_range_shells": 6
+      }
+    }
+  },
+  "missing_inputs": [
+    "APS Supplement Tables S6 and S7",
+    "production bath-selection thresholds",
+    "production real-frequency grids and broadenings",
+    "exact democratic partition weights",
+    "point-level author spectral arrays",
+    "published crystal structures and all geometry choices used by the authors"
+  ]
+}

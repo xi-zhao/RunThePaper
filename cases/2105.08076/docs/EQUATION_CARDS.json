@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "paper_id": "2105.08076",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Long-range hopping on a half-filled ring",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2) and paragraph below it"
+        }
+      ],
+      "latex": "H=-\\sum_{s\\ne m}d_L(s,m)^{-p}c_s^\\dagger c_m,\\quad p>1",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (2) prints the hopping amplitude and the text specifies a ring, half filling, and a Neel initial state."
+        },
+        {
+          "id": "EQ001-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The minimum periodic distance makes the finite ring translationally invariant and recovers nearest-neighbor hopping as p tends to infinity."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The constructed matrix is Hermitian, circulant, has zero diagonal, and conserves particle number."
+        }
+      ],
+      "numerical_form": "Build the circulant hopping matrix from the minimum periodic distance and propagate occupied orbitals with its exact spectral exponential.",
+      "code_refs": [
+        "src/dark_state_fermions/gaussian.py::long_range_hamiltonian"
+      ],
+      "open_questions": [
+        "The finite-ring distance convention is not explicitly printed; minimum periodic distance is declared rather than inferred from pixels."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Normalized quantum-state-diffusion equation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        }
+      ],
+      "latex": "d|\\psi\\rangle=[-iHdt+\\sum_s(\\xi_sM_s-\\gamma M_s^2dt/2)]|\\psi\\rangle",
+      "role": "dynamical_method",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints M_s=n_s-<n_s> and noise covariance gamma dt."
+        },
+        {
+          "id": "EQ002-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding the diagonal one-body exponential exp[xi_s-gamma(1-<n_s>)dt] through Ito order reproduces the non-scalar terms of the printed normalized SSE."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "QR after every measurement step preserves an orthonormal occupied subspace and exactly fixed particle number."
+        },
+        {
+          "id": "EQ002-C3",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At gamma=0 the split step reduces to exact unitary evolution; at zero hopping monitoring preserves number-basis Slater determinants."
+        }
+      ],
+      "numerical_form": "Use a symmetric unitary/measurement split; draw xi_s~N(0,gamma dt), apply the derived diagonal exponential, and QR the occupied orbitals.",
+      "code_refs": [
+        "src/dark_state_fermions/gaussian.py::GaussianTrajectory"
+      ],
+      "open_questions": [
+        "The paper omits dt, burn-in, stationary-time tolerance, and trajectory count; these are convergence parameters."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Gaussian entropy and positive correlation observables",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (4a,b)"
+        }
+      ],
+      "latex": "S=-\\sum_j[\\nu_j\\log\\nu_j+(1-\\nu_j)\\log(1-\\nu_j)],\\quad C_+(l)=|G_{x,x+l}|^2",
+      "role": "observable",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4) defines subsystem von Neumann entropy and plots a positive modulus-squared one-body correlator."
+        },
+        {
+          "id": "EQ003-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For a number-conserving Gaussian state the eigenvalues of the restricted projector give the exact subsystem entropy."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A number-basis product state has projector eigenvalues zero or one and therefore zero entanglement."
+        },
+        {
+          "id": "EQ003-C3",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Translation averaging is performed only after evaluating each trajectory's nonlinear observable."
+        }
+      ],
+      "numerical_form": "Construct G=QQ^dagger, diagonalize each contiguous subsystem block for S, and average |G_xy|^2 over origins and trajectories.",
+      "code_refs": [
+        "src/dark_state_fermions/observables.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Wick sign of the connected density covariance",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4b)"
+        }
+      ],
+      "latex": "\\langle n_xn_y\\rangle-\\langle n_x\\rangle\\langle n_y\\rangle=-|G_{xy}|^2\\quad(x\\ne y)",
+      "role": "paper_consistency_check",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4b) explicitly equates the connected density covariance with positive |G_xy|^2."
+        },
+        {
+          "id": "EQ004-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct fermionic Wick contraction gives -|G_xy|^2 for distinct sites."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent exact-Fock and Slater-projector checks are required to compare the literal covariance with the plotted positive quantity."
+        }
+      ],
+      "numerical_form": "Store both the literal signed covariance and C_+=|G_xy|^2; reproduce the positive plotted magnitude while preserving the sign discrepancy for review.",
+      "code_refs": [
+        "src/dark_state_fermions/observables.py::density_correlations",
+        "src/dark_state_fermions/audit.py::wick_sign_checks"
+      ],
+      "open_questions": [
+        "Did the authors intend C to mean minus the connected covariance?"
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Finite-size scaling and fit observables",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (7)-(9) and numerical-procedure section"
+        }
+      ],
+      "latex": "S=B L^b+(c/3)\\log(L/\\pi)+s_0,\\quad C=[A L^a+D L]^{-1}",
+      "role": "analysis_method",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the CFT chord-length form, the half-chain mixed ansatz, and the L/4 to 3L/4 fit window."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "B=0 gives CFT or area-law entropy scaling; b>0 and a<2 identify the algebraic phase."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Synthetic curves with known c, a, and b are recovered by the independent fitting functions."
+        }
+      ],
+      "numerical_form": "Fit central charge on the printed chord-length window and extract power-law exponents from size/subsystem data with uncertainty and finite-size diagnostics.",
+      "code_refs": [
+        "src/dark_state_fermions/scaling.py"
+      ],
+      "open_questions": [
+        "The paper does not print fit weights or uncertainty model."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Replica long-range term and exponent doubling",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3c); Supplement Eqs. (1)-(5)"
+        }
+      ],
+      "latex": "H_{lr}=i\\Delta\\int dxdy|y|^{-2p}[1+\\cos(\\sqrt2(\\theta_x-\\theta_{x+y}))]",
+      "role": "effective_model",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement derives the first nonzero relative-replica contribution at second order in the microscopic hopping."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Multiplying the two hopping kernels gives |y|^-2p and the Keldysh identification supplies the imaginary coefficient."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Two space integrals and one time integral give the canonical coupling dimension 3-2p."
+        }
+      ],
+      "numerical_form": "Evaluate the independent continuum kernel and RG scaling dimension without importing trajectory data.",
+      "code_refs": [
+        "src/dark_state_fermions/theory.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Infrared long-range kernel and threshold",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (10)-(13)"
+        }
+      ],
+      "latex": "K_p(q)=\\int_1^\\infty dy\\,\\sin^2(qy/2)y^{-2p}\\sim |q|^{2p-1}I_p",
+      "role": "independent_cross_check",
+      "derived_from": [
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the rescaling integral and separates p below and above 3/2."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "For 1<p<3/2 the nonanalytic exponent 2p-1 is below two and dominates q^2; above 3/2 the ultraviolet contribution restores q^2."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Log-log quadrature over independently chosen q values must recover 2p-1 below the threshold and two above it."
+        }
+      ],
+      "numerical_form": "Numerically integrate K_p(q), fit its infrared exponent, and verify the crossover at p=3/2.",
+      "code_refs": [
+        "src/dark_state_fermions/theory.py::infrared_kernel"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Dark-state covariance and algebraic exponents",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (8)-(10); Supplement Eqs. (14)-(19)"
+        }
+      ],
+      "latex": "\\langle\\phi_{-q}\\phi_q\\rangle=(3\\pi/2)\\sqrt{\\Delta_p/|\\eta|}|q|^{p-5/2},\\quad b=3/2-p,\\ a=p+1/2",
+      "role": "analytic_reference",
+      "derived_from": [
+        "EQ003",
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text and supplement print the covariance and both real-space exponents."
+        },
+        {
+          "id": "EQ008-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "One-dimensional Fourier scaling maps |q|^(p-5/2) to l^(3/2-p), and two derivatives give a=p+1/2."
+        },
+        {
+          "id": "EQ008-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At p approaching 3/2 from below, b tends to zero and a tends to two; b=2-a identically."
+        }
+      ],
+      "numerical_form": "Generate the analytic theory lines and independently fit discrete Fourier/quadrature data for the same exponents.",
+      "code_refs": [
+        "src/dark_state_fermions/theory.py::dark_state_exponents"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "First-order long-range RG flow",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (6)-(7); Supplement Eqs. (20)-(23)"
+        }
+      ],
+      "latex": "\\partial_s\\Delta=(3-2p-\\eta)\\Delta,\\quad \\partial_s\\eta=-\\eta^2\\Delta",
+      "role": "phase_boundary_check",
+      "derived_from": [
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both flow equations are printed in the main text and derived in the supplement."
+        },
+        {
+          "id": "EQ009-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At small eta, the sign of 3-2p makes Delta grow below p=3/2 and decay above it."
+        },
+        {
+          "id": "EQ009-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent ODE integration reproduces the opposing flow directions on the two sides of p=3/2."
+        }
+      ],
+      "numerical_form": "Integrate the complex or real-proxy RG flow as an independent phase-classification diagnostic.",
+      "code_refs": [
+        "src/dark_state_fermions/theory.py::integrate_rg"
+      ],
+      "open_questions": [
+        "The paper rescales an approximately constant F_a into Delta, so RG amplitudes are convention-dependent while flow directions are robust."
+      ]
+    }
+  ]
+}

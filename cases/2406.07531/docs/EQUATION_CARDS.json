@@ -1,0 +1,320 @@
+{
+  "schema_version": 1,
+  "paper_id": "2406.07531",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Density-matrix Schmidt bath",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Method paragraph defining B_DM"
+        }
+      ],
+      "latex": "gamma_EI = U s V^dagger; B_DM = columns(U) with retained singular values",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The off-diagonal 1-RDM SVD construction is stated explicitly."
+        },
+        {
+          "id": "EQC001-LIM",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The independent Slater-determinant test reconstructs the impurity 1-RDM to below 1e-12."
+        }
+      ],
+      "numerical_form": "SVD the environment-impurity block, retain nonzero singular vectors, and orthonormalize against impurity orbitals.",
+      "code_refs": [
+        "src/ibdet_reproduction/baths.py::density_matrix_bath"
+      ],
+      "open_questions": [
+        "The production singular-value threshold is not printed."
+      ]
+    },
+    {
+      "id": "EQC002",
+      "title": "Green-function bath",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Method paragraph defining B_GF"
+        }
+      ],
+      "latex": "Im g_EI(omega_n) = U_n s_n V_n^dagger; B_GF = orthogonalized union of retained U_n",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The real-frequency SVD construction and uniform grid are stated."
+        },
+        {
+          "id": "EQC002-ORTH",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The selected union is orthonormal and disjoint from impurity and B_DM to below 1e-12."
+        }
+      ],
+      "numerical_form": "Evaluate the mean-field resolvent on a real-frequency grid, concatenate weighted environment singular vectors, and rank-reveal by SVD.",
+      "code_refs": [
+        "src/ibdet_reproduction/baths.py::green_function_bath"
+      ],
+      "open_questions": [
+        "Frequency range, spacing, broadening, and threshold are not printed."
+      ]
+    },
+    {
+      "id": "EQC003",
+      "title": "Cluster-specific natural-orbital bath",
+      "source_refs": [
+        {
+          "type": "method",
+          "value": "Method paragraph defining B_NO"
+        }
+      ],
+      "latex": "D_env^(2) = dMP2 environment 1-RDM; D_env^(2) U = U n; B_NO = selected columns(U)",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC003-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The dMP2 natural-orbital idea and low virtual augmentation are stated, but the complete selection algorithm is not."
+        },
+        {
+          "id": "EQC003-INV",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent tests clip only roundoff outside [0,1] and verify the selected orbitals are orthonormal."
+        }
+      ],
+      "numerical_form": "Diagonalize a projected dMP2 correlated 1-RDM, select occupied and virtual natural orbitals by explicit thresholds, and optionally append the lowest canonical virtuals.",
+      "code_refs": [
+        "src/ibdet_reproduction/baths.py::natural_orbital_bath"
+      ],
+      "open_questions": [
+        "Natural-occupation thresholds, dMP2 partition details, and number of low virtuals are not printed."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "Projected interacting Hamiltonian and HF double-counting removal",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eqs. (1)-(2)"
+        }
+      ],
+      "latex": "H_emb = sum_ij Ftilde_ij a_i^dagger a_j + 1/2 sum_ijkl (ij|kl) a_i^dagger a_k^dagger a_l a_j; Ftilde_ij = Femb_ij - sum_kl gammaemb_kl[(ij|lk)-1/2(ik|lj)]",
+      "role": "physical_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both equations and the projection Femb=Rdagger Ffull R are printed."
+        },
+        {
+          "id": "EQC004-HF",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Re-adding the projected Hartree-Fock contraction recovers Femb to 1.4e-17 in the attested validation."
+        }
+      ],
+      "numerical_form": "Transform one- and two-electron tensors with R and subtract the embedded Hartree-Fock self-energy exactly once.",
+      "code_refs": [
+        "src/ibdet_reproduction/embedding.py::project_hamiltonian",
+        "src/ibdet_reproduction/embedding.py::remove_hf_self_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Embedded-to-full self-energy assembly",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3) and democratic-partition paragraph"
+        }
+      ],
+      "latex": "Sigma_full,J(omega) = R_J Sigma_emb,J(omega) R_J^dagger",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The rotation is printed explicitly."
+        },
+        {
+          "id": "EQC005-COV",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Independent unitary-rotation tests recover the embedded self-energy to below 1e-11."
+        }
+      ],
+      "numerical_form": "Rotate each impurity-centred self-energy, combine overlapping blocks with explicit democratic weights, and Fourier transform lattice translations to momentum.",
+      "code_refs": [
+        "src/ibdet_reproduction/embedding.py::rotate_self_energy",
+        "src/ibdet_reproduction/embedding.py::democratic_assembly"
+      ],
+      "open_questions": [
+        "The exact democratic weighting convention is not printed in the main article."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "GW plus ibDET self-energy replacement",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4)"
+        }
+      ],
+      "latex": "Sigma_GW+ibDET = Sigma_GW,full + Sigma_CC,ibDET - Sigma_GW,ibDET",
+      "role": "physical_model",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The replacement equation is printed explicitly."
+        },
+        {
+          "id": "EQC006-LIM",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The independent limiting-case test reduces to full-system GW exactly."
+        }
+      ],
+      "numerical_form": "Combine three self-energy tensors only after aligning basis, frequency grid, chemical potential, and static-reference conventions.",
+      "code_refs": [
+        "src/ibdet_reproduction/embedding.py::combine_gw_ibdet"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Dyson spectral observables",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Figs. 2-4 and standard Dyson relation"
+        }
+      ],
+      "latex": "G(k,omega)=[(omega+mu+i eta)S(k)-F(k)-Sigma_c(k,omega)]^-1; A(k,omega)=-(1/pi) Im Tr[S(k)G(k,omega)]",
+      "role": "derived_observable",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The figure captions and text define DOS, spectral maps, gaps, and occupied bandwidths as the observables."
+        },
+        {
+          "id": "EQC007-SUM",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The attested Lehmann spectrum satisfies the integrated spectral-weight sum rule to 0.45 percent."
+        },
+        {
+          "id": "EQC007-GAP",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The noninteracting limit gives a self-energy below 2e-11 and identical Lehmann and Dyson spectra."
+        }
+      ],
+      "numerical_form": "Solve Dyson's equation on declared k and frequency grids, integrate for DOS, and extract direct or indirect gaps and occupied bandwidths.",
+      "code_refs": [
+        "src/ibdet_reproduction/spectra.py::spectral_function",
+        "src/ibdet_reproduction/spectra.py::density_of_states",
+        "src/ibdet_reproduction/spectra.py::extract_gap_from_levels"
+      ],
+      "open_questions": [
+        "Production frequency grids and broadenings are not printed."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Local-only counterfactual and real-space nonlocal range",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Main Fig. 4(b,c) and Na analysis"
+        }
+      ],
+      "latex": "DeltaSigma(R,omega)=Sigma_CC(R,omega)-Sigma_GW(R,omega); DeltaSigma_local(R,omega)=delta_R0 DeltaSigma(R,omega)",
+      "role": "falsification_model",
+      "derived_from": [
+        "EQC005",
+        "EQC006",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008-SRC",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Na analysis explicitly defines the local-only correction and the real-space 3s-3s shell observable."
+        },
+        {
+          "id": "EQC008-LOCAL",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The local counterfactual test preserves same-atom blocks and zeros every interatomic block exactly."
+        },
+        {
+          "id": "EQC008-FT",
+          "type": "backend_parity",
+          "status": "passed",
+          "reason": "The finite-grid transform implementation is covered by direct algebraic tests."
+        }
+      ],
+      "numerical_form": "Zero all interatomic correction blocks for the local counterfactual; shell-average the full real-space 3s-3s correction for Fig. 4(c).",
+      "code_refs": [
+        "src/ibdet_reproduction/embedding.py::local_only_correction",
+        "src/ibdet_reproduction/spectra.py::neighbour_shell_correction"
+      ],
+      "open_questions": [
+        "The paper does not print point-level shell values."
+      ]
+    }
+  ]
+}
