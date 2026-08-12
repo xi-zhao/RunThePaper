@@ -5,10 +5,10 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
 CASE_CONTRACT = "paper_reproduction_only_v1"
+AUTHORITY_SOURCE = "PRAgent authoritative_reproduction_state schema v3"
 README_CATALOG_START = "<!-- case-catalog:start -->"
 README_CATALOG_END = "<!-- case-catalog:end -->"
 
@@ -18,8 +18,11 @@ def load_catalog() -> list[dict[str, Any]]:
     if (
         payload.get("schema_version") != 2
         or payload.get("case_contract") != CASE_CONTRACT
+        or payload.get("authority_source") != AUTHORITY_SOURCE
     ):
-        raise ValueError("unsupported catalog schema or case contract")
+        raise ValueError(
+            "unsupported catalog schema, case contract, or authority source"
+        )
     cases = payload.get("cases")
     if not isinstance(cases, list) or not cases:
         raise ValueError("catalog must contain cases")
@@ -29,7 +32,9 @@ def load_catalog() -> list[dict[str, Any]]:
 def preprint_reference(case: dict[str, Any]) -> str:
     preprint = case["preprint"]
     if preprint.get("status") == "not_recorded":
-        return f"No preprint recorded / 未检索到预印本（checked {preprint['checked_at']}）"
+        return (
+            f"No preprint recorded / 未检索到预印本（checked {preprint['checked_at']}）"
+        )
     return f"[{preprint['identifier']}]({preprint['url']})"
 
 
@@ -81,8 +86,13 @@ def render_readme_catalog(cases: list[dict[str, Any]]) -> str:
 def render_root_readme(cases: list[dict[str, Any]]) -> str:
     path = ROOT / "README.md"
     content = path.read_text(encoding="utf-8")
-    if content.count(README_CATALOG_START) != 1 or content.count(README_CATALOG_END) != 1:
-        raise ValueError("README.md must contain exactly one generated case-catalog block")
+    if (
+        content.count(README_CATALOG_START) != 1
+        or content.count(README_CATALOG_END) != 1
+    ):
+        raise ValueError(
+            "README.md must contain exactly one generated case-catalog block"
+        )
     start = content.index(README_CATALOG_START) + len(README_CATALOG_START)
     end = content.index(README_CATALOG_END, start)
     generated = "\n" + render_readme_catalog(cases) + "\n"
@@ -120,10 +130,16 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
     preprint = case["preprint"]
     publication = case["publication"]
     figures = sorted((case_dir / "outputs" / "figures").glob("*.png"))
-    featured_results = [item for item in case.get("featured_results", []) if isinstance(item, dict)]
-    comparison_results = [item for item in case.get("comparison_results", []) if isinstance(item, dict)]
+    featured_results = [
+        item for item in case.get("featured_results", []) if isinstance(item, dict)
+    ]
+    comparison_results = [
+        item for item in case.get("comparison_results", []) if isinstance(item, dict)
+    ]
     if preprint.get("status") == "not_recorded":
-        preprint_line = f"Preprint: **No preprint recorded as of {preprint['checked_at']}**"
+        preprint_line = (
+            f"Preprint: **No preprint recorded as of {preprint['checked_at']}**"
+        )
     else:
         preprint_line = f"Preprint: [{preprint['identifier']} — {preprint['title']}]({preprint['url']})"
     lines = [
@@ -169,7 +185,9 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
         ]
     )
     if (case_dir / "outputs" / "checks" / "completion_assessment.json").is_file():
-        lines.append("- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)")
+        lines.append(
+            "- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)"
+        )
     if (case_dir / "note" / "reproduction-note.zh-CN.pdf").is_file():
         lines.append("- [中文复现 Note PDF](note/reproduction-note.zh-CN.pdf)")
     if (case_dir / "docs" / "DERIVATION.md").is_file():
@@ -266,7 +284,9 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
                 "```bash",
                 f"cd cases/{paper_id}/code",
                 *[
-                    render_script_command(str(script), case.get("full_run_script_arguments"))
+                    render_script_command(
+                        str(script), case.get("full_run_script_arguments")
+                    )
                     for script in full_run_scripts
                 ],
                 "```",
@@ -311,9 +331,7 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def render_script_command(
-    script: str, arguments: dict[str, Any] | None = None
-) -> str:
+def render_script_command(script: str, arguments: dict[str, Any] | None = None) -> str:
     suffix = str((arguments or {}).get(script, "")).strip()
     command = f"python scripts/{script}"
     return f"{command} {suffix}" if suffix else command
@@ -355,7 +373,9 @@ def render_code_readme(case: dict[str, Any]) -> str:
                 "```bash",
                 f"cd cases/{paper_id}/code",
                 *[
-                    render_script_command(str(script), case.get("full_run_script_arguments"))
+                    render_script_command(
+                        str(script), case.get("full_run_script_arguments")
+                    )
                     for script in full_run_scripts
                 ],
                 "```",
@@ -387,7 +407,7 @@ def render_note_index(case: dict[str, Any], case_dir: Path) -> str:
         [
             "- [English getting-started note](reproduction-note.en.md)",
             "",
-            f"Case overview: [../README.md](../README.md)",
+            "Case overview: [../README.md](../README.md)",
             "",
         ]
     )
@@ -405,12 +425,16 @@ def expected_files(cases: list[dict[str, Any]]) -> dict[Path, str]:
             raise FileNotFoundError(case_dir)
         rendered[case_dir / "README.md"] = render_case_readme(case, case_dir)
         rendered[case_dir / "code" / "README.md"] = render_code_readme(case)
-        rendered[case_dir / "note" / "reproduction-note.md"] = render_note_index(case, case_dir)
+        rendered[case_dir / "note" / "reproduction-note.md"] = render_note_index(
+            case, case_dir
+        )
     return rendered
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render public case navigation from the catalog.")
+    parser = argparse.ArgumentParser(
+        description="Render public case navigation from the catalog."
+    )
     parser.add_argument(
         "--check",
         action="store_true",

@@ -6,7 +6,7 @@ Published as: [Nonreciprocal Photon Blockade](https://doi.org/10.1103/PhysRevLet
 
 Formal citation: Physical Review Letters 121, 153601 (2018) · DOI `10.1103/PhysRevLett.121.153601` · Locator `153601`
 
-Public status: **Scientific reproduction — visual review pending** · Audit score: **82.24/100**
+Public status: **Partial scientific reproduction** · Audit score: **82.24/100**
 
 Case scaffolded from framework/templates/paper_case.
 

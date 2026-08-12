@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from scripts.validate_public_cases import scientific_python_files, validate_paper_identity
+from scripts.validate_public_cases import (
+    scientific_python_files,
+    validate_authority_projection,
+    validate_paper_identity,
+)
 
 
 class PaperIdentityValidationTests(unittest.TestCase):
@@ -95,6 +100,72 @@ class ScientificImplementationValidationTests(unittest.TestCase):
             runner.write_text("", encoding="utf-8")
 
             self.assertEqual([runner], scientific_python_files(case_dir))
+
+
+class AuthorityProjectionValidationTests(unittest.TestCase):
+    def test_accepts_consistent_pragent_projection(self) -> None:
+        with TemporaryDirectory() as directory:
+            case_dir = Path(directory)
+            checks = case_dir / "outputs/checks"
+            checks.mkdir(parents=True)
+            status = {
+                "paper_id": "paper",
+                "authoritative_status": "partial",
+                "complete": False,
+            }
+            (checks / "completion_assessment.json").write_text(
+                json.dumps(status), encoding="utf-8"
+            )
+            (checks / "publication_provenance.json").write_text(
+                json.dumps({**status, "master_git_sha": "a" * 40}),
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+
+            validate_authority_projection(
+                {
+                    **status,
+                    "registry_scope": "paper_reproduction",
+                    "master_git_sha": "a" * 40,
+                },
+                case_dir,
+                errors,
+            )
+
+            self.assertEqual([], errors)
+
+    def test_rejects_status_drift(self) -> None:
+        with TemporaryDirectory() as directory:
+            case_dir = Path(directory)
+            checks = case_dir / "outputs/checks"
+            checks.mkdir(parents=True)
+            (checks / "completion_assessment.json").write_text(
+                '{"paper_id":"paper","authoritative_status":"complete","complete":true}',
+                encoding="utf-8",
+            )
+            (checks / "publication_provenance.json").write_text(
+                '{"paper_id":"paper","authoritative_status":"partial","complete":false,'
+                '"master_git_sha":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}',
+                encoding="utf-8",
+            )
+            errors: list[str] = []
+
+            validate_authority_projection(
+                {
+                    "paper_id": "paper",
+                    "registry_scope": "paper_reproduction",
+                    "authoritative_status": "partial",
+                    "complete": False,
+                    "master_git_sha": "a" * 40,
+                },
+                case_dir,
+                errors,
+            )
+
+            self.assertTrue(
+                any("completion authoritative_status mismatch" in e for e in errors)
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,7 @@ Published as: [Amplitude estimation without phase estimation](https://doi.org/10
 
 Formal citation: Quantum Information Processing 19, 75 (2020) · DOI `10.1007/s11128-019-2565-2` · Locator `75`
 
-Public status: **Historical scientific artifact (4 numerical targets; 4 reproduced)** · Audit score: **95.00/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **95.00/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 4 public generated data files, 4 public generated figures, and 4 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

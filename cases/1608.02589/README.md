@@ -6,7 +6,7 @@ Published as: [Discrete Time Crystals: Rigidity, Criticality, and Realizations](
 
 Formal citation: Physical Review Letters 118, 030401 (2017) · DOI `10.1103/PhysRevLett.118.030401` · Locator `030401`
 
-Public status: **Medium-scale partial reproduction** · Audit score: **73.56/100**
+Public status: **Partial scientific reproduction** · Audit score: **73.56/100**
 
 Reproduces subharmonic rigidity, level statistics, variance, long-range variance, and mutual-information features with exact local evolution.
 

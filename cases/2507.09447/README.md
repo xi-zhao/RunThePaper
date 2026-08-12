@@ -6,7 +6,7 @@ Published as: [Universal Thouless relations for disordered non–Hermitian syste
 
 Formal citation: Science Bulletin (2026), online ahead of print · DOI `10.1016/j.scib.2026.05.055` · Locator `PII S2095-9273(26)00583-9`
 
-Public status: **Paper-scale feature reproduction** · Audit score: **89.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **89.00/100**
 
 Reproduces Figs. 3–5 with an L=1000, 3200-realization spectral ensemble, Lyapunov grids, state profiles, winding sectors, and the W_c=2.1 transition.
 

@@ -6,7 +6,7 @@ Published as: [Buffer-atom-mediated quantum logic gates with off-resonant modula
 
 Formal citation: Sci. China-Phys. Mech. Astron. 67, 120311 (2024) · DOI `10.1007/s11433-024-2478-8` · Locator `Article 120311`
 
-Public status: **Mixed: Fig. 3 complete, Fig. 4/5/7 feature-level** · Audit score: **84.60/100**
+Public status: **Partial scientific reproduction** · Audit score: **84.60/100**
 
 Reproduces the buffer-atom-mediated CZ gate from an independent three-body Rydberg Hamiltonian: single-photon waveforms, populations, and phases (Fig. 3, complete, gate error < 1e-4), the two-photon protocol (Fig. 4), the Doppler-insensitive dual-pulse upgrade (Fig. 5), and the amplitude-ratio robustness map (Fig. 7).
 
@@ -16,6 +16,7 @@ Reproduces the buffer-atom-mediated CZ gate from an independent three-body Rydbe
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

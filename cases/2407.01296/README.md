@@ -6,7 +6,7 @@ Published as: [Geometry-adaptive formulation of non-Bloch bands in arbitrary dim
 
 Formal citation: Communications Physics 9, 127 (2026) · DOI `10.1038/s42005-026-02546-2` · Locator `Article 127`
 
-Public status: **Scientific contract complete: 35/35 numerical subplots and 8/8 claims; main-text pixel-registered, not identical** · Audit score: **89.27/100**
+Public status: **Partial scientific reproduction** · Audit score: **89.27/100**
 
 Completes the formula- and method-derived scientific evidence chain for all 35 declared main-text and supplementary numerical subplots. All 8 scoped claims, 15 formula cards, and 15 execution runs pass; every panel, including all 317 Fig. 2(d) finite-size probes and the exact Fig. S4 middle-root TDL continuum, is independently equation- or model-generated.
 

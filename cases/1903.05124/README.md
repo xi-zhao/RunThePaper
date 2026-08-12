@@ -6,7 +6,7 @@ Published as: [Quantum Error Correction in Scrambling Dynamics and Measurement-I
 
 Formal citation: Phys. Rev. Lett. 125, 030505 (2020) · DOI `10.1103/PhysRevLett.125.030505` · Locator `030505`
 
-Public status: **Complete-scope mixed-scale numerical reproduction** · Audit score: **78.41/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **78.41/100**
 
 Independently derives the decoupling, Clifford frame-potential, stabilizer-entropy, channel-capacity, and finite-size-scaling formulas, then reproduces all 44 theory-numerical panels and insets across Main Fig. 2(b-e) and Supplement Figs. S2-S6. Twenty items are at paper scale and 24 are explicitly feature scale. Every generated value comes from formulas, fresh Clifford/stabilizer trajectories, or fits of those trajectories; paper pixels are downstream presentation-audit inputs only.
 
@@ -16,6 +16,7 @@ Independently derives the decoupling, Clifford frame-potential, stabilizer-entro
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

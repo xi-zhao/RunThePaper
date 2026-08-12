@@ -4,7 +4,7 @@ Preprint: [arXiv:2607.15597 — Deterministic atom-shuttle interconnects via ult
 
 Formal publication: **Not recorded as of 2026-07-23**
 
-Public status: **Numerical feature reproduction with pixel-registered figures** · Audit score: **75.21/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **75.21/100**
 
 Independently reconstructs the single-ion geometric CZ gate, exact operating-point and decay tables, ten-ion axial modes with a deterministic 25-segment closure sequence, the approximately 2 mm interconnect crossover, disclosed qLDPC projections, and circular-state feature models. Eight generated figures are also registered to the paper canvas; all dimensions match exactly, while strict full-image pixel identity is explicitly not claimed.
 
@@ -18,6 +18,7 @@ Independently reconstructs the single-ion geometric CZ gate, exact operating-poi
 - [Pixel-registration metrics](outputs/checks/pixel_metrics.json)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

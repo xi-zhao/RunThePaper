@@ -6,7 +6,7 @@ Published as: [Simulation of Quantum Circuits Using the Big-Batch Tensor Network
 
 Formal citation: Physical Review Letters 128, 030501 (2022) · DOI `10.1103/PhysRevLett.128.030501` · Locator `030501`
 
-Public status: **Compute-bounded feature reproduction** · Audit score: **70.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **70.00/100**
 
 Reproduces batch-probability, post-selection XEB, conditional-probability, and complexity-table features.
 

@@ -49,6 +49,11 @@ and article/page/PII locator. If no formal publication can be found, use
 `publication.status: "not_recorded"` together with `checked_at`; do not use an
 empty DOI as an implicit status.
 
+Case files and lifecycle fields are generated from the corresponding PRAgent
+master projection. A contribution must update the PRAgent case and its
+`workspace/publish_manifest.json` first; RunThePaper does not accept a manually
+authored case directory or completion claim.
+
 At least one paper identity must be verifiable. A case may have an unrecorded
 preprint or an unrecorded formal publication, but never both. Before adding a
 case, confirm that its code, generated data, figures, and checks reproduce

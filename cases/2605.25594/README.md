@@ -4,7 +4,7 @@ Preprint: [arXiv:2605.25594 — Sensitivity to perturbations in the three-dimens
 
 Formal publication: **Not recorded as of 2026-07-14**
 
-Public status: **Paper-scale subset reproduction** · Audit score: **67.49/100**
+Public status: **Partial scientific reproduction** · Audit score: **67.49/100**
 
 Reproduces disorder sensitivity, gap-ratio, IPR, susceptibility separation, and phenomenological strong-disorder trends, including an A100 campaign at L=24,28,31 with 605 disorder realizations.
 

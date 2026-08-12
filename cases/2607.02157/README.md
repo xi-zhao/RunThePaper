@@ -4,7 +4,7 @@ Preprint: [arXiv:2607.02157 — Thermodynamics of Quantum Reservoir Computing](h
 
 Formal publication: **Not recorded as of 2026-07-20**
 
-Public status: **Feature-level reproduction (two final targets, one exploratory target)** · Audit score: **77.27/100**
+Public status: **Partial scientific reproduction** · Audit score: **77.27/100**
 
 Independently reproduces the three numerical figures of Ding & Qiu's thermodynamics of quantum reservoir computing with an explicit stage boundary. Fig. 2 and Fig. S2 use the completed paper-scale A100 campaign and are guarded final reproductions. Fig. S1 reproduces the resonance location and spectral fingerprints but remains exploratory because its drive and disorder ensembles are reduced. The central identity beta*W_irr = chi^d (Eq. 13) holds at machine precision, and the capacity peaks and NMSE minima coincide inside the quantum critical regions.
 
@@ -14,6 +14,7 @@ Independently reproduces the three numerical figures of Ding & Qiu's thermodynam
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

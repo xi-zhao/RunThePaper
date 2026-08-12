@@ -6,7 +6,7 @@ Published as: [Boundary element method for resonances in dielectric microcavitie
 
 Formal citation: Journal of Optics A: Pure and Applied Optics 5, 53–60 (2003) · DOI `10.1088/1464-4258/5/1/308` · Locator `53–60`
 
-Public status: **Reduced-scale reproduction of all numerical figures** · Audit score: **50.49/100**
+Public status: **Partial scientific reproduction** · Audit score: **50.49/100**
 
 Independently implements the paper's boundary-element equations and regenerates all and only its numerical figures: the scattering cross section, resonant near field, and far-field radiation pattern. All three targets pass independent physical checks.
 
@@ -17,6 +17,7 @@ Independently implements the paper's boundary-element equations and regenerates 
 - [Similarity scorecard](docs/SIMILARITY_SCORECARD.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

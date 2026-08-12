@@ -6,7 +6,7 @@ Published as: [Enhancing Nonreciprocity through Squeezing-Induced Symmetry Break
 
 Formal citation: Physical Review Letters 136, 253602 (2026) · DOI `10.1103/kh36-7z76` · Locator `253602`
 
-Public status: **Scientific contract complete: 23/23 numerical panels; 4 claims verified and 1 published cutoff claim rejected** · Audit score: **90.31/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.31/100**
 
 Independently generates every theory-numerical panel from the paper's coupling, Gaussian moment, steady-state, passive-energy, derivative, and scattering equations. Eight of ten target bundles are fully reproduced. The audit verifies four central claims, rejects the published quantitative Figure S1 cutoff claim, and corrects Figure S3's printed absolute-energy label to the formula- and curve-consistent normalized enhancement.
 
@@ -16,6 +16,7 @@ Independently generates every theory-numerical panel from the paper's coupling, 
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

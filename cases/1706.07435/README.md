@@ -6,7 +6,7 @@ Published as: [Topological Band Theory for Non-Hermitian Hamiltonians](https://d
 
 Formal citation: Phys. Rev. Lett. 120, 146402 (2018) · DOI `10.1103/PhysRevLett.120.146402` · Locator `146402`
 
-Public status: **Complete equation-level reproduction** · Audit score: **90.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.00/100**
 
 Independently derives and numerically reproduces all 15 theory-numerical panels across Main Figs. 1-3 and Supplement Figs. 2-4: complex bulk and domain-wall spectra, exceptional-point sheet exchange and half vorticity, phase boundaries and opposite charges, paper-exact cylinder spectra, and hybrid directional exponents. All generated arrays come from formulas or independent eigensolvers; paper pixels are downstream visual-audit inputs only.
 
@@ -16,6 +16,7 @@ Independently derives and numerically reproduces all 15 theory-numerical panels 
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

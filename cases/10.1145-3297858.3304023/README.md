@@ -6,7 +6,7 @@ Published as: [Tackling the Qubit Mapping Problem for NISQ-Era Quantum Devices](
 
 Formal citation: ASPLOS '19, pp. 1001–1014 · DOI `10.1145/3297858.3304023` · Locator `1001–1014`
 
-Public status: **Full-corpus mechanism reproduction** · Audit score: **68.29/100**
+Public status: **Partial scientific reproduction** · Audit score: **68.29/100**
 
 Reconstructs the SABRE routing pipeline, swap trace, reverse traversal, decay trade-off, and all 26 rows of Table II. Row-exact optimized values remain limited by unpublished run metadata.
 

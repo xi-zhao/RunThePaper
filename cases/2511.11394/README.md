@@ -6,7 +6,7 @@ Published as: [Relaxation toward an Ideal Chern Band through Coupling to a Marko
 
 Formal citation: Physical Review Letters 137, 046601 (2026) · DOI `10.1103/d766-sns5` · Locator `046601`
 
-Public status: **Historical scientific artifact (6 numerical targets; 5 evidence_compared, 1 partially_reproduced)** · Audit score: **67.10/100**
+Public status: **Partial scientific reproduction** · Audit score: **67.10/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 14 public generated data files, 11 public generated figures, and 6 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

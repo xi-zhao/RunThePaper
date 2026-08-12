@@ -6,7 +6,7 @@ Published as: [Exact Fractionalized Ground States in an Extended Spin-1 Kitaev C
 
 Formal citation: Physical Review Letters 137, 046701 (2026) · DOI `10.1103/fy4t-6bh8` · Locator `046701`
 
-Public status: **Historical scientific artifact (4 numerical targets; 4 evidence_compared)** · Audit score: **95.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **95.00/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 4 public generated data files, 2 public generated figures, and 4 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

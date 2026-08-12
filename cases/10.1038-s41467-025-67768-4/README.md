@@ -6,7 +6,7 @@ Published as: [Demonstrating quantum error mitigation on logical qubits](https:/
 
 Formal citation: Nature Communications 17, 1021 (2026) · DOI `10.1038/s41467-025-67768-4` · Locator `1021`
 
-Public status: **Historical scientific artifact (9 numerical targets; 2 blocked_missing_method, 1 failed, 5 partially_reproduced, 1 reproduced)** · Audit score: **72.25/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **72.25/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 7 public generated data files, 10 public generated figures, and 9 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

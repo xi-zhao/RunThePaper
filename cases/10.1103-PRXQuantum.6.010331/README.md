@@ -6,7 +6,7 @@ Published as: [Benchmarking and Fidelity Response Theory of High-Fidelity Rydber
 
 Formal citation: PRX Quantum 6, 010331 (2025) · DOI `10.1103/PRXQuantum.6.010331` · Locator `010331`
 
-Public status: **Formula-derived numerical reproduction** · Audit score: **79.89/100**
+Public status: **Partial scientific reproduction** · Audit score: **79.89/100**
 
 Reproduces all nine theory targets closed by printed formulas and public control parameters: Appendix-L universal responses and scaling, error and principal-quantum-number laws, three protocol-level CZ responses, spin-lock and cavity filters, the phase-flip/SSB model, and a seven-site many-body response. Every dataset is generated from formulas or Hamiltonian propagation; no source-figure pixels enter computation.
 
@@ -16,6 +16,7 @@ Reproduces all nine theory targets closed by printed formulas and public control
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

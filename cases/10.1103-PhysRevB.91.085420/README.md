@@ -6,7 +6,7 @@ Published as: [Interband coherence induced correction to adiabatic pumping in pe
 
 Formal citation: Physical Review B 91, 085420 (2015) · DOI `10.1103/PhysRevB.91.085420` · Locator `085420`
 
-Public status: **Feature-level reproduction** · Audit score: **79.54/100**
+Public status: **Partial scientific reproduction** · Audit score: **79.54/100**
 
 Independently reproduces all four figures of the continuously driven Harper model pumping study: the Floquet spectrum and initial populations, the one-cycle population change from exact dynamics versus Eq. (8), the T-independent wave-packet displacement, and the topological-transition probe -- confirming that the Berry-only term is wrong and the interband-coherence correction of Eq. (13) is essential.
 
@@ -16,6 +16,7 @@ Independently reproduces all four figures of the continuously driven Harper mode
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [中文复现 Note PDF](note/reproduction-note.zh-CN.pdf)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)

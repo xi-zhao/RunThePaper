@@ -4,7 +4,7 @@ Preprint: [arXiv:2608.03987v2 — Realified tensor networks: quantum circuit sim
 
 Formal publication: **Not recorded as of 2026-08-08**
 
-Public status: **Independent numerical feature reproduction (Figure 8 exact; Figure 9 partial)** · Audit score: **72.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **72.00/100**
 
 A clean-room Python tensor-network implementation evaluates all 67 paper circuits without executing or translating the authors' Rust crates. Figure 8's exact realification law passes on every circuit (maximum residual 4.44e-16; post-hoc overhead correlation 0.9881). Figure 9 remains optimizer-sensitive: 57/67 independent trees, versus 66/67 in the paper, fall below the 5e-4 transfer-gap threshold.
 
@@ -17,6 +17,7 @@ A clean-room Python tensor-network implementation evaluates all 67 paper circuit
 - [Figure 9 independent data (CSV)](outputs/data/fig9_pipeline.csv)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

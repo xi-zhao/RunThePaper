@@ -6,7 +6,7 @@ Published as: [Weak ergodicity breaking from quantum many-body scars](https://do
 
 Formal citation: Nature Physics 14, 745–749 (2018) · DOI `10.1038/s41567-018-0137-5` · Locator `745–749`
 
-Public status: **Symmetry-resolved partial reproduction** · Audit score: **72.50/100**
+Public status: **Partial scientific reproduction** · Audit score: **72.50/100**
 
 Reproduces constrained Hilbert-space structure, scar overlaps, revivals, participation ratios, and symmetry-resolved level statistics.
 

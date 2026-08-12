@@ -6,7 +6,7 @@ Published as: [Edge States and Topological Invariants of Non-Hermitian Systems](
 
 Formal citation: Physical Review Letters 121, 086803 (2018) · DOI `10.1103/PhysRevLett.121.086803` · Locator `086803`
 
-Public status: **Paper-parameter complete reproduction** · Audit score: **94.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **94.00/100**
 
 Reproduces the open-boundary spectrum, generalized Brillouin zone, skin profiles, non-Bloch winding, and the nonzero-t3 extension.
 
@@ -16,6 +16,7 @@ Reproduces the open-boundary spectrum, generalized Brillouin zone, skin profiles
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

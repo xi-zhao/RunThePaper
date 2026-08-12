@@ -6,7 +6,7 @@ Published as: [Circuit Quantum Electrodynamics](https://doi.org/10.1103/RevModPh
 
 Formal citation: Reviews of Modern Physics 93, 025005 (2021) · DOI `10.1103/RevModPhys.93.025005` · Locator `025005`
 
-Public status: **Full formula derivation and numerical-feature reproduction** · Audit score: **90.28/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.28/100**
 
 Reproduces the full executable theory chain of the circuit-QED review: 30 formula families spanning main-text Eqs. (1)-(164) and Appendices A-C, plus 18 independent numerical or tabular targets. All formula gates and target checks pass. The package includes step-by-step derivations, runnable public code, structured data, generated figures, limited reference comparisons, and a complete Chinese PDF report.
 
@@ -20,6 +20,7 @@ Reproduces the full executable theory chain of the circuit-QED review: 30 formul
 - [Consistency and source-version audit](docs/CONSISTENCY_REPORT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [中文复现 Note PDF](note/reproduction-note.zh-CN.pdf)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)

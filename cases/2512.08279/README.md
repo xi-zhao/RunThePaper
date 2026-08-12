@@ -6,7 +6,7 @@ Published as: [Programmable Open Quantum Systems](https://doi.org/10.1103/yqlr-2
 
 Formal citation: Physical Review Letters 137, 040403 (2026) · DOI `10.1103/yqlr-2dhr` · Locator `040403`
 
-Public status: **Complete reproduction of both numerical main figures** · Audit score: **95.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **95.00/100**
 
 Derives the programmable-Lindbladian formulas before numericalization, independently reconstructs the fixed HPTP processor, reproduces the 101-point signed quasi-sampling curve, and solves both 41-point programming-cost sweeps while certifying all 1000 source-script times.
 
@@ -20,6 +20,7 @@ Derives the programmable-Lindbladian formulas before numericalization, independe
 - [Performance profile](docs/PERFORMANCE_PROFILE.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

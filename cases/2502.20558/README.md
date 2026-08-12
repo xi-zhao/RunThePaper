@@ -6,7 +6,7 @@ Published as: [Leveraging Qubit Loss Detection in Fault-Tolerant Quantum Algorit
 
 Formal citation: Physical Review X 16, 011002 (2026) · DOI `10.1103/ycwc-3myc` · Locator `011002`
 
-Public status: **Mixed analytic and mechanism feature reproduction** · Audit score: **74.22/100**
+Public status: **Partial scientific reproduction** · Audit score: **74.22/100**
 
 Independently generates five figure targets and the analytic rows of Table I. The printed Fig. 4(b) lifecycle-threshold relation, the complete Fig. 6(b) lifecycle bar panel, and Table-I lifecycle/overhead rows are paper-exact targets; Figs. 2(b), 14(c), and 16(a) remain explicitly labeled mechanism or paper-subset reproductions.
 
@@ -17,6 +17,7 @@ Independently generates five figure targets and the analytic rows of Table I. Th
 - [Table I analytic rows (CSV)](outputs/data/table_i_analytic_rows.csv)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

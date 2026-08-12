@@ -6,7 +6,7 @@ Published as: [Information and Majorization Theory for Fermionic Phase-Space Dis
 
 Formal citation: Physical Review Letters 135, 110201 (2025) · DOI `10.1103/3qg7-r4mq` · Locator `110201`
 
-Public status: **Historical scientific artifact (2 numerical targets; 2 evidence_compared)** · Audit score: **90.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.00/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 3 public generated data files, 2 public generated figures, and 2 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

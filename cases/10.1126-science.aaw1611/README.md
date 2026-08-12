@@ -6,7 +6,7 @@ Published as: [Strongly correlated quantum walks with a 12-qubit superconducting
 
 Formal citation: Science 364, 753–756 (2019) · DOI `10.1126/science.aaw1611` · Locator `753–756`
 
-Public status: **Pixel-audited numerical feature reproduction** · Audit score: **80.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **80.00/100**
 
 Independently reproduces the calibrated one- and two-photon Bose–Hubbard dynamics, information-spreading observables, interaction-induced antibunching, and double-occupancy suppression. A supplemental scalar-field pixel audit covers the theoretical interiors of Figs. S14–S20.
 
@@ -16,6 +16,7 @@ Independently reproduces the calibrated one- and two-photon Bose–Hubbard dynam
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

@@ -6,7 +6,7 @@ Published as: [Particle exchange statistics beyond fermions and bosons](https://
 
 Formal citation: Nature 637, 314–318 (2025) · DOI `10.1038/s41586-024-08262-7` · Locator `314–318`
 
-Public status: **Complete reproduction** · Audit score: **90.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.00/100**
 
 Reproduces the numerical main figure from the paper's closed-form single-mode statistics at the published legend parameters, and independently validates the free-paraparticle spectrum of the one-dimensional solvable spin model by exact diagonalization.
 
@@ -18,6 +18,7 @@ Reproduces the numerical main figure from the paper's closed-form single-mode st
 - [中文推导讲义 PDF](docs/DERIVATION_WALKTHROUGH.zh-CN.pdf)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

@@ -4,7 +4,7 @@ Preprint: [arXiv:2607.08212 — Möbius-Guided Diagonal-Gate Compilation with Na
 
 Formal publication: **Not recorded as of 2026-08-04**
 
-Public status: **Historical scientific artifact (6 numerical targets; 4 evidence_compared, 1 partially_reproduced, 1 reproduced)** · Audit score: **70.85/100**
+Public status: **Partial scientific reproduction** · Audit score: **70.85/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 5 public generated data files, 6 public generated figures, and 6 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -14,6 +14,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

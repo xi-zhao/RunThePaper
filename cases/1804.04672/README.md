@@ -6,7 +6,7 @@ Published as: [Non-Hermitian Chern Bands](https://doi.org/10.1103/PhysRevLett.12
 
 Formal citation: Physical Review Letters 121, 136802 (2018) · DOI `10.1103/PhysRevLett.121.136802` · Locator `136802`
 
-Public status: **Feature-level reproduction** · Audit score: **80.18/100**
+Public status: **Partial scientific reproduction** · Audit score: **80.18/100**
 
 Reproduces open-boundary and cylinder phase structure, square dynamics, complex spectra, and finite-size checks.
 
@@ -16,6 +16,7 @@ Reproduces open-boundary and cylinder phase structure, square dynamics, complex 
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

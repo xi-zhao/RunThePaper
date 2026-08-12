@@ -1,71 +1,36 @@
 {
   "schema_version": 1,
   "paper_id": "2604.08669",
-  "status": "paper_geometry_partial_reproduction",
-  "decision": "stop_without_long_training_or_gpu_decoder_reimplementation",
-  "completed_scope": {
-    "gnn": {
-      "paper_geometry_a100_dataset_generation": true,
-      "paper_geometry_short_probe": true,
-      "validation_instances": 64,
-      "average_distance_delta_to_paper": 0.005977100796997536,
-      "max_distance_delta_to_paper": 0.013098535761237207,
-      "strict_paper_metric_gate_passed": false
-    },
-    "p2wgs": {
-      "status": "physically_consistent",
-      "N": 10201,
-      "target_side": 101,
-      "grid": 1024,
-      "iterations": [
-        3,
-        5,
-        8,
-        10
-      ],
-      "stochastic_realizations": 3,
-      "phase_claim_reproduced": true,
-      "intensity_3_to_5_improvement_reproduced": false
-    },
-    "decoder": {
-      "cpu_modified_auction_reconstruction": true,
-      "gpu_parallel_implementation": false
-    }
+  "authoritative_status": "in_progress",
+  "complete": false,
+  "dimensions": {
+    "artifact_integrity": "artifact_valid_with_warnings",
+    "numerical_scope": "incomplete",
+    "parameters": "mixed",
+    "parameter_provenance": "missing",
+    "science": "pending",
+    "execution": "missing",
+    "pixel": "missing",
+    "independent_review": "missing",
+    "paper_assessment": "missing"
   },
-  "remaining_scope": [
-    {
-      "scope": "Million-sample GNN training and 1024-instance final evaluation",
-      "classification": "compute_limited_and_metric_gate_blocked",
-      "reason": "The paper reports 288 GPU-hours on four A40 GPUs, and the current paper-geometry probe still fails the strict average/max-distance gate. Scaling training before fixing that contract would spend compute without a valid acceptance signal."
-    },
-    {
-      "scope": "GPU-parallel modified-auction decoder and hardware timing",
-      "classification": "implementation_unavailable_and_hardware_specific",
-      "reason": "The public source does not provide the author's GPU kernel. The checked-in CPU auction reconstruction validates assignments but cannot reproduce GPU-parallel timing."
-    },
-    {
-      "scope": "Exact P2WGS intensity-continuity 3-to-5 iteration improvement",
-      "classification": "author_protocol_unavailable",
-      "reason": "The independent paper-scale reconstruction matches the phase claim, but the exact frame-trajectory protocol needed for the paper's intensity trend is not published."
-    },
-    {
-      "scope": "RTX 5090 end-to-end timing benchmark",
-      "classification": "hardware_mismatch",
-      "reason": "The public timing result is an analytic pipeline model; an A100 measurement would not be the paper's RTX 5090 benchmark."
-    }
-  ],
-  "difference_reasons_for_figures": {
-    "fig3": "The A100 result is a 64-instance paper-geometry short probe, not million-sample training plus 1024-instance evaluation; the metric-contract gate remains failed.",
-    "fig4": "The exact Zhuifeng frame-trajectory protocol is unavailable, so phase continuity is reproduced but the reported 3-to-5 intensity improvement is not.",
-    "fig5": "The curve is a pipeline timing model, not a measured RTX 5090 or A100 hardware benchmark."
+  "summary": {
+    "targets_total": 3,
+    "critical_targets_total": 3,
+    "critical_targets_complete": 0,
+    "required_targets_total": 3,
+    "required_targets_complete": 0,
+    "numerical_target_ids": [],
+    "required_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "paper_error_candidates": 0,
+    "numeric_items_total": 0,
+    "numeric_items_targeted": 0,
+    "numeric_items_deferred": 0,
+    "blockers_total": 23
   },
-  "proxy_substitution_used_for_missing_scope": false,
-  "evidence": [
-    "outputs/checks/a100_paper_geometry_campaign.json",
-    "outputs/checks/p2wgs_paper_scale.json",
-    "outputs/checks/stage13_metric_contract_decision.json",
-    "outputs/data/fig3_a100_paper_geometry_summary.csv",
-    "outputs/figures/fig3_a100_paper_geometry_gap.png",
-    "outputs/figures/fig4_paper_scale_p2wgs_summary.png"
-  ]
+  "publication_rule": "Only PRAgent project inspect may emit complete."
 }

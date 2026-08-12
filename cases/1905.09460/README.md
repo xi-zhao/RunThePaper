@@ -6,7 +6,7 @@ Published as: [Topological Phase Transition in non-Hermitian Quasicrystals](http
 
 Formal citation: Physical Review Letters 122, 237601 (2019) · DOI `10.1103/PhysRevLett.122.237601` · Locator `237601`
 
-Public status: **Historical scientific artifact (4 numerical targets; 2 evidence_compared, 2 partially_reproduced)** · Audit score: **84.29/100**
+Public status: **Partial scientific reproduction** · Audit score: **84.29/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 8 public generated data files, 4 public generated figures, and 4 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

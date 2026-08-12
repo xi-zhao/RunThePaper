@@ -6,7 +6,7 @@ Published as: [Localization Driven Superradiant Instability](https://doi.org/10.
 
 Formal citation: Physical Review Letters 124, 113601 (2020) · DOI `10.1103/PhysRevLett.124.113601` · Locator `113601`
 
-Public status: **Pixel-registered numerical feature reproduction** · Audit score: **88.56/100**
+Public status: **Partial scientific reproduction** · Audit score: **88.56/100**
 
 Independently reproduces Figs. 2–4 and Supplement Fig. S1 from AA/GAA and cavity mean-field numerics, including a complete Fig. 3 reproduction, a 377-point IPR match, nonlinear photon onset, and pixel-registered paper geometry.
 
@@ -16,6 +16,7 @@ Independently reproduces Figs. 2–4 and Supplement Fig. S1 from AA/GAA and cavi
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

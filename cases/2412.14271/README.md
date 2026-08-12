@@ -6,7 +6,7 @@ Published as: [Dissipative Phase Transition in the Two-Photon Dicke Model](https
 
 Formal citation: Physical Review Letters 135, 173602 (2025) · DOI `10.1103/mz92-6l9g` · Locator `173602`
 
-Public status: **Feature-level numerical reproduction with a documented equation-level discrepancy** · Audit score: **46.71/100**
+Public status: **Partial scientific reproduction** · Audit score: **46.71/100**
 
 Independently reconstructs the analytic fixed points, stability spectra, seeded finite-size quantum trajectories, Wigner functions, and parity sectors for seven of eight numerical figure groups. The audit also identifies a reproducible branch-to-spectrum evidence discrepancy in Fig. 3(g)/Fig. S2.
 
@@ -18,6 +18,7 @@ Independently reconstructs the analytic fixed points, stability spectra, seeded 
 - [Similarity scorecard](docs/SIMILARITY_SCORECARD.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

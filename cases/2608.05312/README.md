@@ -4,7 +4,7 @@ Preprint: [arXiv:2608.05312v1 — Unidirectional Dark-to-Bright Rescue in Cavity
 
 Formal publication: **Not recorded as of 2026-08-08**
 
-Public status: **Feature-level numerical reproduction (10/10 executable targets; QCLE input-blocked)** · Audit score: **83.40/100**
+Public status: **Partial scientific reproduction** · Audit score: **83.40/100**
 
 An independent sparse-Liouvillian implementation reproduces the size-independent dark-to-bright rescue mechanism, manifold-resolved dynamics, finite-temperature crossover, drain-geometry reversal, scaling laws, and both printed tables. All ten executable numerical targets and all 26 feature claims pass; the physics-feature match is 99.7%.
 
@@ -20,6 +20,7 @@ An independent sparse-Liouvillian implementation reproduces the size-independent
 - [Table S2 detuning data (CSV)](outputs/data/table_s2_detuning.csv)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

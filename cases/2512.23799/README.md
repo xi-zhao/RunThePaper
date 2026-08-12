@@ -6,7 +6,7 @@ Published as: [Efficient Simulation of Logical Magic State Preparation Protocols
 
 Formal citation: PRX Quantum 7, 020329 (2026) · DOI `10.1103/fby6-xjbm` · Locator `020329`
 
-Public status: **Exact-circuit partial reproduction** · Audit score: **73.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **73.00/100**
 
 Reconstructs the exact Steane [[7,1,3]] logical-H circuit and evaluates acceptance, logical infidelity, runtime, and sampling precision.
 

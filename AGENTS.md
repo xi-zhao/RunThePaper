@@ -18,6 +18,12 @@ ready to share:
 - validation checks and scorecards;
 - honest reproduction boundaries and lessons learned.
 
+PRAgent is the sole authority for case identity, lifecycle state, and public
+file selection. Every public case must be projected by its PRAgent
+`publish_manifest.json`, carry the matching master Git SHA, and expose the
+projected `completion_assessment.json`. Do not hand-edit a public case status or
+add a case directly to this catalog; change the PRAgent master and re-project it.
+
 Do not treat RunThePaper as the harness repository. Do not move internal
 PRAgent runtime code, checkpoints, prompts, private diagnostics, raw
 paper sources, standalone original figures, digitized source curves, or

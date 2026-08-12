@@ -6,7 +6,7 @@ Published as: [Sufficient Wigner Negativity Implies Genuine Multipartite Entangl
 
 Formal citation: Physical Review Letters 137, 040202 (2026) · DOI `10.1103/bftw-qnbf` · Locator `040202`
 
-Public status: **Numerical feature reproduction; exact W-state witnesses** · Audit score: **85.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **85.00/100**
 
 Derives the phase-space witnesses before numericalization, independently reproduces both W-state panels and the numerical fields behind the theorem overview, and verifies the finite-disk and finite-characteristic-function witnesses. The derivation also exposes an internal source inconsistency in the Fig. 1 state-dependent threshold.
 
@@ -19,6 +19,7 @@ Derives the phase-space witnesses before numericalization, independently reprodu
 - [Similarity scorecard](docs/SIMILARITY_SCORECARD.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

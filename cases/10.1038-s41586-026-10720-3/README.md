@@ -6,7 +6,7 @@ Published as: [Backreaction of stimulated Hawking radiation in an optical analog
 
 Formal citation: Nature 655, 336-341 (2026) · DOI `10.1038/s41586-026-10720-3` · Locator `336-341`
 
-Public status: **Main-figure numerical feature reproduction** · Audit score: **78.47/100**
+Public status: **Partial scientific reproduction** · Audit score: **78.47/100**
 
 Without author code, reproduces the numerical content and registered layout of main-text Figs. 2, 4, and 5: seven phase-matching landmarks, all six Eq. (D.1) spectra, and the 1.0211 thermal-slope ratio.
 
@@ -16,6 +16,7 @@ Without author code, reproduces the numerical content and registered layout of m
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

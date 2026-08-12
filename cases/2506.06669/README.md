@@ -6,7 +6,7 @@ Published as: [Remote Entanglement Generation Via Enhanced Quantum State Transfe
 
 Formal citation: PRX Quantum 7, 010348 (2026) · DOI `10.1103/4x8d-cmyx` · Locator `010348`
 
-Public status: **Historical scientific artifact (10 numerical targets; 10 figure_rendered)** · Audit score: **68.73/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **68.73/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 10 public generated data files, 11 public generated figures, and 10 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -16,6 +16,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

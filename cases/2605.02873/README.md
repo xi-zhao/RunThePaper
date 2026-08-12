@@ -4,7 +4,7 @@ Preprint: [arXiv:2605.02873v1 — Fixed-detector tilt--defocus sensing by upstre
 
 Formal publication: **Not recorded as of 2026-08-04**
 
-Public status: **Historical scientific artifact (5 numerical targets; 5 reproduced)** · Audit score: **90.00/100**
+Public status: **Scientific reproduction — invalid** · Audit score: **90.00/100**
 
 Publishes the independently generated numerical artifacts retained by the historical case: 5 public generated data files, 10 public generated figures, and 5 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
 
@@ -14,6 +14,7 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [English reproduction note](note/reproduction-note.en.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
+- [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
 - [Derivation (equations)](docs/DERIVATION.md)
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)

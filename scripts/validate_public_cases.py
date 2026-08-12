@@ -6,7 +6,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
 CASE_CONTRACT = "paper_reproduction_only_v1"
@@ -50,6 +49,8 @@ SECRET_PATTERNS = {
 MARKDOWN_LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 DOI = re.compile(r"^10\.\d{4,9}/\S+$", re.IGNORECASE)
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+GIT_SHA = re.compile(r"^[0-9a-f]{40}$")
+AUTHORITY_SOURCE = "PRAgent authoritative_reproduction_state schema v3"
 
 
 def load_catalog() -> list[dict[str, Any]]:
@@ -58,11 +59,12 @@ def load_catalog() -> list[dict[str, Any]]:
     if (
         payload.get("schema_version") != 2
         or payload.get("case_contract") != CASE_CONTRACT
+        or payload.get("authority_source") != AUTHORITY_SOURCE
         or not isinstance(cases, list)
     ):
         raise ValueError(
             "cases/catalog.json does not match schema version 2 and the "
-            f"{CASE_CONTRACT} contract"
+            f"{CASE_CONTRACT} contract with {AUTHORITY_SOURCE} authority"
         )
     return cases
 
@@ -97,7 +99,9 @@ def validate_markdown_links(path: Path, errors: list[str]) -> None:
             # as Markdown links.
             continue
         if not (path.parent / target).resolve().exists():
-            errors.append(f"broken Markdown link in {path.relative_to(ROOT)}: {raw_target}")
+            errors.append(
+                f"broken Markdown link in {path.relative_to(ROOT)}: {raw_target}"
+            )
 
 
 def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
@@ -131,7 +135,9 @@ def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
     elif preprint.get("status") == "not_recorded":
         checked_at = preprint.get("checked_at")
         if not isinstance(checked_at, str) or not DATE.match(checked_at):
-            errors.append(f"{paper_id} not_recorded preprint requires checked_at YYYY-MM-DD")
+            errors.append(
+                f"{paper_id} not_recorded preprint requires checked_at YYYY-MM-DD"
+            )
     else:
         for field in ("identifier", "title", "url"):
             if not isinstance(preprint.get(field), str) or not preprint[field].strip():
@@ -143,7 +149,10 @@ def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
     status = publication.get("status")
     if status == "published":
         for field in ("title", "venue", "citation", "doi", "doi_url", "locator"):
-            if not isinstance(publication.get(field), str) or not publication[field].strip():
+            if (
+                not isinstance(publication.get(field), str)
+                or not publication[field].strip()
+            ):
                 errors.append(f"{paper_id} has no publication.{field}")
         doi = publication.get("doi", "")
         if isinstance(doi, str) and doi and not DOI.match(doi):
@@ -153,9 +162,57 @@ def validate_paper_identity(case: dict[str, Any], errors: list[str]) -> None:
     elif status == "not_recorded":
         checked_at = publication.get("checked_at")
         if not isinstance(checked_at, str) or not DATE.match(checked_at):
-            errors.append(f"{paper_id} not_recorded status requires checked_at YYYY-MM-DD")
+            errors.append(
+                f"{paper_id} not_recorded status requires checked_at YYYY-MM-DD"
+            )
     else:
         errors.append(f"{paper_id} has invalid publication status: {status!r}")
+
+
+def validate_authority_projection(
+    case: dict[str, Any], case_dir: Path, errors: list[str]
+) -> None:
+    """Require public lifecycle metadata to agree with its PRAgent projection."""
+
+    paper_id = str(case.get("paper_id", ""))
+    if case.get("registry_scope") != "paper_reproduction":
+        errors.append(f"{paper_id} registry_scope is not paper_reproduction")
+    authoritative_status = case.get("authoritative_status")
+    if not isinstance(authoritative_status, str) or not authoritative_status.strip():
+        errors.append(f"{paper_id} has no authoritative_status")
+    complete = case.get("complete")
+    if not isinstance(complete, bool):
+        errors.append(f"{paper_id} complete must be boolean")
+    elif complete is not (authoritative_status == "complete"):
+        errors.append(f"{paper_id} complete flag disagrees with authoritative_status")
+    master_git_sha = case.get("master_git_sha")
+    if not isinstance(master_git_sha, str) or not GIT_SHA.fullmatch(master_git_sha):
+        errors.append(f"{paper_id} has invalid master_git_sha")
+
+    completion_path = case_dir / "outputs/checks/completion_assessment.json"
+    provenance_path = case_dir / "outputs/checks/publication_provenance.json"
+    for label, path in (
+        ("completion assessment", completion_path),
+        ("publication provenance", provenance_path),
+    ):
+        if not path.is_file():
+            errors.append(f"missing {label}: {path.relative_to(ROOT)}")
+            return
+    try:
+        completion = json.loads(completion_path.read_text(encoding="utf-8"))
+        provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        errors.append(f"invalid authority projection for {paper_id}: {exc}")
+        return
+    for label, payload in (("completion", completion), ("provenance", provenance)):
+        if payload.get("paper_id") != paper_id:
+            errors.append(f"{paper_id} {label} paper_id mismatch")
+        if payload.get("authoritative_status") != authoritative_status:
+            errors.append(f"{paper_id} {label} authoritative_status mismatch")
+        if payload.get("complete") is not complete:
+            errors.append(f"{paper_id} {label} complete flag mismatch")
+    if provenance.get("master_git_sha") != master_git_sha:
+        errors.append(f"{paper_id} provenance master_git_sha mismatch")
 
 
 def validate_case(case: dict[str, Any], errors: list[str]) -> None:
@@ -168,10 +225,13 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
         case_dir / "note" / "reproduction-note.zh-CN.md",
         case_dir / "note" / "reproduction-note.en.md",
         case_dir / "outputs" / "checks" / "similarity_scorecard.json",
+        case_dir / "outputs" / "checks" / "completion_assessment.json",
+        case_dir / "outputs" / "checks" / "publication_provenance.json",
     ]
     for path in required_files:
         if not path.is_file():
             errors.append(f"missing required file: {path.relative_to(ROOT)}")
+    validate_authority_projection(case, case_dir, errors)
     for note_name in ("reproduction-note.zh-CN.md", "reproduction-note.en.md"):
         note = case_dir / "note" / note_name
         if note.is_file() and len(note.read_text(encoding="utf-8").strip()) < 200:
@@ -185,14 +245,25 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
             errors.append(f"invalid additional resource for {paper_id}: {resource!r}")
             continue
         resource_path = (case_dir / resource["path"]).resolve()
-        if case_dir.resolve() not in resource_path.parents or not resource_path.is_file():
-            errors.append(f"missing additional resource for {paper_id}: {resource['path']}")
+        if (
+            case_dir.resolve() not in resource_path.parents
+            or not resource_path.is_file()
+        ):
+            errors.append(
+                f"missing additional resource for {paper_id}: {resource['path']}"
+            )
 
     required_groups = {
         "scientific Python implementation": scientific_python_files(case_dir),
-        "generated data": [p for p in (case_dir / "outputs" / "data").rglob("*") if p.is_file()],
-        "generated figure": [p for p in (case_dir / "outputs" / "figures").rglob("*") if p.is_file()],
-        "machine-readable check": [p for p in (case_dir / "outputs" / "checks").rglob("*.json") if p.is_file()],
+        "generated data": [
+            p for p in (case_dir / "outputs" / "data").rglob("*") if p.is_file()
+        ],
+        "generated figure": [
+            p for p in (case_dir / "outputs" / "figures").rglob("*") if p.is_file()
+        ],
+        "machine-readable check": [
+            p for p in (case_dir / "outputs" / "checks").rglob("*.json") if p.is_file()
+        ],
     }
     for label, paths in required_groups.items():
         if not paths:
@@ -201,7 +272,9 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
     for script in [*case.get("run_scripts", []), *case.get("full_run_scripts", [])]:
         path = case_dir / "code" / "scripts" / str(script)
         if not path.is_file():
-            errors.append(f"catalog run script does not exist: {path.relative_to(ROOT)}")
+            errors.append(
+                f"catalog run script does not exist: {path.relative_to(ROOT)}"
+            )
 
     for result in case.get("featured_results", []):
         if not isinstance(result, dict):
@@ -236,21 +309,32 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
             errors.append(f"symlink is not allowed: {path.relative_to(ROOT)}")
         if any(part in FORBIDDEN_PATH_PARTS for part in relative.parts):
             errors.append(f"forbidden public path: {path.relative_to(ROOT)}")
-        if path.is_file() and (path.suffix.lower() == ".eps" or path.name == "paper.pdf"):
-            errors.append(f"source publication asset is not allowed: {path.relative_to(ROOT)}")
-        if path.is_file() and path.suffix.lower() == ".pdf" and path.name != "paper.pdf":
+        if path.is_file() and (
+            path.suffix.lower() == ".eps" or path.name == "paper.pdf"
+        ):
+            errors.append(
+                f"source publication asset is not allowed: {path.relative_to(ROOT)}"
+            )
+        if (
+            path.is_file()
+            and path.suffix.lower() == ".pdf"
+            and path.name != "paper.pdf"
+        ):
             is_derived_note = (
                 relative.parent == Path("note")
                 and path.name.startswith("reproduction-note")
                 and path.with_suffix(".md").is_file()
             )
             is_derived_document = (
-                relative.parent == Path("docs")
-                and path.with_suffix(".md").is_file()
+                relative.parent == Path("docs") and path.with_suffix(".md").is_file()
             )
             if not (is_derived_note or is_derived_document):
-                errors.append(f"source publication asset is not allowed: {path.relative_to(ROOT)}")
-            elif path.stat().st_size < 1024 or not path.read_bytes().startswith(b"%PDF-"):
+                errors.append(
+                    f"source publication asset is not allowed: {path.relative_to(ROOT)}"
+                )
+            elif path.stat().st_size < 1024 or not path.read_bytes().startswith(
+                b"%PDF-"
+            ):
                 errors.append(f"invalid derived PDF: {path.relative_to(ROOT)}")
 
     for path in text_files(case_dir):
@@ -286,9 +370,13 @@ def main() -> int:
     missing_catalog_entries = sorted(case_dirs - seen)
     stale_catalog_entries = sorted(seen - case_dirs)
     if missing_catalog_entries:
-        errors.append(f"case folders missing from catalog: {', '.join(missing_catalog_entries)}")
+        errors.append(
+            f"case folders missing from catalog: {', '.join(missing_catalog_entries)}"
+        )
     if stale_catalog_entries:
-        errors.append(f"catalog entries without case folders: {', '.join(stale_catalog_entries)}")
+        errors.append(
+            f"catalog entries without case folders: {', '.join(stale_catalog_entries)}"
+        )
     for root_doc in (ROOT / "README.md", ROOT / "CASES.md", ROOT / "ROADMAP.md"):
         if root_doc.is_file():
             validate_markdown_links(root_doc, errors)

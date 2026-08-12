@@ -4,7 +4,7 @@ Preprint: [arXiv:2604.08669 — An Algorithm for Fast Assembling Large-Scale Def
 
 Formal publication: **Not recorded as of 2026-07-14**
 
-Public status: **Paper-geometry partial reproduction** · Audit score: **61.60/100**
+Public status: **Partial scientific reproduction** · Audit score: **61.60/100**
 
 Reproduces paper-geometry path-planning probes, paper-scale P2WGS continuity, and a pipelined timing model for atom-array assembly.
 
