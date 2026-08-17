@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-0211074",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "XY and XXZ Hamiltonians",
+      "role": "model definition for both figures and the sign-convention review",
+      "latex": "H_{XY}=-\\sum_l\\{\\tfrac a2[(1+\\gamma)\\sigma_l^x\\sigma_{l+1}^x+(1-\\gamma)\\sigma_l^y\\sigma_{l+1}^y]+\\sigma_l^z\\},\\quad H_{XXZ}=-\\sum_l(\\sigma_l^x\\sigma_{l+1}^x+\\sigma_l^y\\sigma_{l+1}^y+\\Delta\\sigma_l^z\\sigma_{l+1}^z+\\lambda\\sigma_l^z)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:76-86"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (2) and (3)",
+        "periodic nearest-neighbour sums"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "thermodynamic-limit XY covariance kernel and fixed-magnetization sparse XXZ operator",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both Hamiltonians and all signs are printed explicitly."
+        },
+        {
+          "id": "EQ001-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "a=0 gives the field-polarized XY product state; the printed minus-sign XXX operator has a ferromagnetic ground multiplet."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::xy_entropy",
+        "src/vidal_entanglement/xxx.py"
+      ],
+      "open_questions": [
+        "The Fig. 2 XXX curve is described as free-boson critical although the printed overall minus sign makes Delta=1, lambda=0 ferromagnetic and ground-state-degenerate; both literal and intended conventions must be tested."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Thermodynamic-limit Majorana correlation matrix",
+      "role": "clean-room numerical reduction for the Ising and XX curves",
+      "latex": "B_{jk}=\\Pi_{k-j},\\quad \\Pi_l=\\begin{pmatrix}0&g_l\\\\-g_{-l}&0\\end{pmatrix},\\quad g_l=\\frac1{2\\pi}\\int_0^{2\\pi}e^{-il\\phi}\\frac{a\\cos\\phi-1-ia\\gamma\\sin\\phi}{|a\\cos\\phi-1-ia\\gamma\\sin\\phi|}d\\phi",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:101-139"
+        }
+      ],
+      "derived_from": [
+        "Jordan-Wigner Majoranas",
+        "Fourier and Bogoliubov diagonalization"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "midpoint Fourier quadrature for g_l followed by a real antisymmetric 2L by 2L Toeplitz matrix",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the block Toeplitz form and the complete integral."
+        },
+        {
+          "id": "EQ002-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Pi_l^T=-Pi_-l implies B^T=-B."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The phase ratio has unit modulus away from isolated critical momenta, so physical covariance singular values lie in [0,1]."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::correlation_coefficients",
+        "src/vidal_entanglement/model.py::block_covariance"
+      ],
+      "open_questions": [
+        "The prose shortcut for critical-Ising g_l is indexing/normalization ambiguous; the implementation uses the unambiguous printed integral and an independently derived closed form."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Entropy from covariance normal modes",
+      "role": "observable for every plotted XY datum",
+      "latex": "S_L=\\sum_{m=0}^{L-1}H_2((1+\\nu_m)/2),\\quad H_2(x)=-x\\log_2x-(1-x)\\log_2(1-x)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:141-174"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "orthogonal normal form of a real antisymmetric covariance matrix",
+        "tensor-product Gaussian modes"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "positive eigenvalues of iB_L, clipped only at roundoff, summed with stable binary entropy",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper derives the product-mode density matrix and entropy sum."
+        },
+        {
+          "id": "EQ003-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "nu_m=1 for every mode gives zero entropy; nu_m=0 gives one bit per mode."
+        },
+        {
+          "id": "EQ003-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Every binary probability pair sums to one."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::entropy_from_covariance",
+        "src/vidal_entanglement/model.py::xy_entropy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Critical and noncritical entropy scaling",
+      "role": "independent references and regression checks for Figs. 1 and 2",
+      "latex": "S_L^{XX}\\sim\\tfrac13\\log_2L+k_1,\\quad S_L^{Ising}\\sim\\tfrac16\\log_2L+k_2,\\quad S_{\\infty}^{Ising}\\sim\\tfrac16\\log_2|1-a|^{-1}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:176-220"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "CFT central charges c=1 and c=1/2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "declared-window log2 regressions and saturation-versus-correlation-length checks",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints all three scaling coefficients and their regimes."
+        },
+        {
+          "id": "EQ004-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "L and |1-a|^{-1} are dimensionless lattice lengths."
+        },
+        {
+          "id": "EQ004-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of c=1/2 and c=1 into (c+cbar)/6 reproduces 1/6 and 1/3."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py::fit_log_slope"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "N=20 XXX block entropy",
+      "role": "finite-chain series in Main Fig. 2 and Hamiltonian-consistency review",
+      "latex": "S_L=-\\mathrm{tr}(\\rho_L\\log_2\\rho_L),\\quad \\rho_L=\\mathrm{tr}_{N-L}|\\Psi_g^{(20)}\\rangle\\langle\\Psi_g^{(20)}|",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:192-203,237-255"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "paper Eq. (4)",
+        "Schmidt decomposition"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "sparse exact diagonalization in fixed total-Sz followed by block Schmidt spectra; literal ferromagnetic-sector result is also computed analytically",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "N=20, Delta=1, lambda=0, periodic summation, and the entropy definition are explicit."
+        },
+        {
+          "id": "EQ005-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The reduced-density eigenvalues equal squared Schmidt singular values."
+        },
+        {
+          "id": "EQ005-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A fully polarized member of the printed ferromagnetic ground multiplet has zero block entropy, exposing the stated ground-state ambiguity."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/xxx.py::xxx_ground_state",
+        "src/vidal_entanglement/xxx.py::block_entropies"
+      ],
+      "open_questions": [
+        "Whether the published curve used the opposite antiferromagnetic sign, an excited state of the printed operator, or an unstated Bethe-energy convention must be decided by independent checks rather than by fitting figure pixels."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Reduced-spectrum majorization",
+      "role": "unplotted quantitative claim under scientific review",
+      "latex": "\\lambda_{x_1\\ldots x_L}=\\prod_m[1+(-1)^{x_m}\\nu_m]/2,\\quad \\vec\\lambda_{L+2}\\prec\\vec\\lambda_L",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:316-330"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "Gaussian-mode tensor product",
+        "majorization by sorted partial sums"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "enumerate product spectra, pad lambda_L with zeros, and test every sorted cumulative inequality for L to L+2",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The product spectrum and majorization direction are printed explicitly."
+        },
+        {
+          "id": "EQ006-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The 2^L product probabilities sum to one."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Padding the smaller spectrum is necessary and preserves total weight before comparing unequal dimensions."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::entanglement_spectrum",
+        "src/vidal_entanglement/model.py::majorization_margin"
+      ],
+      "open_questions": [
+        "The paper does not print the tested L range or numerical tolerance; the reproduction declares both and reports the worst inequality margin."
+      ]
+    }
+  ]
+}

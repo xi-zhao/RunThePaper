@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0411737",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Continuum Dirac Hamiltonian with intrinsic spin orbit mass",
+      "role": "bulk QSH spectrum and intrinsic gap",
+      "latex": "H=hbar v_F(sigma_x tau_z q_x + sigma_y q_y) + Delta_so sigma_z tau_z s_z; E=+/-sqrt((hbar v_F q)^2 + Delta_so^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 1-2, Eqs. (2)-(3) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "four-component K/K' envelope basis",
+        "Pauli anticommutation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct 4x4 continuum diagonalization and analytic eigenvalues",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian and dispersion are printed explicitly."
+        },
+        {
+          "id": "EQ001-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Mutually anticommuting Dirac matrices square to (hbar vF q)^2 + Delta_so^2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::continuum_energies"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Rashba perturbation and bulk gap",
+      "role": "gap-closing boundary",
+      "latex": "H_R=lambda_R(sigma_x tau_z s_y - sigma_y s_x); E_g=2(Delta_so-lambda_R)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (4) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "continuum Hamiltonian at q=0"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "8x8 continuum eigenvalue check at q=0",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Rashba term and gap are printed."
+        },
+        {
+          "id": "EQ002-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The direct gap closes at lambda_R=Delta_so."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::continuum_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Quantized spin Hall conductivity",
+      "role": "topological response check",
+      "latex": "sigma_xy^s=e/(2 pi)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "opposite Chern numbers for opposite conserved spins",
+        "J_s=(hbar/2e)(J_up-J_down)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "spin-resolved two-band Berry-curvature Chern check",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The response is printed explicitly."
+        },
+        {
+          "id": "EQ003-T",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Opposite spin blocks have opposite unit Chern numbers when s_z is conserved."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::spin_chern_reference"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Second-neighbour Kane-Mele lattice Hamiltonian",
+      "role": "Main Fig. 1 zigzag-ribbon spectrum",
+      "latex": "H=t sum_<ij>,alpha c_i,alpha^dagger c_j,alpha + i t2 sum_<<ij>>,alpha,beta nu_ij s^z_alpha,beta c_i,alpha^dagger c_j,beta; Delta_so=3 sqrt(3) t2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (6); p. 3, Fig. 1 caption"
+        }
+      ],
+      "derived_from": [
+        "honeycomb nearest neighbours",
+        "oriented second-neighbour paths",
+        "Bloch periodicity along zigzag edge"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Hermitian Bloch ribbon matrix for both spin sectors",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, orientation and t2/t=.03 are printed."
+        },
+        {
+          "id": "EQ004-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "nu_ji=-nu_ij makes the imaginary second-neighbour term Hermitian."
+        },
+        {
+          "id": "EQ004-G",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The periodic bulk gap is 6 sqrt(3) t2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::zigzag_ribbon_hamiltonian"
+      ],
+      "open_questions": [
+        "The paper does not print the ribbon width or k sampling used for Fig. 1."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Ballistic edge conductances",
+      "role": "Fig. 2 quantitative-label check",
+      "latex": "G=2e^2/h; G_ij^s=+/-e/(4 pi); I^s=eV/(4 pi)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Fig. 2 caption and transport discussion"
+        }
+      ],
+      "derived_from": [
+        "one Kramers pair per edge",
+        "Landauer-Buttiker transmission"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "channel-count identity",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The conductance and current values are printed in the Fig. 2 caption and prose."
+        },
+        {
+          "id": "EQ005-L",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Two perfectly transmitted charge channels give 2e^2/h."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::transport_coefficients"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "First-star intrinsic spin-orbit estimate",
+      "role": "bare graphene gap estimate",
+      "latex": "2 Delta_so=4 pi^2 e^2 hbar^2/(3 m^2 c^2 a^3) approximately 2.4 K",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (7) and first-star paragraph"
+        }
+      ],
+      "derived_from": [
+        "microscopic spin-orbit interaction",
+        "first-star Bloch approximation",
+        "Coulomb V(r)=e^2/r"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "SI/atomic-unit dimensional estimate",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The first-star estimate and 2.4 K result are printed on p. 4."
+        },
+        {
+          "id": "EQ006-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The expression has dimensions of energy and is converted to kelvin through k_B."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::bare_gap_kelvin"
+      ],
+      "open_questions": [
+        "The estimate is explicitly described as crude and depends on the first-star approximation."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Perpendicular-field Rashba estimate",
+      "role": "lambda_R much smaller than intrinsic gap",
+      "latex": "lambda_R=hbar v_F e E_z/(4 m c^2) approximately 0.5 mK for E_z approximately 50 V/300 nm",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, paragraph below Eq. (7)"
+        }
+      ],
+      "derived_from": [
+        "Pauli spin-orbit coupling in an external electric field"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "SI-unit estimate with declared v_F reference range",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula, electric field and 0.5 mK estimate are printed on p. 4."
+        },
+        {
+          "id": "EQ007-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Using v_F near 10^6 m/s gives the printed sub-millikelvin scale."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::rashba_kelvin"
+      ],
+      "open_questions": [
+        "The paper does not print the exact v_F used in the 0.5 mK rounding."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Coulomb RG flow and self-consistent renormalized gap",
+      "role": "15 K interaction-enhanced gap claim",
+      "latex": "dg/dell=-g^2/4; dDelta/dell=g Delta/2; Delta(epsilon)=Delta0[1+(g0/4) ln(Lambda0/epsilon)]^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (8) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "separation of variables",
+        "self-consistency Delta_R=Delta(Delta_R)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "positive scalar root in a common energy unit",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The RG equations, integrated form and 15 K estimate are printed on p. 4."
+        },
+        {
+          "id": "EQ008-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct integration of the coupled flows yields the printed squared logarithm."
+        },
+        {
+          "id": "EQ008-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "g0=.74, Lambda0=2 eV and bare full gap 2.4 K define a unique enhanced positive gap."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::renormalized_gap_kelvin"
+      ],
+      "open_questions": [
+        "The printed approximation does not state whether the self-consistency argument uses the half-gap or full gap convention; both will be audited."
+      ]
+    }
+  ]
+}

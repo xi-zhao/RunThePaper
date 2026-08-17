@@ -1,0 +1,904 @@
+{
+  "schema_version": 4,
+  "paper_id": "cond-mat-0610854",
+  "score_model": "scientific_region_pixel_and_scientific_review_v1",
+  "score_policy": {
+    "primary": "Direct pixel difference in each predeclared complete scientific region after scientific and isolation gates pass.",
+    "full_figure": "Whole-canvas values are layout diagnostics only.",
+    "numerical_generator_source_pixels": "forbidden",
+    "render_contract_physics_changes": "forbidden",
+    "evidence_cap": "Reduced-scale or publication-underspecified targets cannot exceed 70 regardless of pixel score."
+  },
+  "targets": [
+    {
+      "target_id": "T001",
+      "label": "Main Figure 1 -- adjacent-gap-ratio distributions",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The generated weak-, intermediate-, and strong-disorder statistics have the printed GOE-to-Poisson ordering; the independent GOE mean differs from the paper value by 0.003083.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The predeclared scientific region has direct pixel score 95.7100.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All target series and claims are coded; the production-scale campaign remains unexecuted.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced-scale numerics and source-figure-only comparison cap the evidence at feature reproduction; high pixel similarity cannot override this gate.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 95.71,
+        "pixel_target_ids": [
+          "PXT_T001_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#targets.PXT_T001_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The predeclared scientific region passes, but presentation fidelity does not promote reduced-scale numerics to paper-exact.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale full-spectrum campaign was not executed; the frozen evidence uses the declared reduced-scale profile.",
+            "evidence": [
+              "config/reduced_scale.json",
+              "config/paper_scale.json",
+              "outputs/checks/run_summary.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Full dense spectra at L=16 have dimension 12870 and must be repeated for many disorder realizations; the bounded local campaign was not sufficient for that production workload, while the sharded A100-ready implementation and run contract are complete.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md",
+              "PERFORMANCE_PROFILE.md",
+              "run_contract.paper_scale.json",
+              "figure_coverage.json#implementations.paper_scale_all_targets"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in basis enumeration, fermion signs, Hermiticity, conditioned disorder, limiting statistics, checkpoint coverage, or isolated execution.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Six focused tests cover basis size, hopping signs, Hermiticity, RMS conditioning, statistics, and resume behavior.",
+                "evidence": [
+                  "tests/test_mbl_level_stats.py"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The Poisson mean is exact and the generated GOE mean agrees with the printed random-matrix anchor.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v2 isolated run returned zero with no denied or forbidden file access.",
+                "evidence": [
+                  "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Measured dense eigensolve timings and Hilbert dimensions quantify the L=16 production cost and justify sharding.",
+                "evidence": [
+                  "PERFORMANCE_PROFILE.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A sign, disorder-normalization, statistic, or checkpoint bug would violate the unit, analytic-limit, or science checks; all passed.",
+              "evidence": [
+                "tests/test_mbl_level_stats.py",
+                "outputs/checks/science_checks.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "The exact W grid and L=10/12 sample counts are not printed, so even a full compute run remains reconstructed in those details.",
+              "evidence": [
+                "PAPER_MAP.md",
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The L=16 model distributions and the printed 1000 x 3432 GOE campaign.",
+            "completion": "The scientific feature is reproduced and the paper-scale code is ready; paper-exact parameter-scale evidence is not yet available.",
+            "items": [
+              "T001"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Run the frozen 64-shard paper-scale campaign on the A100, starting with a measured L=16 pilot shard, then aggregate only after exact shard coverage.",
+            "expected_resolution": "This will distinguish a pure compute-scale gap from any remaining finite-size or sampling discrepancy.",
+            "evidence_to_produce": [
+              "a paper-scale isolated run attestation",
+              "a complete shard coverage manifest",
+              "paper-scale science checks and frozen data hashes"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/T001_main_fig1.png"
+      ],
+      "remaining_gap": "Execute the sharded paper-scale campaign; exact W grid and L=10/12 sample counts remain publication-underspecified.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t001_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The generated weak-, intermediate-, and strong-disorder statistics have the printed GOE-to-Poisson ordering; the independent GOE mean differs from the paper value by 0.003083."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 1"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "001",
+            "status": "reproduced",
+            "evidence": "outputs/figures/T001_main_fig1.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 100.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T002",
+      "label": "Main Figure 2 (top) -- finite-size disorder curves",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Every generated system size crosses from GOE-like to Poisson-like level statistics as disorder increases.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The predeclared scientific region has direct pixel score 94.7262.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All target series and claims are coded; the production-scale campaign remains unexecuted.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced-scale numerics and source-figure-only comparison cap the evidence at feature reproduction; high pixel similarity cannot override this gate.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 94.7262,
+        "pixel_target_ids": [
+          "PXT_T002_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#targets.PXT_T002_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The predeclared scientific region passes, but presentation fidelity does not promote reduced-scale numerics to paper-exact.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale full-spectrum campaign was not executed; the frozen evidence uses the declared reduced-scale profile.",
+            "evidence": [
+              "config/reduced_scale.json",
+              "config/paper_scale.json",
+              "outputs/checks/run_summary.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Full dense spectra at L=16 have dimension 12870 and must be repeated for many disorder realizations; the bounded local campaign was not sufficient for that production workload, while the sharded A100-ready implementation and run contract are complete.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md",
+              "PERFORMANCE_PROFILE.md",
+              "run_contract.paper_scale.json",
+              "figure_coverage.json#implementations.paper_scale_all_targets"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in basis enumeration, fermion signs, Hermiticity, conditioned disorder, limiting statistics, checkpoint coverage, or isolated execution.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Six focused tests cover basis size, hopping signs, Hermiticity, RMS conditioning, statistics, and resume behavior.",
+                "evidence": [
+                  "tests/test_mbl_level_stats.py"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The Poisson mean is exact and the generated GOE mean agrees with the printed random-matrix anchor.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v2 isolated run returned zero with no denied or forbidden file access.",
+                "evidence": [
+                  "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Measured dense eigensolve timings and Hilbert dimensions quantify the L=16 production cost and justify sharding.",
+                "evidence": [
+                  "PERFORMANCE_PROFILE.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A sign, disorder-normalization, statistic, or checkpoint bug would violate the unit, analytic-limit, or science checks; all passed.",
+              "evidence": [
+                "tests/test_mbl_level_stats.py",
+                "outputs/checks/science_checks.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "The exact W grid and L=10/12 sample counts are not printed, so even a full compute run remains reconstructed in those details.",
+              "evidence": [
+                "PAPER_MAP.md",
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The omitted L=16 curve and paper-scale error bars over the full disorder grid.",
+            "completion": "The scientific feature is reproduced and the paper-scale code is ready; paper-exact parameter-scale evidence is not yet available.",
+            "items": [
+              "T002"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Run the frozen 64-shard paper-scale campaign on the A100, starting with a measured L=16 pilot shard, then aggregate only after exact shard coverage.",
+            "expected_resolution": "This will distinguish a pure compute-scale gap from any remaining finite-size or sampling discrepancy.",
+            "evidence_to_produce": [
+              "a paper-scale isolated run attestation",
+              "a complete shard coverage manifest",
+              "paper-scale science checks and frozen data hashes"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/T002_main_fig2_top.png"
+      ],
+      "remaining_gap": "Execute the sharded paper-scale campaign; exact W grid and L=10/12 sample counts remain publication-underspecified.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t002_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Every generated system size crosses from GOE-like to Poisson-like level statistics as disorder increases."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2 (top)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "002",
+            "status": "reproduced",
+            "evidence": "outputs/figures/T002_main_fig2_top.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 100.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T003",
+      "label": "Main Figure 2 (bottom) -- crossing-region enlargement",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "All three adjacent generated size pairs have an explicit sign-change or nearest-approach crossing estimate in the enlarged region.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The predeclared scientific region has direct pixel score 96.2829.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All target series and claims are coded; the production-scale campaign remains unexecuted.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced-scale numerics and source-figure-only comparison cap the evidence at feature reproduction; high pixel similarity cannot override this gate.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 96.2829,
+        "pixel_target_ids": [
+          "PXT_T003_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#targets.PXT_T003_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The predeclared scientific region passes, but presentation fidelity does not promote reduced-scale numerics to paper-exact.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale full-spectrum campaign was not executed; the frozen evidence uses the declared reduced-scale profile.",
+            "evidence": [
+              "config/reduced_scale.json",
+              "config/paper_scale.json",
+              "outputs/checks/run_summary.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Full dense spectra at L=16 have dimension 12870 and must be repeated for many disorder realizations; the bounded local campaign was not sufficient for that production workload, while the sharded A100-ready implementation and run contract are complete.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md",
+              "PERFORMANCE_PROFILE.md",
+              "run_contract.paper_scale.json",
+              "figure_coverage.json#implementations.paper_scale_all_targets"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in basis enumeration, fermion signs, Hermiticity, conditioned disorder, limiting statistics, checkpoint coverage, or isolated execution.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Six focused tests cover basis size, hopping signs, Hermiticity, RMS conditioning, statistics, and resume behavior.",
+                "evidence": [
+                  "tests/test_mbl_level_stats.py"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The Poisson mean is exact and the generated GOE mean agrees with the printed random-matrix anchor.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v2 isolated run returned zero with no denied or forbidden file access.",
+                "evidence": [
+                  "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Measured dense eigensolve timings and Hilbert dimensions quantify the L=16 production cost and justify sharding.",
+                "evidence": [
+                  "PERFORMANCE_PROFILE.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A sign, disorder-normalization, statistic, or checkpoint bug would violate the unit, analytic-limit, or science checks; all passed.",
+              "evidence": [
+                "tests/test_mbl_level_stats.py",
+                "outputs/checks/science_checks.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "The exact W grid and L=10/12 sample counts are not printed, so even a full compute run remains reconstructed in those details.",
+              "evidence": [
+                "PAPER_MAP.md",
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The omitted L=16 curve and paper-scale errors in the crossing enlargement.",
+            "completion": "The scientific feature is reproduced and the paper-scale code is ready; paper-exact parameter-scale evidence is not yet available.",
+            "items": [
+              "T003"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Run the frozen 64-shard paper-scale campaign on the A100, starting with a measured L=16 pilot shard, then aggregate only after exact shard coverage.",
+            "expected_resolution": "This will distinguish a pure compute-scale gap from any remaining finite-size or sampling discrepancy.",
+            "evidence_to_produce": [
+              "a paper-scale isolated run attestation",
+              "a complete shard coverage manifest",
+              "paper-scale science checks and frozen data hashes"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/T003_main_fig2_bottom.png"
+      ],
+      "remaining_gap": "Execute the sharded paper-scale campaign; exact W grid and L=10/12 sample counts remain publication-underspecified.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t003_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "All three adjacent generated size pairs have an explicit sign-change or nearest-approach crossing estimate in the enlarged region."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2 (bottom)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "003",
+            "status": "reproduced",
+            "evidence": "outputs/figures/T003_main_fig2_bottom.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 100.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T004",
+      "label": "Text claim -- finite-size crossing drift",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The generated adjacent-size estimates move to larger disorder and lower mean gap ratio, reproducing the stated drift direction.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Both crossing coordinates drift in the paper-stated direction.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All target series and claims are coded; the production-scale campaign remains unexecuted.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced-scale numerics and source-figure-only comparison cap the evidence at feature reproduction; high pixel similarity cannot override this gate.",
+      "primary_metric": {
+        "kind": "crossing_drift_feature_score",
+        "score": 100.0,
+        "pixel_target_ids": [],
+        "comparison_role": "analytic_feature_contract",
+        "evidence": [
+          "outputs/checks/science_checks.json#CHK_CROSSING_DRIFT"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ004"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a text-level quantitative trend with no separate source panel.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The exact disorder grid and L=10/L=12 realization counts needed to reconstruct the authors' crossing coordinates are not published.",
+            "evidence": [
+              "PAPER_MAP.md",
+              "parameter_provenance.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The article and source archive omit indispensable run metadata for an exact numerical match; the implementation therefore cannot infer those values without inventing provenance.",
+            "confidence": "confirmed",
+            "evidence": [
+              "SOURCE_ACCESS_BOUNDARY.md",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No code fault was found in the independently generated crossings; the Hamiltonian and observable checks pass and every adjacent pair has an explicit sign-change or nearest-approach result.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every printed parameter and every reconstructed parameter is separated in the provenance ledger.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All Hamiltonians are Hermitian and all adjacent size pairs produce a recorded crossing result.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Crossing interpolation and nearest-approach behavior are covered by focused tests.",
+                "evidence": [
+                  "tests/test_mbl_level_stats.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A crossing-analysis defect is disfavored by unit tests, explicit rows, and monotonic drift checks.",
+              "evidence": [
+                "tests/test_mbl_level_stats.py",
+                "outputs/data/crossing_drift.csv"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "supported",
+              "statement": "The absent L=16 production run also limits precision, but more compute cannot recover unprinted metadata.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "config/paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The numerical values and uncertainties of the finite-size crossing coordinates.",
+            "completion": "The drift direction is reproduced; exact author-coordinate agreement remains unclaimable.",
+            "items": [
+              "T004",
+              "all adjacent-size crossing coordinates"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the authors' exact W grid and per-size realization counts, then rerun the frozen paper-scale implementation.",
+            "expected_resolution": "Published metadata would either promote the crossings to paper-exact or isolate a scientific mismatch.",
+            "evidence_to_produce": [
+              "an updated parameter provenance ledger",
+              "a paper-scale isolated run attestation",
+              "new crossing coordinates with uncertainties"
+            ]
+          }
+        },
+        "pixel_alternative_evidence": [
+          "outputs/checks/science_checks.json#CHK_CROSSING_DRIFT",
+          "outputs/data/crossing_drift.csv"
+        ]
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/cond-mat-0610854-reduced-scale-v2/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/data/crossing_drift.csv"
+      ],
+      "remaining_gap": "Execute the sharded paper-scale campaign; exact W grid and L=10/12 sample counts remain publication-underspecified.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t004_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The generated adjacent-size estimates move to larger disorder and lower mean gap ratio, reproducing the stated drift direction."
+        }
+      ],
+      "figure_refs": [
+        "Text claim"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "004",
+            "status": "reproduced",
+            "evidence": "outputs/data/crossing_drift.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    }
+  ],
+  "overall_score": 70.0,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 4,
+    "critical_items": 4,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "insufficient_compute": 3,
+      "missing_parameters": 1
+    },
+    "parameter_match_counts": {
+      "reduced_scale": 4
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 3,
+      "analytic_reference": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 4
+    },
+    "formula_gate_counts": {
+      "verified": 4
+    },
+    "paper_level_role_counts": {
+      "main_claim": 4
+    },
+    "physics_status_counts": {
+      "passed": 4
+    },
+    "physics_assertion_status_counts": {
+      "passed": 4
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 4
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 3,
+      "parameter_values_unavailable": 1
+    },
+    "root_cause_counts": {
+      "compute_capacity_shortfall": 3,
+      "publication_underspecified": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 4
+    }
+  },
+  "status": "passed"
+}

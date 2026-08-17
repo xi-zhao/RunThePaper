@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "paper_id": "1106.2978",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Boundary-driven XXZ Liouvillian",
+      "role": "independent full-space cross-check",
+      "latex": "dot(rho)=-i[H,rho]+sum_k(2L_k rho L_k^dagger-{L_k^dagger L_k,rho}); L_1=sqrt(epsilon)sigma_1^+, L_2=sqrt(epsilon)sigma_n^-",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 1, Eqs. (1)-(3)"
+        }
+      ],
+      "derived_from": [
+        "standard Pauli matrices and printed boundary driving"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense column-vectorized Liouvillian for n<=4",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian, jump operators and dissipator are printed in Eqs. (1)-(3)."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Dense NESS agrees with the unrelated transfer contraction to 7.3e-16 in magnetization and 2.3e-16 in current."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/liouvillian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Exact MPO amplitudes",
+      "role": "finite-chain NESS construction",
+      "latex": "a_r^0=cos(r lambda)+i epsilon sin(r lambda)/(2 sin lambda), lambda=arccos Delta; a_r^+ and a_r^- as printed in Eq. (7)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eqs. (5)-(7)"
+        }
+      ],
+      "derived_from": [
+        "exact MPO theorem and boundary relations"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "complex near-diagonal amplitudes with stable tau signs",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All generic and isotropic amplitudes are transcribed from Eqs. (6)-(7) and the isotropic paragraph."
+        },
+        {
+          "id": "EQ002-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Generated amplitudes pass the printed root-of-unity closure and dense NESS observable checks."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::auxiliary_amplitudes"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Tridiagonal transfer and magnetization vertex",
+      "role": "Main Fig. 2(a) and correlations",
+      "latex": "T=sum_r(|a_r^0|^2|r><r|+|a_r^+|^2|r><r+1|/2+|a_r^-|^2|r+1><r|/2); V=T_offdiag^+-T_offdiag^-",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eq. (15)"
+        }
+      ],
+      "derived_from": [
+        "diagonal auxiliary subspace of the ladder tensor network"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "scaled tridiagonal products",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The transfer and magnetization vertex are printed explicitly in Eq. (15)."
+        },
+        {
+          "id": "EQ003-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Profiles agree with the dense Liouvillian solution to 7.3e-16 over the audit grid."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Conserved spin current",
+      "role": "Main Fig. 2(b)",
+      "latex": "Im W=-(epsilon/4)T; J=(epsilon/2)<0|T^(n-1)|0>/<0|T^n|0>",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eqs. (17)-(18) and following text"
+        }
+      ],
+      "derived_from": [
+        "one-sided hopping vertex and local magnetization conservation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "ratio of scaled transfer norms",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The hopping vertex, Im W identity and current formula are printed around Eqs. (17)-(18)."
+        },
+        {
+          "id": "EQ004-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Transfer current agrees with every dense NESS bond to 3.9e-16 including conservation spread."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::spin_current"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Delta=1/2 closed transfer process",
+      "role": "easy-plane ballistic transport",
+      "latex": "T'=matrix([[1,epsilon^2/2,0],[1/2,(1+epsilon^2)/4,(9+epsilon^2)/24],[0,3(1+epsilon^2)/8,(1+epsilon^2)/4]])",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, unnumbered reduced transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "lambda=pi/3 root-of-unity closure"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact 3x3 matrix",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete reduced 3x3 matrix is printed below Main Fig. 2."
+        },
+        {
+          "id": "EQ005-M",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Generic amplitudes reproduce every printed 3x3 entry to 2.3e-16."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Easy-plane thermodynamic current",
+      "role": "T004 and Main Fig. 2(b) limiting behavior",
+      "latex": "J_inf=epsilon*(sqrt(81+74epsilon^2+9epsilon^4)-7-3epsilon^2)/(4(1+epsilon^2))",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text following reduced transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "ratio of the leading eigenvalue of the 3x3 transfer matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed scalar function and finite-n convergence",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The closed thermodynamic current and its limiting behavior are printed in the easy-plane paragraph."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both limiting coefficients pass and the maximum is epsilon=1.62909."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_plane_current_limit"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Easy-axis insulating exponent",
+      "role": "Main Fig. 2(b) inset",
+      "latex": "J proportional to exp[-n arcosh(|Delta|)]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, easy-axis paragraph and Fig. 2 caption"
+        }
+      ],
+      "derived_from": [
+        "asymptotic auxiliary hopping process"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "linear fit to log current after a declared n cutoff",
+      "checks": [
+        {
+          "id": "EQ007-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exponential law is printed in the easy-axis paragraph and Main Fig. 2 caption."
+        },
+        {
+          "id": "EQ007-S",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All three fitted slopes agree with -arcosh(3/2) within 1.8e-13."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_axis_decay_fit"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Isotropic regularization and asymptotics",
+      "role": "cosine profiles and anomalous current",
+      "latex": "a_r^0=1+i epsilon r/2; M(x)=cos(pi x); J approximately pi^2/(epsilon n^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 4-5, Eqs. (20)-(22) and following text"
+        }
+      ],
+      "derived_from": [
+        "lambda to zero regularization and continuum transfer equation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit regularized amplitudes and finite-size slopes",
+      "checks": [
+        {
+          "id": "EQ008-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The regularized amplitudes, cosine profile and current law are printed after Eq. (22)."
+        },
+        {
+          "id": "EQ008-S",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The epsilon=1 profile RMSE is 0.00119 and the fitted current exponent is -2.01224."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::auxiliary_amplitudes",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Isotropic connected correlation and weak-coupling limit",
+      "role": "T005 and T006",
+      "latex": "C(x,y)=pi f(min(x,y),max(x,y))/(4n)+O(n^-2); J=epsilon/2; M_j=epsilon^2(n+1-2j)/4 for epsilon much less than 2pi/n",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5, final isotropic paragraphs"
+        }
+      ],
+      "derived_from": [
+        "two magnetization vertices and perturbative boundary solution"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "finite transfer correlations and weak-coupling ratios",
+      "checks": [
+        {
+          "id": "EQ009-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete correlation kernel and weak-coupling formulas are printed in the final isotropic paragraphs."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The n=120 correlation error is at most 15.2 percent and weak-coupling errors are below 1.7e-7."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::connected_correlation",
+        "src/open_xxz/transfer.py::correlation_kernel"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "run_id": "1106.2978-paper-exact-v3",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/open_xxz/__init__.py",
+    "src/open_xxz/transfer.py",
+    "src/open_xxz/liouvillian.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile_size": 100,
+    "current_size_min": 2,
+    "current_size_max": 400,
+    "anisotropies": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "couplings": [
+      1.0,
+      0.2,
+      0.04
+    ],
+    "easy_axis_fit_min": 30,
+    "easy_axis_fit_max": 100,
+    "thermodynamic_grid_min": 0.0001,
+    "thermodynamic_grid_max": 20.0,
+    "thermodynamic_grid_points": 20001,
+    "correlation_sizes": [
+      40,
+      80,
+      120
+    ],
+    "correlation_points": [
+      [
+        0.25,
+        0.65
+      ],
+      [
+        0.35,
+        0.75
+      ]
+    ],
+    "weak_coupling_sizes": [
+      8,
+      12
+    ],
+    "weak_couplings": [
+      0.0001,
+      0.0002
+    ],
+    "dense_crosscheck_sizes": [
+      2,
+      3,
+      4
+    ],
+    "dense_crosscheck_anisotropies": [
+      0.5,
+      1.0,
+      1.5
+    ],
+    "dense_crosscheck_couplings": [
+      1.0,
+      0.2
+    ]
+  },
+  "outputs": [
+    "outputs/data/magnetization_profiles.csv",
+    "outputs/data/current_scaling.csv",
+    "outputs/data/correlation_checks.csv",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true,
+    "contract": "config/render_contract.json"
+  }
+}

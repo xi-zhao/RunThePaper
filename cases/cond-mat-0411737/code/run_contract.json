@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "run_id": "cond-mat-0411737-paper-reconstructed-v2",
+  "target_ids": [
+    "T001"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_reconstructed.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src",
+    "scripts/run_reproduction.py",
+    "config/paper_reconstructed.json"
+  ],
+  "parameter_file": "config/paper_reconstructed.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "hopping_t": 1.0,
+    "spin_orbit_t2": 0.03,
+    "rashba_lambda": 0.0,
+    "ribbon_width_chains": 20,
+    "width_convergence_chains": [
+      16,
+      20,
+      24
+    ],
+    "k_over_pi_min": 0.0,
+    "k_over_pi_max": 2.0,
+    "k_points": 401,
+    "energy_window_over_t": [
+      -1.0,
+      1.0
+    ],
+    "edge_chain_depth": 2,
+    "graphene_lattice_constant_angstrom": 2.46,
+    "bare_full_gap_kelvin": 2.4,
+    "coulomb_g0": 0.74,
+    "cutoff_ev": 2.0,
+    "electric_field_volts": 50.0,
+    "electric_field_distance_nm": 300.0,
+    "fermi_velocity_m_per_s": 1000000.0
+  },
+  "outputs": [
+    "outputs/data/main_fig1_bands.csv",
+    "outputs/data/width_convergence.csv",
+    "outputs/data/analytic_checks.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true,
+    "contract": "config/render_contract.json",
+    "command": [
+      "python",
+      "scripts/render_figures.py",
+      "--contract",
+      "config/render_contract.json",
+      "--data-root",
+      "outputs",
+      "--output-root",
+      "outputs"
+    ]
+  }
+}

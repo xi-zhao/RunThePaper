@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-0403025",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Magic-state fidelity, error and polarization",
+      "role": "threshold conversions",
+      "latex": "epsilon=1-F^2=(1-r)/2; F=sqrt(1-epsilon); r=1-2 epsilon",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 3, 6 and 10; Theorems 2-3 and Secs. V-VI"
+        }
+      ],
+      "derived_from": [
+        "Bloch representation along a magic direction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct scalar identities",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The definitions and threshold conversions are printed in the cited locations."
+        },
+        {
+          "id": "EQ001-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The magic-state overlap is (1+r)/2."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::threshold_summary"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "T-basis dephasing and five-copy input",
+      "role": "five-qubit distillation input distribution",
+      "latex": "D(rho)=(1-epsilon)|T0><T0|+epsilon|T1><T1|; rho_in=D(rho)^{otimes 5}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 6-7, Eqs. (8)-(9)"
+        }
+      ],
+      "derived_from": [
+        "Clifford twirl by I,T,T^{-1}",
+        "binomial error strings"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "32 error strings with binomial weights",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The dephasing channel and five-copy input are printed in Eqs. (8)-(9)."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The 32 error-string probabilities sum to one."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::t_type_projector_enumeration"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Five-qubit stabilizer projector",
+      "role": "independent derivation of Fig. 2",
+      "latex": "Pi=2^{-4} product_{j=1}^4(I+S_j); <T00000|Pi|T00000>=1/6",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 7-8, Eqs. (10)-(20); p. 14 Appendix"
+        }
+      ],
+      "derived_from": [
+        "printed Pauli stabilizers",
+        "logical T eigensectors"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit 32x32 complex projector",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The stabilizers, projector and 1/6 identity are printed in the cited equations."
+        },
+        {
+          "id": "EQ003-P",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Commuting involutory stabilizers make Pi a rank-two Hermitian projector."
+        },
+        {
+          "id": "EQ003-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Direct expectation verifies the 1/6 normalization."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::five_qubit_projector"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "T-type syndrome success probability",
+      "role": "Main Fig. 2 lower panel",
+      "latex": "p_s=[epsilon^5+5 epsilon^2(1-epsilon)^3+5 epsilon^3(1-epsilon)^2+(1-epsilon)^5]/6",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 8, Eq. (22)"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "logical-sector weights"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed polynomial and projector enumeration",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The success polynomial is printed in Eq. (22)."
+        },
+        {
+          "id": "EQ004-E",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "p_s(0)=1/6 and p_s(1/2)=1/16."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::t_type_success"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "T-type output-error map",
+      "role": "Main Fig. 2 upper panel",
+      "latex": "epsilon_out=(t^5+5t^2)/(1+5t^2+5t^3+t^5), t=epsilon/(1-epsilon)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 8, Eq. (23)"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "EQ004",
+        "logical-state swap after decoding"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "stable polynomial ratio evaluated directly in epsilon",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The output map and fixed point are printed in Eq. (23) and following text."
+        },
+        {
+          "id": "EQ005-F",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The nontrivial fixed point is (1-sqrt(3/7))/2."
+        },
+        {
+          "id": "EQ005-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "epsilon_out/epsilon^2 tends to 5."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::t_type_output_error"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Punctured Reed-Muller code spaces",
+      "role": "independent H-type enumerator",
+      "latex": "L1=span([x_j]); L2=span([x_j],[x_j x_k]); L1^perp=L2 direct_sum [1]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 9-11, Lemmas 1-2 and Eqs. (29)-(34)"
+        }
+      ],
+      "derived_from": [
+        "truth tables on the 15 nonzero four-bit inputs"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "enumerate 16 L1 and 1024 L2 binary codewords",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The code spaces and enumerator are printed in the cited section."
+        },
+        {
+          "id": "EQ006-W",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Enumeration gives W_L1=x^15+15x^7y^8."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::reed_muller_spaces"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "H-type success and output-error maps",
+      "role": "Main Fig. 3 and supporting yield",
+      "latex": "p_s=[1+15(1-2epsilon)^8]/16; epsilon_out=[1-15q^7+15q^8-q^15]/[2(1+15q^8)], q=1-2epsilon",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 12-13, Eqs. (35)-(36)"
+        }
+      ],
+      "derived_from": [
+        "EQ006",
+        "MacWilliams identity"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed polynomial and exact codeword-weight sums",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The closed H-type maps are printed in Eqs. (35)-(36)."
+        },
+        {
+          "id": "EQ007-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Bracketed root reproduces the printed epsilon_0 about 0.141."
+        },
+        {
+          "id": "EQ007-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "epsilon_out/epsilon^3 tends to 35 and p_s(0)=1."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::h_type_output_error",
+        "src/magic_distillation/model.py::h_type_enumeration"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Recursive distillation exponents",
+      "role": "yield and asymptotic efficiency claims",
+      "latex": "xi_T=1/log_2(30); xi_H=1/log_3(15); epsilon_T~(5epsilon)^{n^xi_T}; epsilon_H~(sqrt(35)epsilon)^{n^xi_H}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 6, 9 and 13; Eqs. (6), (24), (38)-(39)"
+        }
+      ],
+      "derived_from": [
+        "T yield 1/30 and quadratic suppression",
+        "H yield 1/15 and cubic suppression"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "logarithmic exponent evaluation and recurrence checks",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The recursive yields and exponents are printed in the cited equations."
+        },
+        {
+          "id": "EQ008-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Explicit finite-level iteration obeys the quoted exponents."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::resource_summary"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Circuit-level raw-ancilla scaling",
+      "role": "quantitative resource claim",
+      "latex": "epsilon_out~1/(L log L); gamma=log_3(15); N~L(log L)^{gamma+1}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 6, Sec. IV"
+        }
+      ],
+      "derived_from": [
+        "union bound for L non-Clifford rounds",
+        "EQ008 H-type hierarchy"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dimensionless scaling identities",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The circuit-level scaling relations are printed in Sec. IV."
+        },
+        {
+          "id": "EQ009-G",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "gamma evaluates to about 2.465 and rounds to the printed 2.5."
+        }
+      ],
+      "code_refs": [
+        "src/magic_distillation/model.py::resource_summary"
+      ],
+      "open_questions": []
+    }
+  ]
+}

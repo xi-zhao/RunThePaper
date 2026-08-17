@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0610854",
+  "run_profile": "paper_scale_reconstructed",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "entrypoint": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--shard-index",
+    "${SHARD_INDEX}",
+    "--shard-count",
+    "64",
+    "--resume"
+  ],
+  "aggregate_entrypoint": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--shard-count",
+    "64",
+    "--aggregate-only"
+  ],
+  "config_ref": "config/paper_scale.json",
+  "checkpoint_pattern": "outputs/checkpoints/paper_scale_reconstructed/shard-*.json",
+  "expected_outputs": [
+    "outputs/data/level_ratio_curves.csv",
+    "outputs/data/level_ratio_histograms.csv",
+    "outputs/data/crossing_drift.csv",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json"
+  ],
+  "machine_profile": {
+    "gpu": "A100 80GB recommended for L=14,16",
+    "cpu": "16 cores for matrix construction and small-size shards",
+    "memory_gib": 32,
+    "persistent_storage_gib": 20,
+    "walltime_hours": 168
+  },
+  "acceptance_criteria": [
+    "Every declared (L,W,sample_id) is covered exactly once across shards.",
+    "All spectra use the full half-filled Hilbert space and all adjacent gaps.",
+    "The GOE campaign uses 1000 matrices of size 3432.",
+    "All target-level science checks pass and output hashes are frozen.",
+    "Missing printed L=10/12 sample counts and exact W grid remain explicit reconstructed parameters."
+  ]
+}

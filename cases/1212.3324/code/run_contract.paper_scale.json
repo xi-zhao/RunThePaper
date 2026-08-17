@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "paper_id": "1212.3324",
+  "run_profile": "paper_scale_reconstructed",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009"
+  ],
+  "working_directory": "workspace",
+  "entrypoint": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--output-root",
+    "outputs"
+  ],
+  "config_ref": "config/paper_scale.json",
+  "code_refs": [
+    "src/floquet_winding/model.py",
+    "src/floquet_winding/topology.py",
+    "src/floquet_winding/campaign.py",
+    "scripts/run_reproduction.py",
+    "scripts/run_paper_scale.py"
+  ],
+  "expected_outputs": [
+    "outputs/data/square_strip_spectra.npz",
+    "outputs/data/square_phase_diagram.csv",
+    "outputs/data/weak_drive_bulk.npz",
+    "outputs/data/weak_drive_strip.npz",
+    "outputs/data/topological_invariants.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "machine_profile": {
+    "cpu": "16 physical cores recommended",
+    "memory_gib": 32,
+    "persistent_storage_gib": 5,
+    "walltime_hours": 8,
+    "gpu": "not required"
+  },
+  "acceptance_criteria": [
+    "All nine targets are generated from the printed Hamiltonians or invariant formulas.",
+    "The ideal-point bulk Floquet operator is identity within 1e-11.",
+    "The three representative phases have winding pairs (0,0), (0,1), and (1,1).",
+    "The upper Floquet-band Chern sequence is 0,1,0.",
+    "The weak-drive static upper band has unit Chern magnitude and the Floquet band has Chern zero.",
+    "All scientific outputs are hashed before any reference figure is read."
+  ]
+}
