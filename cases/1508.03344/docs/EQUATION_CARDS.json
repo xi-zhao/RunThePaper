@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "paper_id": "1508.03344",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Floquet unitary and quasienergies",
+      "role": "T001-T007 one-period eigensystem",
+      "latex": "U(T)=exp(-i H_F T); U(T)|phi_alpha(0)>=exp(-i epsilon_alpha T)|phi_alpha(0)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p.1, Eqs. (1)-(2) and Floquet formalism"
+        }
+      ],
+      "derived_from": [
+        "chronological product of piecewise-constant drive stages",
+        "principal circular quasienergy zone"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Hermitian spectral exponentials followed by unitary eigendecomposition",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The definition of the Floquet unitary and quasienergy eigenproblem is explicit."
+        },
+        {
+          "id": "EQ001-U",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Reduced all-target tests and campaign checks bound the maximum Floquet unitarity residual below 1e-8."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/model.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Log-normal driven disordered Ising model",
+      "role": "T001-T002 Fig. 1 drive",
+      "latex": "H(t)=sum_i f_s(t) J_i X_i X_{i+1}+sum_i h_i Z_i+J_z sum_i Z_i Z_{i+1}; f_s=(1,e,1)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp.2-3, Eqs. (3)-(4) and surrounding parameter paragraph"
+        }
+      ],
+      "derived_from": [
+        "log J and log h normal with standard deviation one",
+        "omega=2 max(std(J),std(h))"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "three exact stage exponentials in a fixed parity sector",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Drive multipliers, durations, disorder law, Jz and period rule are printed."
+        },
+        {
+          "id": "EQ002-L",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The log-normal mean and variance identities independently reproduce the period rule omega=2W and T=2pi/omega used by the runner."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/model.py",
+        "src/driven_ising/campaign.py"
+      ],
+      "open_questions": [
+        "The exact boundary condition, parity sector, parameter grid and sample allocation are not printed."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Circular adjacent-gap ratio",
+      "role": "T001, T004 and T007 level statistics",
+      "latex": "r_n=min(delta_n,delta_{n+1})/max(delta_n,delta_{n+1})",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p.3, paragraph defining quasienergy gaps and r"
+        }
+      ],
+      "derived_from": [
+        "sorted Floquet eigenphases",
+        "periodic wraparound gap retained as an explicit convention"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "mean ratio over adjacent circular gaps and disorder samples",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The adjacent-gap statistic and Poisson/COE anchors are printed."
+        },
+        {
+          "id": "EQ003-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Unit tests verify circular wrap invariance and the reduced campaign reproduces the ordered-to-ergodic level-statistics crossover."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/observables.py"
+      ],
+      "open_questions": [
+        "The paper does not state whether the circular wrap gap is included."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Spin-glass correlator and susceptibility",
+      "role": "T002, T006 and T007 eigenstate order",
+      "latex": "C_AA^alpha(ij;t)=<phi_alpha(t)|sigma_i^A sigma_j^A|phi_alpha(t)>; chi_SG=L^-2 sum_ij C_xx(ij;0)^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p.3, Eqs. (5)-(6)"
+        }
+      ],
+      "derived_from": [
+        "two-site Pauli operators",
+        "within-period propagation of a Floquet eigenvector"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit eigenvector expectations, disorder/eigenstate averages and time series",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both correlator definitions and the two-crossing pi-SG claim are explicit."
+        },
+        {
+          "id": "EQ004-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Explicit Pauli-pair expectations satisfy 0<=chi_SG<=1; independently generated micromotion has the two claimed |Cxx|=|Cyy| crossings."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/observables.py"
+      ],
+      "open_questions": [
+        "Fig. 2(d) does not identify the disorder seed or selected eigenstate."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Spin-raising spectral function",
+      "role": "T005 and T007 zero/pi spectral peaks",
+      "latex": "A(omega)=2^-L sum_ab |<phi_a|sigma_i^+|phi_b>|^2 delta_T(omega-(epsilon_a-epsilon_b))",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p.3 Eq. (7) and Fig. 2(c) caption"
+        }
+      ],
+      "derived_from": [
+        "positive Lehmann spectral weight",
+        "periodic histogram or normalized broadening kernel"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "cross-parity operator matrix elements binned on the quasienergy circle",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The operator, eigenbasis sum and zero/pi peak claims are printed."
+        },
+        {
+          "id": "EQ005-W",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Completeness gives the positive half spectral sum rule for sigma-plus; the generated histogram satisfies it while the printed unsquared literal form remains complex."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/observables.py"
+      ],
+      "open_questions": [
+        "Eq. (7) omits the absolute square required for a positive spectral function; kernel, site and normalization are not printed."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Interacting pi-phase binary drive",
+      "role": "T003-T007 Fig. 2 model",
+      "latex": "U=exp(-i H_x T2)exp(-i H_z T1); H_z=sum h_i Z_i+J_z sum Z_iZ_i+1; H_x=sum J_i X_iX_i+1+J_z sum Z_iZ_i+1",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p.4, Eqs. (8)-(9), numerical paragraph and Fig. 2 caption"
+        }
+      ],
+      "derived_from": [
+        "open-chain nearest-neighbor Hamiltonians",
+        "printed dimensionless disorder intervals"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "two exact stage exponentials under explicit duration-convention branches",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Stage Hamiltonians, disorder intervals and interaction series are printed."
+        },
+        {
+          "id": "EQ006-P",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Chronological piecewise evolution fixes U=exp(-iHxT2)exp(-iHzT1); both duration-convention branches preserve the printed dimensionless products."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/model.py",
+        "src/driven_ising/campaign.py"
+      ],
+      "open_questions": [
+        "T=T1+T2, T=1, T2=pi/2 and caption T1=1 are mutually incompatible; Hx also leaves the printed Jz bond term outside an explicit sum."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Free uniform four-sector phase diagram",
+      "role": "T003 and T007 phase classification",
+      "latex": "gap closings: J T2=h T1 and J T2+h T1=pi/2 on 0<=hT1,JT2<=pi/2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf Fig. 2(a) and adjacent free-fermion discussion"
+        }
+      ],
+      "derived_from": [
+        "free Jordan-Wigner Floquet modes at high-symmetry momenta",
+        "zero and pi gap closings"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed phase-boundary lines and four-region labels",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The axes, four labels and zero/pi edge-mode interpretation are shown in Fig. 2(a)."
+        },
+        {
+          "id": "EQ007-B",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Independent grid classification generates all four sectors separated by y=x and x+y=pi/2 without reading source pixels."
+        }
+      ],
+      "code_refs": [
+        "src/driven_ising/analytic.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

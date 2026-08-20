@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "run_id": "cond-mat-0411737-whole-paper-v11",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012",
+    "T013"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_reconstructed.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/kane_mele/__init__.py",
+    "src/kane_mele/model.py",
+    "src/kane_mele/boundary.py",
+    "src/kane_mele/edge_theory.py",
+    "src/kane_mele/microscopic.py",
+    "src/kane_mele/renormalization.py",
+    "src/kane_mele/response.py",
+    "src/kane_mele/symmetry.py",
+    "src/kane_mele/topology.py",
+    "scripts/run_reproduction.py",
+    "config/paper_reconstructed.json"
+  ],
+  "parameter_file": "config/paper_reconstructed.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "hopping_t": 1.0,
+    "spin_orbit_t2": 0.03,
+    "rashba_probe_lambda": 0.02,
+    "ribbon_width_chains": 32,
+    "width_convergence_chains": [
+      16,
+      20,
+      24,
+      28,
+      32
+    ],
+    "armchair_width_convergence_chains": [
+      20,
+      32,
+      44
+    ],
+    "armchair_rashba_width_convergence_chains": [
+      56,
+      68,
+      80
+    ],
+    "rashba_spectral_flow_zigzag_widths": [
+      48,
+      58,
+      64
+    ],
+    "rashba_spectral_flow_armchair_widths": [
+      80,
+      104,
+      128
+    ],
+    "armchair_convergence_edge_chain_depth": 4,
+    "armchair_edge_chain_depth": 12,
+    "rashba_sweep_ratios": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      0.95,
+      1.05
+    ],
+    "rashba_kubo_ratios": [
+      0.0,
+      0.01,
+      0.05,
+      0.1,
+      0.25
+    ],
+    "k_over_pi_min": 0.0,
+    "k_over_pi_max": 2.0,
+    "k_points": 401,
+    "energy_window_over_t": [
+      -1.0,
+      1.0
+    ],
+    "edge_chain_depth": 2,
+    "graphene_lattice_constant_angstrom": 2.46,
+    "bare_full_gap_kelvin": 2.4,
+    "coulomb_g0": 0.74,
+    "cutoff_ev": 2.0,
+    "electric_field_volts": 50.0,
+    "electric_field_distance_nm": 300.0,
+    "fermi_velocity_m_per_s": 1000000.0,
+    "rg_probe_ell": 2.0,
+    "rg_coefficient_shell_ell": 1.5,
+    "rg_shell_ells": [
+      0.25,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "interaction_strengths": [
+      0.2,
+      0.4,
+      0.8
+    ],
+    "interaction_temperatures": [
+      0.05,
+      0.0793700526,
+      0.12599210499,
+      0.2,
+      0.31748021039,
+      0.50396841996,
+      0.8
+    ],
+    "disorder_strength_over_t": 1.0,
+    "edge_velocity_over_t": 1.0,
+    "mass_path_gap_scale": 1.0,
+    "parallel_field_bridge_rashba_over_t": 0.08,
+    "parallel_field_zeeman_over_t": 0.15,
+    "parallel_field_final_staggered_mass_over_t": 0.3,
+    "cylinder_circumference_in_correlation_lengths": 20.0,
+    "flux_ramp_time_in_inverse_gaps": 20.0,
+    "screening_momenta_over_cutoff": [
+      0.002,
+      0.004,
+      0.008,
+      0.016,
+      0.032,
+      0.064
+    ],
+    "screening_uv_cutoff": 1.0
+  },
+  "outputs": [
+    "outputs/data/main_fig1_bands.csv",
+    "outputs/data/width_convergence.csv",
+    "outputs/data/armchair_crossing_convergence.csv",
+    "outputs/data/flat_band_diagnostics.csv",
+    "outputs/data/rashba_boundary_sweep.csv",
+    "outputs/data/rashba_edge_spectral_flow.csv",
+    "outputs/data/rashba_kubo_sweep.csv",
+    "outputs/data/interaction_conductivity.csv",
+    "outputs/data/scalar_disorder_ensemble.csv",
+    "outputs/data/finite_cylinder_flux.csv",
+    "outputs/data/dirac_mass_symmetry_inventory.csv",
+    "outputs/data/parallel_field_bulk_path.csv",
+    "outputs/data/rg_exchange_sweep.csv",
+    "outputs/data/screened_coulomb.csv",
+    "outputs/data/analytic_checks.json",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true,
+    "contract": "config/render_contract.json",
+    "command": [
+      "python",
+      "scripts/render_figures.py",
+      "--contract",
+      "config/render_contract.json",
+      "--data-root",
+      "outputs",
+      "--output-root",
+      "outputs"
+    ]
+  }
+}

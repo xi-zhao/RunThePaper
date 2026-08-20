@@ -1,0 +1,1368 @@
+{
+  "schema_version": 4,
+  "paper_id": "1508.03344",
+  "score_model": "scientific_region_pixel_and_scientific_review_v1",
+  "score_policy": {
+    "primary": "Direct pixel difference in every complete predeclared scientific region, after formula, provenance, science and isolation gates.",
+    "full_figure": "Whole-canvas values are layout diagnostics only.",
+    "numerical_generator_source_pixels": "forbidden",
+    "render_contract_physics_changes": "forbidden",
+    "evidence_cap": "Pixel similarity cannot override scale, parameter provenance, source ambiguity or independent review."
+  },
+  "targets": [
+    {
+      "target_id": "T001",
+      "label": "Main Figure 1 -- Floquet level statistics",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The independently generated level statistic crosses between localized and circular-ensemble regimes for both reduced sizes.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 31.28,
+          "reason": "Primary complete-scientific-region pixel score is 89.3573.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "The reduced-scale scientific feature passes, but the full multi-million-realization campaign has not run.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 89.3573,
+        "pixel_target_ids": [
+          "PXT_T001_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T001_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 89.3573 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The attested run uses the declared reduced L=6,8 campaign rather than the complete L=8,10,12 multi-million-realization paper-scale campaign.",
+            "evidence": [
+              "config/reduced_all_targets.json",
+              "config/paper_scale.json",
+              "outputs/checks/performance_profile.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "A measured L=12 sample gives a serial CPU lower bound of 652.35 days for 4,732,001 realizations, before the heavier eigenvector and spectral-function costs; the full scheduler campaign has therefore not been executed.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/performance_profile.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No implementation defect was found: focused tests, scientific invariants and an isolated all-target run pass, and the paper-scale campaign validates into resumable work units.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Eight focused tests cover operator construction, unitarity, parity, observables, phase sectors, work-unit enumeration and resume semantics.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v4 isolated all-target run completed with zero denied or forbidden file accesses.",
+                "evidence": [
+                  "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "A real L=12 timing and memory benchmark projects the complete campaign and records that no A100 speedup was assumed without measurement.",
+                "evidence": [
+                  "outputs/checks/performance_profile.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independently generated level statistic crosses between localized and circular-ensemble regimes for both reduced sizes.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic Hamiltonian, observable or resume defect would contradict the independent tests, invariants and isolated execution that passed.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json",
+                "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finite-size and disorder-average convergence for this target.",
+            "completion": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+            "items": [
+              "T001"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one representative CuPy L=12 shard on the available A100, then execute the complete resumable scheduler array if the measured allocation is acceptable.",
+            "expected_resolution": "The production run would test finite-size/disorder convergence and either promote the target or expose a model-level mismatch.",
+            "evidence_to_produce": [
+              "A100 shard benchmark",
+              "paper-scale isolated/scheduler attestation",
+              "paper-scale output hashes and convergence report"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig1_reproduction.png"
+      ],
+      "remaining_gap": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t001_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The independently generated level statistic crosses between localized and circular-ensemble regimes for both reduced sizes."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 1"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "001",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig1_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 93.28,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T002",
+      "label": "Main Figure 1 inset -- spin-glass susceptibility",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The generated spin-glass susceptibility remains bounded and the ordered/disordered contrast is 0.7772.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 29.89,
+          "reason": "Primary complete-scientific-region pixel score is 85.3926.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "The reduced-scale scientific feature passes, but the full multi-million-realization campaign has not run.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 85.3926,
+        "pixel_target_ids": [
+          "PXT_T002_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T002_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ004"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 85.3926 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The attested run uses the declared reduced L=6,8 campaign rather than the complete L=8,10,12 multi-million-realization paper-scale campaign.",
+            "evidence": [
+              "config/reduced_all_targets.json",
+              "config/paper_scale.json",
+              "outputs/checks/performance_profile.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "A measured L=12 sample gives a serial CPU lower bound of 652.35 days for 4,732,001 realizations, before the heavier eigenvector and spectral-function costs; the full scheduler campaign has therefore not been executed.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/performance_profile.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No implementation defect was found: focused tests, scientific invariants and an isolated all-target run pass, and the paper-scale campaign validates into resumable work units.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Eight focused tests cover operator construction, unitarity, parity, observables, phase sectors, work-unit enumeration and resume semantics.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v4 isolated all-target run completed with zero denied or forbidden file accesses.",
+                "evidence": [
+                  "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "A real L=12 timing and memory benchmark projects the complete campaign and records that no A100 speedup was assumed without measurement.",
+                "evidence": [
+                  "outputs/checks/performance_profile.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The generated spin-glass susceptibility remains bounded and the ordered/disordered contrast is 0.7772.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic Hamiltonian, observable or resume defect would contradict the independent tests, invariants and isolated execution that passed.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json",
+                "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finite-size and disorder-average convergence for this target.",
+            "completion": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+            "items": [
+              "T002"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one representative CuPy L=12 shard on the available A100, then execute the complete resumable scheduler array if the measured allocation is acceptable.",
+            "expected_resolution": "The production run would test finite-size/disorder convergence and either promote the target or expose a model-level mismatch.",
+            "evidence_to_produce": [
+              "A100 shard benchmark",
+              "paper-scale isolated/scheduler attestation",
+              "paper-scale output hashes and convergence report"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig1_reproduction.png"
+      ],
+      "remaining_gap": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t002_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The generated spin-glass susceptibility remains bounded and the ordered/disordered contrast is 0.7772."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 1 inset"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "002",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig1_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 91.89,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T003",
+      "label": "Main Figure 2(a) -- analytic four-phase map",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The two analytic gap-closing lines generate all four printed Floquet phases on the exact paper domain.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 33.56,
+          "reason": "Primary complete-scientific-region pixel score is 95.8781.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 90.0,
+      "cap_reason": "The analytic phase map is paper-exact; analytic-reference evidence caps the score at 90 pending fresh review.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 95.8781,
+        "pixel_target_ids": [
+          "PXT_T003_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T003_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "analytic_reference",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ006",
+          "EQ007"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 95.8781 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_SCIENCE"
+        ]
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig2_reproduction.png"
+      ],
+      "remaining_gap": "No target-level scientific gap; fresh independent review remains a lifecycle gate.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t003_science_gate",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The two analytic gap-closing lines generate all four printed Floquet phases on the exact paper domain."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2(a)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "003",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig2_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 98.56,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T004",
+      "label": "Main Figure 2(b) -- pi-SG level statistics",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The independently generated pi-drive statistic has a 0.0933 interaction crossover, exceeding the declared scientific threshold.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 29.96,
+          "reason": "Primary complete-scientific-region pixel score is 85.5990.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "The reduced-scale scientific feature passes, but the full multi-million-realization campaign has not run.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 85.599,
+        "pixel_target_ids": [
+          "PXT_T004_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T004_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ003",
+          "EQ006"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 85.5990 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T004_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The attested run uses the declared reduced L=6,8 campaign rather than the complete L=8,10,12 multi-million-realization paper-scale campaign.",
+            "evidence": [
+              "config/reduced_all_targets.json",
+              "config/paper_scale.json",
+              "outputs/checks/performance_profile.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "A measured L=12 sample gives a serial CPU lower bound of 652.35 days for 4,732,001 realizations, before the heavier eigenvector and spectral-function costs; the full scheduler campaign has therefore not been executed.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/performance_profile.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No implementation defect was found: focused tests, scientific invariants and an isolated all-target run pass, and the paper-scale campaign validates into resumable work units.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Eight focused tests cover operator construction, unitarity, parity, observables, phase sectors, work-unit enumeration and resume semantics.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v4 isolated all-target run completed with zero denied or forbidden file accesses.",
+                "evidence": [
+                  "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "A real L=12 timing and memory benchmark projects the complete campaign and records that no A100 speedup was assumed without measurement.",
+                "evidence": [
+                  "outputs/checks/performance_profile.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independently generated pi-drive statistic has a 0.0933 interaction crossover, exceeding the declared scientific threshold.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic Hamiltonian, observable or resume defect would contradict the independent tests, invariants and isolated execution that passed.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json",
+                "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finite-size and disorder-average convergence for this target.",
+            "completion": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+            "items": [
+              "T004"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one representative CuPy L=12 shard on the available A100, then execute the complete resumable scheduler array if the measured allocation is acceptable.",
+            "expected_resolution": "The production run would test finite-size/disorder convergence and either promote the target or expose a model-level mismatch.",
+            "evidence_to_produce": [
+              "A100 shard benchmark",
+              "paper-scale isolated/scheduler attestation",
+              "paper-scale output hashes and convergence report"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig2_reproduction.png"
+      ],
+      "remaining_gap": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t004_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The independently generated pi-drive statistic has a 0.0933 interaction crossover, exceeding the declared scientific threshold."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2(b)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "004",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig2_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 91.96,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T005",
+      "label": "Main Figure 2(c) -- zero/pi spectral functions",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The positive Lehmann spectrum is nonnegative, obeys its half sum rule to 1.22e-15, resolves zero/pi peaks and reproduces their interaction decay.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 31.86,
+          "reason": "Primary complete-scientific-region pixel score is 91.0185.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced scale plus an unresolved printed spectral-definition ambiguity caps the evidence.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 91.0185,
+        "pixel_target_ids": [
+          "PXT_T005_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T005_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ005",
+          "EQ006"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 91.0185 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T005_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "Eq. (7) prints an unsquared generally complex matrix element, while the positive plotted spectral density requires squared Lehmann weights; the exact kernel, site averaging and normalization parameters are not printed.",
+            "evidence": [
+              "DERIVATION_TRACE.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The manuscript/source archive contains no author code, arrays or run metadata that can uniquely resolve this printed definition/parameter ambiguity.",
+            "confidence": "confirmed",
+            "evidence": [
+              "SOURCE_ACCESS_BOUNDARY.md",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after unit, invariant and source-trace checks; this does not turn the publication ambiguity into a confirmed paper error.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused operator and observable tests pass.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The positive Lehmann spectrum is nonnegative, obeys its half sum rule to 1.22e-15, resolves zero/pi peaks and reproduces their interaction decay.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The conflicting printed statements and the implemented assumption are line-by-line traceable.",
+                "evidence": [
+                  "DERIVATION_TRACE.md",
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic implementation defect is disfavored by the independent algebraic/invariance checks and explicit convention branching.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Exact source convention and pointwise paper comparison for this target.",
+            "completion": "The qualitative scientific feature is independently reproduced, but paper-exact pointwise attribution is blocked by the publication ambiguity.",
+            "items": [
+              "T005"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "A fresh reviewer should rederive Eq. (7) and compare all physically positive conventions using the same frozen eigensystems.",
+            "expected_resolution": "The result can distinguish a harmless notation omission, an alternative valid convention, a reproduction defect, or a protocol-qualified paper discrepancy.",
+            "evidence_to_produce": [
+              "fresh phase-one inventory",
+              "independent derivation",
+              "protocol-v2 reviewer submission"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig2_reproduction.png"
+      ],
+      "remaining_gap": "The qualitative scientific feature is independently reproduced, but paper-exact pointwise attribution is blocked by the publication ambiguity.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t005_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The positive Lehmann spectrum is nonnegative, obeys its half sum rule to 1.22e-15, resolves zero/pi peaks and reproduces their interaction decay."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2(c)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "005",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig2_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 93.86,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T006",
+      "label": "Main Figure 2(d) -- within-period correlators",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The two independently generated micromotion correlators cross twice during a drive period.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 30.05,
+          "reason": "Primary complete-scientific-region pixel score is 85.8648.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "Reduced scale plus an unresolved printed duration convention caps the evidence.",
+      "primary_metric": {
+        "kind": "pixel_similarity_score_0_100",
+        "score": 85.8648,
+        "pixel_target_ids": [
+          "PXT_T006_SCIENCE"
+        ],
+        "comparison_role": "primary_scientific_region",
+        "evidence": [
+          "outputs/checks/pixel_evidence.json#PXT_T006_SCIENCE"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ004",
+          "EQ006"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region has direct pixel score 85.8648 and passes the >=80 render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T006_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The printed period statements are mutually incompatible: Eq. (8) gives T=T1+T2, the numerical paragraph gives T=1 and T2=pi/2, and the caption gives T1=1.",
+            "evidence": [
+              "DERIVATION_TRACE.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The manuscript/source archive contains no author code, arrays or run metadata that can uniquely resolve this printed definition/parameter ambiguity.",
+            "confidence": "confirmed",
+            "evidence": [
+              "SOURCE_ACCESS_BOUNDARY.md",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after unit, invariant and source-trace checks; this does not turn the publication ambiguity into a confirmed paper error.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused operator and observable tests pass.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The two independently generated micromotion correlators cross twice during a drive period.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The conflicting printed statements and the implemented assumption are line-by-line traceable.",
+                "evidence": [
+                  "DERIVATION_TRACE.md",
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic implementation defect is disfavored by the independent algebraic/invariance checks and explicit convention branching.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Exact source convention and pointwise paper comparison for this target.",
+            "completion": "The qualitative scientific feature is independently reproduced, but paper-exact pointwise attribution is blocked by the publication ambiguity.",
+            "items": [
+              "T006"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Execute both declared duration branches on identical disorder samples and submit the stable difference to fresh-context review.",
+            "expected_resolution": "The result can distinguish a harmless notation omission, an alternative valid convention, a reproduction defect, or a protocol-qualified paper discrepancy.",
+            "evidence_to_produce": [
+              "fresh phase-one inventory",
+              "independent derivation",
+              "protocol-v2 reviewer submission"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/figures/main_fig2_reproduction.png"
+      ],
+      "remaining_gap": "The qualitative scientific feature is independently reproduced, but paper-exact pointwise attribution is blocked by the publication ambiguity.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t006_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The two independently generated micromotion correlators cross twice during a drive period."
+        }
+      ],
+      "figure_refs": [
+        "Main Figure 2(d)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "006",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig2_reproduction.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 92.05,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T007",
+      "label": "Results text -- quantitative phase and observable claims",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "All twelve predeclared phase, spectral, correlation and invariance checks pass on independently generated data.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "All twelve machine-readable quantitative checks pass.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All numerical targets are implemented; only the analytic phase map ran at exact paper scope, while ED targets use the declared reduced campaign.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 70.0,
+      "cap_reason": "The reduced-scale scientific feature passes, but the full multi-million-realization campaign has not run.",
+      "primary_metric": {
+        "kind": "scientific_assertion_pass_rate",
+        "score": 100.0,
+        "pixel_target_ids": [],
+        "comparison_role": "analytic_feature_contract",
+        "evidence": [
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004",
+          "EQ005",
+          "EQ006",
+          "EQ007"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a text-level quantitative contract with no separate plotted panel.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The attested run uses the declared reduced L=6,8 campaign rather than the complete L=8,10,12 multi-million-realization paper-scale campaign.",
+            "evidence": [
+              "config/reduced_all_targets.json",
+              "config/paper_scale.json",
+              "outputs/checks/performance_profile.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "A measured L=12 sample gives a serial CPU lower bound of 652.35 days for 4,732,001 realizations, before the heavier eigenvector and spectral-function costs; the full scheduler campaign has therefore not been executed.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/performance_profile.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No implementation defect was found: focused tests, scientific invariants and an isolated all-target run pass, and the paper-scale campaign validates into resumable work units.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Eight focused tests cover operator construction, unitarity, parity, observables, phase sectors, work-unit enumeration and resume semantics.",
+                "evidence": [
+                  "tests/test_driven_ising.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v4 isolated all-target run completed with zero denied or forbidden file accesses.",
+                "evidence": [
+                  "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "A real L=12 timing and memory benchmark projects the complete campaign and records that no A100 speedup was assumed without measurement.",
+                "evidence": [
+                  "outputs/checks/performance_profile.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All twelve predeclared phase, spectral, correlation and invariance checks pass on independently generated data.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A basic Hamiltonian, observable or resume defect would contradict the independent tests, invariants and isolated execution that passed.",
+              "evidence": [
+                "tests/test_driven_ising.py",
+                "outputs/checks/science_checks.json",
+                "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finite-size and disorder-average convergence for this target.",
+            "completion": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+            "items": [
+              "T007"
+            ]
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one representative CuPy L=12 shard on the available A100, then execute the complete resumable scheduler array if the measured allocation is acceptable.",
+            "expected_resolution": "The production run would test finite-size/disorder convergence and either promote the target or expose a model-level mismatch.",
+            "evidence_to_produce": [
+              "A100 shard benchmark",
+              "paper-scale isolated/scheduler attestation",
+              "paper-scale output hashes and convergence report"
+            ]
+          }
+        },
+        "pixel_alternative_evidence": [
+          "outputs/checks/science_checks.json",
+          "outputs/checks/run_summary.json"
+        ]
+      },
+      "evidence": [
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1508.03344-reduced-all-targets-v4/run_attestation.json",
+        "outputs/checks/target_contracts.json",
+        "outputs/checks/science_checks.json"
+      ],
+      "remaining_gap": "The formula implementation and reduced scientific feature are supported; paper-scale statistical evidence remains unexecuted.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t007_science_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "All twelve predeclared phase, spectral, correlation and invariance checks pass on independently generated data."
+        }
+      ],
+      "figure_refs": [
+        "Results text"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "007",
+            "status": "reproduced",
+            "evidence": "outputs/checks/science_checks.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 90.0,
+      "component_total": 97.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    }
+  ],
+  "overall_score": 72.86,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 7,
+    "critical_items": 7,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "insufficient_compute": 4,
+      "none": 1,
+      "missing_parameters": 2
+    },
+    "parameter_match_counts": {
+      "reduced_scale": 6,
+      "paper_exact": 1
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 5,
+      "analytic_reference": 2
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 6,
+      "analytic_reference": 1
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 7
+    },
+    "formula_gate_counts": {
+      "verified": 7
+    },
+    "paper_level_role_counts": {
+      "main_claim": 7
+    },
+    "physics_status_counts": {
+      "passed": 7
+    },
+    "physics_assertion_status_counts": {
+      "passed": 7
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T003"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 6,
+      "not_required": 1
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 6,
+      "not_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 4,
+      "parameter_values_unavailable": 2
+    },
+    "root_cause_counts": {
+      "compute_capacity_shortfall": 4,
+      "publication_underspecified": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 6
+    }
+  },
+  "status": "passed"
+}

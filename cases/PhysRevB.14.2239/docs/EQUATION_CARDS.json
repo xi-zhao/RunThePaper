@@ -1,0 +1,298 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevB.14.2239",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Harper finite-difference equation",
+      "role": "Microscopic generator for every target",
+      "latex": "g_{m+1}+g_{m-1}+2\\cos(2\\pi p m/q-\\nu)g_m=\\epsilon g_m",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (1)"
+        }
+      ],
+      "derived_from": [
+        "printed one-band magnetic tight-binding Hamiltonian",
+        "Landau gauge and lattice-site restriction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "q-by-q Hermitian cyclic Harper matrix with explicit Bloch phase",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Every coefficient and sign is transcribed from Eq. (1)."
+        },
+        {
+          "id": "EQ001-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The generated matrix is Hermitian including q=1 and q=2 double bonds."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py::harper_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "q-step transfer trace",
+      "role": "Independent physicality and band-edge test",
+      "latex": "(g_{m+1},g_m)^T=A_m(\\epsilon)(g_m,g_{m-1})^T;\\quad Q=\\prod_{m=0}^{q-1}A_m",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-3, Eqs. (2)-(5)"
+        }
+      ],
+      "derived_from": [
+        "solve EQ001 for g_{m+1}",
+        "multiply one magnetic period"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "ordered product of real 2-by-2 transfer matrices",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matrix order and boundedness criterion follow the printed derivation."
+        },
+        {
+          "id": "EQ002-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All independently diagonalized test band edges give |Tr Q|=4 within 5.97e-12 under the shifted phase convention."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py::transfer_trace"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Rational-flux band edges",
+      "role": "Figs. 1-5 and q-band claim",
+      "latex": "\\sigma(p/q)=\\bigcup_{j=1}^{q}[E_{2j-1},E_{2j}]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, rational-spectrum discussion after Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "Chambers phase dependence",
+        "two opposite Bloch-phase extrema",
+        "sorted pairing of the 2q roots"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "pair sorted eigenvalues from two exact q-periodic Hermitian matrices",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The manuscript explicitly states that rational p/q has precisely q bands and derives the trace polynomial."
+        },
+        {
+          "id": "EQ003-Q",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every tested p/q has exactly q non-overlapping bands."
+        },
+        {
+          "id": "EQ003-T",
+          "type": "cross_method",
+          "status": "passed",
+          "reason": "The independently multiplied transfer matrix saturates the band-edge condition."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py::band_edges"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Spectrum symmetries and global bound",
+      "role": "Figs. 1, 2, 5 and text claims",
+      "latex": "\\sigma(\\alpha)=\\sigma(1-\\alpha)=-\\sigma(\\alpha),\\quad |\\epsilon|\\le4",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, properties (i)-(iv)"
+        }
+      ],
+      "derived_from": [
+        "complex conjugation/reflection of EQ001",
+        "bipartite sign transformation",
+        "operator norm bound"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "array-level symmetry residuals and extrema checks",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Properties (i)-(iv) print the flux, sign and energy-bound claims."
+        },
+        {
+          "id": "EQ004-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Flux-reflection residual is 8.22e-15."
+        },
+        {
+          "id": "EQ004-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Energy-inversion residual is 3.11e-15 and all values remain in [-4,4]."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/campaign.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Recursive local coordinates",
+      "role": "Figs. 2-4",
+      "latex": "L_N:\\alpha=(N+\\alpha')^{-1};\\quad C_N:\\alpha=(2+1/\\alpha')^{-1}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 4-5, Statements I-III and Eqs. (6)-(8)"
+        }
+      ],
+      "derived_from": [
+        "continued-fraction cell maps",
+        "linear interpolation of bounding pure-case bands",
+        "affine energy normalization to [-4,4]"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "L2 alpha'=1/alpha-4 and C2 alpha'=alpha/(1-2alpha)-2 with affine band normalization",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Statements I-III and the following equations define the L/R/C local-coordinate maps and rectangularization."
+        },
+        {
+          "id": "EQ005-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The L2 interval 1/5 to 1/4 maps to [1,0] with 1162 resolved subbands."
+        },
+        {
+          "id": "EQ005-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The C2 interval 2/5 to 3/7 maps to [0,1] with 513 resolved subbands."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/campaign.py::rectangularized_subcell"
+      ],
+      "open_questions": [
+        "The paper does not print the numerical rational cutoff used to draw Figs. 3-4."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Field-smeared spectrum",
+      "role": "Fig. 5 and smeared-band bound",
+      "latex": "\\widetilde\\sigma_{\\Delta\\alpha}(\\alpha)=\\bigcup_{|\\alpha'-\\alpha|\\le\\Delta\\alpha}\\sigma(\\alpha')",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 7 and Fig. 5 caption"
+        }
+      ],
+      "derived_from": [
+        "paper's field-fluctuation union",
+        "binary spectral occupancy raster",
+        "maximum filter along alpha only"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "delta-alpha=0.01 union on an independently declared 480x480 grid",
+      "checks": [
+        {
+          "id": "EQ006-D",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The field spread is the printed 1/100."
+        },
+        {
+          "id": "EQ006-B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The generated connected-band count is 26, below the paper's finite bound."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/campaign.py::blurred_quadrant"
+      ],
+      "open_questions": [
+        "The paper does not print its rational cutoff or raster resolution."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Magnetic-period wavefunction reordering",
+      "role": "Fig. 6 and wavefunction claims",
+      "latex": "m_j=j p^{-1}\\pmod q,\\quad x_j/P=j/q,\\quad P=q/p",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 9-10, Eqs. (12)-(17), Fig. 6"
+        }
+      ],
+      "derived_from": [
+        "magnetic superlattice period",
+        "permutation induced by repeated p-site advances modulo q",
+        "largest periodic Harper eigenpair"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact modular inverse permutation followed by normalized Hermitian eigenvector",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The magnetic period, traversal order, three rational approximants and top eigenvalues are printed in the text and Fig. 6."
+        },
+        {
+          "id": "EQ007-P",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For p/q=5/17 the exact permutation matches the printed sequence term by term."
+        },
+        {
+          "id": "EQ007-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All three top eigenvalues match the printed values within printed precision; maximum eigen-residual is 2.89e-15."
+        }
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py::reordered_wavefunction"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevB.14.2239",
+  "run_id": "PhysRevB.14.2239-paper-scale-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-dir",
+    "outputs"
+  ],
+  "inputs": [
+    "config/paper_exact.json",
+    "scripts/run_reproduction.py",
+    "src/hofstadter_reproduction/__init__.py",
+    "src/hofstadter_reproduction/model.py",
+    "src/hofstadter_reproduction/campaign.py"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "artifact_stage": "final_reproduction",
+    "parameter_match": "mixed_paper_exact_and_reconstructed_sampling",
+    "fig1": {
+      "denominator_max": 49
+    },
+    "fig2": {
+      "pure_max_n": 37
+    },
+    "rectangularized": {
+      "denominator_max": 79
+    },
+    "fig5": {
+      "denominator_max": 79,
+      "field_window": 0.01,
+      "alpha_pixels": 480,
+      "energy_pixels": 480
+    },
+    "fig6": {
+      "fractions": [
+        {
+          "p": 1,
+          "q": 5,
+          "printed_energy": 2.9664
+        },
+        {
+          "p": 2,
+          "q": 11,
+          "printed_energy": 3.0285
+        },
+        {
+          "p": 17,
+          "q": 93,
+          "printed_energy": 3.023983268
+        }
+      ]
+    },
+    "disclosures": {
+      "author_code_used": false,
+      "author_arrays_used": false,
+      "source_pixels_used_for_numerics": false,
+      "fig3_l2_identification": "L2 is the N=4 left-chain subcell between alpha=1/5 and 1/4, derived from the paper's beta=(N+beta')^-1 map.",
+      "fig4_c2_identification": "C2 is the center-chain subcell between alpha=2/5 and 3/7, derived from beta=(2+1/alpha')^-1 and beta'=frac(alpha').",
+      "fig5_rational_cutoff": "The paper fixes delta-alpha=1/100 but not its numerical rational cutoff; q<80 is an independently converged raster representation of the defined union."
+    }
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "outputs": [
+    "outputs/data/fig1_spectrum.npz",
+    "outputs/data/fig2_skeleton.npz",
+    "outputs/data/fig3_l2_rectangularized.npz",
+    "outputs/data/fig4_c2_rectangularized.npz",
+    "outputs/data/fig5_blurred_quadrant.npz",
+    "outputs/data/fig6_wavefunctions.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ]
+}

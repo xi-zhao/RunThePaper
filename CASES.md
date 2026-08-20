@@ -85,6 +85,18 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`2404.08378`](cases/2404.08378/README.md) | Independent scientific reproduction of On-Chip Quantum Interference between Independent Lithium Niobate-on-Insulator Photon-Pair Sources | Partial scientific reproduction | 65.00 |
 | [`2406.07531`](cases/2406.07531/README.md) | Independent scientific reproduction of Interacting-Bath Dynamical Embedding for Capturing Nonlocal Electron Correlation in Solids | Partial scientific reproduction | 16.00 |
 | [`2101.12558`](cases/2101.12558/README.md) | Independent scientific reproduction of Electronic correlations at paramagnetic (001) and (110) NiO surfaces: Charge-transfer and Mott-Hubbard-type gaps at the surface and subsurface of (110) NiO | Partial scientific reproduction | 16.00 |
+| [`0911.0556`](cases/0911.0556/README.md) | Independent scientific reproduction of Thermodynamics of Quantum Jump Trajectories | Partial scientific reproduction | 77.27 |
+| [`1106.2978`](cases/1106.2978/README.md) | Independent scientific reproduction of Exact nonequilibrium steady state of a strongly driven open XXZ chain | Scientific reproduction — paper-error candidates identified | 86.58 |
+| [`1212.3324`](cases/1212.3324/README.md) | Independent scientific reproduction of Anomalous edge states and the bulk-edge correspondence for periodically driven two-dimensional systems | Partial scientific reproduction | 81.11 |
+| [`1508.03344`](cases/1508.03344/README.md) | Independent scientific reproduction of Phase Structure of Driven Quantum Systems | Partial scientific reproduction | 72.86 |
+| [`PhysRevA.47.5138`](cases/PhysRevA.47.5138/README.md) | Independent scientific reproduction of Squeezed Spin States | Scientific reproduction — independent review pending | 87.34 |
+| [`PhysRevB.14.2239`](cases/PhysRevB.14.2239/README.md) | Independent scientific reproduction of Energy Levels and Wave Functions of Bloch Electrons in Rational and Irrational Magnetic Fields | Partial scientific reproduction | 89.57 |
+| [`cond-mat-0411737`](cases/cond-mat-0411737/README.md) | Independent scientific reproduction of Quantum Spin Hall Effect in Graphene | Partial scientific reproduction | 90.03 |
+| [`cond-mat-0503511`](cases/cond-mat-0503511/README.md) | Independent scientific reproduction of Dynamics of a Quantum Phase Transition | Partial scientific reproduction | 86.79 |
+| [`cond-mat-0610854`](cases/cond-mat-0610854/README.md) | Independent scientific reproduction of Localization of Interacting Fermions at High Temperature | Partial scientific reproduction | 70.00 |
+| [`physics-9712001`](cases/physics-9712001/README.md) | Independent scientific reproduction of Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry | Scientific reproduction — paper-error candidates identified | 98.37 |
+| [`quant-ph-0211074`](cases/quant-ph-0211074/README.md) | Independent scientific reproduction of Entanglement in Quantum Critical Phenomena | Scientific reproduction — paper-error candidates identified | 82.47 |
+| [`quant-ph-0403025`](cases/quant-ph-0403025/README.md) | Independent scientific reproduction of Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas | Partial scientific reproduction | 90.00 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

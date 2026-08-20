@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "paper_id": "1212.3324",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Five-step square-lattice drive",
+      "role": "T001-T005 and T009 microscopic evolution",
+      "latex": "H_n(k)=-J[cos(k dot b_n) sigma_x-sin(k dot b_n) sigma_y]+delta sigma_z; U(T)=prod_n exp[-i H_n T/5]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 3-4, square-model Hamiltonian and Fig. 2 discussion"
+        }
+      ],
+      "derived_from": [
+        "partial Fourier transform of the directed A-B hopping sequence",
+        "exact exponential of each piecewise-constant step"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact 2x2 Bloch products and dense finite-strip unitary products",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four directed bonds, fifth no-hopping interval and T/5 durations are transcribed from the manuscript."
+        },
+        {
+          "id": "EQ001-U",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Every step Hamiltonian is Hermitian and every generated Floquet operator is unitary within 1e-10."
+        },
+        {
+          "id": "EQ001-I",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At JT/5=pi/2 and zero sublattice offset the bulk Floquet operator is identity at independent momenta."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/model.py"
+      ],
+      "open_questions": [
+        "The text defines delta_AB as an onsite-energy difference while the displayed Hamiltonian uses delta_AB sigma_z; both conventions are evaluated and the discrepancy remains inconclusive."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Strip quasienergy and edge localization",
+      "role": "T001-T004 strip observables",
+      "latex": "U_k(T)|psi_alpha>=exp(-i epsilon_alpha T)|psi_alpha>; w_edge=sum_{y in boundary}|psi_alpha(y)|^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf Figs. 2(c) and 3(a-c), with surrounding edge-state discussion"
+        }
+      ],
+      "derived_from": [
+        "open transverse boundary and periodic longitudinal momentum",
+        "principal Floquet quasienergy zone"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "diagonalize the independently assembled strip Floquet unitary and compute boundary probability",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The quasienergy eigenproblem, open-strip geometry and edge-state interpretation are stated around Figs. 2(c) and 3(a-c)."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Eigenvectors are normalized and edge weight lies in [0,1]."
+        },
+        {
+          "id": "EQ002-F",
+          "type": "feature_check",
+          "status": "passed",
+          "reason": "The trivial, Chern and anomalous representatives respectively show no spanning branch, a pi-gap branch, and branches in both gaps."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/model.py",
+        "src/floquet_winding/campaign.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Full-evolution Floquet winding",
+      "role": "T003-T005 and T009 anomalous topology",
+      "latex": "W[U]=(1/(8 pi^2)) int dt d^2k Tr(U^-1 d_t U [U^-1 d_kx U,U^-1 d_ky U])",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5 Eq. (4) and Eqs. (8)-(10)"
+        }
+      ],
+      "derived_from": [
+        "closed return-map evolution using the selected quasienergy branch cut",
+        "central finite differences on the periodic t-q1-q2 torus"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "three-dimensional trace integral evaluated from the full unitary evolution, not from a plotted curve",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The return-map construction and normalization follow the manuscript."
+        },
+        {
+          "id": "EQ003-Q",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The three representative phases converge near integer pairs (0,0), (0,1), and (1,1)."
+        },
+        {
+          "id": "EQ003-B",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The q1,q2 primitive torus has the opposite orientation to Cartesian kx,ky and this Jacobian sign is included explicitly."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/topology.py::square_winding_number"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Floquet-band Chern number and bulk-edge relation",
+      "role": "T002-T005 and T009 independent topological check",
+      "latex": "C_n=(1/(2 pi i)) int_BZ Tr(P_n[d_kx P_n,d_ky P_n]); C_n=W(epsilon_above)-W(epsilon_below)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2 Eq. (1), p. 6 Eq. (14)"
+        }
+      ],
+      "derived_from": [
+        "Fukui link-variable discretization",
+        "sublattice gauge seam sigma_z on the primitive reciprocal torus"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "gauge-aware plaquette phases of independently diagonalized Floquet eigenvectors",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The manuscript states the Floquet-band Chern number and its difference-of-gap-windings relation in Eqs. (1) and (14)."
+        },
+        {
+          "id": "EQ004-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The upper-band Chern sequence is 0,1,0 for the three representative phases."
+        },
+        {
+          "id": "EQ004-R",
+          "type": "cross_method",
+          "status": "passed",
+          "reason": "Chern differences agree with the independently integrated full-evolution winding changes."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/topology.py::fukui_chern",
+        "src/floquet_winding/topology.py::square_floquet_chern"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Weak-drive two-band model",
+      "role": "T006-T009 bulk and static cylinder",
+      "latex": "H_0(k)=a(sin kx sigma_x+sin ky sigma_y)+[M-2b(2-cos kx-cos ky)+J cos kx cos ky] sigma_z",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 10 Eq. (18) and Fig. 6 caption"
+        }
+      ],
+      "derived_from": [
+        "printed two-band Bloch vector",
+        "partial Fourier transform along y for the cylinder"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "2x2 bulk eigensurfaces and block-tridiagonal open-y cylinder Hamiltonian",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (18) and the Fig. 6 caption print the weak-drive Bloch Hamiltonian and all physical coefficients used here."
+        },
+        {
+          "id": "EQ005-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The real-space cylinder Hamiltonian is Hermitian and reproduces the Bloch Hamiltonian under a periodic-y test transform."
+        },
+        {
+          "id": "EQ005-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The static upper band has unit Chern magnitude and the bulk grid resolves the one-photon resonance loop."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/model.py::weak_bloch_vector",
+        "src/floquet_winding/model.py::weak_strip_hamiltonian"
+      ],
+      "open_questions": [
+        "The paper does not print the finite strip width or momentum sampling used for Fig. 6."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Repeated-zone Floquet Hamiltonian",
+      "role": "T008-T009 driven cylinder",
+      "latex": "(H_F)_{m,m'}=(H_0+m omega)delta_{m,m'}+(Delta_0/2) sigma_z(delta_{m,m'+1}+delta_{m,m'-1})",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 10-12, Eqs. (19)-(20) and Fig. 6(c)"
+        }
+      ],
+      "derived_from": [
+        "Fourier harmonics of Delta_0 cos(omega t) sigma_z",
+        "finite photon-sector truncation M=1"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Hermitian block-tridiagonal repeated-zone matrix plus an independent midpoint time-product Chern calculation",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (19)-(20) explicitly give the harmonic drive and repeated-zone Floquet blocks used by the implementation."
+        },
+        {
+          "id": "EQ006-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The repeated-zone matrix is Hermitian within 1e-12."
+        },
+        {
+          "id": "EQ006-X",
+          "type": "cross_method",
+          "status": "passed",
+          "reason": "A separate real-time midpoint product yields the driven upper-band Chern number zero and is stable to halving the time grid."
+        }
+      ],
+      "code_refs": [
+        "src/floquet_winding/model.py::weak_floquet_strip_hamiltonian",
+        "src/floquet_winding/topology.py::weak_floquet_chern"
+      ],
+      "open_questions": [
+        "The paper does not state the repeated-zone cutoff used for Fig. 6(c); M=1 is the smallest truncation that contains the shown resonant replica coupling."
+      ]
+    }
+  ]
+}

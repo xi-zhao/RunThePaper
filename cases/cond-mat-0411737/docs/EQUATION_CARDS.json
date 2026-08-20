@@ -1,0 +1,759 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0411737",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Continuum Dirac Hamiltonian with intrinsic spin orbit mass",
+      "role": "bulk QSH spectrum and intrinsic gap",
+      "latex": "H=hbar v_F(sigma_x tau_z q_x + sigma_y q_y) + Delta_so sigma_z tau_z s_z; E=+/-sqrt((hbar v_F q)^2 + Delta_so^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 1-2, Eqs. (2)-(3) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "four-component K/K' envelope basis",
+        "Pauli anticommutation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct 4x4 continuum diagonalization and analytic eigenvalues",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian and dispersion are printed explicitly."
+        },
+        {
+          "id": "EQ001-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Mutually anticommuting Dirac matrices square to (hbar vF q)^2 + Delta_so^2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::continuum_energies"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ013",
+      "title": "First-star microscopic matrix projection",
+      "role": "derive the intrinsic mass matrix before the scalar bare-gap estimate",
+      "latex": "<u_{tau,alpha}|V_SO|u_{tau,beta}>=(2 pi^2 e^2 hbar^2/3m^2c^2a^3)(sigma_z tau_z s_z)_{alpha,beta}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (7) and first-star paragraph"
+        }
+      ],
+      "derived_from": [
+        "three equivalent reciprocal-space corners per valley",
+        "two-dimensional Fourier transform of e^2/r",
+        "Pauli spin-orbit operator"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit Hermitian 8x8 plane-wave matrix in sublattice-valley-spin order",
+      "checks": [
+        {
+          "id": "EQ013-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (7) and the adjacent first-star paragraph explicitly print the scalar coefficient and sigma_z tau_z s_z structure."
+        },
+        {
+          "id": "EQ013-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The explicit matrix matches (2 pi^2/3a^3) sigma_z tau_z s_z within 8.9e-16 and has the required fourfold +/- spectrum."
+        },
+        {
+          "id": "EQ013-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The plane-wave cross product reverses sign under valley exchange and the sublattice phase reverses it between A and B."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/microscopic.py::first_star_spin_orbit_matrix",
+        "src/kane_mele/microscopic.py::first_star_projection_diagnostics"
+      ],
+      "open_questions": [
+        "The paper explicitly calls the first-star result crude because detailed Bloch orbitals are not supplied."
+      ]
+    },
+    {
+      "id": "EQ014",
+      "title": "Finite-Rashba conventional spin-current Kubo proxy",
+      "role": "quantify a nonzero-Rashba response without inventing the externally cited conserved-spin operator",
+      "latex": "sigma_xy^{s,conv}=sum_{n occ,m emp} -2 Im <n|{s_z,v_x}/2|m><m|v_y|n>/(E_m-E_n)^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, paragraph following Eq. (5) and citation to Murakami et al., PRB 69, 235206"
+        }
+      ],
+      "derived_from": [
+        "full spinful honeycomb Bloch Hamiltonian",
+        "zero-temperature interband Kubo formula"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "24x24 full-Brillouin-zone quadrature normalized at lambda_R=0",
+      "checks": [
+        {
+          "id": "EQ014-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly states a weak-Rashba spin Hall correction but delegates the conserved-current definition to an external citation; the card therefore labels the implemented conventional current as a proxy."
+        },
+        {
+          "id": "EQ014-K",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The response is continuous from the quantized limit and changes by 0.25 percent at lambda_R/Delta_so=.05 while [H,s_z] is explicitly nonzero."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/response.py::conventional_spin_hall_sweep"
+      ],
+      "open_questions": [
+        "The graphene paper does not print the cited conserved-spin operator; the conventional-current result is a declared proxy and cannot close that exact definition."
+      ]
+    },
+    {
+      "id": "EQ015",
+      "title": "One-loop Coulomb self-energy and SO vertex shell integrals",
+      "role": "derive both Eq. (8) coefficients independently of its closed solution",
+      "latex": "Sigma(k,Delta)=1/2 int_shell d^2q/(2pi)^2 (2pi e^2/q) [sigma dot(q+k)+Delta sigma_z]/sqrt(|q+k|^2+Delta^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Fig. 3 and Eq. (8) discussion"
+        }
+      ],
+      "derived_from": [
+        "static Coulomb exchange",
+        "logarithmic radial shell",
+        "Pauli projections of finite differences in k and Delta"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Gauss-Legendre logarithmic radial integration and independent angular quadrature",
+      "checks": [
+        {
+          "id": "EQ015-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 3 and Eq. (8) identify the Coulomb exchange and SO-vertex renormalizations whose coefficients are independently projected here."
+        },
+        {
+          "id": "EQ015-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The matrix projections recover the velocity coefficient 0.250000002 and SO-vertex coefficient 0.499999984 without inserting either number."
+        },
+        {
+          "id": "EQ015-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A five-shell sweep is linear in ell with slopes 1/4 and 1/2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/renormalization.py::derive_one_loop_flow_coefficients",
+        "src/kane_mele/renormalization.py::exchange_log_sweep"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ016",
+      "title": "Neutral-graphene static RPA screening",
+      "role": "test the paper's claim that screening preserves the long-range logarithm",
+      "latex": "Pi(q,0)=-q/(4 v_F); V_scr(q)=2 pi e^2/[q(1+pi g/2)]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, screening sentence preceding Eq. (8)"
+        }
+      ],
+      "derived_from": [
+        "four massless Dirac flavors",
+        "static random-phase approximation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "six-point interband Lindhard integration with angular and ultraviolet-cutoff convergence, followed by an RPA power-law fit",
+      "checks": [
+        {
+          "id": "EQ016-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The sentence immediately before Eq. (8) states that screening preserves the logarithmic long-range interaction."
+        },
+        {
+          "id": "EQ016-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently integrated polarization has power 0.9947 and coefficient within 0.0051 of 1/4; only then does the screened potential fit a -0.9971 power."
+        },
+        {
+          "id": "EQ016-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Halving the angular grid changes the coefficient by at most 4.8e-7 and doubling the ultraviolet cutoff changes it by at most 0.00255."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/renormalization.py::screened_coulomb_diagnostics"
+      ],
+      "open_questions": [
+        "The paper cites rather than prints the polarization derivation; this clean-room check uses the standard four-flavor static Dirac limit."
+      ]
+    },
+    {
+      "id": "EQ017",
+      "title": "Time-reversal-breaking intervalley mass interpolation proxy",
+      "role": "separate the uniform-field edge gap and generic broken-time-reversal proxy from the publication-underspecified microscopic bulk connection",
+      "latex": "M_QSH=sigma_z tau_z s_z; M_triv=sigma_z; M_bridge=sigma_x tau_x s_x",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, parallel-field paragraph"
+        }
+      ],
+      "derived_from": [
+        "complete Pauli-product mass enumeration",
+        "pairwise anticommuting Dirac masses"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "the legacy two-segment intervalley proxy plus coarse/fine lattice scans and continuous Brillouin-zone minimization of a translation-preserving candidate assembled from printed terms",
+      "checks": [
+        {
+          "id": "EQ017-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The parallel-field paragraph explicitly claims that breaking time reversal permits a gapped connection to a trivial insulator and gaps the edge."
+        },
+        {
+          "id": "EQ017-G",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The uniform edge Zeeman term opens the expected gap. The separate bulk bridge is T-odd and gapped but its tau_x factor fails primitive translation, so it is not claimed as a uniform-field mechanism."
+        },
+        {
+          "id": "EQ017-F",
+          "type": "falsification",
+          "status": "passed",
+          "reason": "A deterministic continuous optimizer finds a direct-gap closing below 1e-16 t in the minimal translation-preserving candidate assembled from the printed intrinsic-SO, Rashba, Zeeman and staggered terms; a coarse 24x24 grid would have produced a false positive."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/symmetry.py::dirac_mass_symmetry_inventory",
+        "src/kane_mele/symmetry.py::parallel_field_mass_path",
+        "src/kane_mele/symmetry.py::translation_preserving_parallel_field_path"
+      ],
+      "open_questions": [
+        "The paper does not print the additional symmetry-allowed microscopic terms needed to construct its claimed translation-preserving gapped bulk connection; the minimal candidate available from printed terms is falsified."
+      ]
+    },
+    {
+      "id": "EQ018",
+      "title": "Finite-cylinder helical spectral flow",
+      "role": "realize the Laughlin h/e spin pump with explicit levels",
+      "latex": "E_{R/L,n}(phi)=+/- (2 pi hbar v_F/L)(n+phi/phi_0)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-3, Laughlin flux-insertion paragraph"
+        }
+      ],
+      "derived_from": [
+        "helical edge dispersion on a periodic cylinder",
+        "minimal coupling to one axial flux quantum"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "101 flux values and 17 angular levels per helical branch",
+      "checks": [
+        {
+          "id": "EQ018-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Laughlin paragraph explicitly states the h/e flux insertion, pumped spin and finite-cylinder scale conditions."
+        },
+        {
+          "id": "EQ018-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "One level crosses in each branch, the final spectrum is the initial spectrum shifted by one angular quantum, and the pumped spin is hbar."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/topology.py::cylinder_flux_spectral_flow"
+      ],
+      "open_questions": [
+        "The paper prints inequalities L>xi and ramp time>hbar/Delta but no particular finite cylinder dimensions; dimensionless factors 20 are declared reconstruction choices."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Rashba perturbation and bulk gap",
+      "role": "gap-closing boundary",
+      "latex": "H_R=lambda_R(sigma_x tau_z s_y - sigma_y s_x); E_g=2(Delta_so-lambda_R)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (4) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "continuum Hamiltonian at q=0"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "8x8 continuum eigenvalue check at q=0",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Rashba term and gap are printed."
+        },
+        {
+          "id": "EQ002-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The direct gap closes at lambda_R=Delta_so."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::continuum_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Quantized spin Hall conductivity",
+      "role": "topological response check",
+      "latex": "sigma_xy^s=e/(2 pi)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "opposite Chern numbers for opposite conserved spins",
+        "J_s=(hbar/2e)(J_up-J_down)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "spin-resolved two-band Berry-curvature Chern check",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The response is printed explicitly."
+        },
+        {
+          "id": "EQ003-T",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A periodic Fukui-grid Berry-flux calculation gives C_up=-1 and C_down=+1 without importing the expected integers."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::honeycomb_bulk_hamiltonian",
+        "src/kane_mele/model.py::fukui_chern_number",
+        "src/kane_mele/model.py::spin_chern_numbers"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Second-neighbour Kane-Mele lattice Hamiltonian",
+      "role": "Main Fig. 1 zigzag-ribbon spectrum",
+      "latex": "H=t sum_<ij>,alpha c_i,alpha^dagger c_j,alpha + i t2 sum_<<ij>>,alpha,beta nu_ij s^z_alpha,beta c_i,alpha^dagger c_j,beta; Delta_so=3 sqrt(3) t2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (6); p. 3, Fig. 1 caption"
+        }
+      ],
+      "derived_from": [
+        "honeycomb nearest neighbours",
+        "oriented second-neighbour paths",
+        "Bloch periodicity along zigzag edge"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Hermitian Bloch ribbon matrix for both spin sectors",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, orientation and t2/t=.03 are printed."
+        },
+        {
+          "id": "EQ004-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "nu_ji=-nu_ij makes the imaginary second-neighbour term Hermitian."
+        },
+        {
+          "id": "EQ004-G",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The periodic bulk gap is 6 sqrt(3) t2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::build_ribbon_geometry",
+        "src/kane_mele/model.py::ribbon_hamiltonian",
+        "src/kane_mele/model.py::analytic_bulk_gap"
+      ],
+      "open_questions": [
+        "The paper does not print the ribbon width or k sampling used for Fig. 1."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Ballistic edge conductances",
+      "role": "Fig. 2 quantitative-label check",
+      "latex": "G=2e^2/h; G_ij^s=+/-e/(4 pi); I^s=eV/(4 pi)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Fig. 2 caption and transport discussion"
+        }
+      ],
+      "derived_from": [
+        "one Kramers pair per edge",
+        "Landauer-Buttiker transmission"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "spin-resolved terminal transmission tensor and Landauer-Buttiker current solve",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The conductance and current values are printed in the Fig. 2 caption and prose."
+        },
+        {
+          "id": "EQ005-L",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Explicit two- and four-contact helical transmission tensors give 2e^2/h, zero right-contact charge current and eV/(4 pi) right-contact spin current."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::helical_transmission_tensor",
+        "src/kane_mele/model.py::landauer_buttiker_currents",
+        "src/kane_mele/model.py::transport_coefficients"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "First-star intrinsic spin-orbit estimate",
+      "role": "bare graphene gap estimate",
+      "latex": "2 Delta_so=4 pi^2 e^2 hbar^2/(3 m^2 c^2 a^3) approximately 2.4 K",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (7) and first-star paragraph"
+        }
+      ],
+      "derived_from": [
+        "microscopic spin-orbit interaction",
+        "first-star Bloch approximation",
+        "Coulomb V(r)=e^2/r"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "SI/atomic-unit dimensional estimate",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The first-star estimate and 2.4 K result are printed on p. 4."
+        },
+        {
+          "id": "EQ006-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The expression has dimensions of energy and is converted to kelvin through k_B."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/microscopic.py::first_star_spin_orbit_matrix",
+        "src/kane_mele/microscopic.py::first_star_projection_diagnostics",
+        "src/kane_mele/model.py::bare_gap_kelvin"
+      ],
+      "open_questions": [
+        "The estimate is explicitly described as crude and depends on the first-star approximation."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Perpendicular-field Rashba estimate",
+      "role": "lambda_R much smaller than intrinsic gap",
+      "latex": "lambda_R=hbar v_F e E_z/(4 m c^2) approximately 0.5 mK for E_z approximately 50 V/300 nm",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, paragraph below Eq. (7)"
+        }
+      ],
+      "derived_from": [
+        "Pauli spin-orbit coupling in an external electric field"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "SI-unit estimate with declared v_F reference range",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula, electric field and 0.5 mK estimate are printed on p. 4."
+        },
+        {
+          "id": "EQ007-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Using v_F near 10^6 m/s gives the printed sub-millikelvin scale."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::rashba_kelvin"
+      ],
+      "open_questions": [
+        "The paper does not print the exact v_F used in the 0.5 mK rounding."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Coulomb RG flow and self-consistent renormalized gap",
+      "role": "15 K interaction-enhanced gap claim",
+      "latex": "dg/dell=-g^2/4; dDelta/dell=g Delta/2; Delta(epsilon)=Delta0[1+(g0/4) ln(Lambda0/epsilon)]^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (8) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "matrix-valued Fock self-energy and spin-orbit vertex shell integrals",
+        "separation of variables",
+        "self-consistency Delta_R=Delta(Delta_R)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "positive scalar root in a common energy unit",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The RG equations, integrated form and 15 K estimate are printed on p. 4."
+        },
+        {
+          "id": "EQ008-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct integration of the coupled flows yields the printed squared logarithm."
+        },
+        {
+          "id": "EQ008-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "g0=.74, Lambda0=2 eV and bare full gap 2.4 K define a unique enhanced positive gap."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/renormalization.py::derive_one_loop_flow_coefficients",
+        "src/kane_mele/renormalization.py::exchange_log_sweep",
+        "src/kane_mele/renormalization.py::rg_running_values",
+        "src/kane_mele/renormalization.py::renormalized_gap_kelvin"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Nearest-neighbour lattice Rashba hopping",
+      "role": "finite-Rashba edge-state protection",
+      "latex": "H_R=i lambda_R sum_<ij> c_i^dagger [z dot (s cross d_ij)] c_j",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Rashba edge-state paragraph"
+        }
+      ],
+      "derived_from": [
+        "directed nearest-neighbour bond vectors",
+        "spin Pauli matrices",
+        "Bloch periodicity"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "full 2N by 2N spinful ribbon Hamiltonian",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The bond-vector Rashba term and lambda_R<Delta_so condition are printed explicitly."
+        },
+        {
+          "id": "EQ009-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Reversing the directed bond makes the imaginary spin hopping Hermitian."
+        },
+        {
+          "id": "EQ009-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The configured nonzero coupling changes the spectrum while full-matrix time reversal and the edge Kramers degeneracy remain within 1e-10."
+        },
+        {
+          "id": "EQ009-F",
+          "type": "falsification",
+          "status": "passed",
+          "reason": "Adaptive full-Brillouin-zone edge-overlap tracking resolves every declared lambda_R/Delta_so<1 zigzag and armchair branch across three increasing widths; nested 192-768 point grids bound the branch-location discretization error."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::spinful_ribbon_hamiltonian",
+        "src/kane_mele/boundary.py::rashba_edge_spectral_flow"
+      ],
+      "open_questions": [
+        "The paper does not specify the finite strip width or a lattice-to-continuum normalization; the width and adaptive momentum grids therefore remain declared convergence choices rather than paper-exact presentation parameters."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Time-reversal constraint on the edge scattering matrix",
+      "role": "absence of elastic backscattering",
+      "latex": "S=s_y S^T s_y",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, disorder-scattering paragraph"
+        }
+      ],
+      "derived_from": [
+        "antiunitary time reversal of incoming and outgoing Kramers partners"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "singular-value null space of the linear 2x2 matrix constraint",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The S-matrix constraint and its no-backscattering consequence are printed."
+        },
+        {
+          "id": "EQ010-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently solved constraint has a one-dimensional complex null space with zero off-diagonal entries and equal diagonals."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::time_reversal_scattering_basis"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Weak-interaction edge conductivity exponent",
+      "role": "irrelevance and low-temperature inelastic transport",
+      "latex": "Delta=4; sigma proportional to u^{-2} T^{3-2 Delta}=u^{-2}T^{-5}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, electron-interaction paragraph"
+        }
+      ],
+      "derived_from": [
+        "four fermion fields of scaling dimension 1/2",
+        "two spatial derivatives of scaling dimension 1",
+        "second time moment of the finite-temperature edge correlator"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Grassmann time-reversal transform plus independent u/T Kubo-kernel sweep",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both Delta=4 and 3-2 Delta are printed."
+        },
+        {
+          "id": "EQ011-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The encoded operator gives Delta=4, and log-log fits of the numerical correlator sweep recover temperature exponent -5 and interaction exponent -2."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/edge_theory.py::interaction_operator_diagnostics",
+        "src/kane_mele/edge_theory.py::interaction_conductivity_sweep"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ012",
+      "title": "Valley-envelope and sublattice basis convention",
+      "role": "basis contract for the continuum model",
+      "latex": "Psi_s(r)=sum_{mu=A,B} sum_{tau=K,K'} Phi_mu,tau(r) u_mu,tau(r)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 1-2, Eq. (1) and the basis sentence before Eq. (2)"
+        }
+      ],
+      "derived_from": [
+        "slow-envelope expansion around the two inequivalent Dirac points"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "sublattice x valley x spin Kronecker basis used by continuum_hamiltonian",
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The envelope expansion and ordering Psi=(u_AK,u_BK,u_AK',u_BK') are printed."
+        },
+        {
+          "id": "EQ012-B",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The implemented Kronecker ordering reproduces the valley sign in q_x and in both spin-orbit terms."
+        }
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py::_operator",
+        "src/kane_mele/model.py::continuum_hamiltonian"
+      ],
+      "open_questions": []
+    }
+  ]
+}

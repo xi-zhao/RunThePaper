@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0610854",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Half-filled disordered spinless-fermion Hamiltonian",
+      "role": "T001-T004 microscopic model",
+      "latex": "H=sum_i[w_i n_i+V(n_i-1/2)(n_{i+1}-1/2)+t(c_i^dagger c_{i+1}+h.c.)+t'(c_i^dagger c_{i+2}+h.c.)]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (1) and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "canonical fixed-particle occupation basis",
+        "fermionic anticommutation signs for periodic hops"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "real symmetric C(L,L/2) by C(L,L/2) matrix with V=2 and t=t'=1",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (1), half filling, periodic boundaries and all printed couplings were transcribed directly from the manuscript."
+        },
+        {
+          "id": "EQ001-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Canonical creation/annihilation parity yields an exactly Hermitian matrix for every tested size."
+        },
+        {
+          "id": "EQ001-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Basis dimensions 70, 252, 924, 3432 and 12870 equal the exact binomial dimensions."
+        }
+      ],
+      "code_refs": [
+        "src/mbl_level_stats/hamiltonian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Fixed-sample-RMS Gaussian disorder ensemble",
+      "role": "T001-T004 disorder sampling",
+      "latex": "w_i=W x_i/sqrt(L^{-1} sum_j x_j^2),  x_i sim N(0,1)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, paragraph after Eq. (1)"
+        }
+      ],
+      "derived_from": [
+        "the paper conditions each sample to have mean-square potential exactly W^2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "deterministic seeded normal draw followed by exact RMS rescaling",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The manuscript explicitly distinguishes this conditioned ensemble from unconditioned Gaussian disorder."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Unit tests verify sqrt(mean(w_i^2)) equals W to 1e-14."
+        }
+      ],
+      "code_refs": [
+        "src/mbl_level_stats/hamiltonian.py::FermionChain.disorder_vector"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Adjacent-gap ratio and limiting ensembles",
+      "role": "T001-T003 observable",
+      "latex": "delta_n=E_{n+1}-E_n; r_n=min(delta_n,delta_{n-1})/max(delta_n,delta_{n-1}); P_P(r)=2/(1+r)^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eqs. (2)-(3), Fig. 1 discussion and footnote 17"
+        }
+      ],
+      "derived_from": [
+        "sorted complete many-body spectrum",
+        "Poisson independent exponential gaps",
+        "independent GOE matrix ensemble"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "all interior adjacent gaps of every full spectrum; analytic Poisson density; independent GOE eigenspectra",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (2)-(3), the Poisson density/mean and the GOE mean are printed in the manuscript."
+        },
+        {
+          "id": "EQ003-P",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Numerical quadrature gives integral 1 and mean 2 ln 2 - 1 for the printed Poisson density."
+        },
+        {
+          "id": "EQ003-G",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The v2 independent GOE campaign gives mean 0.532583, within 0.003083 of the printed 0.5295."
+        },
+        {
+          "id": "EQ003-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "W=3 is closer to GOE while W=11 is closer to Poisson for the generated interacting model."
+        }
+      ],
+      "code_refs": [
+        "src/mbl_level_stats/statistics.py",
+        "src/mbl_level_stats/campaign.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Disorder average, standard error and finite-size crossings",
+      "role": "T002-T004 finite-size analysis",
+      "latex": "r(W,L)=R^{-1} sum_alpha <r>_alpha; sigma_mean=sqrt((<r_alpha^2>-<r_alpha>^2)/(R-1))",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 3-4, Fig. 2 method and discussion"
+        }
+      ],
+      "derived_from": [
+        "equal weighting of all many-body eigenenergies",
+        "independent disorder realizations",
+        "linear interpolation of adjacent size-curve sign changes"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "streamed sample means and variances with exact sample-ID coverage; crossing interpolation in the declared W window",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The manuscript defines the per-sample spectral average, disorder average and standard statistical uncertainty, then discusses the crossing drift in Fig. 2."
+        },
+        {
+          "id": "EQ004-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every declared sample ID appears exactly once and every size crosses from GOE-like to Poisson-like mean r."
+        },
+        {
+          "id": "EQ004-D",
+          "type": "feature_check",
+          "status": "passed",
+          "reason": "Crossings drift from W=4.0,r=0.4972 to W=6.9168,r=0.4391 as size increases, matching the paper's qualitative conclusion."
+        }
+      ],
+      "code_refs": [
+        "src/mbl_level_stats/campaign.py",
+        "src/mbl_level_stats/statistics.py::crossing_estimates"
+      ],
+      "open_questions": [
+        "The exact W grid and L=10,12 disorder realization counts are not printed; paper-exact crossing coordinates cannot be claimed."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "run_id": "0911.0556-paper-reconstructed-v3",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_reconstructed.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/quantum_jumps/__init__.py",
+    "src/quantum_jumps/liouvillian.py",
+    "src/quantum_jumps/models.py",
+    "src/quantum_jumps/large_deviation.py",
+    "src/quantum_jumps/micromaser.py",
+    "src/quantum_jumps/trajectories.py",
+    "src/quantum_jumps/doob.py",
+    "scripts/run_reproduction.py",
+    "config/paper_reconstructed.json"
+  ],
+  "parameter_file": "config/paper_reconstructed.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "two_level": {
+      "omega": 1.0,
+      "kappa": 4.0,
+      "s_min": -5.0,
+      "s_max": 5.0,
+      "s_points": 401,
+      "rate_s_min": -8.0,
+      "rate_s_max": 14.0,
+      "rate_s_points": 4401,
+      "rate_k_min": 0.02,
+      "rate_k_max": 2.4,
+      "rate_k_points": 241,
+      "trajectory_activities": [
+        2.0,
+        0.6666666666666666,
+        0.2222222222222222
+      ],
+      "trajectory_duration": 300.0,
+      "trajectory_dt": 0.005,
+      "trajectory_seeds": [
+        101,
+        102,
+        103
+      ]
+    },
+    "three_level": {
+      "omega_1": 1.0,
+      "omega_2": 0.1,
+      "kappa_1": 4.0,
+      "s_min": -0.5,
+      "s_max": 0.5,
+      "s_points": 501,
+      "rate_s_min": -3.0,
+      "rate_s_max": 6.0,
+      "rate_s_points": 1801,
+      "rate_k_min": 0.005,
+      "rate_k_max": 0.95,
+      "rate_k_points": 300,
+      "trajectory_total_duration": 4000.0,
+      "trajectory_window_duration": 100.0,
+      "trajectory_dt": 0.01,
+      "trajectory_seed": 24680,
+      "trajectory_activities": [
+        0.02,
+        0.74
+      ]
+    },
+    "micromaser": {
+      "excitation_number": 100.0,
+      "thermal_occupation": 0.15,
+      "alphas_over_pi": [
+        1.2,
+        2.0
+      ],
+      "s_min": -0.1,
+      "s_max": 0.1,
+      "s_points": 401,
+      "photon_cutoff": 250,
+      "convergence_cutoff": 350,
+      "distribution_alpha_over_pi": 2.0,
+      "distribution_biases": [
+        -0.05,
+        0.0,
+        0.05
+      ]
+    },
+    "derivative_step": 5e-05,
+    "doob_biases": [
+      -1.0,
+      0.0,
+      1.0
+    ]
+  },
+  "outputs": [
+    "outputs/data/two_level_curves.csv",
+    "outputs/data/two_level_rate.csv",
+    "outputs/data/two_level_trajectories.csv",
+    "outputs/data/three_level_curves.csv",
+    "outputs/data/three_level_rate.csv",
+    "outputs/data/three_level_trajectories.csv",
+    "outputs/data/micromaser_curves.csv",
+    "outputs/data/micromaser_distributions.csv",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true,
+    "contract": "config/render_contract.json"
+  }
+}

@@ -1,0 +1,657 @@
+{
+  "schema_version": 1,
+  "paper_id": "1106.2978",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Boundary-driven XXZ Liouvillian",
+      "role": "independent full-space cross-check",
+      "latex": "dot(rho)=-i[H,rho]+sum_k(2L_k rho L_k^dagger-{L_k^dagger L_k,rho}); L_1=sqrt(epsilon)sigma_1^+, L_2=sqrt(epsilon)sigma_n^-",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 1, Eqs. (1)-(3)"
+        }
+      ],
+      "derived_from": [
+        "standard Pauli matrices and printed boundary driving"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense column-vectorized Liouvillian for n<=4",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian, jump operators and dissipator are printed in Eqs. (1)-(3)."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Dense NESS agrees with the unrelated transfer contraction to 7.3e-16 in magnetization and 2.3e-16 in current."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/liouvillian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Exact MPO amplitudes",
+      "role": "finite-chain NESS construction",
+      "latex": "a_r^0=cos(r lambda)+i epsilon sin(r lambda)/(2 sin lambda), lambda=arccos Delta; a_r^+ and a_r^- as printed in Eq. (7)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eqs. (5)-(7)"
+        }
+      ],
+      "derived_from": [
+        "exact MPO theorem and boundary relations"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "complex near-diagonal amplitudes with stable tau signs",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All generic and isotropic amplitudes are transcribed from Eqs. (6)-(7) and the isotropic paragraph."
+        },
+        {
+          "id": "EQ002-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Generated amplitudes reproduce the exact finite MPO density, commutator identity and dense NESS observables. The root-of-unity parity sentence is audited separately in EQ012."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::auxiliary_amplitudes"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Tridiagonal transfer and magnetization vertex",
+      "role": "Main Fig. 2(a) and correlations",
+      "latex": "T=sum_r(|a_r^0|^2|r><r|+|a_r^+|^2|r><r+1|/2+|a_r^-|^2|r+1><r|/2); V=T_offdiag^+-T_offdiag^-",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eq. (15)"
+        }
+      ],
+      "derived_from": [
+        "diagonal auxiliary subspace of the ladder tensor network"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "scaled tridiagonal products",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The transfer and magnetization vertex are printed explicitly in Eq. (15)."
+        },
+        {
+          "id": "EQ003-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Profiles agree with the dense Liouvillian solution to 7.3e-16 over the audit grid."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Conserved spin current",
+      "role": "Main Fig. 2(b)",
+      "latex": "Im W=-(epsilon/4)T; J=(epsilon/2)<0|T^(n-1)|0>/<0|T^n|0>",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eqs. (17)-(18) and following text"
+        }
+      ],
+      "derived_from": [
+        "one-sided hopping vertex and local magnetization conservation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "ratio of scaled transfer norms",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The hopping vertex, Im W identity and current formula are printed around Eqs. (17)-(18)."
+        },
+        {
+          "id": "EQ004-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Transfer current agrees with every dense NESS bond to 3.9e-16 including conservation spread."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::spin_current"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Delta=1/2 closed transfer process",
+      "role": "easy-plane ballistic transport",
+      "latex": "T'=matrix([[1,epsilon^2/2,0],[1/2,(1+epsilon^2)/4,(9+epsilon^2)/24],[0,3(1+epsilon^2)/8,(1+epsilon^2)/4]])",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, unnumbered reduced transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "lambda=pi/3 root-of-unity closure"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact 3x3 matrix",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete reduced 3x3 matrix is printed below Main Fig. 2."
+        },
+        {
+          "id": "EQ005-M",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Generic amplitudes reproduce every printed 3x3 entry to 2.3e-16."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Easy-plane thermodynamic current",
+      "role": "T004 and Main Fig. 2(b) limiting behavior",
+      "latex": "J_inf=epsilon*(sqrt(81+74epsilon^2+9epsilon^4)-7-3epsilon^2)/(4(1+epsilon^2))",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text following reduced transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "ratio of the leading eigenvalue of the 3x3 transfer matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed scalar function and finite-n convergence",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The closed thermodynamic current and its limiting behavior are printed in the easy-plane paragraph."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both limiting coefficients pass and the maximum is epsilon=1.62909."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_plane_current_limit"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Easy-axis insulating exponent",
+      "role": "Main Fig. 2(b) inset",
+      "latex": "J proportional to exp[-n arcosh(|Delta|)]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, easy-axis paragraph and Fig. 2 caption"
+        }
+      ],
+      "derived_from": [
+        "asymptotic auxiliary hopping process"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "linear fit to log current after a declared n cutoff",
+      "checks": [
+        {
+          "id": "EQ007-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exponential law is printed in the easy-axis paragraph and Main Fig. 2 caption."
+        },
+        {
+          "id": "EQ007-S",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All three fitted slopes agree with -arcosh(3/2) within 1.8e-13."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_axis_decay_fit"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Isotropic regularization and asymptotics",
+      "role": "cosine profiles and anomalous current",
+      "latex": "a_r^0=1+i epsilon r/2; M(x)=cos(pi x); J approximately pi^2/(epsilon n^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 4-5, Eqs. (20)-(22) and following text"
+        }
+      ],
+      "derived_from": [
+        "lambda to zero regularization and continuum transfer equation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit regularized amplitudes and finite-size slopes",
+      "checks": [
+        {
+          "id": "EQ008-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The regularized amplitudes, cosine profile and current law are printed after Eq. (22)."
+        },
+        {
+          "id": "EQ008-S",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The epsilon=1 profile RMSE is 0.00119 and the fitted current exponent is -2.01224."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::auxiliary_amplitudes",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Isotropic connected-correlation kernel",
+      "role": "T005",
+      "latex": "C(x,y)=pi f(min(x,y),max(x,y))/(4n)+O(n^-2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5, final isotropic paragraphs"
+        }
+      ],
+      "derived_from": [
+        "two magnetization vertices"
+      ],
+      "derivation_status": "blocked",
+      "numeric_gate_policy": "blocked_pending_derivation",
+      "numerical_form": "finite transfer correlations and an exact reflection-plus-spin-flip symmetry check",
+      "checks": [
+        {
+          "id": "EQ009-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The complete correlation kernel is printed in the final isotropic paragraph."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "falsification_check",
+          "status": "passed",
+          "reason": "The printed leading kernel has an O(1/n) mirror-symmetry violation while the exact finite NESS respects the symmetry to 7.2e-14. The gate remains closed until fresh review adjudicates the discrepancy."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::connected_correlation",
+        "src/open_xxz/transfer.py::correlation_kernel"
+      ],
+      "open_questions": [
+        "Does the printed connected-correlation kernel contain a variable or sign transcription error?"
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Finite MPO theorem and commutator identity",
+      "role": "T007 exact NESS theorem",
+      "latex": "R=S_n S_n^dagger; [H,S_n]=-i epsilon (sigma^z tensor S_(n-1)-S_(n-1) tensor sigma^z)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-3, Eqs. (4)-(10)"
+        }
+      ],
+      "derived_from": [
+        "printed auxiliary matrices, boundary algebra and Cholesky construction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit small-chain physical MPO matrices and unrelated dense Liouvillian fixed points",
+      "checks": [
+        {
+          "id": "EQ010-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The theorem, auxiliary matrices and boundary commutator are printed in Eqs. (4)-(10)."
+        },
+        {
+          "id": "EQ010-M",
+          "type": "alternative_implementation",
+          "status": "passed",
+          "reason": "Explicit S_n S_n^dagger agrees entry by entry with the dense Liouvillian NESS for n=2,3,4 over the declared anisotropy/coupling grid."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The finite commutator identity and full Lindblad residual pass at machine precision."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::mpo_cholesky_operator",
+        "src/open_xxz/liouvillian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Finite-size structural corollaries",
+      "role": "T008-T011 Cholesky, truncation, polynomial and observable claims",
+      "latex": "S_n upper triangular with diag(S_n)=1; d=1+floor(n/2); deg_epsilon(R)=2n-2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Corollaries (ii)-(v) and Eqs. (13)-(18)"
+        }
+      ],
+      "derived_from": [
+        "explicit physical MPO contraction and finite auxiliary return paths"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "small-chain matrix identities plus epsilon-squared polynomial interpolation",
+      "checks": [
+        {
+          "id": "EQ011-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Corollaries (ii)-(v) explicitly state triangularity, full rank, the finite auxiliary cutoff and polynomial degree."
+        },
+        {
+          "id": "EQ011-S",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Upper triangularity, unit diagonal, positive full rank and exact minimal-dimension truncation pass for all declared small chains."
+        },
+        {
+          "id": "EQ011-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Degree 2n-2 fits have residual below 1e-11, nonzero leading coefficients and fail when forced two degrees lower."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::mpo_cholesky_operator"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ012",
+      "title": "Transfer-contraction complexity",
+      "role": "T013",
+      "latex": "cost(T product)=O(n^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text preceding Eq. (19)"
+        }
+      ],
+      "derived_from": [
+        "finite tridiagonal band-operation count"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact operation count over n=20..640",
+      "checks": [
+        {
+          "id": "EQ012-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that a local observable can be evaluated with O(n^2) operations."
+        },
+        {
+          "id": "EQ012-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The deterministic contraction operation-count exponent is within 0.05 of two."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_contraction_operation_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ013",
+      "title": "Isotropic transfer identities and continuum limit",
+      "role": "T017-T019 isotropic derivation",
+      "latex": "[T,[T,V]]=-(epsilon^2/4)(2V+{T,V}); Z_n/Z_(n-1) approximately epsilon^2((4n-3)^2/(32pi^2)-alpha)+1; M''=-pi^2 M",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 4-5, Eqs. (20)-(22) and continuum derivation"
+        }
+      ],
+      "derived_from": [
+        "regularized isotropic amplitudes and finite-size transfer contractions"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "matrix identities, alpha extrapolation and cosine-profile convergence",
+      "checks": [
+        {
+          "id": "EQ013-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (20)-(22) and the following continuum paragraph print the transfer identities, alpha value and cosine equation."
+        },
+        {
+          "id": "EQ013-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The double commutator and boundary identities pass away from the artificial finite auxiliary cutoff."
+        },
+        {
+          "id": "EQ013-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A controlled 1/n extrapolation recovers alpha near 0.0346 and the cosine-profile error decreases with chain length."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ014",
+      "title": "Isotropic weak-coupling limit",
+      "role": "T006",
+      "latex": "J=epsilon/2; M_j=epsilon^2(n+1-2j)/4 for epsilon much less than 2pi/n",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5, final weak-coupling paragraph"
+        }
+      ],
+      "derived_from": [
+        "perturbative boundary-driven isotropic transfer process"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "finite-size current and magnetization ratios inside the printed asymptotic regime",
+      "checks": [
+        {
+          "id": "EQ014-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The current and magnetization formulas and their validity regime are printed explicitly."
+        },
+        {
+          "id": "EQ014-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Two chain lengths and two couplings recover both perturbative ratios with decreasing error."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::spin_current",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ015",
+      "title": "Root-of-unity cutoff index and parity",
+      "role": "T014",
+      "latex": "lambda=pi l/m; printed: a_m^+=0 (odd m) or a_m^-=0 (even m), dim H=m+1; Eq. (7): a_{m-1}^-=0 (odd m) or a_{m-1}^+=0 (even m), dim H=m",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, root-of-unity paragraph before Eq. (19)"
+        }
+      ],
+      "derived_from": [
+        "direct substitution into the printed Eq. (7) amplitudes"
+      ],
+      "derivation_status": "blocked",
+      "numeric_gate_policy": "blocked_pending_derivation",
+      "numerical_form": "complete Eq. (7) amplitudes at r=m and r=m-1 for m=3..8",
+      "checks": [
+        {
+          "id": "EQ015-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cutoff index, plus/minus assignment and m+1-dimensional space are printed explicitly."
+        },
+        {
+          "id": "EQ015-F",
+          "type": "falsification_check",
+          "status": "passed",
+          "reason": "With the nonsingular tau prescription, the paper-named r=m component is nonzero, whereas the opposite hopping at r=m-1 vanishes exactly and yields the m-state space used by the printed m=3 example; the gate remains closed until fresh review."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::root_of_unity_closure_diagnostic"
+      ],
+      "open_questions": [
+        "Does a fresh derivation confirm that the root-of-unity prose shifts the cutoff index by one and consequently misstates both parity and auxiliary dimension?"
+      ]
+    },
+    {
+      "id": "EQ016",
+      "title": "Easy-plane spectral convergence and flat thermodynamic profile",
+      "role": "T020",
+      "latex": "|O_n-O_infinity| proportional to |lambda_2/lambda_1|^n; <sigma^z>_TL=<L|V|R>/(lambda_1<L|R>)=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text following the reduced 3-by-3 transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "spectral decomposition of the printed reduced transfer matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "eigenspectrum plus independent finite-chain transfer contractions over n=8..36",
+      "checks": [
+        {
+          "id": "EQ016-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly assigns the exponential rate to the ratio of the two leading eigenvalues and states an asymptotically flat profile."
+        },
+        {
+          "id": "EQ016-E",
+          "type": "alternative_implementation",
+          "status": "passed",
+          "reason": "Eigenvalue ratios and independently fitted finite-current error ratios agree within one percent for every printed coupling."
+        },
+        {
+          "id": "EQ016-F",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The Perron-state magnetization vanishes and central-third deviations decrease monotonically."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_plane_convergence_diagnostic"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ017",
+      "title": "Infinite transfer rank for Delta greater than or equal to one",
+      "role": "T021",
+      "latex": "det(T[0:N,1:N+1])=product_(r=0)^(N-1)|a_r^+|^2/2 != 0 for every N",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, easy-axis paragraph before the isotropic section"
+        }
+      ],
+      "derived_from": [
+        "the printed near-diagonal amplitudes and a shifted triangular minor"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "analytic nonzero witnesses and finite principal-minor certificates at Delta=1,1.2,1.5",
+      "checks": [
+        {
+          "id": "EQ017-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that T always has infinite rank for Delta>=1."
+        },
+        {
+          "id": "EQ017-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At Delta=1 the regularized a_r^+ has nonzero real part 2k; at Delta>1 its imaginary part is a nonzero hyperbolic sine."
+        },
+        {
+          "id": "EQ017-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The shifted triangular minor has the predicted nonzero diagonal through rank twelve for all declared cases."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::infinite_transfer_rank_certificate"
+      ],
+      "open_questions": []
+    }
+  ]
+}

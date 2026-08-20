@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "paper_id": "0911.0556",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Lindblad master equation",
+      "role": "physical trace-preserving dynamics",
+      "latex": "dot(rho)=-i[H,rho]+sum_mu(L_mu rho L_mu^dagger-{L_mu^dagger L_mu,rho}/2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 1, Eq. (1)"
+        }
+      ],
+      "derived_from": [
+        "column-major vectorization identity vec(A X B)=(B^T tensor A)vec(X)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense complex d^2 by d^2 superoperator",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian and all recycle/anticommutator terms are printed in Eq. (1)."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The two- and three-level physical generators have identity as a left zero mode in unit tests."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/liouvillian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Tilted quantum master operator",
+      "role": "trajectory generating function",
+      "latex": "W_s=W+(e^{-s}-1)L_1 rho L_1^dagger",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eqs. (3)-(4)"
+        }
+      ],
+      "derived_from": [
+        "Laplace transform over counted jump number K"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "only the counted recycling Kronecker term is multiplied by exp(-s)",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (4) explicitly identifies the single tilted recycling term."
+        },
+        {
+          "id": "EQ002-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At s=0 the implementation is byte-path identical to the physical Lindblad construction."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/liouvillian.py::tilted_liouvillian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "SCGF and activity cumulants",
+      "role": "T001, T004, T005, T008 and T009",
+      "latex": "theta=max Re eig(W_s); k=-theta'; Q=-theta''/theta'-1",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-3, text after Eq. (4) and two-level section"
+        }
+      ],
+      "derived_from": [
+        "long-time spectral dominance of the tilted generator"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dominant eigenvalue plus central finite differences",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The dominant-eigenvalue prescription and both derivative identities are printed."
+        },
+        {
+          "id": "EQ003-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The derivative implementation agrees with the independent two-level closed form over the full figure grid."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/large_deviation.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Two-level special-point SCGF",
+      "role": "T001-T003 and T011 exact anchor",
+      "latex": "theta(s)=-2 Omega(1-e^{-s/3})",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "direct characteristic polynomial of the tilted 4x4 superoperator at kappa=4 Omega"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed scalar theta, activity and Mandel functions",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (5) and its derivative consequences are printed explicitly."
+        },
+        {
+          "id": "EQ004-X",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Generic eigendiagonalization agrees with the closed form to below 2e-12 in unit tests."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/models.py::two_level_exact"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Rate-function Legendre dual",
+      "role": "T002 and T006",
+      "latex": "phi(k)=sup_s[-s k-theta(s)]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2 below Eq. (3), and Main Fig. 1 caption"
+        }
+      ],
+      "derived_from": [
+        "Legendre duality between trajectory free energy and rate function"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "vectorized maximization over a converged s grid",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Legendre relation and closed two-level rate function are printed."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The grid dual agrees with 3[k ln(k/k0)-(k-k0)] in tests."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/large_deviation.py::rate_function"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Three-level tilted model",
+      "role": "T004-T007",
+      "latex": "H=sum_{j=1}^2 Omega_j(a_j+a_j^dagger), L_1=sqrt(kappa_1)a_1",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, three-level section and Main Fig. 2 caption"
+        }
+      ],
+      "derived_from": [
+        "printed three-state basis and single radiative transition"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense 9x9 tilted superoperator and fixed-seed Monte Carlo wave functions",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both Rabi couplings, decay operator and parameter ratios are printed."
+        },
+        {
+          "id": "EQ006-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The physical generator conserves trace and one seeded record contains both target activities."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/models.py::three_level_model",
+        "src/quantum_jumps/trajectories.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Micromaser jump operators",
+      "role": "T008-T010",
+      "latex": "L_1=sqrt(r)sin(phi sqrt(aa^dagger))/sqrt(aa^dagger)a; L_2=sqrt(r)cos(phi sqrt(aa^dagger)); L_3=sqrt(kappa)a; L_4=sqrt(lambda)a^dagger",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, micromaser section"
+        }
+      ],
+      "derived_from": [
+        "number-basis matrix elements of the four printed jumps"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "photon-number birth and death rates",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All four jump operators and alpha definition are printed."
+        },
+        {
+          "id": "EQ007-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Physical s=0 generators conserve total probability with converged photon cutoffs."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/micromaser.py"
+      ],
+      "open_questions": [
+        "The original Letter omits N_ex and nu; T008-T010 therefore retain reconstructed parameter status."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Micromaser birth-death reduction",
+      "role": "stable and independently checkable T008-T010 solver",
+      "latex": "b_n=e^{-s}r sin^2(phi sqrt(n+1))+lambda(n+1); d_n=kappa n",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, printed jumps and statement that r_s is diagonal in number"
+        }
+      ],
+      "derived_from": [
+        "explicit contraction of the four jump dissipators on diagonal density matrices"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "symmetrizable tridiagonal tilted birth-death generator",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four jump operators and the diagonal-eigenmatrix restriction are printed in the micromaser section."
+        },
+        {
+          "id": "EQ008-D",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Atomic and thermal birth rates and cavity death rate follow independently from the printed jumps."
+        },
+        {
+          "id": "EQ008-X",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Direct nonsymmetric dense eigenvalues match the symmetric tridiagonal solver in unit tests."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/micromaser.py::tilted_birth_death"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Quantum Doob transform",
+      "role": "T011 rare-to-typical mapping",
+      "latex": "tilde L_mu=[delta_mu1 e^{-s/2}+1-delta_mu1] l_s^{1/2}L_mu l_s^{-1/2}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5, final displayed equations and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "positive similarity map generated by the dominant left eigenmatrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "d^2 by d^2 similarity transform shifted by theta(s)",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The transformed Hamiltonian, jumps and trace-preservation claim are printed."
+        },
+        {
+          "id": "EQ009-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The transformed generator is trace preserving and reproduces the exact exp(-s/3) activity scaling."
+        }
+      ],
+      "code_refs": [
+        "src/quantum_jumps/doob.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

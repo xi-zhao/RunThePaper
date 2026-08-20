@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "run_id": "cond-mat-0503511-paper-exact-v6",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs",
+    "--resume"
+  ],
+  "inputs": [
+    "src/zurek_qpt/__init__.py",
+    "src/zurek_qpt/model.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "boundary_condition": "open",
+    "coupling_w": 1.0,
+    "hbar": 1.0,
+    "field_start": 5.0,
+    "field_end": 0.0,
+    "main_chain_lengths": [
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+    ],
+    "fig2a_chain_length": 20,
+    "fig2c_chain_lengths": [
+      90,
+      70,
+      50,
+      30
+    ],
+    "scaling_chain_lengths": [
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+    ],
+    "fixed_tau_q_hbar_over_w": 200.0,
+    "fidelity_target": 0.99,
+    "landau_zener_probe_coefficient": 59.0,
+    "reported_fig2b_lzf_coefficient": 59.0,
+    "reported_fig2c_lzf_coefficients_by_chain": {
+      "30": 54.0,
+      "50": 57.0,
+      "70": 59.0,
+      "90": 59.0
+    },
+    "landau_zener_fit_min_fidelity": 0.6,
+    "landau_zener_fit_max_fidelity": 0.99,
+    "tau99_asymptotic_fit_min_chain_length": 40
+  },
+  "outputs": [
+    "outputs/data/fig1_kink_density.csv",
+    "outputs/data/fig2a_spectrum.csv",
+    "outputs/data/fig2b_fidelity_scaling.csv",
+    "outputs/data/fig2c_fidelity_bounds.csv",
+    "outputs/data/fig3_kink_count.csv",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0610854",
+  "run_id": "cond-mat-0610854-reduced-scale-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/reduced_scale.json",
+    "--output-root",
+    "outputs"
+  ],
+  "parameter_file": "config/reduced_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "parameters_paper_exact": false,
+    "backend": "numpy",
+    "model": {
+      "interaction": 2.0,
+      "nearest_hopping": 1.0,
+      "next_nearest_hopping": 1.0,
+      "periodic": true,
+      "half_filling": true,
+      "disorder_distribution": "gaussian_rescaled_to_exact_sample_rms"
+    },
+    "w_values": [
+      1.0,
+      2.0,
+      3.0,
+      4.0,
+      4.5,
+      5.0,
+      5.5,
+      6.0,
+      6.5,
+      7.0,
+      7.5,
+      8.0,
+      9.0,
+      10.0,
+      11.0
+    ],
+    "sizes": [
+      {
+        "length": 8,
+        "samples": 160,
+        "sample_provenance": "measured_runtime_scaled_choice"
+      },
+      {
+        "length": 10,
+        "samples": 64,
+        "sample_provenance": "measured_runtime_scaled_choice"
+      },
+      {
+        "length": 12,
+        "samples": 32,
+        "sample_provenance": "measured_runtime_scaled_choice"
+      },
+      {
+        "length": 14,
+        "samples": 2,
+        "sample_provenance": "measured_runtime_scaled_choice"
+      }
+    ],
+    "critical_window": {
+      "minimum": 4.0,
+      "maximum": 8.0
+    },
+    "crossing_window": {
+      "minimum": 4.0,
+      "maximum": 8.0
+    },
+    "histogram": {
+      "bins": 40,
+      "model_length": 12,
+      "model_strengths": [
+        3.0,
+        7.0,
+        11.0
+      ]
+    },
+    "goe": {
+      "matrix_size": 512,
+      "samples": 96
+    },
+    "seed": 610854,
+    "checkpoint_interval": 1,
+    "execution": {
+      "default_shards": 1
+    },
+    "acceptance": {
+      "goe_mean_abs_error_max": 0.02,
+      "crossing_drift_min": 0.01
+    }
+  },
+  "inputs": [
+    "config/reduced_scale.json",
+    "scripts/run_reproduction.py",
+    "src/mbl_level_stats/__init__.py",
+    "src/mbl_level_stats/hamiltonian.py",
+    "src/mbl_level_stats/statistics.py",
+    "src/mbl_level_stats/campaign.py"
+  ],
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "outputs": [
+    "outputs/data/level_ratio_curves.csv",
+    "outputs/data/level_ratio_histograms.csv",
+    "outputs/data/crossing_drift.csv",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ]
+}

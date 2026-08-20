@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevA.47.5138",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Spin coherent state and Husimi-Q distribution",
+      "role": "observable for all six QPD panels",
+      "latex": "\\langle S,m|\\theta,\\phi\\rangle=\\binom{2S}{S+m}^{1/2}\\cos^{S+m}(\\theta/2)\\sin^{S-m}(\\theta/2)e^{-im\\phi},\\quad Q(\\theta,\\phi)=|\\langle\\theta,\\phi|\\psi\\rangle|^2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5139, 5142 (Fig. 2 caption and Appendix)"
+        }
+      ],
+      "derived_from": [
+        "paper QPD definition note [12]",
+        "Appendix coherent-state expansion"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "log-binomial coherent-state amplitudes and vectorized overlap on a spherical grid",
+      "checks": [
+        {
+          "id": "EQ001-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The binomial theorem gives unit state norm and the initial CSS has Qmax=1."
+        },
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines Q and prints the coherent-state expansion."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::coherent_state",
+        "src/spin_squeezing/model.py::husimi_q"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "One-axis twisting state evolution",
+      "role": "state generator for Fig. 2",
+      "latex": "U_{OAT}(\\mu)=e^{-i\\mu S_z^2/2},\\quad |\\psi(\\mu)\\rangle=U_{OAT}(\\mu)|\\pi/2,0\\rangle",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5139, Sec. III.A and Fig. 2 caption"
+        }
+      ],
+      "derived_from": [
+        "H=hbar chi Sz^2",
+        "mu=2 chi t"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact diagonal phase in the Sz eigenbasis",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian, unitary convention and both mu values are printed in Sec. III.A and the caption."
+        },
+        {
+          "id": "EQ002-U",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Every basis coefficient acquires a unit-modulus phase."
+        },
+        {
+          "id": "EQ002-C",
+          "type": "printed_value",
+          "status": "passed",
+          "reason": "S=20 and mu=0.199/0.399 are printed in the Fig. 2 caption."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::one_axis_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Exact and asymptotic one-axis variances",
+      "role": "one-axis series and asymptote in Fig. 4",
+      "latex": "V_-=\\frac S2\\left[1+\\frac{S-1/2}{2}\\left(A-\\sqrt{A^2+B^2}\\right)\\right],\\ A=1-\\cos^{2S-2}\\mu,\\ B=4\\sin(\\mu/2)\\cos^{2S-2}(\\mu/2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5140, Eqs. (3)-(5)"
+        }
+      ],
+      "derived_from": [
+        "paper twisted moments",
+        "2x2 transverse covariance eigenvalues"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "bounded scalar minimization of the exact closed form for each S",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exact variance, A/B definitions and asymptotic expansion are printed in Eqs. (3)-(5)."
+        },
+        {
+          "id": "EQ003-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At mu=0, A=B=0 and V-=S/2."
+        },
+        {
+          "id": "EQ003-A",
+          "type": "asymptotic",
+          "status": "passed",
+          "reason": "The large-S expansion gives one-half times (S/3)^(1/3)."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::one_axis_variances",
+        "src/spin_squeezing/model.py::minimum_one_axis_variance"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Two-axis countertwisting evolution",
+      "role": "state generator for Fig. 3 and Fig. 4 TACT series",
+      "latex": "U_{TACT}(\\mu)=\\exp[-i\\mu(S_xS_y+S_yS_x)/4]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5140, Eq. (6) and Fig. 3 caption"
+        }
+      ],
+      "derived_from": [
+        "S_{pi/2,pi/4}^2-S_{pi/2,-pi/4}^2=SxSy+SySx",
+        "mu=4 chi t"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Hermitian eigendecomposition followed by exact spectral phases",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (6) and the Fig. 3 caption print the Hamiltonian, unitary and both mu values."
+        },
+        {
+          "id": "EQ004-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The difference of squared +/-45-degree spin components equals SxSy+SySx."
+        },
+        {
+          "id": "EQ004-H",
+          "type": "hermiticity",
+          "status": "passed",
+          "reason": "SxSy+SySx is Hermitian."
+        },
+        {
+          "id": "EQ004-C",
+          "type": "printed_value",
+          "status": "passed",
+          "reason": "S=20 and mu=0.203/0.248 are printed in the Fig. 3 caption."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::two_axis_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Minimum transverse covariance eigenvalue",
+      "role": "coordinate-independent squeezing observable",
+      "latex": "V_{min}=\\tfrac12[C_{xx}+C_{yy}-\\sqrt{(C_{xx}-C_{yy})^2+4C_{xy}^2}]",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5139-5140, Eqs. (3)-(4) and squeezing definition"
+        }
+      ],
+      "derived_from": [
+        "symmetric spin covariance",
+        "Rayleigh-Ritz theorem"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "smallest eigenvalue of the exact 2x2 transverse covariance matrix",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines squeezing as the minimum variance normal to the mean spin and diagonalizes the OAT transverse covariance in Eqs. (3)-(4)."
+        },
+        {
+          "id": "EQ005-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A coherent state returns Vmin=S/2."
+        },
+        {
+          "id": "EQ005-R",
+          "type": "rotation_invariance",
+          "status": "passed",
+          "reason": "A covariance eigenvalue is invariant under transverse coordinate rotation."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::minimum_transverse_variance"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Minimum-variance scaling",
+      "role": "all scientific series in Fig. 4",
+      "latex": "V_{CSS}=S/2,\\quad V_{OAT}^{asym}=\\tfrac12(S/3)^{1/3},\\quad V_{TACT}^{asym}=1/2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5140, Sec. III.A-B and Fig. 4 caption"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "EQ004",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact per-S minimization compared with three printed analytic references",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three limiting curves and the omitted S=1 special case are explicit in the text/caption."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The exact curves must approach the printed one-axis power law and two-axis one-half limit as S grows."
+        },
+        {
+          "id": "EQ006-P",
+          "type": "positivity",
+          "status": "passed",
+          "reason": "All covariance eigenvalues must be nonnegative."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::minimum_one_axis_variance",
+        "src/spin_squeezing/model.py::minimum_two_axis_variance",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The exact marker set used in the 1993 plot is not printed; the reproduction declares its physical S grid."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Appendix twisted-moment identities",
+      "role": "independent derivation of the exact OAT moments",
+      "latex": "\\langle S_+e^{i\\mu(S_z+1/2)}\\rangle=S\\cos^{2S-1}(\\mu/2),\\quad \\langle\\{S_+e^{i\\mu(S_z+1/2)}\\}^2\\rangle=S(S-1/2)\\cos^{2S-2}\\mu",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5142, Eqs. (A1)-(A3)"
+        }
+      ],
+      "derived_from": [
+        "binomial coherent-state expansion",
+        "direct finite-spin operator contraction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "construct both sides independently at three twist angles",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three identities and their operator ordering are printed in Appendix Eqs. (A1)-(A3)."
+        },
+        {
+          "id": "EQ007-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A1-A3 are compared to direct matrix products rather than reused in the runner."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::twisted_moment_identity_residuals"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "OAT optimal twist and uncertainty product",
+      "role": "large-S quantitative claims following Eq. (5)",
+      "latex": "\\mu_0=24^{1/6}S^{-2/3},\\quad U_{yz}=4V_-V_+/|\\langle S_x\\rangle|^2\\simeq1+(\\mu/\\mu_0)^6",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5140, paragraph following Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact covariance product and exact scalar optimum compared on a declared small-twist grid",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The optimum and normalized uncertainty product are printed immediately after Eq. (5)."
+        },
+        {
+          "id": "EQ008-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The S=100 optimum and six mu/mu0 values approach the printed asymptotes within declared finite-S tolerances."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::one_axis_uncertainty_product",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Interferometer Schwinger mapping and noise",
+      "role": "two-mode implementation in Eqs. (7)-(9)",
+      "latex": "S_+=a^\\dagger b,\\ S_z=(N_A-N_B)/2,\\ \\delta N=2\\sqrt{V_z},\\ \\delta\\phi\\simeq\\sqrt{V_y}/|\\langle S_x\\rangle|",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5141, Eqs. (7)-(9)"
+        }
+      ],
+      "derived_from": [
+        "fixed-total-particle Fock basis",
+        "spin coherent state"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "two-mode matrices compared elementwise with abstract spin matrices and CSS noise",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Schwinger map and both noise formulas are printed in Eqs. (7)-(9)."
+        },
+        {
+          "id": "EQ009-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The independently built fixed-N Fock representation agrees with spin S=N/2 and gives deltaN deltaPhi=1."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::schwinger_spin_operators",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Two-level atom collective-spin mapping",
+      "role": "atomic interpretation in Sec. IV.B",
+      "latex": "S=N/2,\\quad S_z=(N_A-N_B)/2,\\quad S_+^2=\\text{simultaneous pair excitation}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5141-5142, Sec. IV.B"
+        }
+      ],
+      "derived_from": [
+        "symmetric N-atom subspace",
+        "SU(2) Casimir"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Casimir and squared raising operators checked in the N=40 symmetric sector",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Section IV.B states the S=N/2 mapping, population difference and pair-excitation interpretation."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The collective Casimir is S(S+1) and pair transfer equals the squared abstract-spin raising operator."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::schwinger_spin_operators",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Finite-spin squeezing boundaries",
+      "role": "definition and special S=1 limit",
+      "latex": "V_{CSS}=S/2,\\quad V_{min}(S=1/2)=S/2,\\quad V_{min}(S=1)=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5138-5141, Sec. II, Sec. III.B and Fig. 4 caption"
+        }
+      ],
+      "derived_from": [
+        "exact finite-spin covariance"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct S=1/2 evolution and explicit S=1 minimization for both mechanisms",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The SQL definition, S=1/2 boundary and omitted S=1 zero are explicit in the text and Fig. 4 caption."
+        },
+        {
+          "id": "EQ011-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both special finite-spin cases are evaluated rather than inferred from the plotted S grid."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "paper_id": "1508.03344",
+  "run_id": "1508.03344-reduced-all-targets-v4",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/reduced_all_targets.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "config/reduced_all_targets.json",
+    "scripts/run_reproduction.py",
+    "src/driven_ising/__init__.py",
+    "src/driven_ising/analytic.py",
+    "src/driven_ising/model.py",
+    "src/driven_ising/observables.py",
+    "src/driven_ising/campaign.py"
+  ],
+  "parameter_file": "config/reduced_all_targets.json",
+  "parameter_selector": "families",
+  "expected_parameters": {
+    "fig1": {
+      "target_ids": [
+        "T001",
+        "T002",
+        "T007"
+      ],
+      "system_sizes": [
+        6,
+        8
+      ],
+      "mean_log_j_grid": {
+        "kind": "values",
+        "values": [
+          -3.0,
+          -1.5,
+          -0.5,
+          0.0,
+          0.5,
+          1.5,
+          3.0
+        ]
+      },
+      "interaction": 0.1,
+      "parity": 1,
+      "periodic": false,
+      "samples_by_size": {
+        "6": 8,
+        "8": 4
+      },
+      "shard_size_by_size": {
+        "6": 4,
+        "8": 2
+      },
+      "eigenstate_stride_by_size": {
+        "6": 1,
+        "8": 1
+      }
+    },
+    "fig2_phase": {
+      "target_ids": [
+        "T003",
+        "T007"
+      ],
+      "points": 81
+    },
+    "fig2_level": {
+      "target_ids": [
+        "T004",
+        "T007"
+      ],
+      "system_sizes": [
+        6,
+        8
+      ],
+      "interaction_grid": {
+        "kind": "values",
+        "values": [
+          0.01,
+          0.02,
+          0.04,
+          0.06,
+          0.08,
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "samples_by_size": {
+        "6": 8,
+        "8": 4
+      },
+      "shard_size_by_size": {
+        "6": 4,
+        "8": 2
+      },
+      "parity": 1,
+      "t1": 1.0,
+      "t2": 1.5707963267948966
+    },
+    "fig2_spectral": {
+      "target_ids": [
+        "T005",
+        "T007"
+      ],
+      "system_size": 8,
+      "interaction_values": [
+        0.02,
+        0.04,
+        0.06,
+        0.08,
+        0.1,
+        0.2,
+        0.3
+      ],
+      "phases": [
+        "pi",
+        "zero"
+      ],
+      "samples": 2,
+      "shard_size": 1,
+      "t1": 1.0,
+      "t2": 1.5707963267948966,
+      "site": 4,
+      "bins": 121,
+      "gaussian_sigma_bins": 1.5
+    },
+    "fig2_micromotion": {
+      "target_ids": [
+        "T006",
+        "T007"
+      ],
+      "system_size": 8,
+      "interaction": 0.04,
+      "t1": 1.0,
+      "t2": 1.5707963267948966,
+      "time_points": 121,
+      "selection_rule": "maximum_long_range_order"
+    }
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "outputs": [
+    "outputs/data/fig1_observables.json",
+    "outputs/data/fig2_level_statistics.json",
+    "outputs/data/fig2_spectral_functions.json",
+    "outputs/data/fig2_micromotion.json",
+    "outputs/data/fig2_phase_diagram.npz",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ]
+}

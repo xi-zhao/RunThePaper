@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "quant-ph-0403025-paper-exact-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/magic_distillation/__init__.py",
+    "src/magic_distillation/model.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "epsilon_min": 0.0,
+    "epsilon_max": 0.5,
+    "curve_points": 2001,
+    "audit_points": 101,
+    "asymptotic_epsilon": 0.0001
+  },
+  "outputs": [
+    "outputs/data/t_type_curves.csv",
+    "outputs/data/h_type_curves.csv",
+    "outputs/data/quantitative_claims.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true,
+    "contract": "config/render_contract.json",
+    "command": [
+      "python",
+      "scripts/render_figures.py",
+      "--contract",
+      "config/render_contract.json",
+      "--data-root",
+      "outputs",
+      "--output-root",
+      "outputs"
+    ]
+  }
+}

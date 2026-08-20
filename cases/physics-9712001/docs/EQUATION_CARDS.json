@@ -1,0 +1,517 @@
+{
+  "schema_version": 1,
+  "paper_id": "physics-9712001",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "PT-symmetric Schrodinger eigenproblem and origin patch",
+      "role": "exact spectrum for all numerical targets",
+      "latex": "-\\psi''+[m^2x^2-(ix)^N]\\psi=E\\psi,\\quad \\operatorname{Re}[\\psi'(0)/\\psi(0)]=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 1-3, Eqs. (1)-(2) and numerical-method paragraph"
+        }
+      ],
+      "derived_from": [
+        "p=-i d/dx",
+        "PT condition psi(-x)^*=psi(x)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "sparse contour eigenproblem plus independent Riccati patching",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian and boundary-value problem are printed explicitly."
+        },
+        {
+          "id": "EQ001-P",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "PT symmetry makes psi(0) real and psi'(0) purely imaginary for a real eigenvalue."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::build_contour_hamiltonian",
+        "src/pt_spectrum/model.py::shooting_patch_residual"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Anti-Stokes wedge centers and smooth contour",
+      "role": "boundary conditions for massless Fig. 1",
+      "latex": "\\theta_L=-\\pi+\\frac{N-2}{N+2}\\frac{\\pi}{2},\\quad \\theta_R=-\\frac{N-2}{N+2}\\frac{\\pi}{2},\\quad \\Delta=\\frac{2\\pi}{N+2}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 2, Eq. (3)"
+        }
+      ],
+      "derived_from": [
+        "large-|x| WKB decay sectors",
+        "PT-symmetric contour continuation from N=2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "smooth PT-symmetric contour with analytic first and second derivatives",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both wedge centers and their opening are printed."
+        },
+        {
+          "id": "EQ002-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At N=2 the contour reduces to the real axis."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::contour_geometry"
+      ],
+      "open_questions": [
+        "The authors do not print their finite endpoint radius or contour interpolation near the origin."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Complex WKB energy formula",
+      "role": "Table I WKB columns and spectrum trend",
+      "latex": "E_n\\sim[\\Gamma(3/2+1/N)\\sqrt{\\pi}(n+1/2)/(\\sin(\\pi/N)\\Gamma(1+1/N))]^{2N/(N+2)}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eqs. (4)-(5) and Table I"
+        }
+      ],
+      "derived_from": [
+        "complex turning points",
+        "real phase-integral contour"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct log-gamma evaluation plus an explicit turning-point segment / principal-branch-cut intersection test",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula and target table are printed."
+        },
+        {
+          "id": "EQ003-H",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "N=2 reduces to E_n=2n+1."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::wkb_energy",
+        "src/pt_spectrum/model.py::wkb_branch_cut_intersection_imag"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Riccati shooting patch condition",
+      "role": "exact Table II energies and near-one Fig. 1 branch",
+      "latex": "y'=V-E-y^2,\\quad y(X)=-\\sqrt{V-E}-V'/(4(V-E)),\\quad \\operatorname{Re}y(0)=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-4, patching discussion and Runge-Kutta method"
+        }
+      ],
+      "derived_from": [
+        "y=psi'/psi",
+        "first-order WKB amplitude",
+        "PT origin condition"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "adaptive DOP853 integration and bracketed scalar root",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the origin patch condition and states that its primary solver integrates the coupled real equations with Runge-Kutta."
+        },
+        {
+          "id": "EQ004-R",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution y=psi'/psi gives the Riccati equation exactly."
+        },
+        {
+          "id": "EQ004-B",
+          "type": "boundary_condition",
+          "status": "passed",
+          "reason": "The selected square-root branch yields exponential decay at positive infinity."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::shooting_patch_residual",
+        "src/pt_spectrum/model.py::ground_state_shooting"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Near-one implicit asymptotic energy",
+      "role": "Table II asymptotic column",
+      "latex": "1\\sim\\epsilon e^{4E^{3/2}/3}E^{-3/2}[\\sqrt3\\ln(2\\sqrt E)+\\pi-(1-\\gamma)\\sqrt3]/8",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (11) and Table II"
+        }
+      ],
+      "derived_from": [
+        "Airy matching at N=1",
+        "epsilon expansion"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "log-domain Brent root",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation, epsilon grid and comparison column are printed."
+        },
+        {
+          "id": "EQ005-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The positive root grows as epsilon decreases and reproduces the printed asymptotic column to its four-digit precision."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::near_one_asymptotic_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Massive N=1 shifted oscillator",
+      "role": "analytic anchor for all Fig. 3 families",
+      "latex": "E_n=(2n+1)\\sqrt{m^2}+1/(4m^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 1,4, Eq. (1) and Fig. 3"
+        }
+      ],
+      "derived_from": [
+        "complete the square in m^2x^2-ix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form comparator at N=1",
+      "checks": [
+        {
+          "id": "EQ006-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Complex coordinate translation leaves the oscillator level spacing and adds 1/(4m^2)."
+        },
+        {
+          "id": "EQ006-P",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (1) supplies the massive Hamiltonian and Fig. 3 prints m^2=3/16,5/16,7/16."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::massive_n1_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Exactly solvable shifted-oscillator sequences",
+      "role": "opening PT and non-PT spectral examples",
+      "latex": "E_n=2n+1-b^2/4\\quad\\text{for}\\quad H=p^2+x^2+bx",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 1, opening harmonic-oscillator examples"
+        }
+      ],
+      "derived_from": [
+        "complete the square x^2+bx=(x+b/2)^2-b^2/4",
+        "analytic continuation of the oscillator contour"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form spectra for b=0, i, -1, and -1+i",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly prints the four Hamiltonians and their energy sequences."
+        },
+        {
+          "id": "EQ007-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Completing the square gives the constant spectral shift -b^2/4 without using author data."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::shifted_oscillator_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "N=1 Airy matching obstruction",
+      "role": "absence of a real eigenvalue at the spectral transition",
+      "latex": "\\left.\\frac{d}{dx}|\\operatorname{Ai}(xe^{-i\\pi/6}+Ee^{-2i\\pi/3})|^2\\right|_{x=0}=-1/(2\\pi)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Eqs. (6)-(7)"
+        }
+      ],
+      "derived_from": [
+        "Airy-function solution at N=1",
+        "Airy Wronskian identity"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "independent complex Airy evaluation over five real energies",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Airy solution, matching condition, and constant derivative are printed in Eqs. (6)-(7)."
+        },
+        {
+          "id": "EQ008-W",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The Airy Wronskian fixes the derivative to -1/(2 pi), so it cannot vanish for real E."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::airy_matching_derivative"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Classical period and subcritical spiral geometry",
+      "role": "classical transition accompanying the quantum spectral transition",
+      "latex": "T=2E^{(2-N)/(2N)}\\cos[(N-2)\\pi/(2N)]\\Gamma(1+1/N)\\sqrt\\pi/\\Gamma(1/2+1/N)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (12) and following text"
+        }
+      ],
+      "derived_from": [
+        "complex classical action integral",
+        "turning points of E+(ix)^N=0"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "log-gamma period plus unwrapped Riemann-sheet Hamiltonian integration, turning-point passage events, and quantum-merger / classical-passage correspondence",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (12), the N>=2 periodicity statement, and the N<2 spiral discussion are printed explicitly."
+        },
+        {
+          "id": "EQ009-H",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At N=2 and E=1 the formula reduces to the harmonic period pi in the paper's normalization."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::classical_period",
+        "src/pt_spectrum/model.py::classical_escape_angle",
+        "src/pt_spectrum/model.py::turning_point_angle",
+        "src/pt_spectrum/model.py::classical_spiral_trajectory",
+        "src/pt_spectrum/model.py::turning_point_passages",
+        "src/pt_spectrum/model.py::turning_points_before_escape"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Hermitian absolute-power spectrum and square-well limit",
+      "role": "body-level comparison following Table I",
+      "latex": "E_n^{(|x|^N)}\\sim[\\Gamma(3/2+1/N)\\sqrt{\\pi}(n+1/2)/\\Gamma(1+1/N)]^{2N/(N+2)},\\quad E_n^{\\rm well}=(n+1)^2\\pi^2/4",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, paragraph following Table I"
+        }
+      ],
+      "derived_from": [
+        "real-axis WKB phase integral",
+        "Dirichlet spectrum on the limiting interval [-1,1]"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "log-gamma WKB comparator plus independent sparse real-axis finite differences",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The missing sine factor and square-well limiting spectrum are both printed explicitly."
+        },
+        {
+          "id": "EQ010-H",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The independent |x|^N eigenspectrum converges toward (n+1)^2 pi^2/4 through N=512."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::hermitian_wkb_energy",
+        "src/pt_spectrum/model.py::hermitian_low_spectrum",
+        "src/pt_spectrum/model.py::square_well_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Near-one logarithmic scaling law",
+      "role": "body-level asymptotic claim in the Table II caption",
+      "latex": "E\\propto(-\\ln\\epsilon)^{2/3}\\quad(\\epsilon\\to0^+)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Eq. (11) and Table II caption"
+        }
+      ],
+      "derived_from": [
+        "dominant balance of 4E^(3/2)/3 against -ln epsilon in Eq. (11)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "log-domain Eq. (11) roots and a log-log slope against -ln epsilon",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The two-thirds scaling is printed explicitly in the Table II caption."
+        },
+        {
+          "id": "EQ011-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The fitted slope on epsilon=10^-40..10^-200 is within 0.02 of 2/3."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::near_one_asymptotic_energy",
+        "scripts/run_reproduction.py::run_quantitative_claims"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ012",
+      "title": "Near-N=2 non-Hermitian two-level merger",
+      "role": "body-level explanation of high-energy-first exceptional-point mergers",
+      "latex": "H(2-\\epsilon)=H_{osc}-\\epsilon x^2[\\ln|x|+i\\pi\\,\\operatorname{sgn}(x)/2]+O(\\epsilon^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, Behavior near N=2 paragraph"
+        }
+      ],
+      "derived_from": [
+        "principal-branch expansion of (ix)^(2-epsilon)",
+        "adjacent-parity harmonic-oscillator projection",
+        "complex-symmetric two-level discriminant"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Gauss-Hermite matrix elements and the positive zero of the two-level discriminant",
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the first-order perturbation and states that adjacent levels merge rather than repel."
+        },
+        {
+          "id": "EQ012-D",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The odd imaginary coupling enters the complex-symmetric discriminant with a negative square, allowing coalescence."
+        },
+        {
+          "id": "EQ012-C",
+          "type": "numeric_convergence",
+          "status": "passed",
+          "reason": "Independent 192- and 256-node quadratures agree and the merger epsilon decreases monotonically through level 20."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::near_n2_two_level_merger"
+      ],
+      "open_questions": [
+        "The paper refers the full asymptotic merger calculation to another work, so the present check tests the printed first-order mechanism rather than reconstructing unpublished higher orders."
+      ]
+    },
+    {
+      "id": "EQ013",
+      "title": "Massive exact anchors at N=0, 1, and 2",
+      "role": "body-level massive phase-transition anchors",
+      "latex": "E_n(0)=(2n+1)\\sqrt{m^2}-1,\\quad E_n(1)=(2n+1)\\sqrt{m^2}+1/(4m^2),\\quad E_n(2)=(2n+1)\\sqrt{m^2+1}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf Eq. (1), Massive case paragraph and Fig. 3"
+        }
+      ],
+      "derived_from": [
+        "harmonic oscillator at N=0",
+        "complex displacement at N=1",
+        "harmonic oscillator at N=2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form anchors cross-checked by independent real-axis finite differences",
+      "checks": [
+        {
+          "id": "EQ013-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (1) fixes all three anchor Hamiltonians and the massive paragraph identifies transitions at N=1 and N=2."
+        },
+        {
+          "id": "EQ013-I",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The three exact spectra agree with independent finite differences for all printed mass values."
+        }
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py::massive_n0_energy",
+        "src/pt_spectrum/model.py::massive_n1_energy",
+        "src/pt_spectrum/model.py::massive_n2_energy"
+      ],
+      "open_questions": []
+    }
+  ]
+}
