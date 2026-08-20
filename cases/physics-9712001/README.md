@@ -6,9 +6,9 @@ Published as: [Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry](ht
 
 Formal citation: 80, 5243-5246 (1998) · DOI `10.1103/PhysRevLett.80.5243` · Locator `5243-5246`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **92.19/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **98.37/100**
 
-All seven numerical targets have paper-scale code; formal isolated execution and independent review remain.
+Seven displayed targets plus five whole-paper quantitative claims have isolated paper-scale evidence; fresh review must be rerun against the expanded evidence.
 
 ## Start Here / 从这里开始
 
@@ -20,6 +20,7 @@ All seven numerical targets have paper-scale code; formal isolated execution and
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Paper review protocol](docs/PAPER_REVIEW_PROTOCOL_V2.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -71,7 +72,7 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 6 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=terminal_blocker, science=pending, pixel=passed_with_not_comparable, review_scope=incomplete, paper_assessment=paper_error_candidate.
+Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=terminal_blocker, pixel=passed_with_not_comparable, paper_assessment=paper_error_candidate.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

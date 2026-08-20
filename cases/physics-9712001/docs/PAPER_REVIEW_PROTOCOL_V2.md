@@ -2,7 +2,10 @@
 
 ## Current classification
 
-`inconclusive_pending_fresh_review`; `paper_error_candidate_emitted=false`.
+T004 has a strong paper-error hypothesis, but the authoritative classification
+for the new atomic scope is review-pending. It is not a confirmed erratum. The
+29-target whole-paper package requires a fresh inventory-first review before
+lifecycle closure.
 
 ## Printed claim
 
@@ -23,4 +26,10 @@ Riccati shooting and a separate finite-difference Hamiltonian agree closely acro
 
 ## What remains deliberately unresolved
 
-The reproducer cannot serve as its own fresh reviewer. The review must start from a paper-only inventory, then receive only the restricted falsification bundle. It must attempt to reproduce the printed late values without using author code, author arrays or source-pixel digitization and must classify every target under the protocol-v2 taxonomy.
+The prior reviewer independently reproduced the late-value discrepancy and
+rejected a reproduction-code explanation. However, the authors' original
+numerical implementation is not public, so the result remains a candidate
+rather than a confirmed journal error. The prior review also showed that broad
+figure-oriented targets were too coarse. The repaired package now maps all 26
+numeric paper items to 29 atomic targets and must be reviewed again from a new
+paper-only inventory; prior classifications cannot be transplanted.

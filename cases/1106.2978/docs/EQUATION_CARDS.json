@@ -66,7 +66,7 @@
           "id": "EQ002-A",
           "type": "symbolic_identity",
           "status": "passed",
-          "reason": "Generated amplitudes pass the printed root-of-unity closure and dense NESS observable checks."
+          "reason": "Generated amplitudes reproduce the exact finite MPO density, commutator identity and dense NESS observables. The root-of-unity parity sentence is audited separately in EQ012."
         }
       ],
       "code_refs": [
@@ -293,9 +293,9 @@
     },
     {
       "id": "EQ009",
-      "title": "Isotropic connected correlation and weak-coupling limit",
-      "role": "T005 and T006",
-      "latex": "C(x,y)=pi f(min(x,y),max(x,y))/(4n)+O(n^-2); J=epsilon/2; M_j=epsilon^2(n+1-2j)/4 for epsilon much less than 2pi/n",
+      "title": "Isotropic connected-correlation kernel",
+      "role": "T005",
+      "latex": "C(x,y)=pi f(min(x,y),max(x,y))/(4n)+O(n^-2)",
       "source_refs": [
         {
           "type": "paper_pdf",
@@ -303,28 +303,353 @@
         }
       ],
       "derived_from": [
-        "two magnetization vertices and perturbative boundary solution"
+        "two magnetization vertices"
       ],
-      "derivation_status": "verified",
-      "numeric_gate_policy": "source_and_symbolic",
-      "numerical_form": "finite transfer correlations and weak-coupling ratios",
+      "derivation_status": "blocked",
+      "numeric_gate_policy": "blocked_pending_derivation",
+      "numerical_form": "finite transfer correlations and an exact reflection-plus-spin-flip symmetry check",
       "checks": [
         {
           "id": "EQ009-T",
           "type": "source_trace",
           "status": "passed",
-          "reason": "The complete correlation kernel and weak-coupling formulas are printed in the final isotropic paragraphs."
+          "reason": "The complete correlation kernel is printed in the final isotropic paragraph."
         },
         {
           "id": "EQ009-C",
-          "type": "numeric_sanity",
+          "type": "falsification_check",
           "status": "passed",
-          "reason": "The n=120 correlation error is at most 15.2 percent and weak-coupling errors are below 1.7e-7."
+          "reason": "The printed leading kernel has an O(1/n) mirror-symmetry violation while the exact finite NESS respects the symmetry to 7.2e-14. The gate remains closed until fresh review adjudicates the discrepancy."
         }
       ],
       "code_refs": [
         "src/open_xxz/transfer.py::connected_correlation",
         "src/open_xxz/transfer.py::correlation_kernel"
+      ],
+      "open_questions": [
+        "Does the printed connected-correlation kernel contain a variable or sign transcription error?"
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Finite MPO theorem and commutator identity",
+      "role": "T007 exact NESS theorem",
+      "latex": "R=S_n S_n^dagger; [H,S_n]=-i epsilon (sigma^z tensor S_(n-1)-S_(n-1) tensor sigma^z)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 2-3, Eqs. (4)-(10)"
+        }
+      ],
+      "derived_from": [
+        "printed auxiliary matrices, boundary algebra and Cholesky construction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit small-chain physical MPO matrices and unrelated dense Liouvillian fixed points",
+      "checks": [
+        {
+          "id": "EQ010-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The theorem, auxiliary matrices and boundary commutator are printed in Eqs. (4)-(10)."
+        },
+        {
+          "id": "EQ010-M",
+          "type": "alternative_implementation",
+          "status": "passed",
+          "reason": "Explicit S_n S_n^dagger agrees entry by entry with the dense Liouvillian NESS for n=2,3,4 over the declared anisotropy/coupling grid."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The finite commutator identity and full Lindblad residual pass at machine precision."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::mpo_cholesky_operator",
+        "src/open_xxz/liouvillian.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Finite-size structural corollaries",
+      "role": "T008-T011 Cholesky, truncation, polynomial and observable claims",
+      "latex": "S_n upper triangular with diag(S_n)=1; d=1+floor(n/2); deg_epsilon(R)=2n-2",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 3, Corollaries (ii)-(v) and Eqs. (13)-(18)"
+        }
+      ],
+      "derived_from": [
+        "explicit physical MPO contraction and finite auxiliary return paths"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "small-chain matrix identities plus epsilon-squared polynomial interpolation",
+      "checks": [
+        {
+          "id": "EQ011-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Corollaries (ii)-(v) explicitly state triangularity, full rank, the finite auxiliary cutoff and polynomial degree."
+        },
+        {
+          "id": "EQ011-S",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Upper triangularity, unit diagonal, positive full rank and exact minimal-dimension truncation pass for all declared small chains."
+        },
+        {
+          "id": "EQ011-P",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Degree 2n-2 fits have residual below 1e-11, nonzero leading coefficients and fail when forced two degrees lower."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::mpo_cholesky_operator"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ012",
+      "title": "Transfer-contraction complexity",
+      "role": "T013",
+      "latex": "cost(T product)=O(n^2)",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text preceding Eq. (19)"
+        }
+      ],
+      "derived_from": [
+        "finite tridiagonal band-operation count"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact operation count over n=20..640",
+      "checks": [
+        {
+          "id": "EQ012-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that a local observable can be evaluated with O(n^2) operations."
+        },
+        {
+          "id": "EQ012-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The deterministic contraction operation-count exponent is within 0.05 of two."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_contraction_operation_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ013",
+      "title": "Isotropic transfer identities and continuum limit",
+      "role": "T017-T019 isotropic derivation",
+      "latex": "[T,[T,V]]=-(epsilon^2/4)(2V+{T,V}); Z_n/Z_(n-1) approximately epsilon^2((4n-3)^2/(32pi^2)-alpha)+1; M''=-pi^2 M",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 4-5, Eqs. (20)-(22) and continuum derivation"
+        }
+      ],
+      "derived_from": [
+        "regularized isotropic amplitudes and finite-size transfer contractions"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "matrix identities, alpha extrapolation and cosine-profile convergence",
+      "checks": [
+        {
+          "id": "EQ013-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (20)-(22) and the following continuum paragraph print the transfer identities, alpha value and cosine equation."
+        },
+        {
+          "id": "EQ013-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The double commutator and boundary identities pass away from the artificial finite auxiliary cutoff."
+        },
+        {
+          "id": "EQ013-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A controlled 1/n extrapolation recovers alpha near 0.0346 and the cosine-profile error decreases with chain length."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::transfer_operators",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ014",
+      "title": "Isotropic weak-coupling limit",
+      "role": "T006",
+      "latex": "J=epsilon/2; M_j=epsilon^2(n+1-2j)/4 for epsilon much less than 2pi/n",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5, final weak-coupling paragraph"
+        }
+      ],
+      "derived_from": [
+        "perturbative boundary-driven isotropic transfer process"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "finite-size current and magnetization ratios inside the printed asymptotic regime",
+      "checks": [
+        {
+          "id": "EQ014-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The current and magnetization formulas and their validity regime are printed explicitly."
+        },
+        {
+          "id": "EQ014-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Two chain lengths and two couplings recover both perturbative ratios with decreasing error."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::spin_current",
+        "src/open_xxz/transfer.py::spin_profile"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ015",
+      "title": "Root-of-unity cutoff index and parity",
+      "role": "T014",
+      "latex": "lambda=pi l/m; printed: a_m^+=0 (odd m) or a_m^-=0 (even m), dim H=m+1; Eq. (7): a_{m-1}^-=0 (odd m) or a_{m-1}^+=0 (even m), dim H=m",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, root-of-unity paragraph before Eq. (19)"
+        }
+      ],
+      "derived_from": [
+        "direct substitution into the printed Eq. (7) amplitudes"
+      ],
+      "derivation_status": "blocked",
+      "numeric_gate_policy": "blocked_pending_derivation",
+      "numerical_form": "complete Eq. (7) amplitudes at r=m and r=m-1 for m=3..8",
+      "checks": [
+        {
+          "id": "EQ015-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cutoff index, plus/minus assignment and m+1-dimensional space are printed explicitly."
+        },
+        {
+          "id": "EQ015-F",
+          "type": "falsification_check",
+          "status": "passed",
+          "reason": "With the nonsingular tau prescription, the paper-named r=m component is nonzero, whereas the opposite hopping at r=m-1 vanishes exactly and yields the m-state space used by the printed m=3 example; the gate remains closed until fresh review."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::root_of_unity_closure_diagnostic"
+      ],
+      "open_questions": [
+        "Does a fresh derivation confirm that the root-of-unity prose shifts the cutoff index by one and consequently misstates both parity and auxiliary dimension?"
+      ]
+    },
+    {
+      "id": "EQ016",
+      "title": "Easy-plane spectral convergence and flat thermodynamic profile",
+      "role": "T020",
+      "latex": "|O_n-O_infinity| proportional to |lambda_2/lambda_1|^n; <sigma^z>_TL=<L|V|R>/(lambda_1<L|R>)=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, text following the reduced 3-by-3 transfer matrix"
+        }
+      ],
+      "derived_from": [
+        "spectral decomposition of the printed reduced transfer matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "eigenspectrum plus independent finite-chain transfer contractions over n=8..36",
+      "checks": [
+        {
+          "id": "EQ016-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly assigns the exponential rate to the ratio of the two leading eigenvalues and states an asymptotically flat profile."
+        },
+        {
+          "id": "EQ016-E",
+          "type": "alternative_implementation",
+          "status": "passed",
+          "reason": "Eigenvalue ratios and independently fitted finite-current error ratios agree within one percent for every printed coupling."
+        },
+        {
+          "id": "EQ016-F",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The Perron-state magnetization vanishes and central-third deviations decrease monotonically."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::easy_plane_convergence_diagnostic"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ017",
+      "title": "Infinite transfer rank for Delta greater than or equal to one",
+      "role": "T021",
+      "latex": "det(T[0:N,1:N+1])=product_(r=0)^(N-1)|a_r^+|^2/2 != 0 for every N",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 4, easy-axis paragraph before the isotropic section"
+        }
+      ],
+      "derived_from": [
+        "the printed near-diagonal amplitudes and a shifted triangular minor"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "analytic nonzero witnesses and finite principal-minor certificates at Delta=1,1.2,1.5",
+      "checks": [
+        {
+          "id": "EQ017-T",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states that T always has infinite rank for Delta>=1."
+        },
+        {
+          "id": "EQ017-A",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At Delta=1 the regularized a_r^+ has nonzero real part 2k; at Delta>1 its imaginary part is a nonzero hyperbolic sine."
+        },
+        {
+          "id": "EQ017-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The shifted triangular minor has the predicted nonzero diagonal through rank twelve for all declared cases."
+        }
+      ],
+      "code_refs": [
+        "src/open_xxz/transfer.py::infinite_transfer_rank_certificate"
       ],
       "open_questions": []
     }

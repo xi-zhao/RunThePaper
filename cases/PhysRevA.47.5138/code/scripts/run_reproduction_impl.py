@@ -22,15 +22,20 @@ if str(SRC) not in sys.path:
 
 from spin_squeezing.model import (  # noqa: E402
     coherent_state,
+    covariance_element,
     husimi_q,
     minimum_one_axis_variance,
     minimum_transverse_variance,
     minimum_two_axis_variance,
     one_axis_state,
+    one_axis_uncertainty_product,
     one_axis_variances,
+    schwinger_spin_operators,
     spin_operators,
     two_axis_generator,
+    two_axis_ladder_generator,
     two_axis_state,
+    twisted_moment_identity_residuals,
 )
 
 
@@ -282,6 +287,215 @@ def main() -> int:
         for result in [*one_axis_results.values(), *two_axis_results.values()]
     )
 
+    # Whole-paper quantitative claims.  These checks are deliberately separate
+    # from pixel rendering: they rederive the paper's algebra and physical
+    # mappings from independently constructed finite-dimensional operators.
+    _, _, _, _, sy_half, sz_half = spin_operators(0.5)
+    css_half = coherent_state(0.5, np.pi / 2.0, 0.0)
+    css_half_variances = [
+        covariance_element(css_half, axis, axis) for axis in (sy_half, sz_half)
+    ]
+    oat_half = one_axis_state(0.5, 0.73)
+    oat_half_variance = minimum_transverse_variance(oat_half, sy_half, sz_half)
+    tact_half_generator_norm = float(np.max(np.abs(two_axis_generator(0.5))))
+    spin_threshold_error = max(
+        *(abs(value - 0.25) for value in css_half_variances),
+        abs(oat_half_variance - 0.25),
+        tact_half_generator_norm,
+    )
+
+    appendix_residuals = [
+        twisted_moment_identity_residuals(spin_qpd, value)
+        for value in (0.0, 0.199, 0.399)
+    ]
+    max_appendix_residual = max(
+        value for residuals in appendix_residuals for value in residuals.values()
+    )
+
+    oat_mu0 = 24.0 ** (1.0 / 6.0) * max_spin ** (-2.0 / 3.0)
+    oat_mu0_ratio = one_axis_results[max_spin].mu / oat_mu0
+    uncertainty_samples = []
+    for fraction in (0.1, 0.2, 0.3, 0.4, 0.5, 0.6):
+        value = fraction * oat_mu0
+        exact_product = one_axis_uncertainty_product(max_spin, value)
+        approximate_product = 1.0 + fraction**6
+        uncertainty_samples.append(
+            {
+                "mu_over_mu0": fraction,
+                "mu": value,
+                "exact": exact_product,
+                "asymptotic": approximate_product,
+                "absolute_difference": abs(exact_product - approximate_product),
+            }
+        )
+    max_uncertainty_asymptotic_error = max(
+        sample["absolute_difference"] for sample in uncertainty_samples
+    )
+
+    tact_ladder_identity_error = float(
+        np.max(
+            np.abs(two_axis_generator(spin_qpd) - two_axis_ladder_generator(spin_qpd))
+        )
+    )
+    oat_spin_one = minimum_one_axis_variance(
+        1.0, mu_max=3.3, tolerance=scalar_tolerance
+    )
+    tact_spin_one = minimum_two_axis_variance(
+        1.0,
+        mu_max=6.5,
+        coarse_points=max(401, int(solver["two_axis_coarse_points"])),
+        tolerance=scalar_tolerance,
+    )
+    spin_one_zero_error = max(oat_spin_one.variance, tact_spin_one.variance)
+
+    particle_count = int(round(2.0 * spin_qpd))
+    schwinger_raising, schwinger_sx, schwinger_sy, schwinger_sz = (
+        schwinger_spin_operators(particle_count)
+    )
+    _, abstract_raising, _, abstract_sx, abstract_sy, abstract_sz = spin_operators(
+        spin_qpd
+    )
+    schwinger_mapping_error = float(
+        max(
+            np.max(np.abs(schwinger_raising - abstract_raising)),
+            np.max(np.abs(schwinger_sx - abstract_sx)),
+            np.max(np.abs(schwinger_sy - abstract_sy)),
+            np.max(np.abs(schwinger_sz - abstract_sz)),
+        )
+    )
+    interferometer_css = coherent_state(spin_qpd, np.pi / 2.0, 0.0)
+    mean_sx = abs(
+        float(np.real(np.vdot(interferometer_css, abstract_sx @ interferometer_css)))
+    )
+    variance_sy = covariance_element(interferometer_css, abstract_sy, abstract_sy)
+    variance_sz = covariance_element(interferometer_css, abstract_sz, abstract_sz)
+    delta_number = 2.0 * np.sqrt(variance_sz)
+    delta_phase = np.sqrt(variance_sy) / mean_sx
+    interferometer_noise_error = max(
+        abs(delta_number - np.sqrt(particle_count)),
+        abs(delta_phase - 1.0 / np.sqrt(particle_count)),
+        abs(delta_number * delta_phase - 1.0),
+    )
+    casimir = (
+        schwinger_sx @ schwinger_sx
+        + schwinger_sy @ schwinger_sy
+        + schwinger_sz @ schwinger_sz
+    )
+    two_level_mapping_error = float(
+        max(
+            np.max(
+                np.abs(
+                    casimir - spin_qpd * (spin_qpd + 1.0) * np.eye(particle_count + 1)
+                )
+            ),
+            np.max(
+                np.abs(
+                    schwinger_raising @ schwinger_raising
+                    - abstract_raising @ abstract_raising
+                )
+            ),
+        )
+    )
+
+    claim_checks = {
+        "schema_version": 1,
+        "status": "pending",
+        "claims": {
+            "spin_squeezing_threshold": {
+                "source_ref": "Sec. II and Fig. 1",
+                "status": "passed",
+                "maximum_error": spin_threshold_error,
+                "interpretation": "S=1/2 remains at the SQL under either quadratic mechanism; squeezing needs S>1/2.",
+            },
+            "appendix_twisted_moments": {
+                "source_ref": "Appendix Eqs. (A1)-(A3)",
+                "status": "passed",
+                "maximum_residual": max_appendix_residual,
+                "samples": appendix_residuals,
+            },
+            "one_axis_exact_moments": {
+                "source_ref": "Sec. III.A Eqs. (1)-(4)",
+                "status": "passed",
+                "maximum_covariance_difference": max(direct_formula_differences),
+                "interpretation": "Directly evolved state covariances reproduce the closed rotated variances.",
+            },
+            "one_axis_asymptotic_optimum": {
+                "source_ref": "Sec. III.A after Eq. (5)",
+                "status": "passed",
+                "maximum_spin": max_spin,
+                "exact_mu": one_axis_results[max_spin].mu,
+                "asymptotic_mu0": oat_mu0,
+                "ratio": oat_mu0_ratio,
+            },
+            "one_axis_uncertainty_product": {
+                "source_ref": "Sec. III.A after Eq. (5)",
+                "status": "passed",
+                "maximum_absolute_difference": max_uncertainty_asymptotic_error,
+                "samples": uncertainty_samples,
+            },
+            "two_axis_hamiltonian_identity": {
+                "source_ref": "Eq. (6)",
+                "status": "passed",
+                "maximum_matrix_difference": tact_ladder_identity_error,
+            },
+            "spin_one_zero_noise_limit": {
+                "source_ref": "Sec. III.B and Fig. 4 caption",
+                "status": "passed",
+                "one_axis_minimum": oat_spin_one.variance,
+                "two_axis_minimum": tact_spin_one.variance,
+            },
+            "interferometer_spin_mapping": {
+                "source_ref": "Sec. IV.A Eq. (7)",
+                "status": "passed",
+                "particle_count": particle_count,
+                "maximum_matrix_difference": schwinger_mapping_error,
+            },
+            "interferometer_noise_relations": {
+                "source_ref": "Sec. IV.A Eqs. (8)-(9)",
+                "status": "passed",
+                "delta_number": delta_number,
+                "delta_phase": delta_phase,
+                "uncertainty_product": delta_number * delta_phase,
+                "maximum_error": interferometer_noise_error,
+            },
+            "two_level_collective_spin_mapping": {
+                "source_ref": "Sec. IV.B",
+                "status": "passed",
+                "casimir_and_pair_transfer_error": two_level_mapping_error,
+            },
+        },
+    }
+
+    claim_gates = {
+        "spin_squeezing_threshold": spin_threshold_error
+        <= float(acceptance["max_operator_identity_error"]),
+        "appendix_twisted_moments": max_appendix_residual
+        <= float(acceptance["max_twisted_moment_residual"]),
+        "one_axis_exact_moments": max(direct_formula_differences)
+        <= float(acceptance["max_one_axis_formula_difference"]),
+        "one_axis_asymptotic_optimum": float(
+            acceptance["one_axis_s100_mu0_ratio_range"][0]
+        )
+        <= oat_mu0_ratio
+        <= float(acceptance["one_axis_s100_mu0_ratio_range"][1]),
+        "one_axis_uncertainty_product": max_uncertainty_asymptotic_error
+        <= float(acceptance["max_uncertainty_asymptotic_error"]),
+        "two_axis_hamiltonian_identity": tact_ladder_identity_error
+        <= float(acceptance["max_operator_identity_error"]),
+        "spin_one_zero_noise_limit": spin_one_zero_error
+        <= float(acceptance["max_spin_one_minimum_variance"]),
+        "interferometer_spin_mapping": schwinger_mapping_error
+        <= float(acceptance["max_operator_identity_error"]),
+        "interferometer_noise_relations": interferometer_noise_error
+        <= float(acceptance["max_operator_identity_error"]),
+        "two_level_collective_spin_mapping": two_level_mapping_error
+        <= float(acceptance["max_operator_identity_error"]),
+    }
+    for claim_id, passed in claim_gates.items():
+        claim_checks["claims"][claim_id]["status"] = "passed" if passed else "failed"
+    claim_checks["status"] = "passed" if all(claim_gates.values()) else "failed"
+    write_json(data_root / "quantitative_claim_checks.json", claim_checks)
+
     gates = {
         "state_norms": max(norm_errors) <= float(acceptance["max_state_norm_error"]),
         "q_bounds": max(q_bound_violations)
@@ -305,6 +519,7 @@ def main() -> int:
         <= float(acceptance["max_two_axis_s100_distance_from_half"]),
         "two_axis_grid_refinement": refinement_difference
         <= float(acceptance["max_two_axis_grid_refinement_variance_difference"]),
+        **claim_gates,
     }
     status = "passed" if all(gates.values()) else "failed"
     science_checks = {
@@ -329,6 +544,14 @@ def main() -> int:
             "one_axis_asymptotic_ratio_at_maximum_spin": oat_ratio,
             "two_axis_relative_distance_from_half_at_maximum_spin": tact_half_distance,
             "two_axis_grid_refinement_variance_difference": refinement_difference,
+            "max_appendix_twisted_moment_residual": max_appendix_residual,
+            "one_axis_mu0_ratio_at_maximum_spin": oat_mu0_ratio,
+            "max_uncertainty_asymptotic_error": max_uncertainty_asymptotic_error,
+            "two_axis_ladder_identity_error": tact_ladder_identity_error,
+            "spin_one_zero_noise_error": spin_one_zero_error,
+            "schwinger_mapping_error": schwinger_mapping_error,
+            "interferometer_noise_error": interferometer_noise_error,
+            "two_level_mapping_error": two_level_mapping_error,
         },
         "paper_review": {
             "printed_qmax_values": "numerically_supported",
@@ -343,6 +566,7 @@ def main() -> int:
         data_root / "qpd_axes.csv",
         data_root / "qpd_landmarks.csv",
         data_root / "variance_scaling.csv",
+        data_root / "quantitative_claim_checks.json",
         *q_files,
         checks_root / "science_checks.json",
     ]

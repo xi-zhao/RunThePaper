@@ -6,7 +6,7 @@ Published as: [Entanglement in Quantum Critical Phenomena](https://doi.org/10.11
 
 Formal citation: Phys. Rev. Lett. 90, 227902 (2003) · DOI `10.1103/PhysRevLett.90.227902` · Locator `90, 227902`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **87.89/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **82.47/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -19,6 +19,7 @@ Case scaffolded from framework/templates/paper_case.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)

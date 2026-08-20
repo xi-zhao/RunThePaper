@@ -12,4 +12,4 @@ python scripts/run_reproduction.py --config config/smoke.json
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=terminal_blocker, pixel=needs_repair, review_scope=incomplete, paper_assessment=mixed.
+Boundary: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=terminal_blocker, pixel=needs_repair, paper_assessment=mixed.

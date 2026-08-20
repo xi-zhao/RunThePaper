@@ -1,45 +1,22 @@
 # Method Trace
 
-Use this file for algorithmic or systems papers where the key reproduction
-object is a method rather than a formula.
+| Method | Targets | Inputs | Scientific falsification |
+| --- | --- | --- | --- |
+| M001 geometric boundary construction | T001,T003,T005 | Eq. (6), zigzag/armchair orientation | coordination, endpoint localization and width convergence |
+| M002 dense ribbon eigensolver | T001,T003 | M001 graph, t2/t, Rashba ratios | Hermiticity, TR, independently sampled bulk gap and full-BZ baseline-subtracted spectral flow across both orientations and three widths |
+| M003 continuum eigensolver | T002,T003 | Eqs. (1)-(4) | direct gaps at four Rashba ratios |
+| M004 Fukui Berry flux and cylinder flow | T004,T005 | periodic Bloch matrix and helical cylinder | grid quantization, opposite sectors and explicit level permutation |
+| M005 S-matrix and random disorder propagation | T006 | printed TR constraint and scalar TR disorder | null-space residual plus 32 seeded ensembles with R=0 |
+| M006 Landauer-Buettiker solve | T008,T009 | helical channel graph, Fig. 2 voltages | charge conservation and spin-resolved currents |
+| M007 edge-field/operator construction | T007 | printed interaction prose | Grassmann/TR transform, dimension counting, `u,T` fits and perturbation inventory |
+| M008 first-star microscopic projection | T010 | Eq. (7), plane-wave first star | explicit 8x8 matrix and SI scale |
+| M009 Coulomb shell/RPA/RG | T012,T013 | Fig. 3, Eq. (8), printed g0/cutoff/gap | derived beta coefficients, independent interband polarization with angular/UV convergence, screening, ODE and root |
+| M010 full-BZ Kubo proxy | T003 | full spinful Bloch Hamiltonian | finite-Rashba conventional current with explicit spin nonconservation |
+| M011 Pauli/lattice symmetry audit | T003,T004 | continuum kinetic matrices and primitive-cell lattice Hamiltonian | unique symmetric SO mass, direct edge Zeeman gap, intervalley/translation diagnosis and continuous optimizer that falsifies the minimal translation-preserving bulk path |
+| M012 RenderContract | T001 only | frozen band CSV hash | data hash unchanged before/after rendering |
 
-## Method Cards
-
-### METHOD001 — Geometric zigzag ribbon construction
-
-- Source: Eq. (6), definition of `nu_ij`, Fig. 1 caption.
-- Role: create the complete T001 Bloch matrix without an author code path.
-- Inputs: `t`, `t2`, number of zigzag chains, reduced momentum and spin.
-- Outputs: Hermitian matrix, site coordinates and edge labels.
-- Algorithm: enumerate an expanded set of neighbouring unit cells, identify
-  first neighbours by unit bond length, identify second neighbours by their
-  unique two-step path, attach exact Bloch phases and project back to one cell.
-- Checks: coordination counts, Hermiticity, time reversal, `t2=0` particle-hole
-  spectrum and width convergence.
-- Code: `src/kane_mele/model.py`.
-- Status: implemented and verified.
-
-### METHOD002 — Band and edge-state extraction
-
-- Source: prose surrounding Fig. 1.
-- Role: separate bulk subbands from edge-localized gap-traversing states.
-- Inputs: eigenpairs of METHOD001.
-- Outputs: energy, spin, edge weight and inverse participation ratio for every
-  state and momentum.
-- Algorithm: dense Hermitian diagonalization at each momentum; compute the
-  probability on the outer two zigzag chains.
-- Checks: Kramers crossing at `k_x=pi/a`, gap agreement, localization and
-  `N=16,20,24` stability.
-- Code: `src/kane_mele/model.py`, `scripts/run_reproduction.py`.
-- Status: implemented and verified.
-
-### METHOD003 — Independent analytic checks
-
-- Source: continuum/RG/transport paragraphs.
-- Role: falsify implementation and paper-claim errors independently of the
-  ribbon diagonalizer.
-- Inputs: printed formulas and constants only.
-- Outputs: analytic gap, conductance coefficients, bare/Rashba/RG gap estimates.
-- Checks: symbolic limits, unit conversions, independent scalar root solve.
-- Code: `src/kane_mele/model.py` and focused tests.
-- Status: implemented and verified.
+Author code, author arrays and digitized figure coordinates are absent from all
+method inputs.  `raw/` and `references/` are forbidden roots for M001-M011.
+M010 is deliberately labelled a proxy because the target paper does not print
+the externally cited conserved-spin-current operator; no acceptance rule may
+silently promote it to paper-exact.

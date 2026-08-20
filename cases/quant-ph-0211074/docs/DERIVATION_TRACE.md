@@ -61,6 +61,14 @@ The runner therefore computes two explicitly labeled objects:
 - the antiferromagnetic convention selected by the caption's critical physics,
   obtained independently by sparse exact diagonalization in `S_z=0`.
 
+For the literal sign and `Delta>=1`, the two-spin bond eigenvalues are
+`-Delta`, `Delta-2`, and `Delta+2`.  Hence every bond is bounded below by
+`-Delta`, and a polarized periodic product state saturates all bonds.  At
+`Delta=1` the `Delta-2` branch is also degenerate, producing the full symmetric
+spin multiplet (including the Dicke representative); for `Delta>1` the common
+ground space reduces to the two polarized product states.  This is an exact
+ground-space certificate, not a finite-sector numerical guess.
+
 No figure value is used to choose between them. Agreement of the second object
 with the stated logarithmic coefficient is evidence about author intent; the
 Hamiltonian/caption mismatch remains a formal review discrepancy until a
@@ -74,3 +82,60 @@ both spectra, pad the `L` spectrum with zeros to dimension `2^(L+2)`, and test
 all partial sums. The reported margin is
 `min_k(sum_{i<=k} lambda_L[i] - sum_{i<=k} lambda_{L+2}[i])`; a negative value
 beyond tolerance falsifies the printed direction.
+
+### EQ007: complete reduced spectrum
+
+Eq. (20) is evaluated literally by taking the tensor product of every mode's
+two probabilities.  For each declared block size the runner checks both that
+the resulting `2^L` weights sum to one and that their direct von Neumann
+entropy equals the independent binary-mode sum in Eq. (13).  This second path
+is important: a normalized spectrum alone would not catch a wrong association
+between the covariance modes and density eigenvalues.
+
+### EQ008: noncritical scaling surface
+
+The Fig. 1 caption proposes a scaling variable `x=L|1-a|`, but it does not
+publish the function `f(x)` or a tolerance.  The reproduction therefore holds
+`x` fixed over four distances from criticality and compares
+`S_L-log2(L)/6`.  Only the two closest-to-critical rows enter the declared
+asymptotic gate; the wider-distance corrections remain in the output instead
+of being hidden by a fitted offset.
+
+### EQ009: RG monotonicity boundary
+
+The c-theorem paragraph states a universal interpretation but supplies no
+lattice RG transformation, scale-matching rule, or entropy observable after
+coarse graining.  A fixed-L Ising mass-flow sweep is useful as a counterexample
+probe, but it is not the missing RG map.  T015 must therefore remain
+publication-underspecified even when the proxy is monotone.
+
+### EQ010: effective rank
+
+"Relevant eigenvectors" is not a numerical definition.  We make it explicit
+as the smallest sorted-spectrum rank retaining a weight `w` and report three
+thresholds.  A gapped Ising point saturates in the finite range while the
+critical rank grows.  This supports the DMRG mechanism but cannot prove the
+paper's unbounded-`L` quantifier.
+
+The output now reports three different objects instead of conflating them:
+
+- the algebraic dimension `2^L` of the enumerated finite-block spectrum;
+- the number of floating-point eigenvalues resolved above an explicit absolute
+  tolerance;
+- the epsilon-effective rank needed to retain a declared total weight.
+
+Only the third is the reconstructed DMRG proxy. None is silently promoted to
+the paper's undefined phrase “relevant eigenvectors.”
+
+### EQ011: Eq. (11) fermion occupation sign
+
+Using the paper's own definition `b=(d_0+i d_1)/2`, canonical Majorana algebra
+gives `b^dagger b=(1+i d_0 d_1)/2`. Its normal-form covariance convention is
+`<d_0 d_1>=i nu`, hence the labelled occupied probability is `(1-nu)/2`, not
+the `(1+nu)/2` printed in Eq. (11). An independent Pauli representation
+`d_0=sigma_x`, `d_1=sigma_y` reproduces the same result.
+
+This is a label/sign discrepancy, not an entropy discrepancy: swapping the two
+probabilities preserves normalization, binary entropy, and the unordered full
+product spectrum. The runner therefore keeps explicit `empty` and `occupied`
+labels, tests the identity, and leaves publication adjudication to fresh review.

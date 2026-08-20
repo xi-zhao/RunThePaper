@@ -6,7 +6,7 @@ Published as: [Quantum Spin Hall Effect in Graphene](https://doi.org/10.1103/Phy
 
 Formal citation: 95, 226801 (2005) · DOI `10.1103/PhysRevLett.95.226801` · Locator `226801`
 
-Public status: **Partial scientific reproduction** · Audit score: **89.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.03/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -19,6 +19,7 @@ Case scaffolded from framework/templates/paper_case.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)

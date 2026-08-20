@@ -195,7 +195,7 @@
       ],
       "derivation_status": "verified",
       "numeric_gate_policy": "source_and_symbolic",
-      "numerical_form": "sparse exact diagonalization in fixed total-Sz followed by block Schmidt spectra; literal ferromagnetic-sector result is also computed analytically",
+      "numerical_form": "sparse exact diagonalization in fixed total-Sz for the caption-implied antiferromagnet; the literal negative-sign Delta>=1 ground energy and manifold are certified from the exact two-spin bond spectrum",
       "checks": [
         {
           "id": "EQ005-S",
@@ -214,11 +214,18 @@
           "type": "limiting_case",
           "status": "passed",
           "reason": "A fully polarized member of the printed ferromagnetic ground multiplet has zero block entropy, exposing the stated ground-state ambiguity."
+        },
+        {
+          "id": "EQ005-B",
+          "type": "spectral_bound",
+          "status": "passed",
+          "reason": "For the literal negative sign and Delta>=1, every bond is bounded below by -Delta; polarized product states saturate all periodic bonds, while Delta=1 additionally admits the full symmetric-spin multiplet."
         }
       ],
       "code_refs": [
         "src/vidal_entanglement/xxx.py::xxx_ground_state",
-        "src/vidal_entanglement/xxx.py::block_entropies"
+        "src/vidal_entanglement/xxx.py::block_entropies",
+        "src/vidal_entanglement/xxx.py::literal_ferromagnetic_xxz_certificate"
       ],
       "open_questions": [
         "Whether the published curve used the opposite antiferromagnetic sign, an excited state of the printed operator, or an unstated Bethe-energy convention must be decided by independent checks rather than by fitting figure pixels."
@@ -270,6 +277,236 @@
       ],
       "open_questions": [
         "The paper does not print the tested L range or numerical tolerance; the reproduction declares both and reports the worst inequality margin."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Complete reduced-density spectrum",
+      "role": "direct numerical verification of paper Eq. (20)",
+      "latex": "\\lambda_{x_1\\ldots x_L}=\\prod_{m=0}^{L-1}[1+(-1)^{x_m}\\nu_m]/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:316-320"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "EQ003",
+        "tensor product of uncorrelated Gaussian modes"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "enumerate all 2^L products for declared L, verify normalization, and recompute the entropy directly from the spectrum",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (20) prints every factor and binary index."
+        },
+        {
+          "id": "EQ007-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Each mode contributes a normalized probability pair, so the full product spectrum sums to one."
+        },
+        {
+          "id": "EQ007-I",
+          "type": "independent_numeric_identity",
+          "status": "passed",
+          "reason": "The direct 2^L spectrum entropy agrees with the separate binary-mode entropy sum."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::entanglement_spectrum",
+        "src/vidal_entanglement/model.py::entropy_from_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Noncritical entanglement-length scaling",
+      "role": "tests the scaling statement in the Main Fig. 1 caption",
+      "latex": "S_L\\sim \\tfrac16\\log_2[L f(L|1-a|)],\\qquad \\xi_E\\propto |1-a|^{-1}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:207-233"
+        }
+      ],
+      "derived_from": [
+        "EQ004",
+        "critical Ising correlation-length exponent",
+        "fixed scaling coordinate x=L|1-a|"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "hold x=L|1-a| fixed across four distances from criticality and compare S_L-log2(L)/6 in the two closest-to-critical rows",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The caption explicitly states both the entanglement-length and scaling-function claims."
+        },
+        {
+          "id": "EQ008-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "L|1-a| is dimensionless."
+        },
+        {
+          "id": "EQ008-A",
+          "type": "asymptotic_check",
+          "status": "passed",
+          "reason": "The acceptance window is applied only to the closest-to-critical pairs; all wider-distance values remain visible as corrections to scaling."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The paper does not print f(x) or a numerical collapse tolerance, so the finite-window result is support rather than a paper-exact reconstruction of f."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "RG-flow entanglement monotonicity",
+      "role": "falsification target for the c-theorem interpretation",
+      "latex": "C_{UV}>C_{IR}\\quad\\Longrightarrow\\quad E_{UV}>E_{IR}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:290-314"
+        }
+      ],
+      "derived_from": [
+        "Zamolodchikov c-theorem",
+        "paper's quantum-information interpretation"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "numerical_form": "representative fixed-L Ising mass-flow proxy, explicitly barred from paper-exact status",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The monotonic interpretation is printed."
+        },
+        {
+          "id": "EQ009-M",
+          "type": "missing_definition",
+          "status": "open",
+          "reason": "No lattice RG transformation, scale matching, or entropy observable is specified by the paper."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "A paper-exact numerical target requires a published RG map and observable-matching convention."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Operational effective Schmidt rank",
+      "role": "finite falsification of the DMRG relevant-eigenvector discussion",
+      "latex": "r_w(L)=\\min\\{r:\\sum_{j=1}^{r}\\lambda_j^{\\downarrow}\\ge w\\}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:258-260"
+        }
+      ],
+      "derived_from": [
+        "EQ007",
+        "paper's undefined phrase relevant eigenvectors"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "threshold sweep w in {0.99,0.999,0.9999} for critical and gapped Ising spectra",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states bounded versus unbounded numbers of relevant eigenvectors."
+        },
+        {
+          "id": "EQ010-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Sorting the spectrum and taking the first cumulative sum above w exactly implements the declared minimum-rank definition."
+        },
+        {
+          "id": "EQ010-T",
+          "type": "threshold_sensitivity",
+          "status": "passed",
+          "reason": "Three retained-weight thresholds are reported instead of hiding one arbitrary definition."
+        },
+        {
+          "id": "EQ010-Q",
+          "type": "quantifier_boundary",
+          "status": "passed",
+          "reason": "Finite L can support or falsify trends but cannot prove unbounded growth."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::retained_weight_rank",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The publication supplies neither a retained-weight threshold nor a finite range, so this target remains a declared finite operationalization."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Fermion occupation convention from Majorana modes",
+      "role": "adjudicates the sign printed in paper Eq. (11) without changing the entropy spectrum",
+      "latex": "b=(d_0+i d_1)/2,\\quad b^\\dagger b=(1+i d_0d_1)/2,\\quad \\langle d_0d_1\\rangle=i\\nu\\;\\Longrightarrow\\;\\langle b^\\dagger b\\rangle=(1-\\nu)/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/paper.tex:141-161"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (5), (6), (10), and (11)",
+        "canonical fermion algebra",
+        "Pauli-matrix representation of one Majorana pair"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "return explicitly labelled empty=(1+nu)/2 and occupied=(1-nu)/2 probabilities; entropy and unordered product spectrum remain invariant under pair exchange",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Majorana definition, covariance normal form, fermion definition, and printed occupation are all explicit in Eqs. (5), (6), (10), and (11)."
+        },
+        {
+          "id": "EQ011-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct expansion of b-dagger b and an independent Pauli/Fock representation both give occupied probability (1-nu)/2, opposite to the sign printed in Eq. (11)."
+        },
+        {
+          "id": "EQ011-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At nu=1 the labelled mode is empty and pure; exchanging empty and occupied labels leaves normalization, entropy, and the unordered spectrum unchanged."
+        }
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py::fermion_mode_probabilities",
+        "src/vidal_entanglement/model.py::entanglement_spectrum",
+        "tests/test_model.py::test_eq11_fermion_occupation_sign_follows_majorana_definitions"
+      ],
+      "open_questions": [
+        "A fresh-context reviewer must determine whether the sign in paper Eq. (11) is a publication typo; the numerical entropy conclusions are unaffected by the label exchange."
       ]
     }
   ]

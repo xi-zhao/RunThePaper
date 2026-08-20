@@ -90,6 +90,13 @@ def two_axis_generator(spin: float) -> np.ndarray:
     return sx @ sy + sy @ sx
 
 
+def two_axis_ladder_generator(spin: float) -> np.ndarray:
+    """Return Eq. (6) in its independent ladder-operator representation."""
+
+    _, raising, lowering, _, _, _ = spin_operators(spin)
+    return (raising @ raising - lowering @ lowering) / (2.0j)
+
+
 def two_axis_eigensystem(
     spin: float,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -196,6 +203,75 @@ def one_axis_variances(spin: float, mu: float) -> tuple[float, float]:
         float(prefactor * (1.0 + coefficient * (a_value - radius))),
         float(prefactor * (1.0 + coefficient * (a_value + radius))),
     )
+
+
+def one_axis_mean_spin(spin: float, mu: float) -> float:
+    """Return the exact mean spin along x following Appendix Eq. (A1)."""
+
+    _two_spin(spin)
+    return float(spin * np.cos(float(mu) / 2.0) ** int(round(2.0 * spin - 1.0)))
+
+
+def one_axis_uncertainty_product(spin: float, mu: float) -> float:
+    """Return the normalized OAT uncertainty product printed below Eq. (5)."""
+
+    smaller, larger = one_axis_variances(spin, mu)
+    mean_spin = one_axis_mean_spin(spin, mu)
+    if abs(mean_spin) <= np.finfo(float).tiny:
+        return float("inf")
+    return float(4.0 * smaller * larger / (mean_spin * mean_spin))
+
+
+def twisted_moment_identity_residuals(spin: float, mu: float) -> dict[str, float]:
+    """Independently contract Appendix Eqs. (A1)-(A3) and return residuals."""
+
+    m, raising, _, _, _, sz = spin_operators(spin)
+    state = coherent_state(spin, np.pi / 2.0, 0.0)
+    identity = np.eye(len(m), dtype=complex)
+    phase = np.diag(np.exp(1.0j * float(mu) * (m + 0.5)))
+    twisted_raising = raising @ phase
+    lhs_a1 = expectation(state, twisted_raising)
+    rhs_a1 = spin * np.cos(float(mu) / 2.0) ** int(round(2.0 * spin - 1.0))
+    lhs_a2 = expectation(state, twisted_raising @ twisted_raising)
+    rhs_a2 = spin * (spin - 0.5) * np.cos(float(mu)) ** int(round(2.0 * spin - 2.0))
+    lhs_a3 = expectation(state, 1.0j * twisted_raising @ (sz + 0.5 * identity))
+    rhs_a3 = (
+        -spin
+        * (spin - 0.5)
+        * np.cos(float(mu) / 2.0) ** int(round(2.0 * spin - 2.0))
+        * np.sin(float(mu) / 2.0)
+    )
+    return {
+        "A1": float(abs(lhs_a1 - rhs_a1)),
+        "A2": float(abs(lhs_a2 - rhs_a2)),
+        "A3": float(abs(lhs_a3 - rhs_a3)),
+    }
+
+
+def schwinger_spin_operators(
+    total_particles: int,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Return the fixed-N two-mode operators in paper Eq. (7).
+
+    The basis is ordered by n_A=0,...,N, so S_z=(N_A-N_B)/2 and
+    S_+=a^dagger b.  This construction is independent of the abstract-spin
+    ladder formula used by :func:`spin_operators`.
+    """
+
+    if int(total_particles) != total_particles or total_particles < 1:
+        raise ValueError("total_particles must be a positive integer")
+    particle_count = int(total_particles)
+    dimension = particle_count + 1
+    raising = np.zeros((dimension, dimension), dtype=complex)
+    for n_a in range(particle_count):
+        n_b = particle_count - n_a
+        raising[n_a + 1, n_a] = np.sqrt((n_a + 1) * n_b)
+    lowering = raising.conj().T
+    sx = 0.5 * (raising + lowering)
+    sy = (raising - lowering) / (2.0j)
+    n_a_values = np.arange(dimension, dtype=float)
+    sz = np.diag(n_a_values - 0.5 * particle_count).astype(complex)
+    return raising, sx, sy, sz
 
 
 def minimum_one_axis_variance(

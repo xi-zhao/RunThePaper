@@ -6,7 +6,7 @@ Published as: [Dynamics of a Quantum Phase Transition](https://doi.org/10.1103/P
 
 Formal citation: Phys. Rev. Lett. 95, 105701 (2005) · DOI `10.1103/PhysRevLett.95.105701` · Locator `105701`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **87.07/100**
+Public status: **Partial scientific reproduction** · Audit score: **86.79/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -19,6 +19,7 @@ Case scaffolded from framework/templates/paper_case.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -58,7 +59,7 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 3 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=terminal_blocker, pixel=needs_repair, review_scope=incomplete, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=terminal_blocker, pixel=needs_repair, paper_assessment=mixed.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

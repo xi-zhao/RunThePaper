@@ -9,10 +9,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from itertools import combinations
-from typing import Iterable
+from typing import Callable, Iterable
 
 import numpy as np
 from scipy.integrate import solve_ivp
+from scipy.optimize import brentq
 
 
 @dataclass(frozen=True)
@@ -26,6 +27,19 @@ class EvolutionResult:
     nfev: int
     antisymmetry_error: float
     purity_error: float
+
+
+@dataclass(frozen=True)
+class FidelityCrossingResult:
+    """Auditable result of a bracketed monotone fidelity crossing."""
+
+    tau_q: float
+    fidelity: float
+    lower_tau_q: float
+    upper_tau_q: float
+    function_calls: int
+    iterations: int
+    converged: bool
 
 
 def _validate_chain(n_spins: int) -> None:
@@ -261,6 +275,66 @@ def landau_zener_fidelity(
     return float(result) if result.ndim == 0 else result
 
 
+def fit_landau_zener_coefficient(
+    n_spins: int,
+    tau_q: Iterable[float],
+    fidelities: Iterable[float],
+    *,
+    minimum_fidelity: float = 0.6,
+    maximum_fidelity: float = 0.99,
+    coupling_w: float = 1.0,
+    hbar: float = 1.0,
+) -> tuple[float, int]:
+    """Fit the paper's LZF coefficient from independently generated data.
+
+    The transformation ``-log(1-f)=a W tau_Q/(hbar N^2)`` makes the fit a
+    one-parameter regression through the physical origin.  The upper fidelity
+    cut avoids magnifying ODE round-off when ``1-f`` is already tiny; it is an
+    explicit numerical-stability choice, not a digitized plot window.
+    """
+
+    _validate_chain(n_spins)
+    times = np.asarray(list(tau_q), dtype=float)
+    if coupling_w <= 0 or hbar <= 0 or np.any(times <= 0):
+        raise ValueError("times, coupling_w, and hbar must be positive")
+    return fit_landau_zener_coefficient_from_scaled_time(
+        coupling_w * times / (hbar * n_spins**2),
+        fidelities,
+        minimum_fidelity=minimum_fidelity,
+        maximum_fidelity=maximum_fidelity,
+    )
+
+
+def fit_landau_zener_coefficient_from_scaled_time(
+    scaled_tau_q: Iterable[float],
+    fidelities: Iterable[float],
+    *,
+    minimum_fidelity: float = 0.6,
+    maximum_fidelity: float = 0.99,
+) -> tuple[float, int]:
+    """Fit ``a`` from precomputed ``W tau_Q/(hbar N^2)`` coordinates."""
+
+    x_all = np.asarray(list(scaled_tau_q), dtype=float)
+    values = np.asarray(list(fidelities), dtype=float)
+    if x_all.shape != values.shape or x_all.ndim != 1 or x_all.size == 0:
+        raise ValueError("scaled_tau_q and fidelities must be equally sized vectors")
+    if np.any(x_all <= 0):
+        raise ValueError("scaled times must be positive")
+    if not 0.0 < minimum_fidelity < maximum_fidelity < 1.0:
+        raise ValueError("fidelity fit window must lie strictly inside (0, 1)")
+
+    selected = (values >= minimum_fidelity) & (values <= maximum_fidelity)
+    if int(np.count_nonzero(selected)) < 2:
+        raise ValueError("at least two fidelity points are required for the LZF fit")
+    x = x_all[selected]
+    y = -np.log1p(-values[selected])
+    denominator = float(np.dot(x, x))
+    if denominator <= 0 or not np.all(np.isfinite(y)):
+        raise ValueError("invalid transformed values in LZF fit")
+    coefficient = float(np.dot(x, y) / denominator)
+    return coefficient, int(x.size)
+
+
 def low_excitation_spectrum(
     n_spins: int,
     field_values: Iterable[float],
@@ -277,11 +351,7 @@ def low_excitation_spectrum(
     if max_particles < 0 or max_particles > n_spins:
         raise ValueError("invalid max_particles")
 
-    elementary = []
-    for field in fields:
-        values = np.linalg.eigvalsh(1j * majorana_generator(n_spins, field, coupling_w))
-        elementary.append(np.asarray(values[n_spins:], dtype=float))
-    energies = np.stack(elementary, axis=0)
+    energies = _elementary_excitation_energies(n_spins, fields, coupling_w)
 
     curves: list[dict[str, object]] = []
     for particle_count in range(max_particles + 1):
@@ -305,6 +375,108 @@ def low_excitation_spectrum(
                 }
             )
     return curves
+
+
+def _elementary_excitation_energies(
+    n_spins: int, fields: np.ndarray, coupling_w: float
+) -> np.ndarray:
+    elementary = []
+    for field in fields:
+        values = np.linalg.eigvalsh(
+            1j * majorana_generator(n_spins, float(field), coupling_w)
+        )
+        # Exact zero modes can appear as tiny negative round-off values.
+        elementary.append(np.clip(values[n_spins:], 0.0, None))
+    return np.stack(elementary, axis=0)
+
+
+def required_excitation_particle_cutoff(
+    n_spins: int,
+    field_values: Iterable[float],
+    *,
+    max_energy: float,
+    coupling_w: float = 1.0,
+    tolerance: float = 1.0e-12,
+) -> int:
+    """Return the largest particle sector that can enter an energy window.
+
+    For each field, the sum of the ``p`` smallest positive BdG energies is the
+    lower bound for every ``p``-particle many-body branch.  Once that bound is
+    above the requested window at every field, all higher sectors are excluded
+    too.  This gives an independent completeness gate for Fig. 2(a), instead
+    of validating an enumeration with the same configured truncation.
+    """
+
+    fields = np.asarray(list(field_values), dtype=float)
+    if fields.ndim != 1 or fields.size == 0:
+        raise ValueError("field_values must be a nonempty one-dimensional sequence")
+    if max_energy < 0 or tolerance < 0:
+        raise ValueError("max_energy and tolerance must be non-negative")
+    energies = _elementary_excitation_energies(n_spins, fields, coupling_w)
+    cumulative = np.cumsum(energies, axis=1)
+    admissible = np.any(cumulative <= float(max_energy) + tolerance, axis=0)
+    indices = np.flatnonzero(admissible)
+    return int(indices[-1] + 1) if indices.size else 0
+
+
+def solve_monotone_fidelity_crossing(
+    evaluate_fidelity: Callable[[float], float],
+    *,
+    target: float,
+    lower_tau_q: float,
+    upper_tau_q: float,
+    absolute_tolerance: float = 1.0e-5,
+    relative_tolerance: float = 1.0e-8,
+    max_iterations: int = 64,
+) -> FidelityCrossingResult:
+    """Locate ``f(tau_Q)=target`` without interpolating sparse probabilities."""
+
+    if not 0.0 < target < 1.0:
+        raise ValueError("target fidelity must lie strictly between zero and one")
+    if lower_tau_q <= 0 or upper_tau_q <= lower_tau_q:
+        raise ValueError("tau_Q bracket must be positive and ordered")
+    if absolute_tolerance <= 0 or relative_tolerance <= 0 or max_iterations < 1:
+        raise ValueError("root-solver tolerances and max_iterations must be positive")
+
+    cache: dict[float, float] = {}
+
+    def residual(tau_q: float) -> float:
+        key = float(tau_q)
+        if key not in cache:
+            value = float(evaluate_fidelity(key))
+            if not np.isfinite(value) or value < -1.0e-9 or value > 1.0 + 1.0e-9:
+                raise ValueError(f"fidelity evaluator returned invalid value {value}")
+            cache[key] = value
+        return cache[key] - target
+
+    lower_residual = residual(lower_tau_q)
+    upper_residual = residual(upper_tau_q)
+    if lower_residual > 0 or upper_residual < 0:
+        raise ValueError(
+            "fidelity crossing is not bracketed: "
+            f"f(lower)-target={lower_residual}, f(upper)-target={upper_residual}"
+        )
+
+    root, result = brentq(
+        residual,
+        lower_tau_q,
+        upper_tau_q,
+        xtol=absolute_tolerance,
+        rtol=relative_tolerance,
+        maxiter=max_iterations,
+        full_output=True,
+        disp=False,
+    )
+    root_fidelity = residual(float(root)) + target
+    return FidelityCrossingResult(
+        tau_q=float(root),
+        fidelity=float(root_fidelity),
+        lower_tau_q=float(lower_tau_q),
+        upper_tau_q=float(upper_tau_q),
+        function_calls=int(result.function_calls),
+        iterations=int(result.iterations),
+        converged=bool(result.converged),
+    )
 
 
 def periodic_mode_observables(

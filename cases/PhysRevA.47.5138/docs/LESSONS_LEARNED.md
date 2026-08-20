@@ -4,7 +4,7 @@
 
 - Paper: *Squeezed Spin States*
 - PaperID: `PhysRevA.47.5138`
-- Scientific result: seven of seven numerical panels reproduced
+- Scientific result: seven figure panels and ten non-figure quantitative claims reproduced
 - Lifecycle state: awaiting fresh-context review
 
 ## What Worked
@@ -20,6 +20,7 @@
 | Direct cause | Root cause | Detection | Repair |
 | --- | --- | --- | --- |
 | JSON could not serialize `numpy.bool_` | scalar normalization was absent at the artifact boundary | full runner smoke test | convert NumPy scalars only during JSON encoding; rerun all gates |
+| Ten quantitative claims were absent from authored scope | the coverage model treated figures as the only scientific units | fresh inventory-first review | add first-class quantitative-claim coverage and executable gates |
 
 The defect affected artifact emission, not the physics arrays or scientific
 interpretation. This is exactly why the loop must execute the whole production
@@ -39,6 +40,7 @@ entrypoint instead of relying only on unit-level formula tests.
 | --- | --- | --- |
 | NumPy scalar serialization failure | final run-summary emission | exercise the full CLI in smoke and formal runs |
 | sphere size dominates pixel score | first Fig. 3 render | align camera/canvas only after frozen data hashes are verified |
+| figure-only scope can hide scientific omissions | independent full-paper inventory | require a canonical ledger of figures plus quantitative claims |
 
 ## Reusable Checks Or Tools
 

@@ -86,6 +86,61 @@ class GroundState:
     amplitudes: np.ndarray
 
 
+@dataclass(frozen=True)
+class FerromagneticXXZCertificate:
+    """Exact ground-space certificate for the literal sign in paper Eq. (3).
+
+    For ``Delta >= 1`` each negative-sign XXZ bond is bounded below by
+    ``-Delta``.  A polarized product state saturates every bond, proving the
+    periodic-chain ground energy without selecting a magnetization sector.
+    At ``Delta = 1`` the symmetric spin multiplet is degenerate; for
+    ``Delta > 1`` the common local ground space contains only the two
+    polarized product states.
+    """
+
+    n_spins: int
+    delta: float
+    bond_ground_energy: float
+    chain_ground_energy: float
+    local_excitation_gap: float
+    ground_manifold: str
+    polarized_entropy_bits: float
+
+
+def literal_ferromagnetic_xxz_certificate(
+    n_spins: int, *, delta: float
+) -> FerromagneticXXZCertificate:
+    """Prove the literal negative-sign XXZ ground space for ``Delta >= 1``."""
+
+    if n_spins < 2:
+        raise ValueError("n_spins must be at least two")
+    if delta < 1.0:
+        raise ValueError("the exact certificate requires delta >= 1")
+
+    # Bond eigenvalues in the parallel, symmetric, and antisymmetric sectors
+    # of -(sigma_x sigma_x + sigma_y sigma_y + Delta sigma_z sigma_z).
+    parallel = -float(delta)
+    symmetric = float(delta) - 2.0
+    antisymmetric = float(delta) + 2.0
+    assert parallel <= symmetric and parallel <= antisymmetric
+    local_gap = min(symmetric, antisymmetric) - parallel
+    isotropic = bool(np.isclose(delta, 1.0, rtol=0.0, atol=1e-14))
+    manifold = (
+        "symmetric_spin_n_over_2_multiplet"
+        if isotropic
+        else "two_polarized_product_states"
+    )
+    return FerromagneticXXZCertificate(
+        n_spins=n_spins,
+        delta=float(delta),
+        bond_ground_energy=parallel,
+        chain_ground_energy=n_spins * parallel,
+        local_excitation_gap=float(local_gap),
+        ground_manifold=manifold,
+        polarized_entropy_bits=0.0,
+    )
+
+
 def _translation_overlap(
     basis: np.ndarray, amplitudes: np.ndarray, n_spins: int
 ) -> complex:

@@ -4,9 +4,9 @@
 
 | Level | Count | Meaning |
 | --- | ---: | --- |
-| exact_or_formula_match | 7 | Formula, paper parameters, target features and scientific checks pass. |
+| exact_or_formula_match | 5 | T001-T004 and T007 pass their formula, parameter and scientific checks. |
 | partial_match | 0 | No target has a partial scientific result. |
-| unresolved_mismatch | 0 | No stable paper-versus-reproduction discrepancy remains. |
+| unresolved_mismatch | 2 | T005 and T006 retain caption-value discrepancies beyond printed rounding intervals. |
 | not_in_scope | 2 | Figures 1 and 5 are schematics. |
 
 ## Per-Target Consistency
@@ -17,8 +17,8 @@
 | T002 | Fig. 2(b) | Qmax=0.446284 vs 0.445 | +0.001284 | rounding/grid agreement |
 | T003 | Fig. 2(c) | Qmax=0.240581 vs 0.241 | -0.000419 | rounding/grid agreement |
 | T004 | Fig. 3(a) | Qmax=1; normalized CSS | none above tolerance | exact initial state |
-| T005 | Fig. 3(b) | Qmax=0.254471 vs 0.252 | +0.002471 | rounding/grid agreement |
-| T006 | Fig. 3(c) | Qmax=0.185589 vs 0.187 | -0.001411 | rounding/grid agreement |
+| T005 | Fig. 3(b) | Qmax=0.254471 vs 0.252 | +0.002471 | stable caption discrepancy after spectral, dense-expm and DOP853 checks |
+| T006 | Fig. 3(c) | Qmax=0.185589 vs 0.187 | -0.001411 | stable caption discrepancy after a full printed-mu rounding sweep |
 | T007 | Fig. 4 | OAT/TACT minima and asymptotes pass | finite-S distance only | scientific scaling reproduced |
 
 The maximum direct OAT formula-versus-state covariance difference is
@@ -28,6 +28,10 @@ spectral implementation in the tests.
 
 ## Paper Review
 
-The printed Qmax values, one-axis optimum and both asymptotic claims are
-numerically supported. No paper-error candidate is emitted. A new reviewer must
-still attempt to falsify this conclusion from the frozen review bundles.
+The prior fresh-context protocol-v2 review supported T001-T004 and T007, and
+identified T005 and T006 as `paper_error_candidate`. This is limited to the two
+Figure 3 caption values; it does not invalidate the spin-squeezing theory. Its
+scope finding triggered the present repair: all ten missing quantitative claims
+now have canonical coverage and executable evidence. Because that repair changes
+the review bundle, the historical verdict cannot be copied forward; a new
+fresh-context review must adjudicate the v3 evidence.

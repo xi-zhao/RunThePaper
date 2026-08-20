@@ -1,72 +1,26 @@
 # Derivation Trace
 
-Use this file for formula-heavy papers. Every implemented equation should map
-back to a source equation or an explicit derivation step.
+| Formula | Paper source | Code path | Independent evidence |
+| --- | --- | --- | --- |
+| EQ012 basis | Eq. (1) | `_operator`, `continuum_hamiltonian` | continuum basis tests |
+| EQ001 intrinsic Dirac mass | Eqs. (2)-(3) | `continuum_hamiltonian` | direct eigenspectrum |
+| EQ002 continuum Rashba | Eq. (4) | `continuum_hamiltonian` | four ratio gap sweep |
+| EQ003 spin Hall topology | Eq. (5) and Kubo prose | `honeycomb_bulk_hamiltonian`, `fukui_chern_number` | periodic Berry-flux sum |
+| EQ004 lattice model | Eq. (6), Fig. 1 | zigzag/armchair geometry and ribbon solvers | width, endpoint, localization and DOS checks |
+| EQ009 lattice Rashba | p. 3 Rashba prose | `spinful_ribbon_hamiltonian`, `bulk_half_filling_gap_edges`, `rashba_edge_spectral_flow` | full-BZ branch tracking, independent bulk-gap selection, exact uniform baseline, both orientations and three widths |
+| EQ010 S constraint | p. 3 disorder prose | `time_reversal_scattering_basis`, `helical_scalar_disorder_ensemble` | SVD null space plus 32 random profiles |
+| EQ011 interaction operator | p. 3 interaction prose | `interaction_operator_diagnostics`, `interaction_conductivity_sweep` | field/derivative counting and independent log-log fits |
+| EQ005 transport | Fig. 2 and prose | transmission tensor and LB solver | explicit terminal currents |
+| EQ006 bare gap | Eq. (7) and first-star prose | `first_star_projection_diagnostics`, `bare_gap_kelvin` | explicit 8x8 projection plus dimensional SI evaluation |
+| EQ007 field Rashba | p. 4 field prose | `rashba_kelvin` | dimensional SI evaluation |
+| EQ008 Coulomb RG | Eq. (8) and integrated equation | shell integration plus RG running/root solvers | independently derived coefficients, ODE residual and self-consistency |
+| EQ013 first-star matrix | Eq. (7), first-star prose | `first_star_spin_orbit_matrix` | full matrix versus Pauli-product identity |
+| EQ014 finite-Rashba response proxy | prose after Eq. (5) | `conventional_spin_hall_sweep` | full-BZ conventional-current Kubo sweep; exact cited current remains unavailable |
+| EQ015 one-loop shell integrals | Fig. 3, Eq. (8) | `derive_one_loop_flow_coefficients`, `exchange_log_sweep` | matrix projection and shell-width linearity |
+| EQ016 RPA screening | screening prose before Eq. (8) | `neutral_graphene_polarization`, `screened_coulomb_diagnostics` | interband integral, angular/cutoff convergence and downstream power fit |
+| EQ017 broken-T proxy and edge field | p. 3 parallel-field prose | `dirac_mass_symmetry_inventory`, `parallel_field_mass_path`, `translation_preserving_parallel_field_path` | exhaustive Pauli search, direct edge gap, translation diagnosis and continuous-optimizer falsification of the minimal published-term bulk path |
+| EQ018 cylinder spectral flow | Laughlin paragraph | `cylinder_flux_spectral_flow` | explicit level permutation across one flux quantum |
 
-## Formula Lane Rule
-
-Every formula used by numerical code must have:
-
-- a card in `EQUATION_CARDS.json`;
-- a human-readable derivation in this file;
-- a formula gate result in `outputs/checks/formula_verification.json`;
-- a code pointer, or a note that it is not used in code.
-
-Do not open a numerical target until its formula dependencies are traceable and
-the formula gate is not closed.
-
-## Equation Cards
-
-### EQ001-EQ002 — Continuum gap
-
-The kinetic matrices anticommute with the intrinsic mass matrix. Squaring the
-Hamiltonian at zero Rashba coupling gives
-`E^2=(hbar v_F q)^2+Delta_so^2`. At `q=0`, diagonalizing the intrinsic plus
-Rashba matrices gives the direct gap `2(Delta_so-lambda_R)` and locates the
-printed closing boundary.
-
-### EQ003 — Spin response
-
-For conserved `s_z`, each spin block is a Haldane model with Chern number of
-opposite sign. Combining their opposite charge Hall currents with
-`J_s=(hbar/2e)(J_up-J_down)` yields `sigma_xy^s=e/(2 pi)`.
-
-### EQ004 — Ribbon matrix
-
-Choose a honeycomb strip with zigzag boundaries and one periodic translation
-along the edge. Each nearest-neighbour hopping receives its Bloch phase from
-the crossed unit-cell translation. For every second-neighbour pair, find the
-unique two-bond path `j -> common -> i` and set `nu_ij` from the sign of
-`(d1 x d2)_z`. Multiplication by `i t2 s_z` makes the term Hermitian because
-`nu_ji=-nu_ij`. Diagonalizing both spin blocks over `k_x` produces the finite
-ribbon bands and edge-state weights.
-
-The bulk expansion around `K/K'` gives `Delta_so=3 sqrt(3)t2`, hence the full
-gap is `6 sqrt(3)t2`. This analytic value is the primary numerical anchor for
-Fig. 1.
-
-### EQ005 — Transport
-
-One Kramers pair gives two perfectly transmitted charge channels, hence
-`G=2e^2/h`. Sorting the two spins into opposite contacts gives the adjacent
-spin conductance and four-terminal current printed in Fig. 2.
-
-### EQ006-EQ007 — Bare gap estimates
-
-The paper's first-star matrix element and perpendicular-field Pauli term are
-evaluated with explicit units. They are order-of-magnitude checks, not fitted
-targets.
-
-### EQ008 — RG flow
-
-Integrating `dg/dl=-g^2/4` gives `g(l)=g0/(1+g0 l/4)`. Substitution into
-`d ln Delta/dl=g/2` gives the squared logarithmic enhancement. The reported
-renormalized gap is then tested by solving the positive self-consistency root
-in kelvin and eV conventions.
-
-## Open Source Questions
-
-- Fig. 1 ribbon width and k-grid are not printed.
-- The RG paragraph does not make the half-gap/full-gap convention explicit.
-- Three internal equation references are inconsistent and are tracked in the
-  review protocol rather than silently corrected.
+The machine-readable source traces, check statuses and code references are in
+`EQUATION_CARDS.json`; `outputs/checks/formula_verification.json` is generated
+from that single source of truth.

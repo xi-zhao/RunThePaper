@@ -12,4 +12,4 @@ python scripts/run_reproduction.py --config config/smoke.json
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Remaining lifecycle boundaries: parameters=paper_exact, causal_resolution=not_required, review_scope=incomplete, paper_assessment=paper_error_candidate.
+Boundary: Remaining lifecycle boundaries: parameters=paper_exact, causal_resolution=not_required, independent_review=stale, review_scope=stale, paper_assessment=stale.

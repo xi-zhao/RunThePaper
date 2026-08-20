@@ -2,7 +2,10 @@
 
 ## Review question
 
-Can a fresh reviewer, without the original reproduction conversation, independently confirm or falsify the complete numerical inventory, exact MPO implementation, parameters, frozen results and paper-consistency verdict for T001-T006?
+Can a fresh reviewer, without the original reproduction conversation,
+independently confirm or falsify all 24 numerical publication items covered by
+the 21 target contracts, the exact MPO implementation, parameters, frozen
+results and two source discrepancies?
 
 ## Two-phase boundary
 
@@ -20,6 +23,17 @@ A discrepancy is not a paper error merely because one run differs. Promotion req
 - Re-inventory the entire Fig. 2(b) logarithmic axis and inset, because an earlier reproduction configuration missed the `n=100..400` domain.
 - Recheck current normalization and dissipator convention with a direct Liouvillian construction.
 - Test the isotropic `n^-2` coefficient and easy-axis exponent without fitting source pixels.
-- Determine whether the 15.16% finite-size correlation residual is compatible with the printed leading-order statement.
+- Re-derive the correlation kernel and test its exact reflection-plus-spin-flip symmetry, including possible variable or sign transcriptions.
+- Substitute `lambda=pi*l/m` into the complete Eq. (7) at both `r=m` and
+  `r=m-1` for odd and even `m`.  Adjudicate the printed cutoff index, hopping
+  parity and `H_(m+1)` dimension against the paper's own `m=3` three-state
+  reduced matrix.  Do not reuse the superseded diagnostic that forced the
+  singular same-index choice `tau_m=-cos(m*lambda)`.
+- Verify the complete 25-item publication inventory (24 numerical items plus
+  the schematic), including the boundary-divergence proof, general transfer-MPO
+  formulas, easy-plane spectral convergence, infinite-rank construction and
+  isotropic-current asymptote.  Every numerical item must map explicitly to a
+  target; closely coupled statements may share a target only when the mapping
+  is scientifically justified.
 
-This case currently emits no paper-error candidate. The independent reviewer result must not be fabricated by the reproducing context.
+The reproducing context records two stable discrepancies but emits no paper-error candidate. Only a fresh-context reviewer may promote or reject them.

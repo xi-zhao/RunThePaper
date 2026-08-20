@@ -30,11 +30,13 @@ the next paper.
   exposed the factor-of-two defect, and v4 records a zero conversion error.
 - Dense many-body spectra are unusually sensitive to visible-level selection,
   vector strokes, and rasterization even when the underlying gaps are correct.
-- A low scientific-region pixel score was useful scientific evidence here: it
-  led to the discovery that v4 had included all 1140 three-particle odd curves
-  in addition to the declared 0/1/2-particle reconstruction. V5 fixes that
-  internal scope and asserts its 191-even/20-odd counts, while retaining an
-  explicit cap because the publication never enumerates its plotted level set.
+- A low scientific-region pixel score was useful scientific evidence here, but
+  the first repair was wrong: v5 simply truncated the spectrum at two
+  particles. V6 instead derives the necessary cutoff from the minimum possible
+  p-particle energy over the full field grid. Six particles are necessary and
+  sufficient for the printed energy window, producing 1304 even and 1303 odd
+  curves while retaining an explicit display-selection cap because the paper
+  never enumerates which curves it drew.
 
 ## Generalized Experience
 
@@ -49,8 +51,8 @@ the next paper.
 | Pitfall | How it appeared | How future runs should avoid it |
 | --- | --- | --- |
 | Dimensionless-unit ambiguity | Fig. 2(b) initially used `tau_Q W/hbar` under a `tau_Q/tau_0` label. | Derive every plotted unit in the formula cards and assert conversions numerically. |
-| Pixel score interpreted as physics score | T002 physics passed while render remained 78.76, but the earlier visual discrepancy still exposed a real selection defect. | Treat pixel mismatch as a diagnostic trigger, then distinguish code, science, publication metadata, and rendering with independent checks. |
-| Unbounded low-spectrum enumeration | V4 included a complete three-particle sector outside the declared reconstruction. | Declare and test particle-sector/curve-count scope before rendering dense spectra, and do not call it paper exact unless the publication enumerates it. |
+| Pixel score interpreted as physics score | T002 physics passed while render remained 77.16, but the visual discrepancy exposed an arbitrary truncation. | Treat pixel mismatch as a diagnostic trigger, then distinguish code, science, publication metadata, and rendering with independent checks. |
+| Arbitrary low-spectrum truncation | V5 assumed 0/1/2 particles without proving that higher sectors could not enter the plotted energy window. | Derive a cutoff from spectral lower bounds and assert completeness independently of the configured truncation. |
 
 ## Recommended Practices
 
@@ -65,8 +67,8 @@ the next paper.
 | Failure mode | Where it appeared | How future runs should detect it |
 | --- | --- | --- |
 | Axis-normalization defect | T003, pre-v4 | Assert both raw and plotted dimensionless units. |
-| Dense-branch target-scope defect | T002, pre-v5 | Assert exact sector identities and expected combinatorial curve counts. |
-| Residual dense-branch render mismatch | T002, v5 | Compare axis box and line density over frozen data, then classify an unpublished curve-selection rule as a publication boundary rather than copying source geometry. |
+| Dense-branch truncation defect | T002, v5 | Prove the maximum particle sector from the plotted energy window instead of choosing it by eye. |
+| Residual dense-branch render mismatch | T002, v6 | Compare axis box and line density over frozen data, then classify an unpublished display-selection rule as a publication boundary rather than copying source geometry. |
 
 ## Reusable Checks Or Tools
 
@@ -79,7 +81,7 @@ the next paper.
 
 | Implementation | Efficiency evidence | Keep case-local or promote generic helper |
 | --- | --- | --- |
-| Majorana covariance evolution | 186 final v5 paper-scale jobs completed in 612.87 s locally. | Keep model case-local; promote checkpoint and isolation pattern. |
+| Majorana covariance evolution | 186 final v6 paper-scale jobs completed in 1219.91 s locally. | Keep model case-local; promote checkpoint and isolation pattern. |
 | Periodic mode cross-check | Independent thermodynamic observable at low cost. | Promote as a reference pattern for integrable-chain cases. |
 
 ## Harness Backlog Items
@@ -93,7 +95,7 @@ Concrete tool, checker, template, field, or workflow changes should be copied to
 | Priority | Improvement | Evidence from this case | Status |
 | --- | --- | --- | --- |
 | P1 | Require explicit plotted-unit assertions. | v3-to-v4 factor-of-two correction in T003. | candidate |
-| P1 | Require explicit low-spectrum sector/curve-count contracts. | T002 v4 contained 1140 unintended three-particle branches; v5's declared 191/20 check prevents recurrence. | candidate |
+| P1 | Require an independently derived low-spectrum truncation bound. | T002 v5's 0/1/2-particle assumption failed; v6 proves six sectors are necessary and sufficient for the energy window. | candidate |
 | P2 | Separate plot sampling from unpublished branch selection. | T002 matches the axis box and EPS sampling density, but the caption never enumerates the level subset/cutoff. | candidate |
 
 ## Prompt Or Workflow Changes

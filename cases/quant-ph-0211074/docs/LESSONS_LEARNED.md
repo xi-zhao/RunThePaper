@@ -64,7 +64,7 @@ the next paper.
 
 | Implementation | Efficiency evidence | Keep case-local or promote generic helper |
 | --- | --- | --- |
-| XY Toeplitz covariance kernel | 1100 points plus checks in a 3.216 s full run. | Keep case-local until another case needs the identical convention. |
+| XY Toeplitz covariance kernel | 1100 points plus checks in a 5.990 s full run. | Keep case-local until another case needs the identical convention. |
 | Bit-basis periodic XXX solver | N=20 sector dimension 184,756 with stable Lanczos residual 2.75e-12. | Keep case-local; pattern is reusable but normalization is paper-specific. |
 
 ## Harness Backlog Items

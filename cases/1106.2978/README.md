@@ -6,7 +6,7 @@ Published as: [Exact Nonequilibrium Steady State of a Strongly Driven Open XXZ C
 
 Formal citation: Phys. Rev. Lett. 107, 137201 (2011) · DOI `10.1103/PhysRevLett.107.137201` · Locator `137201`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **89.71/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **86.58/100**
 
 Clean-room scientific reproduction; author code and author numerical arrays are excluded from numerical inputs.
 
@@ -20,6 +20,7 @@ Clean-room scientific reproduction; author code and author numerical arrays are 
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Paper review protocol](docs/PAPER_REVIEW_PROTOCOL_V2.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -43,7 +44,7 @@ Generated files are kept under [data](outputs/data/), [figures](outputs/figures/
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=not_required, pixel=passed_with_not_comparable, review_scope=incomplete, paper_assessment=paper_error_candidate.
+Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=terminal_blocker, science=pending, pixel=passed_with_not_comparable, review_scope=incomplete, paper_assessment=paper_error_candidate.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

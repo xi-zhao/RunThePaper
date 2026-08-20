@@ -266,6 +266,193 @@
       "open_questions": [
         "The exact marker set used in the 1993 plot is not printed; the reproduction declares its physical S grid."
       ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Appendix twisted-moment identities",
+      "role": "independent derivation of the exact OAT moments",
+      "latex": "\\langle S_+e^{i\\mu(S_z+1/2)}\\rangle=S\\cos^{2S-1}(\\mu/2),\\quad \\langle\\{S_+e^{i\\mu(S_z+1/2)}\\}^2\\rangle=S(S-1/2)\\cos^{2S-2}\\mu",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5142, Eqs. (A1)-(A3)"
+        }
+      ],
+      "derived_from": [
+        "binomial coherent-state expansion",
+        "direct finite-spin operator contraction"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "construct both sides independently at three twist angles",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three identities and their operator ordering are printed in Appendix Eqs. (A1)-(A3)."
+        },
+        {
+          "id": "EQ007-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A1-A3 are compared to direct matrix products rather than reused in the runner."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::twisted_moment_identity_residuals"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "OAT optimal twist and uncertainty product",
+      "role": "large-S quantitative claims following Eq. (5)",
+      "latex": "\\mu_0=24^{1/6}S^{-2/3},\\quad U_{yz}=4V_-V_+/|\\langle S_x\\rangle|^2\\simeq1+(\\mu/\\mu_0)^6",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5140, paragraph following Eq. (5)"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "EQ007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact covariance product and exact scalar optimum compared on a declared small-twist grid",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The optimum and normalized uncertainty product are printed immediately after Eq. (5)."
+        },
+        {
+          "id": "EQ008-A",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The S=100 optimum and six mu/mu0 values approach the printed asymptotes within declared finite-S tolerances."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::one_axis_uncertainty_product",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Interferometer Schwinger mapping and noise",
+      "role": "two-mode implementation in Eqs. (7)-(9)",
+      "latex": "S_+=a^\\dagger b,\\ S_z=(N_A-N_B)/2,\\ \\delta N=2\\sqrt{V_z},\\ \\delta\\phi\\simeq\\sqrt{V_y}/|\\langle S_x\\rangle|",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf p. 5141, Eqs. (7)-(9)"
+        }
+      ],
+      "derived_from": [
+        "fixed-total-particle Fock basis",
+        "spin coherent state"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "two-mode matrices compared elementwise with abstract spin matrices and CSS noise",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Schwinger map and both noise formulas are printed in Eqs. (7)-(9)."
+        },
+        {
+          "id": "EQ009-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The independently built fixed-N Fock representation agrees with spin S=N/2 and gives deltaN deltaPhi=1."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::schwinger_spin_operators",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Two-level atom collective-spin mapping",
+      "role": "atomic interpretation in Sec. IV.B",
+      "latex": "S=N/2,\\quad S_z=(N_A-N_B)/2,\\quad S_+^2=\\text{simultaneous pair excitation}",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5141-5142, Sec. IV.B"
+        }
+      ],
+      "derived_from": [
+        "symmetric N-atom subspace",
+        "SU(2) Casimir"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Casimir and squared raising operators checked in the N=40 symmetric sector",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Section IV.B states the S=N/2 mapping, population difference and pair-excitation interpretation."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The collective Casimir is S(S+1) and pair transfer equals the squared abstract-spin raising operator."
+        }
+      ],
+      "code_refs": [
+        "src/spin_squeezing/model.py::schwinger_spin_operators",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Finite-spin squeezing boundaries",
+      "role": "definition and special S=1 limit",
+      "latex": "V_{CSS}=S/2,\\quad V_{min}(S=1/2)=S/2,\\quad V_{min}(S=1)=0",
+      "source_refs": [
+        {
+          "type": "paper_pdf",
+          "value": "raw/paper.pdf pp. 5138-5141, Sec. II, Sec. III.B and Fig. 4 caption"
+        }
+      ],
+      "derived_from": [
+        "exact finite-spin covariance"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct S=1/2 evolution and explicit S=1 minimization for both mechanisms",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The SQL definition, S=1/2 boundary and omitted S=1 zero are explicit in the text and Fig. 4 caption."
+        },
+        {
+          "id": "EQ011-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both special finite-spin cases are evaluated rather than inferred from the plotted S grid."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
     }
   ]
 }

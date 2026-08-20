@@ -10,7 +10,6 @@ from dataclasses import dataclass
 
 import numpy as np
 
-
 SIGMA_X = np.array([[0.0, 1.0], [1.0, 0.0]], dtype=np.complex128)
 SIGMA_Y = np.array([[0.0, -1j], [1j, 0.0]], dtype=np.complex128)
 SIGMA_Z = np.array([[1.0, 0.0], [0.0, -1.0]], dtype=np.complex128)
@@ -60,9 +59,7 @@ def liouvillian(delta: float, epsilon: float, size: int) -> np.ndarray:
     hilbert_dimension = 2**size
     identity = np.eye(hilbert_dimension, dtype=np.complex128)
     h_value = hamiltonian(delta, size)
-    generator = -1j * (
-        np.kron(identity, h_value) - np.kron(h_value.T, identity)
-    )
+    generator = -1j * (np.kron(identity, h_value) - np.kron(h_value.T, identity))
     jumps = [
         np.sqrt(epsilon) * _site_operator(SIGMA_PLUS, 0, size),
         np.sqrt(epsilon) * _site_operator(SIGMA_MINUS, size - 1, size),
@@ -82,9 +79,7 @@ def solve_dense_ness(delta: float, epsilon: float, size: int) -> DenseNESSResult
     hilbert_dimension = 2**size
     system = generator.copy()
     right_hand_side = np.zeros(hilbert_dimension**2, dtype=np.complex128)
-    system[0, :] = np.eye(hilbert_dimension, dtype=np.complex128).reshape(
-        -1, order="F"
-    )
+    system[0, :] = np.eye(hilbert_dimension, dtype=np.complex128).reshape(-1, order="F")
     right_hand_side[0] = 1.0
     vector = np.linalg.solve(system, right_hand_side)
     density = vector.reshape((hilbert_dimension, hilbert_dimension), order="F")
@@ -115,3 +110,20 @@ def solve_dense_ness(delta: float, epsilon: float, size: int) -> DenseNESSResult
         trace_error=float(abs(np.trace(density) - 1.0)),
         hermiticity_error=float(np.max(np.abs(density - density.conj().T))),
     )
+
+
+def longitudinal_connected_correlation(
+    density: np.ndarray, site_j: int, site_k: int, size: int
+) -> float:
+    """Evaluate the connected longitudinal correlator from a dense state."""
+
+    if density.shape != (2**size, 2**size):
+        raise ValueError("density matrix shape does not match size")
+    if not 0 <= site_j < site_k < size:
+        raise ValueError("sites must satisfy 0 <= site_j < site_k < size")
+    sigma_j = _site_operator(SIGMA_Z, site_j, size)
+    sigma_k = _site_operator(SIGMA_Z, site_k, size)
+    one_j = np.trace(density @ sigma_j)
+    one_k = np.trace(density @ sigma_k)
+    two = np.trace(density @ sigma_j @ sigma_k)
+    return float(np.real(two - one_j * one_k))

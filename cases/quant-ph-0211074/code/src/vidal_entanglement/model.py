@@ -126,21 +126,106 @@ def xy_entropy(
     return entropy_from_covariance(block_covariance(block_length, coefficients))
 
 
+def fermion_mode_probabilities(mode: float) -> tuple[float, float]:
+    """Return ``(empty, occupied)`` probabilities for one covariance mode.
+
+    With the paper's definitions ``b=(d_0+i d_1)/2`` and
+    ``<d_0 d_1>=i nu``, the operator identity
+    ``b^dagger b=(1+i d_0 d_1)/2`` gives occupation ``(1-nu)/2``.
+    The paper prints the opposite sign in Eq. (11).  Keeping the labels here
+    makes that source discrepancy explicit even though binary entropy and the
+    unordered product spectrum are invariant under exchanging the pair.
+    """
+
+    value = float(mode)
+    if value < -1e-10 or value > 1.0 + 1e-10:
+        raise ValueError(f"unphysical mode {mode}")
+    clipped = float(np.clip(value, 0.0, 1.0))
+    occupied = (1.0 - clipped) / 2.0
+    return 1.0 - occupied, occupied
+
+
 def entanglement_spectrum(modes: Iterable[float]) -> np.ndarray:
     """Enumerate all product eigenvalues of rho_L from paper Eq. (20)."""
 
     spectrum = np.array([1.0], dtype=float)
     for mode in np.asarray(list(modes), dtype=float):
-        if mode < -1e-10 or mode > 1.0 + 1e-10:
-            raise ValueError(f"unphysical mode {mode}")
-        probability = (1.0 + np.clip(mode, 0.0, 1.0)) / 2.0
+        empty_probability, occupied_probability = fermion_mode_probabilities(mode)
         spectrum = np.concatenate(
-            (spectrum * probability, spectrum * (1.0 - probability))
+            (spectrum * empty_probability, spectrum * occupied_probability)
         )
     total = float(np.sum(spectrum))
     if abs(total - 1.0) > 1e-10:
         raise RuntimeError(f"entanglement spectrum normalization is {total}")
     return spectrum
+
+
+def entropy_from_spectrum(probabilities: Iterable[float]) -> float:
+    """Return the von Neumann entropy of an explicitly enumerated spectrum.
+
+    This is deliberately kept separate from :func:`entropy_from_covariance`.
+    It gives the reproduction two numerically different paths through the
+    paper's Eqs. (13) and (20): a sum of binary-mode entropies and a direct
+    sum over all ``2**L`` eigenvalues.
+    """
+
+    values = np.asarray(list(probabilities), dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("probabilities must be a non-empty one-dimensional array")
+    if np.min(values) < -1e-14:
+        raise ValueError("probabilities must be non-negative")
+    total = float(np.sum(values))
+    if abs(total - 1.0) > 1e-10:
+        raise ValueError(f"probabilities are not normalized: {total}")
+    positive = values[values > 0.0]
+    return float(-np.sum(positive * np.log2(positive)))
+
+
+def retained_weight_rank(
+    probabilities: Iterable[float], *, retained_weight: float
+) -> int:
+    """Smallest number of eigenvectors retaining a declared total weight.
+
+    The paper uses the informal phrase "relevant eigenvectors" in its DMRG
+    discussion but supplies no threshold.  Making the retained weight an
+    explicit input prevents that missing convention from being hidden in the
+    implementation.
+    """
+
+    if retained_weight <= 0.0 or retained_weight > 1.0:
+        raise ValueError("retained_weight must lie in (0, 1]")
+    values = np.asarray(list(probabilities), dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("probabilities must be a non-empty one-dimensional array")
+    if np.min(values) < -1e-14:
+        raise ValueError("probabilities must be non-negative")
+    total = float(np.sum(values))
+    if abs(total - 1.0) > 1e-10:
+        raise ValueError(f"probabilities are not normalized: {total}")
+    descending = np.sort(np.clip(values, 0.0, None))[::-1]
+    return int(np.searchsorted(np.cumsum(descending), retained_weight, side="left") + 1)
+
+
+def resolved_spectrum_rank(
+    probabilities: Iterable[float], *, absolute_tolerance: float = 0.0
+) -> int:
+    """Count eigenvalues resolved above an explicit numerical tolerance.
+
+    This is deliberately not called an exact rank.  Finite-precision spectra
+    can underflow even when the analytic finite-block state has full support.
+    Reporting this quantity beside retained-weight rank prevents a numerical
+    threshold proxy from being mistaken for the paper's undefined phrase
+    ``relevant eigenvectors``.
+    """
+
+    if absolute_tolerance < 0.0:
+        raise ValueError("absolute_tolerance must be non-negative")
+    values = np.asarray(list(probabilities), dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("probabilities must be a non-empty one-dimensional array")
+    if np.min(values) < -1e-14:
+        raise ValueError("probabilities must be non-negative")
+    return int(np.count_nonzero(values > absolute_tolerance))
 
 
 def majorization_margin(

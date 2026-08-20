@@ -74,3 +74,53 @@ Thus the full spectrum at `N=1` is analytically
 `E_n=(2n+1)sqrt(m^2)+1/(4m^2)`.
 
 This is an independent anchor for all three Fig. 3 target families.
+
+## EQ007–EQ009 — exact examples, Airy obstruction, and classical period
+
+For `H=p^2+x^2+b x`, completing the square gives
+`E_n=2n+1-b^2/4`, including all four real/complex shifts printed in the
+opening paragraph. At `N=1`, the Airy Wronskian fixes the origin matching
+derivative to `-1/(2*pi)`, excluding a real eigenvalue. The classical period
+in Eq. (12) is evaluated in log-gamma form and reduces exactly to `pi` at
+`N=2`, while the explicit turning-point angles expose the subcritical spiral.
+
+## EQ010 — Hermitian comparison
+
+For `p^2+|x|^N`, the same real-axis phase integral removes the PT-specific
+`sin(pi/N)` denominator from Eq. (5). The paper's separate `N→∞` statement is
+not inferred from WKB: an independent real symmetric finite-difference
+Hamiltonian is solved through `N=512` and compared with
+`E_n=(n+1)^2*pi^2/4` on the limiting interval `[-1,1]`.
+
+## EQ011 — logarithmic near-one scaling
+
+Taking the logarithm of Eq. (11), its dominant balance is
+`4 E^(3/2)/3 ~ -log(epsilon)`, hence
+`E proportional to (-log(epsilon))^(2/3)`. Solving the full implicit equation
+for `epsilon=10^-40..10^-200` and fitting `log(E)` against
+`log(-log(epsilon))` gives `0.6524918`, approaching `2/3` with the expected
+subleading logarithmic correction.
+
+## EQ012 — near-N=2 level-merger mechanism
+
+Write `N=2-epsilon` and expand the potential around the harmonic oscillator.
+The first-order perturbation is non-Hermitian. In each adjacent pair
+`{|n>, |n+1>}`, the complex-symmetric effective Hamiltonian has discriminant
+
+`D_n(epsilon) = (H_nn-H_(n+1,n+1))^2 + 4 H_n,n+1^2`.
+
+The exceptional point is the first positive epsilon for which `D_n=0`. Matrix
+elements are evaluated independently by Gauss-Hermite quadrature at orders 192
+and 256. The two orders agree, the discriminant becomes negative past the
+root, and the merger epsilon decreases with excitation level. This tests the
+paper's printed first-order mechanism without pretending to reconstruct
+unpublished higher-order terms.
+
+## EQ013 — massive exact anchors
+
+At `N=0`, the potential is `m^2 x^2-1`, so
+`E_n=(2n+1)sqrt(m^2)-1`. At `N=1`, completing the square gives EQ006. At
+`N=2`, the quadratic coefficient is `m^2+1`, hence
+`E_n=(2n+1)sqrt(m^2+1)`. These three independent analytic limits anchor the
+massive numerical branches and expose any sign or normalization mistake in the
+contour solver.

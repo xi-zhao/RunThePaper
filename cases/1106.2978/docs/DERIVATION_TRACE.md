@@ -16,5 +16,21 @@
 6. Independently solve the Lindblad fixed-point equation in the full Hilbert
    space for n=2,3,4.  Agreement with the transfer result checks Hamiltonian,
    dissipator, observable conventions and MPO contraction together.
-7. Freeze generated CSV/JSON data and hashes.  Rendering and pixel comparison
+7. Construct the physical MPO explicitly and test the theorem, commutator,
+   triangularity, rank, exact auxiliary cutoff and coupling-polynomial degree.
+8. Count band operations directly for the `O(n^2)` claim; treat the printed
+   root-of-unity cutoff index, hopping parity and auxiliary dimension as a
+   separate full-Eq.-(7) substitution problem, cross-checked against the
+   paper's own `m=3` reduced matrix.
+9. In the isotropic limit, test the amplitude recurrence, double commutator,
+   boundary identities, normalization constant `alpha` and convergence to the
+   continuum cosine profile independently.
+10. In the easy-plane regime, diagonalize the finite reduced transfer matrix
+    and compare its subleading/leading eigenvalue ratio with an independently
+    fitted finite-current convergence ratio and the flattening bulk profile.
+11. For `Delta>=1`, construct an arbitrarily extendable shifted triangular
+    minor. Its nonzero diagonal gives a direct, finite certificate of the
+    paper's infinite-rank statement without inferring rank from a truncated
+    numerical matrix alone.
+12. Freeze generated CSV/JSON data and hashes. Rendering and pixel comparison
    happen only after this boundary.

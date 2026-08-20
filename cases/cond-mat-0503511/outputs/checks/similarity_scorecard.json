@@ -89,7 +89,7 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json",
+          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json",
           "claim": "The numerical runner accessed no source image, raw paper, author code, or author array."
         },
         {
@@ -118,23 +118,7 @@
           }
         ],
         "panel_scope_cap": 15.0
-      },
-      "critical": true,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 90.0,
-      "component_total": 90.0,
-      "score": 90.0,
-      "similarity_level": "complete_reproduction",
-      "causal_diagnosis_required": false,
-      "causal_diagnosis_status": "not_required",
-      "causal_diagnosis_disposition": "not_required"
+      }
     },
     {
       "target_id": "T002",
@@ -143,24 +127,24 @@
       "score_aggregation": "included",
       "components": {
         "feature_match": {
-          "score": 39.38,
+          "score": 38.5814,
           "reason": "The primary scalar follows the direct scientific-region pixel score after all scientific gates passed.",
           "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 27.57,
+          "score": 27.007,
           "reason": "Direct grayscale pixel difference is evaluated only in the predeclared theoretical/numerical region.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 11.81,
+          "score": 11.5744,
           "reason": "Every numerical panel, inset, branch family, and formula line in this target is included.",
           "max_score": 15.0
         }
       },
       "primary_metric": {
         "kind": "pixel_similarity_score_0_100",
-        "score": 78.761,
+        "score": 77.1628,
         "pixel_target_ids": [
           "PXT_T002_SPECTRUM"
         ],
@@ -195,7 +179,7 @@
         "causal_diagnosis": {
           "direct_cause": {
             "category": "parameter_values_unavailable",
-            "statement": "After the confirmed sector-selection defect was fixed and the author EPS sampling density was reproduced in the RenderContract, the dense spectrum crop scores 78.76, still 1.24 points below the 80-point render gate; the publication does not enumerate the exact plotted level subset or cutoff.",
+            "statement": "After v6 proved that particle sectors through six exhaust every branch entering the printed 0 <= E/W <= 6.1 window, the dense spectrum crop scores 77.16, still below the 80-point render gate; the publication does not enumerate which of those lowest excitations were selected for display.",
             "evidence": [
               "outputs/checks/pixel_evidence.json#targets.PXT_T002_SPECTRUM",
               "outputs/checks/science_checks.json"
@@ -203,7 +187,7 @@
           },
           "root_cause": {
             "category": "publication_underspecified",
-            "statement": "The v4 code incorrectly included three-particle odd branches; v5 fixed that internal defect. The remaining paper-exact presentation boundary is external: the caption says only 'lowest excitations' and gives neither a complete level-selection rule nor an energy/branch cutoff, while the EPS exposes presentation sampling but not that scientific selection convention.",
+            "statement": "Earlier versions used an unjustified low-particle truncation. Version 6 replaces it with an independent lower-bound proof: sectors through six are necessary and sufficient for the printed energy window. The remaining presentation boundary is external: the caption says only 'lowest excitations' and never gives the authored display subset, while the EPS cannot be used as a numerical branch-selection input.",
             "confidence": "confirmed",
             "evidence": [
               "outputs/checks/science_checks.json#metrics.spectrum_curve_counts",
@@ -213,7 +197,7 @@
           },
           "code_fault_assessment": {
             "status": "not_found_after_checks",
-            "statement": "A historical selection defect was found and fixed before v5. No remaining spectrum-kernel fault was found: the complete small-chain spectrum equals direct spin-Hilbert-space diagonalization, the N=20 gap and exact sector counts pass, and the v5 isolated run has no forbidden access.",
+            "statement": "A historical truncation defect was found and fixed in v6. No remaining spectrum-kernel fault was found: the complete small-chain spectrum equals direct spin-Hilbert-space diagonalization, the N=20 gap and independently derived six-particle completeness bound pass, and the v6 isolated run has no forbidden access.",
             "checks": [
               {
                 "kind": "independent_implementation",
@@ -226,7 +210,7 @@
               {
                 "kind": "analytic_limit",
                 "result": "passed",
-                "statement": "The N=20 parity-accessible critical gap agrees with 4 pi/N within 2.61 percent, and the 0/1/2-particle catalogue contains exactly 191 even and 20 odd curves.",
+                "statement": "The N=20 parity-accessible critical gap agrees with 4 pi/N within 2.61 percent; the independently derived cutoff is six particles, yielding 1304 even and 1303 odd curves in the printed energy window.",
                 "evidence": [
                   "outputs/checks/science_checks.json"
                 ]
@@ -242,9 +226,9 @@
               {
                 "kind": "execution_attestation",
                 "result": "passed",
-                "statement": "The v5 isolated run returned zero with 814 logged file events and no forbidden accesses.",
+                "statement": "The v6 isolated run returned zero with 893 logged file events and no forbidden accesses.",
                 "evidence": [
-                  "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json"
+                  "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json"
                 ]
               }
             ]
@@ -253,7 +237,7 @@
             {
               "category": "reproduction_code_defect",
               "status": "ruled_out",
-              "statement": "A remaining error in the free-fermion energies is disfavored by complete direct-spectrum parity, the analytic critical gap, and exact curve-family counts.",
+              "statement": "A remaining error in the free-fermion energies or truncation is disfavored by complete direct-spectrum parity, the analytic critical gap, and the independent energy-window completeness proof.",
               "evidence": [
                 "tests/test_model.py",
                 "outputs/checks/science_checks.json"
@@ -271,7 +255,7 @@
           ],
           "affected_scope": {
             "summary": "Only Main Fig. 2(a) dense-spectrum pixel acceptance remains affected; its scientific result and scope are complete.",
-            "completion": "4/5 scientific-region render targets pass; T002 is scientifically passed but remains below the render threshold at 78.76/100 under a confirmed publication-underspecification cap.",
+            "completion": "4/5 scientific-region render targets pass; T002 is scientifically passed but remains below the render threshold at 77.16/100 under a confirmed publication-underspecification cap.",
             "items": [
               "T002",
               "PXT_T002_SPECTRUM"
@@ -307,7 +291,7 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json",
+          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json",
           "claim": "The numerical runner accessed no source image, raw paper, author code, or author array."
         },
         {
@@ -331,23 +315,7 @@
           }
         ],
         "panel_scope_cap": 15.0
-      },
-      "critical": true,
-      "final_reproduction_eligible": false,
-      "final_reproduction_gate": "exploratory_only",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 89.0,
-      "reference_score_cap": 90.0,
-      "component_total": 78.76,
-      "score": 78.76,
-      "similarity_level": "numerical_feature_reproduction",
-      "causal_diagnosis_required": true,
-      "causal_diagnosis_status": "complete",
-      "causal_diagnosis_disposition": "terminal_blocker"
+      }
     },
     {
       "target_id": "T003",
@@ -373,7 +341,7 @@
       },
       "primary_metric": {
         "kind": "pixel_similarity_score_0_100",
-        "score": 94.6266,
+        "score": 94.5205,
         "pixel_target_ids": [
           "PXT_T003_SCALING"
         ],
@@ -426,7 +394,7 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json",
+          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json",
           "claim": "The numerical runner accessed no source image, raw paper, author code, or author array."
         },
         {
@@ -450,23 +418,7 @@
           }
         ],
         "panel_scope_cap": 15.0
-      },
-      "critical": true,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 90.0,
-      "component_total": 90.0,
-      "score": 90.0,
-      "similarity_level": "complete_reproduction",
-      "causal_diagnosis_required": false,
-      "causal_diagnosis_status": "not_required",
-      "causal_diagnosis_disposition": "not_required"
+      }
     },
     {
       "target_id": "T004",
@@ -492,7 +444,7 @@
       },
       "primary_metric": {
         "kind": "pixel_similarity_score_0_100",
-        "score": 90.0615,
+        "score": 90.0545,
         "pixel_target_ids": [
           "PXT_T004_BOUNDS"
         ],
@@ -545,7 +497,7 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json",
+          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json",
           "claim": "The numerical runner accessed no source image, raw paper, author code, or author array."
         },
         {
@@ -569,23 +521,7 @@
           }
         ],
         "panel_scope_cap": 15.0
-      },
-      "critical": true,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 90.0,
-      "component_total": 90.0,
-      "score": 90.0,
-      "similarity_level": "complete_reproduction",
-      "causal_diagnosis_required": false,
-      "causal_diagnosis_status": "not_required",
-      "causal_diagnosis_disposition": "not_required"
+      }
     },
     {
       "target_id": "T005",
@@ -594,24 +530,24 @@
       "score_aggregation": "included",
       "components": {
         "feature_match": {
-          "score": 43.3,
+          "score": 43.3831,
           "reason": "The primary scalar follows the direct scientific-region pixel score after all scientific gates passed.",
           "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 30.31,
+          "score": 30.3682,
           "reason": "Direct grayscale pixel difference is evaluated only in the predeclared theoretical/numerical region.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 12.99,
+          "score": 13.0149,
           "reason": "Every numerical panel, inset, branch family, and formula line in this target is included.",
           "max_score": 15.0
         }
       },
       "primary_metric": {
         "kind": "pixel_similarity_score_0_100",
-        "score": 86.5919,
+        "score": 86.7662,
         "pixel_target_ids": [
           "PXT_T005_REGIMES"
         ],
@@ -667,7 +603,7 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v5/run_attestation.json",
+          "evidence": "outputs/runs/cond-mat-0503511-paper-exact-v6/run_attestation.json",
           "claim": "The numerical runner accessed no source image, raw paper, author code, or author array."
         },
         {
@@ -696,109 +632,10 @@
           }
         ],
         "panel_scope_cap": 15.0
-      },
-      "critical": true,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 90.0,
-      "component_total": 86.59,
-      "score": 86.59,
-      "similarity_level": "numerical_feature_reproduction",
-      "causal_diagnosis_required": false,
-      "causal_diagnosis_status": "not_required",
-      "causal_diagnosis_disposition": "not_required"
+      }
     }
   ],
-  "overall_score": 87.07,
-  "similarity_level": "numerical_feature_reproduction",
-  "evaluation_summary": {
-    "scored_items": 5,
-    "critical_items": 5,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
-    "manual_interventions_total": 0,
-    "manual_interventions_per_item": 0.0,
-    "failure_type_counts": {
-      "none": 4,
-      "missing_parameters": 1
-    },
-    "parameter_match_counts": {
-      "paper_exact": 4,
-      "paper_subset": 1
-    },
-    "reference_comparison_counts": {
-      "analytic_reference": 5
-    },
-    "generated_data_provenance_counts": {
-      "independent_numerics": 5
-    },
-    "evidence_tier_counts": {
-      "physics_reproduction": 5
-    },
-    "formula_gate_counts": {
-      "verified": 5
-    },
-    "paper_level_role_counts": {
-      "main_claim": 5
-    },
-    "physics_status_counts": {
-      "passed": 5
-    },
-    "physics_assertion_status_counts": {
-      "passed": 14,
-      "failed": 1
-    },
-    "essential_physics_failures": [],
-    "final_reproduction_ready": false,
-    "final_reproduction_target_ids": [
-      "T001",
-      "T003",
-      "T004",
-      "T005"
-    ],
-    "final_reproduction_blocked_target_ids": [],
-    "exploratory_target_ids": [
-      "T002"
-    ],
-    "aggregate_included_target_ids": [
-      "T001",
-      "T002",
-      "T003",
-      "T004",
-      "T005"
-    ],
-    "aggregate_excluded_target_ids": [],
-    "causal_diagnosis_status_counts": {
-      "not_required": 4,
-      "complete": 1
-    },
-    "causal_diagnosis_disposition_counts": {
-      "not_required": 4,
-      "terminal_blocker": 1
-    },
-    "causal_diagnosis_required_target_ids": [
-      "T002"
-    ],
-    "causal_diagnosis_incomplete_target_ids": [],
-    "causal_diagnosis_terminal_blocker_target_ids": [
-      "T002"
-    ],
-    "causal_diagnosis_react_loop_target_ids": [],
-    "direct_cause_counts": {
-      "parameter_values_unavailable": 1
-    },
-    "root_cause_counts": {
-      "publication_underspecified": 1
-    },
-    "code_fault_status_counts": {
-      "not_found_after_checks": 1
-    }
-  },
-  "status": "passed"
+  "overall_score": 86.79,
+  "status": "passed",
+  "similarity_level": "numerical_feature_reproduction"
 }

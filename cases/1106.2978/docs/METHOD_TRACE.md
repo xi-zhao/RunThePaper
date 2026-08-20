@@ -2,9 +2,9 @@
 
 ## EXACT_TRANSFER: exact auxiliary-space contraction
 
-- Source: Eqs. (5)-(22) and the printed root-of-unity reduction.
+- Source: Eqs. (4)-(22), all printed corollaries and the root-of-unity paragraph.
 - Inputs: printed `Delta`, `epsilon`, system sizes and formula-derived sampling grids.
-- Outputs: magnetization profiles, conserved currents and connected correlations.
+- Outputs: profiles, currents, correlations, explicit physical MPOs, structural identities, complexity counts and asymptotic checks.
 - Code: `src/open_xxz/transfer.py`.
 - Stability: scaled tridiagonal products and exact removal of auxiliary states that cannot return to the vacuum within the remaining steps.
 - Complexity: `O(n^2)` path contraction rather than full `4^n` density-matrix evolution.
@@ -22,7 +22,7 @@
 - Contract: `run_contract.json` and `config/paper_exact.json`.
 - Inputs: exact case-local source files plus JSON configuration only.
 - Forbidden: `raw/`, `references/`, PDF, original figure, network and subprocess.
-- Final run: `1106.2978-paper-exact-v3`, attested in `11.773324 s`, zero forbidden accesses.
+- Final run: `1106.2978-paper-exact-v6`, attested in `11.358127 s`, 21 targets, 51/51 assertions and zero forbidden accesses.
 
 ## RENDER_ONLY: post-freeze presentation
 

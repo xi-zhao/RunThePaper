@@ -51,6 +51,7 @@ def _style() -> None:
             "mathtext.fontset": "stix",
             "axes.linewidth": 1.0,
             "svg.fonttype": "none",
+            "svg.hashsalt": "physics-9712001-render-contract-v1",
             "pdf.fonttype": 42,
             "savefig.facecolor": "white",
         }
@@ -80,9 +81,13 @@ def _save(figure: plt.Figure, workspace: Path, spec: dict[str, Any]) -> dict[str
     for path in paths.values():
         path.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(paths["png"], dpi=spec["dpi"])
-    figure.savefig(paths["svg"], format="svg")
+    figure.savefig(paths["svg"], format="svg", metadata={"Date": None})
     _normalize_svg(paths["svg"])
-    figure.savefig(paths["pdf"], format="pdf")
+    figure.savefig(
+        paths["pdf"],
+        format="pdf",
+        metadata={"CreationDate": None, "ModDate": None},
+    )
     plt.close(figure)
     with Image.open(paths["png"]) as image:
         canvas = list(image.size)

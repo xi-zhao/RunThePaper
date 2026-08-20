@@ -23,10 +23,14 @@ if str(SRC) not in sys.path:
 
 from zurek_qpt.model import (  # noqa: E402
     evolve_open_chain,
+    fit_landau_zener_coefficient,
+    fit_landau_zener_coefficient_from_scaled_time,
     final_observables,
     landau_zener_fidelity,
     low_excitation_spectrum,
     periodic_mode_observables,
+    required_excitation_particle_cutoff,
+    solve_monotone_fidelity_crossing,
 )
 
 
@@ -181,23 +185,65 @@ def build_jobs(
     return sorted(jobs), probes
 
 
-def interpolate_tau99(
-    results: list[dict[str, Any]], n_spins: int, target: float, probe_rates: list[float]
-) -> float:
-    selected = [
-        row
+def solve_tau99(
+    results: list[dict[str, Any]],
+    n_spins: int,
+    target: float,
+    probe_rates: list[float],
+    *,
+    output_root: Path,
+    parameters: dict[str, Any],
+    solver: dict[str, Any],
+    config_hash: str,
+    implementation_hash: str,
+) -> dict[str, Any]:
+    """Resolve the crossing by new model evaluations, not sparse interpolation."""
+
+    by_rate = {
+        float(row["rate_tau0_over_tauq"]): row
         for row in results
-        if row["n_spins"] == n_spins
-        and any(abs(row["rate_tau0_over_tauq"] - rate) < 1e-14 for rate in probe_rates)
-    ]
-    selected.sort(key=lambda row: row["tau_q_hbar_over_w"])
-    tau = np.array([row["tau_q_hbar_over_w"] for row in selected], dtype=float)
-    fidelity = np.maximum.accumulate(
-        np.array([row["fidelity_exact"] for row in selected], dtype=float)
+        if int(row["n_spins"]) == n_spins
+    }
+
+    def evaluate(tau_q: float) -> float:
+        rate = 0.5 / float(tau_q)
+        matched = next(
+            (row for known, row in by_rate.items() if abs(known - rate) < 1.0e-14),
+            None,
+        )
+        if matched is None:
+            matched = load_or_run_jobs(
+                [(n_spins, rate)],
+                output_root=output_root,
+                parameters=parameters,
+                solver=solver,
+                config_hash=config_hash,
+                implementation_hash=implementation_hash,
+                resume=True,
+            )[0]
+            by_rate[rate] = matched
+            results.append(matched)
+        return float(matched["fidelity_exact"])
+
+    bracket_tau = sorted(0.5 / float(rate) for rate in probe_rates)
+    crossing = solve_monotone_fidelity_crossing(
+        evaluate,
+        target=target,
+        lower_tau_q=bracket_tau[0],
+        upper_tau_q=bracket_tau[-1],
+        absolute_tolerance=float(solver["crossing_tau_absolute_tolerance"]),
+        relative_tolerance=float(solver["crossing_tau_relative_tolerance"]),
+        max_iterations=int(solver["crossing_max_iterations"]),
     )
-    if fidelity[0] > target or fidelity[-1] < target:
-        raise RuntimeError(f"tau99 probes do not bracket f={target} for N={n_spins}")
-    return float(np.interp(target, fidelity, tau))
+    return {
+        "tau_q_hbar_over_w": crossing.tau_q,
+        "fidelity_at_crossing": crossing.fidelity,
+        "crossing_lower_tau_q": crossing.lower_tau_q,
+        "crossing_upper_tau_q": crossing.upper_tau_q,
+        "crossing_function_calls": crossing.function_calls,
+        "crossing_iterations": crossing.iterations,
+        "crossing_converged": crossing.converged,
+    }
 
 
 def fit_power(x: np.ndarray, y: np.ndarray) -> tuple[float, float]:
@@ -288,9 +334,18 @@ def main() -> int:
     fig2b_rows = []
     for n_spins in parameters["scaling_chain_lengths"]:
         fixed = by_key[(n_spins, fixed_rate)]
-        tau_q_hbar_over_w = interpolate_tau99(
-            results, n_spins, target, probe_rates[n_spins]
+        crossing = solve_tau99(
+            results,
+            n_spins,
+            target,
+            probe_rates[n_spins],
+            output_root=output_root,
+            parameters=parameters,
+            solver=config["solver"],
+            config_hash=config_hash,
+            implementation_hash=implementation_hash,
         )
+        tau_q_hbar_over_w = float(crossing["tau_q_hbar_over_w"])
         tau_q_over_tau0 = (
             tau_q_hbar_over_w
             * 2.0
@@ -306,20 +361,54 @@ def main() -> int:
                 "fixed_time_fidelity_exact": fixed["fidelity_exact"],
                 "fixed_time_fidelity_lower": fixed["fidelity_lower_bound"],
                 "fixed_time_fidelity_upper": fixed["fidelity_upper_bound"],
+                "fidelity_at_crossing": crossing["fidelity_at_crossing"],
+                "crossing_lower_tau_q": crossing["crossing_lower_tau_q"],
+                "crossing_upper_tau_q": crossing["crossing_upper_tau_q"],
+                "crossing_function_calls": crossing["crossing_function_calls"],
+                "crossing_iterations": crossing["crossing_iterations"],
+                "crossing_converged": crossing["crossing_converged"],
             }
         )
 
-    tau_power, tau_prefactor = fit_power(
+    all_n_tau_power, all_n_tau_prefactor = fit_power(
         np.array([row["n_spins"] for row in fig2b_rows], dtype=float),
         np.array(
             [row["tau_q_over_tau0_for_target_fidelity"] for row in fig2b_rows],
             dtype=float,
         ),
     )
-    fig2b_lzf_coefficient = float(parameters["fig2b_lzf_coefficient"])
+    asymptotic_rows = [
+        row
+        for row in fig2b_rows
+        if int(row["n_spins"])
+        >= int(parameters["tau99_asymptotic_fit_min_chain_length"])
+    ]
+    tau_power, tau_prefactor = fit_power(
+        np.array([row["n_spins"] for row in asymptotic_rows], dtype=float),
+        np.array(
+            [row["tau_q_over_tau0_for_target_fidelity"] for row in asymptotic_rows],
+            dtype=float,
+        ),
+    )
+    fit_minimum = float(parameters["landau_zener_fit_min_fidelity"])
+    fit_maximum = float(parameters["landau_zener_fit_max_fidelity"])
+    fig2b_lzf_coefficient, fig2b_lzf_fit_points = (
+        fit_landau_zener_coefficient_from_scaled_time(
+            [
+                float(parameters["fixed_tau_q_hbar_over_w"]) / row["n_spins"] ** 2
+                for row in fig2b_rows
+            ],
+            [row["fixed_time_fidelity_exact"] for row in fig2b_rows],
+            minimum_fidelity=fit_minimum,
+            maximum_fidelity=fit_maximum,
+        )
+    )
+    reported_fig2b_coefficient = float(parameters["reported_fig2b_lzf_coefficient"])
     for row in fig2b_rows:
         n_spins = int(row["n_spins"])
         row["tau_q_power_fit"] = tau_prefactor * n_spins**tau_power
+        row["lzf_fitted_coefficient"] = fig2b_lzf_coefficient
+        row["paper_reported_lzf_coefficient"] = reported_fig2b_coefficient
         row["fixed_time_lzf_fit"] = landau_zener_fidelity(
             n_spins,
             float(parameters["fixed_tau_q_hbar_over_w"]),
@@ -379,32 +468,49 @@ def main() -> int:
             else ""
         )
 
-    fig2c_coefficients = {
+    reported_fig2c_coefficients = {
         int(key): float(value)
-        for key, value in parameters["fig2c_lzf_coefficients_by_chain"].items()
+        for key, value in parameters["reported_fig2c_lzf_coefficients_by_chain"].items()
     }
+    fitted_lzf_coefficients: dict[int, float] = {}
+    fitted_lzf_point_counts: dict[int, int] = {}
+    for n_spins in sorted(
+        set(parameters["fig2c_chain_lengths"]) | set(parameters["main_chain_lengths"])
+    ):
+        source_rows = [row for row in results if int(row["n_spins"]) == int(n_spins)]
+        coefficient, point_count = fit_landau_zener_coefficient(
+            int(n_spins),
+            [0.5 / float(row["rate_tau0_over_tauq"]) for row in source_rows],
+            [float(row["fidelity_exact"]) for row in source_rows],
+            minimum_fidelity=fit_minimum,
+            maximum_fidelity=fit_maximum,
+        )
+        fitted_lzf_coefficients[int(n_spins)] = coefficient
+        fitted_lzf_point_counts[int(n_spins)] = point_count
     for row in fig2c_rows:
         n_spins = int(row["n_spins"])
         tau_q = 0.5 / float(row["rate_tau0_over_tauq"])
-        row["lzf_fit_coefficient"] = fig2c_coefficients[n_spins]
+        row["lzf_fit_coefficient"] = fitted_lzf_coefficients[n_spins]
+        row["paper_reported_lzf_coefficient"] = reported_fig2c_coefficients[n_spins]
+        row["lzf_fit_point_count"] = fitted_lzf_point_counts[n_spins]
         row["lzf_fit_fidelity"] = landau_zener_fidelity(
             n_spins,
             tau_q,
-            coefficient_a=fig2c_coefficients[n_spins],
+            coefficient_a=fitted_lzf_coefficients[n_spins],
         )
 
-    fig3_lzf_coefficient = float(parameters["fig3_lzf_coefficient"])
     for row in fig3_rows:
         n_spins = int(row["n_spins"])
         rate = float(row["rate_tau0_over_tauq"])
         exponent, prefactor = kzm_fits[n_spins]
         row["kzm_fit_kink_count"] = prefactor * rate**exponent
         row["kzm_fit_exponent"] = exponent
-        row["lzf_fit_coefficient"] = fig3_lzf_coefficient
+        row["lzf_fit_coefficient"] = fitted_lzf_coefficients[n_spins]
+        row["lzf_fit_point_count"] = fitted_lzf_point_counts[n_spins]
         row["lzf_kink_estimate"] = 1.0 - landau_zener_fidelity(
             n_spins,
             0.5 / rate,
-            coefficient_a=fig3_lzf_coefficient,
+            coefficient_a=fitted_lzf_coefficients[n_spins],
         )
 
     data_root = output_root / "data"
@@ -441,7 +547,15 @@ def main() -> int:
             "fixed_time_fidelity_exact",
             "fixed_time_fidelity_lower",
             "fixed_time_fidelity_upper",
+            "fidelity_at_crossing",
+            "crossing_lower_tau_q",
+            "crossing_upper_tau_q",
+            "crossing_function_calls",
+            "crossing_iterations",
+            "crossing_converged",
             "tau_q_power_fit",
+            "lzf_fitted_coefficient",
+            "paper_reported_lzf_coefficient",
             "fixed_time_lzf_fit",
         ],
     )
@@ -455,6 +569,8 @@ def main() -> int:
             "fidelity_upper_bound",
             "fidelity_exact",
             "lzf_fit_coefficient",
+            "paper_reported_lzf_coefficient",
+            "lzf_fit_point_count",
             "lzf_fit_fidelity",
         ],
     )
@@ -469,6 +585,7 @@ def main() -> int:
             "kzm_fit_kink_count",
             "kzm_fit_exponent",
             "lzf_fit_coefficient",
+            "lzf_fit_point_count",
             "lzf_kink_estimate",
         ],
     )
@@ -514,12 +631,32 @@ def main() -> int:
         )
         for parity in ["accessible_even", "inaccessible_odd"]
     }
-    expected_spectrum_curve_counts = {
-        "accessible_even": 1
-        + int(parameters["fig2a_chain_length"])
-        * (int(parameters["fig2a_chain_length"]) - 1)
-        // 2,
-        "inaccessible_odd": int(parameters["fig2a_chain_length"]),
+    spectrum_particle_counts = {
+        particle_count: len(
+            {
+                int(row["curve_id"])
+                for row in spectrum_rows
+                if int(row["particle_count"]) == particle_count
+            }
+        )
+        for particle_count in range(int(grids["spectrum_max_particles"]) + 1)
+    }
+    required_spectrum_cutoff = required_excitation_particle_cutoff(
+        int(parameters["fig2a_chain_length"]),
+        fields,
+        coupling_w=float(parameters["coupling_w"]),
+        max_energy=float(grids["spectrum_max_energy"]),
+    )
+    fig2b_lzf_relative_error = (
+        abs(fig2b_lzf_coefficient - reported_fig2b_coefficient)
+        / reported_fig2b_coefficient
+    )
+    fig2c_lzf_relative_errors = {
+        str(n_spins): abs(
+            fitted_lzf_coefficients[n_spins] - reported_fig2c_coefficients[n_spins]
+        )
+        / reported_fig2c_coefficients[n_spins]
+        for n_spins in sorted(reported_fig2c_coefficients)
     }
 
     acceptance = config["acceptance"]
@@ -531,6 +668,14 @@ def main() -> int:
         "n100_kzm_prefactor": kzm_prefactor,
         "tau99_power": tau_power,
         "tau99_prefactor": tau_prefactor,
+        "tau99_all_n_power": all_n_tau_power,
+        "tau99_all_n_prefactor": all_n_tau_prefactor,
+        "tau99_asymptotic_fit_min_chain_length": int(
+            parameters["tau99_asymptotic_fit_min_chain_length"]
+        ),
+        "tau99_max_crossing_residual": max(
+            abs(float(row["fidelity_at_crossing"]) - target) for row in fig2b_rows
+        ),
         "tau99_axis_unit_conversion_max_error": max(
             abs(
                 row["tau_q_over_tau0_for_target_fidelity"]
@@ -547,7 +692,19 @@ def main() -> int:
         "periodic_open_kink_relative_gap": periodic_open_gap,
         "periodic_crosscheck": periodic_cross,
         "spectrum_curve_counts": spectrum_curve_counts,
-        "expected_spectrum_curve_counts": expected_spectrum_curve_counts,
+        "spectrum_particle_counts": spectrum_particle_counts,
+        "configured_spectrum_particle_cutoff": int(grids["spectrum_max_particles"]),
+        "required_spectrum_particle_cutoff": required_spectrum_cutoff,
+        "fig2b_lzf_fitted_coefficient": fig2b_lzf_coefficient,
+        "fig2b_lzf_fit_point_count": fig2b_lzf_fit_points,
+        "fig2b_lzf_reported_relative_error": fig2b_lzf_relative_error,
+        "fig2c_lzf_fitted_coefficients": {
+            str(key): value for key, value in sorted(fitted_lzf_coefficients.items())
+        },
+        "fig2c_lzf_fit_point_counts": {
+            str(key): value for key, value in sorted(fitted_lzf_point_counts.items())
+        },
+        "fig2c_lzf_reported_relative_errors": fig2c_lzf_relative_errors,
     }
     gates = {
         "covariance_purity": metrics["max_purity_error"]
@@ -564,11 +721,18 @@ def main() -> int:
         "tau99_power": acceptance["tau99_power_range"][0]
         <= tau_power
         <= acceptance["tau99_power_range"][1],
+        "tau99_crossing_residual": metrics["tau99_max_crossing_residual"]
+        <= acceptance["max_tau99_fidelity_residual"],
         "tau99_axis_units": metrics["tau99_axis_unit_conversion_max_error"] <= 1.0e-12,
         "periodic_open_crosscheck": periodic_open_gap
         <= acceptance["max_periodic_open_kink_relative_gap"],
-        "spectrum_sector_coverage": spectrum_curve_counts
-        == expected_spectrum_curve_counts,
+        "spectrum_sector_coverage": int(grids["spectrum_max_particles"])
+        >= required_spectrum_cutoff
+        and all(spectrum_particle_counts.values()),
+        "lzf_coefficient_recovery": max(
+            [fig2b_lzf_relative_error, *fig2c_lzf_relative_errors.values()]
+        )
+        <= acceptance["max_lzf_coefficient_relative_error"],
     }
     checks = {
         "schema_version": 1,

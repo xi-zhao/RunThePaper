@@ -71,11 +71,11 @@
       },
       "evidence": [
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
         "outputs/checks/pixel_evidence.json",
         "outputs/checks/target_contracts.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context independent scientific review.",
       "physics_assertions": [
         {
           "assertion_id": "t001_dense_crosscheck",
@@ -186,11 +186,11 @@
       },
       "evidence": [
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
         "outputs/checks/pixel_evidence.json",
         "outputs/checks/target_contracts.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context independent scientific review.",
       "physics_assertions": [
         {
           "assertion_id": "t002_current_crosscheck",
@@ -308,11 +308,11 @@
       },
       "evidence": [
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
         "outputs/checks/pixel_evidence.json",
         "outputs/checks/target_contracts.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context independent scientific review.",
       "physics_assertions": [
         {
           "assertion_id": "t003_exponent",
@@ -410,9 +410,9 @@
       "evidence": [
         "outputs/data/quantitative_claims.json",
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json"
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context independent scientific review.",
       "physics_assertions": [
         {
           "assertion_id": "t004_root_of_unity",
@@ -460,17 +460,17 @@
       "score_aggregation": "included",
       "components": {
         "feature_match": {
-          "score": 50.0,
-          "reason": "The connected sigma-z correlator and its printed continuum kernel are independently evaluated.",
+          "score": 35.0,
+          "reason": "The finite connected correlator is reproduced exactly, but the printed leading kernel fails its exact mirror symmetry.",
           "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 35.0,
-          "reason": "The largest-size finite-chain result approaches the printed leading 1/n kernel with 15.16 percent relative error, inside the declared finite-size convergence tolerance.",
+          "score": 20.0,
+          "reason": "The exact finite mirror error is below 7.2e-14, whereas the printed scaled kernel mismatch remains above 0.00856.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 15.0,
+          "score": 7.5,
           "reason": "Both printed coordinate pairs and three convergence sizes are covered.",
           "max_score": 15.0
         }
@@ -482,11 +482,11 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "none",
+        "failure_type": "source_discrepancy",
         "parameter_match": "paper_exact",
         "artifact_stage": "final_reproduction",
         "generated_data_provenance": "independent_numerics",
-        "formula_gate": "verified",
+        "formula_gate": "blocked",
         "formula_dependencies": [
           "EQ003",
           "EQ009"
@@ -497,22 +497,116 @@
         "pixel_alternative_evidence": [
           "outputs/data/correlation_checks.csv",
           "outputs/checks/science_checks.json"
-        ]
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The printed leading correlation kernel violates the exact reflection-plus-spin-flip symmetry by at least 0.00856 after scaling, while the finite MPO respects it to 7.2e-14.",
+            "evidence": [
+              "outputs/data/correlation_checks.csv",
+              "outputs/data/quantitative_claims.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "A publication-side formula transcription is the leading hypothesis after exact algebraic and independent numerical checks.",
+            "confidence": "probable",
+            "evidence": [
+              "outputs/data/correlation_checks.csv",
+              "outputs/data/quantitative_claims.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after direct dense-state, exact symmetry and equation-substitution checks.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A full-density calculation independently reproduces the finite transfer observables.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The discrepancy follows from an exact symmetry or direct symbolic substitution, not a fitted visual comparator.",
+                "evidence": [
+                  "outputs/data/correlation_checks.csv",
+                  "outputs/data/quantitative_claims.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every symbol used by the discrepancy test is tied to the printed equation and paper-exact regime.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "EQUATION_CARDS.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The finite-size mirror identity remains at roundoff while the printed scaled gap stays nonzero across the declared size sequence.",
+                "evidence": [
+                  "outputs/data/correlation_checks.csv",
+                  "outputs/data/quantitative_claims.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent dense and algebraic paths agree with the reproduced finite object.",
+              "evidence": [
+                "outputs/checks/science_checks.json",
+                "tests/test_transfer.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "All quantities needed for the exact symmetry or substitution check are printed in the paper.",
+              "evidence": [
+                "parameter_provenance.json",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The printed leading connected-correlation kernel is disputed; the separate weak-coupling claim is unaffected.",
+            "items": [
+              "T005"
+            ],
+            "completion": "Numerical reproduction complete; publication claim adjudication pending fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Have a fresh-context reviewer rederive both kernel branches and test variable/sign transcriptions.",
+            "expected_resolution": "Independent agreement promotes a paper-error candidate; disagreement reopens the implementation diagnosis.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/correlation_checks.csv",
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json"
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context adjudication of the stable printed-kernel discrepancy.",
       "physics_assertions": [
         {
           "assertion_id": "t005_kernel",
           "tier": "numeric",
           "essential": true,
-          "status": "passed",
+          "status": "failed",
           "evidence": "outputs/checks/science_checks.json",
-          "claim": "Finite exact correlations converge toward the printed 1/n continuum kernel."
+          "claim": "The finite NESS obeys the exact symmetry, but the printed leading kernel does not."
         }
       ],
       "figure_refs": [
@@ -522,28 +616,28 @@
         "panels": [
           {
             "panel_id": "kernel",
-            "status": "reproduced",
+            "status": "partial",
             "evidence": "outputs/data/correlation_checks.csv"
           }
         ],
-        "panel_scope_cap": 15.0
+        "panel_scope_cap": 7.5
       },
       "critical": false,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "passed",
-      "formula_score_cap": 100.0,
+      "physics_status": "failed",
+      "formula_score_cap": 55.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
+      "physics_score_cap": 55.0,
       "parameter_score_cap": 100.0,
       "reference_score_cap": 90.0,
-      "component_total": 100.0,
-      "score": 90.0,
-      "similarity_level": "complete_reproduction",
-      "causal_diagnosis_required": false,
-      "causal_diagnosis_status": "not_required",
-      "causal_diagnosis_disposition": "not_required"
+      "component_total": 62.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T006",
@@ -580,7 +674,7 @@
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
         "formula_dependencies": [
-          "EQ009"
+          "EQ014"
         ],
         "reference_comparison": "analytic_reference",
         "pixel_status": "not_comparable",
@@ -593,9 +687,9 @@
       "evidence": [
         "outputs/data/quantitative_claims.json",
         "outputs/checks/science_checks.json",
-        "outputs/runs/1106.2978-paper-exact-v3/run_attestation.json"
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json"
       ],
-      "remaining_gap": "Fresh-context independent scientific review remains outstanding.",
+      "remaining_gap": "Fresh-context independent scientific review.",
       "physics_assertions": [
         {
           "assertion_id": "t006_weak_limit",
@@ -635,56 +729,1574 @@
       "causal_diagnosis_required": false,
       "causal_diagnosis_status": "not_required",
       "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T007",
+      "label": "Finite MPO theorem and Lindblad fixed point",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Explicit MPO densities agree with a structurally independent dense Liouvillian solver below 4.6e-16.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ010"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t007_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Explicit MPO densities agree with a structurally independent dense Liouvillian solver below 4.6e-16."
+        }
+      ],
+      "figure_refs": [
+        "Eqs. (4)-(10) and theorem"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T008",
+      "label": "Upper-triangular Cholesky factor and full rank",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Triangularity and unit diagonal hold exactly; every tested density matrix has a positive minimum eigenvalue.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ011"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t008_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Triangularity and unit diagonal hold exactly; every tested density matrix has a positive minimum eigenvalue."
+        }
+      ],
+      "figure_refs": [
+        "Corollary (ii)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T009",
+      "label": "Exact finite auxiliary cutoff",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The minimal d=1+floor(n/2) contraction agrees entrywise with an enlarged auxiliary space for n=2..6.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ011"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t009_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The minimal d=1+floor(n/2) contraction agrees entrywise with an enlarged auxiliary space for n=2..6."
+        }
+      ],
+      "figure_refs": [
+        "Corollary (iv)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T010",
+      "label": "Polynomial degree in boundary coupling",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The normalization has degree 2n-2 with sub-1e-11 residual and a nonzero leading coefficient.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ011"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t010_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The normalization has degree 2n-2 with sub-1e-11 residual and a nonzero leading coefficient."
+        }
+      ],
+      "figure_refs": [
+        "Corollary (v)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T011",
+      "label": "Transfer observables versus the full density matrix",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "One- and two-point observables and current agree with direct density-matrix traces on every small-chain probe.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ003",
+          "EQ004",
+          "EQ011"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t011_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "One- and two-point observables and current agree with direct density-matrix traces on every small-chain probe."
+        }
+      ],
+      "figure_refs": [
+        "Eqs. (13)-(18)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T012",
+      "label": "Hopping-vertex identity and current conservation",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The printed W identity holds at machine precision and dense bond currents are site independent.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ004"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t012_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The printed W identity holds at machine precision and dense bond currents are site independent."
+        }
+      ],
+      "figure_refs": [
+        "Text following Eq. (18)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T013",
+      "label": "Quadratic transfer-contraction complexity",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The exact band-operation count scales with fitted exponent 1.9736 over n=80..640.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ012"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t013_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The exact band-operation count scales with fitted exponent 1.9736 over n=80..640."
+        }
+      ],
+      "figure_refs": [
+        "Complexity statement before Eq. (19)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T014",
+      "label": "Root-of-unity cutoff index and parity",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 35.0,
+          "reason": "Full Eq. (7) substitution leaves the paper-named r=m component nonzero for m=3..8, while the opposite hopping vanishes at r=m-1 and yields the m-state space used by the paper's own m=3 example.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 20.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "blocked",
+        "formula_dependencies": [
+          "EQ002",
+          "EQ015"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "For m=3..8, the full Eq. (7) amplitudes leave the paper-named component at r=m nonzero, while the opposite hopping vanishes at r=m-1 and produces an m-state auxiliary space rather than H_(m+1).",
+            "evidence": [
+              "outputs/data/quantitative_claims.json",
+              "EQUATION_CARDS.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The prose appears to shift the true cutoff from r=m-1 to r=m and consequently assigns both the wrong hopping parity and the wrong auxiliary dimension.",
+            "confidence": "probable",
+            "evidence": [
+              "outputs/data/quantitative_claims.json",
+              "EQUATION_CARDS.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "An earlier reproduction diagnostic incorrectly forced a singular same-index tau branch and called the result a label swap. That code defect has been removed; the repaired single-source Eq. (7) implementation now agrees with the full amplitude arrays and the paper's m=3 matrix.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A full-density calculation independently reproduces the finite transfer observables.",
+                "evidence": [
+                  "outputs/checks/science_checks.json"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The discrepancy follows from an exact symmetry or direct symbolic substitution, not a fitted visual comparator.",
+                "evidence": [
+                  "outputs/data/quantitative_claims.json",
+                  "EQUATION_CARDS.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every symbol used by the discrepancy test is tied to the printed equation and paper-exact regime.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "EQUATION_CARDS.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The full Eq. (7) gives a nonzero paper-named r=m component and an exact opposite-parity zero at r=m-1, without a discretization or fit.",
+                "evidence": [
+                  "outputs/data/quantitative_claims.json",
+                  "EQUATION_CARDS.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent dense and algebraic paths agree with the reproduced finite object.",
+              "evidence": [
+                "outputs/checks/science_checks.json",
+                "tests/test_transfer.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "All quantities needed for the exact symmetry or substitution check are printed in the paper.",
+              "evidence": [
+                "parameter_provenance.json",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The cutoff index, parity assignment and m+1-dimensional claim in the root-of-unity sentence are disputed; the separately printed m=3 reduced matrix is supported.",
+            "items": [
+              "T014"
+            ],
+            "completion": "Numerical reproduction complete; publication claim adjudication pending fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Have a fresh-context reviewer rederive the cutoff from the complete Eq. (7), including the nonsingular tau branch and the m=3 dimensionality cross-check.",
+            "expected_resolution": "Independent agreement promotes a paper-error candidate; disagreement reopens the implementation diagnosis.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context adjudication of the stable publication discrepancy.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t014_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Full Eq. (7) substitution leaves the paper-named r=m component nonzero for m=3..8, while the opposite hopping vanishes at r=m-1 and yields the m-state space used by the paper's own m=3 example."
+        }
+      ],
+      "figure_refs": [
+        "Root-of-unity paragraph before Eq. (19)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "partial",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": true,
+      "physics_status": "failed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 62.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T015",
+      "label": "Reduced easy-plane transfer matrix",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The finite transfer process reduces to the printed three-state matrix across all declared boundary couplings.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ005"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t015_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The finite transfer process reduces to the printed three-state matrix across all declared boundary couplings."
+        }
+      ],
+      "figure_refs": [
+        "Eq. (19)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T016",
+      "label": "Easy-axis coupling-independent asymptotics",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Profiles become coupling independent and every fitted current slope matches -arcosh(3/2).",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ007"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t016_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Profiles become coupling independent and every fitted current slope matches -arcosh(3/2)."
+        }
+      ],
+      "figure_refs": [
+        "Easy-axis paragraph"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T017",
+      "label": "Isotropic auxiliary amplitudes",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The lambda-to-zero auxiliary amplitudes satisfy the printed finite-r recurrences and boundary values.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ008",
+          "EQ013"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t017_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The lambda-to-zero auxiliary amplitudes satisfy the printed finite-r recurrences and boundary values."
+        }
+      ],
+      "figure_refs": [
+        "Isotropic limit following Eq. (19)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T018",
+      "label": "Isotropic transfer identities and alpha",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Double-commutator and boundary identities hold and controlled 1/n extrapolation recovers alpha near 0.0346.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ013"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t018_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Double-commutator and boundary identities hold and controlled 1/n extrapolation recovers alpha near 0.0346."
+        }
+      ],
+      "figure_refs": [
+        "Eqs. (20)-(22)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T019",
+      "label": "Continuum cosine magnetization profile",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Finite isotropic profiles converge monotonically to M(x)=cos(pi x) over n=40..160.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ008",
+          "EQ013"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t019_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Finite isotropic profiles converge monotonically to M(x)=cos(pi x) over n=40..160."
+        }
+      ],
+      "figure_refs": [
+        "Continuum derivation after Eq. (22)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T020",
+      "label": "Easy-plane spectral convergence and flat thermodynamic profile",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Finite-current errors converge at the two-leading-eigenvalue ratio, while the Perron-state magnetization vanishes and bulk profiles flatten.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ005",
+          "EQ016"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t020_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Finite-current errors converge at the two-leading-eigenvalue ratio, while the Perron-state magnetization vanishes and bulk profiles flatten."
+        }
+      ],
+      "figure_refs": [
+        "Easy-plane paragraph following the reduced transfer matrix"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T021",
+      "label": "Infinite transfer rank for Delta greater than or equal to one",
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "For every requested rank, a shifted triangular transfer minor has a nonzero diagonal certified by the printed amplitudes.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Exact identities, convergence probes and independent implementations are used instead of source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The full printed quantitative statement and all of its declared branches are tested.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ002",
+          "EQ017"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a body-level quantitative theorem or formula claim, not a plotted panel.",
+        "pixel_alternative_evidence": [
+          "outputs/data/quantitative_claims.json",
+          "outputs/checks/science_checks.json"
+        ]
+      },
+      "evidence": [
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/1106.2978-paper-exact-v6/run_attestation.json",
+        "outputs/checks/target_contracts.json"
+      ],
+      "remaining_gap": "Fresh-context independent scientific review.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t021_science",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "For every requested rank, a shifted triangular transfer minor has a nonzero diagonal certified by the printed amplitudes."
+        }
+      ],
+      "figure_refs": [
+        "Easy-axis paragraph before the isotropic section"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "evidence": "outputs/data/quantitative_claims.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
-  "overall_score": 89.71,
+  "overall_score": 86.58,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 6,
-    "critical_items": 4,
+    "scored_items": 21,
+    "critical_items": 8,
     "artifact_pass_rate": 1.0,
     "data_backed_rate": 1.0,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "none": 6
+      "none": 19,
+      "source_discrepancy": 2
     },
     "parameter_match_counts": {
-      "paper_exact": 6
+      "paper_exact": 21
     },
     "reference_comparison_counts": {
-      "analytic_reference": 6
+      "analytic_reference": 21
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 6
+      "independent_numerics": 21
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 6
+      "physics_reproduction": 21
     },
     "formula_gate_counts": {
-      "verified": 6
+      "verified": 19,
+      "blocked": 2
     },
     "paper_level_role_counts": {
-      "main_claim": 4,
-      "supporting": 2
+      "main_claim": 8,
+      "supporting": 13
     },
     "physics_status_counts": {
-      "passed": 6
+      "passed": 19,
+      "failed": 2
     },
     "physics_assertion_status_counts": {
-      "passed": 10
+      "passed": 23,
+      "failed": 2
     },
-    "essential_physics_failures": [],
-    "final_reproduction_ready": true,
+    "essential_physics_failures": [
+      "T005",
+      "T014"
+    ],
+    "final_reproduction_ready": false,
     "final_reproduction_target_ids": [
       "T001",
       "T002",
       "T003",
       "T004",
       "T005",
-      "T006"
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016",
+      "T017",
+      "T018",
+      "T019",
+      "T020",
+      "T021"
     ],
-    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_blocked_target_ids": [
+      "T005",
+      "T014"
+    ],
+    "final_reproduction_block_reasons": {
+      "T005": [
+        "formula_gate_not_verified",
+        "science_checks_not_passed"
+      ],
+      "T014": [
+        "formula_gate_not_verified",
+        "science_checks_not_passed"
+      ]
+    },
     "exploratory_target_ids": [],
     "aggregate_included_target_ids": [
       "T001",
@@ -692,22 +2304,51 @@
       "T003",
       "T004",
       "T005",
-      "T006"
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016",
+      "T017",
+      "T018",
+      "T019",
+      "T020",
+      "T021"
     ],
     "aggregate_excluded_target_ids": [],
     "causal_diagnosis_status_counts": {
-      "not_required": 6
+      "not_required": 19,
+      "complete": 2
     },
     "causal_diagnosis_disposition_counts": {
-      "not_required": 6
+      "not_required": 19,
+      "terminal_blocker": 2
     },
-    "causal_diagnosis_required_target_ids": [],
+    "causal_diagnosis_required_target_ids": [
+      "T005",
+      "T014"
+    ],
     "causal_diagnosis_incomplete_target_ids": [],
-    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T005",
+      "T014"
+    ],
     "causal_diagnosis_react_loop_target_ids": [],
-    "direct_cause_counts": {},
-    "root_cause_counts": {},
-    "code_fault_status_counts": {}
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 2
+    },
+    "root_cause_counts": {
+      "paper_claim_discrepancy": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 2
+    }
   },
   "status": "passed"
 }
