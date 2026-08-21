@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "paper_id": "0709.0548",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Separable nonclassical state",
+      "role": "opening quantitative example",
+      "latex": "rho=1/4 (|+><+|x|0><0|+|-><-|x|1><1|+|0><0|x|-><-|+|1><1|x|+><+|)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:112-131"
+        }
+      ],
+      "derived_from": [
+        "four normalized product-state projectors"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "4x4 density matrix; negativity and optimized discord",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four terms and coefficients are explicit in Eq. (1)."
+        },
+        {
+          "id": "EQ001-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Trace, positivity, PPT, and discord are evaluated independently."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::separable_example_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Quantum discord",
+      "role": "scientific observable",
+      "latex": "D(S,M)=H(M)-H(S,M)+min_{Pi} sum_j p_j H(rho_{S|j})",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:141-225"
+        }
+      ],
+      "derived_from": [
+        "mutual information minus optimized classical correlation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense projective grid for Eq. (1); eigenphase grid for DQC1",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All entropy terms and the projective optimization are explicit."
+        },
+        {
+          "id": "EQ002-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "alpha=0 has zero discord and the Eq. (1) state remains positive."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::two_qubit_discord_second",
+        "src/dqc1_discord/model.py::discord_from_eigenphases"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "DQC1 final state",
+      "role": "model state",
+      "latex": "rho=[I,alpha U^dagger;alpha U,I]/2^(n+1)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:267-280"
+        }
+      ],
+      "derived_from": [
+        "Hadamard plus controlled-U circuit"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dense block matrix for independent small-n validation",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (9) prints every block and normalization factor."
+        },
+        {
+          "id": "EQ003-T",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The control coherence reproduces alpha Tr(U)/2^n."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::dqc1_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "DQC1 spectra and entropies",
+      "role": "closed-form invariant",
+      "latex": "lambda(rho)=(1+-alpha)/2^(n+1), H(S,M)=n+H2((1-alpha)/2)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:287-312"
+        }
+      ],
+      "derived_from": [
+        "unitary diagonalization of the block matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "sorted eigenvalue and entropy comparison",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (10)-(13) print the spectrum and entropy formulas."
+        },
+        {
+          "id": "EQ004-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Dense eigenvalues agree to machine precision."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Post-measurement eigenphase spectrum",
+      "role": "conditional entropy",
+      "latex": "q_{k+-}=(1+-alpha cos(theta_k-phi))/(2^n[1+-alpha(tau_R cos phi+tau_I sin phi)])",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:314-366"
+        }
+      ],
+      "derived_from": [
+        "spectral theorem for U and one-qubit projectors"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "probability vectors minimized over phi",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The conditional probabilities and phase convention are explicit."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Both conditional spectra normalize for every sampled phase."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::discord_from_eigenphases"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Finite eigenphase sum",
+      "role": "finite-n numerical curve",
+      "latex": "Htilde=n-2^(-n-1) sum_k[log(1-alpha^2 cos^2 theta_k)+alpha cos theta_k log((1+alpha cos theta_k)/(1-alpha cos theta_k))]",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:369-416"
+        }
+      ],
+      "derived_from": [
+        "Eq. (20) with typical tau approximately zero"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "500 QR-Haar and 500 independent local-circuit U(32) eigenphase sets with every instance value frozen",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (21) and the Main Fig. 1 caption define the sum, n=5, and ensemble size."
+        },
+        {
+          "id": "EQ006-H",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Both independent ensembles retain pointwise values, sampling uncertainty, eigenphases, and generator provenance; no ad hoc curve-distance threshold is used."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The paper does not publish its pseudorandom seed or raw 500-instance array."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Typical-unitary discord",
+      "role": "Main Fig. 1 analytic curve",
+      "latex": "D=2-H2((1-alpha)/2)-log2(1+sqrt(1-alpha^2))-(1-sqrt(1-alpha^2))log2(e)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:417-448"
+        }
+      ],
+      "derived_from": [
+        "uniform root-of-unity limit of EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed form plus 4096-root phase sum",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (23) and its endpoint are printed explicitly."
+        },
+        {
+          "id": "EQ007-R",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The discrete root limit and alpha endpoints agree with the closed form."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::analytic_typical_discord"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Constructive control-register separability",
+      "role": "all-stage separability certificate",
+      "latex": "rho_DQC1=2^{-n} sum_k rho_M(theta_k) tensor |u_k><u_k|",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:249-280"
+        }
+      ],
+      "derived_from": [
+        "spectral theorem for the controlled unitary",
+        "positive control factors with eigenvalues (1 plus or minus alpha)/2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit product-mixture reconstruction across n, alpha, and five unitary-path stages",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The DQC1 block state and all-time separability claim are explicit in the paper."
+        },
+        {
+          "id": "EQ008-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The product mixture reconstructs the block state to machine precision and every factor is positive."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::dqc1_separable_reconstruction",
+        "src/dqc1_discord/model.py::unitary_power"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Grouped-partition entanglement witnesses",
+      "role": "finite bipartition audit",
+      "latex": "N_A=(||rho^{T_A}||_1-1)/2; separable implies ||R(rho)||_1<=1",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:249-267"
+        }
+      ],
+      "derived_from": [
+        "partial-transpose spectrum",
+        "computable cross-norm criterion"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "all grouped-control bipartitions through five register qubits",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The grouped-partition negativity claim is explicit in the paper."
+        },
+        {
+          "id": "EQ009-B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Zero negativity or realignment norm below one is recorded as non-detection, never as a separability proof."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::negativity",
+        "src/dqc1_discord/model.py::realignment_trace_norm"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "First symmetric-extension feasibility problem",
+      "role": "external entanglement-test boundary",
+      "latex": "find X_ABB' >= 0: Swap_BB'(X)=X, Tr_B'(X)=rho_AB",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:455-481"
+        }
+      ],
+      "derived_from": [
+        "first level of the cited Doherty hierarchy"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "numerical_form": "machine-readable variable dimensions and affine/PSD constraint contract",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly cites the first Doherty level and a private calculation."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The exact SDP dimensions and constraints are emitted; no result is claimed without a PSD-cone solver and certificate."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::first_symmetric_extension_contract"
+      ],
+      "open_questions": [
+        "The paper gives no solver, tolerance, seed, or primal/dual certificate for the cited private calculation."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Finite root-grid periodicity",
+      "role": "paper-claim falsification",
+      "latex": "{2 pi k/N - phi} is permutation invariant only for phi=2 pi m/N at finite N",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:369-416"
+        }
+      ],
+      "derived_from": [
+        "finite cyclic group action",
+        "conditional probability spectrum"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "phi sweeps for N=4 through 4096 and alpha=0.5,1",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The finite root placement and phi-independence wording is explicit in the paper."
+        },
+        {
+          "id": "EQ011-F",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Finite N=32 discord varies with phi while the variation converges toward zero as N grows."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::discord_at_phi",
+        "scripts/run_reproduction.py::root_phi_rows"
+      ],
+      "open_questions": [
+        "The literal finite-N phrasing is false; the continuum-limit statement remains valid."
+      ]
+    },
+    {
+      "id": "EQ012",
+      "title": "Fixed-accuracy DQC1 sampling overhead",
+      "role": "trace-estimation complexity claim",
+      "latex": "Var[\\hat{t}] \\le 1/(M \\alpha^2), \\quad M \\ge 1/(\\alpha^2 \\epsilon^2)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/DQCdiscordPRL.tex:249-259"
+        }
+      ],
+      "derived_from": [
+        "bounded variance of a Pauli control measurement",
+        "normalized trace obtained by division by alpha"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact integer shot bound over four polarizations, four register sizes and fixed RMS error",
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly states the 1/alpha squared repetition overhead for fixed accuracy."
+        },
+        {
+          "id": "EQ012-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The generated shot counts scale exactly as 1/alpha squared and do not depend on n."
+        }
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py::dqc1_sampling_bound",
+        "scripts/run_reproduction.py::sampling_complexity_rows"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-9709029",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Convex-roof entanglement of formation",
+      "role": "definition and optimization target",
+      "latex": "E(rho)=min_{p_i,psi_i} sum_i p_i E(psi_i)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:81-114"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (1)-(3)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit optimal ensembles attain both the concurrence and entanglement convex roofs",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The convex-roof definition and pure-state entropy are explicit."
+        },
+        {
+          "id": "EQ001-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Forward and inverse HJW maps reconstruct rho, and the constructive optimum attains E(C(rho))."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::hjw_decomposition",
+        "src/wootters/model.py::hjw_isometry_from_decomposition",
+        "src/wootters/model.py::optimal_decomposition"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Two-qubit spin flip and magic basis",
+      "role": "antiunitary map",
+      "latex": "tilde(rho)=(sigma_y tensor sigma_y) rho* (sigma_y tensor sigma_y)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:126-166"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (4)-(5) and magic-basis paragraph"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "fixed 4x4 spin flip and a basis where it is coefficient conjugation",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The state, density-matrix, and magic-basis maps are explicit."
+        },
+        {
+          "id": "EQ002-I",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Applying spin flip twice returns the original state or density matrix."
+        },
+        {
+          "id": "EQ002-M",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "In the explicit magic basis, spin flip is coefficient-wise complex conjugation."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::spin_flip_state",
+        "src/wootters/model.py::spin_flip_density",
+        "src/wootters/model.py::magic_basis"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Pure-state concurrence and entropy",
+      "role": "T001",
+      "latex": "C(psi)=|<psi|tilde(psi)>|, E(psi)=mathcal E(C)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:174-224"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (6)-(8)",
+        "Schmidt eigenvalues"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "partial-trace entropy versus binary entropy of concurrence",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Concurrence and mathcal E are printed explicitly."
+        },
+        {
+          "id": "EQ003-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Product states give zero and Bell states give one."
+        },
+        {
+          "id": "EQ003-R",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "Random pure-state partial-trace entropies equal mathcal E(C)."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::pure_concurrence",
+        "src/wootters/model.py::pure_entanglement",
+        "src/wootters/model.py::entanglement_from_concurrence"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Mixed-state concurrence formula",
+      "role": "T002 and T003",
+      "latex": "C(rho)=max(0,lambda1-lambda2-lambda3-lambda4)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:226-274"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (9)-(10)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "singular values of the proof tau matrix cross-checked against rho tilde(rho)",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both equivalent spectral definitions are explicit."
+        },
+        {
+          "id": "EQ004-E",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "The tau singular values and rho-tilde product spectrum agree for the frozen campaign."
+        },
+        {
+          "id": "EQ004-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Pure states reduce to one nonzero lambda equal to pure-state concurrence."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::concurrence",
+        "src/wootters/model.py::concurrence_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "HJW decompositions, lower bound, and constructive optimum",
+      "role": "T004 and T005",
+      "latex": "w_i=sum_j U_ij* v_j; <C>=sum_i |(VYV^T)_ii| >= C(rho)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:289-520"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (11)-(18)",
+        "Takagi factorization",
+        "triangle inequality",
+        "real equalizing rotations"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Takagi tilde-orthogonal states, signed preconcurrences, real rotations, and forward/inverse HJW maps",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The HJW prescription, lower bound, and constructive optimum are explicit."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Generated and recovered HJW ensembles reconstruct rho to machine precision."
+        },
+        {
+          "id": "EQ005-B",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "No sampled decomposition violates the analytic lower bound."
+        },
+        {
+          "id": "EQ005-T",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "Takagi states and real rotations produce equal-preconcurrence ensembles attaining both C(rho) and E(C(rho))."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::hjw_decomposition",
+        "src/wootters/model.py::hjw_isometry_from_decomposition",
+        "src/wootters/model.py::tilde_orthogonal_decomposition",
+        "src/wootters/model.py::equal_preconcurrence_decomposition",
+        "src/wootters/model.py::optimal_decomposition"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Zero-concurrence decomposition",
+      "role": "T006",
+      "latex": "sum_j exp(2 i theta_j) lambda_j=0 when lambda1 <= lambda2+lambda3+lambda4",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:522-573"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (23)-(24)",
+        "polygon closure"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "lambda-polygon phase closure followed by the printed four-row Hadamard sign construction",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four-state phase construction and closure condition are explicit."
+        },
+        {
+          "id": "EQ006-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Independent mixtures of product states have zero concurrence and positive partial transpose."
+        },
+        {
+          "id": "EQ006-C",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "Random and Bell-diagonal negative-branch states are reconstructed by four zero-concurrence subnormalized states."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::zero_concurrence_decomposition",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Pure-state asymptotic entanglement rate",
+      "role": "T007",
+      "latex": "R_{singlet}(psi)=E(psi)=H_2(p)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:116-122,571-587"
+        }
+      ],
+      "derived_from": [
+        "Schmidt coefficients p and 1-p",
+        "binomial typical-subspace concentration"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact binomial-type mass and typical-subspace dimension rate through 32768 copies",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states the asymptotic conversion and communication-rate interpretation explicitly."
+        },
+        {
+          "id": "EQ007-T",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The exact binomial typical mass tends to one and its dimension rate tends to H2(p)."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::typical_subspace_record",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The cited external converse and achievability proofs are not bundled; finite typical-subspace numerics do not replace those theorems."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Previously proved rank-two scope",
+      "role": "T008",
+      "latex": "rank(rho)<=2 implies E(rho)=mathcal E(C(rho))",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:234-241"
+        }
+      ],
+      "derived_from": [
+        "EQ004",
+        "the paper's historical statement about Ref. HW"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "independent rank-one and rank-two optimal-decomposition campaign",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The current paper explicitly states the earlier rank-at-most-two scope."
+        },
+        {
+          "id": "EQ008-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All frozen rank-one and rank-two cases attain the formula."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The historical proof in Ref. HW is not included in the review bundle, so attribution and theorem-condition identity remain source-limited."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Equal-entanglement optimal ensemble",
+      "role": "T009",
+      "latex": "E(psi_i)=mathcal E(C(rho)) for every nonzero component of an optimal ensemble",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:244-251,450-468"
+        }
+      ],
+      "derived_from": [
+        "EQ005",
+        "continuous equal-preconcurrence rotations"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "per-component entanglement spread for every constructive optimal ensemble",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper both attributes and independently proves an equal-entanglement construction."
+        },
+        {
+          "id": "EQ009-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The component spread is frozen, rather than inferred only from the ensemble average."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::optimal_decomposition",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The unpublished Uhlmann source cannot be audited, although the present paper's own construction is independently executable."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Finite pure-state ensemble cardinality bound",
+      "role": "T010",
+      "latex": "m<=d^2=16 for d=4",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:481-490"
+        }
+      ],
+      "derived_from": [
+        "the real affine dimension d^2-1 of density matrices",
+        "Caratheodory's convex-hull theorem"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dimension count plus constructive ensembles using at most four states",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states the m<=16 prior-result bound."
+        },
+        {
+          "id": "EQ010-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "A 4x4 density matrix has affine dimension 15, giving at most 16 pure-state points."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/model.py::caratheodory_ensemble_bound",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The cited external source is not bundled; the dimension derivation verifies the bound but not its attribution."
+      ]
+    }
+  ]
+}

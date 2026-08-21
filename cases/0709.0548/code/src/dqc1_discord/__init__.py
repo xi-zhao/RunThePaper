@@ -1,0 +1,41 @@
+"""Independent formulas and numerics for DQC1 quantum discord."""
+
+from .model import (
+    analytic_typical_discord,
+    binary_entropy,
+    brickwork_pseudorandom_unitary,
+    discord_at_phi,
+    discord_from_eigenphases,
+    dqc1_sampling_bound,
+    dqc1_separable_reconstruction,
+    dqc1_state,
+    eigenphase_spacing_statistics,
+    first_symmetric_extension_contract,
+    foundational_information_audit,
+    haar_unitary,
+    negativity,
+    realignment_trace_norm,
+    separable_example_state,
+    two_qubit_discord_second,
+    unitary_power,
+)
+
+__all__ = [
+    "analytic_typical_discord",
+    "binary_entropy",
+    "brickwork_pseudorandom_unitary",
+    "discord_at_phi",
+    "discord_from_eigenphases",
+    "dqc1_sampling_bound",
+    "dqc1_separable_reconstruction",
+    "dqc1_state",
+    "eigenphase_spacing_statistics",
+    "first_symmetric_extension_contract",
+    "foundational_information_audit",
+    "haar_unitary",
+    "negativity",
+    "realignment_trace_norm",
+    "separable_example_state",
+    "two_qubit_discord_second",
+    "unitary_power",
+]

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "paper_id": "1302.5069",
+  "run_id": "1302.5069-paper-exact-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "config/paper_exact.json",
+    "scripts/run_reproduction.py",
+    "src/open_qsl/__init__.py",
+    "src/open_qsl/model.py"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "spectral_width_lambda": 50.0,
+    "transition_frequency_omega0": 1.0,
+    "duration_tau": 1.0,
+    "gamma0_min": 0.0,
+    "gamma0_max": 150.0,
+    "gamma0_points": 1501,
+    "integration_points": 8193,
+    "convergence_integration_points": 16385,
+    "ode_crosscheck_gamma0": [
+      0.2,
+      5.0,
+      25.0,
+      40.0,
+      80.0,
+      150.0
+    ],
+    "ode_crosscheck_time_points": 401
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "outputs": [
+    "outputs/data/fig1_qsl.csv",
+    "outputs/data/fig2_generator_and_fidelity.csv",
+    "outputs/data/independent_crosschecks.csv",
+    "outputs/data/formula_counterexamples.csv",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ]
+}

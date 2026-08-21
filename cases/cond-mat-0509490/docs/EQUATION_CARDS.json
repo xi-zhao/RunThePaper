@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "paper_id": "cond-mat-0509490",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Periodic transverse-field Ising chain and dispersion",
+      "role": "model, boundary condition, parity sector, and T001 dispersion",
+      "latex": "H=-J\\sum_{n=1}^{N}(g\\sigma_n^x+\\sigma_n^z\\sigma_{n+1}^z),\\quad \\epsilon_k=2J\\sqrt{(g-\\cos ka)^2+\\sin^2 ka}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:71-83,146-271"
+        }
+      ],
+      "derived_from": [
+        "paper Eqs. (1)-(14)",
+        "Jordan-Wigner, antiperiodic even-parity momenta"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form dispersion on k=(2m+1)pi/(Na)",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, periodic spin boundary, parity sector, momentum grid, and dispersion are explicit."
+        },
+        {
+          "id": "EQ001-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At g=1 and k approaching zero, epsilon_k/(2Jka) approaches one."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::positive_momenta",
+        "src/dziarmaga_ising/model.py::dispersion"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Time-dependent Bogoliubov-de Gennes equations",
+      "role": "independent numerical dynamics for T002",
+      "latex": "i\\hbar\\partial_t(u_k,v_k)^T=2J[(g-\\cos ka)\\sigma_z+\\sin(ka)\\sigma_x](u_k,v_k)^T",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:273-352"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "time-dependent Bogoliubov transformation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "adaptive complex two-level ODE in field g from 8 to 0",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Initial state, dynamical equations, final projection, and p_k=|beta_k|^2 are explicit."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The independent ODE preserves the two-component norm within 7e-9."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::bdg_excitation_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Landau-Zener mapping",
+      "role": "bridge from T002 dynamics to T003-T005 analytic claims",
+      "latex": "\\tau=4J\\tau_Q\\sin(ka)(t/\\tau_Q+\\cos ka),\\quad \\Delta_k^{-1}=4J\\tau_Q\\sin^2(ka)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:353-375"
+        }
+      ],
+      "derived_from": [
+        "EQ002",
+        "linear quench g(t)=-t/tau_Q"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "dimensionless two-level crossing with exact sin^2(ka) gap parameter",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The change of variables and Delta_k are printed explicitly in Eqs. (21)-(22)."
+        },
+        {
+          "id": "EQ003-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct substitution into EQ002 gives the printed standard LZ equations."
+        },
+        {
+          "id": "EQ003-D",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "J tau_Q/hbar is dimensionless in every exponent."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::landau_zener_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Pair excitation probability",
+      "role": "primary observable for T002",
+      "latex": "p_k\\simeq e^{-2\\pi(J\\tau_Q/\\hbar)\\sin^2(ka)}\\simeq e^{-2\\pi(J\\tau_Q/\\hbar)(ka)^2}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:377-387"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "standard Landau-Zener transition probability",
+        "long-wavelength expansion"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form probability cross-checked against EQ002 ODE",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both the sin-squared and long-wavelength forms are printed in Eq. (23)."
+        },
+        {
+          "id": "EQ004-X",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "Direct BdG integration differs from the full sin-squared LZ form by at most 0.00222 on the frozen grid."
+        },
+        {
+          "id": "EQ004-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "p_k tends to one at k=0 and to zero for fixed nonzero k under an adiabatic quench."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::landau_zener_probability",
+        "src/dziarmaga_ising/model.py::bdg_excitation_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Thermodynamic defect density",
+      "role": "T003 Kibble-Zurek exponent and exact prefactor",
+      "latex": "n=\\frac{1}{2\\pi}\\int_{-\\pi}^{\\pi}d(ka)p_k=\\frac{1}{2\\pi\\sqrt{2J\\tau_Q/\\hbar}}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:388-410"
+        }
+      ],
+      "derived_from": [
+        "EQ004",
+        "Gaussian integral in the slow-quench regime"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "analytic reference plus N=4096 half-integer momentum sum",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The kink-number sum, integral, prefactor, and exponent are explicit in Eqs. (24)-(25)."
+        },
+        {
+          "id": "EQ005-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The Gaussian integral gives the printed 1/(2 pi sqrt(2)) prefactor."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "independent_numeric",
+          "status": "passed",
+          "reason": "The finite sum recovers exponent -0.5 and the prefactor to floating-point precision in the declared window."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::asymptotic_defect_density",
+        "src/dziarmaga_ising/model.py::finite_chain_defect_density"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Finite-chain ground-state probability",
+      "role": "T004 adiabatic crossover and N-squared scaling",
+      "latex": "{\\cal P}_{GS}=\\prod_{k>0}(1-p_k)\\simeq1-e^{-2\\pi^3J\\tau_Q/(\\hbar N^2)}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:412-439"
+        }
+      ],
+      "derived_from": [
+        "EQ004",
+        "lowest antiperiodic momentum k=pi/(Na)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "stable log-product for all positive half-integer modes",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exact product, lowest-mode approximation, and N-squared crossover are printed explicitly."
+        },
+        {
+          "id": "EQ006-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting k=pi/N gives coefficient 2 pi^3=62.0126."
+        },
+        {
+          "id": "EQ006-C",
+          "type": "scaling_collapse",
+          "status": "passed",
+          "reason": "N=32,64,128,256 collapse exactly versus tau_Q/N^2 on the frozen grid."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::ground_state_probability"
+      ],
+      "open_questions": [
+        "The cited earlier simulation's fitted coefficient 59 is an external-data comparison, not an independently available array in this paper."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Reverse-quench spin-flip density",
+      "role": "T005 ferromagnet-to-paramagnet result",
+      "latex": "f=\\frac{1}{2\\pi\\sqrt{2J\\tau_Q/\\hbar}}",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/ising_final.tex:441-470"
+        }
+      ],
+      "derived_from": [
+        "EQ002-EQ005",
+        "time reversal of the LZ sweep"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "separate DOP853 evolutions for g=8 to 0 and g=0 to 8, compared mode by mode and after the finite-chain density sum",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The flip operator and reverse-quench density are explicit in Eqs. (28)-(29)."
+        },
+        {
+          "id": "EQ007-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Changing tau to -tau swaps the sweep direction without changing the LZ probability."
+        },
+        {
+          "id": "EQ007-N",
+          "type": "numeric_identity",
+          "status": "passed",
+          "reason": "Independently executed forward and reverse sweeps agree within 3.8e-10 per mode and 2.5e-11 in density."
+        }
+      ],
+      "code_refs": [
+        "src/dziarmaga_ising/model.py::bdg_sweep_excitation_probability",
+        "src/dziarmaga_ising/model.py::reverse_bdg_excitation_probability",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,473 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-0507004",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Finite-N LMG Hamiltonian",
+      "role": "model definition",
+      "latex": "H=J_z+(lambda/N)(J_x^2-J_y^2)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:137-147"
+        }
+      ],
+      "derived_from": [
+        "J_x^2-J_y^2=(J_+^2+J_-^2)/2"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "two exact symmetric tridiagonal m-parity blocks",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (1) fixes the operator and 1/N scaling."
+        },
+        {
+          "id": "EQ001-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A separately assembled dense matrix matches the tridiagonal eigenvalues."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::sector_diagonals"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Classical Hamiltonian and Poisson bracket",
+      "role": "semiclassical map",
+      "latex": "K=2H/N=-sqrt(1-mu^2)cos(phi)-lambda[mu^2-(1-mu^2)sin^2(phi)]/2; {mu,phi}=2/N",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:174-224"
+        }
+      ],
+      "derived_from": [
+        "fixed spin length j=N/2",
+        "paper coordinate map"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed-form stationary-point checks",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Coordinates, bracket, and K are explicit."
+        },
+        {
+          "id": "EQ002-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At mu=phi=0, K=-1 is the separatrix saddle."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Classical minima and ground energy",
+      "role": "phase-transition invariant",
+      "latex": "mu_0=0 (lambda<=1), +-sqrt(1-lambda^-2) (lambda>=1); H_min=-N/2 or -N(lambda+lambda^-1)/4",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:225-257"
+        }
+      ],
+      "derived_from": [
+        "stationarity of EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "closed form and N=5000 exact ground-state comparison",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (5)-(7) print the minima and both energy branches."
+        },
+        {
+          "id": "EQ003-M",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The exact finite-N ground energy converges to the classical value."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::classical_minimum_mu",
+        "src/lmg_scaling/model.py::classical_ground_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Normal, critical, and deformed local expansions",
+      "role": "low-energy spectrum",
+      "latex": "K=-1+(1+lambda)phi^2/2+(1-lambda)mu^2/2+mu^4/8; omega_< =sqrt(1-lambda^2); omega_>=sqrt(2(lambda^2-1))",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:258-307"
+        }
+      ],
+      "derived_from": [
+        "Taylor expansion of EQ002 at its minima"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "large-N exact low-energy gaps",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The expansions and both frequency statements are printed explicitly."
+        },
+        {
+          "id": "EQ004-F",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Exact gaps converge to both printed harmonic frequencies."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "WKB action and spacing",
+      "role": "density-of-states identity",
+      "latex": "S(2E_k/N)=2pi(k+1/2)hbar; Delta E=2pi/T(Ebar)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:309-337"
+        }
+      ],
+      "derived_from": [
+        "T=dS/dE",
+        "hbar=2/N"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "finite differences of exact eigenvalues plus direct two-lobe separatrix-action quadrature",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (9)-(10) print the action and spacing identities."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Normal-phase spacings vary smoothly rather than remaining globally constant."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py",
+        "src/lmg_scaling/model.py::separatrix_action",
+        "src/lmg_scaling/model.py::wkb_separatrix_index"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Separatrix logarithmic spacing",
+      "role": "Main Fig. 1 claim",
+      "latex": "Delta E=2pi sqrt(lambda^2-1)/ln N",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:348-407"
+        }
+      ],
+      "derived_from": [
+        "quadratic saddle period divergence",
+        "Delta E=O(1/ln N)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact same-parity finite-N gaps and caption-defined 1/ln N fits",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (12) and Fig. 1 caption fix the asymptote and N range."
+        },
+        {
+          "id": "EQ006-X",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Both parity sectors are computed independently; the unresolved finite-N mismatch is retained as review evidence."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::separatrix_spacing",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The paper does not publish the selected finite-N level pairs, raw gaps, fit weights, or exact lambda grid."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Critical quartic scaling",
+      "role": "Main Fig. 2 claim",
+      "latex": "Delta E proportional to (E/N)^(1/4); E_k proportional to k^(4/3)/N^(1/3)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:421-449"
+        }
+      ],
+      "derived_from": [
+        "quartic-oscillator period T(E) proportional to E^-1/4",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "N=5000 exact spectrum and multi-N fixed-k scaling",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (13)-(14) and Fig. 2 caption print both exponents."
+        },
+        {
+          "id": "EQ007-K",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The fitted k exponent is within 1 percent of 4/3 and fixed-k fits converge to N^-1/3."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::critical_excitation_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Threshold excitation energy",
+      "role": "excited-state phase boundary",
+      "latex": "E_c=-N/2; (E_c-E_ground)/(N/2)=(lambda+lambda^-1-2)/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:397-420"
+        }
+      ],
+      "derived_from": [
+        "EQ003",
+        "separatrix K=-1"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact finite-N spectrum around E_c",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The threshold energy statement follows immediately after Fig. 1."
+        },
+        {
+          "id": "EQ008-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The saddle energy and ground-energy difference reproduce the printed threshold."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Exponential parity-doublet splitting",
+      "role": "deformed-phase quantitative claim",
+      "latex": "delta E_tunnel proportional to exp(-const N)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:386-397"
+        }
+      ],
+      "derived_from": [
+        "semiclassical tunneling with hbar=2/N"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "cross-parity ground-doublet splitting versus N",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exponential-in-N tunnelling law is explicit in the separatrix discussion."
+        },
+        {
+          "id": "EQ009-E",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The logarithm of the exact splitting has negative linear slope in N."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Alternative polar-coordinate Hamiltonian",
+      "role": "semiclassical wavefunction method",
+      "latex": "K=mu+lambda(1-mu^2)cos(2phi)/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:507-530"
+        }
+      ],
+      "derived_from": [
+        "usual polar coordinates around z"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "explicit K=-1 separatrix roots and two-lobe canonical-area quadrature; no target wavefunction figure is printed",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (16) is explicit; the paper only outlines rather than publishes a numerical WKB wavefunction."
+        },
+        {
+          "id": "EQ010-I",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The alternative polar-coordinate substitution gives the printed K."
+        }
+      ],
+      "code_refs": [
+        "DERIVATION_TRACE.md",
+        "src/lmg_scaling/model.py::separatrix_action"
+      ],
+      "open_questions": [
+        "Turning-point matching and a numerical target wavefunction are not specified by the publication."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Explicit self-adjoint coordinate orderings",
+      "role": "ordering-error claim",
+      "latex": "K_{sym}=mu+lambda{(1-mu^2),cos(2phi)}/4; K_{sand}=mu+lambda sqrt(1-mu^2) cos(2phi) sqrt(1-mu^2)/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:453-468"
+        }
+      ],
+      "derived_from": [
+        "EQ010",
+        "mu diagonal in the J_z basis",
+        "cos(2phi) shifts m by two"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "two finite Hermitian tridiagonal matrices compared with normalized Eq. (1) spectra",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly identifies non-unique self-adjoint ordering and claims a careful choice has O(N^-2) error; the two displayed prescriptions are labeled reconstructed rather than quoted."
+        },
+        {
+          "id": "EQ011-H",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Both reconstructed prescriptions are explicitly Hermitian."
+        },
+        {
+          "id": "EQ011-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Their full spectra are frozen over six N values, both parities, and four couplings."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::coordinate_ordered_sector"
+      ],
+      "open_questions": [
+        "The paper states that a careful ordering has O(N^-2) error but does not identify that ordering; the two natural reconstructions are therefore evidence about underspecification, not author-method replicas."
+      ]
+    },
+    {
+      "id": "EQ012",
+      "title": "Exceptional point as a characteristic double root",
+      "role": "complex-coupling singularity test",
+      "latex": "p(E,lambda)=det(H(lambda)-E I)=0; partial_E p(E,lambda)=0",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/lipsemi_0531.tex:469-479"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "algebraic multiplicity at an exceptional point"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "complex nonlinear double-root solve with matrix-norm backward errors, direct eigenvalue-coalescence and eigenvector-conditioning certificates",
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly identifies complex-lambda spectral singularities as exceptional points and states claims (i)-(iii)."
+        },
+        {
+          "id": "EQ012-R",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Both characteristic backward errors are enforced, and an independent dense complex eigensolve must show a coalescing pair with an ill-conditioned eigenbasis."
+        },
+        {
+          "id": "EQ012-F",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Finite-N candidates are tracked toward lambda=1 without converting failed seeds or avoided crossings into roots."
+        }
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py::characteristic_and_energy_derivative",
+        "src/lmg_scaling/model.py::exceptional_point_certificate",
+        "src/lmg_scaling/model.py::exceptional_point_candidates"
+      ],
+      "open_questions": [
+        "The complete deterministic seed campaign tests finite-N trends but is not a certified root count over a continuous complex domain and therefore does not prove global exclusion or the N-to-infinity theorem."
+      ]
+    }
+  ]
+}

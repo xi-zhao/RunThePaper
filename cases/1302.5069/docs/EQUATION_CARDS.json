@@ -1,0 +1,412 @@
+{
+  "schema_version": 1,
+  "paper_id": "1302.5069",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Bures angle and time-local velocity",
+      "role": "T001",
+      "latex": "L(rho_0,rho_t)=arccos(sqrt(<psi_0|rho_t|psi_0>)); 2 cos(L) sin(L) Ldot <= |<psi_0|rho_dot_t|psi_0>|",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq02--eq04"
+        }
+      ],
+      "derived_from": [
+        "direct differentiation of the pure-initial-state fidelity"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "excited-state fidelity sqrt(rho_11(t)) and its derivative",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Bures angle and velocity equations are explicit in the source."
+        },
+        {
+          "id": "EQ001-D",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "Direct differentiation requires rho_t in every time-local factor."
+        },
+        {
+          "id": "EQ001-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The angle vanishes at t=0 and its cosine remains in [0,1]."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::fidelity_amplitude"
+      ],
+      "open_questions": [
+        "The first displayed derivative in the source contains rho_tau where direct differentiation requires rho_t; fresh review must classify this notation discrepancy."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Von Neumann trace inequality",
+      "role": "T001",
+      "latex": "|Tr(A_1 A_2)| <= sum_i sigma_i(A_1) sigma_i(A_2)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eq. eq08"
+        }
+      ],
+      "derived_from": [
+        "singular-value trace inequality"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "2x2 direct singular-value checks",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The singular-value inequality is printed explicitly."
+        },
+        {
+          "id": "EQ002-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Direct matrices satisfy the singular-value upper bound."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Closed-system operator-norm ML bound",
+      "role": "T002",
+      "latex": "tau >= hbar sin^2(L)/(2 E_tau)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq09--eq12"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "triangle inequality"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "positive 2x2 H and noncommuting pure rho counterexample to the intermediate trace-norm identity",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The bound and disputed intermediate equality are explicit in the source."
+        },
+        {
+          "id": "EQ003-C",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For H=diag(1,2), rho=|+><+|, ||H rho||_tr=sqrt(2.5) while Tr(H rho)=1.5."
+        },
+        {
+          "id": "EQ003-K",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The equality is recovered when H and rho commute."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py",
+        "tests/test_model.py"
+      ],
+      "open_questions": [
+        "Eq. (10) claims ||H rho||_tr=<H> for positive H without stating the required commutation condition; fresh review must judge the impact on the reduction."
+      ]
+    },
+    {
+      "id": "EQ004",
+      "title": "Open-system Margolus--Levitin bound",
+      "role": "T001",
+      "latex": "tau >= max(1/Lambda_op,1/Lambda_tr) sin^2(L)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq13--eq18"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "EQ002",
+        "singular values of L_t(rho_t)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "time averages of operator and trace norms of dot(rho)",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The open-system ML bound is printed explicitly."
+        },
+        {
+          "id": "EQ004-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Direct SVD of dot(rho) reproduces both norm factors at every cross-check point."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::averaged_norms"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Open-system Mandelstam--Tamm bound",
+      "role": "T001",
+      "latex": "tau >= sin^2(L)/Lambda_hs",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq19--eq22"
+        }
+      ],
+      "derived_from": [
+        "EQ001",
+        "Cauchy--Schwarz inequality"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "time average of the Frobenius norm of dot(rho)",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hilbert--Schmidt bound is printed explicitly."
+        },
+        {
+          "id": "EQ005-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For diagonal dot(rho), the HS norm is sqrt(2) times the operator norm."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::averaged_norms"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Unified QSL and Schatten hierarchy",
+      "role": "T001 and T007",
+      "latex": "tau_QSL=max(1/Lambda_op,1/Lambda_tr,1/Lambda_hs) sin^2(L); ||A||_op<=||A||_hs<=||A||_tr",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq23--eq24"
+        }
+      ],
+      "derived_from": [
+        "EQ004",
+        "EQ005",
+        "Schatten norm ordering"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "three QSL curves and pointwise hierarchy checks",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The unified bound and Schatten hierarchy are printed explicitly."
+        },
+        {
+          "id": "EQ006-H",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every gamma-grid row obeys tau_op >= tau_hs >= tau_tr."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::qsl_bounds"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Damped Jaynes--Cummings generator and Lorentzian bath",
+      "role": "T003",
+      "latex": "L_t(rho)=gamma_t[sigma_- rho sigma_+ - {sigma_+sigma_-,rho}/2]; J(omega)=gamma_0 lambda/[2 pi((omega_0-omega)^2+lambda^2)]",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq27 and eq33"
+        }
+      ],
+      "derived_from": [
+        "single-excitation Lorentzian pseudomode model"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "independent two-amplitude Markovian embedding",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The generator, spectral density and ladder definition are explicit in the source."
+        },
+        {
+          "id": "EQ007-P",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The standard ladders (sigma_x +/- i sigma_y)/2 yield the printed survival solution; the literal printed ladders multiply the dissipator by four."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::pseudomode_survival_amplitude"
+      ],
+      "open_questions": [
+        "The source defines sigma_pm without the conventional factor 1/2 although the solution uses the conventional normalization."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Exact Lorentzian survival amplitude",
+      "role": "T003 and T006",
+      "latex": "G(t)=exp(-lambda t/2)[cosh(dt/2)+(lambda/d)sinh(dt/2)], d=sqrt(lambda^2-2 gamma_0 lambda); rho_11=|G|^2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eqs. eq34 and eq32"
+        }
+      ],
+      "derived_from": [
+        "G''+lambda G'+gamma_0 lambda G/2=0",
+        "G(0)=1",
+        "G'(0)=0"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "regularized sinhc formula and independent DOP853 pseudomode integration",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The rate and reduced density solution are printed explicitly."
+        },
+        {
+          "id": "EQ008-O",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Analytic amplitude matches the independent pseudomode ODE over weak, critical, and strong coupling."
+        },
+        {
+          "id": "EQ008-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The implementation is finite at gamma_0=lambda/2 and exactly normalized at t=0."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::survival_amplitude",
+        "src/open_qsl/model.py::pseudomode_survival_amplitude"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Specialized norm integral and QSL curves",
+      "role": "T004, T005 and T006",
+      "latex": "dot(rho)=diag(dot(p),-dot(p)); Lambda_p=2^(1/p) integral_0^tau |dot(p)| dt/tau; tau_QSL=(1-p(tau))/Lambda_p",
+      "source_refs": [
+        {
+          "type": "paper_figure_and_text",
+          "value": "Main Figs. 1--2 and paragraph containing Eq. (27) in published numbering"
+        }
+      ],
+      "derived_from": [
+        "EQ006",
+        "EQ008",
+        "singular values of a traceless diagonal 2x2 matrix"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "paper-exact gamma_0 sweep with converged trapezoidal total variation",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both figure captions and the specialized norm discussion are explicit."
+        },
+        {
+          "id": "EQ009-Q",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Doubling the time grid changes total variation by less than the frozen tolerance."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::qsl_bounds",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Markovian plateau and non-Markovian speedup",
+      "role": "T005 and T007",
+      "latex": "Lambda_p=2^(1/p)[1-exp(-gamma_0 tau)]/tau",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/openqsl_final.tex, Eq. label 33 and surrounding paragraphs"
+        }
+      ],
+      "derived_from": [
+        "p(t)=exp(-gamma_0 t)",
+        "monotonic total variation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Markovian reference curve, plateau limit, and strong-coupling variation excess",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Markovian average norm and speedup discussion are explicit in the source."
+        },
+        {
+          "id": "EQ010-M",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The operator bound approaches tau and the other two plateau at tau/sqrt(2) and tau/2."
+        },
+        {
+          "id": "EQ010-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Strong coupling produces total variation above the monotonic Markov reference and lowers the operator QSL."
+        }
+      ],
+      "code_refs": [
+        "src/open_qsl/model.py::markovian_averaged_norms",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

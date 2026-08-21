@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "paper_id": "1004.0190",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Quantum discord definition",
+      "role": "scientific quantity",
+      "latex": "D_A(rho)=I(rho)-Q_A(rho)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:160-217"
+        }
+      ],
+      "derived_from": [
+        "mutual information and optimized conditional entropy"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "context for the operational zero-discord and geometric proxies",
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All entropy terms and optimization domain are explicit."
+        },
+        {
+          "id": "EQ001-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Classical-quantum states satisfy the zero-discord condition."
+        }
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Zero-discord commutator criterion",
+      "role": "T001",
+      "latex": "D_A=0 iff [S_n,S_m]=0 for all n,m",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:229-284"
+        }
+      ],
+      "derived_from": [
+        "operator-Schmidt SVD and common eigenbasis"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "SVD of the Hilbert-Schmidt coefficient map and pairwise commutator norms",
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The SVD, rank L, and commutator condition are explicit."
+        },
+        {
+          "id": "EQ002-I",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Random classical-quantum constructions have rank at most d_A and commuting left operators."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::operator_schmidt_commutator_norm"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Geometric discord",
+      "role": "T002",
+      "latex": "D_A^(2)=min_{chi in Omega_0} Tr(rho-chi)^2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:291-313"
+        }
+      ],
+      "derived_from": [
+        "Hilbert-Schmidt distance to zero-discord states"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct minimization over a projective measurement direction",
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The norm and minimization set are explicit."
+        },
+        {
+          "id": "EQ003-N",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Direct dephasing distances are nonnegative and vanish for CQ states."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::geometric_discord_direct"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Closed two-qubit formula",
+      "role": "T002",
+      "latex": "D_A^(2)=(||x||^2+||T||^2-k_max)/4",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:315-368"
+        }
+      ],
+      "derived_from": [
+        "quadratic minimization and largest eigenvalue of xx^T+TT^T"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Bloch tensor and 3x3 Hermitian eigensolve",
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Bloch definitions and stationary point are explicit."
+        },
+        {
+          "id": "EQ004-E",
+          "type": "symbolic_or_numeric_equivalence",
+          "status": "passed",
+          "reason": "The closed form matches independent measurement-direction minimization."
+        },
+        {
+          "id": "EQ004-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Zero axes yield zero and Bell vertices yield one half."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::geometric_discord"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Bell-diagonal geometry",
+      "role": "T003 and T004",
+      "latex": "rho(t)=[I+sum_i t_i sigma_i tensor sigma_i]/4",
+      "source_refs": [
+        {
+          "type": "paper_figure_and_text",
+          "value": "Main Fig. 1 and following paragraph"
+        }
+      ],
+      "derived_from": [
+        "Bell-basis positivity and PPT separability"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "tetrahedron, L1 octahedron, axes, and constrained quadratic extrema",
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Vertices, separable domain, axes, and claimed extrema are explicit."
+        },
+        {
+          "id": "EQ005-P",
+          "type": "positivity",
+          "status": "passed",
+          "reason": "Every declared physical point has nonnegative density-matrix eigenvalues."
+        },
+        {
+          "id": "EQ005-X",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Formula substitution exposes 1/18 at printed facet centers and 1/16 at the true separable maxima."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::bell_diagonal_state",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The printed separable maximum 1/6 at facet centers conflicts with the formula and independent constrained optimization; fresh review is required."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "DQC1 output and trace readout",
+      "role": "T005",
+      "latex": "rho=[I+alpha |1><0| tensor U+alpha |0><1| tensor U^dag]/2^(n+1)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:415-447"
+        }
+      ],
+      "derived_from": [
+        "Hadamard and controlled-U circuit"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "direct block matrix and control Pauli expectations",
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The output state and normalized-trace observables are explicit."
+        },
+        {
+          "id": "EQ006-T",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The block matrix has trace one and reproduces both real and imaginary normalized traces."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::dqc1_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "DQC1 zero-discord condition",
+      "role": "T006",
+      "latex": "D_A=0 iff U^dag=kU iff U=e^(i phi) A, A^2=I",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:459-477"
+        }
+      ],
+      "derived_from": [
+        "linear dependence of Hermitian and anti-Hermitian parts of U"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "Haar unitary versus phase-times-random-involution campaigns",
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The equivalence and binary-observable form are explicit."
+        },
+        {
+          "id": "EQ007-I",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Phase-times-involutions have commuting left Schmidt operators while all frozen Haar samples do not."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::dqc1_left_operators",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Multipartite subsystem extension",
+      "role": "T007",
+      "latex": "D_{A_j}=0 iff [S_n^{(j)},S_m^{(j)}]=0 for every n,m",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:491-495"
+        }
+      ],
+      "derived_from": [
+        "apply Eqs. (5)-(7) to subsystem A_j versus the tensor product of all remaining subsystems",
+        "DERIVATION_TRACE.md step 6"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "subsystem permutation, generalized Hermitian basis, direct coefficient-map SVD, and pairwise commutators",
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The final paragraph explicitly states extension to any number of subsystems and increasing difficulty with subsystem number and dimension."
+        },
+        {
+          "id": "EQ008-B",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Generalized Hermitian bases are orthonormal through local dimension five."
+        },
+        {
+          "id": "EQ008-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Fully classical multipartite mixtures commute for every party while GHZ and maximally entangled qudit states do not."
+        },
+        {
+          "id": "EQ008-D",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The frozen local-basis search dimension equals sum_j(d_j^2-d_j)."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::multipartite_discord_criterion",
+        "src/geometric_discord/model.py::local_basis_optimization_dimension",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Projective multipartite geometric discord",
+      "role": "T007",
+      "latex": "D_G^{(M)}(rho)=min_{U_j} ||rho-Delta_{U_1,...,U_M}(rho)||_2^2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:291-313 and 491-495"
+        }
+      ],
+      "derived_from": [
+        "orthogonal Hilbert-Schmidt projection onto the algebra diagonal in a fixed local product basis",
+        "optimization over U(d_j)/U(1)^{d_j} for each measured subsystem",
+        "DERIVATION_TRACE.md step 7"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "minimal complex-Givens coordinates and deterministic multistart minimization of the dephasing distance",
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper defines Hilbert-Schmidt geometric discord and explicitly says that the method and measure evaluation extend to arbitrary subsystem count, while omitting one unique multipartite formula."
+        },
+        {
+          "id": "EQ009-P",
+          "type": "positivity",
+          "status": "passed",
+          "reason": "The objective is a squared Hilbert-Schmidt norm and is nonnegative."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Rotated fully classical states optimize to zero for two through four qubits."
+        },
+        {
+          "id": "EQ009-G",
+          "type": "analytic_reference",
+          "status": "passed",
+          "reason": "GHZ states give one half and maximally entangled qudits give 1-1/d."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::local_projective_basis",
+        "src/geometric_discord/model.py::projective_dephasing_distance",
+        "src/geometric_discord/model.py::multipartite_geometric_discord",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": [
+        "The paper states that the measure extends but does not print a unique multipartite convention; this implementation explicitly chooses simultaneous local projective dephasing and labels that choice reconstructed."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Local-channel discord nonmonotonicity",
+      "role": "T008",
+      "latex": "rho' = sum_mu (K_mu tensor I) rho (K_mu^dagger tensor I)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex: final discussion paragraph"
+        }
+      ],
+      "derived_from": [
+        "trace-preserving local Kraus map",
+        "nonorthogonal prepare channel on a classical two-term state"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "apply the printed prepare-channel example, then an explicit local reset channel",
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states the nonorthogonal local prepare map explicitly."
+        },
+        {
+          "id": "EQ010-T",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Both Kraus families satisfy sum K^dagger K=I."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The initial and reset states have zero geometric discord while the nonorthogonal prepared state has nonzero discord."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/model.py::apply_local_channel",
+        "scripts/run_reproduction.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

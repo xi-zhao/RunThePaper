@@ -97,6 +97,13 @@ Every case provides a public overview, Chinese and English getting-started notes
 | [`physics-9712001`](cases/physics-9712001/README.md) | Independent scientific reproduction of Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry | Scientific reproduction — paper-error candidates identified | 98.37 |
 | [`quant-ph-0211074`](cases/quant-ph-0211074/README.md) | Independent scientific reproduction of Entanglement in Quantum Critical Phenomena | Scientific reproduction — paper-error candidates identified | 82.47 |
 | [`quant-ph-0403025`](cases/quant-ph-0403025/README.md) | Independent scientific reproduction of Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas | Partial scientific reproduction | 90.00 |
+| [`cond-mat-0509490`](cases/cond-mat-0509490/README.md) | Independent scientific reproduction of Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model | Scientific reproduction — paper-error candidates identified | 90.00 |
+| [`quant-ph-9709029`](cases/quant-ph-9709029/README.md) | Independent scientific reproduction of Entanglement of Formation of an Arbitrary State of Two Qubits | Partial scientific reproduction | 90.00 |
+| [`quant-ph-0507004`](cases/quant-ph-0507004/README.md) | Independent scientific reproduction of Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model | Scientific reproduction — paper-error candidates identified | 69.00 |
+| [`1004.0190`](cases/1004.0190/README.md) | Independent scientific reproduction of Necessary and Sufficient Condition for Nonzero Quantum Discord | Scientific reproduction — paper-error candidates identified | 88.75 |
+| [`1302.5069`](cases/1302.5069/README.md) | Independent scientific reproduction of Quantum Speed Limit for Non-Markovian Dynamics | Scientific reproduction — paper-error candidates identified | 90.00 |
+| [`0709.0548`](cases/0709.0548/README.md) | Independent scientific reproduction of Quantum Discord and the Power of One Qubit | Scientific reproduction — paper-error candidates identified | 82.00 |
+| [`1206.2505`](cases/1206.2505/README.md) | Independent scientific reproduction of Dynamical Quantum Phase Transitions in the Transverse-Field Ising Model | Scientific reproduction — paper-error candidates identified | 84.64 |
 
 The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.
 It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.

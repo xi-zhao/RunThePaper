@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-9709029",
+  "run_id": "quant-ph-9709029-paper-exact-v6",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "config/paper_exact.json",
+    "scripts/run_reproduction.py",
+    "src/wootters/__init__.py",
+    "src/wootters/model.py"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "random_seed": 9709029,
+    "pure_state_samples": 256,
+    "mixed_state_samples": 128,
+    "decompositions_per_state": 32,
+    "optimal_samples_per_rank": 32,
+    "named_degenerate_bell_probabilities": [
+      0.55,
+      0.25,
+      0.1,
+      0.1
+    ],
+    "bell_simplex_denominator": 12,
+    "conditioning_seed": 7111997,
+    "conditioning_samples_per_family": 5000,
+    "conditioning_separable_samples": 5000,
+    "zero_branch_werner_p": [
+      0.0,
+      0.1,
+      0.2,
+      0.3333333333333333
+    ],
+    "separable_state_samples": 128,
+    "werner_grid_points": 101,
+    "typical_schmidt_probabilities": [
+      0.1,
+      0.25,
+      0.5
+    ],
+    "typical_copy_counts": [
+      128,
+      512,
+      2048,
+      8192,
+      32768
+    ],
+    "typical_tolerance_exponent": 0.4
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "outputs": [
+    "outputs/data/random_mixed_states.csv",
+    "outputs/data/optimal_decompositions.csv",
+    "outputs/data/bell_diagonal_adversarial.csv",
+    "outputs/data/ill_conditioned_physical_states.csv",
+    "outputs/data/werner_family.csv",
+    "outputs/data/pure_state_protocol_rates.csv",
+    "outputs/data/historical_claim_checks.csv",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPYCACHEPREFIX": "outputs/.pycache"
+  }
+}

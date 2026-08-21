@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "paper_id": "1206.2505",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Boundary partition function and intensive free energy",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:83-109"
+      ],
+      "latex": "Z(z)=<Psi_i|e^{-zH}|Psi_i>, f(z)=-lim_{N->infinity} log Z(z)/N",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::loschmidt_rate"
+      ],
+      "checks": [
+        {
+          "id": "EQ001-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ001-N",
+          "type": "normalization",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "TFIM Hamiltonian, Bogoliubov angle, and dispersion",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:118-149"
+      ],
+      "latex": "epsilon_k(g)=sqrt((g-cos k)^2+sin^2 k), tan(2 theta_k)=sin k/(g-cos k)",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::dispersion",
+        "src/dqpt_tfim/model.py::bogoliubov_angle"
+      ],
+      "checks": [
+        {
+          "id": "EQ002-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ002-L",
+          "type": "limiting_case",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Exact quench boundary free energy",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:143-151"
+      ],
+      "latex": "f(z)=-integral_0^pi dk/(2pi) log(cos^2 phi_k+sin^2 phi_k exp(-2z epsilon_k))",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::loschmidt_rate"
+      ],
+      "checks": [
+        {
+          "id": "EQ003-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ003-N",
+          "type": "normalization",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Fisher-zero lines",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:172-190"
+      ],
+      "latex": "z_n(k)=[log tan^2(phi_k)+i pi(2n+1)]/[2 epsilon_k(g1)]",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::fisher_zero_lines"
+      ],
+      "checks": [
+        {
+          "id": "EQ004-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ004-Z",
+          "type": "symbolic_identity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Critical momentum and Fisher times",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:194-237"
+      ],
+      "latex": "cos k*=(1+g0 g1)/(g0+g1), t_n*=pi(n+1/2)/epsilon_k*(g1)",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::critical_momentum",
+        "src/dqpt_tfim/model.py::critical_period"
+      ],
+      "checks": [
+        {
+          "id": "EQ005-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ005-H",
+          "type": "numeric_sanity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Double-quench work distribution and cumulant",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:253-283"
+      ],
+      "latex": "c(R,t)=-integral dk/(2pi) log[1+sin^2(2phi_k)sin^2(epsilon_1 t)(exp(-2epsilon_0 R)-1)]",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::cumulant_rate"
+      ],
+      "checks": [
+        {
+          "id": "EQ006-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ006-N",
+          "type": "normalization",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Large-deviation Legendre transform",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:263-293"
+      ],
+      "latex": "r(w,t)=sup_R[c(R,t)-wR]",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::work_rate_grid"
+      ],
+      "checks": [
+        {
+          "id": "EQ007-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ007-W",
+          "type": "numeric_sanity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Majorana-Pfaffian longitudinal correlation",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:327-338",
+        "paper-source/HeylPolkovnikovKehrein.tex:491"
+      ],
+      "latex": "<sigma_z(0) sigma_z(r)>=(-1)^r Pf Gamma_[b0,a1,...,b_(r-1),a_r]",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::longitudinal_correlation_dynamics"
+      ],
+      "checks": [
+        {
+          "id": "EQ008-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ008-X",
+          "type": "numeric_sanity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": [
+        "The source figure does not define whether s_z denotes the spin correlator or its cluster-decomposition square root."
+      ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Extreme-quench Loschmidt-matrix rates",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:493-523"
+      ],
+      "latex": "f_11=-log|cos(g1 t/2)|, f_12=-log|sin(g1 t/2)| for L_ab=exp(-N f_ab)",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::extreme_quench_loschmidt_rates"
+      ],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ009-A",
+          "type": "symbolic_identity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": [
+        "The source prints plus logarithms although its preceding exponential-rate definition requires minus logarithms."
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Normalized exponential postselection",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:543-584"
+      ],
+      "latex": "<O>_beta=sum_n p_n exp(-beta E_n) O_n / Z_beta",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::postselection_normalization_check"
+      ],
+      "checks": [
+        {
+          "id": "EQ010-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ010-N",
+          "type": "normalization",
+          "status": "passed"
+        }
+      ],
+      "open_questions": [
+        "The source's discrete expectation line omits division by the partition function defined immediately above it."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Normalized complex-time characteristic identity",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:587-607"
+      ],
+      "latex": "integral dW P_beta(W)e^{iWt}=G(t+i beta)/G(i beta)",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::complex_time_postselection_check"
+      ],
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ011-N",
+          "type": "normalization",
+          "status": "passed"
+        }
+      ],
+      "open_questions": [
+        "The source prints the unnormalized G(t+i beta) on the right-hand side."
+      ]
+    },
+    {
+      "id": "EQ012",
+      "title": "Time-dependent Bogoliubov-mode ramp equation",
+      "source_refs": [
+        "paper-source/HeylPolkovnikovKehrein.tex:191-239",
+        "paper-source/HeylPolkovnikovKehrein.tex:420-425"
+      ],
+      "latex": "i d_t psi_k(t)=[(g(t)-cos k) sigma_z+sin k sigma_x] psi_k(t)",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/dqpt_tfim/model.py::ramp_mode_occupations"
+      ],
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ012-U",
+          "type": "normalization",
+          "status": "passed"
+        },
+        {
+          "id": "EQ012-C",
+          "type": "numeric_sanity",
+          "status": "passed"
+        }
+      ],
+      "open_questions": [
+        "The paper specifies only ramp endpoints and the Schrodinger equation, not a particular ramp function or duration."
+      ]
+    }
+  ]
+}
