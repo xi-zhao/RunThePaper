@@ -6,8 +6,9 @@
 
 <p align="center">
   <a href="#reproduction-catalog--论文复现目录">Explore cases</a> ·
+  <a href="#why-this-exists">Why this exists</a> ·
+  <a href="#infrastructure-model">Infrastructure</a> ·
   <a href="https://github.com/xi-zhao/runthepaper/issues/new">Request a paper</a> ·
-  <a href="ROADMAP.md">Roadmap</a> ·
   <a href="CONTRIBUTING.md">Contribute</a>
 </p>
 
@@ -18,9 +19,9 @@ RunThePaper 想把这些被压缩的过程重新展开。这里的每个案例�
 论文，包含中英文讲义、可运行代码、生成结果、机器可读的检查，以及仍未解决的边界。
 你可以从一张图开始，也可以把它当作下一项研究的起点。
 
-RunThePaper is a community-built library of executable paper reproductions.
-It is the public, reusable layer of [PRAgent](#pragent-behind-the-library),
-our system for turning static papers into auditable research cases.
+RunThePaper is community-built infrastructure for executable paper
+reproductions: a public place where research cases can be read, rerun, checked,
+and extended.
 
 The 100 cases here are not 100 completion trophies. Partial reproductions,
 missing public inputs, compute limits, invalid runs, and pending independent
@@ -35,6 +36,39 @@ not polish it away.
 
 Standalone benchmarks, synthetic exercises, source-contract audits, and
 internal evaluations are not published as paper cases.
+
+<a id="why-this-exists"></a>
+
+## Why This Exists / 为什么要做 RunThePaper
+
+科研面临的不只是生产力问题，也有协作方式的问题。AI 正在加速文献阅读、推导、
+编程和数据分析，但科研最主要的交付物仍然是一篇高度压缩的论文。只要推导、代码、
+参数、失败记录和验证过程继续散落在个人电脑和临时文件夹里，科研就仍然很难摆脱
+小作坊式的交接方式。
+
+Research has both a productivity bottleneck and a collaboration bottleneck.
+AI can accelerate reading, reasoning, coding, and analysis, but the paper is
+still a compressed record rather than a complete working context. Derivations,
+parameters, failed attempts, and validation evidence are often lost between
+teams.
+
+与此同时，生成正在变得越来越便宜，验证却没有。未来的 Scientific Agent 可以快速
+提出大量假设、代码和结果，但未经检查的产出越多，科研系统里的噪声也可能越多。
+真正稀缺的将是经过验证、能够理解、可以继续使用的结果。
+
+Generation is becoming cheaper; verification is not. Scientific agents may
+produce more hypotheses, programs, and results than researchers can inspect.
+The scarce output is therefore not merely an answer, but an answer that is
+checkable, understandable, and reusable.
+
+> 在要求 AI 发现未知科学之前，我们应该先检验它能否可靠地重建、执行和审计已知科学。
+>
+> Before asking AI to discover unknown science, we should test whether it can
+> reliably reconstruct, execute, and audit known science.
+
+RunThePaper 从论文复现开始，因为复现同时检验理解、执行和验证。每个 public case
+都试图把论文重新展开成一种新的科研交付单位：明确的论文身份与主张、推导、代码、
+生成数据、机器检查、独立评审状态，以及仍未解决的边界。
 
 ## Reproduction Catalog / 论文复现目录
 
@@ -287,6 +321,10 @@ boundary.
 
 ## Build It Together / 一起共建
 
+RunThePaper 希望建立的不是由一个团队维护的成果橱窗，而是一种大家可以共同改进的
+科研协作单元。贡献不必从零复现整篇论文；确认一次运行、修正一个公式、补充一项输入、
+解释一次失败或完成一次独立评审，都能让这个公共上下文更可靠。
+
 RunThePaper is intended as shared infrastructure for the AI era of science, not
 a finished showcase owned by one team. You do not need to contribute an entire
 paper. A corrected derivation, an independent rerun, a missing parameter, a
@@ -297,23 +335,39 @@ issue](https://github.com/xi-zhao/runthepaper/issues/new) with its title, DOI or
 arXiv ID, and the figure or claim you care about most. To review or extend an
 existing case, see the [contributing guide](CONTRIBUTING.md).
 
-<a id="pragent-behind-the-library"></a>
+<a id="infrastructure-model"></a>
 
-## PRAgent Behind the Library / PRAgent 是怎么工作的
+## The Infrastructure Model / RunThePaper 如何成为科研基础设施
 
-PRAgent is the reproduction harness behind RunThePaper. It traces a paper's
-claims and methods, turns them into explicit reproduction items, implements and
-runs the calculations, and packages the results with evidence and remaining
-boundaries. RunThePaper is where those cases become public, readable, runnable,
-and reusable.
+RunThePaper 把可执行的 research case 作为基本单元。一个 case 不只保存最终图片，
+还把论文身份、复现范围、推导、代码、运行结果、机器检查、评审状态和未解决边界组织
+在一起。研究者和 Scientific Agent 可以从同一个公开对象出发，而不是各自在 PDF 和
+临时文件夹中重新猜测研究过程。
+
+RunThePaper treats an executable research case as the basic unit of scientific
+collaboration. A case keeps the paper identity, reproduced scope, derivation,
+code, run outputs, machine-readable checks, review state, and remaining boundary
+together in one public object.
 
 ```text
-static paper
-    ↓  PRAgent: trace → implement → run → check → review
-auditable reproduction case
-    ↓  RunThePaper: publish → rerun → discuss → extend
-shared context for researchers and scientific agents
+paper / 论文
+    ↓
+claim and scope → derivation → code → run outputs
+    ↓
+checks → review state → explicit boundary
+    ↓
+public research case
+    ↓
+read → rerun → discuss → correct → extend
 ```
+
+作为科研基础设施，RunThePaper 承担四个作用：为人和 Agent 提供可操作的公共上下文，
+保存验证证据，让成功与失败都成为可读取的长期记忆，并为跨团队协作提供共同入口。
+它不是完成案例的陈列柜，而是能够被持续运行、质疑和改进的公共工作台。
+
+As infrastructure, RunThePaper provides operational public context, preserves
+verification evidence, keeps both success and failure as shared memory, and
+gives different teams a common place to rerun and extend research.
 
 The public 100-case collection is an open testbed. It shows what the current
 system can and cannot turn into executable science; it is not a claim of blind
@@ -321,21 +375,39 @@ generalization to every unseen paper.
 
 ## Toward Agent4Science / 我们对 AI for Science 的判断
 
-Papers alone are too compressed to be the full working context of a scientific
-agent. Future agents need derivations, code, data, experimental observations,
-and eventually safe interfaces to instruments. They need to see not only the
-final claim, but also what was tried, what failed, and what remains uncertain.
+我们目前对 AI for Science 有三个判断。
 
-RunThePaper already begins to provide part of that context: explicit
-derivations, runnable implementations, generated artifacts, checks, and honest
-boundaries. Instrument control and live experimental observations are future
-layers, not capabilities claimed by this repository today.
+| 判断 / Principle | 含义 / What it means |
+| --- | --- |
+| **先验证，再发现 / Verification before discovery** | 如果 Agent 还不能稳定重建和审计已知结果，我们就没有足够理由相信它在未知空间中的新发现。 |
+| **先建立可操作上下文，再谈自主性 / Operational context before autonomy** | Agent 需要的不只是论文文本，还需要推导、代码、数据、observations、工具接口、历史失败和明确边界。 |
+| **人的判断仍在循环中 / Human judgment stays in the loop** | 问题品位、社会需求、科学意义和最终证据裁决，仍然需要研究者承担。 |
 
-That is why executable research infrastructure matters. When scientific agents
-start a new exploration from a checked case instead of a static PDF, they inherit
-more of the reasoning and evidence needed to ask the next question. We believe
-this can make AI for Science more grounded, more collaborative, and easier to
-audit.
+我们的目标不是让 Agent 一次性生成一个看起来合理的答案，而是逐步形成能够自我修正的
+科研循环：提出方案、执行、获得 observation、验证、写入记忆，再决定下一次
+exploration。RunThePaper 目前提供的是这个循环最基础的可执行上下文和验证记忆。
+
+Our goal is not a one-shot scientific answer. It is a research loop that can
+propose, execute, observe, verify, remember, and choose the next exploration.
+RunThePaper currently provides the loop's foundational executable context and
+verification memory.
+
+| 层级 / Layer | 进入模型上下文的信息 / Context available to agents | 边界 / Boundary |
+| --- | --- | --- |
+| **现在 / Now** | 论文主张、详细推导、代码、生成数据与图、机器检查、评审状态和未解决边界 | 本仓库已经公开提供 |
+| **继续建设 / Next** | 跨案例记忆、可复用 scientific skills、更强的独立评审与因果化失败诊断 | 发展方向，不是已完成能力 |
+| **未来 / Future** | 实验数据、实时 observations，以及安全、可审计的实验器材操作接口 | 本仓库目前不具备 |
+
+当 Scientific Agent 从一个经过检查的 case 而不是一份静态 PDF 开始探索时，它继承的
+不只是结论，还有得出结论的路径与证据。我们相信，这种基础设施会让 AI for Science
+更可靠、更开放，也更容易被人类理解和共同建设。
+
+支撑这些案例持续建设的 **PRAgent** 仍在优化中。待系统进一步成熟后，我们计划将其
+开源，让更多研究者能够共同使用和改进，敬请期待。
+
+The **PRAgent** system supporting this work is still being improved. We plan to
+open-source it after further refinement so that more researchers can use and
+develop it together. Stay tuned.
 
 ## License
 
