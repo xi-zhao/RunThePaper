@@ -7,6 +7,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
+COLLECTIONS_PATH = ROOT / "cases" / "collections.json"
 CASE_CONTRACT = "paper_reproduction_only_v1"
 AUTHORITY_SOURCE = "PRAgent authoritative_reproduction_state schema v3"
 README_CATALOG_START = "<!-- case-catalog:start -->"
@@ -27,6 +28,51 @@ def load_catalog() -> list[dict[str, Any]]:
     if not isinstance(cases, list) or not cases:
         raise ValueError("catalog must contain cases")
     return [item for item in cases if isinstance(item, dict)]
+
+
+def load_collections(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    payload = json.loads(COLLECTIONS_PATH.read_text(encoding="utf-8"))
+    collections = payload.get("collections")
+    if payload.get("schema_version") != 1 or not isinstance(collections, list):
+        raise ValueError("cases/collections.json must use schema version 1")
+
+    catalog_ids = {str(case["paper_id"]) for case in cases}
+    collection_ids: set[str] = set()
+    grouped_ids: list[str] = []
+    required_text = (
+        "id",
+        "title_zh",
+        "title_en",
+        "description_zh",
+        "description_en",
+    )
+    for collection in collections:
+        if not isinstance(collection, dict):
+            raise ValueError("every collection must be an object")
+        for field in required_text:
+            value = collection.get(field)
+            if not isinstance(value, str) or not value.strip():
+                raise ValueError(f"collection requires non-empty {field}")
+        collection_id = str(collection["id"])
+        if collection_id in collection_ids:
+            raise ValueError(f"duplicate collection id: {collection_id}")
+        collection_ids.add(collection_id)
+
+        paper_ids = collection.get("paper_ids")
+        if not isinstance(paper_ids, list) or not paper_ids:
+            raise ValueError(f"collection {collection_id} must contain paper_ids")
+        grouped_ids.extend(str(paper_id) for paper_id in paper_ids)
+
+    if len(grouped_ids) != len(set(grouped_ids)):
+        raise ValueError("a paper may appear in only one primary collection")
+    grouped_set = set(grouped_ids)
+    unknown = sorted(grouped_set - catalog_ids)
+    missing = sorted(catalog_ids - grouped_set)
+    if unknown or missing:
+        raise ValueError(
+            f"collection coverage mismatch; unknown={unknown}, missing={missing}"
+        )
+    return collections
 
 
 def preprint_reference(case: dict[str, Any]) -> str:
@@ -52,38 +98,85 @@ def paper_reference(case: dict[str, Any]) -> str:
     return f"{preprint_reference(case)}<br>{publication_reference(case)}"
 
 
-def render_readme_catalog(cases: list[dict[str, Any]]) -> str:
+def catalog_focus(case: dict[str, Any]) -> str:
+    topic = str(case["topic"]).strip()
+    if topic.startswith("Independent scientific reproduction of "):
+        return "Independent formula, code, and data reconstruction with explicit remaining boundaries."
+    return topic
+
+
+def render_readme_catalog(
+    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+) -> str:
+    cases_by_id = {str(case["paper_id"]): case for case in cases}
     lines = [
-        f"**{len(cases)} public cases.** Open a paper below, then choose the reading or",
-        "reproduction resource you need.",
+        f"**{len(cases)} 篇公开案例，按研究主题进入。** 这里的分类是一条主要阅读路径，",
+        "很多论文同时横跨多个方向。",
         "",
-        "| Paper | Preprint / formal publication | Reproduction status | Open package |",
-        "| --- | --- | --- | --- |",
+        f"**{len(cases)} public cases, organized as research collections.** Each paper is",
+        "placed on one primary path even when its ideas cross several fields.",
+        "",
+        "选择一个主题展开目录，也可以进入 [完整索引](CASES.md) 查看论文身份、分数和复现边界。",
+        "",
+        "Choose a collection to open its catalog, or use the [detailed index](CASES.md)",
+        "for paper identities, scores, and reproduction boundaries.",
+        "",
+        "**快速入口 / Jump to a collection**",
+        "",
     ]
-    for case in cases:
-        paper_id = str(case["paper_id"])
-        case_root = f"cases/{paper_id}"
-        paper = f"[{case['title']}]({case_root}/README.md)"
-        resources = (
-            f"[中文 Note]({case_root}/note/reproduction-note.zh-CN.md) · "
-            f"[English Note]({case_root}/note/reproduction-note.en.md)<br>"
-            f"[Code]({case_root}/code/README.md) · "
-            f"[Figures]({case_root}/outputs/figures/) · "
-            f"[Checks]({case_root}/outputs/checks/)"
-        )
+    for collection in collections:
+        count = len(collection["paper_ids"])
         lines.append(
-            f"| {paper} | {paper_reference(case)} | {case['status']} | {resources} |"
+            f"- [{collection['title_zh']} / {collection['title_en']}"
+            f"（{count}）](#collection-{collection['id']})"
         )
+
+    for collection in collections:
+        collection_id = str(collection["id"])
+        paper_ids = [str(paper_id) for paper_id in collection["paper_ids"]]
+        lines.extend(
+            [
+                "",
+                f'<a id="collection-{collection_id}"></a>',
+                "",
+                "<details>",
+                f"<summary><strong>{collection['title_zh']} / {collection['title_en']}（{len(paper_ids)}）</strong></summary>",
+                "",
+                str(collection["description_zh"]),
+                "",
+                str(collection["description_en"]),
+                "",
+                "| 论文 / Paper | 复现内容 / Reproduced focus | 状态 / Status | 打开 / Open |",
+                "| --- | --- | --- | --- |",
+            ]
+        )
+        for paper_id in paper_ids:
+            case = cases_by_id[paper_id]
+            case_root = f"cases/{paper_id}"
+            paper = f"[{case['title']}]({case_root}/README.md)"
+            resources = (
+                f"[中文]({case_root}/note/reproduction-note.zh-CN.md) · "
+                f"[EN]({case_root}/note/reproduction-note.en.md) · "
+                f"[Code]({case_root}/code/README.md)"
+            )
+            lines.append(
+                f"| {paper} | {catalog_focus(case)} | {case['status']} | {resources} |"
+            )
+        lines.extend(["", "</details>"])
     lines.extend(
         [
             "",
-            "Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for audit scores and explicit boundaries.",
+            "这里的状态描述复现范围，不是论文排名，也不是完成度奖杯。部分复现、输入缺失、算力阻塞和待独立评审都会照实保留。",
+            "",
+            "Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for paper identities, audit scores, generated figures, checks, and explicit boundaries.",
         ]
     )
     return "\n".join(lines)
 
 
-def render_root_readme(cases: list[dict[str, Any]]) -> str:
+def render_root_readme(
+    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+) -> str:
     path = ROOT / "README.md"
     content = path.read_text(encoding="utf-8")
     if (
@@ -95,7 +188,7 @@ def render_root_readme(cases: list[dict[str, Any]]) -> str:
         )
     start = content.index(README_CATALOG_START) + len(README_CATALOG_START)
     end = content.index(README_CATALOG_END, start)
-    generated = "\n" + render_readme_catalog(cases) + "\n"
+    generated = "\n" + render_readme_catalog(cases, collections) + "\n"
     return content[:start] + generated + content[end:]
 
 
@@ -414,9 +507,11 @@ def render_note_index(case: dict[str, Any], case_dir: Path) -> str:
     return "\n".join(lines)
 
 
-def expected_files(cases: list[dict[str, Any]]) -> dict[Path, str]:
+def expected_files(
+    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+) -> dict[Path, str]:
     rendered = {
-        ROOT / "README.md": render_root_readme(cases),
+        ROOT / "README.md": render_root_readme(cases, collections),
         ROOT / "CASES.md": render_cases_index(cases),
     }
     for case in cases:
@@ -442,8 +537,9 @@ def main() -> int:
     )
     args = parser.parse_args()
     cases = load_catalog()
+    collections = load_collections(cases)
     stale: list[Path] = []
-    for path, content in expected_files(cases).items():
+    for path, content in expected_files(cases, collections).items():
         if args.check:
             if not path.exists() or path.read_text(encoding="utf-8") != content:
                 stale.append(path.relative_to(ROOT))
