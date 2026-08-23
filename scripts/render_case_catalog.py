@@ -12,6 +12,16 @@ CASE_CONTRACT = "paper_reproduction_only_v1"
 AUTHORITY_SOURCE = "PRAgent authoritative_reproduction_state schema v3"
 README_CATALOG_START = "<!-- case-catalog:start -->"
 README_CATALOG_END = "<!-- case-catalog:end -->"
+README_PATHS = {
+    "en": ROOT / "README.md",
+    "zh-CN": ROOT / "README.zh-CN.md",
+}
+CHINESE_STATUS = {
+    "Partial scientific reproduction": "部分科学复现",
+    "Scientific reproduction — independent review pending": "科学复现，待独立评审",
+    "Scientific reproduction — invalid": "科学复现无效",
+    "Scientific reproduction — paper-error candidates identified": "科学复现，发现论文错误候选",
+}
 
 
 def load_catalog() -> list[dict[str, Any]]:
@@ -106,29 +116,40 @@ def catalog_focus(case: dict[str, Any]) -> str:
 
 
 def render_readme_catalog(
-    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+    cases: list[dict[str, Any]],
+    collections: list[dict[str, Any]],
+    language: str,
 ) -> str:
+    if language not in README_PATHS:
+        raise ValueError(f"unsupported README language: {language}")
     cases_by_id = {str(case["paper_id"]): case for case in cases}
-    lines = [
-        f"**{len(cases)} 篇公开案例，按研究主题进入。** 这里的分类是一条主要阅读路径，",
-        "很多论文同时横跨多个方向。",
-        "",
-        f"**{len(cases)} public cases, organized as research collections.** Each paper is",
-        "placed on one primary path even when its ideas cross several fields.",
-        "",
-        "选择一个主题展开目录，也可以进入 [完整索引](CASES.md) 查看论文身份、分数和复现边界。",
-        "",
-        "Choose a collection to open its catalog, or use the [detailed index](CASES.md)",
-        "for paper identities, scores, and reproduction boundaries.",
-        "",
-        "**快速入口 / Jump to a collection**",
-        "",
-    ]
+    if language == "en":
+        lines = [
+            f"**{len(cases)} public cases, organized as research collections.** Each paper is",
+            "placed on one primary path even when its ideas cross several fields.",
+            "",
+            "Choose a collection to open its catalog, or use the [detailed index](CASES.md)",
+            "for paper identities, scores, and reproduction boundaries.",
+            "",
+            "**Jump to a collection**",
+            "",
+        ]
+        title_field = "title_en"
+    else:
+        lines = [
+            f"**{len(cases)} 篇公开案例，按研究主题进入。** 这里的分类是一条主要阅读路径，",
+            "很多论文同时横跨多个方向。论文标题保留原文。",
+            "",
+            "选择一个主题展开目录，也可以进入 [完整索引（英文）](CASES.md) 查看论文身份、分数和复现边界。",
+            "",
+            "**快速入口**",
+            "",
+        ]
+        title_field = "title_zh"
     for collection in collections:
         count = len(collection["paper_ids"])
         lines.append(
-            f"- [{collection['title_zh']} / {collection['title_en']}"
-            f"（{count}）](#collection-{collection['id']})"
+            f"- [{collection[title_field]} ({count})](#collection-{collection['id']})"
         )
 
     for collection in collections:
@@ -140,56 +161,92 @@ def render_readme_catalog(
                 f'<a id="collection-{collection_id}"></a>',
                 "",
                 "<details>",
-                f"<summary><strong>{collection['title_zh']} / {collection['title_en']}（{len(paper_ids)}）</strong></summary>",
+                f"<summary><strong>{collection[title_field]} ({len(paper_ids)})</strong></summary>",
                 "",
-                str(collection["description_zh"]),
-                "",
-                str(collection["description_en"]),
-                "",
-                "| 论文 / Paper | 复现内容 / Reproduced focus | 状态 / Status | 打开 / Open |",
-                "| --- | --- | --- | --- |",
             ]
         )
+        if language == "en":
+            lines.extend(
+                [
+                    str(collection["description_en"]),
+                    "",
+                    "| Paper | Reproduced focus | Status | Open |",
+                    "| --- | --- | --- | --- |",
+                ]
+            )
+        else:
+            lines.extend(
+                [
+                    str(collection["description_zh"]),
+                    "",
+                    "| 论文 | 复现状态 | 查看 |",
+                    "| --- | --- | --- |",
+                ]
+            )
         for paper_id in paper_ids:
             case = cases_by_id[paper_id]
             case_root = f"cases/{paper_id}"
             paper = f"[{case['title']}]({case_root}/README.md)"
-            resources = (
-                f"[中文]({case_root}/note/reproduction-note.zh-CN.md) · "
-                f"[EN]({case_root}/note/reproduction-note.en.md) · "
-                f"[Code]({case_root}/code/README.md)"
-            )
-            lines.append(
-                f"| {paper} | {catalog_focus(case)} | {case['status']} | {resources} |"
-            )
+            if language == "en":
+                resources = (
+                    f"[Note]({case_root}/note/reproduction-note.en.md) · "
+                    f"[Code]({case_root}/code/README.md)"
+                )
+                lines.append(
+                    f"| {paper} | {catalog_focus(case)} | {case['status']} | {resources} |"
+                )
+            else:
+                status = CHINESE_STATUS.get(str(case["status"]))
+                if status is None:
+                    raise ValueError(
+                        f"missing Chinese status for {paper_id}: {case['status']}"
+                    )
+                resources = (
+                    f"[中文讲义]({case_root}/note/reproduction-note.zh-CN.md) · "
+                    f"[代码]({case_root}/code/README.md)"
+                )
+                lines.append(f"| {paper} | {status} | {resources} |")
         lines.extend(["", "</details>"])
-    lines.extend(
-        [
-            "",
-            "这里的状态描述复现范围，不是论文排名，也不是完成度奖杯。部分复现、输入缺失、算力阻塞和待独立评审都会照实保留。",
-            "",
-            "Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for paper identities, audit scores, generated figures, checks, and explicit boundaries.",
-        ]
-    )
+    if language == "en":
+        lines.extend(
+            [
+                "",
+                "Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for paper identities, audit scores, generated figures, checks, and explicit boundaries.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "",
+                "这里的状态描述复现范围，不是论文排名，也不是完成度奖杯。部分复现、输入缺失、算力阻塞和待独立评审都会照实保留。详情可查看[如何理解复现质量](#如何理解复现质量)和[完整索引（英文）](CASES.md)。",
+            ]
+        )
     return "\n".join(lines)
 
 
-def render_root_readme(
-    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+def render_readme(
+    path: Path,
+    cases: list[dict[str, Any]],
+    collections: list[dict[str, Any]],
+    language: str,
 ) -> str:
-    path = ROOT / "README.md"
     content = path.read_text(encoding="utf-8")
     if (
         content.count(README_CATALOG_START) != 1
         or content.count(README_CATALOG_END) != 1
     ):
         raise ValueError(
-            "README.md must contain exactly one generated case-catalog block"
+            f"{path.name} must contain exactly one generated case-catalog block"
         )
     start = content.index(README_CATALOG_START) + len(README_CATALOG_START)
     end = content.index(README_CATALOG_END, start)
-    generated = "\n" + render_readme_catalog(cases, collections) + "\n"
-    return content[:start] + generated + content[end:]
+    generated = "\n" + render_readme_catalog(cases, collections, language) + "\n"
+    rendered = content[:start] + generated + content[end:]
+    if language == "en" and any(
+        "\u3400" <= character <= "\u9fff" for character in rendered
+    ):
+        raise ValueError("README.md must remain English-only")
+    return rendered
 
 
 def render_cases_index(cases: list[dict[str, Any]]) -> str:
@@ -511,7 +568,12 @@ def expected_files(
     cases: list[dict[str, Any]], collections: list[dict[str, Any]]
 ) -> dict[Path, str]:
     rendered = {
-        ROOT / "README.md": render_root_readme(cases, collections),
+        README_PATHS["en"]: render_readme(
+            README_PATHS["en"], cases, collections, "en"
+        ),
+        README_PATHS["zh-CN"]: render_readme(
+            README_PATHS["zh-CN"], cases, collections, "zh-CN"
+        ),
         ROOT / "CASES.md": render_cases_index(cases),
     }
     for case in cases:
