@@ -33,6 +33,27 @@ missing public inputs, compute limits, invalid runs, and pending independent
 review remain visible. Useful scientific infrastructure should preserve
 uncertainty, not polish it away.
 
+## Claim-first 100-paper audit
+
+The fixed audit maps every one of 3,933 Claim Checks to a direct scientific
+Claim and a terminal outcome. Structural mapping and final accounting are
+100%; this is distinct from successful reproduction.
+
+| Metric | Result |
+| --- | ---: |
+| Successful numerical-Claim coverage | 40.55% |
+| Objective-blocker Claim rate | 21.93% |
+| Attempted-but-not-reproduced Claim rate | 37.52% |
+| Pending Claim rate | 0.00% |
+| Conditional Fidelity on trusted scientific regions | 92.97/100 |
+| Successful Claim mass with trusted Fidelity evidence | 23.37% |
+| Conditional Reproduction Degree | 37.70/100 (bounds 8.81--39.88) |
+
+Fidelity is never imputed. The combined Degree is reported only with success
+coverage, conditional Fidelity, evidence coverage, and bounds. See the
+[full evaluation, distributions, ledgers, manuscript, and Supplementary
+Information](evaluation/claim-first-100/README.md).
+
 | If you want to... | Start here |
 | --- | --- |
 | Understand a paper | Open its explanatory note |
