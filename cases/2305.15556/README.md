@@ -6,7 +6,7 @@ Published as: [Optimal Generators for Quantum Sensing](https://doi.org/10.1103/P
 
 Formal citation: Phys. Rev. Lett. 131, 150802 (2023) · DOI `10.1103/PhysRevLett.131.150802` · Locator `150802`
 
-Public status: **Scientific reproduction — independent review pending** · Audit score: **90.00/100**
+Public status: **Scientific reproduction — visual review pending** · Audit score: **90.00/100**
 
 Clean-room reproduction from the paper equations; no author numerical code or arrays are present or used.
 
@@ -64,7 +64,7 @@ cd cases/2305.15556/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

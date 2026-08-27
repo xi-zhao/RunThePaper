@@ -1,60 +1,1588 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "2510.12880",
-  "overall_score": 95.0,
-  "source_score_model": "rra_similarity_v3_figure_evaluation",
-  "source_status": "passed",
-  "similarity_level": "complete_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 4,
-    "target_status_counts": {
-      "evidence_compared": 4
-    },
-    "published_generated_datasets": 4,
-    "published_generated_figures": 2
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "score_model": "rra_similarity_v3_figure_evaluation",
+  "summary": "The two Main Fig. 5 panels and two central periodic analytic families are independently covered, while a full-paper audit exposes five supplemental claim families without accepted implementations. The legacy two-panel similarity score remains 95; whole-paper coverage and reproduction degree are derived separately.",
   "targets": [
     {
-      "target_id": "V001",
-      "figure_id": "VALIDATION001",
-      "meaning": "Exact algebraic and finite-size validation of the frustration-free 2^N+1 ground-state manifold.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
-    },
-    {
-      "target_id": "V002",
-      "figure_id": "VALIDATION002",
-      "meaning": "Energy-bound and symmetry checks behind the schematic phase diagram.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
-    },
-    {
       "target_id": "T001",
-      "figure_id": "FIG005A",
-      "meaning": "Squared fidelity of the uniform-positive-w fractionalized MPS with the exact ground state.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Fig. 5(a): ground-state squared fidelity",
+      "figure_refs": [
+        "Main Fig. 5(a)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 49.0,
+          "max_score": 50.0,
+          "reason": "All five angle branches have the paper's ordering, finite-size decay, and approach to unit fidelity at the exact point."
+        },
+        "numeric_closeness": {
+          "score": 31.0,
+          "max_score": 35.0,
+          "reason": "Twenty-four of twenty-five values agree within 0.0015; the mean absolute digitized error is 0.0002504, with one N=12, theta=10 degree point differing by 0.0036385."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Every published system size and angle in the panel is independently evaluated with the paper boundary condition and conserved sector."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "note": "All 25 plotted values are generated and compared against digitized source markers.",
+            "evidence": "outputs/checks/t001_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "digitized_curve",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC006",
+          "EQC007",
+          "EQC008"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The reduced-scale overlap runner is now attested, but the exploratory panel still lacks a final artifact/pixel and fresh-review closure.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/T001.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining limitation is evidence-process debt rather than a missing or defective implementation.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Main Figure 5(a); scientific acceptance is unchanged.",
+            "items": [
+              "T001",
+              "Main Figure 5(a)"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Review the existing full N/theta panel evidence together with the new clean-room attestation; do not substitute this reduced run for the accepted numerical comparison.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/T001_fresh_scientific_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ground_fidelity_range",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.all_overlaps_in_unit_interval",
+          "claim": "Every computed squared fidelity lies in the physical interval."
+        },
+        {
+          "assertion_id": "ground_fidelity_trends",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.finite_size_trend_matches_source",
+          "claim": "The system-size and angle trends match the source panel."
+        },
+        {
+          "assertion_id": "ground_digitized_agreement",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.digitized_reference_agreement",
+          "claim": "The digitized curve agrees except for one explicitly bounded source discrepancy."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/ground_state_overlaps.csv",
+        "outputs/data/source_ground_state_overlaps_digitized.csv",
+        "outputs/checks/t001_paper_target_run.json",
+        "comparison-artifacts/fig5a_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "At theta=10 degrees and N=12 the independent result is 0.87585412 while the digitized marker is 0.87949260; author arrays and eigensolver settings are unavailable.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 95.0,
+      "component_total": 95.0,
+      "score": 95.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG005B",
-      "meaning": "Squared fidelity of a one-w-flip MPS with the exact first-excited manifold.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Fig. 5(b): first-excited-subspace squared fidelity",
+      "figure_refs": [
+        "Main Fig. 5(b)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "max_score": 50.0,
+          "reason": "All five branches reproduce the paper's ordering, finite-size decay, exact-point approach, and N-fold one-flip degeneracy."
+        },
+        "numeric_closeness": {
+          "score": 34.0,
+          "max_score": 35.0,
+          "reason": "All twenty-five values fall within 0.0015 of the digitized markers; the maximum absolute error is 0.0003862 and the mean is 0.0001516."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Every published size and angle is generated, and the translational N-fold energy degeneracy is independently checked."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "note": "All 25 plotted values and representative one-flip degeneracies are generated.",
+            "evidence": "outputs/checks/t002_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "digitized_curve",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC006",
+          "EQC007",
+          "EQC009"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T002 (Main Fig. 5(b): first-excited-subspace squared fidelity) records legacy failure label=missing_benchmark_metadata; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T002 (Main Fig. 5(b): first-excited-subspace squared fidelity).",
+            "items": [
+              "T002"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T002 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "first_excited_fidelity_range",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.all_overlaps_in_unit_interval",
+          "claim": "Every first-excited-subspace squared fidelity lies in the physical interval."
+        },
+        {
+          "assertion_id": "one_flip_degeneracy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.one_flip_energies_n_fold_degenerate",
+          "claim": "Moving the single negative conserved bond produces the N-fold degenerate first-excited manifold."
+        },
+        {
+          "assertion_id": "first_excited_digitized_agreement",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.digitized_reference_agreement",
+          "claim": "All digitized source markers agree within the numerical comparison tolerance."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/first_excited_overlaps.csv",
+        "outputs/data/source_first_excited_overlaps_digitized.csv",
+        "outputs/checks/t002_paper_target_run.json",
+        "comparison-artifacts/fig5b_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The source does not disclose the eigensolver, degeneracy threshold, or convergence tolerance, so the reader-facing artifact remains an exploratory reconstruction despite paper-exact physical parameters.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 95.0,
+      "component_total": 99.0,
+      "score": 95.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V001",
+      "label": "Periodic exact-point ground-state manifold",
+      "figure_refs": [
+        "Main exact-point and MPS claim family"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This analytic validation has no comparable visual primary metric; it is excluded from the historical render aggregate but remains part of item-level scientific reproduction.",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Projector identity, total nullity 2^N+1, the unique extra uniform-minus zero mode, and fractionalized-MPS zero energy all pass.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Independent N=4 and N=6 sector counts equal 17 and 65 exactly; projector matrix error is below 3.4e-16.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The periodic exact-point projector, sector-counting, and MPS-construction claim family is checked at an explicit finite-size subset.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "periodic-exact-point",
+            "status": "reproduced",
+            "evidence": "outputs/checks/v001_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC003",
+          "EQC004",
+          "EQC005",
+          "EQC006",
+          "EQC007",
+          "EQC011"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic sector-count and projector target rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/checks/v001_paper_target_run.json",
+          "outputs/data/exact_point_validation.csv"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The exact finite-size implementation is attested at N=4; the previously discussed N=8--12 extension has not been executed in this closure run.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V001.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining paper-size extension is an evidence follow-up, not an undefined target scope or implementation defect.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: periodic exact-point ground-state manifold; scientific acceptance is unchanged.",
+            "items": [
+              "V001",
+              "Claim: periodic exact-point ground-state manifold"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Run the already-declared larger even-N validation only if the paper-size extension is required for scientific acceptance.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V001_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "periodic_projector_identity",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/v001_paper_target_run.json#checks.projector_identity",
+          "claim": "Every exact-point bond term equals sqrt(2) times the stated rank-two projector."
+        },
+        {
+          "assertion_id": "periodic_exact_degeneracy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/v001_paper_target_run.json#checks.degeneracy_matches_2n_plus_1",
+          "claim": "The periodic exact-point nullity equals 2^N+1 at the checked even sizes."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V001.json",
+        "outputs/checks/v001_paper_target_run.json",
+        "outputs/data/exact_point_validation.csv",
+        "tests/test_kitaev_aklt.py"
+      ],
+      "remaining_gap": "The accepted run verifies N=4 and N=6 rather than every paper-listed size, so the paper-subset cap remains explicit.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V002",
+      "label": "Periodic phase and product-state controls",
+      "figure_refs": [
+        "Main Fig. 4 analytic claim family"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This analytic validation has no comparable visual primary metric; it is excluded from the historical render aggregate but remains part of item-level scientific reproduction.",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Periodic product-state energy, phase-boundary degeneracy, unique uniform-z ground state, and K-mirror checks all pass.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Independent sector spectra and product-state energies satisfy the exact zero, -N, multiplicity, and mirror identities to numerical precision.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The periodic-boundary analytic controls behind Main Fig. 4 are all represented.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "periodic-phase-controls",
+            "status": "reproduced",
+            "evidence": "outputs/checks/v002_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC003",
+          "EQC010"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic phase-control target rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/checks/v002_paper_target_run.json",
+          "outputs/data/phase_controls.csv"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "periodic_product_state_controls",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/v002_paper_target_run.json#checks",
+          "claim": "The periodic product states attain the stated energies and multiplicities across the phase controls."
+        },
+        {
+          "assertion_id": "periodic_k_mirror_symmetry",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/v002_paper_target_run.json#checks.k_mirror_symmetry",
+          "claim": "The representative spectrum is invariant under K to -K."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V002.json",
+        "outputs/checks/v002_paper_target_run.json",
+        "outputs/data/phase_controls.csv"
+      ],
+      "remaining_gap": "Fresh-context independent review remains separate from this W1 inventory migration.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "V003",
+      "label": "Open-chain exact-point degeneracy",
+      "figure_refs": [
+        "Supplement Edge states and Fig. S1"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent open-chain exact-point nullity or fractionalized-state rank artifact is registered.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The claimed 2^(N+1)-1 sequence has not been independently evaluated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The open-chain exact-point claim is declared but uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "open-exact-degeneracy",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#V003"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC003",
+          "EQC012"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic open-chain degeneracy claim rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "EQUATION_CARDS.json",
+          "TARGET_LEDGER.md"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "Independent open-chain N=2,4 nullities now run and match the formula, but the all-even-N theorem has not received fresh scientific acceptance.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V003.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "Finite-size implementation is closed; the remaining gap is proof-level review and evidence finality.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: open-chain exact-point degeneracy; scientific acceptance is unchanged.",
+            "items": [
+              "V003",
+              "Claim: open-chain exact-point degeneracy"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the finite-size sequence and independently verify the all-even-N edge-state counting argument.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V003_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v003_open_exact_degeneracy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#V003",
+          "claim": "For even open chains with X end bonds, the exact-point nullity equals 2^(N+1)-1."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V003.json",
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "An independent open-boundary count and rank artifact is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V004",
+      "label": "Open-chain theta=pi/2 degeneracy",
+      "figure_refs": [
+        "Supplement purely biquadratic theta=pi/2 claim"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No open-chain theta=pi/2 zero-mode-count artifact is registered.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The claimed 2N+1 sequence has not been independently evaluated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The open-chain theta=pi/2 claim is declared but uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "open-pi-over-2-degeneracy",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#V004"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC002",
+          "EQC013"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic open-chain degeneracy claim rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "EQUATION_CARDS.json",
+          "TARGET_LEDGER.md"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "Independent open-chain N=2,4 spectra now match the 2N+1 degeneracy, but the all-N claim remains unaccepted.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V004.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "Finite-size implementation is closed; the remaining gap is proof-level review and evidence finality.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: open-chain theta=pi/2 degeneracy; scientific acceptance is unchanged.",
+            "items": [
+              "V004",
+              "Claim: open-chain theta=pi/2 degeneracy"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the finite-size evidence and the supplement's all-N degeneracy derivation.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V004_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v004_open_pi_over_2_degeneracy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#V004",
+          "claim": "The open-chain theta=pi/2 nullity equals 2N+1."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V004.json",
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "An independent open-chain theta=pi/2 spectrum is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V005",
+      "label": "Open-chain theta=3pi/2 energy and degeneracy",
+      "figure_refs": [
+        "Supplement purely biquadratic theta=3pi/2 claim"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No open-chain four-state ground-manifold artifact is registered.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The claimed -(N-1) energy and fourfold degeneracy have not been independently evaluated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The open-chain theta=3pi/2 claim is declared but uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "open-3pi-over-2-controls",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#V005"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC002",
+          "EQC014"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic open-chain energy and degeneracy claim rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "EQUATION_CARDS.json",
+          "TARGET_LEDGER.md"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "Independent N=2,4 spectra now reproduce energy -(N-1) and fourfold multiplicity, while the edge-charge labeling has not been independently accepted.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining limitation is scientific evidence finality, not implementation readiness.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: open-chain theta=3pi/2 energy and degeneracy; scientific acceptance is unchanged.",
+            "items": [
+              "V005",
+              "Claim: open-chain theta=3pi/2 energy and degeneracy"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the finite-size spectrum and add an independent edge-conserved-quantity labeling check if required.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V005_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v005_open_3pi_over_2_controls",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#V005",
+          "claim": "The open-chain theta=3pi/2 ground manifold is fourfold with energy -(N-1)."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V005.json",
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "An independent open-chain product-state and spectrum artifact is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V006",
+      "label": "Theta=0 fractionalized-state parity constraints",
+      "figure_refs": [
+        "Supplement theta<pi/4 variational-ansatz claim"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No coefficient-support or global-rotation parity artifact is registered.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The even-triplet selection rule has not been independently enumerated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The theta=0 parity claim is declared but uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "theta-zero-parity",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#V006"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC005",
+          "EQC015"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic wavefunction-support claim rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "EQUATION_CARDS.json",
+          "TARGET_LEDGER.md"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The finite-size uniform-sector ground state now passes both global pi-rotation parity checks, but this necessary consequence is not yet an all-bond support proof.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V006.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is the strength of the scientific inference and fresh review, not missing code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: theta=0 fractionalized-state parity constraints; scientific acceptance is unchanged.",
+            "items": [
+              "V006",
+              "Claim: theta=0 fractionalized-state parity constraints"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Independently connect the global parity eigenvalues to the paper's bond-triplet parity statement or provide a direct coefficient-support proof.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V006_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v006_theta_zero_parity",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#V006",
+          "claim": "Only even triplet-x and triplet-y parities appear in the uniform-positive-w ground-state expansion."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V006.json",
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "An independent bond-basis support and global-rotation artifact is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "V007",
+      "label": "Perturbative preservation of the uniform-positive-w sector",
+      "figure_refs": [
+        "Supplement unique-ground-state perturbation claim"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No perturbative matrix-element or order-by-order sector artifact is registered.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The vanishing first-order shift and all-order sector preservation have not been independently evaluated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The perturbative sector claim is declared but uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uniform-plus-perturbation",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#V007"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC002",
+          "EQC010",
+          "EQC016"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic perturbative-sector claim rather than a raster target.",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "EQUATION_CARDS.json",
+          "TARGET_LEDGER.md"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The finite-size implementation verifies zero first order, negative second order, and perturbation support in the uniform-positive sector; every-order preservation remains unproved.",
+            "evidence": [
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json",
+              "outputs/data/implementation_closure/V007.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining limitation is theorem-level scientific closure rather than implementation readiness.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The case-local implementation now has focused formula/invariant tests and a clean-room isolated execution attestation; no remaining implementation defect was found in this declared reduced-scale path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover the target formula, invariant, input boundary, and campaign mapping.",
+                "evidence": [
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The declared target path ran successfully with all declared inputs read and no forbidden case input access.",
+                "evidence": [
+                  "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the declared reduced-scale implementation path is ruled out by the focused tests and isolated execution; this does not rule out a paper-scale or theorem-level scientific discrepancy.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/2510.12880-implementation-closure-v1-20260824/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Implementation closure for Claim: perturbation preserves the uniform-positive-w sector; scientific acceptance is unchanged.",
+            "items": [
+              "V007",
+              "Claim: perturbation preserves the uniform-positive-w sector"
+            ],
+            "completion": "Implementation path attested; remaining scientific boundary explicitly retained."
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the first/second-order artifact and independently verify the every-order commutation/sector argument.",
+            "expected_resolution": "Fresh scientific review either accepts the generated evidence at its declared scope or identifies a paper-scale, proof-level, or missing-input boundary without reopening implementation readiness.",
+            "evidence_to_produce": [
+              "outputs/review/V007_fresh_scientific_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v007_uniform_plus_perturbation",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#V007",
+          "claim": "The bilinear perturbation starts at second order and preserves the uniform-positive-w sector at every order."
+        }
+      ],
+      "evidence": [
+        "outputs/data/implementation_closure/V007.json",
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "An independent perturbative-order and sector-selection artifact is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
-  "source_scorecard_sha256": "44996850e9d1d81aa8f21401a0d4e374f03c1a296ea24cf252d46ace186b023e"
+  "overall_score": 95.0,
+  "similarity_level": "complete_reproduction",
+  "evaluation_summary": {
+    "scored_items": 9,
+    "critical_items": 4,
+    "artifact_pass_rate": 0.44,
+    "data_backed_rate": 0.44,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "missing_reference_curve": 1,
+      "missing_benchmark_metadata": 1,
+      "none": 2,
+      "artifact_not_runnable": 5
+    },
+    "parameter_match_counts": {
+      "paper_exact": 3,
+      "paper_subset": 1,
+      "not_applicable": 5
+    },
+    "reference_comparison_counts": {
+      "digitized_curve": 2,
+      "analytic_reference": 7
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4,
+      "unknown": 5
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 4,
+      "unknown": 5
+    },
+    "formula_gate_counts": {
+      "verified": 4,
+      "source_only": 5
+    },
+    "paper_level_role_counts": {
+      "main_claim": 4,
+      "supporting": 5
+    },
+    "physics_status_counts": {
+      "passed": 4,
+      "pending": 5
+    },
+    "physics_assertion_status_counts": {
+      "passed": 10,
+      "blocked": 5
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "V001",
+      "V002",
+      "V003",
+      "V004",
+      "V005",
+      "V006",
+      "V007"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "aggregate_excluded_target_ids": [
+      "V001",
+      "V002",
+      "V003",
+      "V004",
+      "V005",
+      "V006",
+      "V007"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 8,
+      "not_required": 1
+    },
+    "causal_diagnosis_disposition_counts": {
+      "react_loop_required": 8,
+      "not_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "V001",
+      "V003",
+      "V004",
+      "V005",
+      "V006",
+      "V007"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T001",
+      "T002",
+      "V001",
+      "V003",
+      "V004",
+      "V005",
+      "V006",
+      "V007"
+    ],
+    "direct_cause_counts": {
+      "unresolved": 2,
+      "paper_scale_execution_not_run": 1,
+      "implementation_not_ready": 5
+    },
+    "root_cause_counts": {
+      "unresolved": 2,
+      "scope_definition_gap": 1,
+      "reproduction_method_gap": 5
+    },
+    "code_fault_status_counts": {
+      "not_excluded": 8
+    }
+  },
+  "status": "passed"
 }

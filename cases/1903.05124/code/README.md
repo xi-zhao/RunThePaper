@@ -7,27 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/1903.05124/code
-python scripts/run_supp_fig_s2.py --render-only
-python scripts/run_supp_fig_s3.py --render-only
-python scripts/run_supp_fig_s4.py --refinement-input ../outputs/data/supp_fig_s5_refinement_numerical_data.csv
-python scripts/run_supp_fig_s5.py --refinement-input ../outputs/data/supp_fig_s5_refinement_numerical_data.csv
-```
-
-## Full mixed-scale rerun
-
-The full mixed-scale campaign takes roughly 50 CPU wall-clock minutes with eight workers on the recorded machine. It reruns T002/T003 at paper scale and T001/T004/T005/T006 at their published feature scales, writes generated data and checks before figures, and never reads a paper image.
-
-```bash
-cd cases/1903.05124/code
-python scripts/run_main_fig2.py --scale feature --workers 8
-python scripts/run_supp_fig_s2.py --scale paper --workers 8
-python scripts/run_supp_fig_s3.py --scale paper --workers 8
-python scripts/run_supp_fig_s5_refinement.py --workers 8
-python scripts/run_supp_fig_s4.py --refinement-input ../outputs/data/supp_fig_s5_refinement_numerical_data.csv
-python scripts/run_supp_fig_s5.py --refinement-input ../outputs/data/supp_fig_s5_refinement_numerical_data.csv
-python scripts/run_supp_fig_s6.py --scale feature --workers 8
+python scripts/run_reproduction.py --config config/isolation_smoke.json
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: T001, T004, T005, and T006 use reduced statistics or system sizes through L=24, so the package does not claim paper-exact precision for all panels. T005 transition locations pass, but the fitted critical exponent remains too depth-sensitive for a full exponent claim. Author seeds and raw trajectories are unavailable, and the S3 caption/raster uncertainty-label inconsistency is recorded explicitly.
+Boundary: All 44 visible theory-numerical panels and insets are frozen in the reproduction scope. Nine schematic panels and one numerical summary table are inventoried but excluded from figure generation. Source figures are comparison-only; every generated value must come from formulas or an independent Clifford/stabilizer computation. T001 now has a feature-scale reproduction of all four Main Fig. 2 numerical panels; paper geometry is preserved while sampling and finite-size grids remain reduced and explicitly labeled. T004 now has all ten Supplement Fig. S4 numerical items from a fresh EQC007 half-chain fit over independent generated observations; every scientific check passes at feature scale. T005 now has all seven Supplement Fig. S5 panels from 4,352 independent periodic-chain trajectories; critical points pass, while exponent-depth stability remains partial at L<=24 and eight realizations per cell. T006 now has all three Supplement Fig. S6 panels from 2,880 independent trajectories over every paper block size at exact d/m=3; all frozen scientific checks pass at feature scale, with sizes limited to L<=24. All 44 theory-numerical items now have independent formula-based evidence; 20 are paper scale and 24 are explicitly feature scale.

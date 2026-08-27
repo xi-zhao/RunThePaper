@@ -1,64 +1,47 @@
+#!/usr/bin/env python3
+"""Portable public entrypoint for the independently implemented reproduction."""
 from __future__ import annotations
 
-import argparse
-import json
-import sys
+import os
 from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+CASE_ROOT = Path(__file__).resolve().parents[2]
+CODE_ROOT = CASE_ROOT / "code"
+IMPLEMENTATION = CODE_ROOT / "scripts" / "run_reproduction_impl.py"
 
 
-WORKSPACE = Path(__file__).resolve().parents[1]
-CASE_ROOT = WORKSPACE.parent
-sys.path.insert(0, str(WORKSPACE / "src"))
-
-from benchmark_release import ARCHIVE_FILENAME  # noqa: E402
-from realified_figures import run_reproduction  # noqa: E402
-
-
-def _default_archive() -> Path:
-    internal = CASE_ROOT / "raw" / "benchmarks" / ARCHIVE_FILENAME
-    public = CASE_ROOT / "inputs" / ARCHIVE_FILENAME
-    return internal if internal.is_file() else public
-
-
-def _default_output_root() -> Path:
-    if (WORKSPACE / "metadata").is_dir():
-        return WORKSPACE / "outputs"
-    return CASE_ROOT / "outputs"
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Reproduce Figures 8 and 9 of arXiv:2608.03987."
-    )
-    parser.add_argument(
-        "--archive",
-        type=Path,
-        default=_default_archive(),
-        help="Immutable Zenodo data-release ZIP.",
-    )
-    parser.add_argument(
-        "--output-root",
-        type=Path,
-        default=_default_output_root(),
-        help="Directory containing data/, figures/, and checks/.",
-    )
-    parser.add_argument(
-        "--validate-only",
-        action="store_true",
-        help="Validate and write tidy data/checks without rendering figures.",
-    )
-    return parser.parse_args()
+def sync_generated_outputs() -> None:
+    for group in ("data", "figures", "checks"):
+        source = CODE_ROOT / "outputs" / group
+        destination = CASE_ROOT / "outputs" / group
+        if not source.is_dir():
+            continue
+        for path in source.rglob("*"):
+            if not path.is_file():
+                continue
+            target = destination / path.relative_to(source)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, target)
 
 
 def main() -> int:
-    args = parse_args()
-    result = run_reproduction(
-        args.archive,
-        args.output_root,
-        render=not args.validate_only,
+    environment = os.environ.copy()
+    python_path = [str(CODE_ROOT), str(CODE_ROOT / "src")]
+    if environment.get("PYTHONPATH"):
+        python_path.append(environment["PYTHONPATH"])
+    environment["PYTHONPATH"] = os.pathsep.join(python_path)
+    completed = subprocess.run(
+        [sys.executable, str(IMPLEMENTATION), *sys.argv[1:]],
+        cwd=CODE_ROOT,
+        env=environment,
+        check=False,
     )
-    print(json.dumps(result, indent=2, ensure_ascii=False))
-    return 0
+    if completed.returncode == 0:
+        sync_generated_outputs()
+    return completed.returncode
 
 
 if __name__ == "__main__":

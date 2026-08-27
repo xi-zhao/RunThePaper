@@ -20,5 +20,5 @@ two figures.
 Run:
 
 ```bash
-python3 private validation harness/scripts/check_formula_gate.py case/2401.08523 --write
+python3 PRAgent-workflow/scripts/check_formula_gate.py case/2401.08523 --write
 ```

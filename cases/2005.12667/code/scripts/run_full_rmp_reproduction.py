@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the public full-review numerical targets T005--T020."""
+"""Generate all independent full-review numerical targets T005--T020."""
 
 from __future__ import annotations
 
@@ -16,9 +16,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-CODE_ROOT = Path(__file__).resolve().parents[1]
-CASE_ROOT = CODE_ROOT.parent
-sys.path.insert(0, str(CODE_ROOT))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE))
 
 from src.full_rmp_reproduction import (  # noqa: E402
     binomial_code_metrics,
@@ -42,11 +41,12 @@ from src.full_rmp_reproduction import (  # noqa: E402
 )
 
 
-DATA_DIR = CASE_ROOT / "outputs" / "data"
-FIGURE_DIR = CASE_ROOT / "outputs" / "figures"
-COMPARISON_DIR = CASE_ROOT / "docs" / "comparisons"
-CHECK_DIR = CASE_ROOT / "outputs" / "checks"
-CONFIG_PATH = CODE_ROOT / "config" / "full_rmp_scope.json"
+DATA_DIR = WORKSPACE / "outputs" / "data"
+FIGURE_DIR = WORKSPACE / "outputs" / "figures"
+COMPARISON_DIR = WORKSPACE / "outputs" / "comparisons"
+CHECK_DIR = WORKSPACE / "outputs" / "checks"
+REFERENCE_DIR = WORKSPACE / "references" / "original_figures"
+CONFIG_PATH = WORKSPACE / "experiments" / "full_rmp_scope.json"
 SCORECARD_PATH = CHECK_DIR / "similarity_scorecard.json"
 
 
@@ -108,9 +108,27 @@ def save_figure(fig: plt.Figure, filename: str) -> Path:
 
 
 def render_comparison(target_id: str, generated: Path) -> Path | None:
-    """Keep the public numerical runner independent of paper-owned image assets."""
-    del target_id, generated
-    return None
+    reference_name = REFERENCE_NAMES.get(target_id)
+    if reference_name is None:
+        return None
+    reference_path = REFERENCE_DIR / reference_name
+    if not reference_path.is_file():
+        return None
+    output_path = COMPARISON_DIR / f"{target_id.lower()}_source_vs_reproduction.png"
+    reference = plt.imread(reference_path)
+    reproduction = plt.imread(generated)
+    fig, axes = plt.subplots(1, 2, figsize=(12.0, 5.0))
+    axes[0].imshow(reference)
+    axes[0].set_title("Paper source panel (visual context)")
+    axes[1].imshow(reproduction)
+    axes[1].set_title("Independent equation-driven result")
+    for axis in axes:
+        axis.axis("off")
+    fig.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path, dpi=150)
+    plt.close(fig)
+    return output_path
 
 
 def grid_integral(values: np.ndarray, x: np.ndarray, p: np.ndarray) -> float:
@@ -140,7 +158,7 @@ def reproduce_t005(config: dict[str, object]) -> dict[str, object]:
     render_comparison("T005", figure)
     expected = np.arange(1, int(config["mode_count"]) + 1) * float(config["fundamental_GHz"])
     local_peaks = [frequencies[np.argmax(response * (np.abs(frequencies - peak) < 0.5))] for peak in expected]
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "max_peak_error_GHz": float(np.max(np.abs(expected - local_peaks)))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "max_peak_error_GHz": float(np.max(np.abs(expected - local_peaks)))}
 
 
 def reproduce_t006(config: dict[str, object]) -> dict[str, object]:
@@ -175,7 +193,7 @@ def reproduce_t006(config: dict[str, object]) -> dict[str, object]:
     axis.grid(alpha=0.15)
     figure = save_figure(fig, "fig5_transmon_wavefunctions.png")
     render_comparison("T006", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "max_wavefunction_norm_error": float(np.max(np.abs(np.asarray(norms) - 1.0))), "anharmonicity_over_EC": float((energies[2] - energies[1]) - (energies[1] - energies[0]))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "max_wavefunction_norm_error": float(np.max(np.abs(np.asarray(norms) - 1.0))), "anharmonicity_over_EC": float((energies[2] - energies[1]) - (energies[1] - energies[0]))}
 
 
 def reproduce_t007(config: dict[str, object]) -> dict[str, object]:
@@ -212,7 +230,7 @@ def reproduce_t007(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig6_transmon_charge_dispersion.png")
     render_comparison("T007", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "max_periodicity_error_GHz": max(periodic_errors), "charge_dispersion_GHz": dispersions, "dispersion_suppression_ratio": dispersions[-1] / dispersions[0]}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "max_periodicity_error_GHz": max(periodic_errors), "charge_dispersion_GHz": dispersions, "dispersion_suppression_ratio": dispersions[-1] / dispersions[0]}
 
 
 def reproduce_t008(config: dict[str, object]) -> dict[str, object]:
@@ -259,7 +277,7 @@ def reproduce_t008(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig18_readout_phase_space.png")
     render_comparison("T008", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "max_steady_photon_error": max(steady_errors), "snr_peak_two_chi_over_kappa": peak_ratios}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "max_steady_photon_error": max(steady_errors), "snr_peak_two_chi_over_kappa": peak_ratios}
 
 
 def reproduce_t009(config: dict[str, object]) -> dict[str, object]:
@@ -284,7 +302,7 @@ def reproduce_t009(config: dict[str, object]) -> dict[str, object]:
     figure = save_figure(fig, "fig19_dispersive_cavity_pull.png")
     render_comparison("T009", figure)
     center = len(detuning) // 2
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "center_amplitude_symmetry_error": float(abs(abs(alpha_g[center]) - abs(alpha_e[center]))), "center_phase_separation": float(abs(np.angle(alpha_e[center]) - np.angle(alpha_g[center])))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "center_amplitude_symmetry_error": float(abs(abs(alpha_g[center]) - abs(alpha_e[center]))), "center_phase_separation": float(abs(np.angle(alpha_e[center]) - np.angle(alpha_g[center])))}
 
 
 def _normalized_response(detuning: np.ndarray, g: float, kappa: float, gamma2: float) -> np.ndarray:
@@ -341,7 +359,7 @@ def reproduce_t010(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig20_coupling_regimes.png")
     render_comparison("T010", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "peak_positions_over_g": peak_positions, "strong_peak_split_error": abs((peak_positions["strong"][1] - peak_positions["strong"][0]) - 2.0)}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "peak_positions_over_g": peak_positions, "strong_peak_split_error": abs((peak_positions["strong"][1] - peak_positions["strong"][0]) - 2.0)}
 
 
 def reproduce_t011(config: dict[str, object]) -> dict[str, object]:
@@ -368,7 +386,7 @@ def reproduce_t011(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig21_vacuum_rabi_theory.png")
     render_comparison("T011", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "split_errors_MHz": split_errors}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "split_errors_MHz": split_errors}
 
 
 def reproduce_t012(config: dict[str, object]) -> dict[str, object]:
@@ -396,7 +414,7 @@ def reproduce_t012(config: dict[str, object]) -> dict[str, object]:
     left = probe < 0
     right = probe > 0
     split = probe[right][np.argmax(resonance_row[right])] - probe[left][np.argmax(resonance_row[left])]
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "resonant_split_over_g": float(split), "split_error": float(abs(split - 2.0))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "resonant_split_over_g": float(split), "split_error": float(abs(split - 2.0))}
 
 
 def reproduce_t013(config: dict[str, object]) -> dict[str, object]:
@@ -437,7 +455,7 @@ def reproduce_t013(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig24_qubit_spectroscopy.png")
     render_comparison("T013", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "max_linewidth_grid_error_MHz": max(linewidth_errors), "saturation_limit": float(resonance_population[-1])}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "max_linewidth_grid_error_MHz": max(linewidth_errors), "saturation_limit": float(resonance_population[-1])}
 
 
 def reproduce_t014(config: dict[str, object]) -> dict[str, object]:
@@ -466,7 +484,7 @@ def reproduce_t014(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig25_ac_stark.png")
     render_comparison("T014", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "weak_panel_mean_photons": [float(value) for value in [drive**2 / (float(config["chi_MHz"][0])**2 + (kappa / 2.0) ** 2) for drive in config["weak_drive_MHz"]]], "strong_peak_spacing_MHz": 2.0 * float(config["chi_MHz"][1])}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "weak_panel_mean_photons": [float(value) for value in [drive**2 / (float(config["chi_MHz"][0])**2 + (kappa / 2.0) ** 2) for drive in config["weak_drive_MHz"]]], "strong_peak_spacing_MHz": 2.0 * float(config["chi_MHz"][1])}
 
 
 def reproduce_t015(config: dict[str, object]) -> dict[str, object]:
@@ -490,7 +508,7 @@ def reproduce_t015(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig26_nonlinear_cavity_pull.png")
     render_comparison("T015", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "high_photon_return_errors_GHz": return_errors}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "high_photon_return_errors_GHz": return_errors}
 
 
 def reproduce_t016(config: dict[str, object]) -> dict[str, object]:
@@ -520,7 +538,7 @@ def reproduce_t016(config: dict[str, object]) -> dict[str, object]:
     render_comparison("T016", figure)
     short = gate_times <= 20.0
     improvement = np.asarray(gaussian_errors)[short] / np.asarray(drag_errors)[short]
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "median_short_gate_improvement": float(np.median(improvement)), "max_norm_error": float(max(max(row["gaussian_norm_error"], row["drag_norm_error"]) for row in rows))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "median_short_gate_improvement": float(np.median(improvement)), "max_norm_error": float(max(max(row["gaussian_norm_error"], row["drag_norm_error"]) for row in rows))}
 
 
 def reproduce_t017(_: dict[str, object]) -> dict[str, object]:
@@ -538,7 +556,7 @@ def reproduce_t017(_: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     check = CHECK_DIR / "table1_amplitude_damping_checks.json"
     write_json(check, {"status": "passed", **metrics})
-    return {"data": str(data.relative_to(CASE_ROOT)), "check": str(check.relative_to(CASE_ROOT)), **metrics}
+    return {"data": str(data.relative_to(WORKSPACE)), "check": str(check.relative_to(WORKSPACE)), **metrics}
 
 
 def reproduce_t018(config: dict[str, object]) -> dict[str, object]:
@@ -560,7 +578,7 @@ def reproduce_t018(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig31_cat_code_wigner.png")
     render_comparison("T018", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "wigner_integrals": integrals, "minimum_wigner": [float(np.min(value)) for value in wigners]}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "wigner_integrals": integrals, "minimum_wigner": [float(np.min(value)) for value in wigners]}
 
 
 def reproduce_t019(config: dict[str, object]) -> dict[str, object]:
@@ -585,7 +603,7 @@ def reproduce_t019(config: dict[str, object]) -> dict[str, object]:
     write_csv(data, rows)
     figure = save_figure(fig, "fig32_fock_superposition_wigner.png")
     render_comparison("T019", figure)
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "wigner_integrals": integrals, "max_integral_error": float(np.max(np.abs(np.asarray(integrals) - 1.0)))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "wigner_integrals": integrals, "max_integral_error": float(np.max(np.abs(np.asarray(integrals) - 1.0)))}
 
 
 def reproduce_t020(config: dict[str, object]) -> dict[str, object]:
@@ -617,7 +635,7 @@ def reproduce_t020(config: dict[str, object]) -> dict[str, object]:
     figure = save_figure(fig, "fig33_squeezing.png")
     render_comparison("T020", figure)
     expected_db = [-20.0 * value / np.log(10.0) for value in [float(item) for item in config["curve_r"]]]
-    return {"data": str(data.relative_to(CASE_ROOT)), "figure": str(figure.relative_to(CASE_ROOT)), "wigner_integral": grid_integral(wigner, grid, grid), "minimum_dB": minimum_db, "max_minimum_dB_error": float(np.max(np.abs(np.asarray(minimum_db) - np.asarray(expected_db))))}
+    return {"data": str(data.relative_to(WORKSPACE)), "figure": str(figure.relative_to(WORKSPACE)), "wigner_integral": grid_integral(wigner, grid, grid), "minimum_dB": minimum_db, "max_minimum_dB_error": float(np.max(np.abs(np.asarray(minimum_db) - np.asarray(expected_db))))}
 
 
 RUNNERS = {
@@ -678,7 +696,7 @@ def update_scorecard(results: dict[str, dict[str, object]], parameters: dict[str
         evidence = [value for key, value in results[target_id].items() if key in {"data", "figure", "check"}]
         comparison = COMPARISON_DIR / f"{target_id.lower()}_source_vs_reproduction.png"
         if comparison.exists():
-            evidence.append(str(comparison.relative_to(CASE_ROOT)))
+            evidence.append(str(comparison.relative_to(WORKSPACE)))
         target["evidence"] = evidence
         target["physics_assertions"] = [{"assertion_id": f"{target_id.lower()}_numeric_contract", "tier": "numeric", "essential": True, "status": "passed", "evidence": f"outputs/checks/full_rmp_checks.json#targets.{target_id}"}]
     write_json(SCORECARD_PATH, payload)

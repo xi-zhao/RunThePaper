@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "run_id": "2507.09447-supplement-closure-v4-20260825",
+  "target_ids": [
+    "T006",
+    "T007",
+    "T008"
+  ],
+  "command": [
+    "python",
+    "scripts/run_supplement_additional_numerics.py",
+    "--config",
+    "config/supplement_additional_run.json",
+    "--science-only"
+  ],
+  "inputs": [
+    "scripts/run_supplement_additional_numerics.py",
+    "src/supplement_additional_numerics.py",
+    "src/lyapunov_band.py",
+    "config/supplement_additional_run.json"
+  ],
+  "parameter_file": "config/supplement_additional_run.json",
+  "parameter_selector": "unidirectional",
+  "expected_parameters": {
+    "length": 128,
+    "realizations": 32,
+    "W": 0.8,
+    "hopping_real": 1.0,
+    "hopping_imag": 0.0,
+    "direction": "right",
+    "max_eigenvalue_error": 1e-12
+  },
+  "outputs": [
+    "outputs/data/unidirectional_density.csv",
+    "outputs/data/supplement_s3_precision_pilot.csv",
+    "outputs/data/supplement_s4_gap_scaling.csv",
+    "outputs/data/supplement_s4_protocol_sensitivity.csv",
+    "outputs/checks/supplement_additional_numerics.json",
+    "outputs/checks/supplement_compute_benchmark.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

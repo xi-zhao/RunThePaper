@@ -10,61 +10,92 @@ This report is a human-readable projection of the validated structured independe
 | --- | --- |
 | Protocol status | `passed` |
 | Protocol valid | `true` |
-| Whole-paper scope | `incomplete` |
+| Whole-paper scope | `complete` |
 | Paper assessment | `paper_error_candidate` |
+| Reviewed atomic claims | `24` |
+| Candidate atomic claims | `2` |
 | Candidate targets | `2` |
 
-The review protocol and target-level scientific adjudication are valid, but the fresh full-paper inventory exposed quantitative items that are not yet represented one-to-one in the authored target model. This blocks lifecycle completion without masking the candidate findings below.
+## Atomic claim adjudication
+
+| Claim | Targets | Assessment | Independent-review reason |
+| --- | --- | --- | --- |
+| INV-001 | T007 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Boundary-divergence proof (Eqs. 8-10) | T007 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-003 | T008 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-004 | T009 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-005 | T010 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-006 | T011 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| General transfer-MPO formulas (Eqs. 13-14) | T011 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-007 | T012 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Main Figure 2(a) | T001 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Main Figure 2(b) main axes | T002 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Main Figure 2(b) inset | T003 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Delta=1/2 thermodynamic current claim | T004 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-011 | T013 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-012 | T014 | `paper_error_candidate` | The bundled derivation and direct Eq. (7) substitution agree that the paper-named root-of-unity component assignment is inconsistent with the m-state example used in the publication. |
+| INV-013 | T015 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Delta=1/2 exponential thermodynamic convergence | T020 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-015 | T016 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Delta>=1 infinite transfer rank | T021 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-016 | T017 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-017 | T018 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| INV-018 | T019 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Isotropic current-ratio asymptote | T002 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| Isotropic connected-correlation claim | T005 | `paper_error_candidate` | Independent isotropic NESS checks preserve the symmetry constraints while the printed leading kernel violates them, so the discrepancy currently points to the paper rather than the clean-room implementation. |
+| Isotropic weak-coupling claim | T006 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
 
 ## Target adjudication
 
 | Target | Assessment | Independent-review reason |
 | --- | --- | --- |
-| T001 | `paper_supported` | Direct cause: no scientific mismatch was found for the nine paper-exact n=100 profiles. Root cause of residual finite-size differences from the red cosine guide is the guide's asymptotic status, not a model mismatch. Code-fault assessment: no defect found after dense-Liouvillian and reflection/bounds checks; the isolated rerun reproduced the frozen hashes. |
-| T002 | `paper_supported` | Direct cause: no mismatch remains in the main current panel over n=2..400. Root cause of the three curve families is the easy-plane, isotropic, and easy-axis transfer spectra described by the paper. Code-fault assessment: no defect found; dense currents, bond conservation, n^-2 coefficient, and deterministic rerun all pass. |
-| T003 | `paper_supported` | Direct cause: every easy-axis fit has the printed slope within 1.8e-13 and R^2 above 0.9999985. Root cause is the hyperbolic transfer spectrum. Code-fault assessment: no defect found after dense-current comparison and an independent log-linear fit. |
-| T004 | `paper_supported` | Direct cause: the closed Delta=1/2 current agrees with the leading-eigenvalue result and finite n=400 values. Root cause of the nonmonotonic curve is the exact 3x3 transfer spectrum. Code-fault assessment: no defect found; small- and large-epsilon limits plus the maximum were independently checked. |
-| T005 | `paper_error_candidate` | Direct cause: the printed leading kernel assigns different O(1/n) coefficients to reflection-plus-spin-flip-related point pairs, with minimum scaled gap 0.00856579, while finite exact NESS values agree across the pairs within 7.12e-14. Root cause: a variable/sign transcription error in the printed f(x,y) is strongly indicated. Code-fault assessment: no reproduction-code defect found; transfer correlations match direct density traces to 1.06e-15 and an independent symmetry derivation reaches the same contradiction. |
-| T006 | `paper_supported` | Direct cause: current and profile approach the two printed weak-coupling formulas with errors below 1.1e-7 and 1.7e-7. Root cause is the perturbative epsilon regime. Code-fault assessment: no defect found after two n values, two epsilon values, and dense small-chain comparison. |
-| T007 | `paper_supported` | Direct cause: no discrepancy was found in the exact MPO theorem or boundary-divergence identity. Root cause of agreement is satisfaction of the printed bulk and boundary algebra. Code-fault assessment: no defect found after direct commutator residuals, full Lindblad residuals, and structurally independent dense fixed points. |
-| T008 | `paper_supported` | Direct cause: S_n is exactly upper triangular with unit diagonal and every tested rho is positive full rank. Root cause is the one-way auxiliary boundary structure and R=S S^dagger. Code-fault assessment: no defect found after matrix-structure and eigenvalue checks. |
-| T009 | `paper_supported` | Direct cause: minimal and enlarged auxiliary contractions agree exactly for n=2..6. Root cause is the return-path height bound floor(n/2). Code-fault assessment: no defect found after path-count rederivation and exact enlarged-space comparison. |
-| T010 | `paper_supported` | Direct cause: degree-(2n-2) fits have sub-1e-15 residuals and nonzero highest coefficients, while degree two lower fails. Root cause is linear epsilon dependence with boundary-return constraints. Code-fault assessment: no defect found after analytic degree counting and independent interpolation at n=2..5. |
-| T011 | `paper_supported` | Direct cause: one-point, two-point, and current transfer formulas match direct density traces to 1.06e-15. Root cause is invariance of the diagonal doubled-auxiliary subspace. Code-fault assessment: no defect found after independent full-space traces and the W identity. |
-| T012 | `paper_supported` | Direct cause: Im(W)=-(epsilon/4)T holds to 2.29e-12 relative error and dense currents are bond independent. Root cause is the local continuity equation. Code-fault assessment: no defect found after matrix-identity and independent dense-current checks. |
-| T013 | `paper_supported` | Direct cause: exact band-operation counts scale with exponent 1.9736 over n=80..640. Root cause is O(n) active auxiliary width over O(n) transfer steps. Code-fault assessment: no defect found; this is a deterministic operation count rather than a noisy wall-time fit. |
-| T014 | `paper_error_candidate` | Direct cause: direct Eq. (7) substitution gives the paper-named a_m^+ (odd m) or a_m^- (even m) nonzero, with magnitude at least 0.382683 for m=3..8; the zero occurs in the opposite component at r=m-1 with residual at most 1.29e-16. Root cause: the prose shifts the cutoff index by one and swaps the parity/component, thereby also misstating dimension m+1 instead of m. Code-fault assessment: no defect found; 80-digit analytic evaluation, the full amplitude arrays, and the paper's own m=3 3x3 Eq. (19) all independently agree on the corrected cutoff. |
-| T015 | `paper_supported` | Direct cause: every entry of the printed Delta=1/2 3x3 matrix is reproduced within 2.78e-16 for all three couplings. Root cause is the corrected three-state root-of-unity closure. Code-fault assessment: no defect found; the matrix was checked entrywise and independently used for its eigenvalue limit. |
-| T016 | `paper_supported` | Direct cause: easy-axis profiles differ across couplings by at most 1.82e-12 and all current slopes equal -arcosh(3/2). Root cause is the dominant easy-axis transfer eigenstructure. Code-fault assessment: no defect found after independent profile-spread and slope checks. |
-| T017 | `paper_supported` | Direct cause: every printed regularized Delta=1 amplitude agrees exactly through the configured auxiliary dimension. Root cause is the specified tau and c scaling before lambda tends to zero. Code-fault assessment: no defect found after direct limit derivation and recurrence comparison. |
-| T018 | `paper_supported` | Direct cause: the double commutator and both boundary identities pass at 8.73e-15 or better, and the normalization sequence extrapolates to alpha=0.0344186. Root cause is the isotropic transfer algebra and a slowly convergent O(1/n) remainder. Code-fault assessment: no scientific defect found; double precision becomes cancellation-sensitive beyond the configured alpha window, but the frozen n<=200 extrapolation is corroborated by independent high-precision continuation and does not alter the reported result. |
-| T019 | `paper_supported` | Direct cause: finite isotropic profiles converge monotonically to cos(pi x), with RMSE falling from 0.00853 at n=40 to 0.000417 at n=160. Root cause is the continuum equation and boundary conditions. Code-fault assessment: no defect found after analytic ODE solution and four-size convergence. |
-| T020 | `paper_supported` | Direct cause: fitted finite-current error ratios match \|lambda_2/lambda_1\| within 1.03e-4 relative and bulk profiles flatten monotonically. Root cause is spectral decomposition of the exact 3x3 transfer matrix. Code-fault assessment: no defect found after eigenvalue and independent finite-contraction checks. |
-| T021 | `paper_supported` | Direct cause: nonzero shifted triangular minors exist through rank 12 for Delta=1,1.2,1.5, with analytic witnesses matching to 1.41e-16 relative. Root cause is the nonvanishing upper hopping amplitude at every auxiliary level. Code-fault assessment: no defect found after analytic nonzero-witness derivation and independent finite-minor construction. Scope note: this authored target was absent as a standalone row in the frozen fresh inventory and therefore contributes to incomplete scope reconciliation even though its scientific assessment is supported. |
+| T001 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T002 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T003 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T004 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T005 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T006 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T007 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T008 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T009 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T010 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T011 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T012 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T013 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T014 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T015 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T016 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T017 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T018 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T019 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T020 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T021 | `paper_supported` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### T005
+### INV-012
 
-- Paper source: paper p.4, isotropic correlation paragraph
-- Paper claim: C(x,y)=pi f(min(x,y),max(x,y))/(4n)+O(n^-2) with the printed explicit f.
-- Independent result: The exact NESS symmetry forces identical leading coefficients at (x,y) and (1-y,1-x); finite transfer and dense checks obey the symmetry, but the printed f does not.
-- Observed gap: The printed scaled mirror coefficient differs by at least 0.0085657908, whereas finite mirror-pair differences are at most 7.1166e-14.
-- Tolerance basis: The gap is O(1/n), not the stated O(n^-2) remainder; it exceeds the 1e-10 symmetry tolerance by more than seven orders of magnitude after scaling.
-- Assessment reason: Direct cause: the printed leading kernel assigns different O(1/n) coefficients to reflection-plus-spin-flip-related point pairs, with minimum scaled gap 0.00856579, while finite exact NESS values agree across the pairs within 7.12e-14. Root cause: a variable/sign transcription error in the printed f(x,y) is strongly indicated. Code-fault assessment: no reproduction-code defect found; transfer correlations match direct density traces to 1.06e-15 and an independent symmetry derivation reaches the same contradiction.
-- Convergence evidence: `generated_data/outputs/data/correlation_checks.csv`, `generated_data/outputs/data/quantitative_claims.json`
-- Independent cross-check evidence: `implementation/src/open_xxz/liouvillian.py`, `implementation/src/open_xxz/transfer.py`, `machine_evidence/outputs/checks/science_checks.json`
+- Linked targets: T014
+- Paper source: Root-of-unity paragraph before Eq. (19).
+- Paper claim: The root-of-unity paragraph before Eq. (19) identifies the vanishing component at r=m in the printed reduced transfer construction.
+- Independent result: Independent substitution shows the nonzero component remains at r=m while the opposite hopping vanishes at r=m-1, matching the paper's own m=3 state count.
+- Observed gap: The printed component index conflicts with the direct Eq. (7) substitution and with the m-state example implied by the same paragraph.
+- Tolerance basis: This is an exact symbolic substitution and state-counting check, so the discrepancy is discrete rather than tolerance-based.
+- Assessment reason: The bundled derivation and direct Eq. (7) substitution agree that the paper-named root-of-unity component assignment is inconsistent with the m-state example used in the publication.
+- Convergence evidence: `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `formula/DERIVATION.md`, `machine_evidence/outputs/checks/science_checks.json`
 
-### T014
+### Isotropic connected-correlation claim
 
-- Paper source: paper p.4, root-of-unity paragraph before Eq. (19)
-- Paper claim: At lambda=pi l/m, a_m^+=0 for odd m or a_m^-=0 for even m, so the transfer process closes on H_{m+1}.
-- Independent result: For l=1 and m=3..8, the nonzero paper-named component has magnitude 0.382683..0.866025; the exact zero is a^-_{m-1} for odd m or a^+_{m-1} for even m, giving m states and matching the printed m=3 3x3 matrix.
-- Observed gap: Index m versus m-1, plus/minus parity swapped, and auxiliary dimension m+1 versus m.
-- Tolerance basis: The claimed component is bounded away from zero by 0.382683, while the corrected component residual is <=1.2909e-16; the separation exceeds floating uncertainty by over 15 orders of magnitude.
-- Assessment reason: Direct cause: direct Eq. (7) substitution gives the paper-named a_m^+ (odd m) or a_m^- (even m) nonzero, with magnitude at least 0.382683 for m=3..8; the zero occurs in the opposite component at r=m-1 with residual at most 1.29e-16. Root cause: the prose shifts the cutoff index by one and swaps the parity/component, thereby also misstating dimension m+1 instead of m. Code-fault assessment: no defect found; 80-digit analytic evaluation, the full amplitude arrays, and the paper's own m=3 3x3 Eq. (19) all independently agree on the corrected cutoff.
-- Convergence evidence: `generated_data/outputs/data/quantitative_claims.json`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `paper/raw/paper.pdf`, `implementation/tests/test_transfer.py`, `implementation/src/open_xxz/transfer.py`
+- Linked targets: T005
+- Paper source: Isotropic correlation quantitative paragraph in the main paper.
+- Paper claim: The printed leading isotropic connected-correlation kernel is asserted to satisfy the exact finite-N symmetry structure.
+- Independent result: The finite NESS satisfies the exact symmetry, but the printed leading kernel does not satisfy that symmetry when evaluated clean-room.
+- Observed gap: The publication-level kernel conflicts with the exact symmetry that the independently generated finite NESS obeys.
+- Tolerance basis: This is an exact symmetry/invariant check rather than a fit-quality comparison; no tolerance window is needed beyond numerical residuals in the bundled science check.
+- Assessment reason: Independent isotropic NESS checks preserve the symmetry constraints while the printed leading kernel violates them, so the discrepancy currently points to the paper rather than the clean-room implementation.
+- Convergence evidence: `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `formula/DERIVATION.md`, `machine_evidence/outputs/checks/science_checks.json`
 
 ## Interpretation boundary
 

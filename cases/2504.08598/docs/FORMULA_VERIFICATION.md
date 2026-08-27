@@ -23,5 +23,5 @@ opened by transcription alone.
 Run:
 
 ```bash
-python private validation harness/scripts/check_formula_gate.py case/2504.08598 --write
+python PRAgent-workflow/scripts/check_formula_gate.py case/2504.08598 --write
 ```

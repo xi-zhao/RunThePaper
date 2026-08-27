@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "paper_id": "2605.02873",
+  "target_id": "T-FIGS001",
+  "artifact_stage": "final_reproduction",
+  "parameter_match": "paper_exact",
+  "scientific_role": "theory_numerical",
+  "generated_data_provenance": "independent_numerics",
+  "formula_dependencies": [
+    "EQC001",
+    "EQC002",
+    "EQC003",
+    "EQC004",
+    "EQC008"
+  ],
+  "parameters": {
+    "geometry": {
+      "wavelength_m": 6.33e-07,
+      "L1_m": 0.35,
+      "L2_m": 0.35,
+      "slit_separation_m": 0.0005,
+      "slit_width_m": 0.00025,
+      "detector_x_m": -0.000110775,
+      "y_min_m": -0.0015,
+      "y_max_m": 0.0015,
+      "noise_floor_fraction": 0.02
+    },
+    "y_points": 1201,
+    "slit_quadrature_order": 192,
+    "convergence_y_points": 1801,
+    "convergence_slit_quadrature_order": 256,
+    "width_scan": {
+      "slit_widths_m": [
+        2e-05,
+        4e-05,
+        8e-05,
+        0.00015,
+        0.00025
+      ],
+      "y_points": 1201,
+      "quadrature_order": 192,
+      "convergence_y_points": 1801,
+      "convergence_quadrature_order": 256
+    }
+  },
+  "metrics": {
+    "widths_um": [
+      20.0,
+      40.0,
+      80.0,
+      150.0,
+      250.0
+    ],
+    "generated_rho": [
+      1.7924904043615047e-05,
+      0.0002978097986973116,
+      0.00794835567283168,
+      0.17526473515650492,
+      1.562329196147147
+    ],
+    "table_s1_rho": [
+      1.75e-05,
+      0.000299,
+      0.00793,
+      0.176,
+      1.56
+    ],
+    "relative_table_errors": [
+      0.024280231063717073,
+      0.003980606363506421,
+      0.0023147128413216153,
+      0.004177641156221959,
+      0.0014930744532993556
+    ],
+    "absolute_table_errors": [
+      4.2490404361504873e-07,
+      1.19020130268842e-06,
+      1.835567283168041e-05,
+      0.0007352648434950648,
+      0.0023291961471469946
+    ],
+    "table_tolerances": [
+      6.049999999999999e-07,
+      2.294e-06,
+      4.8079999999999994e-05,
+      0.0010565,
+      0.0093605
+    ],
+    "table_rows_within_tolerance": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "table_relative_error_max": 0.024280231063717073,
+    "convergence_relative_errors": [
+      1.0345305116805125e-06,
+      3.386919733035844e-06,
+      8.522981775290394e-06,
+      8.174502915247467e-07,
+      2.2536643793807515e-07
+    ],
+    "convergence_relative_max": 8.522981775290394e-06,
+    "strictly_monotonic": true,
+    "narrow_slit_suppression": true
+  },
+  "physics_assertions": [
+    {
+      "assertion_id": "ASSERT-FIGS001-NARROW",
+      "tier": "analytic",
+      "essential": true,
+      "status": "passed",
+      "evidence": "outputs/checks/figs001_width_scan_science.json",
+      "claim": "The 20 micrometre slit has a defocus-to-tilt ratio below 2e-5, consistent with the point-slit limit."
+    },
+    {
+      "assertion_id": "ASSERT-FIGS001-MONOTONIC",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "evidence": "outputs/data/figs001_width_scan.csv",
+      "claim": "The independently generated ratio increases strictly over all five paper widths."
+    },
+    {
+      "assertion_id": "ASSERT-FIGS001-TABLE",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "evidence": "outputs/data/figs001_width_scan.csv",
+      "claim": "All five independent ratios satisfy the declared printed-table tolerance."
+    },
+    {
+      "assertion_id": "ASSERT-FIGS001-CONVERGED",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "evidence": "outputs/checks/figs001_width_scan_science.json",
+      "claim": "Every width-scan ratio is stable under denser quadrature."
+    }
+  ],
+  "artifacts": {
+    "data": "outputs/data/figs001_width_scan.csv",
+    "figure": "outputs/figures/figs001_width_scan.png"
+  },
+  "scientific_input_boundary": {
+    "paper_images_used": false,
+    "author_arrays_used": false,
+    "author_code_used": false,
+    "printed_results_used_for_comparison_only": true
+  }
+}

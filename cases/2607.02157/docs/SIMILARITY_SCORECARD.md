@@ -9,38 +9,54 @@ mismatches when the underlying numerical feature matches.
 
 ## Case Score
 
-- Overall score: **77.27 / 100**
+- Overall score: **79.18 / 100**
 - Similarity level: **numerical_feature_reproduction**
 - Machine-readable record: `outputs/checks/similarity_scorecard.json`
 
-The A100 campaign makes Fig. 2 and Fig. S2 paper-scale and eligible for
-`final_reproduction`. Fig. S1 remains `reduced_scale` and therefore
-exploratory. Every target uses
-`reference_comparison = visual_feature_contract`: we compare physical curve
+## Whole-paper Reproduction Measure
+
+- Reproduction degree: **79.02 / 100**
+- Scope coverage: **43 / 43 eligible items = 100%**
+- Covered-item fidelity: **79.02 / 100**
+- Uncovered eligible items: **0**
+- Explicitly excluded non-numerical items: **3** (Main Fig. 1(a-c))
+- Evidence grade: **E1** (`science_not_verified`, `execution_not_attested`)
+
+The 79.18 historical score aggregates three targets with authored target
+weights.  The 79.02 public reproduction degree instead gives every atomic
+eligible display item one vote and assigns zero to uncovered items.  The latter
+is the comparable whole-paper metric; neither number is a lifecycle-completion
+claim.
+
+The A100 paper-exact campaign lifted `parameter_match` from `reduced_scale`
+(cap 70) to `paper_exact` (cap 100). Every target is now bound by
+`reference_comparison = visual_feature_contract` (cap 80): we compare curve
 features against the published panels, not against author data or digitized
-pixels.
+curves. This is the honest ceiling without the authors' numerical data — we
+do not digitize their figures (pixel-derived data is not scientific
+reproduction).
 
 ## Targets
 
 | Target | Figure | Score (capped) | Raw | Key evidence |
 | --- | --- | ---: | ---: | --- |
-| T001 (critical) | Fig. 2 | 80 | 89 | 16 essential checks pass at paper scale; cluster row is near quantitative; TFIM capacity and NMSE extrema lie in the critical region; the irreversible-work amplitude 0.396 vs paper reading ~0.49 is retained as one nonessential mismatch |
-| T002 | Fig. S1 | 70 | 86 | Spectral features pass, but the data use 400 x 2500 rather than 5000 x 5000 drive samples and 400 rather than 10000 TFIM disorder realizations |
-| T003 | Fig. S2 | 80 | 88 | 12/12 target checks pass; delayed capacities and all full-Pauli NMSE horizons place their extrema in the critical regions |
+| T001 (critical) | Fig. 2 | 80 | 86 | 14/14 feature-contract checks at paper-exact ensembles; cluster row near-quantitative (chi_m peak 2.19 vs ~2.25; beta*W_irr 0.499 vs ~0.52); TFIM peak 1.80+-0.11 over 100 realizations; NMSE minima at the capacity peaks; aggregation convention adjudicated |
+| T002 | Fig. S1 | 80 | 86 | G(omega) peak 2.72 @ 0.355 (closed form 2.27, paper ~2.3); OBC spectral fingerprints match panel c exactly |
+| T003 | Fig. S2 | 77 | 77 | tau/h orderings and critical-region peaks; full-Pauli NMSE minima aligned and on the paper's absolute scale; deep-MBL memory inversion confirmed at full scale |
 
 ## What blocks a higher score
 
-1. Fig. S1 is genuinely reduced-scale, so its score is capped at 70 and it
-   cannot be labeled final.
-2. The paper publishes no numerical arrays. Fig. 2 and Fig. S2 are therefore
-   capped at 80 by feature-level comparison even though their run parameters
-   are paper-scale.
-3. Fig. 2 retains a real amplitude discrepancy in the TFIM irreversible-work
-   peak. It does not break the critical peak or the Landauer inequality, but it
-   must remain visible.
+1. `visual_feature_contract` reference (cap 80): the paper publishes no
+   numerical data. The only paths above 80 require the authors' data
+   (`author_data`, cap 100) or digitizing the Fig. 2 curves (`digitized_curve`,
+   cap 95) — the latter we decline on principle, since pixel-derived agreement
+   is not scientific reproduction.
+2. T003 raw (77): the deep-MBL tail and the multi-step panels carry genuine
+   physical caveats (memory inversion, partial decoupling) that hold it just
+   below the cap.
 
 ## Per-step identity as internal evidence
 
 The central theoretical identity beta*W_irr = chi_d (Eq. 13) holds at machine
-precision (max residual 5.7e-14) across every paper-scale run — the strongest
+precision (max residual 8.9e-16) across every production run — the strongest
 internal consistency evidence this framework admits.

@@ -8,12 +8,15 @@
 | T004 | C2 cell | rational sampling q<=79 | exact map + affine energy transform |
 | T005 | smeared quadrant | delta-alpha=0.01, q<=79, 480x480 | interval raster + alpha-only dilation |
 | T006 | three wavefunctions | 1/5, 2/11, 17/93 | periodic eigensolver + modular reorder |
-| T007 | text claims | all above | 11 independent invariants |
+| T007 | supporting checks | all above | 11 independent invariants; no separate denominator item |
+| T008 | irrational Cantor-spectrum theorem | not yet implemented | nested-cell/rational-approximant topology and measure test required |
+| T009 | spectrum/measure continuity theorem | not yet implemented | separate set-valued and Lebesgue-measure convergence tests required |
 
 The implementation uses dense Hermitian diagonalization for q<=93. Cached band
-edges are reused across figures, so the complete campaign takes under one
-second of scientific-runtime time on the local Apple Silicon CPU and peaks
-below 80 MiB RSS. No GPU or large-scale deferred channel is warranted.
+edges are reused across figures, so the completed display campaign takes under
+one second of scientific-runtime time on the local Apple Silicon CPU and peaks
+below 80 MiB RSS. T008-T009 require new analytic/numerical evidence design, not
+an A100 or a larger rerun of the existing display campaign.
 
 ## Parameter boundary
 

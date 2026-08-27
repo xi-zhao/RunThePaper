@@ -1,379 +1,676 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_figure_evaluation",
   "paper_id": "2512.23799",
   "status": "passed",
   "checks_status": "passed",
-  "summary": "T001/T002 use the reconstructed exact Steane circuit. Acceptance matches all 12 internally validated points; infidelity matches the trend and edge regimes with a declared 0.42-0.68x mid-range residual. Runtime remains proxy timing.",
+  "summary": "A source-free literal-circuit Steane implementation and sampling test were rerun in isolation. T001-T002 are attempted numerical mismatches, T003 reaches a proven publication benchmark boundary, and T004 reproduces the inverse-square-root sampling law.",
   "targets": [
     {
       "target_id": "T001",
-      "label": "Infidelity benchmark",
+      "label": "Fig. 10(a) logical infidelity",
       "weight": 1.3,
       "components": {
         "feature_match": {
-          "score": 43.0,
-          "max_score": 50.0,
-          "reason": "The exact protocol reproduces the infidelity curve's quadratic rise and saturation, matching the reference at both extremes (p<=2.1e-3, p=5e-2)."
-        },
-        "numeric_closeness": {
-          "score": 19.0,
-          "max_score": 35.0,
-          "reason": "Mid-range (3e-3..2e-2) sits at 0.42-0.68x the digitized reference (quadratic coefficient ~140p^2 vs ~300p^2); declared as known residual in the check JSON, with the acceptance curve pinning first-order structure."
-        },
-        "paper_scope_coverage": {
-          "score": 13.0,
-          "max_score": 15.0,
-          "reason": "Full paper p grid with error bars; ideal-decoder logical fidelity definition."
-        }
-      },
-      "evaluation": {
-        "critical": true,
-        "paper_level_role": "main_claim",
-        "artifact_pass": true,
-        "data_backed": true,
-        "manual_interventions": 0,
-        "failure_type": "numeric_mismatch",
-        "parameter_match": "paper_subset",
-        "formula_dependencies": [
-          "MSC003",
-          "MSC005"
-        ],
-        "formula_gate": "reconstructed",
-        "reference_comparison": "digitized_curve",
-        "generated_data_provenance": "independent_numerics"
-      },
-      "evidence": [
-        "outputs/data/steane_exact_benchmark.csv",
-        "outputs/checks/steane_exact_benchmark.json",
-        "internal digitized acceptance validation (not redistributed)",
-        "internal digitized infidelity validation (not redistributed)",
-        "outputs/checks/completion_assessment.json",
-        "outputs/figures/steane_exact_infidelity_comparison.png"
-      ],
-      "remaining_gap": "known_residual: mid-range second-order damaging-pair count is ~half the source curve's under the reconstructed schedule; the author gate/idle schedule and code are not public.",
-      "critical": true,
-      "component_total": 75.0,
-      "score": 75.0,
-      "similarity_level": "numerical_feature_reproduction",
-      "parameter_score_cap": 89.0,
-      "formula_score_cap": 80.0,
-      "reference_score_cap": 95.0,
-      "physics_status": "passed",
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "physics_assertions": [
-        {
-          "assertion_id": "protocol_structure_verified",
-          "tier": "analytic",
-          "essential": true,
-          "status": "passed",
-          "evidence": "tests/test_steane_exact.py",
-          "claim": "The transcribed circuit's encoded state is a +1 eigenstate of logical H and of all six measured stabilizers, whose supports form a perfect Hamming check; the ideal decoder corrects every single-qubit Pauli exactly."
-        },
-        {
-          "assertion_id": "infidelity_matches_at_both_extremes",
-          "tier": "numeric",
-          "essential": true,
-          "status": "passed",
-          "evidence": "outputs/checks/steane_exact_benchmark.json#infidelity_edge_checks",
-          "claim": "Decoded logical infidelity matches the digitized reference at low p (<=2.1e-3) and at saturation (5e-2) within the declared ratio band."
-        },
-        {
-          "assertion_id": "mid_range_quadratic_coefficient_matches",
-          "tier": "numeric",
-          "essential": false,
-          "status": "failed",
-          "evidence": "outputs/checks/steane_exact_benchmark.json#known_residual",
-          "claim": "Mid-range infidelity quadratic coefficient equals the source curve's; currently 0.42-0.68x - recorded openly as the remaining residual."
-        }
-      ],
-      "figure_refs": [
-        "Fig. stim-vs-cirq-1"
-      ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "a",
-            "status": "reproduced",
-            "note": "exact-protocol infidelity curve; mid-range residual is the numeric axis",
-            "evidence": "outputs/figures/steane_exact_infidelity_comparison.png"
-          },
-          {
-            "panel_id": "b",
-            "status": "not_applicable",
-            "note": "scored by T002"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      }
-    },
-    {
-      "target_id": "T002",
-      "label": "Acceptance-rate benchmark",
-      "weight": 1.2,
-      "components": {
-        "feature_match": {
-          "score": 46.0,
-          "max_score": 50.0,
-          "reason": "The exact Fig. CH-meas-circ protocol reproduces the acceptance curve's full decline: correct scale, correct shape, all twelve paper grid points."
-        },
-        "numeric_closeness": {
-          "score": 30.0,
-          "max_score": 35.0,
-          "reason": "All 12 points match the digitized state-vector reference within max(0.012, 3 sigma); e.g. 0.836/0.833 at p=1e-3 and 0.173/0.174 at 1e-2."
-        },
-        "paper_scope_coverage": {
-          "score": 14.0,
-          "max_score": 15.0,
-          "reason": "The full paper p grid linspace(1e-3,1e-2,9)+[0.02,0.035,0.05] is run; shot counts (3e4-1e5) sit at the lower end of the paper's 1e5-1e6 range."
-        }
-      },
-      "evaluation": {
-        "critical": true,
-        "paper_level_role": "main_claim",
-        "artifact_pass": true,
-        "data_backed": true,
-        "manual_interventions": 0,
-        "failure_type": "none",
-        "parameter_match": "paper_subset",
-        "formula_dependencies": [
-          "MSC004"
-        ],
-        "formula_gate": "reconstructed",
-        "reference_comparison": "digitized_curve",
-        "generated_data_provenance": "independent_numerics"
-      },
-      "evidence": [
-        "outputs/data/steane_exact_benchmark.csv",
-        "outputs/checks/steane_exact_benchmark.json",
-        "internal digitized acceptance validation (not redistributed)",
-        "internal digitized infidelity validation (not redistributed)",
-        "outputs/checks/completion_assessment.json",
-        "outputs/figures/steane_exact_acceptance_comparison.png"
-      ],
-      "remaining_gap": "Panel (c) slice structure and panel (a) noise placement are reconstructed details validated by the acceptance verdict; author shot counts not fully matched.",
-      "critical": true,
-      "component_total": 90.0,
-      "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction",
-      "parameter_score_cap": 89.0,
-      "formula_score_cap": 80.0,
-      "reference_score_cap": 95.0,
-      "physics_status": "passed",
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "physics_assertions": [
-        {
-          "assertion_id": "protocol_structure_verified",
-          "tier": "analytic",
-          "essential": true,
-          "status": "passed",
-          "evidence": "tests/test_steane_exact.py",
-          "claim": "The transcribed circuit's encoded state is a +1 eigenstate of logical H and of all six measured stabilizers, whose supports form a perfect Hamming check; the ideal decoder corrects every single-qubit Pauli exactly."
-        },
-        {
-          "assertion_id": "acceptance_curve_matches_all_12_points",
-          "tier": "numeric",
-          "essential": true,
-          "status": "passed",
-          "evidence": "outputs/checks/steane_exact_benchmark.json#acceptance_checks",
-          "claim": "The exact-protocol acceptance rate matches the digitized paper curve at all 12 grid points within max(0.012, 3 sigma)."
-        }
-      ],
-      "figure_refs": [
-        "Fig. stim-vs-cirq-1"
-      ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "a",
-            "status": "not_applicable",
-            "note": "scored by T001"
-          },
-          {
-            "panel_id": "b",
-            "status": "reproduced",
-            "note": "12/12 acceptance points",
-            "evidence": "outputs/figures/steane_exact_acceptance_comparison.png"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      }
-    },
-    {
-      "target_id": "T003",
-      "label": "Average time per shot benchmark",
-      "weight": 1.1,
-      "score_cap": 55.0,
-      "cap_reason": "Runtime is a local proxy, not the paper Stim/Cirq benchmark timing.",
-      "components": {
-        "feature_match": {
-          "score": 40.0,
-          "reason": "The low-p propagated-error route is substantially faster than the state-vector-like route.",
+          "score": 38.0,
+          "reason": "The clean-room circuit has the correct noiseless logical-H state, postselection structure, decoder invariants, and statistically increasing infidelity over the independently chosen p probes.",
           "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 15.0,
-          "reason": "The reported speedup is a local calibrated proxy, not the authors' measured timing.",
+          "reason": "Post-freeze comparison retains a material curve mismatch under the literal Fig. 9 schedule; this is an unsuccessful attempt rather than an external-input claim.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 12.0,
-          "reason": "The target runtime panel is represented and labeled as proxy timing.",
+          "score": 7.5,
+          "reason": "Five independent domain probes were attested, but the paper's exact p grid, per-point shot allocation, and full timing contract are unavailable.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "numeric_mismatch",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "MSC003",
+          "MSC005"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "digitized_curve",
+        "generated_data_provenance": "independent_numerics",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "Pixel agreement cannot override the scientific mismatch: the independent literal-circuit array was frozen before reference access and differs materially from the paper curve.",
+        "pixel_alternative_evidence": [
+          "outputs/checks/frozen_reference_comparison.json",
+          "outputs/checks/attested_science_checks.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The source-free literal Fig. 9 circuit run does not reproduce the Fig. 10(a) infidelity curve: the five frozen probes retain mean absolute deviation 0.0237 and maximum deviation 0.0683 after post-run comparison.",
+            "evidence": [
+              "outputs/checks/frozen_reference_comparison.json",
+              "outputs/data/attested_steane_subset.csv"
+            ]
+          },
+          "root_cause": {
+            "category": "system_capability_limit",
+            "statement": "The current independent implementation reproduces the circuit invariants and executes the public noise model, but it has not resolved the paper-level infidelity array under a source-free contract. This is recorded as an unsuccessful scientific attempt, not an external blocker or paper error.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/attested_science_checks.json",
+              "outputs/checks/frozen_reference_comparison.json",
+              "STEANE_EXACT_WIP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found by the available structural checks and isolated execution, but a remaining circuit/noise implementation defect is not claimed impossible; fresh review must attempt to falsify this assessment.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The noiseless logical-H state, all six stabilizers, decoder single-Pauli corrections, and bounded observables pass.",
+                "evidence": [
+                  "outputs/checks/attested_science_checks.json",
+                  "tests/test_2512_steane_exact.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The literal-circuit campaign completed with all four declared inputs read and zero forbidden source/reference access.",
+                "evidence": [
+                  "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The generated array comes from case-owned circuit code and a predeclared configuration; digitized values enter only after the output hash is frozen.",
+                "evidence": [
+                  "scripts/run_attested_reproduction.py",
+                  "scripts/compare_frozen_outputs.py",
+                  "outputs/checks/frozen_reference_comparison.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "open",
+              "statement": "A subtle gate-order, error-location, decoder, or finite-sampling implementation defect remains a live explanation for the curve mismatch.",
+              "evidence": [
+                "STEANE_EXACT_WIP.md",
+                "outputs/checks/frozen_reference_comparison.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The exact p/shot table is not printed, but that omission alone does not justify treating the scientific curve as externally blocked.",
+              "evidence": [
+                "raw/paper.pdf",
+                "outputs/checks/publication_input_audit.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unsuccessful attempt applies only to the Fig. 10(a) infidelity item.",
+            "items": [
+              "T001"
+            ],
+            "completion": "1/1 atomic item received attempted_not_reproduced disposition"
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the literal Fig. 9 layer transcription and independently rederive the Appendix-D error-location mapping before increasing shot count.",
+            "expected_resolution": "The review will identify an implementation repair, establish convergence to the source curve, or preserve the capability-limit outcome without asserting a paper error.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json",
+              "outputs/checks/steane_error_location_crosscheck.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/data/attested_steane_subset.csv",
+        "outputs/checks/attested_science_checks.json",
+        "outputs/checks/frozen_reference_comparison.json",
+        "outputs/checks/publication_input_audit.json",
+        "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
+      ],
+      "remaining_gap": "The literal clean-room implementation has not reproduced Fig. 10(a); fresh review must test gate ordering, error locations, decoder behavior, and idling before more sampling.",
+      "physics_assertions": [
+        {
+          "assertion_id": "steane_logical_structure",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "tests/test_2512_steane_exact.py",
+          "claim": "The encoded state is the +1 logical-H eigenstate, all six stabilizers pass, and every single-qubit Pauli is corrected by the ideal decoder."
+        },
+        {
+          "assertion_id": "paper_infidelity_array_identified",
+          "tier": "alignment",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/frozen_reference_comparison.json",
+          "claim": "The independently generated infidelity values identify the paper's displayed array under a uniquely published schedule."
+        }
+      ],
+      "figure_refs": [
+        "Fig. 10(a)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "partial",
+            "note": "Clean-room attempt completed; the frozen numerical target is not reproduced.",
+            "evidence": "outputs/checks/publication_input_audit.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 95.0,
+      "score_aggregation": "included",
+      "component_total": 60.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "attempted_not_reproduced"
+    },
+    {
+      "target_id": "T002",
+      "label": "Fig. 10(b) acceptance rate",
+      "weight": 1.2,
+      "components": {
+        "feature_match": {
+          "score": 38.0,
+          "reason": "The isolated run reproduces the monotone acceptance collapse and the correct probability scale without reading the source curve.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 18.0,
+          "reason": "After freezing, the literal-circuit schedule differs from the digitized curve by mean absolute 0.0403 and maximum absolute 0.0726.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "reason": "Five independent domain probes were attested under the literal Fig. 9 circuit; exact paper grid and shot allocation are not claimed.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "numeric_mismatch",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "formula_dependencies": [
+          "MSC004"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "digitized_curve",
+        "generated_data_provenance": "independent_numerics",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "The generated literal-circuit curve is scientifically compared after freezing and remains numerically mismatched; raster alignment is diagnostic only.",
+        "pixel_alternative_evidence": [
+          "outputs/checks/frozen_reference_comparison.json",
+          "outputs/data/attested_steane_subset.csv"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The literal-circuit acceptance curve has the correct direction but differs from Fig. 10(b), with mean absolute deviation 0.0403 and maximum deviation 0.0726 after the generated array was frozen.",
+            "evidence": [
+              "outputs/checks/frozen_reference_comparison.json",
+              "outputs/data/attested_steane_subset.csv"
+            ]
+          },
+          "root_cause": {
+            "category": "system_capability_limit",
+            "statement": "The current clean-room implementation has not reproduced the displayed acceptance values despite executing the public circuit and passing intrinsic checks. The unresolved mismatch is an attempted failure, not a claimed publication boundary.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/attested_science_checks.json",
+              "outputs/checks/frozen_reference_comparison.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in boundedness, noiseless acceptance, trend, source-free execution, or circuit invariants; fresh review must still test the exact error-location transcription.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Acceptance is bounded, equals one noiselessly, and decreases statistically across the independent domain probes.",
+                "evidence": [
+                  "outputs/checks/attested_science_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The acceptance array was regenerated in isolation with zero forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The circuit and observable are computed from case-owned code; reference curves are only post-freeze diagnostics.",
+                "evidence": [
+                  "scripts/run_attested_reproduction.py",
+                  "scripts/compare_frozen_outputs.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "open",
+              "statement": "A code-level error in the precise noise-location or postselection implementation remains possible despite passed coarse invariants.",
+              "evidence": [
+                "outputs/checks/frozen_reference_comparison.json",
+                "STEANE_EXACT_WIP.md"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "Unprinted p/shot values can affect sampling variance, but do not by themselves prove the acceptance curve is impossible to reproduce.",
+              "evidence": [
+                "raw/paper.pdf",
+                "outputs/checks/publication_input_audit.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unsuccessful attempt applies only to the Fig. 10(b) acceptance item.",
+            "items": [
+              "T002"
+            ],
+            "completion": "1/1 atomic item received attempted_not_reproduced disposition"
+          },
+          "next_discriminating_test": {
+            "action": "Independently reconstruct the Fig. 9 and Appendix-D location table, then repeat a converged fixed-grid campaign before changing any physics parameters.",
+            "expected_resolution": "A second implementation will distinguish a code/method defect from finite-sampling and publication-detail effects.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json",
+              "outputs/checks/steane_error_location_crosscheck.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/data/attested_steane_subset.csv",
+        "outputs/checks/attested_science_checks.json",
+        "outputs/checks/frozen_reference_comparison.json",
+        "outputs/checks/publication_input_audit.json",
+        "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
+      ],
+      "remaining_gap": "The expected direction is present, but the literal clean-room implementation has not reproduced Fig. 10(b); fresh review must test the implementation before more sampling.",
+      "physics_assertions": [
+        {
+          "assertion_id": "acceptance_observable_and_trend",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/attested_science_checks.json",
+          "claim": "Nacc/Ntot is bounded, equals one noiselessly, and decreases statistically across the independent p grid."
+        },
+        {
+          "assertion_id": "paper_acceptance_array_identified",
+          "tier": "alignment",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/frozen_reference_comparison.json",
+          "claim": "The independent schedule identifies the paper's displayed acceptance array."
+        }
+      ],
+      "figure_refs": [
+        "Fig. 10(b)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "partial",
+            "note": "Trend direction is present, but the frozen numerical array is not reproduced.",
+            "evidence": "outputs/checks/publication_input_audit.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 95.0,
+      "score_aggregation": "included",
+      "component_total": 63.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "attempted_not_reproduced"
+    },
+    {
+      "target_id": "T003",
+      "label": "Fig. 11 seconds per simulation shot",
+      "weight": 1.1,
+      "components": {
+        "feature_match": {
+          "score": 40.0,
+          "reason": "The local proxy independently reproduces the algorithmic low-p speedup direction and exceeds tenfold at p=1e-3.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "Absolute seconds cannot be compared because the paper omits the benchmark machine, package builds, timer protocol, and timing arrays.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 6.0,
+          "reason": "The speedup mechanism is checked, but the paper's absolute wall-clock observable is not reproducible on an unidentified environment.",
           "max_score": 15.0
         }
       },
       "evaluation": {
         "critical": true,
         "paper_level_role": "method_validation",
-        "artifact_pass": true,
+        "assessment_subject": "paper",
+        "artifact_pass": false,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "missing_benchmark_metadata",
         "parameter_match": "proxy_model",
+        "artifact_stage": "exploratory",
         "formula_dependencies": [
-          "MSC006"
+          "MSC007"
         ],
-        "formula_gate": "reconstructed",
+        "formula_gate": "verified",
         "reference_comparison": "source_figure_only",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "The paper panel reports environment-specific seconds while the generated artifact is an explicitly local algorithmic proxy; pixel alignment would compare different observables.",
+        "pixel_alternative_evidence": [
+          "outputs/data/attested_runtime_proxy.csv",
+          "outputs/checks/publication_input_audit.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The publication reports absolute seconds per shot but omits the benchmark host, processor allocation, package builds, timer protocol, repetitions, and numerical timing table.",
+            "evidence": [
+              "outputs/checks/publication_input_audit.json",
+              "parameter_provenance.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "Fig. 11 is an environment-dependent benchmark whose indispensable execution manifest is absent from the public article.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "outputs/checks/publication_input_audit.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "The local proxy tests only the speedup mechanism and is not represented as the authors' absolute-seconds computation.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The audit enumerates every missing environment and timing field needed for a like-for-like comparison.",
+                "evidence": [
+                  "outputs/checks/publication_input_audit.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The explicitly non-comparable local proxy completed in isolation.",
+                "evidence": [
+                  "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The missing object is the original external benchmark identity, not a failed claim that the local proxy reproduces absolute seconds.",
+              "evidence": [
+                "outputs/checks/publication_input_audit.json",
+                "outputs/checks/attested_science_checks.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only the environment-specific Fig. 11 absolute timing item is externally blocked.",
+            "items": [
+              "T003"
+            ],
+            "completion": "1/1 atomic item received externally_blocked disposition"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain and hash the original host/software/timer manifest and rerun both methods under it.",
+            "expected_resolution": "A fixed benchmark identity will make absolute seconds scientifically comparable.",
+            "evidence_to_produce": [
+              "config/fig11_benchmark_manifest.json",
+              "outputs/runs/2512.23799-fig11-paper-exact/run_attestation.json"
+            ]
+          }
+        }
       },
       "evidence": [
-        "outputs/data/runtime_proxy_benchmark.csv",
-        "outputs/figures/fig3_runtime_reproduction.png"
+        "outputs/data/attested_runtime_proxy.csv",
+        "outputs/checks/attested_science_checks.json",
+        "outputs/checks/publication_input_audit.json",
+        "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
       ],
-      "remaining_gap": "declared_boundary[author_hardware_timing]: the paper's per-shot timings were measured on the authors' machine with their Stim/Cirq builds; wall-clock equality is unreproducible by design. The calibrated local proxy reproduces the claim's substance - the stabilizer-based method's growing speedup toward low p.",
-      "critical": true,
-      "component_total": 67.0,
-      "score": 55.0,
-      "similarity_level": "feature_not_accepted",
-      "parameter_score_cap": 55.0,
-      "formula_score_cap": 80.0,
-      "reference_score_cap": 70.0,
-      "physics_status": "passed",
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
+      "remaining_gap": "A complete machine/software/timing manifest and author timing arrays are required to reproduce absolute seconds per shot.",
+      "physics_assertions": [
+        {
+          "assertion_id": "low_p_speedup_mechanism",
+          "tier": "numeric",
+          "essential": false,
+          "status": "passed",
+          "evidence": "outputs/checks/attested_science_checks.json",
+          "claim": "A locally calibrated propagated-error proxy is more than ten times faster than the state-vector-like proxy at p=1e-3."
+        },
+        {
+          "assertion_id": "author_absolute_seconds_reproduced",
+          "tier": "alignment",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/publication_input_audit.json",
+          "claim": "The authors' absolute seconds-per-shot curves are reproduced on their declared environment."
+        }
+      ],
       "figure_refs": [
-        "Fig. stim-vs-cirq-2"
+        "Fig. 11"
       ],
       "panel_coverage": {
         "panels": [
           {
             "panel_id": "single",
-            "status": "reproduced",
-            "note": "runtime curves generated (proxy timing via parameter axis)",
-            "evidence": "outputs/figures/fig3_runtime_reproduction.png"
+            "status": "partial",
+            "note": "Qualitative speedup tested; absolute wall clock externally blocked by missing benchmark metadata.",
+            "evidence": "outputs/checks/publication_input_audit.json"
           }
         ],
-        "panel_scope_cap": 15.0
+        "panel_scope_cap": 7.5
       },
-      "physics_assertions": [
-        {
-          "assertion_id": "speedup_direction_reproduced",
-          "tier": "numeric",
-          "essential": true,
-          "status": "passed",
-          "evidence": "outputs/data/runtime_proxy_benchmark.csv",
-          "claim": "The calibrated proxy shows the stabilizer-based method beating state-vector simulation with the margin growing toward low p, the substance of the paper's ~10x claim."
-        },
-        {
-          "assertion_id": "author_walltime_equality",
-          "tier": "alignment",
-          "essential": false,
-          "status": "failed",
-          "evidence": "outputs/checks/numerical_feature_checks.json",
-          "claim": "Matching the paper's absolute per-shot seconds requires the authors' hardware and builds - recorded openly as a permanent boundary."
-        }
-      ]
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 70.0,
+      "score_aggregation": "included",
+      "component_total": 46.0,
+      "score": 46.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
-      "label": "Formula and sampling gate",
+      "label": "Sampling precision scales as Ntot^-1/2",
       "weight": 0.8,
-      "score_cap": 90.0,
-      "cap_reason": "This validates the method chain but is not an original numerical figure.",
       "components": {
         "feature_match": {
-          "score": 47.0,
-          "reason": "PSC square checks, controlled-H propagation, Pauli-rank reconstruction, and sampling scaling all pass.",
+          "score": 49.0,
+          "reason": "Independent repeated sampling reproduces the inverse-square-root standard-error law stated by the paper.",
           "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 27.0,
-          "reason": "Matrix residuals are at roundoff level and sampling slope is -0.498, close to the expected -0.5.",
+          "score": 34.0,
+          "reason": "The attested log-log slope is -0.498143, within 0.002 of the analytic exponent -0.5.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 10.0,
-          "reason": "The formula path and reconstructed full Steane gadget are covered; this target remains a method gate rather than a separate paper figure.",
+          "score": 12.0,
+          "reason": "Six shot counts from 2,000 to 100,000 and 240 repeats per point test the full quantitative exponent claim.",
           "max_score": 15.0
         }
       },
       "evaluation": {
         "critical": false,
         "paper_level_role": "method_validation",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "not_applicable",
+        "artifact_stage": "final_reproduction",
         "formula_dependencies": [
-          "MSC001",
-          "MSC002",
-          "MSC003"
+          "MSC006"
         ],
         "formula_gate": "verified",
         "reference_comparison": "analytic_reference",
-        "generated_data_provenance": "analytic_reference"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This denominator item is a quantitative text claim rather than a paper figure, so there is no source raster region to compare.",
+        "pixel_alternative_evidence": [
+          "outputs/data/attested_sampling_scaling.csv",
+          "outputs/checks/attested_science_checks.json"
+        ]
       },
       "evidence": [
-        "outputs/checks/formula_verification.json",
-        "outputs/data/sampling_scaling.csv",
-        "outputs/figures/fig4_sampling_precision_reproduction.png"
+        "outputs/data/attested_sampling_scaling.csv",
+        "outputs/checks/attested_science_checks.json",
+        "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json"
       ],
-      "remaining_gap": "Use the formula gate as supporting evidence; T001/T002 are evaluated separately using the exact-circuit rerun.",
-      "critical": false,
-      "component_total": 84.0,
-      "score": 84.0,
-      "similarity_level": "numerical_feature_reproduction",
-      "parameter_score_cap": 100.0,
-      "formula_score_cap": 100.0,
-      "reference_score_cap": 90.0,
-      "physics_status": "undeclared",
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
+      "remaining_gap": "none",
+      "physics_assertions": [
+        {
+          "assertion_id": "sampling_exponent",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/attested_science_checks.json",
+          "claim": "The standard deviation of independent fidelity estimates has log-log slope -1/2 in shot count."
+        },
+        {
+          "assertion_id": "sampling_arrays_attested",
+          "tier": "alignment",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json",
+          "claim": "The sampling arrays were generated in a raw/reference-free isolated runner and their output hashes are frozen."
+        }
+      ],
       "figure_refs": [
-        "none:formula_and_sampling_gate"
+        "Sec. VII B sampling-precision claim"
       ],
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "single",
-            "status": "not_applicable",
-            "note": "method gate, not a paper figure"
+            "panel_id": "quantitative_claim",
+            "status": "reproduced",
+            "note": "Independent numerical slope agrees with the analytic exponent.",
+            "evidence": "outputs/checks/attested_science_checks.json"
           }
-        ]
-      }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 95.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
-  "overall_score": 73.0,
-  "similarity_level": "numerical_feature_reproduction",
+  "overall_score": 59.11,
+  "similarity_level": "feature_not_accepted",
   "evaluation_summary": {
     "scored_items": 4,
     "critical_items": 3,
-    "artifact_pass_rate": 1.0,
+    "artifact_pass_rate": 0.25,
     "data_backed_rate": 1.0,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "numeric_mismatch": 1,
-      "none": 2,
-      "missing_benchmark_metadata": 1
+      "numeric_mismatch": 2,
+      "missing_benchmark_metadata": 1,
+      "none": 1
     },
     "parameter_match_counts": {
       "paper_subset": 2,
@@ -386,28 +683,83 @@
       "analytic_reference": 1
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 3,
-      "analytic_reference": 1
+      "independent_numerics": 4
     },
     "evidence_tier_counts": {
       "physics_reproduction": 4
     },
     "formula_gate_counts": {
-      "reconstructed": 3,
-      "verified": 1
+      "verified": 4
     },
     "paper_level_role_counts": {
       "main_claim": 2,
       "method_validation": 2
     },
     "physics_status_counts": {
-      "passed": 3,
-      "undeclared": 1
+      "failed": 3,
+      "passed": 1
     },
     "physics_assertion_status_counts": {
       "passed": 5,
-      "failed": 2
+      "failed": 3
     },
-    "essential_physics_failures": []
+    "essential_physics_failures": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T004"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 3,
+      "not_required": 1
+    },
+    "causal_diagnosis_disposition_counts": {
+      "attempted_not_reproduced": 2,
+      "terminal_blocker": 1,
+      "not_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T003"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 2,
+      "indispensable_input_unavailable": 1
+    },
+    "root_cause_counts": {
+      "system_capability_limit": 2,
+      "publication_underspecified": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 2,
+      "not_applicable": 1
+    }
   }
 }

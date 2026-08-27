@@ -4,9 +4,13 @@
 
 | 分类 | 数量 | 含义 |
 | --- | ---: | --- |
-| feature_match | 10 | 理论特征、参数与独立数值不变量通过；无作者数组可做逐点基准。 |
-| blocked | 5 | 纯实验或实验后处理面板缺作者原始数据/完整方法输入。 |
-| not_in_scope | 1 | Main Fig. 1 是装置与能级示意图。 |
+| covered | 27 items / 10 targets | 理论特征、参数与独立数值不变量通过；无作者数组可做逐点基准。 |
+| uncovered | 2 claims | 两处因子 2 的论文内部一致性问题已检出，但尚未由 fresh-context 评审裁决。 |
+| excluded experiment | 9 items | 论文实验测量或其后处理，保留在清单中但不进入理论复现分母。 |
+| excluded schematic | 3 items | Main Fig. 1 的三个装置、能级与脉冲序列示意区域。 |
+
+统一指标为 `27/29 = 93.10%` coverage；已覆盖 item 平均 fidelity 为 90.0，
+所以整篇 reproduction degree 为 83.79。
 
 ## 理论目标
 
@@ -23,16 +27,19 @@
 | T009 | Supp. Fig. 5 left | feature_match | maximum root residual `1.10e-13` |
 | T010 | Supp. Fig. 5 right | feature_match | peak advantage `0.0842247` |
 
-## 实验目标的诚实边界
+## 实验测量的诚实边界
 
-Main Fig. 3 top/bottom、Main Fig. 4 experimental series、Main Fig. 5 main/inset
-均为 `missing_author_data`。代码没有把理论曲线冒充实验数据，也没有从原图恢复点列。
+9 个实验 item 分布在 Main Fig. 2 左图的三组测量点、Main Fig. 3 top/bottom、
+Main Fig. 4 的 raw/smoothed 两条实验序列、Main Fig. 5 main/inset。它们统一标记为
+`experimental_measurement + excluded`：代码没有把理论曲线冒充实验数据，也没有从
+原图恢复点列。
 
-## 论文内部不一致
+## 未覆盖 item 的因果归因
 
-`DISC-RATE-FACTOR-TWO`：Main Eqs. (1)-(2) 的标准 dissipator 与 Supplement
-Eqs. (1)-(4) 的 Bloch/Liouvillian 系数相差精确的两倍。三条独立检查均稳定复现该差异，
-但在 fresh-context 审查和替代约定核查完成前，结论保持 `inconclusive`。
+| Item / target | 直接原因 | 根本原因 | 代码错误判断 | 下一项判别测试 |
+| --- | --- | --- | --- | --- |
+| `claim_dissipator_rate_factor_two` / T011 | Main Eqs. (1)-(2) 的标准 dissipator 与 Supplement Eqs. (1)-(4) 的 Bloch/Liouvillian 系数相差精确两倍 | `unresolved`：正文漏写因子 2 与未声明的速率约定尚不能区分 | `not_found_after_checks`：算符重推、独立 4x4 实现、单元测试三路一致 | fresh-context 评审重推并检查正式版本和勘误 |
+| `claim_hamiltonian_prose_factor_two` / T012 | 实验段写 `H=Omega sigma_x`，方程统一使用 `H=Omega sigma_x/2` | `unresolved`：文字笔误与局部 Rabi 频率重定义尚不能区分 | `not_applicable`：这是两个印刷陈述的冲突，runner 没有第二条执行路径 | fresh-context 评审追踪全文定义并检查正式版本和勘误 |
 
-`DISC-HAMILTONIAN-PROSE-TWO`：实验段落写 `H=Omega sigma_x`，而 Main Eq. (1)、
-补充材料和标准 Rabi 约定使用 `H=Omega sigma_x/2`。本次计算始终采用公式一致的后者。
+两项当前都保持 `inconclusive`，不能提前宣布论文错误；但它们已经进入分母并以 0 分
+计入整篇复现度。

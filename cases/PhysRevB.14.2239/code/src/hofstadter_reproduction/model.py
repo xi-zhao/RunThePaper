@@ -5,6 +5,7 @@ from __future__ import annotations
 from functools import lru_cache
 from math import gcd
 
+import mpmath as mp
 import numpy as np
 
 
@@ -56,6 +57,47 @@ def band_edges(p: int, q: int) -> tuple[tuple[float, float], ...]:
     )
     roots = np.sort(np.concatenate([roots_a, roots_b])).real
     return tuple((float(roots[2 * i]), float(roots[2 * i + 1])) for i in range(q))
+
+
+@lru_cache(maxsize=None)
+def high_precision_band_edges(
+    p: int, q: int, decimal_digits: int = 80
+) -> tuple[tuple[str, str], ...]:
+    """Return Chambers band edges as decimal strings at arbitrary precision.
+
+    Double precision is sufficient to place the bands in a rendered figure,
+    but not to resolve every positive width for the largest denominators in
+    Fig. 1.  This independent high-precision path preserves those scientific
+    widths without changing the float arrays used only for rendering.
+    """
+
+    if p == 0 and q == 1:
+        return (("-4.0", "4.0"),)
+    if q < 1 or not (0 <= p <= q) or gcd(p, q) != 1:
+        raise ValueError("p/q must be a reduced fraction with q>=1")
+
+    def matrix(nu: mp.mpf, antiperiodic: bool) -> mp.matrix:
+        result = mp.matrix(q, q)
+        for site in range(q):
+            result[site, site] = 2 * mp.cos(
+                2 * mp.pi * p * site / q - nu
+            )
+        for site in range(q):
+            neighbour = (site + 1) % q
+            phase = -1 if antiperiodic and site == q - 1 else 1
+            result[site, neighbour] += phase
+            result[neighbour, site] += phase
+        return result
+
+    with mp.workdps(decimal_digits):
+        roots_a = list(mp.eigsy(matrix(mp.mpf("0"), False), eigvals_only=True))
+        roots_b = list(mp.eigsy(matrix(mp.pi / q, True), eigvals_only=True))
+        roots = sorted([*roots_a, *roots_b])
+        digits = max(25, decimal_digits - 10)
+        return tuple(
+            (mp.nstr(roots[2 * index], digits), mp.nstr(roots[2 * index + 1], digits))
+            for index in range(q)
+        )
 
 
 def transfer_trace(energy: float, p: int, q: int, *, nu: float | None = None) -> float:

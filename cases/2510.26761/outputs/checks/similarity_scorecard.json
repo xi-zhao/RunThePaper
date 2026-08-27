@@ -1,26 +1,913 @@
 {
-  "status": "passed",
+  "schema_version": 4,
   "paper_id": "2510.26761",
-  "overall_score": 85.0,
-  "similarity_level": "numerical_feature_reproduction",
-  "scored_items": [
+  "score_model": "rra_similarity_v3_figure_evaluation",
+  "summary": "Main Fig. 2 is exactly reproduced from closed-form fields and finite witnesses. The numerical fields behind Main Fig. 1 are independently regenerated and pass all state-derived invariants, while its 3D rendering is feature-level and the source-printed theorem-1 threshold is internally inconsistent with the source-printed state.",
+  "targets": [
     {
-      "paper_item": "Main Fig. 1",
+      "target_id": "T001",
+      "label": "Main Fig. 1: numerical Wigner surfaces behind the theorem overview",
+      "figure_refs": [
+        "Main Fig. 1"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 47.0,
+          "reason": "The independent field has the source's positive/negative lobe structure, equal-slice sign topology, reduced center-of-mass lobes, and surviving smoothed negativity.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 31.0,
+          "reason": "State norm, signed slice integral, converged negative volume, reduced-state trace, and smoothed origin are exact or independently converged; the paper's printed theorem-1 threshold is incompatible with its printed state.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 13.0,
+          "reason": "All numerical fields are generated, but the central 3D surface is only a feature-level rendering because the source does not report isosurface levels, mesh, or camera.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "full_cut",
+            "status": "partial",
+            "note": "The exact three-dimensional field is evaluated; only the undisclosed isosurface rendering is reconstructed.",
+            "evidence": "outputs/checks/t001_paper_target_run.json"
+          },
+          {
+            "panel_id": "equal_slice",
+            "status": "reproduced",
+            "note": "The field, signed integral, and negative volume are independently evaluated.",
+            "evidence": "outputs/data/overview_metrics.json"
+          },
+          {
+            "panel_id": "center_of_mass",
+            "status": "reproduced",
+            "note": "The reduced density matrix has exact trace and Fock populations.",
+            "evidence": "outputs/checks/t001_paper_target_run.json"
+          },
+          {
+            "panel_id": "smoothed_center_of_mass",
+            "status": "reproduced",
+            "note": "The grid convolution and independent analytic value both give -7/(16*pi) at the origin.",
+            "evidence": "outputs/checks/t001_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 13.12
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "reconstructed",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC003",
+          "EQC004",
+          "EQC005",
+          "EQC012",
+          "EQC013",
+          "EQC014"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "illustrative_state_normalized",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.state_normalized",
+          "claim": "The six printed collective-Fock amplitudes define a normalized state."
+        },
+        {
+          "assertion_id": "slice_parity_integral",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.signed_integral_matches_parity_identity",
+          "claim": "The equal-slice signed integral is -52/(75*pi^2)."
+        },
+        {
+          "assertion_id": "negative_volume_convergence",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.negative_volume_converged",
+          "claim": "The negative volume converges to approximately 0.26369957."
+        },
+        {
+          "assertion_id": "smoothed_origin",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t001_paper_target_run.json#checks.smoothed_origin_matches_exact_value",
+          "claim": "The smoothed center-of-mass Wigner function equals -7/(16*pi) at the origin."
+        },
+        {
+          "assertion_id": "source_threshold_alignment",
+          "tier": "alignment",
+          "essential": false,
+          "status": "source_figure_artifact",
+          "evidence": "outputs/data/illustrative_state_validation.json#source_inconsistency",
+          "claim": "The source prints numerator 56 although its state and theorem imply numerator 52."
+        }
+      ],
+      "evidence": [
+        "outputs/runs/2510.26761-t001-scientific-closure-v1-20260825/run_attestation.json",
+        "outputs/checks/t001_scientific_closure.json",
+        "outputs/data/t001_scientific_fields.npz",
+        "outputs/data/t001_scientific_metrics.json",
+        "outputs/data/overview_fields.npz",
+        "outputs/data/overview_metrics.json",
+        "outputs/checks/t001_paper_target_run.json",
+        "comparison-artifacts/fig1_source_vs_reproduction.png"
+      ],
+      "score_cap": 80.0,
+      "cap_reason": "EQC013 is reconstructed because the source's quoted threshold conflicts with the source's own normalized state.",
+      "remaining_gap": "Author isosurface parameters are unavailable, and the printed +56 theorem-1 threshold cannot be reproduced from the printed state.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 91.0,
       "score": 80.0,
-      "parameter_match": "paper_exact",
-      "data_provenance": "independent_numerics",
-      "formula_gate": "reconstructed",
-      "result": "feature_match",
-      "boundary": "Exact state-derived fields and invariants; reconstructed 3D presentation and one source-level threshold contradiction."
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
-      "paper_item": "Main Fig. 2",
+      "target_id": "T002",
+      "label": "Main Fig. 2: tripartite W-state Wigner and characteristic witnesses",
+      "figure_refs": [
+        "Main Fig. 2"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Both heat maps reproduce the central sign, annular structure, radius-0.7 disk, and all 19 characteristic-function difference points.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The exact disk formula gives r_crit=0.6991953293 and the independent 7-by-7 eigensolve gives N_C=0.01758037565, matching the paper's rounded values.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both panels, the finite-region criterion, the seven-point construction, the 19 differences, and the ten independent measurements are covered.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "note": "Exact Wigner field and finite-disk witness.",
+            "evidence": "outputs/checks/t002_paper_target_run.json"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "note": "Exact characteristic field, 19 points, and finite-matrix eigenspectrum.",
+            "evidence": "outputs/checks/t002_paper_target_run.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "analytic_reference",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC006",
+          "EQC007",
+          "EQC008",
+          "EQC009",
+          "EQC010",
+          "EQC011"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "disk_formula",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/v001_paper_target_run.json#checks.closed_form_matches_independent_quadrature",
+          "claim": "The source's piecewise disk formula agrees with independent quadrature."
+        },
+        {
+          "assertion_id": "disk_threshold",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.disk_at_0_7_certifies_gme",
+          "claim": "Radius 0.7 lies above the exact GME threshold crossing."
+        },
+        {
+          "assertion_id": "difference_point_count",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.nineteen_unique_differences",
+          "claim": "The seven-point set generates exactly 19 unique pairwise differences and ten independent measurements."
+        },
+        {
+          "assertion_id": "characteristic_witness",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/t002_paper_target_run.json#checks.characteristic_witness_matches_0_0176",
+          "claim": "The minimum eigenvalue gives the paper's 0.0176 GME witness."
+        }
+      ],
+      "evidence": [
+        "outputs/data/w_state_fields.npz",
+        "outputs/data/w_state_metrics.json",
+        "outputs/checks/t002_paper_target_run.json",
+        "comparison-artifacts/fig2_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The source does not expose its rasterization settings; this affects presentation only, not the analytic field or witness values.",
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
       "score": 90.0,
-      "parameter_match": "paper_exact",
-      "data_provenance": "analytic_reference",
-      "formula_gate": "verified",
-      "result": "exact_match",
-      "boundary": "Exact finite-disk threshold and characteristic-matrix spectrum; no author numerical arrays are required."
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T003",
+      "label": "General Wigner-negativity theorems and proof lemmas",
+      "figure_refs": [
+        "No-display analytic items C01-C12"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no accepted independent proof artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "The current evidence checks selected M=3 examples, not the nine all-state/all-M statements assigned here.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent general proof check exists."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No claim-level symbolic or finite-dimensional falsification artifact exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "All nine assigned primary claims remain uncovered."
+        }
+      },
+      "evidence": [
+        "outputs/data/analytic_claim_campaign/t003.json",
+        "outputs/checks/analytic_claim_campaign/t003.json",
+        "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+      ],
+      "remaining_gap": "Finite checks do not replace a fresh-context review of the general proof quantifiers.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "EQC003",
+          "EQC004",
+          "EQC005"
+        ],
+        "formula_gate": "verified",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "These are no-display analytic claims.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "All 9 declared claim paths now execute in an isolated run; fresh-context scientific adjudication is the remaining gate.",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t003.json",
+              "outputs/checks/analytic_claim_campaign/t003.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The legacy case omitted a reviewable no-display-claim campaign; implementation and attestation are now present.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t003.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Focused tests and the isolated execution found no reproduction-code defect in the declared paths.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "All case-local analytic campaign and Wigner tests pass.",
+                "evidence": [
+                  "tests/test_analytic_claim_campaign.py",
+                  "tests/test_wigner_gme.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The raw/reference-free runner produced the declared data with zero forbidden accesses.",
+                "evidence": [
+                  "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The complete campaign runs locally in under two seconds.",
+              "evidence": [
+                "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The Letter plus public companion paper expose the formulas and parameters used here.",
+              "evidence": [
+                "raw/paper.pdf",
+                "raw/companion_paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "9/9 implementation paths execute; review remains pending.",
+            "items": [
+              "T003 atomic analytic claims"
+            ],
+            "completion": "9/9 executable; 0/9 independently adjudicated in the current package"
+          },
+          "next_discriminating_test": {
+            "action": "Run protocol-v5 fresh-context proof and falsification review over the frozen package.",
+            "expected_resolution": "Each atomic claim becomes paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with a proven external boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "execution_output_refs": [
+          "outputs/data/analytic_claim_campaign/t003.json"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t003_general_theorems",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "outputs/checks/analytic_claim_campaign/t003.json",
+          "claim": "Nine theorem and lemma claims have executable formula or finite-falsification checks."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C01-C12-primary",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0
+    },
+    {
+      "target_id": "T004",
+      "label": "Operational GME corollaries and measurement bounds",
+      "figure_refs": [
+        "No-display analytic items C13-C22"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no accepted independent proof artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "Existing W-state numerics demonstrate examples, not the six general operational claims.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent general corollary check exists."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No symbolic or small-state claim artifact exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "All six assigned primary claims remain uncovered."
+        }
+      },
+      "evidence": [
+        "outputs/data/analytic_claim_campaign/t004.json",
+        "outputs/checks/analytic_claim_campaign/t004.json",
+        "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+      ],
+      "remaining_gap": "Fresh-context review must still adjudicate the general implications.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "EQC006",
+          "EQC010",
+          "EQC011"
+        ],
+        "formula_gate": "verified",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "These are no-display analytic claims.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "All 6 declared claim paths now execute in an isolated run; fresh-context scientific adjudication is the remaining gate.",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t004.json",
+              "outputs/checks/analytic_claim_campaign/t004.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The legacy case omitted a reviewable no-display-claim campaign; implementation and attestation are now present.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t004.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Focused tests and the isolated execution found no reproduction-code defect in the declared paths.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "All case-local analytic campaign and Wigner tests pass.",
+                "evidence": [
+                  "tests/test_analytic_claim_campaign.py",
+                  "tests/test_wigner_gme.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The raw/reference-free runner produced the declared data with zero forbidden accesses.",
+                "evidence": [
+                  "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The complete campaign runs locally in under two seconds.",
+              "evidence": [
+                "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The Letter plus public companion paper expose the formulas and parameters used here.",
+              "evidence": [
+                "raw/paper.pdf",
+                "raw/companion_paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "6/6 implementation paths execute; review remains pending.",
+            "items": [
+              "T004 atomic analytic claims"
+            ],
+            "completion": "6/6 executable; 0/6 independently adjudicated in the current package"
+          },
+          "next_discriminating_test": {
+            "action": "Run protocol-v5 fresh-context proof and falsification review over the frozen package.",
+            "expected_resolution": "Each atomic claim becomes paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with a proven external boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "execution_output_refs": [
+          "outputs/data/analytic_claim_campaign/t004.json"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t004_operational_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "outputs/checks/analytic_claim_campaign/t004.json",
+          "claim": "Six operational corollary claims have executable formula or finite-witness checks."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C13-C22-primary",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0
+    },
+    {
+      "target_id": "T005",
+      "label": "Quantitative results imported from the companion study",
+      "figure_refs": [
+        "Main text point-count and all-M robustness statements"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 external-evidence target remains zero-credit until its cited companion derivation is independently reconstructed.",
+      "score_cap": 0.0,
+      "cap_reason": "The present paper does not expose the sampling tolerance, all-M family construction, or robustness data.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "Required external scientific objects are absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No independent point-count or robustness data exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "All four assigned primary claims remain uncovered."
+        }
+      },
+      "evidence": [
+        "outputs/data/analytic_claim_campaign/t005.json",
+        "outputs/checks/analytic_claim_campaign/t005.json",
+        "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+      ],
+      "remaining_gap": "Fresh-context review must verify the companion source trace and all-finite-M proof boundary.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_dependencies": [
+          "EQC015",
+          "EQC016",
+          "EQC017"
+        ],
+        "formula_gate": "verified",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "These are no-display external quantitative claims.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "All 4 declared claim paths now execute in an isolated run; fresh-context scientific adjudication is the remaining gate.",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t005.json",
+              "outputs/checks/analytic_claim_campaign/t005.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The legacy case omitted a reviewable no-display-claim campaign; implementation and attestation are now present.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/data/analytic_claim_campaign/t005.json",
+              "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Focused tests and the isolated execution found no reproduction-code defect in the declared paths.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "All case-local analytic campaign and Wigner tests pass.",
+                "evidence": [
+                  "tests/test_analytic_claim_campaign.py",
+                  "tests/test_wigner_gme.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The raw/reference-free runner produced the declared data with zero forbidden accesses.",
+                "evidence": [
+                  "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The complete campaign runs locally in under two seconds.",
+              "evidence": [
+                "outputs/runs/2510.26761-analytic-claim-campaign-v2/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The Letter plus public companion paper expose the formulas and parameters used here.",
+              "evidence": [
+                "raw/paper.pdf",
+                "raw/companion_paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "4/4 implementation paths execute; review remains pending.",
+            "items": [
+              "T005 atomic analytic claims"
+            ],
+            "completion": "4/4 executable; 0/4 independently adjudicated in the current package"
+          },
+          "next_discriminating_test": {
+            "action": "Run protocol-v5 fresh-context proof and falsification review over the frozen package.",
+            "expected_resolution": "Each atomic claim becomes paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with a proven external boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "execution_output_refs": [
+          "outputs/data/analytic_claim_campaign/t005.json"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t005_companion_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "outputs/checks/analytic_claim_campaign/t005.json",
+          "claim": "Four companion-paper quantities are independently recomputed from printed formulas and parameters."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C18-C33-external",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0
     }
-  ]
+  ],
+  "overall_score": 85.0,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 5,
+    "critical_items": 4,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "none": 5
+    },
+    "parameter_match_counts": {
+      "paper_exact": 5
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 5
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4,
+      "analytic_reference": 1
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 5
+    },
+    "formula_gate_counts": {
+      "reconstructed": 1,
+      "verified": 4
+    },
+    "paper_level_role_counts": {
+      "main_claim": 4,
+      "supporting": 1
+    },
+    "physics_status_counts": {
+      "passed": 2,
+      "pending": 3
+    },
+    "physics_assertion_status_counts": {
+      "passed": 8,
+      "source_figure_artifact": 1,
+      "blocked": 3
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T002"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 2,
+      "complete": 3
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 2,
+      "react_loop_required": 3
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "direct_cause_counts": {
+      "evidence_chain_incomplete": 3
+    },
+    "root_cause_counts": {
+      "review_or_evidence_process_gap": 3
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3
+    }
+  },
+  "status": "passed"
 }

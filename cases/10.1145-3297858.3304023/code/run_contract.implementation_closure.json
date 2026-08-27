@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "run_id": "10.1145-3297858.3304023-implementation-closure-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/sabre.py",
+    "src/benchmarks.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "T001": {
+      "extended_size": 4,
+      "lookahead_weight": 0.5
+    },
+    "T002": {
+      "logical_qubits": 6,
+      "seed": 3,
+      "attempts": 2,
+      "extended_size": 20,
+      "lookahead_weight": 0.5,
+      "decay_delta": 0.001,
+      "paper_target_boundary": {
+        "benchmark_corpus": "Table II 26 circuits",
+        "attempts_per_circuit": 5
+      }
+    },
+    "T003": {
+      "logical_qubits": 10,
+      "two_qubit_gates": 50,
+      "circuit_seed": 1,
+      "layout_seed": 1001,
+      "decay_deltas": [
+        0.0,
+        0.1,
+        1.0
+      ],
+      "extended_size": 20,
+      "lookahead_weight": 0.5,
+      "paper_target_boundary": {
+        "benchmark_corpus": "Table II 26 circuits",
+        "decay_sweep": "paper evaluation sweep"
+      }
+    },
+    "T004": {
+      "required_inputs": {
+        "benchmark_manifest": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "Exact identities, versions, and ordering of all 26 benchmark circuits."
+        },
+        "qasm_corpus": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "Clean-room QASM files for the exact benchmark revisions; author arrays or code are prohibited."
+        },
+        "seed_and_attempt_policy": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "The paper-exact mapping of five attempts to random seeds."
+        },
+        "tie_break_policy": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "Deterministic candidate-SWAP tie-breaking semantics."
+        },
+        "reverse_traversal_policy": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "Exact traversal count and selection rule used for each reported row."
+        },
+        "bka_baseline_definition": {
+          "path": null,
+          "sha256": null,
+          "source_requirement": "The exact BKA comparator implementation/version and metric aggregation used by Table II."
+        }
+      },
+      "boundary": "Table II cannot be rerun paper-exactly inside the clean-room bundle until the exact benchmark corpus and underspecified stochastic/evaluation metadata are independently frozen."
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

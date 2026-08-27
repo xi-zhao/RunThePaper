@@ -21,7 +21,7 @@ Numerical form:
 Compare 4*sum_i p_i*(<H^2>_i-<H>_i^2) with the spectral QFI formula.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:qfi_spectral`
+Code: `src/leaf_thermodynamics.py:qfi_spectral`
 
 
 ### EQ002 — Effective state Hamiltonian in the rho eigenbasis
@@ -40,7 +40,7 @@ Numerical form:
 For rho proportional to exp(-beta H0), use factor sech(beta*(e_m-e_n)/2) in the H0 eigenbasis; this cancels the partition function and avoids underflow.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:effective_state_hamiltonian`
+Code: `src/leaf_thermodynamics.py:effective_state_hamiltonian`
 
 
 ### EQ003 — Yu optimal ensemble reconstruction
@@ -59,7 +59,7 @@ Numerical form:
 Diagonalize H_rho; p_i=sum_m lambda_m |Psi_mi|^2; Phi_mi=sqrt(lambda_m) Psi_mi/sqrt(p_i).
 ```
 
-Code: `code/src/leaf_thermodynamics.py:minimum_variance_ensemble`
+Code: `src/leaf_thermodynamics.py:minimum_variance_ensemble`
 
 
 ### EQ004 — Leaf-canonical ensemble
@@ -78,7 +78,7 @@ Numerical form:
 Evaluate the matrix exponential through the eigendecomposition of H_rho0 and normalize by sum_i exp(-beta E_i)<Psi_i|rho0|Psi_i>.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:leaf_canonical_state`
+Code: `src/leaf_thermodynamics.py:leaf_canonical_state`
 
 
 ### EQ005 — Leaf-typicality observable and outlier diagnostic
@@ -97,7 +97,7 @@ Numerical form:
 Sort by E_rho, compute a local shell mean over consecutive levels, residuals abs(o_i-f_i), count residuals above each Delta, and report log(N_Delta)/log(d).
 ```
 
-Code: `code/src/leaf_thermodynamics.py:typicality_curve`
+Code: `src/leaf_thermodynamics.py:typicality_curve`
 
 
 ### EQ006 — Spin-chain Hamiltonian
@@ -116,7 +116,7 @@ Numerical form:
 Construct sparse Pauli strings; nonintegrable h=((sqrt(5)+5)/8,1/2,sqrt(5)/2), D=pi/20; H0 has h=(0,0,3/2) or (0,0,1/2), D=0.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:spin_chain_hamiltonian`
+Code: `src/leaf_thermodynamics.py:spin_chain_hamiltonian`
 
 
 ### EQ007 — Representative-state dynamics and delta selection
@@ -135,7 +135,7 @@ Numerical form:
 Compute exact mixed-state dynamics under H; choose argmin delta_i; evolve that representative; use the stated normalized delta-shell and empirical 16/84 and 2.5/97.5 percentiles as the initial confidence-band reconstruction.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:representative_dynamics`
+Code: `src/leaf_thermodynamics.py:representative_dynamics`
 
 
 ### EQ008 — Symmetric logarithmic derivative and QFI
@@ -154,7 +154,7 @@ Numerical form:
 F_Q=2*sum_mn ((lambda_m-lambda_n)^2/(lambda_m+lambda_n))*|H_mn|^2, omitting zero denominators.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:qfi_spectral`
+Code: `src/leaf_thermodynamics.py:qfi_spectral`
 
 
 ### EQ009 — Spectral-compression entropies
@@ -173,4 +173,4 @@ Numerical form:
 Transform both the H0 eigenvectors and optimal representatives into the H eigenbasis; compute columnwise Shannon entropy and population-weighted means.
 ```
 
-Code: `code/src/leaf_thermodynamics.py:spectral_compression`
+Code: `src/leaf_thermodynamics.py:spectral_compression`

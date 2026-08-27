@@ -1,0 +1,435 @@
+{
+  "schema_version": 2,
+  "paper_id": "2507.09447",
+  "implementations": {
+    "supplement_feature_runner": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_supplement_reproduction.py",
+        "--config",
+        "config/supplement_feature_run.json"
+      ],
+      "code_refs": [
+        "scripts/run_supplement_reproduction.py",
+        "src/supplement_hatano_nelson.py"
+      ],
+      "config_ref": "config/supplement_feature_run.json",
+      "expected_outputs": [
+        "outputs/supplement_feature/data/supplement_offdiag_grid.csv",
+        "outputs/supplement_feature/data/supplement_quasiperiodic_grid.csv",
+        "outputs/supplement_feature/figures/figs1_reproduction.png",
+        "outputs/supplement_feature/figures/figs2_reproduction.png",
+        "outputs/supplement_feature/checks/supplement_feature_checks.json"
+      ],
+      "acceptance_criteria": [
+        "The off-diagonal-disorder supplement independently generates theory density, ED density, and representative ALM/skin profiles.",
+        "The quasiperiodic supplement independently generates theory density, ED density, and representative ALM/skin profiles.",
+        "Both supplement examples use the published Hamiltonians and parameters while honestly capping fidelity where the paper omits exact state-selection windows or rendering metadata."
+      ]
+    },
+    "main_paper_exact": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_exact.py",
+        "--config",
+        "config/paper_exact_run.json",
+        "--stage",
+        "all"
+      ],
+      "code_refs": [
+        "scripts/run_paper_exact.py",
+        "src/paper_exact_reproduction.py",
+        "src/lyapunov_band.py"
+      ],
+      "config_ref": "config/paper_exact_run.json",
+      "expected_outputs": [
+        "outputs/paper_exact/data/paper_fig34_theory.npz",
+        "outputs/paper_exact/data/paper_profiles.npz",
+        "outputs/paper_exact/data/paper_fig5_contours.npz",
+        "outputs/paper_exact/data/paper_alpha.csv",
+        "outputs/checks/paper_scientific_similarity.json"
+      ],
+      "acceptance_criteria": [
+        "The OBC and PBC spectral densities overlap the finite-size exact-diagonalization histograms above the declared thresholds.",
+        "The essential-Lyapunov mobility contours and winding labels are generated from independent transfer-matrix numerics rather than source pixels.",
+        "The Fig. 5 alpha threshold remains near the paper's Wc ≈ 2.1 under the declared paper-matched configuration."
+      ]
+    },
+    "supplement_additional_runner": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_supplement_additional_numerics.py",
+        "--config",
+        "config/supplement_additional_run.json"
+      ],
+      "code_refs": [
+        "scripts/run_supplement_additional_numerics.py",
+        "src/supplement_additional_numerics.py",
+        "src/lyapunov_band.py"
+      ],
+      "config_ref": "config/supplement_additional_run.json",
+      "expected_outputs": [
+        "outputs/data/unidirectional_density.csv",
+        "outputs/data/supplement_s3_precision_pilot.csv",
+        "outputs/data/supplement_s4_gap_scaling.csv",
+        "outputs/data/supplement_s4_protocol_sensitivity.csv",
+        "outputs/figures/figs3_precision_pilot.png",
+        "outputs/figures/figs4_gap_scaling.png",
+        "outputs/checks/supplement_additional_numerics.json",
+        "outputs/checks/supplement_compute_benchmark.json"
+      ],
+      "acceptance_criteria": [
+        "The one-way OBC Hamiltonian is constructed independently and its eigenvalue multiset equals the onsite-disorder samples to the declared tolerance.",
+        "The Fig. S3 runner implements arbitrary-precision dense ED and periodic-QR potentials for every published precision and energy; its paper-scale path is parameterized even when only the measured pilot is executed.",
+        "The Fig. S4 runner evaluates the published size grid and E0, then applies a predeclared seed/ensemble/QR sensitivity sweep without tuning to source pixels."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_supercell_schematic",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1",
+      "reason": "Conceptual lattice and supercell construction diagram."
+    },
+    {
+      "item_id": "fig2_localization_cartoons",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2",
+      "reason": "Illustrative localization profiles and sign cartoons, not independently generated numerics."
+    },
+    {
+      "item_id": "fig3a_obc_spectral_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 3(a)",
+      "reason": "The OBC spectral density is independently regenerated from exact diagonalization at the paper's L=1000, 3200-realization scale.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig3b_obc_profile_classes",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 3(b)",
+      "reason": "Representative ALM, critical, and skin profiles are selected by independent numerical search rather than source-image tracing.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig3c_obc_lyapunov_density_and_mobility_edge",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 3(c)",
+      "reason": "The Lyapunov density and essential-exponent mobility contour are generated from the transfer-matrix formulation with independent grids.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig3d_obc_potential_scaling",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 3(d)",
+      "reason": "Potential convergence exponents are independently fit against system size using the documented paper-matched configuration.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig4a_pbc_spectral_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 4(a)",
+      "reason": "The PBC spectral density is independently regenerated from exact diagonalization at the paper scale.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig4b_pbc_lyapunov_density_and_winding",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 4(b)",
+      "reason": "The PBC Lyapunov density and winding-sector labels are independently generated and cross-checked against direct twisted-boundary winding.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig5a_mobility_edge_evolution",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 5(a)",
+      "reason": "The mobility-edge contours for the five published disorder strengths are independently generated from the essential Lyapunov exponent.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig5b_alm_fraction_threshold",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "main_paper_exact",
+      "source_ref": "Fig. 5(b)",
+      "reason": "The ALM-fraction curve and the Wc ≈ 2.1 threshold are independently regenerated from exact diagonalization plus Lyapunov classification.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "figs1a_offdiagonal_theory_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S1(a)",
+      "reason": "The off-diagonal Hatano-Nelson theory density and mobility edge are independently generated from the published Hamiltonian. Because the paper does not publish its exact rendering grid, this item remains fidelity-capped rather than deferred.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1b_offdiagonal_obc_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S1(b)",
+      "reason": "The off-diagonal OBC spectral density is independently regenerated at reduced scale from exact diagonalization under the published parameters.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1c_offdiagonal_profiles",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S1(c)",
+      "reason": "Representative ALM and skin profiles are selected by an independent Lyapunov-sign rule at reduced scale. The unpublished author windows cap fidelity but do not block scientific reproduction.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs2a_quasiperiodic_theory_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S2(a)",
+      "reason": "The quasiperiodic theory density and mobility edge are independently generated from the published Hatano-Nelson Hamiltonian with onsite modulation.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "figs2b_quasiperiodic_obc_density",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S2(b)",
+      "reason": "The quasiperiodic OBC spectral density is independently regenerated from exact diagonalization at reduced scale under the published model parameters.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "figs2c_quasiperiodic_profiles",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "supplement_feature_runner",
+      "source_ref": "Fig. S2(c)",
+      "reason": "Representative ALM and skin profiles are independently selected from the Lyapunov-classified quasiperiodic spectrum; the unpublished author windows cap fidelity but do not block reproduction.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "main_unidirectional_density_limit",
+      "item_type": "quantitative_statement",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Main text after Fig. 4",
+      "reason": "The rho_OBC=rho_w limit is independently checked from the triangular OBC Hamiltonian and finite eigenvalue histograms.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "figs3_precision_energy_minus_0_72",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Fig. S3, E=-0.72 series",
+      "reason": "The full precision/energy path is implemented; a measured arbitrary-precision pilot is executed and the L=1000 x 1600 run remains compute-blocked.",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "figs3_precision_energy_3_20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Fig. S3, E=3.20 series",
+      "reason": "The full precision/energy path is implemented; a measured arbitrary-precision pilot is executed and the L=1000 x 1600 run remains compute-blocked.",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "figs3_qr_more_accurate_at_64bit",
+      "item_type": "quantitative_statement",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Fig. S3 text/caption",
+      "reason": "Matched-precision ED and QR errors are computed against an independently generated 256-bit ED reference; the reduced pilot is not promoted to the paper-scale ordering claim.",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "figs3_precision_vs_size_dependence",
+      "item_type": "quantitative_statement",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Appendix S6 discussion",
+      "reason": "The two-factor precision/size implementation exists and the pilot records a resource projection; the publication-scale sweep is not claimed as run.",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "figs4_gap_deviation_series",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Fig. S4",
+      "reason": "The paper's L=50..400 grid and L=1000 reference at E0 are executed from independently sampled disorder.",
+      "claim_refs": [
+        "CLM008"
+      ]
+    },
+    {
+      "item_id": "figs4_exponential_decay_claim",
+      "item_type": "quantitative_statement",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "supplement_additional_runner",
+      "source_ref": "Published Supplement Fig. S4 text/caption",
+      "reason": "An exponential fit is compared against a power-law alternative; the current result is preserved even when it does not resolve the paper claim.",
+      "claim_refs": [
+        "CLM008"
+      ]
+    },
+    {
+      "item_id": "table1_comparison_summary",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Table I",
+      "reason": "Conceptual comparison table; its scientific content is covered by the derivation and method trace rather than a standalone numerical output."
+    }
+  ]
+}

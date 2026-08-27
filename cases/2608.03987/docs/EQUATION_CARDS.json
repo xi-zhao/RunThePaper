@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "paper_id": "2608.03987",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Realification arithmetic cost law",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:law"
+        },
+        {
+          "type": "theorem",
+          "value": "thm:law"
+        }
+      ],
+      "latex": "o = 3m + 2r + (1-m-r) = 1 + 2m + r, \\quad 1 \\le o \\le 3",
+      "role": "observable",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Theorem 1 and Eq. (8), TeX label eq:law, state the same volume-weighted cost law."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Pass, ride, and merge costs 1, 2, and 3 give 3m+2r+(1-m-r)=1+2m+r; m>=0, r>=0, and m+r<=1 imply 1<=o<=3."
+        }
+      ],
+      "numerical_form": "overhead = 1.0 + 2.0*m + r; lower = 1.0 + 2.0*m; upper = 2.0 + m",
+      "code_refs": [
+        "src/independent_tn.py::TreeStatistics",
+        "src/realified_figures.py::CostLawPoint",
+        "src/realified_figures.py::validate_reproduction"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Relative pipeline gap",
+      "source_refs": [
+        {
+          "type": "figure_caption",
+          "value": "fig:pipe"
+        }
+      ],
+      "latex": "g = \\frac{|o_{\\mathrm{conv}}-o_{\\mathrm{full}}|}{o_{\\mathrm{full}}}",
+      "role": "comparison_metric",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Figure 9 caption defines the relative pipeline gap and its 1e-6 aggregation and 5e-4 acceptance thresholds."
+        }
+      ],
+      "numerical_form": "gap = abs(convert_only - full_anneal) / full_anneal",
+      "code_refs": [
+        "scripts/run_independent_reimplementation.py::main",
+        "src/realified_figures.py::PipelinePoint",
+        "src/realified_figures.py::validate_reproduction"
+      ],
+      "open_questions": []
+    }
+  ]
+}

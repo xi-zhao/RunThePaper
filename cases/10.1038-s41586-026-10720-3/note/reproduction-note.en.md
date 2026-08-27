@@ -1,53 +1,21 @@
-# Backreaction of stimulated Hawking radiation — reproduction note
+# Backreaction of stimulated Hawking radiation in an optical analogue: scientific reproduction note
 
 ## Result
 
-This case reproduces the numerical content of the Nature paper's main-text
-Figs. 2, 4, and 5 without using author code. Fig. 2 reconstructs the co-moving
-dispersion and seven labelled phase-matching landmarks. Fig. 4 independently
-evaluates all six Eq. (D.1) sideband spectra after red-marker-only fitting.
-Fig. 5 recomputes the thermal slope ratio as `1.0211`, matching the reported
-`1.02`.
+The 28-item audit identifies 13 theoretical targets, 13 experimental reference items, and two schematics; theoretical coverage is 13/13 and lifecycle is partial.
 
-## Important physical correction
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-The pump state drawn in Fig. 2 is not the incident 800 nm carrier. It is the
-Raman-shifted carrier at the local minimum of the co-moving dispersion. Keeping
-these states separate yields the NRR, Hawking-partner, and backreaction roots
-at `233.383`, `233.011`, and `232.643 nm`.
+## What is reproduced
 
-## Validation
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-The six Fig. 4 curves were fitted without access to the paper's black theory
-paths. After freezing the parameters, blind comparison gave mean NRMSE `0.0653`
-and correlation `0.9810`. Pixel-registered presentation diagnostics for Figs. 2,
-4, and 5 were `0.8238`, `0.7348`, and `0.8201`.
-
-## Public boundary
-
-The public package contains the physical model, frozen fit parameters,
-equation-generated curves, checks, and limited comparison panels. It does not
-contain the paper PDF, standalone original figures, raw vector coordinates,
-digitized point sets, or internal process history. The public Fig. 4 output
-therefore shows generated theory only, and the public Fig. 5 output shows the
-fitted lines without the source-derived points.
-
-Fig. 1 is a conceptual schematic. Fig. 3 is an experimental acquisition and
-cannot be independently regenerated because the raw photon counts were not
-published. The result is numerical feature reproduction, not author-data-level
-exact reproduction.
+Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=failed, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install torch
-cd cases/10.1038-s41586-026-10720-3/code
-python scripts/run_main_figures.py
-```
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-See [`../docs/DERIVATION.md`](../docs/DERIVATION.md) for the physics derivation
-and [`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md) for the
-evidence boundary.
+## Paper-review boundary
+
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: The measured fibre dispersion coefficients, fitted frame corrections, six Fig. 4 parameter tables, raw spectra, raw fluxes, and measured pulse states are unavailable. The 47-unit paper profile is code-ready; a 17-unit CPU smoke profile completed with isolated file-access attestation. The formula-only PCF surrogate does not recover the printed 1551 nm horizon, so it is recorded as a missing-parameter/model-mismatch boundary rather than a paper error. Historical vector-trace fits, marker regressions, pixel scores, and UPPE outputs based on the traced dispersion are retained only as comparison history and are ineligible as scientific evidence. No author scientific code, author numerical arrays, digitized curves, or source pixels enter the formula-only numerical runner. The public projection and publish manifest have not yet been refreshed from this calibration state.

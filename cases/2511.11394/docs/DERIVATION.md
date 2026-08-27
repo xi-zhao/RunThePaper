@@ -21,7 +21,7 @@ Numerical form:
 Pointwise unit-vector dot product.
 ```
 
-Code: `code/src/chern_jump_geometry.py:projector_mismatch`
+Code: `src/chern_jump_geometry.py:projector_mismatch`
 
 
 ### EQC002 — Small-q quantum-metric expansion
@@ -40,7 +40,7 @@ Numerical form:
 Symmetrize over plus/minus q to remove odd corrections.
 ```
 
-Code: `code/src/chern_jump_geometry.py:directional_mismatch`
+Code: `src/chern_jump_geometry.py:directional_mismatch`
 
 
 ### EQC003 — Four-direction jump second moment
@@ -59,7 +59,7 @@ Numerical form:
 Periodic interpolation at four displacements followed by Brillouin-zone quadrature.
 ```
 
-Code: `code/src/chern_jump_geometry.py:jump_metric_estimator`
+Code: `src/chern_jump_geometry.py:jump_metric_estimator`
 
 
 ### EQC004 — Chern lower bound and Dirichlet normalization
@@ -78,7 +78,7 @@ Numerical form:
 Report both K/(2 pi |C|) and E_D/(pi |C|); the ratios are identical.
 ```
 
-Code: `code/src/chern_jump_geometry.py:geometry_observables`
+Code: `src/chern_jump_geometry.py:geometry_observables`
 
 
 ### EQC005 — Massive Dirac texture and lattice Chern number
@@ -97,7 +97,7 @@ Numerical form:
 Two oriented triangles per periodic momentum plaquette.
 ```
 
-Code: `code/src/chern_jump_geometry.py:qwz_texture`, `code/src/chern_jump_geometry.py:chern_number_solid_angle`
+Code: `src/chern_jump_geometry.py:qwz_texture`, `src/chern_jump_geometry.py:chern_number_solid_angle`
 
 
 ### EQC006 — Small-q Landau-Lifshitz-Gilbert flow
@@ -116,7 +116,7 @@ Numerical form:
 Periodic finite differences and RK4 with unit-vector projection.
 ```
 
-Code: `code/src/chern_jump_geometry.py:llg_rhs`, `code/src/chern_jump_geometry.py:rk4_step`
+Code: `src/chern_jump_geometry.py:llg_rhs`, `src/chern_jump_geometry.py:rk4_step`
 
 
 ### EQC007 — Metriplectic Lyapunov inequality
@@ -135,7 +135,7 @@ Numerical form:
 Check discrete energy increments against an integration tolerance and track topology separately.
 ```
 
-Code: `code/scripts/run_validation.py`
+Code: `scripts/run_validation.py`
 
 
 ### EQC008 — Paper bath is momentum-local
@@ -154,7 +154,7 @@ Numerical form:
 Compare its same-k interband matrix elements with the finite-q density-probe form factor.
 ```
 
-Code: `code/src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
+Code: `src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
 
 
 ### EQC009 — Paper Ohmic spectral superoperator and friction
@@ -173,7 +173,7 @@ Numerical form:
 Use an orthonormal Hilbert-Schmidt vertex basis to test what the identity superoperator can resolve.
 ```
 
-Code: `code/src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
+Code: `src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
 
 
 ### EQC010 — Independent finite-q density probe
@@ -192,7 +192,7 @@ Numerical form:
 Evaluate the band-basis form factor gauge-free as tr[P(k)(1-P(k+q))].
 ```
 
-Code: `code/src/detector_sum_rule.py:density_probe_weight`
+Code: `src/detector_sum_rule.py:density_probe_weight`
 
 
 ### EQC011 — Frequency-resolved calibrated click sum
@@ -211,7 +211,7 @@ Numerical form:
 Calibrate transition by transition; never divide an already integrated raw rate by a single average kernel.
 ```
 
-Code: `code/src/detector_sum_rule.py:calibrated_density_response`
+Code: `src/detector_sum_rule.py:calibrated_density_response`
 
 
 ### EQC012 — Conditional click-record topology bound
@@ -230,7 +230,7 @@ Numerical form:
 Use four symmetric momenta and extrapolate linearly in q^2.
 ```
 
-Code: `code/src/detector_sum_rule.py:density_probe_metric_estimator`
+Code: `src/detector_sum_rule.py:density_probe_metric_estimator`
 
 
 ### EQC013 — Paper-bath complete-vertex response is texture blind
@@ -249,7 +249,7 @@ Numerical form:
 Evaluate the four normalized Pauli-basis vertices pointwise for both topological and constant projectors.
 ```
 
-Code: `code/src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
+Code: `src/detector_sum_rule.py:paper_bath_complete_vertex_strength`
 
 
 ### EQC014 — Raw-rate and orbital-vertex failure modes
@@ -268,7 +268,7 @@ Numerical form:
 Sweep lambda, temperature, detector window, and a non-scalar orbital vertex.
 ```
 
-Code: `code/src/detector_sum_rule.py:raw_absorption_rate`, `code/src/detector_sum_rule.py:orbital_vertex_weight`
+Code: `src/detector_sum_rule.py:raw_absorption_rate`, `src/detector_sum_rule.py:orbital_vertex_weight`
 
 
 ### EQC015 — Exact extended-Hubbard effective field
@@ -287,7 +287,7 @@ Numerical form:
 Periodic quadrature of five vector Fourier moments followed by projected RK4.
 ```
 
-Code: `code/src/chern_jump_geometry.py:extended_hubbard_convolution`, `code/src/chern_jump_geometry.py:exact_extended_hubbard_rhs`, `code/src/chern_jump_geometry.py:rk4_step_exact_extended_hubbard`
+Code: `src/chern_jump_geometry.py:extended_hubbard_convolution`, `src/chern_jump_geometry.py:exact_extended_hubbard_rhs`, `src/chern_jump_geometry.py:rk4_step_exact_extended_hubbard`
 
 
 ### EQC016 — Small-q coupling for the extended Hubbard kernel
@@ -306,7 +306,7 @@ Numerical form:
 Direct scalar evaluation before running the approximate flow.
 ```
 
-Code: `code/src/chern_jump_geometry.py:extended_hubbard_lambda_d`
+Code: `src/chern_jump_geometry.py:extended_hubbard_lambda_d`
 
 
 ### EQC017 — Trace-condition deviation map
@@ -325,4 +325,4 @@ Numerical form:
 Periodic spectral derivatives on a half-cell-shifted mesh for metric and curvature, with centered-difference and solid-angle diagnostics retained separately.
 ```
 
-Code: `code/src/chern_jump_geometry.py:local_geometry`
+Code: `src/chern_jump_geometry.py:local_geometry`

@@ -95,10 +95,10 @@ the next paper.
 ## Harness Backlog Items
 
 Abstract cross-paper lessons should be copied to
-`private validation harness/REPRODUCTION_EXPERIENCE.md`.
+`PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`.
 
 Concrete tool, checker, template, field, or workflow changes should be copied to
-`private validation harness/HARNESS_BACKLOG.md`.
+`PRAgent-workflow/HARNESS_BACKLOG.md`.
 
 | Priority | Improvement | Evidence from this case | Status |
 | --- | --- | --- | --- |

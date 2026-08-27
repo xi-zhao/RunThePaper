@@ -1,0 +1,1507 @@
+{
+  "schema_version": 2,
+  "paper_id": "cond-mat-0503511",
+  "implementations": {
+    "open_chain_all_targets": {
+      "status": "ready",
+      "code_refs": [
+        "src/zurek_qpt/model.py",
+        "scripts/run_reproduction.py",
+        "run_contract.json"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs",
+        "--resume"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig1_kink_density.csv",
+        "outputs/data/fig2a_spectrum.csv",
+        "outputs/data/fig2b_fidelity_scaling.csv",
+        "outputs/data/fig2c_fidelity_bounds.csv",
+        "outputs/data/fig3_kink_count.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "All five targets use the printed open chain, J/W=5 to 0, and the paper-declared N values.",
+        "Covariance purity, parity-resolved critical gap, fidelity bounds, KZM exponent, N-squared timing law, and periodic-mode cross-check pass config tolerances.",
+        "The isolated runner reads no raw paper, reference image, author code, or author numerical array."
+      ]
+    },
+    "eq15_ratio_audit": {
+      "status": "ready",
+      "target_ids": [
+        "T006"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_ratio_audit.py",
+        "--config",
+        "config/ratio_audit.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/zurek_qpt/ratio_audit.py",
+        "scripts/run_ratio_audit.py"
+      ],
+      "config_ref": "config/ratio_audit.json",
+      "run_contract_ref": "run_contract.ratio_audit.json",
+      "expected_outputs": [
+        "outputs/checks/T006_lzf_kzm_ratio.json"
+      ],
+      "acceptance_criteria": [
+        "Direct Eq. (15), independent Eq. (10)/(14) substitution, and high-precision decimal evaluation agree within 1e-14.",
+        "The stable difference from the printed 0.14 prose value is preserved for fresh-context adjudication rather than tuned away."
+      ]
+    },
+    "analytic_formula_chain": {
+      "status": "ready",
+      "target_ids": [
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_formula_chain_audit.py",
+        "--config",
+        "config/formula_chain_audit.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/zurek_qpt/formula_chain.py",
+        "scripts/run_formula_chain_audit.py"
+      ],
+      "config_ref": "config/formula_chain_audit.json",
+      "run_contract_ref": "run_contract.formula_chain.json",
+      "expected_outputs": [
+        "outputs/checks/T007_formula_chain.json"
+      ],
+      "acceptance_criteria": [
+        "All 28 fresh-review quantitative claims from Eqs. (1)-(14) and their method text are explicitly bound to one executable analytic target.",
+        "The direct small-chain Hamiltonian, freeze-out identities, KZM regime gates, fidelity overlap, and Landau-Zener substitutions pass the frozen tolerance.",
+        "The isolated runner reads no raw paper, source image, author code, or author numerical array."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M1.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=50 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=50 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=50 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=60 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=60 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=60 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=70 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=70 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=70 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=80 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=80 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=80 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.S5",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=90 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=90 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=90 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.S6",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=100 solid curve",
+      "scientific_object": "Post-quench kink density versus dimensionless quench rate for the N=100 open chain.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=100 lane in fig1_kink_density.csv.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M1.F1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1, N=100 dashed fit",
+      "scientific_object": "Kibble-Zurek power-law fit to the N=100 kink-density curve, including exponent and prefactor.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the fitted N=100 lane and KZM regression checks in T001.",
+      "claim_refs": [
+        "CLM_KZM"
+      ]
+    },
+    {
+      "item_id": "M2a.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(a), lowest solid line",
+      "scientific_object": "Ground-state energy branch of the N=20 open-chain spectrum.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the ground-state family in fig2a_spectrum.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2a.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(a), second-lowest solid line",
+      "scientific_object": "First parity-accessible excited-state branch and its finite-size critical gap.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the first accessible even-parity branch in fig2a_spectrum.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2a.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(a), remaining solid branches",
+      "scientific_object": "Remaining parity-accessible low-excitation branches inside the displayed energy window.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The complete energy-window even-parity family is independently generated; W2 must retain the publication cap on the exact authored display subset.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2a.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(a), dashed branches",
+      "scientific_object": "Parity-inaccessible odd-excitation branches inside the displayed energy window.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The complete energy-window odd-parity family is independently generated; W2 must retain the publication cap on the exact authored display subset.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2b.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(b)(i), numerical points",
+      "scientific_object": "Quench time required for 99 percent fidelity versus chain length.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the exact bracketed 99-percent crossings in fig2b_fidelity_scaling.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2b.F1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(b)(i), power-law fit",
+      "scientific_object": "Finite-size power-law fit of the 99-percent quench time, with reported exponent 1.93.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the finite-size regression check in T003; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2b.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(b)(ii), numerical points",
+      "scientific_object": "Ground-state fidelity at fixed quench time versus chain length.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the fixed-time fidelity lane in fig2b_fidelity_scaling.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2b.F2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(b)(ii), LZF fit",
+      "scientific_object": "Landau-Zener fit of fixed-time fidelity with coefficient approximately 59.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the LZF comparison in T003; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N90.L",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(i), N=90 solid curve",
+      "scientific_object": "Lower fidelity bound versus quench rate for N=90.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=90 lower-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N90.U",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(i), N=90 dashed curve",
+      "scientific_object": "Upper fidelity bound versus quench rate for N=90.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=90 upper-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N90.F",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(i), N=90 dotted LZF fit",
+      "scientific_object": "Landau-Zener fidelity fit for N=90 with coefficient approximately 59.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=90 LZF lane in T004; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N70.L",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(ii), N=70 solid curve",
+      "scientific_object": "Lower fidelity bound versus quench rate for N=70.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=70 lower-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N70.U",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(ii), N=70 dashed curve",
+      "scientific_object": "Upper fidelity bound versus quench rate for N=70.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=70 upper-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N70.F",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(ii), N=70 dotted LZF fit",
+      "scientific_object": "Landau-Zener fidelity fit for N=70 with coefficient approximately 59.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=70 LZF lane in T004; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N50.L",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iii), N=50 solid curve",
+      "scientific_object": "Lower fidelity bound versus quench rate for N=50.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=50 lower-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N50.U",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iii), N=50 dashed curve",
+      "scientific_object": "Upper fidelity bound versus quench rate for N=50.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=50 upper-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N50.F",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iii), N=50 dotted LZF fit",
+      "scientific_object": "Landau-Zener fidelity fit for N=50 with coefficient approximately 57.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=50 LZF lane in T004; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N30.L",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iv), N=30 solid curve",
+      "scientific_object": "Lower fidelity bound versus quench rate for N=30.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=30 lower-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N30.U",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iv), N=30 dashed curve",
+      "scientific_object": "Upper fidelity bound versus quench rate for N=30.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=30 upper-bound lane in fig2c_fidelity_bounds.csv.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M2c-N30.F",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2(c)(iv), N=30 dotted LZF fit",
+      "scientific_object": "Landau-Zener fidelity fit for N=30 with coefficient approximately 54.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=30 LZF lane in T004; W2 will adjudicate fit-window sensitivity.",
+      "claim_refs": [
+        "CLM_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N50.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=50 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=50.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=50 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N50_S"
+      ]
+    },
+    {
+      "item_id": "M3-N50.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=50 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=50 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=50 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N50_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N50.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=50 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=50 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=50 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N50_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N60.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=60 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=60.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=60 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N60_S"
+      ]
+    },
+    {
+      "item_id": "M3-N60.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=60 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=60 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=60 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N60_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N60.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=60 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=60 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=60 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N60_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N70.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=70 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=70.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=70 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N70_S"
+      ]
+    },
+    {
+      "item_id": "M3-N70.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=70 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=70 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=70 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N70_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N70.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=70 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=70 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=70 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N70_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N80.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=80 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=80.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=80 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N80_S"
+      ]
+    },
+    {
+      "item_id": "M3-N80.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=80 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=80 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=80 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N80_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N80.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=80 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=80 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=80 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N80_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N90.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=90 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=90.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=90 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N90_S"
+      ]
+    },
+    {
+      "item_id": "M3-N90.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=90 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=90 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=90 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N90_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N90.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=90 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=90 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=90 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N90_LZF"
+      ]
+    },
+    {
+      "item_id": "M3-N100.S",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=100 numerical curve",
+      "scientific_object": "Total post-quench kink count versus quench rate for N=100.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Bound to the N=100 numerical lane in fig3_kink_count.csv.",
+      "claim_refs": [
+        "CLM_M3_N100_S"
+      ]
+    },
+    {
+      "item_id": "M3-N100.KZM",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=100 red KZM fit",
+      "scientific_object": "Kibble-Zurek mid-rate fit to the N=100 kink-count curve.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=100 KZM regression lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N100_KZM"
+      ]
+    },
+    {
+      "item_id": "M3-N100.LZF",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, N=100 blue LZF estimate",
+      "scientific_object": "Landau-Zener slow-quench estimate for the N=100 kink count.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "open_chain_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the N=100 LZF lane in T005.",
+      "claim_refs": [
+        "CLM_M3_N100_LZF"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "Q-EQ01-HAMILTONIAN",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (1)",
+      "scientific_object": "Open-chain transverse-field Ising Hamiltonian and its summation limits.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Direct small-chain matrix construction checks the printed Hamiltonian.",
+      "claim_refs": [
+        "CLM_Q_EQ01_HAMILTONIAN"
+      ]
+    },
+    {
+      "item_id": "Q-CRITICAL-JW",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text immediately after Eq. (1)",
+      "scientific_object": "The thermodynamic transition is at J=W.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The printed thermodynamic gap closes at epsilon=0.",
+      "claim_refs": [
+        "CLM_Q_CRITICAL_JW"
+      ]
+    },
+    {
+      "item_id": "Q-GROUND-DEGENERACY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text immediately after Eq. (1)",
+      "scientific_object": "The J=0 open chain has a doubly degenerate low-field ground-state manifold.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Direct diagonalization checks the twofold ground space.",
+      "claim_refs": [
+        "CLM_Q_GROUND_DEGENERACY"
+      ]
+    },
+    {
+      "item_id": "Q-EQ02-EPSILON",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (2)",
+      "scientific_object": "Relative coupling epsilon=J/W-1.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The dimensionless coupling is explicit in the analytic chain.",
+      "claim_refs": [
+        "CLM_Q_EQ02_EPSILON"
+      ]
+    },
+    {
+      "item_id": "Q-EQ03-GAP",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (3)",
+      "scientific_object": "Thermodynamic gap Delta=2W|epsilon|.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The printed gap relation and critical limit are checked.",
+      "claim_refs": [
+        "CLM_Q_EQ03_GAP"
+      ]
+    },
+    {
+      "item_id": "Q-EQ04-TAU",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (4)",
+      "scientific_object": "Relaxation time tau=hbar/Delta=tau0/|epsilon|.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Both printed forms are evaluated through one model.",
+      "claim_refs": [
+        "CLM_Q_EQ04_TAU"
+      ]
+    },
+    {
+      "item_id": "Q-TAU0",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (4)",
+      "scientific_object": "Microscopic timescale tau0=hbar/(2W).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The implicit definition is an explicit model property.",
+      "claim_refs": [
+        "CLM_Q_TAU0"
+      ]
+    },
+    {
+      "item_id": "Q-SOUND-SPEED",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text before Eq. (5)",
+      "scientific_object": "Critical sound speed c=2Wa/hbar.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The printed scale is implemented directly.",
+      "claim_refs": [
+        "CLM_Q_SOUND_SPEED"
+      ]
+    },
+    {
+      "item_id": "Q-EQ05-XI",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (5)",
+      "scientific_object": "Healing length xi=a/|epsilon|=xi0/|epsilon|.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The exact divergence and equivalent forms are evaluated.",
+      "claim_refs": [
+        "CLM_Q_EQ05_XI"
+      ]
+    },
+    {
+      "item_id": "Q-XI0",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (5)",
+      "scientific_object": "Microscopic length xi0=a.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The implicit length definition is executable.",
+      "claim_refs": [
+        "CLM_Q_XI0"
+      ]
+    },
+    {
+      "item_id": "Q-LINEAR-QUENCH",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (6)",
+      "scientific_object": "Linear quench epsilon(t)=t/tauQ.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The declared linear protocol is evaluated.",
+      "claim_refs": [
+        "CLM_Q_LINEAR_QUENCH"
+      ]
+    },
+    {
+      "item_id": "Q-QUENCH-TIMESCALE",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (6)",
+      "scientific_object": "For the linear quench, epsilon/dot(epsilon)=t.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The timescale identity is checked numerically.",
+      "claim_refs": [
+        "CLM_Q_QUENCH_TIMESCALE"
+      ]
+    },
+    {
+      "item_id": "Q-EQ06-FREEZE-EQUALITY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (6)",
+      "scientific_object": "Freeze-out satisfies tau(hat t)=hat t.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Relaxation and quench times agree at the derived root.",
+      "claim_refs": [
+        "CLM_Q_EQ06_FREEZE_EQUALITY"
+      ]
+    },
+    {
+      "item_id": "Q-EQ07-HAT-T",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (7)",
+      "scientific_object": "Freeze-out time hat t=sqrt(tauQ tau0).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The positive root is substituted back into Eq. (6).",
+      "claim_refs": [
+        "CLM_Q_EQ07_HAT_T"
+      ]
+    },
+    {
+      "item_id": "Q-EQ08-HAT-EPSILON",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (8)",
+      "scientific_object": "Freeze-out coupling hat epsilon=sqrt(tau0/tauQ).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The two printed routes are compared.",
+      "claim_refs": [
+        "CLM_Q_EQ08_HAT_EPSILON"
+      ]
+    },
+    {
+      "item_id": "Q-EQ09-HAT-XI",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 2, Eq. (9)",
+      "scientific_object": "Freeze-out length hat xi=a sqrt(2W tauQ/hbar).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "xi(hat epsilon) is compared with the closed form.",
+      "claim_refs": [
+        "CLM_Q_EQ09_HAT_XI"
+      ]
+    },
+    {
+      "item_id": "Q-MEAN-FIELD-SCALING",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Eq. (9)",
+      "scientific_object": "The nonrelativistic mean-field alternative scales as (tauQ/tau0)^(1/4).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The alternative exponent is retained separately.",
+      "claim_refs": [
+        "CLM_Q_MEAN_FIELD_SCALING"
+      ]
+    },
+    {
+      "item_id": "Q-KZM-DEFECT-ASSUMPTION",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (10)",
+      "scientific_object": "The raw KZM estimate uses order-one defects per freeze-out length.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The code exposes nuKZM=a/hat xi.",
+      "claim_refs": [
+        "CLM_Q_KZM_DEFECT_ASSUMPTION"
+      ]
+    },
+    {
+      "item_id": "Q-KZM-VALIDITY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 3, KZM validity paragraph",
+      "scientific_object": "KZM comparison requires hat epsilon much smaller than one.",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "A predeclared small-hat-epsilon gate is evaluated.",
+      "claim_refs": [
+        "CLM_Q_KZM_VALIDITY"
+      ]
+    },
+    {
+      "item_id": "Q-AT-LEAST-ONE-DEFECT",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 3, KZM validity paragraph",
+      "scientific_object": "The stated KZM comparison regime expects at least one defect.",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "N times nuKZM is checked against one.",
+      "claim_refs": [
+        "CLM_Q_AT_LEAST_ONE_DEFECT"
+      ]
+    },
+    {
+      "item_id": "Q-INVERSE-NTILDE-DENSITY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 3, paragraph before Landau-Zener discussion",
+      "scientific_object": "At roughly 50 percent defect probability, 1/Ntilde estimates defect density.",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The f=0.5 chain bound and its inverse are emitted.",
+      "claim_refs": [
+        "CLM_Q_INVERSE_NTILDE_DENSITY"
+      ]
+    },
+    {
+      "item_id": "Q-GAP-VELOCITY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Eq. (11)",
+      "scientific_object": "Far from closest approach the Landau-Zener velocity is dot Delta.",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The derivative of the linear gap is checked.",
+      "claim_refs": [
+        "CLM_Q_GAP_VELOCITY"
+      ]
+    },
+    {
+      "item_id": "Q-FIDELITY-DEFINITION",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (12)",
+      "scientific_object": "Fidelity is the squared overlap with the ground state.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "A normalized two-state construction checks the definition.",
+      "claim_refs": [
+        "CLM_Q_FIDELITY_DEFINITION"
+      ]
+    },
+    {
+      "item_id": "Q-PCHANGE-MAPPING",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (12)",
+      "scientific_object": "The stated mapping identifies change probability with approximately 1-f.",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "At the equality chain length the LZF probability equals 1-f.",
+      "claim_refs": [
+        "CLM_Q_PCHANGE_MAPPING"
+      ]
+    },
+    {
+      "item_id": "Q-EQ12-SPEED-BOUND",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 3, Eq. (12)",
+      "scientific_object": "The near-defect-free quench velocity bound follows from LZF and fidelity.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The bound is implemented from the printed gap and logarithm.",
+      "claim_refs": [
+        "CLM_Q_EQ12_SPEED_BOUND"
+      ]
+    },
+    {
+      "item_id": "Q-QUENCH-VELOCITY",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Eq. (12)",
+      "scientific_object": "For the declared linear quench, |v|=2W/tauQ.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The derivative identity is evaluated independently.",
+      "claim_refs": [
+        "CLM_Q_QUENCH_VELOCITY"
+      ]
+    },
+    {
+      "item_id": "Q-EQ13-BOUND-SUBSTITUTION",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 3, Eq. (13)",
+      "scientific_object": "Substituting the accessible gap 4piW/N gives the printed velocity inequality.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The derived Ntilde makes both sides coincide.",
+      "claim_refs": [
+        "CLM_Q_EQ13_BOUND_SUBSTITUTION"
+      ]
+    },
+    {
+      "item_id": "Q-EQ14-NTILDE",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 4, Eq. (14)",
+      "scientific_object": "Defect-free chain bound Ntilde=2pi sqrt(pi W tauQ/[hbar |ln(1-f)|]).",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "analytic_formula_chain",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The closed form is back-substituted into LZF.",
+      "claim_refs": [
+        "CLM_Q_EQ14_NTILDE"
+      ]
+    },
+    {
+      "item_id": "C1-lzf-kzm-ratio-f05",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 4, Eq. (15) and following paragraph",
+      "scientific_object": "Scalar ratio between the Landau-Zener and raw Kibble-Zurek defect-density estimates at f=0.5.",
+      "kind": "numeric",
+      "scientific_role": "analytic_quantitative_claim",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "eq15_ratio_audit",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Three independent arithmetic routes now stabilize the literal value 0.105723838752 against the prose value about 0.14; fresh-context paper adjudication remains pending.",
+      "claim_refs": [
+        "CLM_C1_lzf_kzm_ratio_f05"
+      ]
+    }
+  ]
+}

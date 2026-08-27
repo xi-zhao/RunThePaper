@@ -3,8 +3,10 @@
 Machine-readable result:
 `outputs/checks/formula_verification.json`.
 
-All eleven formula cards have source traces, independent checks, and open
-numeric gates.
+All sixteen formula cards have source traces. EQC001-EQC011 have independent
+checks and verified numerical gates. EQC012-EQC016 are deliberately
+`source_only`: the paper statements are located, but claim-specific numerical
+or symbolic implementations do not yet exist.
 
 | Formula | Plain-language role | Gate | Independent check |
 | --- | --- | --- | --- |
@@ -19,6 +21,15 @@ numeric gates.
 | EQC009 | first-excited projector fidelity | open | basis-independent eigenspace projection and one-flip sector test |
 | EQC010 | product-state energy bounds | open | exact representative energies and mirror symmetry |
 | EQC011 | \(2^N+1\) degeneracy | open | full sector nullity counts for \(N=4,6\) |
+| EQC012 | open exact-point \(2^{N+1}-1\) degeneracy | source-only | V003 open-chain count/rank check missing |
+| EQC013 | open \(\theta=\pi/2\) \(2N+1\) degeneracy | source-only | V004 zero-mode sequence missing |
+| EQC014 | open \(\theta=3\pi/2\) energy and fourfold ground space | source-only | V005 product-state/spectrum check missing |
+| EQC015 | \(\theta=0\) triplet-parity selection | source-only | V006 bond-basis support check missing |
+| EQC016 | all-order uniform-positive-\(w\) perturbative sector | source-only | V007 perturbation-order check missing |
+
+`source_only` is not a formula failure and does not claim scientific coverage.
+It prevents the five uncovered paper results from disappearing merely because
+their equations were transcribed.
 
 ## Source Ambiguities Resolved
 
@@ -31,5 +42,5 @@ numeric gates.
 ## Gate Command
 
 ```bash
-python private validation harness/scripts/check_formula_gate.py case/2510.12880 --write
+python PRAgent-workflow/scripts/check_formula_gate.py case/2510.12880 --write
 ```

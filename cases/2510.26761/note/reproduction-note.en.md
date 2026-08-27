@@ -1,57 +1,21 @@
-# Reproducing Wigner-negativity witnesses for genuine multipartite entanglement
-
-Paper: *Sufficient Wigner Negativity Implies Genuine Multipartite
-Entanglement*, Physical Review Letters 137, 040202 (2026).
+# Sufficient Wigner Negativity Implies Genuine Multipartite Entanglement: scientific reproduction note
 
 ## Result
 
-The reproduction derives the phase-space witnesses before numericalization.
-For the tripartite W state, the finite-disk witness has the exact critical
-radius \(r_{\mathrm{crit}}=0.6991953293\). At the paper's \(r=0.7\), the
-negative volume is 0.3541354750, above the GME threshold 0.3535533906. Seven
-characteristic-function points generate 19 distinct differences and require
-ten independent measurements; the resulting negative eigenvalue gives the
-witness 0.01758037565, matching the paper's 0.0176.
+Main Fig. 2 is exactly reproduced from closed-form fields and finite witnesses. The numerical fields behind Main Fig. 1 are independently regenerated and pass all state-derived invariants, while its 3D rendering is feature-level and the source-printed theorem-1 threshold is internally inconsistent with the source-printed state.
 
-![W-state Wigner and characteristic witnesses](../outputs/figures/w_state_wigner_characteristic.png)
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Why the derivation matters
+## What is reproduced
 
-On the equal-coordinate three-mode slice, only the center-of-mass mode is
-excited. The W state reduces to one center-of-mass Fock excitation multiplied
-by vacuum parity in the two relative modes. This gives the Wigner function,
-disk integral, and characteristic matrix directly, without fitting source
-pixels.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-The same calculation exposes an internal inconsistency in Fig. 1. The six
-printed Fock amplitudes imply relative parity \(-13/25\), and the theorem then
-gives a threshold numerator of 52. The End Matter prints 56. Independent
-quadrature gives a negativity volume of 0.2636995707: it exceeds the
-state-derived threshold 0.2634433620 but not the separately printed threshold
-0.2701100286. Both values are preserved rather than tuning the numerical method
-to one of them.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=missing, causal_resolution=repair_required, science=pending, execution=failed, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
-![Fig. 1 numerical fields and threshold comparison](../outputs/figures/overview_numeric_surfaces.png)
+## Run
 
-The second Fig. 1 witness is unaffected. Gaussian smoothing of the
-center-of-mass Wigner function gives the exact origin value
-\(-7/(16\pi)\), reproduced by the numerical convolution to about
-\(2.8\times10^{-15}\).
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-## Reproduction extent
+## Paper-review boundary
 
-- Main Fig. 2: complete analytic-reference reproduction, 90/100.
-- Main Fig. 1: exact state-derived fields and invariants, but reconstructed 3D
-  presentation and one source-level threshold contradiction, 80/100.
-- Overall: 85/100, numerical feature reproduction.
-
-The score measures physical objects, parameter fidelity, numerical agreement,
-and evidence provenance. It is not a style or pixel-similarity score. See the
-[derivation](../docs/DERIVATION.md) and [run instructions](../code/README.md).
-
-## Boundary
-
-The public case contains independent code, generated data, generated figures,
-and machine-readable checks. It does not redistribute the paper PDF, author
-source archive, or standalone source figures. Limited comparison panels are
-included only to audit the reproduction and do not imply access to author data.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: The numerical fields behind Main Fig. 1 are reproduced at feature level; the source does not disclose its isosurface rendering parameters. The printed Fig. 1 state implies (75*sqrt(2)+52)/600, while the End Matter prints (75*sqrt(2)+56)/600. The state-derived negative volume is 0.26369957: above the corrected bound and below the printed bound.

@@ -21,7 +21,7 @@ Numerical form:
 Evaluate the independently specified noise model at explicit scale factors r; do not fit or sample source-figure pixels.
 ```
 
-Code: `code/src/qem_models.py::zne_weights`
+Code: `src/qem_models.py::zne_weights`
 
 
 ### ZNE002 — Distance-aware polynomial extrapolation
@@ -40,7 +40,7 @@ Numerical form:
 Build V from the declared r values and solve V.T * b = e0; never use an image-derived fit.
 ```
 
-Code: `code/src/qem_models.py::zne_weights`, `code/src/qem_models.py::zne_estimate`
+Code: `src/qem_models.py::zne_weights`, `src/qem_models.py::zne_estimate`
 
 
 ### ZNE003 — Bias and optimally allocated sampling overhead
@@ -59,7 +59,7 @@ Numerical form:
 Use analytic expectation values O(r_k), the same total-shot convention, and return infinity only when the raw Pauli variance is exactly zero.
 ```
 
-Code: `code/src/qem_models.py::zne_metrics`
+Code: `src/qem_models.py::zne_metrics`
 
 
 ### FB001 — Exact feedback and post-selection response of Main Fig. 2
@@ -78,7 +78,7 @@ Numerical form:
 For each data qubit X/Y contributes a classical Z-basis flip with probability q. Q3 accepts e2=e4; Q1 feedback leaves residual flip e2.
 ```
 
-Code: `code/src/qem_models.py::feedback_expectation`, `code/src/qem_models.py::feedback_expectation_enumerated`
+Code: `src/qem_models.py::feedback_expectation`, `src/qem_models.py::feedback_expectation_enumerated`
 
 
 ### REP001 — Repetition-code logical failure and multi-round composition
@@ -97,7 +97,7 @@ Numerical form:
 Evaluate the binomial tail with integer arithmetic/scipy-free summation; optionally compose disclosed median gate/readout flips as a separate, labelled calibration model.
 ```
 
-Code: `code/src/qem_models.py::repetition_logical_failure`, `code/src/qem_models.py::repetition_expectation`
+Code: `src/qem_models.py::repetition_logical_failure`, `src/qem_models.py::repetition_expectation`
 
 
 ### SURF001 — Exact distance-3 rotated-surface-code Pauli channel
@@ -116,7 +116,7 @@ Numerical form:
 Pre-enumerate each Pauli pattern's weight and decoded logical class, then evaluate its probability polynomial for each effective depolarizing rate.
 ```
 
-Code: `code/src/surface_code.py::logical_channel`, `code/src/surface_code.py::validate_code`
+Code: `src/surface_code.py::logical_channel`, `src/surface_code.py::validate_code`
 
 
 ### MEM001 — Bravyi--Vargo logical-memory fit used by Supplementary Fig. 9
@@ -135,4 +135,4 @@ Numerical form:
 Use noisy-syndrome path coefficients x=(9.88,1170,-76400), c=7.52, y=(880,4690,6.04e6); use r_d=(d+1)/4 for d=7,11,15.
 ```
 
-Code: `code/src/qem_models.py::bravyi_vargo_path_error`, `code/src/qem_models.py::logical_memory_expectation`
+Code: `src/qem_models.py::bravyi_vargo_path_error`, `src/qem_models.py::logical_memory_expectation`

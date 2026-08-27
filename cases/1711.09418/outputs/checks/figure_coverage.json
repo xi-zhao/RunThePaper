@@ -1,0 +1,1657 @@
+{
+  "schema_version": 2,
+  "paper_id": "1711.09418",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf; raw/paper.txt; paper-source/extracted/charged_entanglement_entropy.tex; embedded Supplemental Material; paper-source/extracted/fig1plus.pdf; fig2.pdf; fig3.pdf",
+    "known_items": [
+      "20 atomic display items: two schematic panels, four Fig. 2 series, fourteen Fig. 3 series",
+      "44 atomic no-display quantitative, analytic, method, definition, and supplement claims",
+      "51 primary reproduction items, 10 supporting derivation items, and 3 excluded schematic/definition items"
+    ],
+    "unknown_remainder": false,
+    "boundary_sentinel_id": "C044",
+    "reason": "The full main text, all three source figures, and both embedded Supplemental Material derivations were read end to end; no additional supplementary figures or numerical tables exist."
+  },
+  "implementations": {
+    "main_figures_paper_scale": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_paper_scale.py",
+        "src/symmetry_entanglement/paper_scale.py",
+        "src/symmetry_entanglement/model.py",
+        "paper_scale_run_contract.json"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--profile",
+        "paper",
+        "--resume",
+        "run-all"
+      ],
+      "expected_outputs": [
+        "outputs/paper_scale/data/fig2_charge_resolved.csv",
+        "outputs/paper_scale/data/single_particle_spectrum.csv",
+        "outputs/paper_scale/data/fig3_spectrum_numeric.csv",
+        "outputs/paper_scale/data/fig3_spectrum_analytic.csv",
+        "outputs/paper_scale/checks/acceptance.json",
+        "outputs/paper_scale/checks/backend_benchmark.json",
+        "outputs/paper_scale/checks/manifest.json",
+        "outputs/paper_scale/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "T001: paper L=10000/K=1 parameters load; normalization, entropy, particle-hole, active-window convergence and independent eigensolver parity pass at config tolerances.",
+        "T002: all 2^24 states are covered exactly once by canonical shards; streaming/monolithic parity, quadrature convergence, I0 identity and sector-onset checks pass.",
+        "Each target satisfies its config-declared CPU/RAM/software machine acceptance; the run reads neither paper pixels nor author code/arrays.",
+        "Execution never emits paper_error_candidate; the Fig. 3 label discrepancy stays inconclusive until fresh protocol-v2 review."
+      ]
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_implementation_campaign.py",
+        "src/symmetry_entanglement/implementation_campaign.py"
+      ],
+      "config_ref": "config/implementation_campaign.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json",
+        "outputs/data/implementation_closure/T004.json",
+        "outputs/data/implementation_closure/T005.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T007.json"
+      ],
+      "acceptance_criteria": [
+        "All fourteen formula-defined SU(2), discrete-symmetry, and measurement claims execute target-specific algebraic checks from frozen JSON inputs.",
+        "The unplotted finite-Ising verification fails closed with a complete indispensable-input schema and no guessed lattice protocol.",
+        "Implementation attestation does not change scientific coverage, paper-exact status, pixel status, or independent-review status."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "D001",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "source_ref": "Main Fig. 1(a)",
+      "scientific_object": "Three-sheet Riemann surface and flux insertion geometry.",
+      "critical": false,
+      "reason": "Conceptual geometry; no numerical observable."
+    },
+    {
+      "item_id": "D002",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "source_ref": "Main Fig. 1(b)",
+      "scientific_object": "Many-body wavefunction decomposed into subsystem charge sectors.",
+      "critical": false,
+      "reason": "Conceptual charge-sector schematic; no numerical observable."
+    },
+    {
+      "item_id": "D003",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 2",
+      "scientific_object": "Numerical lattice markers for the charge probability P(N_A) at Delta N_A=-5,...,5.",
+      "critical": true,
+      "reason": "Frozen paper-exact lattice data cover all 11 markers.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig2_charge_resolved.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D004",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 2",
+      "scientific_object": "Parameter-free analytic curve for P(N_A) at K=1 and L=10000.",
+      "critical": true,
+      "reason": "Frozen analytic-reference data cover the full curve.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig2_charge_resolved.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D005",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 2",
+      "scientific_object": "Numerical lattice markers for charge-resolved entropy S(N_A) at Delta N_A=-5,...,5.",
+      "critical": true,
+      "reason": "Frozen paper-exact lattice data cover all 11 markers.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig2_charge_resolved.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D006",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 2",
+      "scientific_object": "Parameter-free analytic curve for charge-resolved entropy S(N_A).",
+      "critical": true,
+      "reason": "Frozen analytic-reference data cover the full curve.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig2_charge_resolved.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D007",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for all charge sectors.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D008",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for all charge sectors.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D009",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=0.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D010",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=0.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D011",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=1.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D012",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=1.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D013",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=2.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D014",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=2.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D015",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=3.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D016",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=3.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D017",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=4.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D018",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=4.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D019",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Numerical integrated entanglement-spectrum branch for Delta N_A=5.",
+      "critical": true,
+      "reason": "Frozen 24-mode enumeration covers the displayed branch.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "D020",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Analytic integrated entanglement-spectrum curve for Delta N_A=5.",
+      "critical": true,
+      "reason": "Frozen Eq. (11) quadrature covers the displayed curve.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "main_figures_paper_scale",
+      "data_refs": [
+        "outputs/data/fig3_spectrum_numeric.csv",
+        "outputs/data/fig3_spectrum_analytic.csv",
+        "outputs/checks/target_checks.json"
+      ],
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C001",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (1)",
+      "scientific_object": "Definition of the charged moment that supplies the flux generating function.",
+      "paper_assertion": "The charged moment is s_n(alpha)=Tr[rho_A^n exp(i alpha N_A)].",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "critical": false,
+      "reason": "Source definition retained for traceability but excluded from the independent-result denominator."
+    },
+    {
+      "item_id": "C002",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main idea, paragraph before Eq. (2)",
+      "scientific_object": "Block decomposition and exact sector sum.",
+      "paper_assertion": "[N,rho]=0 implies [N_A,rho_A]=0, so rho_A is charge-block diagonal and s_n=sum_N s_n(N).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C002"
+      ]
+    },
+    {
+      "item_id": "C003",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (2)",
+      "scientific_object": "Exact charge-sector Fourier projector identity.",
+      "paper_assertion": "Fourier projection of s_n(alpha) equals Tr[rho_A^n P_NA] for each charge sector.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C003"
+      ]
+    },
+    {
+      "item_id": "C004",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (3)",
+      "scientific_object": "Supporting twist-field correlator identity.",
+      "paper_assertion": "The fluxed Riemann-surface correlator is represented by a normalized composite-twist-field correlator on C^n.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_C004"
+      ]
+    },
+    {
+      "item_id": "C005",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (4); Supplement Sec. S.A",
+      "scientific_object": "General scaling dimension of the flux-twist field.",
+      "paper_assertion": "The composite twist field has Delta_n(alpha)=c(n-1/n)/24+Delta_V/n.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C005"
+      ]
+    },
+    {
+      "item_id": "C006",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (5)",
+      "scientific_object": "General CFT charged-moment scaling law.",
+      "paper_assertion": "The charged Renyi moment scales with L using c and the holomorphic/antiholomorphic dimensions of V.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C006"
+      ]
+    },
+    {
+      "item_id": "C007",
+      "item_type": "quantitative_claim",
+      "source_ref": "U(1) charge section before Eq. (6)",
+      "scientific_object": "Luttinger-liquid flux-operator dimension.",
+      "paper_assertion": "For a Luttinger liquid, Delta_V=barDelta_V=(K/2)(alpha/2pi)^2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C007"
+      ]
+    },
+    {
+      "item_id": "C008",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (6)",
+      "scientific_object": "U(1) charged-moment scaling.",
+      "paper_assertion": "s_n(alpha)=s_n(0)L^{-(2K/n)(alpha/2pi)^2}, periodically continued outside [-pi,pi].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C008"
+      ]
+    },
+    {
+      "item_id": "C009",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (7)",
+      "scientific_object": "Symmetry-resolved Renyi Gaussian asymptotic.",
+      "paper_assertion": "For ln L much greater than one, s_n(N_A) has the stated Gaussian sector dependence.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C009"
+      ]
+    },
+    {
+      "item_id": "C010",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Main Eq. (7)",
+      "scientific_object": "Charge-fluctuation variance.",
+      "paper_assertion": "The particle-number variance is K ln L/pi^2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C010"
+      ]
+    },
+    {
+      "item_id": "C011",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (8)",
+      "scientific_object": "Resolved entropy formula.",
+      "paper_assertion": "The charge-resolved entropy has the stated Gaussian form with leading amplitude proportional to sqrt(ln L/K).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C011"
+      ]
+    },
+    {
+      "item_id": "C012",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Main Eq. (8)",
+      "scientific_object": "Sector-entropy scaling consequence.",
+      "paper_assertion": "The maximal charge-sector contribution scales as sqrt(ln L).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C012"
+      ]
+    },
+    {
+      "item_id": "C013",
+      "item_type": "quantitative_claim",
+      "source_ref": "Free-fermion check before Fig. 2",
+      "scientific_object": "Free-fermion product formula.",
+      "paper_assertion": "For independent fermion modes, s_n(alpha) is the product of exp(i alpha)f_l^n+(1-f_l)^n.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C013"
+      ]
+    },
+    {
+      "item_id": "C014",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text before Fig. 2",
+      "scientific_object": "Finite-L method conclusion.",
+      "paper_assertion": "At L=10000 the leading sqrt(ln L) approximation is insufficient; the full Fourier transform of Eq. (6) is required.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_C014"
+      ]
+    },
+    {
+      "item_id": "C015",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (9)",
+      "scientific_object": "Charge-sector entanglement-spectrum onset.",
+      "paper_assertion": "The largest eigenvalue in sector Delta N_A obeys -ln lambda_max=(ln L)/6+pi^2 Delta N_A^2/(2K ln L).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C016",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Main Eq. (9)",
+      "scientific_object": "Low-lying free-fermion entanglement spectrum.",
+      "paper_assertion": "The low single-particle entanglement energies are plus/minus pi^2(2l-1)/(2 ln L).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C017",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text after Main Eq. (9)",
+      "scientific_object": "Exact odd-integer sum identity.",
+      "paper_assertion": "Adding Delta N_A particles costs pi^2 Delta N_A^2/(2 ln L), agreeing with Eq. (9).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C018",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text before Main Eq. (11)",
+      "scientific_object": "Interacting-Luttinger extension.",
+      "paper_assertion": "The Delta N_A^2 spectrum law extends from free fermions to interacting K not equal to one.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C019",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eqs. (10)-(11); Supplement Sec. S.B",
+      "scientific_object": "Charge-resolved integrated spectrum.",
+      "paper_assertion": "The integrated charge-resolved entanglement spectrum is the printed cosine/Bessel integral.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C020",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Eq. (S7) and target check",
+      "scientific_object": "All-sector Bessel identity.",
+      "paper_assertion": "Summing charge sectors reduces the integrated spectrum to the all-sector I0 curve.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": true,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Existing formula cards, independent data, or invariant checks directly adjudicate this result.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C021",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main Eq. (12)",
+      "scientific_object": "SU(2) spin-sector projection identity.",
+      "paper_assertion": "For an SU(2)-invariant operator, the fixed-S trace equals the difference of two fixed-Sz traces.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C021"
+      ]
+    },
+    {
+      "item_id": "C022",
+      "item_type": "quantitative_claim",
+      "source_ref": "SU(2) section, unnumbered equation after Eq. (12)",
+      "scientific_object": "SU(2)_k flux-operator dimension.",
+      "paper_assertion": "In SU(2)_k WZW, Delta_V=barDelta_V=(k/4)(alpha/2pi)^2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C022"
+      ]
+    },
+    {
+      "item_id": "C023",
+      "item_type": "quantitative_claim",
+      "source_ref": "SU(2) section following vertex dimension",
+      "scientific_object": "k=1 consistency relation.",
+      "paper_assertion": "For k=1 the result agrees with the Heisenberg-chain mapping to K=1/2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C023"
+      ]
+    },
+    {
+      "item_id": "C024",
+      "item_type": "quantitative_claim",
+      "source_ref": "SU(2) section, resolved-entropy equation",
+      "scientific_object": "SU(2)-resolved entropy formula.",
+      "paper_assertion": "S(S_A,Sz_A)=(2S_A+1)c pi^(5/2)/(3k^(3/2)sqrt(ln L)) exp[-pi^2 S_A^2/(k ln L)].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C024"
+      ]
+    },
+    {
+      "item_id": "C025",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after SU(2) resolved-entropy equation",
+      "scientific_object": "Non-Abelian sector scaling.",
+      "paper_assertion": "Because typical S_A scales as sqrt(ln L), a fixed (S_A,Sz_A) entropy contribution is O(L^0).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C025"
+      ]
+    },
+    {
+      "item_id": "C026",
+      "item_type": "quantitative_claim",
+      "source_ref": "Discrete symmetries opening paragraph",
+      "scientific_object": "Discrete charge-sector projection.",
+      "paper_assertion": "For Z_N, s_n(Q_A) is the discrete Fourier transform of flux moments s_n(alpha).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C026"
+      ]
+    },
+    {
+      "item_id": "C027",
+      "item_type": "quantitative_claim",
+      "source_ref": "Critical-Ising paragraph",
+      "scientific_object": "Ising parity/disorder identity.",
+      "paper_assertion": "The parity counter over A equals the product of boundary disorder fields mu_1^z mu_L^z.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C027"
+      ]
+    },
+    {
+      "item_id": "C028",
+      "item_type": "quantitative_claim",
+      "source_ref": "Critical-Ising unnumbered equation",
+      "scientific_object": "Critical-Ising parity-resolved Renyi formula.",
+      "paper_assertion": "At criticality s_n(Q_A)=L^{-(n-1/n)/12}[1+L^{-1/(4n)}(-1)^Q_A]/2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C028"
+      ]
+    },
+    {
+      "item_id": "C029",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence following critical-Ising equation",
+      "scientific_object": "Parity equipartition asymptotic.",
+      "paper_assertion": "At n=1 the even/odd probability difference vanishes as L tends to infinity.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C029"
+      ]
+    },
+    {
+      "item_id": "C030",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence following critical-Ising equation",
+      "scientific_object": "Unplotted finite-lattice numerical verification.",
+      "paper_assertion": "The authors state that the critical-Ising parity formula was verified numerically.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T007",
+      "claim_refs": [
+        "CLM_C030"
+      ]
+    },
+    {
+      "item_id": "C031",
+      "item_type": "quantitative_claim",
+      "source_ref": "Z_N generalization paragraph",
+      "scientific_object": "Parafermion central charge.",
+      "paper_assertion": "The parafermion CFT central charge is 2(N-1)/(N+2).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C031"
+      ]
+    },
+    {
+      "item_id": "C032",
+      "item_type": "quantitative_claim",
+      "source_ref": "Z_N generalization paragraph",
+      "scientific_object": "Parafermion disorder dimensions.",
+      "paper_assertion": "The generalized disorder dimension is alpha(N-alpha)/[2N(N+2)] in each chiral sector.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C032"
+      ]
+    },
+    {
+      "item_id": "C033",
+      "item_type": "quantitative_claim",
+      "source_ref": "Experimental measurement section",
+      "scientific_object": "Charge-resolved two-copy measurement identity.",
+      "paper_assertion": "In a two-copy protocol, conditioning one-copy parity on the measured average N_A yields s_2(N_A).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T006",
+      "claim_refs": [
+        "CLM_C033"
+      ]
+    },
+    {
+      "item_id": "C034",
+      "item_type": "quantitative_claim",
+      "source_ref": "Experimental measurement section",
+      "scientific_object": "Flux-moment measurement identity.",
+      "paper_assertion": "Weighting parity by exp(i alpha N_A) and averaging yields the flux moment s_2(alpha).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T006",
+      "claim_refs": [
+        "CLM_C034"
+      ]
+    },
+    {
+      "item_id": "C035",
+      "item_type": "quantitative_claim",
+      "source_ref": "Experimental measurement section",
+      "scientific_object": "Higher-replica protocol claim.",
+      "paper_assertion": "The charge-resolved replica measurement extends analogously to n greater than two.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "decision": "target",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "No claim-specific accepted analytic or numerical artifact closes this atomic result.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T006",
+      "claim_refs": [
+        "CLM_C035"
+      ]
+    },
+    {
+      "item_id": "C036",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Eq. (S1)",
+      "scientific_object": "Supporting uniformization identity.",
+      "paper_assertion": "The stress tensor on R_n transforms into the plane expectation plus the Schwarzian term.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_C036"
+      ]
+    },
+    {
+      "item_id": "C037",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Eq. (S2)",
+      "scientific_object": "Supporting Schwarzian evaluation.",
+      "paper_assertion": "The Schwarzian derivative has the printed rational form and coefficient c(1-n^-2)/24.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_C037"
+      ]
+    },
+    {
+      "item_id": "C038",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement equations following (S2)",
+      "scientific_object": "Supporting primary-field correlator step.",
+      "paper_assertion": "The primary-field Ward identity gives <T_l> tending to Delta_V/xi^2.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_C038"
+      ]
+    },
+    {
+      "item_id": "C039",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement conclusion of Sec. S.A",
+      "scientific_object": "Supporting derivation duplicate of C005.",
+      "paper_assertion": "Combining the uniformization terms reproduces Main Eq. (4).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T003"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_C005"
+      ]
+    },
+    {
+      "item_id": "C040",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Sec. S.B first equation",
+      "scientific_object": "Supporting spectral resolvent identity.",
+      "paper_assertion": "The resolvent f(z,alpha) generates charged moments and its imaginary part recovers lambda P(lambda,alpha).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C041",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Sec. S.B polylog expansion",
+      "scientific_object": "Supporting polylog expansion.",
+      "paper_assertion": "Expanding exp[br(alpha)/n] yields the printed polylogarithm series for f.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C042",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement Sec. S.B after polylog expansion",
+      "scientific_object": "Supporting discontinuity identity.",
+      "paper_assertion": "Im Li_k(y+i0)=pi theta(y-1)(ln y)^{k-1}/Gamma(k).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C043",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement final equation",
+      "scientific_object": "Supporting flux-space integrated spectrum.",
+      "paper_assertion": "Integrating and resumming gives n(lambda,alpha)=I0(2 sqrt[b r(alpha) ln(lambda_max/lambda)]).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    },
+    {
+      "item_id": "C044",
+      "item_type": "quantitative_claim",
+      "source_ref": "Supplement final sentence",
+      "scientific_object": "Supporting derivation duplicate of C019.",
+      "paper_assertion": "Fourier projection of n(lambda,alpha) yields Main Eq. (11).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "coverage_status": "covered",
+      "critical": false,
+      "target_ids": [
+        "T002"
+      ],
+      "evidence_refs": [
+        "outputs/checks/formula_verification.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "reason": "Supporting derivation step retained as evidence and not counted again.",
+      "claim_refs": [
+        "CLM_CHARGE_RESOLVED_ENTANGLEMENT"
+      ]
+    }
+  ],
+  "inventory_summary": {
+    "items_total": 64,
+    "display_items_total": 20,
+    "quantitative_claims_total": 44,
+    "eligible_total": 51,
+    "covered_total": 36,
+    "uncovered_total": 15,
+    "supporting_not_double_counted": 10,
+    "excluded_total": 3,
+    "atomic_coverage_ratio": 0.7059
+  },
+  "source_boundary": {
+    "paper_source": "Full PDF, TeX source, embedded supplement, and figure PDFs inspected for inventory only.",
+    "author_code_or_arrays_accessed": false,
+    "source_pixels_as_scientific_input": false,
+    "runner_boundary": "Existing independent numerical evidence remains frozen; source figures are comparison-only."
+  }
+}

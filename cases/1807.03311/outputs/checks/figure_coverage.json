@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.03311",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (10 pages; main Letter and embedded supplementary material)",
+    "unknown_remainder": false,
+    "reason": "The complete PDF was audited through Supplement Figure 8 and the end of the AB-stacking discussion."
+  },
+  "implementations": {
+    "paper_scale_continuum_sweeps": {
+      "status": "ready",
+      "target_ids": [
+        "T003",
+        "T006",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "run-all",
+        "--config",
+        "config/paper_scale.json",
+        "--workers",
+        "16"
+      ],
+      "code_refs": [
+        "src/twisted_tmd/model.py",
+        "src/twisted_tmd/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale/plan.json",
+        "outputs/data/paper_scale/run_summary.json",
+        "outputs/data/paper_scale/aggregates/T003_main_fig3b_dos.npz",
+        "outputs/data/paper_scale/aggregates/T006_main_fig4b_gaps.npz",
+        "outputs/data/paper_scale/aggregates/T007_main_fig4c_phase.npz",
+        "outputs/data/paper_scale/checks/crosscheck.json",
+        "outputs/data/paper_scale/checks/scientific_assessment.json",
+        "outputs/data/paper_scale/aggregate_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All paper-scale conditions are hash-bound, checkpointed and resumable.",
+        "Normalization, convergence, Hermiticity and printed transition neighborhoods pass.",
+        "Aggregation fails closed on missing, stale, overlapping or corrupt shards."
+      ]
+    },
+    "dft_input_boundary": {
+      "status": "ready",
+      "target_ids": [
+        "D001",
+        "D002"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_dft_input_boundary.py",
+        "--config",
+        "config/dft_input_boundary.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/twisted_tmd/dft_input_boundary.py",
+        "scripts/run_dft_input_boundary.py"
+      ],
+      "config_ref": "config/dft_input_boundary.json",
+      "run_contract_ref": "run_contract.dft_input_boundary.json",
+      "expected_outputs": [
+        "outputs/checks/dft_input_boundary/manifest.json",
+        "outputs/checks/dft_input_boundary/D001.json",
+        "outputs/checks/dft_input_boundary/D002.json",
+        "outputs/data/dft_input_boundary/D001.json",
+        "outputs/data/dft_input_boundary/D002.json"
+      ],
+      "acceptance_criteria": [
+        "Every indispensable QE, pseudopotential, structure, convergence and Wannier input is source-traced and hash-bound before execution.",
+        "The parameterized QE-to-Wannier plan is frozen for both displacements and fails closed while any required input is absent.",
+        "No source pixels, author code, author arrays, PDF or raw paper asset enters the numerical runner."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1a_top_view_stacking",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), main view, PDF p. 1",
+      "scientific_object": "AA-stacked twisted homobilayer top-view geometry",
+      "decision": "excluded",
+      "reason": "Atomic-geometry schematic without a numerical observable."
+    },
+    {
+      "item_id": "main_fig1a_side_view_inset",
+      "item_type": "figure_inset",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), inset, PDF p. 1",
+      "scientific_object": "Side-view twist and local displacement geometry",
+      "decision": "excluded",
+      "reason": "Atomic-geometry schematic without a numerical observable."
+    },
+    {
+      "item_id": "main_fig1b_uncoupled_bands",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(b), PDF p. 1",
+      "scientific_object": "Uncoupled layer/spin bands at the two valleys",
+      "decision": "excluded",
+      "reason": "Qualitative band-alignment schematic."
+    },
+    {
+      "item_id": "main_fig2a_moire_bz",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 2(a), PDF p. 2",
+      "scientific_object": "Layer Brillouin zones and moire Brillouin-zone construction",
+      "decision": "excluded",
+      "reason": "Reciprocal-space construction schematic."
+    },
+    {
+      "item_id": "main_fig2b_pseudospin_skyrmion",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 2",
+      "scientific_object": "Real-space layer-pseudospin skyrmion texture and winding",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent continuum-field evaluation generates Delta_z and the in-plane pseudospin vectors.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_continuum_bands",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), solid bands, PDF p. 3",
+      "scientific_object": "Theta=1.2 degree continuum moire-band family and Chern ordering",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent plane-wave diagonalization.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_kane_mele_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_formula_numerical",
+      "source_ref": "Main Fig. 3(a), red dashed overlay, PDF p. 3",
+      "scientific_object": "Kane-Mele tight-binding fit with printed t0 and t1",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "The analytic tight-binding overlay can fail independently of the continuum bands.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_density_of_states",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), PDF p. 3",
+      "scientific_object": "Density of states versus holes per moire unit cell and areal density",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_continuum_sweeps",
+      "reason": "Independent continuum eigenvalues generate the DOS; current evidence is reduced-scale.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig3c_berry_curvature",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(c), PDF p. 3",
+      "scientific_object": "First-band Berry-curvature map and integrated Chern number",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent Kubo curvature and Brillouin-zone integration.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig3d_honeycomb_hopping",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 3(d), PDF p. 3",
+      "scientific_object": "Honeycomb tight-binding hopping diagram",
+      "decision": "excluded",
+      "reason": "Lattice-model schematic."
+    },
+    {
+      "item_id": "main_fig4a_two_degree_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(a), PDF p. 4",
+      "scientific_object": "Theta=2 degree continuum bands and Chern reordering",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent continuum diagonalization at the printed angle.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig4b_gap23",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(b), epsilon_23 series, PDF p. 4",
+      "scientific_object": "Second-to-third-band global gap and first critical twist angle",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_continuum_sweeps",
+      "paper_level_role": "main_claim",
+      "reason": "This gap series and its closing can be adjudicated independently.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig4b_gap12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(b), epsilon_12 series, PDF p. 4",
+      "scientific_object": "First-to-second-band global gap and second critical twist angle",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_continuum_sweeps",
+      "paper_level_role": "main_claim",
+      "reason": "This gap series and its closing can be adjudicated independently.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_continuum_phase_boundaries",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(c), solid boundary and regions, PDF p. 4",
+      "scientific_object": "Continuum-model critical layer bias and topological/overlap regions",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale_continuum_sweeps",
+      "paper_level_role": "main_claim",
+      "reason": "Independent continuum phase-boundary sweep.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_tight_binding_boundary",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_formula_numerical",
+      "source_ref": "Main Fig. 4(c), dashed boundary, PDF p. 4",
+      "scientific_object": "Tight-binding critical layer-bias boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale_continuum_sweeps",
+      "reason": "Analytic comparator independently adjudicable from the continuum boundary.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "supp_fig5a_dft_d00_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(a), PDF p. 6",
+      "scientific_object": "Fully relativistic DFT bands and layer/spin characters at displacement d_0,0",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "D001"
+      ],
+      "claim_refs": [
+        "CLM_DFT_BAND_CHARACTERS"
+      ],
+      "implementation_ref": "dft_input_boundary",
+      "critical": true,
+      "reason": "The publication omits the exact relativistic pseudopotentials, QE version, relaxed coordinates, cutoffs, convergence settings and Wannier windows required for an independent paper-exact calculation."
+    },
+    {
+      "item_id": "supp_fig5b_dft_d01_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(b), PDF p. 6",
+      "scientific_object": "Fully relativistic DFT bands and layer/spin characters at displacement d_0,1",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "D002"
+      ],
+      "claim_refs": [
+        "CLM_DFT_BAND_CHARACTERS"
+      ],
+      "implementation_ref": "dft_input_boundary",
+      "critical": true,
+      "reason": "The second displacement requires the same unpublished first-principles input contract."
+    },
+    {
+      "item_id": "supp_fig6a_dirac_valence_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 6(a), PDF p. 7",
+      "scientific_object": "Four-band massive-Dirac valence spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent four-band plane-wave diagonalization.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "supp_fig6b_dirac_conduction_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 6(b), PDF p. 7",
+      "scientific_object": "Two lowest conduction bands relative to the direct gap",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independent four-band plane-wave diagonalization.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "supp_fig7a_spin_mixed_1p2_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 7(a), PDF p. 8",
+      "scientific_object": "Spin-mixed remote-band spectrum at theta=1.2 degrees",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent layer-by-spin Hamiltonian diagonalization.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "supp_fig7b_spin_mixed_2p0_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 7(b), PDF p. 8",
+      "scientific_object": "Spin-mixed remote-band spectrum at theta=2 degrees",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Independent layer-by-spin Hamiltonian diagonalization.",
+      "claim_refs": [
+        "CLM_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "supp_fig8a_ab_top_view",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplement Fig. 8(a), main view, PDF p. 10",
+      "scientific_object": "AB-stacked homobilayer top-view structure",
+      "decision": "excluded",
+      "reason": "Atomic-structure schematic."
+    },
+    {
+      "item_id": "supp_fig8a_inversion_inset",
+      "item_type": "figure_inset",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplement Fig. 8(a), inset, PDF p. 10",
+      "scientific_object": "Side-view inversion-center construction",
+      "decision": "excluded",
+      "reason": "Symmetry schematic."
+    },
+    {
+      "item_id": "supp_fig8b_ab_bands",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplement Fig. 8(b), PDF p. 10",
+      "scientific_object": "AB-stacked valley/layer band-alignment sketch",
+      "decision": "excluded",
+      "reason": "Qualitative band schematic without a computed axis."
+    }
+  ],
+  "quantitative_claims": []
+}

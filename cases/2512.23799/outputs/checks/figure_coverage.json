@@ -1,0 +1,185 @@
+{
+  "schema_version": 2,
+  "paper_id": "2512.23799",
+  "inventory_boundary": {
+    "status": "complete",
+    "unknown_remainder": false,
+    "source_ref": "PAPER_MAP.md and raw/paper.pdf",
+    "reason": "The complete public article was audited at figure-panel and quantitative-claim granularity; every numerical item is listed below."
+  },
+  "implementations": {
+    "cleanroom_attested_campaign": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_attested_reproduction.py",
+        "--config",
+        "config/independent_reproduction.json"
+      ],
+      "code_refs": [
+        "scripts/run_attested_reproduction.py",
+        "src/steane_h_prep.py",
+        "src/magic_state_simulation.py"
+      ],
+      "config_ref": "config/independent_reproduction.json",
+      "expected_outputs": [
+        "outputs/data/attested_steane_subset.csv",
+        "outputs/data/attested_runtime_proxy.csv",
+        "outputs/data/attested_sampling_scaling.csv",
+        "outputs/checks/attested_science_checks.json"
+      ],
+      "acceptance_criteria": [
+        "The Steane trajectory passes the noiseless logical-H, stabilizer, decoder, and statistical trend gates without reading paper figures or reference arrays.",
+        "The local runtime proxy is labelled non-comparable to the authors' absolute seconds until a benchmark environment manifest is available.",
+        "The sampling standard deviation has a log-log slope within 0.15 of -1/2."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig_simulation_steps",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. simulation-steps",
+      "reason": "Conceptual workflow schematic with no independently generated numerical observable."
+    },
+    {
+      "item_id": "fig_code422",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. code422",
+      "reason": "Quantum-code schematic used only as scientific context."
+    },
+    {
+      "item_id": "fig_422_example",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 422_example",
+      "reason": "Circuit diagram; the mathematical mechanism is audited through the formula and method traces, not by copying its pixels."
+    },
+    {
+      "item_id": "fig_422_propagation",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 422_propagation",
+      "reason": "Error-propagation circuit schematic with no plotted numerical result."
+    },
+    {
+      "item_id": "fig_non_ft_measurement",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. non-ft-can-meas",
+      "reason": "Measurement-gadget schematic used to define the clean-room method."
+    },
+    {
+      "item_id": "fig_ft_canonical_measurement",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. FT-canonical-meas-circ",
+      "reason": "Shor-style measurement-gadget schematic, not a numerical output."
+    },
+    {
+      "item_id": "fig_propagation_rules",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. propagation_rules_visual",
+      "reason": "Algorithm-rule illustration; its identities are checked through formula cards."
+    },
+    {
+      "item_id": "fig_ch_measurement_circuit",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. CH-meas-circ",
+      "reason": "Steane preparation circuit used as a public method specification, not a numerical target."
+    },
+    {
+      "item_id": "fig_stim_cirq_infidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "cleanroom_attested_campaign",
+      "source_ref": "Fig. stim-vs-cirq-numerical-results1 panel (a)",
+      "reason": "The public Fig. 9 circuit is sufficient for a literal clean-room attempt. That isolated attempt completed, but the frozen Fig. 10(a) infidelity values retain a material numerical mismatch; the item is therefore attempted_not_reproduced rather than externally blocked.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "fig_stim_cirq_acceptance",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "cleanroom_attested_campaign",
+      "source_ref": "Fig. stim-vs-cirq-numerical-results1 panel (b)",
+      "reason": "The public Fig. 9 circuit is sufficient for a literal clean-room attempt. The isolated acceptance curve has the expected direction but does not reproduce the frozen Fig. 10(b) values; the item is therefore attempted_not_reproduced rather than externally blocked.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig_runtime_per_shot",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_benchmark_metadata",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "cleanroom_attested_campaign",
+      "source_ref": "Fig. stim-vs-cirq-numerical-results2",
+      "reason": "Direct cause: absolute seconds per shot require the authors' host, software builds, timer protocol, repetitions, and raw timing table. Root cause: the publication does not report this benchmark manifest. A local speedup proxy is retained only as mechanism evidence.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig_error_prop_sim",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. error_prop_sim",
+      "reason": "Error-location map used as method context; no plotted numerical output."
+    },
+    {
+      "item_id": "fig_propagation_algorithm",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. propagation_alg_visual",
+      "reason": "Algorithm-flow illustration whose scientific content is represented by the method trace."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_sampling_precision_scaling",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "cleanroom_attested_campaign",
+      "source_ref": "Sec. VII B, raw/paper.txt:1053-1067",
+      "reason": "The independent repeated-sampling campaign reproduces the stated Ntot^-1/2 uncertainty exponent without source data or pixels.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    }
+  ]
+}

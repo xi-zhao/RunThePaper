@@ -2,7 +2,7 @@
 
 ## 结论
 
-All independently recoverable baseline targets are generated; Fig. 3(b) has an inconclusive method-equivalence gap, Supplement Fig. S2 is a declared proxy with a code-ready 3D rerun, and unpublished experimental arrays/curve-specific atom numbers remain deferred.
+Whole-paper atomic audit: 25 eligible scientific items, 18 backed by existing independent artifacts, and 7 explicitly uncovered.
 
 公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
@@ -10,7 +10,7 @@ All independently recoverable baseline targets are generated; Fig. 3(b) has an i
 
 本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, science=failed, execution=attested, pixel=passed, independent_review=missing`。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=failed, execution=attested, pixel=needs_repair, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 

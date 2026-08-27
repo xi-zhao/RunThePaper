@@ -21,7 +21,7 @@ Numerical form:
 Defines the non-Hermitian SSH Bloch model and the hopping convention used by real-space numerics.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::open_chain_hamiltonian`, `code/src/nonhermitian_ssh.py::non_bloch_ab`, `code/src/nonhermitian_ssh.py::non_bloch_ab_t3`
+Code: `src/nonhermitian_ssh.py::open_chain_hamiltonian`, `src/nonhermitian_ssh.py::non_bloch_ab`, `src/nonhermitian_ssh.py::non_bloch_ab_t3`
 
 
 ### EQC002 — Bloch eigenvalues and exceptional points
@@ -40,7 +40,7 @@ Numerical form:
 Gives the periodic Bloch spectrum and exceptional-point markers used as references.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::open_chain_eigenvalues`
+Code: `src/nonhermitian_ssh.py::open_chain_eigenvalues`
 
 
 ### EQC003 — Open-chain real-space equations
@@ -59,7 +59,7 @@ Numerical form:
 Defines the open-chain real-space equations used by finite-size Hamiltonians.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::open_chain_hamiltonian`
+Code: `src/nonhermitian_ssh.py::open_chain_hamiltonian`
 
 
 ### EQC004 — Similarity transform shortcut
@@ -78,7 +78,7 @@ Numerical form:
 Explains the similarity-transform shortcut behind the open-boundary transition.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::chiral_block_eigenvalues`
+Code: `src/nonhermitian_ssh.py::chiral_block_eigenvalues`
 
 
 ### EQC005 — Open-boundary transition
@@ -97,7 +97,7 @@ Numerical form:
 Gives the open-boundary topological transition used by Fig. 2 and winding checks.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::analytic_transition`
+Code: `src/nonhermitian_ssh.py::analytic_transition`
 
 
 ### EQC006 — Beta ansatz and bulk equation
@@ -116,7 +116,7 @@ Numerical form:
 Introduces the beta ansatz and bulk equation used for GBZ calculations.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::beta_roots_from_energy`
+Code: `src/nonhermitian_ssh.py::beta_roots_from_energy`
 
 
 ### EQC007 — Generalized Brillouin zone for t3=0
@@ -135,7 +135,7 @@ Numerical form:
 Defines the generalized Brillouin zone for the t3=0 model.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::generalized_brillouin_radius`
+Code: `src/nonhermitian_ssh.py::generalized_brillouin_radius`
 
 
 ### EQC008 — Open-boundary bulk spectrum
@@ -154,7 +154,7 @@ Numerical form:
 Gives the open-boundary bulk spectrum on the non-Bloch contour.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::non_bloch_ab`
+Code: `src/nonhermitian_ssh.py::non_bloch_ab`
 
 
 ### EQC009 — Non-Bloch Hamiltonian and winding number
@@ -173,7 +173,7 @@ Numerical form:
 Defines the non-Bloch Hamiltonian, Q matrix, q(beta), and winding number.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::non_bloch_winding_t3_zero`, `code/src/nonhermitian_ssh.py::phase_winding`
+Code: `src/nonhermitian_ssh.py::non_bloch_winding_t3_zero`, `src/nonhermitian_ssh.py::phase_winding`
 
 
 ### EQC010 — Nonzero t3 beta equation
@@ -192,4 +192,4 @@ Numerical form:
 Defines the nonzero-t3 beta equation used for Fig. 5.
 ```
 
-Code: `code/src/nonhermitian_ssh.py::beta_roots_t3_from_energy`, `code/src/nonhermitian_ssh.py::non_bloch_ab_t3`
+Code: `src/nonhermitian_ssh.py::beta_roots_t3_from_energy`, `src/nonhermitian_ssh.py::non_bloch_ab_t3`

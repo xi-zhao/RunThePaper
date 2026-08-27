@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "paper_id": "2605.25398",
+  "cards": [
+    {
+      "id": "F001",
+      "title": "Lambda to lambda conversion",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "Lambda = lambda^2 d / (2 pi)"
+        }
+      ],
+      "latex": "lambda = sqrt(2 pi Lambda / d)",
+      "role": "Converts the paper perturbation parameter into the sampled Hamiltonian parameter.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Formula is recorded in the paper method and existing formula check."
+        },
+        {
+          "id": "F001_algebra",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Solving Lambda=lambda^2 d/(2 pi) gives lambda=sqrt(2 pi Lambda/d)."
+        }
+      ],
+      "numerical_form": "lambda_from_Lambda(Lambda, dimension)",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::lambda_from_Lambda"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F002",
+      "title": "Random-matrix Hamiltonian normalization",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "H=(H0+lambda V)/sqrt(1+lambda^2)"
+        }
+      ],
+      "latex": "H=(H_0+lambda V)/sqrt(1+lambda^2)",
+      "role": "Defines integrable-to-chaotic one-particle dynamics.",
+      "derived_from": [
+        "F001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Formula is recorded in the paper method and existing formula check."
+        },
+        {
+          "id": "F002_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The code applies the same sqrt(1+lambda^2) normalization."
+        }
+      ],
+      "numerical_form": "sample_hamiltonian draws H0 and GOE V, then normalizes by sqrt(1+lambda^2).",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::sample_hamiltonian",
+        "src/boson_sampling_chaos.py::sample_goe"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F003",
+      "title": "Two-photon permanent probability",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "p=|Per(U_sub)|^2"
+        }
+      ],
+      "latex": "p(r,s)=|U_{r,i}U_{s,j}+U_{r,j}U_{s,i}|^2",
+      "role": "Turns a one-particle unitary into collision-free two-photon output probabilities.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Permanent formula is recorded in the paper method and existing formula check."
+        },
+        {
+          "id": "F003_permanent",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The 2x2 permanent reduces to the sum of two products."
+        }
+      ],
+      "numerical_form": "conditional_two_photon_distribution computes the squared permanent for all output pairs.",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::conditional_two_photon_distribution"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F004",
+      "title": "Collision-free conditional normalization",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "p_cond=p/sum_collision_free p"
+        }
+      ],
+      "latex": "p_cond(r,s)=p(r,s)/sum_{r<s} p(r,s)",
+      "role": "Matches the post-selected two-click distribution used by the paper figures.",
+      "derived_from": [
+        "F003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Conditional distribution is recorded in the existing formula check."
+        },
+        {
+          "id": "F004_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Generated probability vectors are normalized to one."
+        }
+      ],
+      "numerical_form": "probabilities / probabilities.sum() over collision-free pairs.",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::conditional_two_photon_distribution"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F005",
+      "title": "Porter-Thomas dimension and reference distribution",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "D=C(8,2)=28, P_PT(p)=D exp(-D p)"
+        }
+      ],
+      "latex": "D=binom(M,2), P_PT(p)=D exp(-D p)",
+      "role": "Defines the PT reference used to diagnose chaotic output statistics.",
+      "derived_from": [
+        "F004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "D=28 and PT reference are recorded in the existing formula check."
+        },
+        {
+          "id": "F005_dimension",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "For M=8 and N=2, C(8,2)=28."
+        }
+      ],
+      "numerical_form": "porter_thomas_w1 compares sorted probabilities against PT quantiles.",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::collision_free_pairs",
+        "src/boson_sampling_chaos.py::porter_thomas_w1"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F006",
+      "title": "Shannon entropy and Haar reference",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "S=-sum p log p, S_Haar=-1+sum_i 1/i"
+        }
+      ],
+      "latex": "S=-sum_i p_i log p_i",
+      "role": "Measures spreading of the two-photon probability vector.",
+      "derived_from": [
+        "F004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Entropy formula is recorded in the existing formula check."
+        },
+        {
+          "id": "F006_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For D=28 the Haar reference is about 2.927 and the generated chaotic peak is below it."
+        }
+      ],
+      "numerical_form": "shannon_entropy(probabilities)",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::shannon_entropy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F007",
+      "title": "OTOC short-time scaling",
+      "source_refs": [
+        {
+          "type": "paper_feature",
+          "value": "overlap-one outputs scale as t^2 and overlap-zero outputs as t^4"
+        }
+      ],
+      "latex": "C(t) ~ t^2 or t^4 depending on output-input overlap",
+      "role": "Checks the short-time order of two-photon spreading.",
+      "derived_from": [
+        "F003",
+        "F004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "OTOC scaling relation is recorded in the existing formula check."
+        },
+        {
+          "id": "F007_slopes",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Measured slopes are 1.999 and 3.999."
+        }
+      ],
+      "numerical_form": "ensemble_metrics groups probabilities by overlap_count and checks log-log slopes.",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::overlap_count",
+        "src/boson_sampling_chaos.py::ensemble_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F008",
+      "title": "Participation ratio",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "PR=1/sum_i p_i^2"
+        }
+      ],
+      "latex": "PR=1/sum_i p_i^2",
+      "role": "Measures delocalization of the output probability vector.",
+      "derived_from": [
+        "F004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Participation ratio formula is recorded in the derivation trace."
+        },
+        {
+          "id": "F008_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At t=1.79, chaotic PR is 12.51 and integrable PR is 1.05."
+        }
+      ],
+      "numerical_form": "participation_ratio(probabilities)",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::participation_ratio"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F009",
+      "title": "Fourth-order spectral form factor proxy",
+      "source_refs": [
+        {
+          "type": "paper_feature",
+          "value": "SFF diagnostic used with PT and entropy probes"
+        }
+      ],
+      "latex": "SFF_4(t)=|Tr exp(-iHt)|^4/d^4",
+      "role": "Provides the local spectral diagnostic plotted with PT distance and entropy.",
+      "derived_from": [
+        "F002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "F009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "SFF diagnostic is part of the paper probe chain."
+        },
+        {
+          "id": "F009_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The local SFF minimum aligns with the PT and entropy feature time."
+        }
+      ],
+      "numerical_form": "spectral_form_factor_4(eigenvalues, time)",
+      "code_refs": [
+        "src/boson_sampling_chaos.py::spectral_form_factor_4"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "F010",
+      "title": "Printed Eq. S8 excluded-mass notation trace",
+      "source_refs": [
+        {
+          "type": "paper_formula",
+          "value": "Appendix A defines Y=1-sum_{x in C} p_x, then prints a density proportional to (1-y)^(C-1) exp[-N0(1-y)] in Eq. S8."
+        },
+        {
+          "type": "paper_text",
+          "value": "The following paragraph calls p_j^cond a ratio involving the Gamma distribution of Y; paper-source/extracted/main.tex:486-501."
+        }
+      ],
+      "latex": "Y=1-\\sum_{x\\in\\mathcal C}p_x,\\qquad f_{S8}(y)=\\frac{N_0^C(1-y)^{C-1}e^{-N_0(1-y)}}{(C-1)!}",
+      "role": "Records the publication's exact definition and printed density so a fresh reviewer can adjudicate their internal consistency; this card does not decide a paper error.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "F010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both the Y definition and the printed Eq. S8 density are transcribed directly from the frozen TeX source."
+        }
+      ],
+      "numerical_form": "Not used by the numerical generator; T004 samples normalized conditional probabilities directly.",
+      "code_refs": [],
+      "open_questions": [
+        "The author-side record notes that Y is named excluded mass while the printed density is written in 1-y. Whether this is a variable-definition error, a reflected-variable convention, or a prose omission is reserved for fresh independent review."
+      ]
+    }
+  ]
+}

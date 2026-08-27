@@ -6,7 +6,7 @@ Published as: [Symmetry-Resolved Entanglement in Many-Body Systems](https://doi.
 
 Formal citation: 120, 200602 (2018) · DOI `10.1103/PhysRevLett.120.200602` · Locator `200602`
 
-Public status: **Scientific reproduction — independent review pending** · Audit score: **90.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **90.00/100**
 
 All numerical figures reproduced from formulas at paper-declared scale.
 
@@ -19,6 +19,7 @@ All numerical figures reproduced from formulas at paper-declared scale.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -48,7 +49,7 @@ cd cases/1711.09418/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "packet_type": "distance_tiebreak_dry_run",
+  "status": "ready",
+  "paper_id": "2604.08669",
+  "case_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669",
+  "source_plan_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/checks/distance_tiebreak_probe_plan.json",
+  "launcher_contract": {
+    "script": "scripts/run_fixed_shard_overfit.py",
+    "profile": "distance_tiebreak_shard32_u0512",
+    "objective": "source_target_topk_plus_distance_tiebreak",
+    "dataset": "outputs/datasets/paper_gnn_target_fig3_v1_shard32",
+    "validation_dataset": "outputs/datasets/paper_gnn_target_fig3_v1_val64",
+    "output": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512",
+    "updates": 512,
+    "result_file": "distance_tiebreak_probe_result.json",
+    "progress_file": "training_progress.jsonl",
+    "gate_file": "distance_tiebreak_gate.json"
+  },
+  "gate_result_schema": {
+    "required_fields": [
+      "mean_predicted_average_distance",
+      "mean_predicted_max_distance",
+      "predicted_max_distance_p90",
+      "predicted_max_distance_p99",
+      "mean_average_distance_gap",
+      "mean_max_distance_gap",
+      "rank1_rate",
+      "mean_positive_rank",
+      "decision"
+    ],
+    "pass_conditions": [
+      "mean_predicted_average_distance_must_decrease",
+      "mean_predicted_max_distance_must_not_increase",
+      "max_tail_p90_p99_must_not_worsen",
+      "rank1_is_diagnostic_not_primary"
+    ]
+  },
+  "dry_run_checks": {
+    "plan_ready": true,
+    "single_variable": "distance_tiebreak_term",
+    "starts_training": false,
+    "launches_remote_jobs": false,
+    "requires_human_approval_for_remote_run": true
+  },
+  "forbidden_actions_until_gate": [
+    "train256",
+    "curriculum",
+    "new_training_scaleup",
+    "long_remote_training"
+  ],
+  "allowed_next_actions": [
+    "request_human_approval_for_remote_short_probe",
+    "inspect_distance_tiebreak_dry_run"
+  ],
+  "automation": {
+    "safe_local_only": true,
+    "starts_training": false,
+    "launches_remote_jobs": false,
+    "requires_human_approval_for_remote_run": true
+  },
+  "findings": [],
+  "output_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/checks/distance_tiebreak_dry_run.json"
+}

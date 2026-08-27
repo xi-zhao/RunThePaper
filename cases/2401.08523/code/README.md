@@ -7,9 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2401.08523/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Frozen non-final target states: T001=evidence_compared, T002=evidence_compared. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Boundary: All two main figures and all four numerical panels are generated from the paper's closed-form equations. The supplement contains derivations but no additional figures. Original source figures are isolated to terminal pixel evaluation and are never numerical inputs.

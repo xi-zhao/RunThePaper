@@ -11,8 +11,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from nonhermitian_ssh import (  # noqa: E402
     analytic_transition,
@@ -101,7 +101,7 @@ def main() -> int:
         "notes": [
             "Formula gate is checked before running.",
             "Comparison uses the analytic transition from the verified derivation.",
-            "A digitized paper-figure reference was used in the internal audit but is not redistributed.",
+            "Published EPS curve is rendered for visual reference but not digitized yet.",
             "Acceptance is based on feature-level numeric checks, not pixel similarity.",
         ],
     }

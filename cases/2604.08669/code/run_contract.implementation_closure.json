@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "run_id": "2604.08669-implementation-closure-v1",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/atom_path_planner.py",
+    "src/p2wgs_potential.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "reduced_implementation_attestation",
+    "gnn_assignment": {
+      "initial_side": 5,
+      "target_side": 3,
+      "loading_probability": 0.75,
+      "k_neighbors": 9,
+      "train_samples": 2,
+      "hidden_dim": 8,
+      "message_passes": 2,
+      "learning_rate": 0.01,
+      "graph_backend": "dense",
+      "seed": 260408691,
+      "paper_target_boundary": {
+        "initial_side": 127,
+        "target_side": 101,
+        "training_samples": 1000000,
+        "required_device": "cuda",
+        "execution_status": "not_run"
+      }
+    },
+    "p2wgs": {
+      "grid_size": 32,
+      "initial_side": 5,
+      "target_side": 3,
+      "samples": 1,
+      "frames": 4,
+      "iterations": [
+        3,
+        5,
+        8,
+        10
+      ],
+      "sigma": 1.2,
+      "seed": 260408692,
+      "paper_target_boundary": {
+        "grid_size": 1024,
+        "initial_side": 127,
+        "target_side": 101,
+        "iterations": [
+          3,
+          5,
+          8,
+          10
+        ]
+      },
+      "known_scientific_gap": "The unpublished frame-trajectory and redundant-atom perturbation protocol prevents a paper-exact intensity-continuity claim."
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json",
+    "outputs/checks/implementation_closure/p2wgs/metrics.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

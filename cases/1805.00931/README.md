@@ -6,9 +6,9 @@ Published as: [Exact Spectral Form Factor in a Minimal Model of Many-Body Quantu
 
 Formal citation: Phys. Rev. Lett. 121, 264101 (2018) · DOI `10.1103/PhysRevLett.121.264101` · Locator `121, 264101`
 
-Public status: **Partial scientific reproduction** · Audit score: **75.01/100**
+Public status: **Partial scientific reproduction** · Audit score: **71.06/100**
 
-All five numerical targets are formula-derived; Table I is paper-exact, while Figures 2 and 3 remain reduced-scale and therefore exploratory.
+Existing reproduced items are preserved; t=10..15 are externally compute-blocked after smoke/resource checks, and the unrestricted IID claim is publication-underspecified.
 
 ## Start Here / 从这里开始
 
@@ -52,7 +52,7 @@ cd cases/1805.00931/code
 python scripts/run_reproduction.py --config config/feature.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

@@ -12,4 +12,4 @@ python scripts/run_reproduction.py
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: The released materials contain vector figures but no surface-code circuit generator, correlated MLE implementation, raw samples, shots, seeds, complete grids, or fit windows. Fig. 2(b) is therefore a repetition-code information-mechanism proxy rather than an absolute surface-code result, and 19 numeric panel/table groups remain deferred.
+Boundary: All 272 eligible atomic items have final evidence-backed dispositions: 26 reproduced, 1 externally blocked, and 245 attempted but not reproduced. Similarity score 79.31/100; strict lifecycle remains partial and the central circuit-level surface-code scope reached the current clean-room capability limit.

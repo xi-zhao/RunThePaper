@@ -262,7 +262,7 @@ def run_software_assembly_pipeline(
             "seed": seed,
             "loading_probability": loading_probability,
             "k_neighbors": k_neighbors,
-            "checkpoint_path": checkpoint_path.name if checkpoint_path is not None else None,
+            "checkpoint_path": str(checkpoint_path) if checkpoint_path is not None else None,
             "assignment_strategy": resolve_assignment_strategy(assignment_strategy, checkpoint_path),
             "device": device,
             "graph_backend": graph_backend,

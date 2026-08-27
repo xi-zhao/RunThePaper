@@ -12,6 +12,6 @@
 | EQ006 三能级模型 | T004–T007 | verified | trace 与随机轨迹检查 |
 | EQ007 micromaser jumps | T008–T010 | verified | 光子数 birth/death 率推导 |
 | EQ008 birth–death reduction | 稳定 micromaser solver | verified | 对称/非对称两种本征求解 |
-| EQ009 Doob transform | T003/T007/T011 | verified | 左零模与精确 rate scaling |
+| EQ009 Doob transform | T003/T007/T011/T012 | verified | 左零模、精确 rate scaling、显式 mapped Hamiltonian 与超算符重建 |
 
 EQ007 的公式本身可数值化，但原 Letter 未给 `N_ex` 和热占据数；这限制参数身份，不关闭公式 gate。

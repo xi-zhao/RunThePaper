@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "run_id": "analytic-cumulant-v5-20260825",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T004",
+    "T005"
+  ],
+  "command": [
+    "python",
+    "scripts/run_analytic.py",
+    "--config",
+    "config/analytic.json"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/dicke.py",
+    "scripts/run_analytic.py",
+    "config/analytic.json"
+  ],
+  "parameter_file": "config/analytic.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "omega_c": 1.0,
+    "omega_a_one_photon": 2.0,
+    "omega_a_two_photon": 1.0,
+    "kappa1": 0.4,
+    "kappa2": 0.2,
+    "one_photon_lambda": [
+      0.1,
+      2.0,
+      191
+    ],
+    "stability_lambda": [
+      0.1,
+      1.25,
+      61
+    ],
+    "two_photon_lambda": [
+      0.1,
+      1.25,
+      81
+    ],
+    "branch_audit_lambda": [
+      0.62,
+      0.645,
+      0.65,
+      0.79,
+      0.82,
+      1.1,
+      1.25
+    ]
+  },
+  "outputs": [
+    "outputs/data/analytic_branches.npz",
+    "outputs/data/analytic_summary.json",
+    "outputs/checks/fig2_science.json",
+    "outputs/checks/fig3_analytic_science.json",
+    "outputs/checks/figS1_science.json",
+    "outputs/checks/figS2_science.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

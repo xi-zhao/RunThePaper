@@ -1,35 +1,25 @@
 # Numerical methods
 
-## Public executable scope
+## Input boundary
 
-The public package regenerates the numerical content of main-text Figs. 2, 4,
-and 5. Fig. 1 is a conceptual schematic. Fig. 3 is an experimental acquisition
-whose raw counts were not published.
+The scientific runner receives only paper equations, disclosed scalar values,
+standard material constants, and labelled surrogate assumptions. It cannot
+read the PDFs, original figures, author code, author arrays, digitized curves,
+or post-freeze rendering assets.
 
-## Fig. 2
+## Methods by target
 
-- Piecewise Chebyshev evaluation in float64.
-- Golden-section stationary-point search with 80 iterations.
-- Bracketed bisection with 80 iterations.
-- Generated curve and landmark data are written before plotting.
+| Targets | Method | Current scale |
+| --- | --- | --- |
+| T_F2A-C | Sellmeier-plus-capillary dispersion, co-moving transform, bracketed roots | one attested smoke assumption; seven paper assumptions coded |
+| T_S1A-C | analytic-signal UPPE, positive-frequency projection, conjugated-SPM ablation | three attested points per panel; eleven points per panel coded |
+| T_F4A-F | direct evaluation of Methods D.1 sensitivity family | six attested analytic units |
+| T_F5C | shared-slope identity from Methods D.2-D.3 | attested and verified |
 
-## Fig. 4
+Each work unit writes NPZ/JSON artifacts bound to configuration and
+implementation hashes. The isolated runner records actual argv, Git state,
+input/output hashes, file access, sandbox assurance, and runtime.
 
-- Six frozen red-only fits, one for each disclosed probe wavelength.
-- Peak-profile quadrature table: 50,001 points.
-- Sideband orders: `m=-10,...,10`.
-- Public output contains equation-generated theory curves only.
-- Internal blind validation: mean NRMSE `0.0653`, correlation `0.9810`.
-
-## Fig. 5
-
-- Ordinary least-squares coefficients frozen after the independent regression.
-- Public output contains fitted lines only, not the source-derived point set.
-- Recomputed slope ratio: `1.0211`; paper: `1.02`.
-
-## Runtime
-
-This main-figure path is analytic and fit-evaluation work and completes in
-seconds on a CPU. An A100 is unnecessary for these three figures. The separate
-UPPE propagation study is retained as auxiliary internal validation and is not
-part of this public main-figure package.
+The 17-unit smoke validates execution only. The 47-unit paper profile remains
+deferred because it cannot resolve the dominant missing-input and method-
+normalization questions by itself.

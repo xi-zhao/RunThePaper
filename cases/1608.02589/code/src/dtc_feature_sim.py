@@ -21,12 +21,23 @@ def z_table(n_spins: int) -> np.ndarray:
     return 1 - 2 * bits
 
 
-def sample_disorder(n_spins: int, j_z: float, rng: np.random.Generator, w: float = 2 * np.pi) -> Disorder:
+def sample_disorder(
+    n_spins: int,
+    j_z: float,
+    rng: np.random.Generator,
+    w: float = 2 * np.pi,
+    *,
+    uniform_field: float | None = None,
+) -> Disorder:
     if j_z == 0:
         j_nn = np.zeros(n_spins - 1)
     else:
         j_nn = rng.uniform(0.8 * j_z, 1.2 * j_z, size=n_spins - 1)
-    b_z = rng.uniform(0.0, w, size=n_spins)
+    b_z = (
+        rng.uniform(0.0, w, size=n_spins)
+        if uniform_field is None
+        else np.full(n_spins, float(uniform_field))
+    )
     return Disorder(j_nn=j_nn, b_z=b_z)
 
 
@@ -80,9 +91,10 @@ def autocorrelation_trace(
     rng: np.random.Generator,
     alpha: float | None = None,
     initial: str = "random_z",
+    uniform_field: float | None = None,
 ) -> np.ndarray:
     zs = z_table(n_spins)
-    disorder = sample_disorder(n_spins, j_z, rng)
+    disorder = sample_disorder(n_spins, j_z, rng, uniform_field=uniform_field)
     phases = np.exp(-1j * diagonal_energy(zs, disorder, j_z=j_z, alpha=alpha))
     theta = np.pi / 2 - epsilon
 
@@ -112,10 +124,20 @@ def averaged_trace(
     seed: int,
     alpha: float | None = None,
     initial: str = "random_z",
+    uniform_field: float | None = None,
 ) -> np.ndarray:
     rng = np.random.default_rng(seed)
     traces = [
-        autocorrelation_trace(n_spins, j_z, epsilon, steps, rng, alpha=alpha, initial=initial)
+        autocorrelation_trace(
+            n_spins,
+            j_z,
+            epsilon,
+            steps,
+            rng,
+            alpha=alpha,
+            initial=initial,
+            uniform_field=uniform_field,
+        )
         for _ in range(samples)
     ]
     return np.mean(traces, axis=0)
@@ -163,21 +185,30 @@ def floquet_matrix(
     *,
     zs: np.ndarray | None = None,
     rotation: np.ndarray | None = None,
+    alpha: float | None = None,
 ) -> np.ndarray:
     if zs is None:
         zs = z_table(n_spins)
     disorder = sample_disorder(n_spins, j_z, rng)
-    phases = np.exp(-1j * diagonal_energy(zs, disorder, j_z=j_z))
+    phases = np.exp(-1j * diagonal_energy(zs, disorder, j_z=j_z, alpha=alpha))
     if rotation is None:
         rotation = rx_product_matrix(n_spins, np.pi / 2 - epsilon)
     return phases[:, None] * rotation
 
 
-def level_statistic_r(n_spins: int, j_z: float, epsilon: float, samples: int, seed: int) -> float:
+def level_statistic_r(
+    n_spins: int,
+    j_z: float,
+    epsilon: float,
+    samples: int,
+    seed: int,
+    *,
+    alpha: float | None = None,
+) -> float:
     rng = np.random.default_rng(seed)
     values = []
     for _ in range(samples):
-        eigvals = np.linalg.eigvals(floquet_matrix(n_spins, j_z, epsilon, rng))
+        eigvals = np.linalg.eigvals(floquet_matrix(n_spins, j_z, epsilon, rng, alpha=alpha))
         angles = np.sort(np.mod(np.angle(eigvals), 2 * np.pi))
         gaps = np.diff(np.r_[angles, angles[0] + 2 * np.pi])
         for a, b in zip(gaps, np.roll(gaps, -1)):
@@ -518,7 +549,7 @@ def run_case(workspace: Path) -> dict:
 
 
 def main() -> None:
-    workspace = Path(__file__).resolve().parents[2]
+    workspace = Path(__file__).resolve().parents[1]
     print(json.dumps(run_case(workspace), indent=2, ensure_ascii=False))
 
 

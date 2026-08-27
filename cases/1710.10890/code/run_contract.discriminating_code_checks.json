@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "run_id": "1710.10890-discriminating-code-check-v2",
+  "paper_id": "1710.10890",
+  "target_ids": [
+    "T008",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_discriminating_checks.py",
+    "--config",
+    "config/discriminating_code_checks.json",
+    "--output",
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "inputs": [
+    "src/quantum_droplets/__init__.py",
+    "src/quantum_droplets/model.py",
+    "src/quantum_droplets/coupled_gpe.py",
+    "src/quantum_droplets/paper_scale.py",
+    "src/quantum_droplets/implementation_closure.py",
+    "src/quantum_droplets/reproduction.py",
+    "src/quantum_droplets/discriminating_checks.py",
+    "scripts/run_discriminating_checks.py",
+    "config/paper_theory.json",
+    "config/paper_scale_campaign.json",
+    "config/discriminating_code_checks.json"
+  ],
+  "parameter_file": "config/discriminating_code_checks.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "T008": {
+      "refined_smoke": {
+        "grid_points": 14,
+        "box_length_micrometre": 18.0
+      },
+      "norm_drift_maximum": 1e-10,
+      "width_relative_gap_maximum": 0.5
+    },
+    "T012": {
+      "required_paper_inputs": [
+        "magnetic_field_gauss",
+        "total_atom_number",
+        "component_populations",
+        "initial_trap_frequencies_hz"
+      ],
+      "sensitivity_input": {
+        "magnetic_field_gauss": 56.55,
+        "total_atom_number": 100000.0,
+        "component_populations": [
+          0.5,
+          0.5
+        ],
+        "initial_trap_frequencies_hz": [
+          250.0,
+          240.0,
+          280.0
+        ]
+      },
+      "norm_drift_maximum": 1e-10
+    }
+  },
+  "expected_outputs": [
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "outputs": [
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "timeout_seconds": 180,
+  "resource_contract": {
+    "cpu_cores": 1,
+    "memory_gib": 2,
+    "gpu_required": false
+  },
+  "scientific_boundary": "Reduced same-path solver and strict input-schema checks only; exact paper atom numbers and calibration field remain unavailable."
+}

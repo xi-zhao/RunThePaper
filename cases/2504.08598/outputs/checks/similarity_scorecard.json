@@ -1,61 +1,883 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "2504.08598",
-  "overall_score": 82.3,
-  "source_score_model": "rra_similarity_v3_figure_evaluation",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 4,
-    "target_status_counts": {
-      "evidence_compared": 2,
-      "partially_reproduced": 2
-    },
-    "published_generated_datasets": 9,
-    "published_generated_figures": 1
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "score_model": "rra_similarity_v3_figure_evaluation",
+  "summary": "A clean-room Eq. (3)-Eq. (6) run reproduces Main Figures 5 and 6 at feature level; author CSVs are comparison-only after generation is frozen. Appendix Figures 8 and 9 retain stable named numeric mismatches, and Figure 7 is source-blocked.",
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "FIG005",
-      "meaning": "k=3 target-coloring probability versus annealing time and final E/F basis distributions",
-      "status": "evidence_compared",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Main Figure 5: k=3 annealing curves and final distributions",
+      "figure_refs": [
+        "Figure 5"
+      ],
+      "weight": 2.0,
+      "components": {
+        "feature_match": {
+          "score": 46.0,
+          "reason": "All six A-F curves pass the feature gate and both E/F final distributions pass the semantic distribution gate.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 30.0,
+          "reason": "Five curves pass strict numeric thresholds; E distribution sorted TVD is 0.00369 and F is 0.08595, while D remains feature-level.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All released Figure 5 curves and distributions are independently generated at the paper controls.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "all_released_series",
+            "status": "reproduced",
+            "note": "A-F curves and E/F distributions covered",
+            "evidence": "outputs/checks/qudit_reproduction_summary.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "score_cap": 89.0,
+      "cap_reason": "The result is feature-complete but not uniformly strict or pixel-registered.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "author_data",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception."
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig5_valid_coloring_mass",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/qudit_reproduction_summary.json#figure_5_k3_measurements",
+          "claim": "The generated final states concentrate on paper target and proper-coloring sectors."
+        },
+        {
+          "assertion_id": "fig5_curve_feature",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/qudit_reproduction_summary.json#verdict.main_k3_annealing_feature_reproduced",
+          "claim": "All released k=3 annealing curves reproduce their source feature."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig5_k3_annealing_generated.csv",
+        "outputs/data/fig5_k3_measurement_generated.csv",
+        "outputs/checks/qudit_reproduction_summary.json",
+        "comparison-artifacts/fig5_k3_author_vs_independent.png"
+      ],
+      "remaining_gap": "Figure 5 D is feature-level and F retains nonzero distribution discrepancy; exact source propagation and basis-index conventions are unavailable.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 91.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG006",
-      "meaning": "k=4 G-I final coloring distributions",
-      "status": "evidence_compared",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Main Figure 6: k=4 final distributions",
+      "figure_refs": [
+        "Figure 6"
+      ],
+      "weight": 2.0,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "reason": "G, H and I all pass the semantic distribution gate and reproduce the intended k=4 coloring behavior.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 26.0,
+          "reason": "Sorted TVD spans 0.05256 to 0.10121, while target/proper-coloring masses remain within the feature thresholds.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All three released k=4 graph distributions are independently generated.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "G_H_I",
+            "status": "reproduced",
+            "note": "all released distributions covered",
+            "evidence": "outputs/checks/qudit_reproduction_summary.json#figure_6_k4_measurements"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "author_data",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception."
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig6_k4_semantic_gate",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/qudit_reproduction_summary.json#verdict.main_k4_final_distributions_reproduced",
+          "claim": "All k=4 main-text final distributions pass the semantic feature gate."
+        },
+        {
+          "assertion_id": "fig6_tetrahedron_geometry",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "tests/test_rydberg_qudit.py::test_tetrahedron_uses_table_spacing_as_physical_edge",
+          "claim": "The physical tetrahedron edge equals the Table-2 lattice spacing."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig6_k4_measurement_generated.csv",
+        "outputs/data/paper_atom_coordinates.csv",
+        "outputs/checks/qudit_reproduction_summary.json"
+      ],
+      "remaining_gap": "The author CSV does not disclose state indexing; source precision and propagation implementation are unavailable.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 86.0,
+      "score": 86.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T003A",
-      "figure_id": "FIG008",
-      "meaning": "k=2 A-F appendix annealing curves and E/F final distributions",
-      "status": "partially_reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Appendix Figure 8: k=2 annealing and distributions",
+      "figure_refs": [
+        "Figure 8"
+      ],
+      "weight": 0.5,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "reason": "A-C pass strict and D passes feature level, but E/F curves and E final distribution do not pass.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 18.0,
+          "reason": "The successful graphs agree quantitatively while three source-bound items remain named numeric mismatches.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "reason": "Every released item was executed, but the figure is only partially reproduced.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "all_released_series",
+            "status": "partial",
+            "note": "curve E/F and distribution E fail",
+            "evidence": "outputs/checks/qudit_reproduction_summary.json#verdict.appendix_k2_named_mismatches"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "numeric_mismatch",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "author_data",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "Using the paper-declared k=2 profile and 300 Trotter intervals, clean-room curves E/F and distribution E remain outside the declared feature gates after comparison with the author dataset.",
+            "evidence": [
+              "outputs/checks/qudit_reference_comparison.json#figure_8_k2_curves",
+              "outputs/checks/qudit_reference_comparison.json#figure_8_k2_measurements"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The published Eq. (3)-Eq. (6) model with the printed Appendix-A.2 parameters does not yield the released Figure-8 E/F behavior in an independently generated, converged calculation; fresh-context review must decide whether the remaining undisclosed convention is material.",
+            "confidence": "probable",
+            "evidence": [
+              "outputs/checks/qudit_reference_comparison.json",
+              "outputs/checks/qudit_convergence_audit.json",
+              "outputs/runs/2504.08598-clean-room-reproduction-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found after provenance, convergence, independent-implementation, execution, and physics-invariant checks; this does not by itself confirm a paper error.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The scientific configuration was frozen before author comparison, and the generation manifest proves that no author array or source pixel supplied scientific inputs.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/checks/generated_data_manifest.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Refining graph E from 300 to 600 intervals changes the final distribution by TVD 0.00172 and proper-coloring mass by 0.00088, far below the observed source discrepancy.",
+                "evidence": [
+                  "outputs/checks/qudit_convergence_audit.json#T003A"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The clean-room generator constructs its own 301-point grid and evolves the published multilevel Hamiltonian without reading author code or numerical arrays.",
+                "evidence": [
+                  "src/clean_room_reproduction.py",
+                  "outputs/runs/2504.08598-clean-room-reproduction-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Normalization, bounded probability, nonempty target sectors, and target/proper-coloring index invariants pass for every k=2 program.",
+                "evidence": [
+                  "outputs/data/clean_room_reproduction/T003A.json",
+                  "tests/test_clean_room_reproduction.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "An unreported author propagation or basis convention could still explain the mismatch, because the publication does not disclose the original solver precision or state-index convention.",
+              "evidence": [
+                "outputs/checks/qudit_reference_comparison.json#figure_8_k2_measurements"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch is limited to Figure-8 curves E/F and distribution E; curves A-C pass the numeric gate, curve D passes the feature gate, and distribution F passes the feature gate.",
+            "items": [
+              "T003A",
+              "FIG008:E_curve",
+              "FIG008:F_curve",
+              "FIG008:E_distribution"
+            ],
+            "completion": "3/9 declared Figure-8 numerical objects remain mismatched"
+          },
+          "next_discriminating_test": {
+            "action": "Run fresh-context claim-level review over the frozen inventory and falsification bundles, checking parameter, convention, discretization, and code alternatives before adjudicating the Figure-8 mismatch.",
+            "expected_resolution": "Independent review will either identify a reproduction-side defect or convention, or classify the stable mismatch as a paper-error candidate/inconclusive discrepancy.",
+            "evidence_to_produce": [
+              "outputs/review/reviewer_submission_fresh.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig8_feature_agreement",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/qudit_reference_comparison.json#verdict.appendix_k2_named_mismatches",
+          "claim": "Every released k=2 Figure-8 curve and distribution passes its declared feature gate."
+        },
+        {
+          "assertion_id": "fig8_numerical_stability",
+          "tier": "numeric",
+          "essential": false,
+          "status": "passed",
+          "evidence": "outputs/checks/qudit_convergence_audit.json#T003A",
+          "claim": "The representative failing graph E is stable under doubling the Trotter interval count."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig8_k2_annealing_generated.csv",
+        "outputs/data/fig8_k2_measurement_generated.csv",
+        "outputs/checks/qudit_reproduction_summary.json"
+      ],
+      "remaining_gap": "curve_E, curve_F and distribution_E do not reproduce; author implementation details are unavailable.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 55.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T003B",
-      "figure_id": "FIG009",
-      "meaning": "k=3 G-J appendix final distributions",
-      "status": "partially_reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Appendix Figure 9: k=3 G-J distributions",
+      "figure_refs": [
+        "Figure 9"
+      ],
+      "weight": 0.5,
+      "components": {
+        "feature_match": {
+          "score": 38.0,
+          "reason": "G and I pass strict numeric gates and J passes feature level; H remains a named mismatch.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 22.0,
+          "reason": "Three of four cases retain the expected distribution structure, while square K4 H has large semantic error.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "reason": "Every released distribution is executed, but the figure is partially reproduced.",
+          "max_score": 15.0
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "G_H_I_J",
+            "status": "partial",
+            "note": "distribution H fails",
+            "evidence": "outputs/checks/qudit_reproduction_summary.json#verdict.appendix_k3_named_mismatches"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "numeric_mismatch",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "author_data",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "Using the paper-declared k=3 profiles and 300 Trotter intervals, the clean-room Figure-9 H distribution remains outside the declared feature gate, while G, I, and J pass.",
+            "evidence": [
+              "outputs/checks/qudit_reference_comparison.json#figure_9_k3_measurements_G_to_I",
+              "outputs/checks/qudit_reference_comparison.json#figure_9_k3_measurement_J"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The published Eq. (3)-Eq. (6) model with the printed profile and geometry does not yield the released Figure-9 H distribution in an independently generated, converged calculation; fresh-context review must decide whether an undisclosed convention is material.",
+            "confidence": "probable",
+            "evidence": [
+              "outputs/checks/qudit_reference_comparison.json",
+              "outputs/checks/qudit_convergence_audit.json",
+              "outputs/runs/2504.08598-clean-room-reproduction-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found after provenance, convergence, independent-implementation, execution, and physics-invariant checks; this does not by itself confirm a paper error.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The scientific configuration was frozen before author comparison, and the generation manifest proves that no author array or source pixel supplied scientific inputs.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/checks/generated_data_manifest.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Refining graph H from 300 to 600 intervals changes the final distribution by TVD 0.00206 and proper-coloring mass by 0.000083, far below the observed source discrepancy.",
+                "evidence": [
+                  "outputs/checks/qudit_convergence_audit.json#T003B"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The clean-room generator constructs its own 301-point grid and evolves the published multilevel Hamiltonian without reading author code or numerical arrays.",
+                "evidence": [
+                  "src/clean_room_reproduction.py",
+                  "outputs/runs/2504.08598-clean-room-reproduction-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Normalization, bounded probability, nonempty target sectors, and target/proper-coloring index invariants pass for every k=3 appendix program.",
+                "evidence": [
+                  "outputs/data/clean_room_reproduction/T003B.json",
+                  "tests/test_clean_room_reproduction.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "An unreported author propagation or basis convention could still explain H, because the publication does not disclose the original solver precision or state-index convention.",
+              "evidence": [
+                "outputs/checks/qudit_reference_comparison.json#figure_9_k3_measurements_G_to_I"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch is limited to Figure-9 distribution H; distributions G, I, and J pass their declared feature gates.",
+            "items": [
+              "T003B",
+              "FIG009:H_distribution"
+            ],
+            "completion": "1/4 declared Figure-9 numerical objects remains mismatched"
+          },
+          "next_discriminating_test": {
+            "action": "Run fresh-context claim-level review over the frozen inventory and falsification bundles, checking parameter, convention, discretization, and code alternatives before adjudicating the Figure-9 H mismatch.",
+            "expected_resolution": "Independent review will either identify a reproduction-side defect or convention, or classify the stable mismatch as a paper-error candidate/inconclusive discrepancy.",
+            "evidence_to_produce": [
+              "outputs/review/reviewer_submission_fresh.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig9_feature_agreement",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/checks/qudit_reference_comparison.json#verdict.appendix_k3_named_mismatches",
+          "claim": "Every released k=3 Figure-9 distribution passes its declared feature gate."
+        },
+        {
+          "assertion_id": "fig9_H_numerical_stability",
+          "tier": "numeric",
+          "essential": false,
+          "status": "passed",
+          "evidence": "outputs/checks/qudit_convergence_audit.json#T003B",
+          "claim": "The failing graph H distribution is stable under doubling the Trotter interval count."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig9_k3_measurement_G-I_generated.csv",
+        "outputs/data/fig9_k3_measurement_J_generated.csv",
+        "outputs/checks/qudit_reproduction_summary.json"
+      ],
+      "remaining_gap": "distribution_H does not reproduce; its non-equidistant geometry is sensitive to negative cross-level interactions.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 67.5,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T004",
+      "label": "Figure 7 protocol-c source-conflict gap",
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "FIG007 is already an uncovered denominator item; this zero-credit target records its causal boundary without changing the covered-target score.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No unique protocol-c Hamiltonian can be selected from the conflicting published Omega values.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "A paper-exact Figure 7 numerical comparison is undefined until the source conflict is resolved.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "FIG007 remains explicitly uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "The final paper gives mutually inconsistent protocol-c Omega inputs.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "independent_numerics",
+        "generated_data_role": "attested_input_boundary_record_only",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQ002",
+          "EQ003",
+          "EQ004"
+        ],
+        "reference_comparison": "source_figure_only",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "A render comparison would be scientifically meaningless until one authoritative protocol-c Hamiltonian is identified.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "CONSISTENCY_REPORT.md#T004",
+          "figure_coverage.json#FIG007"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "Appendix A.2 and the Figure 7 caption specify conflicting protocol-c Omega values, leaving no authoritative paper-exact parameter set for the curve.",
+            "evidence": [
+              "CONSISTENCY_REPORT.md#T004",
+              "FORMULA_VERIFICATION.md#Figure-7-protocol-c"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The final publication does not resolve which of its two incompatible protocol-c parameter statements is authoritative; this is not a compute limitation or a chosen proxy.",
+            "confidence": "confirmed",
+            "evidence": [
+              "DERIVATION_TRACE.md#Figure-7",
+              "raw/paper.txt:892"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "No implementation can be judged against a unique paper-exact target while the source specifies two incompatible Hamiltonians.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The consistency audit independently locates the conflicting values in Appendix A.2 and the Figure 7 caption.",
+                "evidence": [
+                  "CONSISTENCY_REPORT.md#T004",
+                  "FORMULA_VERIFICATION.md#Figure-7-protocol-c"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "supported",
+              "statement": "One of the two values may be a typographical error, but confirming a paper discrepancy requires author clarification or an erratum.",
+              "evidence": [
+                "LESSONS_LEARNED.md#source_parameter_conflict"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only Figure 7 protocol-c is source-conflicted; no parameter value is guessed and no compute blocker is asserted.",
+            "items": [
+              "T004",
+              "FIG007"
+            ],
+            "completion": "0/1 Figure 7 protocol-c target scientifically defined"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain an author clarification or erratum identifying the authoritative protocol-c Omega values, freeze that source, and only then execute the existing Hamiltonian workflow.",
+            "expected_resolution": "The clarification will select one falsifiable Hamiltonian and distinguish a paper typo from any later implementation mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/figure7_protocol_c_source_resolution.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig7_parameter_identifiability",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "outputs/data/clean_room_reproduction/T004.json",
+          "claim": "One authoritative protocol-c Omega parameter set can be identified from the final publication."
+        }
+      ],
+      "evidence": [
+        "outputs/data/clean_room_reproduction/T004.json",
+        "CONSISTENCY_REPORT.md#T004",
+        "FORMULA_VERIFICATION.md#Figure-7-protocol-c",
+        "figure_coverage.json#FIG007"
+      ],
+      "remaining_gap": "The final paper does not identify which conflicting protocol-c Omega value is authoritative.",
+      "figure_refs": [
+        "Figure 7"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "protocol-c",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG007"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "source_scorecard_sha256": "0dd21fa26cbebdd6ae644ae4ff1f7885916ed91412f04f00ff171641bb0584af"
+  "overall_score": 81.0,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 5,
+    "critical_items": 2,
+    "artifact_pass_rate": 0.4,
+    "data_backed_rate": 0.8,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "none": 2,
+      "numeric_mismatch": 2,
+      "missing_parameters": 1
+    },
+    "parameter_match_counts": {
+      "paper_exact": 4,
+      "unknown": 1
+    },
+    "reference_comparison_counts": {
+      "author_data": 4,
+      "source_figure_only": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 5
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 5
+    },
+    "formula_gate_counts": {
+      "verified": 4,
+      "source_only": 1
+    },
+    "paper_level_role_counts": {
+      "main_claim": 2,
+      "supporting": 3
+    },
+    "physics_status_counts": {
+      "passed": 2,
+      "failed": 2,
+      "pending": 1
+    },
+    "physics_assertion_status_counts": {
+      "passed": 6,
+      "failed": 2,
+      "blocked": 1
+    },
+    "essential_physics_failures": [
+      "T003A",
+      "T003B"
+    ],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003A",
+      "T003B",
+      "T004"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003A",
+      "T003B"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T004"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 2,
+      "complete": 3
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 2,
+      "react_loop_required": 2,
+      "terminal_blocker": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T003A",
+      "T003B",
+      "T004"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T004"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T003A",
+      "T003B"
+    ],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 2,
+      "parameter_values_unavailable": 1
+    },
+    "root_cause_counts": {
+      "paper_claim_discrepancy": 2,
+      "publication_underspecified": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 2,
+      "not_applicable": 1
+    }
+  },
+  "status": "passed"
 }

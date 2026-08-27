@@ -205,7 +205,7 @@ def spectral_function(
     bins: np.ndarray,
 ) -> list[dict[str, float]]:
     indices = central_indices(eigenvalues)
-    O = operator_in_eigenbasis(eigenvectors, operator)
+    operator_eigenbasis = operator_in_eigenbasis(eigenvectors, operator)
     values: list[dict[str, float]] = []
     for lo, hi in zip(bins[:-1], bins[1:]):
         items = []
@@ -214,7 +214,7 @@ def spectral_function(
             mask = (omega >= lo) & (omega < hi)
             mask[n] = False
             if np.any(mask):
-                items.extend(np.abs(O[n, mask]) ** 2)
+                items.extend(np.abs(operator_eigenbasis[n, mask]) ** 2)
         if items:
             center = math.sqrt(lo * hi)
             values.append(
@@ -571,13 +571,9 @@ def run_case(workspace: Path) -> dict:
     spec = RunSpec()
     raw_rows = []
     spectral_rows = []
-    rng_operator = np.random.default_rng(spec.seed + 17)
-
     for L in spec.sizes:
         V = L**3
-        kinetic = matrix_from_pairs(V, nearest_neighbor_pairs(L), value=-1.0)
         sub_kinetic = sublattice_kinetic_matrix(L)
-        site_operator = randomized_site_operator(rng_operator, V)
         sample_count = 4 if L <= 5 else 3 if L == 6 else 2
         for W in spec.disorder_grid:
             for sample in range(sample_count):
@@ -648,7 +644,7 @@ def run_case(workspace: Path) -> dict:
     json_dump(checks_dir / "formula_verification.json", formula_verification_payload())
     json_dump(checks_dir / "similarity_scorecard.json", similarity_scorecard_payload(checks))
     json_dump(checks_dir / "performance_profile.json", performance_payload(checks))
-    write_large_scale_config(workspace)
+    validate_paper_scale_config(workspace)
     return checks
 
 
@@ -736,33 +732,12 @@ def performance_payload(checks: dict) -> dict:
     }
 
 
-def write_large_scale_config(workspace: Path) -> None:
-    config = {
-        "paper_id": "2605.25594",
-        "purpose": "Recommended paper-scale rerun for complete reproduction.",
-        "model": "3D Anderson model with open boundary conditions",
-        "operators": ["T_s", "T", "n"],
-        "system_sizes_L": [18, 20, 24, 28, 32, 38],
-        "disorder_grid": {
-            "weak_crossover": "dense grid in W*sqrt(V) around 25-55",
-            "anderson_transition": [8, 10, 12, 14, 15, 16, 16.5, 17, 18, 20, 24, 28, 32, 40],
-            "localized_regime": [16.5, 20, 22, 25, 28, 30, 35, 40, 60, 90],
-        },
-        "mu_values": {
-            "default_mu_star": "2*log(V)*omega_av",
-            "mu_sweep": ["1e-4", "3e-4", "1e-3", "3e-3", "1e-2", "3e-2", "1e-1", "3e-1", "1"],
-        },
-        "samples": {
-            "L<=28": 20,
-            "L>28": 5,
-            "gap_ratio_appendix": 40,
-        },
-        "eigenstates": "20 percent of single-particle eigenstates in the middle of the spectrum",
-        "recommended_compute": {
-            "memory": "128GB+ for L<=28 exact/sparse workflows; 256GB+ or cluster for L=38 workflows",
-            "cpu": "32+ cores",
-            "runtime": "multi-day batch queue for full figure set",
-            "method": "sparse shift-invert or block eigensolver around E=0; avoid full dense diagonalization at paper sizes",
-        },
-    }
-    json_dump(workspace / "config" / "paper_scale_run_plan.json", config)
+def validate_paper_scale_config(workspace: Path) -> None:
+    """Keep the local feature run from overwriting the authoritative campaign."""
+
+    path = workspace / "config" / "paper_scale.json"
+    if not path.exists():
+        raise FileNotFoundError(f"missing authoritative paper-scale config: {path}")
+    config = json.loads(path.read_text(encoding="utf-8"))
+    if config.get("paper_id") != "2605.25594" or not config.get("families"):
+        raise ValueError("invalid authoritative paper-scale config")

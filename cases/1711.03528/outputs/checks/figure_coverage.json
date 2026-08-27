@@ -1,0 +1,216 @@
+{
+  "schema_version": 2,
+  "paper_id": "1711.03528",
+  "implementations": {
+    "dynamics_paper_scale": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_mps_dynamics.py",
+        "--config",
+        "config/dynamics_paper_scale.json",
+        "--output-root",
+        "outputs/paper_scale_dynamics"
+      ],
+      "code_refs": [
+        "scripts/run_mps_dynamics.py",
+        "src/mps_dynamics.py"
+      ],
+      "config_ref": "config/dynamics_paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale_dynamics/data/fig2_mps_dynamics.csv",
+        "outputs/paper_scale_dynamics/figures/fig2_mps_dynamics.png",
+        "outputs/paper_scale_dynamics/checks/mps_dynamics.json"
+      ],
+      "acceptance_criteria": [
+        "The independently implemented three-site PXP evolution preserves the nearest-neighbor blockade constraint and the MPS bond cap.",
+        "The central-window observables are stable under smaller Trotter steps and larger bond dimensions.",
+        "The Z2 local-correlation revival period agrees with the paper within the declared tolerance.",
+        "The measured central window is unchanged when the finite open chain is lengthened, excluding boundary contamination over the plotted time interval."
+      ]
+    },
+    "sector_paper_scale": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_symmetry_resolved_sector.py",
+        "--config",
+        "config/sector_paper_scale.json",
+        "--output-root",
+        "outputs/paper_scale"
+      ],
+      "code_refs": [
+        "scripts/run_symmetry_resolved_sector.py",
+        "src/pxp_scars.py"
+      ],
+      "config_ref": "config/sector_paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale/data/sector_scar_tower.csv",
+        "outputs/paper_scale/data/sector_level_spacings.csv",
+        "outputs/paper_scale/data/sector_density_of_states.csv",
+        "outputs/paper_scale/figures/sector_scar_tower.png",
+        "outputs/paper_scale/figures/sector_level_statistics.png",
+        "outputs/paper_scale/checks/symmetry_resolved_sector.json"
+      ],
+      "acceptance_criteria": [
+        "The L=32, k=0, inversion-even sector contains exactly L/2+1 scar-tower states selected without source-figure input.",
+        "Tower energies are particle-hole symmetric and their central spacing variation remains below the declared threshold.",
+        "Zero modes and spectrum edges are excluded before unfolding; gap-ratio and spacing distributions are closer to GOE than Poisson.",
+        "The density-of-states output retains the Gaussian bulk and explicitly exposes the central zero-mode spike."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_hilbert_graph",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "source_ref": "Fig. 1",
+      "reason": "The L=6 constrained basis has the exact 18 nodes and Hamiltonian-induced edges generated directly from the PXP rule.",
+      "claim_refs": [
+        "CLM_FIG1_CONSTRAINED_GRAPH"
+      ]
+    },
+    {
+      "item_id": "fig2_top_entanglement_growth",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "dynamics_paper_scale",
+      "source_ref": "Fig. 2 top panel and iTEBD methods paragraph",
+      "reason": "Finite-size ED reproduces the ordering and slow Z2 growth. A finite-window bond-400 MPS comparator is code-ready for paper-scale execution; because the paper omits its Trotter step and truncation schedule, the target remains method-reconstructed rather than author-code-identical.",
+      "claim_refs": [
+        "CLM_FIG2_ENTANGLEMENT_GROWTH"
+      ]
+    },
+    {
+      "item_id": "fig2_middle_detrended_entropy",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "dynamics_paper_scale",
+      "source_ref": "Fig. 2 middle panel",
+      "reason": "The Z2 entropy residual is independently generated and the paper-scale MPS path is code-ready. The exact detrending convention is not specified, so this panel's fidelity is capped rather than silently excluded.",
+      "claim_refs": [
+        "CLM_FIG2_DETRENDED_ENTROPY"
+      ]
+    },
+    {
+      "item_id": "fig2_bottom_local_correlation",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "dynamics_paper_scale",
+      "source_ref": "Fig. 2 bottom panel",
+      "reason": "The independently evolved L=16 chain reproduces the 2.375 oscillation period, and the same observable has a code-ready bond-400 MPS path. Missing author discretization metadata limits identity with the published iTEBD curve, not scientific coverage.",
+      "claim_refs": [
+        "CLM_FIG2_LOCAL_CORRELATION"
+      ]
+    },
+    {
+      "item_id": "fig3a_scar_tower",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 3(a)",
+      "reason": "The same k=0, inversion-even sector at L=28 independently yields the complete 15-state high-Z2-overlap tower; paper-scale L=32 code is ready for a high-memory node.",
+      "claim_refs": [
+        "CLM_FIG3_SCAR_TOWER"
+      ]
+    },
+    {
+      "item_id": "fig3b_fsa_ground_state",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 3(b)",
+      "reason": "Exact and FSA ground-state projections on every Hamming-distance basis vector are generated from the reconstructed Hamiltonian.",
+      "claim_refs": [
+        "CLM_FIG3_FSA_GROUND_STATE"
+      ]
+    },
+    {
+      "item_id": "fig3c_fsa_central_scar",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 3(c)",
+      "reason": "The central-scar FSA oscillatory projection structure is independently reproduced; its reduced-size closeness is carried by T003's scientific cap.",
+      "claim_refs": [
+        "CLM_FIG3_FSA_CENTRAL_SCAR"
+      ]
+    },
+    {
+      "item_id": "fig3d_participation_ratio",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 3(d)",
+      "reason": "Special-state participation ratios and the inverse-Hilbert-space reference are generated across system sizes without source pixels.",
+      "claim_refs": [
+        "CLM_FIG3_PARTICIPATION_RATIO"
+      ]
+    },
+    {
+      "item_id": "fig4_level_spacing",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 4 main panel",
+      "reason": "Symmetry-resolved L=28 unfolding excludes zero modes and shows a distribution closer to Wigner-Dyson than Poisson; the same runner is configured for L=32.",
+      "claim_refs": [
+        "CLM_FIG4_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "fig4_density_of_states_inset",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "sector_paper_scale",
+      "source_ref": "Fig. 4 inset",
+      "reason": "The independently diagonalized spectrum emits an explicit density-of-states dataset and inset, including the Gaussian bulk and central zero-mode structure.",
+      "claim_refs": [
+        "CLM_FIG4_DENSITY_OF_STATES"
+      ]
+    }
+  ]
+}

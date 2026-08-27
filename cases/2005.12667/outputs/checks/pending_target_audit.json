@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "paper_id": "2005.12667",
+  "audit_scope": "all scorecard targets pending final disposition",
+  "scientific_coverage_promoted": false,
+  "source_trace": {
+    "path": "paper-source/CircuitQED_RMP.tex",
+    "sha256": "2d0ec86afa9ad0a0197a407512d481c1640ec8a7d31b1e2841f9f3bff0b10b79"
+  },
+  "isolated_canaries": [
+    {
+      "run_id": "2005.12667-implementation-closure-v2-20260824",
+      "attestation": "outputs/runs/2005.12667-implementation-closure-v2-20260824/run_attestation.json"
+    },
+    {
+      "run_id": "2005.12667-completion-repairs-v4-20260824",
+      "attestation": "outputs/runs/2005.12667-completion-repairs-v4-20260824/run_attestation.json"
+    }
+  ],
+  "target_groups": [
+    {
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013",
+        "T017",
+        "T018",
+        "T019",
+        "T020"
+      ],
+      "disposition": "pending",
+      "direct_cause": "Scientific feature checks pass, while final parameter/render/review gates remain open.",
+      "root_cause": "lifecycle_evidence_gap",
+      "code_fault_status": "not_found_after_distinct_checks",
+      "objective_external_blocker_proven": false,
+      "next_discriminating_test": "Reuse current data and perform target-level parameter binding plus fresh-context review before considering any rerun."
+    },
+    {
+      "target_ids": [
+        "T005",
+        "T011"
+      ],
+      "disposition": "pending",
+      "direct_cause": "Only a normalized or paper-subset analytic curve is currently accepted; device-specific paper fidelity is not established.",
+      "root_cause": "parameter_and_review_gap",
+      "code_fault_status": "not_excluded",
+      "objective_external_blocker_proven": false,
+      "next_discriminating_test": "Audit the cited source parameters and test whether a declared normalized equivalence-class contract is scientifically valid."
+    },
+    {
+      "target_ids": [
+        "T014",
+        "T042",
+        "T043"
+      ],
+      "disposition": "pending",
+      "direct_cause": "The previous parameter/observable implementations were defective; caption-exact drive values, the pulled-cavity detuning, Fig. 24 readout phase, and numerical FWHM are now corrected and isolated, but fresh scientific review is still absent.",
+      "root_cause": "reproduction_code_defect_repaired_then_review_gap",
+      "code_fault_status": "not_found_after_distinct_checks",
+      "objective_external_blocker_proven": false,
+      "evidence": [
+        "outputs/data/implementation_closure/T014.json",
+        "outputs/data/implementation_closure/T042.json",
+        "outputs/checks/T043_strong_dispersive_spectrum.json",
+        "outputs/runs/2005.12667-implementation-closure-v2-20260824/run_attestation.json",
+        "outputs/runs/2005.12667-completion-repairs-v4-20260824/run_attestation.json"
+      ],
+      "next_discriminating_test": "Fresh-context review must compare the corrected equations and caption parameters; no missing-publication-parameter claim remains for T014."
+    },
+    {
+      "target_ids": [
+        "T015",
+        "T016"
+      ],
+      "disposition": "pending",
+      "direct_cause": "The RMP fixes the Hamiltonian-level object but not the full drive-response convention for Fig. 26 or the Chow pulse/decoherence/RB schedule for Fig. 28. The runner now exposes these as explicit input boundaries instead of guessing them.",
+      "root_cause": "cited_source_input_audit_required",
+      "code_fault_status": "not_excluded",
+      "objective_external_blocker_proven": false,
+      "evidence": [
+        "outputs/data/implementation_closure/T015.json",
+        "outputs/data/implementation_closure/T016.json",
+        "paper-source/CircuitQED_RMP.tex"
+      ],
+      "next_discriminating_test": "Audit Boissonneault 2010 and Chow 2010 for the exact missing inputs; only a confirmed omission across the cited publication chain may become an external blocker."
+    },
+    {
+      "target_ids": [
+        "T028",
+        "T029",
+        "T031",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T039",
+        "T040",
+        "T041"
+      ],
+      "disposition": "pending",
+      "direct_cause": "Case-local formulas, structured outputs, invariants, and isolated attestations pass; target-level paper-fidelity and independent review are not yet accepted.",
+      "root_cause": "scientific_acceptance_gap",
+      "code_fault_status": "not_excluded",
+      "objective_external_blocker_proven": false,
+      "next_discriminating_test": "Review the formula cards and checks against the printed equations, then promote only the claims that pass without using source pixels."
+    },
+    {
+      "target_ids": [
+        "T030"
+      ],
+      "disposition": "externally_blocked",
+      "direct_cause": "The four COMSOL field panels cannot be regenerated from the RMP because the simulation geometry, material/port model, mesh, solver settings, and boundary-condition project are absent.",
+      "root_cause": "publication_underspecified",
+      "code_fault_status": "not_applicable",
+      "objective_external_blocker_proven": true,
+      "publication_source_trace": "paper-source/CircuitQED_RMP.tex:398-415 gives only mode labels, a rendered COMSOL credit, the ideal rectangular-cavity frequency, and symbolic dimensions a,b,d; it does not specify the actual simulation project.",
+      "next_discriminating_test": "Resume only if an independently specified COMSOL geometry/material/port/boundary/mesh project is supplied with provenance."
+    },
+    {
+      "target_ids": [
+        "T032"
+      ],
+      "disposition": "pending",
+      "direct_cause": "The three-mode Hamiltonian path is implemented and isolated, but the reduced spectrum has not passed target-specific paper-fidelity review.",
+      "root_cause": "review_gap",
+      "code_fault_status": "not_found_after_distinct_checks",
+      "objective_external_blocker_proven": false,
+      "next_discriminating_test": "Run the declared paper profile and compare excitation-manifold avoided crossings against the printed parameter contract."
+    }
+  ],
+  "summary": {
+    "targets_total": 36,
+    "pending": 35,
+    "externally_blocked": 1,
+    "attempted_not_reproduced": 0,
+    "code_defects_repaired": [
+      "T014",
+      "T016",
+      "T042",
+      "T043"
+    ],
+    "objective_external_blockers": [
+      "T030"
+    ]
+  }
+}

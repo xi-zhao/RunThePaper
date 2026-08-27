@@ -34,6 +34,16 @@ The implementation uses dense linear algebra on matrices no larger than 4x4. The
 - Outputs: `pure_state_protocol_rates.csv` and `historical_claim_checks.csv`
 - Boundary: private/unpublished proofs are not reconstructed from missing source material; only their locally executable consequences are tested
 
+### NUM005 — pure-state communication theorem
+
+- Target: T011
+- Exact calculation: group the product Schmidt spectrum by Hamming type and locate the smallest transmitted-qubit budget whose largest-coefficient mass reaches the declared fidelity
+- Achievability: prepare the rank-limited Schmidt approximation locally, transmit its compressed second subsystem, and decompress
+- Converse: `q` transmitted qubits create Schmidt rank at most `2^q`; the Ky Fan bound makes the same largest-coefficient mass the maximum possible fidelity
+- Asymptotic check: use vanishing infidelity `epsilon_n=n^-0.4` and verify `q_n/n -> H2(p)` through 32768 copies
+- Outputs: `T011_operational_communication_rate.csv` and `t011_operational_rate_theorem.json`
+- Boundary: the open mixed-state additivity question is not included
+
 The Takagi implementation uses a complex SVD followed by symmetric-unitary
 phase refinement inside degenerate singular subspaces. A 15,000-state physical
 conditioning campaign covers near-rank-3, near-full-rank, and explicit

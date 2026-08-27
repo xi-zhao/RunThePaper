@@ -1,0 +1,442 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1038-s41586-026-10720-3",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Co-moving frequency transformation",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Main Eq. (1)"
+        }
+      ],
+      "latex": "\\omega'(\\omega)=\\omega-u\\beta(\\omega)",
+      "role": "Maps laboratory frequency to the pump frame and defines every phase-matching root.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) gives the exact co-moving transformation; evaluating its plotted curve still requires the unpublished fibre beta(omega)."
+        },
+        {
+          "id": "EQ001_clean_room",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independent Sellmeier-plus-capillary implementation is finite across the declared material interval and continues beyond it by an explicit tangent rule."
+        },
+        {
+          "id": "EQ001_horizon_gap",
+          "type": "consistency_check",
+          "status": "passed",
+          "reason": "The declared physical surrogate does not recover the printed 1551 nm horizon; this expected model gap is recorded as missing measured fibre coefficients rather than repaired from Fig. 2 pixels."
+        }
+      ],
+      "numerical_form": "Evaluate fused-silica Sellmeier n(lambda), subtract the scalar capillary transverse mode term, derive u/c from the surrogate pump group index, and form omega-u beta. Sweep the explicit effective-core-radius assumption.",
+      "code_refs": [
+        "src/optical_hawking/physical_dispersion.py:CleanRoomPCFDispersion"
+      ],
+      "open_questions": [
+        "The measured/fitted beta coefficients are not published."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Negative resonant radiation root",
+      "source_refs": [
+        {
+          "type": "main_figure",
+          "value": "Main Fig. 2(c) NRR phase-matching label"
+        }
+      ],
+      "latex": "\\omega'_{\\mathrm{NRR}}=-\\omega'_{\\mathrm{pump}}",
+      "role": "Defines the spontaneous negative-frequency resonant-radiation marker.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The NRR root relation is identified in Main Fig. 2(c); Main Eq. (1) itself defines only the co-moving frequency transformation."
+        },
+        {
+          "id": "EQ002_root",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Broad-bracket bisection on the formula-only default surrogate returns the NRR root near 232.1 nm; this is a reconstructed feature, not a paper-exact result."
+        }
+      ],
+      "numerical_form": "Scan and bisect on the 7-10 rad/fs UV interval without encoding source-figure coordinates.",
+      "code_refs": [
+        "src/optical_hawking/analysis.py:figure2_landmarks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Stimulated Hawking-partner root",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Main Methods Eq. (B.1)"
+        }
+      ],
+      "latex": "\\omega'_-=-\\omega'_{\\mathrm{probe}}",
+      "role": "Defines the ultraviolet partner of the infrared probe.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The identity is stated in Main Methods Eq. (B.1), not in the supplementary equation sequence."
+        },
+        {
+          "id": "EQ003_root",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The clean surrogate resolves a distinct negative-frequency partner and records its displacement from the paper's approximately 233 nm result as a missing-dispersion-parameter gap."
+        }
+      ],
+      "numerical_form": "Evaluate omega-prime at the probe, negate it, and find the UV-branch root.",
+      "code_refs": [
+        "src/optical_hawking/analysis.py:figure2_landmarks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Backreaction phase-matching root",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Main Methods Eq. (B.3)"
+        }
+      ],
+      "latex": "\\omega'_B=\\omega'_{\\mathrm{pump}}-2\\omega'_{\\mathrm{probe}}",
+      "role": "Defines the conjugated-SPM backreaction channel and its blue shift from the Hawking partner.",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The identity is stated in Main Methods Eq. (B.3), not in the supplementary equation sequence."
+        },
+        {
+          "id": "EQ004_root",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Across the clean default surrogate the backreaction root is blue of the Hawking partner; its exact separation is not scored because the measured dispersion is unavailable."
+        }
+      ],
+      "numerical_form": "Form the co-moving target from pump and probe, then bisect on the UV branch.",
+      "code_refs": [
+        "src/optical_hawking/analysis.py:figure2_landmarks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Analytic-signal unidirectional propagation equation",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eq. (3)"
+        }
+      ],
+      "latex": "i\\partial_\\zeta a_\\omega+u\\beta(\\omega)a_\\omega+u\\gamma(a^3+3|a|^2a+3|a|^2a^*)_{\\omega,+}=0",
+      "role": "Advances the positive-frequency analytic field through the fibre.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The analytic-signal UPPE is Supplement Eq. (3); Main Methods Eq. (A.1) is the real-field wave equation."
+        },
+        {
+          "id": "EQ005_linear",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With gamma=0, both integrators equal the exact linear phase solution."
+        },
+        {
+          "id": "EQ005_projection",
+          "type": "invariant",
+          "status": "passed",
+          "reason": "Negative laboratory-frequency bins remain exactly zero."
+        }
+      ],
+      "numerical_form": "FFT pseudo-spectral nonlinear RHS with exact co-moving linear phase and a positive-frequency mask.",
+      "code_refs": [
+        "src/optical_hawking/solver.py:AnalyticSignalUPPE"
+      ],
+      "open_questions": [
+        "The public paper does not provide a complete executable beta(omega) coefficient table."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Cubic-polarization channel decomposition",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "three cubic terms in Supplement Eq. (3)"
+        }
+      ],
+      "latex": "P^{(3)}_+=\\left(a^3+3|a|^2a+3|a|^2a^*\\right)_+",
+      "role": "Separates THG, ordinary SPM, and conjugated SPM for the causal counterfactual.",
+      "derived_from": [
+        "EQ005"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The three cubic channels are stated in the supplementary propagation model."
+        },
+        {
+          "id": "EQ006_ablation",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Term weights disable only conjugated SPM while preserving identical initial fields."
+        }
+      ],
+      "numerical_form": "Four batched scenarios share the same FFT grid; the third term weight is one or zero.",
+      "code_refs": [
+        "src/optical_hawking/solver.py:build_counterfactual_batch",
+        "src/optical_hawking/solver.py:nonlinear_rhs"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Sech-pulse power normalization",
+      "source_refs": [
+        {
+          "type": "methods_parameters",
+          "value": "pulse FWHM, average power, and 80 MHz repetition rate"
+        }
+      ],
+      "latex": "I(t)=P_0\\,\\mathrm{sech}^2(t/T_0),\\quad T_0=\\tau_{\\mathrm{FWHM}}/1.762747,\\quad P_0=E_p/(2T_0)",
+      "role": "Converts disclosed laser parameters into deterministic initial field amplitudes.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Pulse FWHM, average powers, and repetition rate are stated in Methods/Supplement."
+        },
+        {
+          "id": "EQ007_energy",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integrating P0 sech^2(t/T0) gives 2 P0 T0 = pulse energy."
+        }
+      ],
+      "numerical_form": "Pulse energy is average power divided by repetition rate; field amplitude is sqrt(power).",
+      "code_refs": [
+        "src/optical_hawking/model.py:PulseSpec"
+      ],
+      "open_questions": [
+        "Measured chirp, detailed pulse shape, and pump-probe delay are not reported numerically."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Power-law sideband amplitudes",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Eq. (C.3)"
+        }
+      ],
+      "latex": "A_m=\\widetilde g\\,\\frac{1-X^2}{1+X^2}(-iX)^{|m|},\\quad X=\\frac{\\sqrt{1+(2\\pi\\chi)^2}-1}{2\\pi\\chi},\\quad \\chi=\\Omega/\\delta'",
+      "role": "Turns ultrashort-pulse modulation into a geometric sideband ladder.",
+      "derived_from": [
+        "EQ005"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The coefficient and modulation map are stated in Methods Eq. (C.3)."
+        },
+        {
+          "id": "EQ008_decay",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For zero backreaction and isolated peaks, adjacent sideband intensities decay as X squared."
+        }
+      ],
+      "numerical_form": "Sum integer sideband orders from -10 through 10; omitted terms are below the plotted resolution for fitted X values.",
+      "code_refs": [
+        "src/optical_hawking/theory.py:sideband_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Backreaction sideband asymmetry",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Eq. (C.4)"
+        }
+      ],
+      "latex": "\\widetilde g_m=\\begin{cases}\\widetilde g_-+i\\widetilde g_B/X,&m<0,\\\\\\widetilde g_- - i\\widetilde g_B X,&m\\ge 0.\\end{cases}",
+      "role": "Makes the band intensities asymmetric and exposes the backreaction contribution.",
+      "derived_from": [
+        "EQ008",
+        "EQ004"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The piecewise amplitudes are stated in Methods Eq. (C.4)."
+        },
+        {
+          "id": "EQ009_asymmetry",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The synthetic test makes the blue/backreaction sideband stronger only when the backreaction intensity is non-zero."
+        }
+      ],
+      "numerical_form": "Use |g_-|^2+|g_B|^2/X^2 for m<0 and |g_-|^2+|g_B|^2X^2 for m>=0 after incoherent averaging.",
+      "code_refs": [
+        "src/optical_hawking/theory.py:sideband_spectrum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ010",
+      "title": "Incoherently averaged Hawking spectrum",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Eq. (D.1) and the following peak-profile definition"
+        }
+      ],
+      "latex": "I_{\\mathrm{signal}}(\\omega)\\propto\\sum_m|\\widetilde g_m|^2X^{2|m|}I_H(\\omega-\\omega_m),\\quad I_H(\\nu)=1-\\theta(\\nu)^2,\\quad \\theta=\\frac{\\int_0^{\\nu}\\mathrm{sech}^2(v^\\mu)\\,dv}{\\int_0^\\infty\\mathrm{sech}^2(v^\\mu)\\,dv}",
+      "role": "Generates all six black theoretical curves in Nature Fig. 4.",
+      "derived_from": [
+        "EQ008",
+        "EQ009"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The incoherent sum, peak centres, profile, and six mu values are stated in Methods D."
+        },
+        {
+          "id": "EQ010_sech",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At mu=1 the numerical integral agrees with sech squared to 2e-7."
+        },
+        {
+          "id": "EQ010_synthetic",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A synthetic formula-generated spectrum is recovered by the independent fitting test, and the scientific campaign evaluates all six mu values as a parameter-sensitivity family without reading Fig. 4 markers."
+        }
+      ],
+      "numerical_form": "Tabulate the normalized profile integral and evaluate a declared width/modulation/backreaction sensitivity grid for each of the six printed mu values. No source marker is a fit input.",
+      "code_refs": [
+        "src/optical_hawking/theory.py:hawking_peak_profile",
+        "src/optical_hawking/theory.py:sideband_spectrum",
+        "src/optical_hawking/paper_scale_campaign.py:_sideband_unit"
+      ],
+      "open_questions": [
+        "The raw spectra and six fitted values of omega-minus, omega-B, Delta, X, |g-minus|^2, and |g-B|^2 are not published."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Thermal normalization and equal-slope test",
+      "source_refs": [
+        {
+          "type": "methods_equation",
+          "value": "Eqs. (D.2) and (D.3)"
+        },
+        {
+          "type": "main_figure",
+          "value": "Nature Fig. 5"
+        }
+      ],
+      "latex": "I_H=\\frac{\\omega_2}{P}|\\widetilde g_-|^2,\\quad I_B=\\left(\\frac{\\omega_2}{P}\\right)^2|\\widetilde g_B|^2,\\quad \\ln p_{H,B}=a_{H,B}+b_{H,B}\\,\\omega_+/\\omega_1",
+      "role": "Tests whether Hawking radiation and backreaction share the same effective thermal slope.",
+      "derived_from": [
+        "EQ010"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The normalization and equal-slope prediction are stated in Methods Eqs. (D.2-D.3)."
+        },
+        {
+          "id": "EQ011_slope",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Taking logarithms of Eqs. (D.2-D.3) gives equal coefficients of omega-plus/omega-one; the formula-only runner verifies exactly equal slopes in a dimensionless gauge."
+        },
+        {
+          "id": "EQ011_policy",
+          "type": "consistency_check",
+          "status": "passed",
+          "reason": "A comparison-only vector audit suggests a plotted-line/exclusion-policy discrepancy, but raw points and fresh-context review are missing, so no paper-error candidate is promoted."
+        }
+      ],
+      "numerical_form": "Generate two affine log-probability families with one shared dimensionless slope. The plotted points, intercepts, and slope magnitude remain unavailable.",
+      "code_refs": [
+        "src/optical_hawking/paper_scale_campaign.py:_thermal_unit"
+      ],
+      "open_questions": [
+        "Exact raw NRR photon fluxes, fitted amplitudes, and red-shifted frequencies are unavailable."
+      ]
+    }
+  ]
+}

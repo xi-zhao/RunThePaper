@@ -327,6 +327,13 @@ def disk_hamiltonian_sparse(params: DiskParams) -> sp.csr_matrix:
     return sp.csr_matrix((values, (row_indices, col_indices)), shape=(size, size))
 
 
+def square_gap_square(params: SquareParams, eigen_count: int = 8) -> float:
+    """Return min |E|^2 for a finite square open-boundary spectrum near zero."""
+
+    values = lowest_square_eigenvalues(params, eigen_count=eigen_count)
+    return float(np.min(np.abs(values)) ** 2)
+
+
 def disk_gap_square(params: DiskParams, eigen_count: int = 8) -> float:
     """Return min |E|^2 for a finite disk spectrum near zero energy."""
 
@@ -475,10 +482,28 @@ def source_disk_numerical_boundary(gamma: float) -> float:
 
 def generate_open_boundary_phase_diagram_rows(
     gamma_values: Iterable[float],
+    independent_boundary: dict[float, float] | None = None,
 ) -> list[dict[str, float | str]]:
-    """Generate the Fig. 1 phase-diagram objects with explicit provenance."""
+    """Generate the Fig. 1 phase-diagram objects with explicit provenance.
+
+    ``independent_boundary`` maps gamma to the m* transition computed from
+    finite-size open-boundary spectra (see run_independent_obc_boundary.py).
+    When provided it is emitted as its own series so the rendered red curve
+    can come from independent numerics with the source table as reference.
+    """
 
     rows: list[dict[str, float | str]] = []
+    for gamma, m_star in sorted((independent_boundary or {}).items()):
+        rows.append(
+            {
+                "target_id": "T003",
+                "series_id": "independent_numerical_boundary",
+                "gamma": float(gamma),
+                "m": float(m_star),
+                "region": "open_boundary_transition",
+                "source": "independent_finite_size_extrapolation",
+            }
+        )
     for gamma in [float(value) for value in gamma_values]:
         lower_bloch, upper_bloch = open_boundary_bloch_phase_boundaries(gamma)
         theory_boundary = open_boundary_non_bloch_phase_boundary(gamma)
@@ -547,10 +572,27 @@ def generate_open_boundary_phase_diagram_rows(
 
 def generate_disk_phase_diagram_rows(
     gamma_values: Iterable[float],
+    independent_boundary: dict[float, float] | None = None,
 ) -> list[dict[str, float | str]]:
-    """Generate Supplemental Fig. S3 disk phase-diagram objects."""
+    """Generate Supplemental Fig. S3 disk phase-diagram objects.
+
+    ``independent_boundary`` maps gamma to the m* transition computed from
+    disk finite-size spectra; when provided it is emitted as its own series
+    so the red curve can come from independent numerics.
+    """
 
     rows: list[dict[str, float | str]] = []
+    for gamma, m_star in sorted((independent_boundary or {}).items()):
+        rows.append(
+            {
+                "target_id": "T006",
+                "series_id": "independent_numerical_boundary",
+                "gamma": float(gamma),
+                "m": float(m_star),
+                "region": "disk_open_boundary_transition",
+                "source": "independent_finite_size_extrapolation",
+            }
+        )
     for gamma in [float(value) for value in gamma_values]:
         lower_bloch, upper_bloch = open_boundary_bloch_phase_boundaries(gamma)
         theory_boundary = open_boundary_non_bloch_phase_boundary(gamma)
@@ -757,6 +799,138 @@ def _momentum_grid_with_zero(points: int) -> np.ndarray:
     if np.any(np.isclose(grid, 0.0)):
         return grid
     return np.sort(np.append(grid, 0.0))
+
+
+def non_bloch_bulk_min_abs_energy(
+    gamma: float,
+    m: float,
+    *,
+    coarse_points: int = 201,
+    refine_rounds: int = 3,
+    params_template: CylinderParams | None = None,
+) -> float:
+    """Return min |E| of the non-Bloch bulk dispersion via closed form.
+
+    Uses E^2 = dx^2 + dy^2 + dz^2 of the 2x2 non-Bloch Hamiltonian, evaluated
+    on a dense momentum grid with local grid refinement around the minimum.
+    This is an independent gaplessness probe: it does not use the analytic
+    band-touching boundary formula.
+    """
+
+    base = params_template or CylinderParams()
+    v_x, v_y = base.v_x, base.v_y
+    t_x, t_y = base.t_x, base.t_y
+    gamma_x = gamma_y = float(gamma)
+    gamma_z = base.gamma_z
+
+    def min_on_window(kx_lo: float, kx_hi: float, ky_lo: float, ky_hi: float, points: int) -> tuple[float, float, float]:
+        kx = np.linspace(kx_lo, kx_hi, points)
+        ky = np.linspace(ky_lo, ky_hi, points)
+        kx_mesh, ky_mesh = np.meshgrid(kx, ky, indexing="ij")
+        numerator = m - t_x * np.cos(kx_mesh) + gamma_y
+        denominator = m - t_x * np.cos(kx_mesh) - gamma_y
+        with np.errstate(divide="ignore", invalid="ignore"):
+            radius = np.sqrt(np.abs(numerator / denominator))
+            beta = radius * np.exp(1.0j * ky_mesh)
+            sin_ky = (beta - beta**-1) / 2.0j
+            cos_ky = (beta + beta**-1) / 2.0
+            dx = v_x * np.sin(kx_mesh) + 1.0j * gamma_x
+            dy = v_y * sin_ky + 1.0j * gamma_y
+            dz = m - t_x * np.cos(kx_mesh) - t_y * cos_ky + 1.0j * gamma_z
+            abs_energy = np.sqrt(np.abs(dx**2 + dy**2 + dz**2))
+        abs_energy = np.where(np.isfinite(abs_energy), abs_energy, np.inf)
+        flat_index = int(np.argmin(abs_energy))
+        i, j = np.unravel_index(flat_index, abs_energy.shape)
+        return float(abs_energy[i, j]), float(kx_mesh[i, j]), float(ky_mesh[i, j])
+
+    best, kx_best, ky_best = min_on_window(-np.pi, np.pi, -np.pi, np.pi, coarse_points)
+    window = 2.0 * np.pi / coarse_points
+    for _ in range(refine_rounds):
+        value, kx_best, ky_best = min_on_window(
+            kx_best - window, kx_best + window, ky_best - window, ky_best + window, 81
+        )
+        best = min(best, value)
+        window /= 40.0
+    return best
+
+
+def non_bloch_chern_number(
+    gamma: float,
+    m: float,
+    *,
+    kx_points: int = 41,
+    ky_points: int = 41,
+    gap_threshold: float = 0.12,
+    params_template: CylinderParams | None = None,
+) -> int | None:
+    """Integrate the non-Bloch Chern number C_y directly on the deformed torus.
+
+    Uses the Fukui-Hatsugai-Suzuki lattice construction with biorthogonal
+    left/right link variables for the lower Re(E) band of the 2x2 non-Bloch
+    cylinder Hamiltonian. Returns ``None`` when the real line gap closes on
+    the sampled grid, where the band Chern number is undefined.
+
+    The momentum grid is offset by an irrational fraction (1/pi) of a step:
+    GBZ radius singularities sit at special angles that are rational
+    multiples of pi (kx = 0, pi/2, pi, ...), and the irrational offset
+    guarantees no grid point ever lands on one, for any grid size.
+    """
+
+    if kx_points <= 0 or ky_points <= 0:
+        raise ValueError("kx_points and ky_points must be positive")
+    base = params_template or CylinderParams()
+    params = CylinderParams(
+        t_x=base.t_x,
+        t_y=base.t_y,
+        v_x=base.v_x,
+        v_y=base.v_y,
+        gamma_x=gamma,
+        gamma_y=gamma,
+        gamma_z=base.gamma_z,
+        m=m,
+        L_y=base.L_y,
+        target_id=base.target_id,
+    )
+    offset = 1.0 / np.pi
+    kx_grid = -np.pi + (np.arange(kx_points) + offset) * (2.0 * np.pi / kx_points)
+    ky_grid = -np.pi + (np.arange(ky_points) + offset) * (2.0 * np.pi / ky_points)
+
+    right_vectors = np.empty((kx_points, ky_points, 2), dtype=np.complex128)
+    left_vectors = np.empty((kx_points, ky_points, 2), dtype=np.complex128)
+    min_real_gap = float("inf")
+    for i, kx in enumerate(kx_grid):
+        for j, ky_tilde in enumerate(ky_grid):
+            h = non_bloch_cylinder_hamiltonian(float(kx), float(ky_tilde), params)
+            eigenvalues, right = np.linalg.eig(h)
+            left = np.linalg.inv(right)  # rows are biorthonormal left eigenvectors
+            band = int(np.argmin(eigenvalues.real))
+            min_real_gap = min(min_real_gap, float(abs(eigenvalues[band].real)))
+            right_vectors[i, j] = right[:, band]
+            left_vectors[i, j] = left[band, :]
+
+    if min_real_gap < gap_threshold:
+        return None
+
+    def link(i: int, j: int, i2: int, j2: int) -> complex:
+        value = complex(np.dot(left_vectors[i, j], right_vectors[i2, j2]))
+        if value == 0:
+            raise ValueError("biorthogonal link vanished; refine the momentum grid")
+        return value
+
+    total_flux = 0.0
+    for i in range(kx_points):
+        i_next = (i + 1) % kx_points
+        for j in range(ky_points):
+            j_next = (j + 1) % ky_points
+            plaquette = (
+                link(i, j, i_next, j)
+                * link(i_next, j, i_next, j_next)
+                / link(i, j_next, i_next, j_next)
+                / link(i, j, i, j_next)
+            )
+            total_flux += float(np.angle(plaquette))
+
+    return int(round(total_flux / (2.0 * np.pi)))
 
 
 def classify_cylinder_phase_point(

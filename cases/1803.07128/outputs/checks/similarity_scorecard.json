@@ -2,7 +2,7 @@
   "paper_id": "1803.07128",
   "schema_version": 3,
   "score_model": "rra_similarity_v3_scientific_crop_pixel_primary",
-  "summary": "All numerical panels are independently generated; missing benchmark/training metadata prevents paper-exact status for Fig. 5--8.",
+  "summary": "Four display targets cover fourteen numerical items; the independent Appendix B-D claim is implemented and reveals qualified source-discrepancy candidates pending fresh review.",
   "raw_pixel_summary": {
     "primary_metric": "foreground_mean_absolute_pixel_similarity_0_100",
     "mean_scientific_region_score": 69.4855,
@@ -21,15 +21,18 @@
       "components": {
         "feature_match": {
           "score": 48.0,
-          "reason": "The exact kernel narrows monotonically as c increases."
+          "reason": "The exact kernel narrows monotonically as c increases.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 27.8,
-          "reason": "Post-freeze foreground similarity is 79.4314/100."
+          "reason": "Post-freeze foreground similarity is 79.4314/100.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
           "score": 15.0,
-          "reason": "Every numerical subpanel assigned to the composite target is generated."
+          "reason": "Every numerical subpanel assigned to the composite target is generated.",
+          "max_score": 15.0
         }
       },
       "evaluation": {
@@ -51,7 +54,8 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Source figures were unavailable to the isolated numerical bundle and read only after data hashes were frozen.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/T001_*",
@@ -89,7 +93,23 @@
       "remaining_gap": "None in the printed kernel formula.",
       "score_cap": 70.0,
       "cap_reason": "The only reference is the rendered source figure; author arrays and code are prohibited inputs.",
-      "score_aggregation": "included"
+      "score_aggregation": "included",
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 70.0,
+      "component_total": 90.8,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
@@ -101,15 +121,18 @@
       "components": {
         "feature_match": {
           "score": 43.0,
-          "reason": "The formula-derived kernel learns all named datasets and gains capacity with c."
+          "reason": "The formula-derived kernel learns all named datasets and gains capacity with c.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 22.48,
-          "reason": "Post-freeze foreground similarity is 64.2386/100."
+          "reason": "Post-freeze foreground similarity is 64.2386/100.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
           "score": 15.0,
-          "reason": "Every numerical subpanel assigned to the composite target is generated."
+          "reason": "Every numerical subpanel assigned to the composite target is generated.",
+          "max_score": 15.0
         }
       },
       "evaluation": {
@@ -130,7 +153,96 @@
         "parameter_match": "unknown",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Source figures were unavailable to the isolated numerical bundle and read only after data hashes were frozen.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The paper does not disclose the random seeds, noise, lower-row generator or SVC regularization needed to reconstruct the six Fig. 5 panels paper-exactly.",
+            "evidence": [
+              "parameter_provenance.json",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "Fig. 5, six SVC decision maps is scientifically runnable, but the publication omits indispensable benchmark or training metadata; no amount of local rerunning can prove the missing author trajectory.",
+            "confidence": "confirmed",
+            "evidence": [
+              "PAPER_MAP.md",
+              "parameter_provenance.json",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The independent implementation passes formula, invariant and target checks; the remaining paper-exact gap is not an observed code failure.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The publication, source package, and frozen provenance table were audited field by field; the target-specific seed, generator, training, and cutoff values named above are absent.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/featuremap_variational_cvcircuit.tex",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused model and paper-scale tests pass for the shared feature-map and classifier implementation.",
+                "evidence": [
+                  "tests/test_models.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific scientific feature checks pass on independently generated data.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T002"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The accepted numerical run is isolated and reads no raw paper, reference image, author code or author array.",
+                "evidence": [
+                  "outputs/runs/1803.07128-independent-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No failed formula, invariant, unit or execution check identifies a reproduction-code defect; the unsupported quantity is the unpublished author instance.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-exact parameters and trajectory for Fig. 5, six SVC decision maps.",
+            "items": [
+              "T002"
+            ],
+            "completion": "Scientific feature implementation is complete; exact author-instance reproduction remains externally blocked by missing publication metadata."
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the omitted author benchmark/training contract and rerun the frozen implementation without changing scientific arrays to fit the source figure.",
+            "expected_resolution": "The disclosed metadata would either promote the target to paper-exact or expose a genuine model/code discrepancy.",
+            "evidence_to_produce": [
+              "updated parameter provenance",
+              "new isolated run attestation",
+              "updated scientific checks"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/T002_*",
@@ -168,7 +280,23 @@
       "remaining_gap": "The paper omits random seeds and critical benchmark/training metadata; this target is not paper-exact.",
       "score_cap": 70.0,
       "cap_reason": "The only reference is the rendered source figure; author arrays and code are prohibited inputs.",
-      "score_aggregation": "included"
+      "score_aggregation": "included",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 80.48,
+      "score": 50.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -180,15 +308,18 @@
       "components": {
         "feature_match": {
           "score": 43.0,
-          "reason": "The real Fock map reaches unit training accuracy while held-out accuracy stays imperfect."
+          "reason": "The real Fock map reaches unit training accuracy while held-out accuracy stays imperfect.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 27.2,
-          "reason": "Post-freeze foreground similarity is 77.7280/100."
+          "reason": "Post-freeze foreground similarity is 77.7280/100.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
           "score": 15.0,
-          "reason": "Every numerical subpanel assigned to the composite target is generated."
+          "reason": "Every numerical subpanel assigned to the composite target is generated.",
+          "max_score": 15.0
         }
       },
       "evaluation": {
@@ -209,7 +340,96 @@
         "parameter_match": "unknown",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Source figures were unavailable to the isolated numerical bundle and read only after data hashes were frozen.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The paper does not disclose the blob generator, random seed, Fock cutoff or exact sample order needed to reconstruct the Fig. 6 training path paper-exactly.",
+            "evidence": [
+              "parameter_provenance.json",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "Fig. 6, three Fock-perceptron epochs is scientifically runnable, but the publication omits indispensable benchmark or training metadata; no amount of local rerunning can prove the missing author trajectory.",
+            "confidence": "confirmed",
+            "evidence": [
+              "PAPER_MAP.md",
+              "parameter_provenance.json",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The independent implementation passes formula, invariant and target checks; the remaining paper-exact gap is not an observed code failure.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The publication, source package, and frozen provenance table were audited field by field; the target-specific seed, generator, training, and cutoff values named above are absent.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/featuremap_variational_cvcircuit.tex",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused model and paper-scale tests pass for the shared feature-map and classifier implementation.",
+                "evidence": [
+                  "tests/test_models.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific scientific feature checks pass on independently generated data.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T003"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The accepted numerical run is isolated and reads no raw paper, reference image, author code or author array.",
+                "evidence": [
+                  "outputs/runs/1803.07128-independent-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No failed formula, invariant, unit or execution check identifies a reproduction-code defect; the unsupported quantity is the unpublished author instance.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-exact parameters and trajectory for Fig. 6, three Fock-perceptron epochs.",
+            "items": [
+              "T003"
+            ],
+            "completion": "Scientific feature implementation is complete; exact author-instance reproduction remains externally blocked by missing publication metadata."
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the omitted author benchmark/training contract and rerun the frozen implementation without changing scientific arrays to fit the source figure.",
+            "expected_resolution": "The disclosed metadata would either promote the target to paper-exact or expose a genuine model/code discrepancy.",
+            "evidence_to_produce": [
+              "updated parameter provenance",
+              "new isolated run attestation",
+              "updated scientific checks"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/T003_*",
@@ -247,7 +467,23 @@
       "remaining_gap": "The paper omits random seeds and critical benchmark/training metadata; this target is not paper-exact.",
       "score_cap": 70.0,
       "cap_reason": "The only reference is the rendered source figure; author arrays and code are prohibited inputs.",
-      "score_aggregation": "included"
+      "score_aggregation": "included",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 85.2,
+      "score": 50.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
@@ -259,15 +495,18 @@
       "components": {
         "feature_match": {
           "score": 43.0,
-          "reason": "The independently simulated four-block circuit learns the moons benchmark and sharply reduces loss."
+          "reason": "The independently simulated four-block circuit learns the moons benchmark and sharply reduces loss.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 19.79,
-          "reason": "Post-freeze foreground similarity is 56.5441/100."
+          "reason": "Post-freeze foreground similarity is 56.5441/100.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
           "score": 15.0,
-          "reason": "Every numerical subpanel assigned to the composite target is generated."
+          "reason": "Every numerical subpanel assigned to the composite target is generated.",
+          "max_score": 15.0
         }
       },
       "evaluation": {
@@ -289,7 +528,96 @@
         "parameter_match": "reduced_scale",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Source figures were unavailable to the isolated numerical bundle and read only after data hashes were frozen.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The paper does not disclose the dataset seed/noise, initialization, optimizer schedule, regularization, displacement convention or Fock cutoff needed to reconstruct Fig. 8 paper-exactly.",
+            "evidence": [
+              "parameter_provenance.json",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "Fig. 8, variational decision map and loss is scientifically runnable, but the publication omits indispensable benchmark or training metadata; no amount of local rerunning can prove the missing author trajectory.",
+            "confidence": "confirmed",
+            "evidence": [
+              "PAPER_MAP.md",
+              "parameter_provenance.json",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The independent implementation passes formula, invariant and target checks; the remaining paper-exact gap is not an observed code failure.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The publication, source package, and frozen provenance table were audited field by field; the target-specific seed, generator, training, and cutoff values named above are absent.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/featuremap_variational_cvcircuit.tex",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused model and paper-scale tests pass for the shared feature-map and classifier implementation.",
+                "evidence": [
+                  "tests/test_models.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific scientific feature checks pass on independently generated data.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T004"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The accepted numerical run is isolated and reads no raw paper, reference image, author code or author array.",
+                "evidence": [
+                  "outputs/runs/1803.07128-independent-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No failed formula, invariant, unit or execution check identifies a reproduction-code defect; the unsupported quantity is the unpublished author instance.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-exact parameters and trajectory for Fig. 8, variational decision map and loss.",
+            "items": [
+              "T004"
+            ],
+            "completion": "Scientific feature implementation is complete; exact author-instance reproduction remains externally blocked by missing publication metadata."
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the omitted author benchmark/training contract and rerun the frozen implementation without changing scientific arrays to fit the source figure.",
+            "expected_resolution": "The disclosed metadata would either promote the target to paper-exact or expose a genuine model/code discrepancy.",
+            "evidence_to_produce": [
+              "updated parameter provenance",
+              "new isolated run attestation",
+              "updated scientific checks"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/T004_*",
@@ -327,10 +655,323 @@
       "remaining_gap": "The paper omits random seeds and critical benchmark/training metadata; this target is not paper-exact.",
       "score_cap": 70.0,
       "cap_reason": "The only reference is the rendered source figure; author arrays and code are prohibited inputs.",
-      "score_aggregation": "included"
+      "score_aggregation": "included",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 70.0,
+      "component_total": 77.79,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T005",
+      "label": "Appendices B-D universal linear-independence and separability claim",
+      "figure_refs": [
+        "Appendices B-D, Propositions 1-2 and Eqs. (C1)-(C2)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Independent tests support the corrected finite-set theorem and reproduce stable counterexamples to the unqualified printed statement.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Explicit Fock and analytic Gram matrices agree within 9.77e-12; all 64 labels interpolate within 9.33e-15.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The single-mode, multi-mode, arbitrary-label and domain-qualification branches of the printed claim are all adjudicated.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "source_discrepancy",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ009"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "not_applicable",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is an analytic claim; rank, residual and counterexample artifacts replace an inapplicable pixel comparison.",
+        "pixel_alternative_evidence": [
+          "outputs/checks/T005_separability_property_tests.json",
+          "outputs/checks/T005_independent_rank_crosscheck.json"
+        ],
+        "reference_comparison": "analytic_reference",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The printed universal statement fails without identifying phases modulo 2*pi, and Proposition 1 is false as written even though the corrected finite-set feature-space conclusion is supported.",
+            "evidence": [
+              "outputs/checks/T005_separability_property_tests.json",
+              "outputs/data/T005_counterexample_search.json",
+              "DERIVATION.md"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The paper omits the physical phase-domain qualification, states an insufficient affine-separability condition, and uses nonzero pairwise overlaps as an invalid proof of multi-mode linear independence.",
+            "confidence": "probable",
+            "evidence": [
+              "paper-source/featuremap_variational_cvcircuit.tex",
+              "outputs/data/T005_counterexample_search.json",
+              "outputs/checks/T005_independent_rank_crosscheck.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Exact counterexamples, independent Fock and analytic-Gram paths, convergence checks and isolated execution agree; no reproduction-code fault was found.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every phase, cutoff, tolerance and counterexample coordinate is frozen in the T005 config and traced as a paper value or independent falsification choice.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "config/t005_separability.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover phase periodicity, Vandermonde rank, Gram parity, affine interpolation and the Proposition 1 counterexample.",
+                "evidence": [
+                  "tests/test_separability.py"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "Inputs phi and phi+2*pi generate the same state to 1.32e-15, and the three-point affine counterexample fails by an exact rank condition.",
+                "evidence": [
+                  "outputs/data/T005_counterexample_search.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The explicit tensor-product Fock Gram converges to the independently evaluated closed-form overlap Gram with 9.77e-12 maximum error.",
+                "evidence": [
+                  "outputs/checks/T005_independent_rank_crosscheck.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The theorem probe ran from five declared inputs with no forbidden raw, reference or original-figure access.",
+                "evidence": [
+                  "outputs/runs/1803.07128-t005-separability-v1-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A shared rank or truncation bug would not survive both the exact affine counterexample and the independent analytic-Gram crosscheck.",
+              "evidence": [
+                "tests/test_separability.py",
+                "outputs/checks/T005_independent_rank_crosscheck.json"
+              ]
+            },
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The corrected finite-set result was checked by two independent representations and all 64 binary labelings on the declared six-point test set.",
+              "evidence": [
+                "outputs/checks/T005_separability_property_tests.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only the wording and proof of the universal Appendix B-D claim are disputed; the finite feature-map result survives under an explicit modulo-2*pi domain condition.",
+            "items": [
+              "T005"
+            ],
+            "completion": "Implementation and falsification are complete; final paper-error classification waits for fresh-context review."
+          },
+          "next_discriminating_test": {
+            "action": "A fresh-context reviewer must independently rederive the phase-domain and affine-rank conditions and attempt to falsify both counterexamples without reading the original reproduction discussion.",
+            "expected_resolution": "Agreement promotes the result to a paper-error candidate; disagreement reopens the mathematical or implementation diagnosis.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "outputs/checks/T005_separability_property_tests.json",
+        "outputs/checks/T005_independent_rank_crosscheck.json",
+        "outputs/data/T005_counterexample_search.json",
+        "outputs/runs/1803.07128-t005-separability-v1-20260824/run_attestation.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Appendices B-D universal linear-independence and separability claim",
+            "status": "reproduced",
+            "evidence": "outputs/checks/T005_separability_property_tests.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t005_universal_separability",
+          "claim": "Finite phase-squeezed feature sets are full rank and shatter arbitrary binary labels when physical phases are distinct modulo 2*pi; the unqualified printed statement has explicit counterexamples.",
+          "essential": true,
+          "evidence": "outputs/checks/T005_separability_property_tests.json",
+          "status": "passed",
+          "tier": "analytic"
+        }
+      ],
+      "remaining_gap": "Fresh-context review must decide whether the stable source discrepancies qualify as a paper-error candidate.",
+      "score_cap": 90.0,
+      "cap_reason": "Analytic reference evidence has no author-data comparison and awaits independent paper-error adjudication.",
+      "score_aggregation": "included",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
-  "overall_score": 70.0,
-  "status": "passed",
-  "similarity_level": "numerical_feature_reproduction"
+  "overall_score": 66.0,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 5,
+    "critical_items": 5,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "none": 1,
+      "missing_benchmark_metadata": 2,
+      "not_paper_parameters": 1,
+      "source_discrepancy": 1
+    },
+    "parameter_match_counts": {
+      "paper_exact": 1,
+      "unknown": 2,
+      "reduced_scale": 1,
+      "not_applicable": 1
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 4,
+      "analytic_reference": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 5
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 5
+    },
+    "formula_gate_counts": {
+      "verified": 5
+    },
+    "paper_level_role_counts": {
+      "main_claim": 5
+    },
+    "physics_status_counts": {
+      "passed": 5
+    },
+    "physics_assertion_status_counts": {
+      "passed": 5
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T001"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "not_required": 1,
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 1,
+      "terminal_blocker": 3,
+      "react_loop_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T005"
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 3,
+      "scientific_result_mismatch": 1
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 3,
+      "paper_claim_discrepancy": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 4
+    }
+  },
+  "status": "passed"
 }

@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "paper_id": "1804.04672",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Main non-Hermitian Chern Bloch Hamiltonian",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "model"
+        }
+      ],
+      "latex": "H(k)=(v_x\\sin k_x+i\\gamma_x)\\sigma_x+(v_y\\sin k_y+i\\gamma_y)\\sigma_y+(m-t_x\\cos k_x-t_y\\cos k_y+i\\gamma_z)\\sigma_z",
+      "role": "Defines the two-band non-Hermitian Chern/Qi-Wu-Zhang model used by the first target.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source_model",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Found in paper-source/nonHermitianChernarXivv3.tex with label model."
+        },
+        {
+          "id": "EQC001_author_scientific_closure_v1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The paper-scale square evolution preserves the declared normalized-intensity convention at every printed time.",
+          "evidence": "outputs/data/scientific_closure/T004.json"
+        }
+      ],
+      "numerical_form": "Use Pauli matrices with real parameters t_x,t_y,v_x,v_y,m and non-Hermitian imaginary Zeeman fields gamma_x,gamma_y,gamma_z.",
+      "code_refs": [
+        "src/nonhermitian_chern.py:cylinder_hamiltonian",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [],
+      "source_verified": true,
+      "derivation_verified": true
+    },
+    {
+      "id": "EQC002",
+      "title": "Cylinder finite-strip Hamiltonian for T001",
+      "source_refs": [
+        {
+          "type": "figure_caption",
+          "value": "cylinder"
+        },
+        {
+          "type": "tex_contains",
+          "value": "Suppose that the cylinder has periodic-boundary condition in the x direction and open boundaries in the y direction."
+        },
+        {
+          "type": "tex_contains",
+          "value": "T_y=-t_y/2 sigma_z-i v_y/2 sigma_y"
+        }
+      ],
+      "latex": "H_y(k_x)=\\sum_y c_y^\\dagger M(k_x)c_y+\\sum_y c_y^\\dagger T_y c_{y+1}+\\sum_y c_{y+1}^\\dagger T_y^\\dagger c_y",
+      "role": "Turns the Bloch Hamiltonian into the finite strip eigenproblem for Fig. 3(b): periodic x, open y.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source_cylinder",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Cylinder paragraph states periodic x, open y, and diagonalization as a family of 1D Hamiltonians parametrized by k_x."
+        },
+        {
+          "id": "EQC002_source_hopping",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Open-boundary section gives T_y=-t_y/2 sigma_z-i v_y/2 sigma_y and its reverse hopping T_y^dagger."
+        },
+        {
+          "id": "EQC002_author_scientific_closure_v1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The finite-strip spectrum has the paper-scale row count and a resolution-stable chiral trace separated from the bulk line gap.",
+          "evidence": "outputs/data/scientific_closure/T001.json"
+        }
+      ],
+      "numerical_form": "M(k_x)=(v_x sin k_x+i gamma_x) sigma_x+i gamma_y sigma_y+(m-t_x cos k_x+i gamma_z) sigma_z; T_y=-t_y/2 sigma_z-i v_y/2 sigma_y; reverse hopping is T_y^dagger.",
+      "code_refs": [
+        "src/nonhermitian_chern.py:cylinder_hamiltonian",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "Boundary-localization candidates are retained as diagnostics; the rendered red subset now follows the analytic chiral edge trace E_+=sin(kx)+i gamma and E_-=-sin(kx)-i gamma."
+      ],
+      "source_verified": true,
+      "derivation_verified": true
+    },
+    {
+      "id": "EQC003",
+      "title": "Non-Bloch Chern number",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "chern"
+        }
+      ],
+      "latex": "C=(1/2\\pi i)\\int_{\\tilde T^2} d^2\\tilde k\\,\\epsilon^{ij}\\langle \\partial_i u_L(\\tilde k)|\\partial_j u_R(\\tilde k)\\rangle",
+      "role": "Provides the topological interpretation for the cylinder edge-state spectrum, but is not directly needed to generate T001 data.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source_chern",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Found in TeX source with label chern."
+        },
+        {
+          "id": "EQC003_author_scientific_closure_v1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Biorthogonal FHS integration gives C_y=1 and 0 on the two gapped sides at two independent momentum grids.",
+          "evidence": "outputs/data/scientific_closure/T002.json"
+        }
+      ],
+      "numerical_form": "Biorthogonal Berry-curvature integral over the generalized Brillouin zone.",
+      "code_refs": [
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "Direct non-Bloch Chern-number implementation is a later target."
+      ],
+      "source_verified": true,
+      "derivation_verified": true
+    },
+    {
+      "id": "EQC004",
+      "title": "Cylinder non-Bloch bulk continuum",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "bulkeigen2"
+        },
+        {
+          "type": "tex_label",
+          "value": "bulkbetay"
+        },
+        {
+          "type": "tex_contains",
+          "value": "|beta_1(E)|=|beta_2(E)| if E belongs to the continuum spectrum"
+        }
+      ],
+      "latex": "|\\beta_{1,2}|=\\sqrt{\\left|(m-t_x\\cos k_x+\\gamma_y)/(m-t_x\\cos k_x-\\gamma_y)\\right|}",
+      "role": "Defines the non-Bloch cylinder bulk continuum used to separate skin-localized bulk states from chiral edge-branch candidates.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source_equal_modulus",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement V derives the open-y cylinder condition |beta_1(E)|=|beta_2(E)| for continuum bulk spectrum."
+        },
+        {
+          "id": "EQC004_source_radius",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation bulkbetay gives the closed-form radius r(k_x)."
+        },
+        {
+          "id": "EQC004_author_scientific_closure_v1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The analytic cylinder edge trace and finite-strip eigenvalues agree within the frozen residual tolerance at both kx resolutions.",
+          "evidence": "outputs/data/scientific_closure/T001.json"
+        }
+      ],
+      "numerical_form": "Use beta=r(k_x) exp(i ky_tilde) in the original Bloch Hamiltonian to sample the open-y non-Bloch bulk continuum at fixed k_x.",
+      "code_refs": [
+        "src/nonhermitian_chern.py:non_bloch_cylinder_radius",
+        "src/nonhermitian_chern.py:non_bloch_cylinder_hamiltonian",
+        "src/nonhermitian_chern.py:non_bloch_cylinder_bulk_eigenvalues",
+        "scripts/analyze_edge_branch_candidates.py",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "The non-Bloch bulk continuum is retained as a diagnostic for skin-localized bulk states; the red branch itself is selected by the analytic edge trace and now passes pointwise EPS validation. The remaining validation frontier is full pixel layout and blue point-cloud distance."
+      ],
+      "source_verified": true,
+      "derivation_verified": true
+    },
+    {
+      "id": "EQC005",
+      "title": "Open-boundary phase-boundary formulas for Fig. 1",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "mpm"
+        },
+        {
+          "type": "tex_label",
+          "value": "quadratic"
+        },
+        {
+          "type": "supplement_table",
+          "value": "diskdata"
+        }
+      ],
+      "latex": "m_\\pm=2\\pm\\sqrt{2}\\gamma;\\quad m_c=2+\\gamma^2",
+      "role": "Defines the Bloch fan and the non-Bloch open-boundary phase-boundary curve used in Fig. 1.",
+      "derived_from": [
+        "EQC001",
+        "EQC003"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC005_source_phase_boundaries",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main text gives m_± and m=2+gamma^2; supplement table diskdata gives numerical boundary reference points."
+        }
+      ],
+      "numerical_form": "Use m_-=2-sqrt(2)gamma, m_+=2+sqrt(2)gamma, and m_c=2+gamma^2 for symmetric t=v=1 and gamma_x=gamma_y=gamma.",
+      "code_refs": [
+        "src/nonhermitian_chern.py:open_boundary_bloch_phase_boundaries",
+        "src/nonhermitian_chern.py:open_boundary_non_bloch_phase_boundary",
+        "src/nonhermitian_chern.py:source_disk_numerical_boundary_points"
+      ],
+      "open_questions": [
+        "The red Fig. 1 boundary still needs independent square finite-size extrapolation to replace or verify the supplemental numerical boundary reference."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "Square Hamiltonian and wave-packet evolution for Fig. 2",
+      "source_refs": [
+        {
+          "type": "figure_caption",
+          "value": "square"
+        },
+        {
+          "type": "supplement_section",
+          "value": "Technical details in the calculation of phase diagram"
+        }
+      ],
+      "latex": "i\\partial_t|\\psi(t)\\rangle=H|\\psi(t)\\rangle;\\quad \\psi(0)=N e^{-(x-15)^2/40-(y-1)^2/10}(1,1)^T",
+      "role": "Defines the square open-boundary eigenproblem and normalized wave-packet dynamics used by Fig. 2.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source_square_dynamics",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 2 caption gives L=30, m values, gamma=0.15, Gaussian initial state, time evolution equation, and displayed times."
+        },
+        {
+          "id": "EQC006_author_scientific_closure_v1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Direct and split semigroup propagation agree in normalized density to below 1e-10.",
+          "evidence": "outputs/data/scientific_closure/T004.json"
+        }
+      ],
+      "numerical_form": "Build the L x L real-space Hamiltonian with open x and y boundaries, compute low-energy eigenvalues near zero, and evolve psi(t)=exp(-iHt)psi(0) with intensity normalized at each displayed time.",
+      "code_refs": [
+        "src/nonhermitian_chern.py:square_hamiltonian_sparse",
+        "src/nonhermitian_chern.py:generate_square_spectrum_rows",
+        "src/nonhermitian_chern.py:square_wavepacket_snapshots",
+        "scripts/run_square_dynamics.py",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "The generated Fig. 2 panel is source-visual comparison only; source intensity maps and spectrum points are not yet digitized into quantitative pixel gates."
+      ],
+      "source_verified": true,
+      "derivation_verified": true
+    },
+    {
+      "id": "EQC007",
+      "title": "Finite-size gap-square extrapolation for Supplemental Fig. S2",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Technical details in the calculation of phase diagram"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "fitting"
+        }
+      ],
+      "latex": "|\\Delta|^2(L)=a/L^2+b,\\quad b=|\\Delta|^2(L\\to\\infty)",
+      "role": "Defines the linear finite-size extrapolation used to infer the thermodynamic-limit open-boundary gap square.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "source_verified": true,
+      "derivation_verified": true,
+      "checks": [
+        {
+          "id": "EQC007_source_gap_scaling",
+          "status": "passed",
+          "reason": "Supplement I states that |Delta|^2 is plotted versus 1/L^2 and the fit intercept gives |Delta|^2 in the L -> infinity limit.",
+          "type": "source_trace"
+        },
+        {
+          "id": "EQC007_author_scientific_closure_v1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Two finite-size windows independently select S4 transition masses within 0.04 of the printed formulas.",
+          "evidence": "outputs/data/scientific_closure/T007.json"
+        }
+      ],
+      "code_refs": [
+        "src/nonhermitian_chern.py:disk_hamiltonian_sparse",
+        "src/nonhermitian_chern.py:generate_disk_gap_scaling_rows",
+        "src/nonhermitian_chern.py:fit_gap_scaling_by_mass",
+        "scripts/run_gap_scaling.py",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "The current S2 reproduction uses a tractable radius subset and source-visual comparison; larger radii and digitized source-curve validation remain future gates."
+      ],
+      "numerical_form": "For each disk radius L, compute the finite open-boundary spectrum near zero, take |Delta|^2=min |E|^2, and fit |Delta|^2 against 1/L^2. The intercept is the thermodynamic-limit gap square."
+    },
+    {
+      "id": "EQC008",
+      "title": "Parameter-variation open-boundary transitions for Supplemental Fig. S4",
+      "source_refs": [
+        {
+          "type": "supplement_figure",
+          "value": "gammax"
+        },
+        {
+          "type": "tex_contains",
+          "value": "m=2+gamma_x^2/2"
+        },
+        {
+          "type": "tex_contains",
+          "value": "m=2+1.28125 gamma^2"
+        }
+      ],
+      "latex": "m_c=2+gamma_x^2/2 (gamma_y=0); m_c=2+1.28125 gamma^2 (v_x=0.8, gamma_x=gamma_y=gamma)",
+      "role": "Defines the two low-energy non-Bloch predictions tested against independent finite-square spectra in Supplemental Fig. S4.",
+      "derived_from": [
+        "EQC001",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_verified": true,
+      "checks": [
+        {
+          "id": "EQC008_source_s4",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement III prints both parameter families and both transition formulas."
+        },
+        {
+          "id": "EQC008_author_scientific_closure_v1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both printed S4 parameter families pass the two-window boundary and gamma-grid checks.",
+          "evidence": "outputs/data/scientific_closure/T007.json"
+        }
+      ],
+      "numerical_form": "For every gamma and mass offset, diagonalize finite open-boundary squares at multiple L, fit min|E|^2 versus 1/L^2, and compare the extrapolated transition with the printed formula.",
+      "code_refs": [
+        "src/supplemental_campaign.py:s4_theory_boundary",
+        "src/supplemental_campaign.py:s4_finite_size_scan",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "The two-window finite-size scan is executed; fresh review must decide whether absent author discretization limits literal panel identity."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Exactly solvable non-Hermitian Chern model",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "exactlybloch"
+        },
+        {
+          "type": "tex_label",
+          "value": "exactly"
+        }
+      ],
+      "latex": "H(k)=sin(k_x+i gamma_x) sigma_x+sin(k_y+i gamma_y) sigma_y+[m-t cos(k_x+i gamma_x)-t cos(k_y+i gamma_y)] sigma_z",
+      "role": "Defines Supplemental Figs. S8-S9 and its asymmetric real-space hopping realization.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC009_source_exact_model",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement VI prints both the Bloch and asymmetric real-space Hamiltonians."
+        }
+      ],
+      "numerical_form": "Build the printed 2x2 Bloch matrix or the finite open-y block-tridiagonal matrix without consulting source panels.",
+      "code_refs": [
+        "src/supplemental_campaign.py:exact_cylinder_hamiltonian",
+        "src/supplemental_campaign.py:exact_cylinder_spectrum_arrays"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Similarity transform and gamma-independent open-boundary phase boundary",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "An analytically solvable model"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "phaseexact"
+        }
+      ],
+      "latex": "S(x,y)=exp(gamma_x x+gamma_y y); S^{-1} H S=H_bar; m_c=2t; m_+-=t(cosh gamma_x+cosh gamma_y)+-sqrt(sinh^2 gamma_x+sinh^2 gamma_y)",
+      "role": "Explains why the exact model's open-boundary transition is gamma-independent even though the Bloch transition fans out.",
+      "derived_from": [
+        "EQC009"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "source_verified": true,
+      "derivation_verified": true,
+      "checks": [
+        {
+          "id": "EQC010_source_similarity",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement VI prints S(x,y), the transformed Hermitian model, m=2t, and both Bloch boundaries."
+        },
+        {
+          "id": "EQC010_similarity_transform",
+          "type": "numeric_identity",
+          "status": "passed",
+          "reason": "The isolated smoke run verifies the finite-y similarity-transform residual below 1e-12."
+        },
+        {
+          "id": "EQC010_author_scientific_closure_v1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The full two-dimensional open-square matrix satisfies S^-1 H(gamma) S=H(0) below 5e-12.",
+          "evidence": "outputs/data/scientific_closure/T010.json"
+        }
+      ],
+      "numerical_form": "Emit m=2t and the two Bloch curves over the declared gamma grid, and independently verify the finite-matrix similarity identity.",
+      "code_refs": [
+        "src/supplemental_campaign.py:exact_model_phase_rows",
+        "src/supplemental_campaign.py:similarity_transform_residual",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "Final RenderContract comparison for Supplemental Fig. S8 is pending."
+      ]
+    },
+    {
+      "id": "EQC011",
+      "title": "Exactly solvable cylinder continuum and transition lines",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "exactHy"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "exactcylinder"
+        }
+      ],
+      "latex": "E_+-=+-sqrt(sin^2(k_x+i gamma_x)+sin^2(k_y_tilde)+[m-cos(k_x+i gamma_x)-cos(k_y_tilde)]^2); m=1+exp(+-gamma_x)",
+      "role": "Defines the solid cylinder boundaries and finite-strip spectrum in Supplemental Fig. S9.",
+      "derived_from": [
+        "EQC009"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source_exact_cylinder",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement VI prints the finite-y hopping blocks, non-Bloch dispersion, and m=1+exp(+-gamma_x) boundaries."
+        },
+        {
+          "id": "EQC011_author_scientific_closure_v1",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The exact cylinder similarity identity, four dense phase curves, bulk line gap, and edge traces pass at 90 and 180 kx points.",
+          "evidence": "outputs/data/scientific_closure/T011.json"
+        }
+      ],
+      "numerical_form": "Diagonalize the 2L_y by 2L_y asymmetric strip at each k_x and emit the solid non-Bloch and dotted Bloch transition curves separately.",
+      "code_refs": [
+        "src/supplemental_campaign.py:exact_cylinder_phase_rows",
+        "src/supplemental_campaign.py:exact_cylinder_hamiltonian",
+        "src/supplemental_campaign.py:exact_cylinder_spectrum_arrays",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "open_questions": [
+        "Ly=40 and 90/180-kx convergence are executed as independent representatives; the supplement does not publish its displayed finite discretization."
+      ],
+      "source_verified": true,
+      "derivation_verified": true
+    }
+  ]
+}

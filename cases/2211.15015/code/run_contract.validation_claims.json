@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "run_id": "2211.15015-validation-claims-final-v2-20260825",
+  "target_ids": [
+    "T025",
+    "T026",
+    "T027",
+    "T028"
+  ],
+  "command": [
+    "python",
+    "scripts/run_validation_claims.py",
+    "--config",
+    "config/validation_claims.json"
+  ],
+  "inputs": [
+    "src/tissue_rheology/__init__.py",
+    "src/tissue_rheology/claim_validation.py",
+    "src/tissue_rheology/geometry.py",
+    "src/tissue_rheology/model.py",
+    "src/tissue_rheology/topology.py",
+    "scripts/run_validation_claims.py",
+    "config/validation_claims.json"
+  ],
+  "parameter_file": "config/validation_claims.json",
+  "parameter_selector": "",
+  "expected_parameters": {
+    "schema_version": 1,
+    "paper_id": "2211.15015",
+    "profile": "validation_claims_final",
+    "analytic_factor": {
+      "seed": 15015,
+      "vertex_count": 7,
+      "radius_min": 0.7,
+      "radius_max": 1.3,
+      "target_area_fraction": 0.83,
+      "kappa_area": 0.5,
+      "finite_difference_step": 1e-06,
+      "relative_tolerance": 1e-07,
+      "factor_tolerance": 1e-10
+    },
+    "gradient_sign": {
+      "nx": 4,
+      "ny": 4,
+      "p0": 3.8,
+      "seed": 15016,
+      "descent_step": 1e-06
+    },
+    "time_step_scan": {
+      "nx": 10,
+      "ny": 10,
+      "p0": 3.9,
+      "seed": 15017,
+      "seeds": [
+        15017,
+        15018,
+        15019
+      ],
+      "activity": 0.0,
+      "shear_rate": 0.01,
+      "physical_time": 1.0,
+      "dt_values": [
+        0.01,
+        0.005,
+        0.0025
+      ],
+      "enable_t1": true,
+      "max_nonaffine_displacement": 0.02,
+      "paper_dt": 0.01,
+      "energy_relative_tolerance": 0.02,
+      "stress_relative_tolerance": 0.02,
+      "scientific_scope": "three_seed_representative_condition_dt_refinement"
+    },
+    "finite_size_scan": {
+      "grid_sizes": [
+        [
+          8,
+          8
+        ],
+        [
+          10,
+          10
+        ],
+        [
+          12,
+          12
+        ]
+      ],
+      "p0": 3.9,
+      "seed": 15018,
+      "seeds": [
+        15018,
+        15019,
+        15020
+      ],
+      "activity": 0.0,
+      "shear_rate": 0.01,
+      "physical_time": 1.0,
+      "dt": 0.01,
+      "enable_t1": true,
+      "max_nonaffine_displacement": 0.02,
+      "paper_cell_count": 100,
+      "energy_relative_tolerance": 0.1,
+      "stress_relative_tolerance": 0.1,
+      "scientific_scope": "three_seed_representative_condition_N64_N100_N144_convergence"
+    }
+  },
+  "outputs": [
+    "outputs/data/validation_claims/T025_area_force_factor.csv",
+    "outputs/data/validation_claims/T026_gradient_sign.csv",
+    "outputs/data/validation_claims/T027_dt_convergence.csv",
+    "outputs/data/validation_claims/T028_size_convergence.csv",
+    "outputs/checks/validation_claims/target_checks.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

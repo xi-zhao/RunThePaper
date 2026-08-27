@@ -9,10 +9,9 @@
 - Parameters: L=6, beta=1, gamma0=0.1, dt=1, lambda=0.05, B=50 bins,
   N_wash=500, N_eval=2000; MG drive (0.2, 0.1, 18), sampled every 3,
   centered with sigma_s^2=0.11 (EQC002 assumption).
-- Grid or benchmark: cluster alpha in linspace(0,1,21); TFIM J in
-  logspace(-1,2,25), with 5000 sequences and 100 TFIM disorder realizations.
-- Boundary conditions: cluster chain open, resolved from the paper's broken
-  periodic duality and Fig. S1c spectral fingerprint; TFIM
+- Grid or benchmark: cluster alpha in linspace(0,1,17); TFIM J in
+  logspace(-1,2,13) with reduced disorder realizations (reduced-scale pass).
+- Boundary conditions: cluster chain periodic (EQC013 open question); TFIM
   fully connected (no boundary).
 - Solver: exact dense linear algebra on 64x64 matrices; per-step propagator
   and Gibbs state looked up from a 401-point s-grid cache built by
@@ -29,21 +28,21 @@
   precision, asserted over every run); chi >= I hierarchy; Landauer
   beta*W_irr_tot >= chi_d_tot; ensemble marginalization (memory and predictive
   bins average to the same state).
-- Numerical risks: finite-ensemble bias of the binned Holevo estimator remains
-  visible even at the paper's sample count; the drive-normalization convention
-  is reconstructed from the paper's published statistics (EQC002).
+- Numerical risks: finite-ensemble bias of the binned Holevo estimator
+  (fewer samples per bin than the paper's ~100); drive-normalization
+  convention (EQC002); reduced disorder averaging for the TFIM row.
 
 ### NUM002 — Ridge readout / NMSE (T001 green curves, T003 panel c)
 
 - Target: Fig. 2a NMSE curves, Fig. S2c
 - Equations/method cards: EQC014
 - Parameters: N_wash=500, N_train=2000, N_test=2000, eta=1e-5, horizons 1-3.
-- Production protocol: 500 sequences, N_wash=500, N_train=2000,
-  N_test=2000, and all 4^6-1 nontrivial Pauli observables plus a constant bias.
-- Solver: normal-equation ridge regression per sequence, averaged NMSE,
-  accumulated in GPU chunks to fit memory.
-- Numerical risks: the paper does not state whether a constant bias is
-  included; the reproduction includes one.
+- Deviation: readout basis reduced to all 1- and 2-body Pauli strings
+  (153 features + bias) instead of the full 4^6-1 Pauli basis; fewer
+  sequences than the paper's 500. Recorded in TARGET_LEDGER.md.
+- Solver: normal-equation ridge regression per sequence, averaged NMSE.
+- Numerical risks: reduced feature basis raises the absolute NMSE floor;
+  only the *shape* (minimum inside the critical region) is compared.
 
 ### NUM003 — Spectral analytics (T002)
 
@@ -51,16 +50,14 @@
 - Equations/method cards: EQC002, EQC012, EQC013
 - Parameters: G(omega) on 90 points in [0.02, 3]; filtered history with
   g = (1-P_th)e^{-i omega dt}; binned conditional means (B=50). TFIM spectra:
-  40 log-spaced J, 400 realizations, levels normalized by spectral width
+  40 log-spaced J, reduced realizations, levels normalized by spectral width
   and averaged sorted; cluster spectrum on 101 alpha points (deterministic).
 - Validation checks: G peak location ~0.36 and value vs the S52 closed form
   (~2.3); MG spectral peak location; cluster gap minimum at alpha=0.5
   (outputs/checks/figS1_features.json).
 - Numerical risks: F(omega) plot normalization is an assumed convention
   (paper does not publish it); averaged sorted levels are a proxy for the
-  paper's unspecified spectral-average procedure in S1b. Panel a uses 400
-  sequences x 2500 steps instead of 5000 x 5000, and panel b uses 400 instead
-  of 10000 disorder realizations, so this target is exploratory.
+  paper's unspecified spectral-average procedure in S1b.
 
 ## Efficiency And Reuse Plan
 

@@ -18,10 +18,15 @@ sys.path.insert(0, str(WORKSPACE / "src"))
 
 from open_qsl.model import (  # noqa: E402
     averaged_norms,
+    closed_two_level_qsl_audit,
     density_derivative,
     fidelity_amplitude,
+    lorentzian_kernel_scale,
+    lorentzian_spectral_density,
     markovian_averaged_norms,
+    optimize_blp_state_pair,
     pseudomode_survival_amplitude,
+    pure_state_unitary_speed,
     qsl_bounds,
     survival_amplitude,
 )
@@ -62,6 +67,10 @@ def main() -> int:
     duration = float(parameters["duration_tau"])
     integration_points = int(parameters["integration_points"])
     fine_points = int(parameters["convergence_integration_points"])
+    blp_angle_points = int(parameters["blp_angle_points"])
+    blp_convergence_angle_points = int(
+        parameters["blp_convergence_angle_points"]
+    )
     gamma_grid = np.linspace(
         float(parameters["gamma0_min"]),
         float(parameters["gamma0_max"]),
@@ -189,6 +198,132 @@ def main() -> int:
         },
     ]
 
+    # Claim-specific closure for the four defects identified by fresh review.
+    # These checks use only the printed equations and deterministic, independently
+    # chosen systems; none of them read a paper figure or author data.
+    unitary_cases = [
+        (
+            "qubit_equal_superposition",
+            np.diag([0.0, 2.0]),
+            np.array([1.0, 1.0], dtype=complex) / np.sqrt(2.0),
+        ),
+        (
+            "qutrit_complex_superposition",
+            np.array(
+                [[0.0, 1.0, 0.0], [1.0, 2.0, 0.5j], [0.0, -0.5j, 3.0]],
+                dtype=complex,
+            ),
+            np.array([1.0, 1.0j, -1.0], dtype=complex) / np.sqrt(3.0),
+        ),
+    ]
+    unitary_rows: list[dict[str, object]] = []
+    max_unitary_identity_error = 0.0
+    for case_id, hamiltonian, state in unitary_cases:
+        audit = pure_state_unitary_speed(hamiltonian, state, hbar=1.0)
+        max_unitary_identity_error = max(
+            max_unitary_identity_error,
+            audit["hilbert_schmidt_identity_error"],
+        )
+        unitary_rows.append({"case_id": case_id, "hbar": 1.0, **audit})
+
+    closed_rows: list[dict[str, object]] = []
+    for phase_fraction in (0.25, 0.5, 1.0):
+        audit = closed_two_level_qsl_audit(
+            phase_fraction * np.pi, angular_frequency=1.0, hbar=1.0
+        )
+        closed_rows.append(
+            {
+                "phase_fraction_of_first_orthogonalization": phase_fraction,
+                **audit,
+                "operator_gap_to_geometric_mt": audit["standard_mt_geometric"]
+                - audit["equation_21_operator"],
+            }
+        )
+    orthogonal_row = closed_rows[-1]
+    closed_orthogonal_gap = float(
+        orthogonal_row["standard_mt_orthogonal"]
+        - orthogonal_row["equation_21_operator"]
+    )
+
+    printed_kernel = lorentzian_kernel_scale(
+        1.0, spectral_width, convention="printed_eq24"
+    )
+    dynamics_kernel = lorentzian_kernel_scale(
+        1.0, spectral_width, convention="eq25_dynamics"
+    )
+    kernel_ratio = dynamics_kernel / printed_kernel
+    spectral_rows: list[dict[str, object]] = []
+    for detuning_over_lambda in (-5.0, -2.0, -1.0, 0.0, 1.0, 2.0, 5.0):
+        detuning = detuning_over_lambda * spectral_width
+        printed_density = float(
+            lorentzian_spectral_density(
+                detuning, 1.0, spectral_width, convention="printed_eq24"
+            )
+        )
+        dynamics_density = float(
+            lorentzian_spectral_density(
+                detuning, 1.0, spectral_width, convention="eq25_dynamics"
+            )
+        )
+        spectral_rows.append(
+            {
+                "detuning_over_lambda": detuning_over_lambda,
+                "detuning": detuning,
+                "printed_eq24_density": printed_density,
+                "eq25_required_density": dynamics_density,
+                "density_ratio": dynamics_density / printed_density,
+                "printed_zero_time_kernel": printed_kernel,
+                "eq25_required_zero_time_kernel": dynamics_kernel,
+                "kernel_ratio": kernel_ratio,
+            }
+        )
+
+    blp_rows: list[dict[str, object]] = []
+    max_blp_convergence_error = 0.0
+    max_excited_ground_shortfall = 0.0
+    max_optimal_angle_error = 0.0
+    active_blp_rows = 0
+    blp_time = np.linspace(0.0, duration, integration_points)
+    for gamma0 in gamma_grid:
+        amplitude = survival_amplitude(blp_time, float(gamma0), spectral_width)
+        coarse = optimize_blp_state_pair(
+            amplitude, angle_points=blp_angle_points
+        )
+        fine = optimize_blp_state_pair(
+            amplitude, angle_points=blp_convergence_angle_points
+        )
+        convergence_error = abs(
+            float(coarse["optimal_measure"]) - float(fine["optimal_measure"])
+        )
+        shortfall = float(fine["optimal_measure"]) - float(
+            fine["excited_ground_measure"]
+        )
+        if float(fine["optimal_measure"]) > 1.0e-12:
+            active_blp_rows += 1
+            max_optimal_angle_error = max(
+                max_optimal_angle_error,
+                abs(float(fine["optimal_polar_angle"]) - np.pi / 2.0),
+            )
+        max_blp_convergence_error = max(
+            max_blp_convergence_error, convergence_error
+        )
+        max_excited_ground_shortfall = max(
+            max_excited_ground_shortfall, shortfall
+        )
+        blp_rows.append(
+            {
+                "gamma0_over_omega0": float(gamma0 / omega0),
+                "gamma0": float(gamma0),
+                "optimal_polar_angle": fine["optimal_polar_angle"],
+                "optimal_measure": fine["optimal_measure"],
+                "excited_ground_measure": fine["excited_ground_measure"],
+                "equatorial_measure": fine["equatorial_measure"],
+                "excited_ground_shortfall": shortfall,
+                "revival_segments": fine["revival_segments"],
+                "coarse_fine_measure_error": convergence_error,
+            }
+        )
+
     weak_rows = [row for row in fig1_rows if 0.0 < float(row["gamma0"]) <= 25.0]
     weak_plateau_error = max(
         abs(float(row["qsl_operator"]) - duration) for row in weak_rows
@@ -236,6 +371,21 @@ def main() -> int:
         >= float(acceptance["trace_norm_counterexample_min_gap"]),
         "printed_ladder_definition_differs_by_factor_four": ladder_factor_error
         <= float(acceptance["literal_ladder_factor_error"]),
+        "unitary_hs_normalization_is_frozen": max_unitary_identity_error
+        <= float(acceptance["unitary_hs_identity_max_error"]),
+        "closed_unitary_qsl_reduction_is_frozen": closed_orthogonal_gap
+        >= float(acceptance["closed_qsl_discrepancy_min_gap"]),
+        "literal_spectral_density_kernel_mismatch_is_frozen": abs(
+            kernel_ratio - spectral_width
+        )
+        <= float(acceptance["spectral_kernel_ratio_max_error"]),
+        "blp_state_pair_optimization_is_converged": max_blp_convergence_error
+        <= float(acceptance["blp_measure_convergence_max_error"]),
+        "blp_excited_ground_counterexample_is_frozen": max_excited_ground_shortfall
+        >= float(acceptance["blp_excited_ground_shortfall_min"]),
+        "blp_global_optimum_is_equatorial_on_active_rows": active_blp_rows > 0
+        and max_optimal_angle_error
+        <= np.pi / (2.0 * (blp_convergence_angle_points - 1)),
     }
     assertions = {key: bool(value) for key, value in assertions.items()}
     target_results = {
@@ -256,6 +406,13 @@ def main() -> int:
             "max_strong_coupling_norm_excess": strong_norm_excess,
             "trace_norm_counterexample_gap": trace_norm_gap,
             "literal_ladder_factor_error": ladder_factor_error,
+            "max_unitary_hs_identity_error": max_unitary_identity_error,
+            "closed_orthogonal_standard_mt_minus_eq21_operator": closed_orthogonal_gap,
+            "printed_to_dynamics_spectral_kernel_ratio": kernel_ratio,
+            "blp_active_coupling_rows": active_blp_rows,
+            "max_blp_measure_convergence_error": max_blp_convergence_error,
+            "max_excited_ground_blp_shortfall": max_excited_ground_shortfall,
+            "max_blp_optimal_angle_error": max_optimal_angle_error,
         },
         "source_discrepancies_for_fresh_review": [
             {
@@ -276,6 +433,30 @@ def main() -> int:
                 "independent_result": "direct differentiation requires rho_t; the following equation uses the time-local form",
                 "scope": "intermediate displayed equation; downstream bound uses the corrected time-local quantity",
             },
+            {
+                "claim": "Lambda_tau^hs equals the time-averaged energy variance for pure unitary motion.",
+                "source_ref": "sentence following Eq. (20)",
+                "independent_result": "||rho_dot||_hs=sqrt(2)*DeltaE/hbar for every frozen pure-state case",
+                "scope": "normalization and dimensions of the claimed unitary reduction",
+            },
+            {
+                "claim": "Eq. (21) is an extension of the standard MT and ML result.",
+                "source_ref": "sentence following Eq. (21)",
+                "independent_result": f"at orthogonalization the sharpest Eq. (21) branch is {orthogonal_row['equation_21_operator']:.16g}, versus standard MT/ML {orthogonal_row['standard_mt_orthogonal']:.16g}",
+                "scope": "closed-system orthogonal limit",
+            },
+            {
+                "claim": "literal Eq. (24) generates the decay dynamics in Eqs. (25)-(26).",
+                "source_ref": "Eqs. (24)-(26)",
+                "independent_result": f"the required zero-time memory kernel is larger by lambda={kernel_ratio:.16g}",
+                "scope": "Lorentzian normalization under the paper's Fourier convention",
+            },
+            {
+                "claim": "the excited/ground pair maximizes the trace-distance non-Markovianity measure.",
+                "source_ref": "Discussion and footnote [48]",
+                "independent_result": f"the equatorial antipodal pair exceeds it by up to {max_excited_ground_shortfall:.16g} on the printed coupling sweep",
+                "scope": "global qubit-state-pair BLP optimization",
+            },
         ],
         "target_results": target_results,
     }
@@ -285,12 +466,20 @@ def main() -> int:
         "fig2": data_dir / "fig2_generator_and_fidelity.csv",
         "crosschecks": data_dir / "independent_crosschecks.csv",
         "formula": data_dir / "formula_counterexamples.csv",
+        "unitary": data_dir / "unitary_speed_audit.csv",
+        "closed": data_dir / "closed_unitary_qsl_audit.csv",
+        "spectral": data_dir / "lorentzian_kernel_audit.csv",
+        "blp": data_dir / "blp_state_pair_optimization.csv",
         "science": checks_dir / "science_checks.json",
     }
     write_csv(paths["fig1"], fig1_rows)
     write_csv(paths["fig2"], fig2_rows)
     write_csv(paths["crosschecks"], crosscheck_rows)
     write_csv(paths["formula"], formula_rows)
+    write_csv(paths["unitary"], unitary_rows)
+    write_csv(paths["closed"], closed_rows)
+    write_csv(paths["spectral"], spectral_rows)
+    write_csv(paths["blp"], blp_rows)
     write_json(paths["science"], science)
 
     manifest_entries = []

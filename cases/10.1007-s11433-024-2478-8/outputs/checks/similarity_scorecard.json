@@ -1,76 +1,51 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "paper_id": "10.1007-s11433-024-2478-8",
+  "status": "passed",
   "score_model": "rra_similarity_v1",
   "targets": [
     {
       "target_id": "T001",
-      "label": "Fig. 3(a-c) single-photon BAM CZ, hybrid modulation",
-      "weight": 1.0,
+      "label": "Main Fig. 3(a-c) single-photon hybrid BAM CZ",
       "figure_refs": [
-        "Fig. 3(a)",
-        "Fig. 3(b)",
-        "Fig. 3(c)"
+        "Main Figure 3(a)",
+        "Main Figure 3(b)",
+        "Main Figure 3(c)"
       ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "a",
-            "status": "reproduced",
-            "note": "Omega1/Omega2/Delta1/Delta2 waveforms; digitized RMS 0.14-0.57% of axis range",
-            "evidence": "outputs/figures/fig3_original_vs_repro.png"
-          },
-          {
-            "panel_id": "b",
-            "status": "reproduced",
-            "note": "return populations; digitized RMS < 0.0021 (<=0.21% of range)",
-            "evidence": "outputs/figures/fig3_digitized_overlay.png"
-          },
-          {
-            "panel_id": "c",
-            "status": "reproduced",
-            "note": "wrapped phases; match paper except single-point 2pi-jump artifacts",
-            "evidence": "outputs/figures/fig3_digitized_overlay.png"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      },
+      "weight": 0.12,
       "components": {
         "feature_match": {
-          "score": 49.0,
-          "max_score": 50.0,
-          "reason": "Every curve of Fig. 3(a-c) is reproduced from an independent three-body integration; generated lines overlie the digitized paper points across waveforms, populations, and phases (incl. the 2pi jumps)."
+          "score": 50.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 33.0,
-          "max_score": 35.0,
-          "reason": "Digitized-curve RMS: waveforms 0.14-0.57% of axis range, populations <=0.21% (<0.0021 in population units). Gate error 6.5e-6 (< 1e-4) and conditional phase -1.00000*pi reproduce the paper's headline claim. Only phase-jump single points deviate."
+          "score": 35.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 14.0,
-          "max_score": 15.0,
-          "reason": "All three panels (a),(b),(c) reproduced at the paper's parameters (B=2pi*50 MHz, tau=0.25 us, published Fourier coefficients)."
+          "score": 15.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/data/fig3_hybrid.csv",
-        "outputs/data/fig3_hybrid_summary.json",
-        "outputs/checks/fig3_hybrid.json",
-        "outputs/checks/fig3_digitization_comparison.json",
-        "outputs/figures/fig3_digitized_overlay.png",
-        "outputs/figures/fig3_original_vs_repro.png",
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
         "outputs/checks/formula_verification.json"
       ],
-      "remaining_gap": "Phase panels deviate only at the single columns where the paper curve jumps by 2pi (digitization of a near-vertical segment); away from jumps agreement is within pixel noise. The paper reports no numeric tables, so comparison uses digitized curves from the raster figure.",
+      "remaining_gap": "None.",
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "reference_comparison": "digitized_curve",
+        "reference_comparison": "analytic_reference",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
         "formula_dependencies": [
@@ -80,89 +55,106 @@
           "h_sector11",
           "cz_gate_metric"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t001_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 3(a-c) single-photon hybrid BAM CZ"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Main Figure 3(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 3(b)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 3(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
       },
       "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
-      "reference_score_cap": 95.0,
-      "component_total": 96.0,
-      "score": 95.0,
-      "similarity_level": "complete_reproduction"
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
-      "label": "Fig. 3(d-f) single-photon BAM CZ, amplitude-only modulation",
-      "weight": 1.0,
+      "label": "Main Fig. 3(d-f) single-photon amplitude-only BAM CZ",
       "figure_refs": [
-        "Fig. 3(d)",
-        "Fig. 3(e)",
-        "Fig. 3(f)"
+        "Main Figure 3(d)",
+        "Main Figure 3(e)",
+        "Main Figure 3(f)"
       ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "d",
-            "status": "reproduced",
-            "note": "multi-lobe Omega1/Omega2, constant detunings; digitized RMS ~0.36% of range",
-            "evidence": "outputs/figures/fig3_original_vs_repro.png"
-          },
-          {
-            "panel_id": "e",
-            "status": "reproduced",
-            "note": "W-shaped return populations; digitized RMS <=0.65% of range",
-            "evidence": "outputs/figures/fig3_digitized_overlay.png"
-          },
-          {
-            "panel_id": "f",
-            "status": "reproduced",
-            "note": "wrapped phases with sharp 2pi jumps",
-            "evidence": "outputs/figures/fig3_digitized_overlay.png"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      },
+      "weight": 0.12,
       "components": {
         "feature_match": {
-          "score": 48.0,
-          "max_score": 50.0,
-          "reason": "Multi-lobe Omega1/Omega2 with constant detunings, the W-shaped |00> return population, deep |01>/|11> oscillations, and the wrapped-phase jumps all overlie the digitized Fig. 3(d-f) points."
+          "score": 50.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 32.0,
-          "max_score": 35.0,
-          "reason": "Digitized-curve RMS: waveforms ~0.36% of axis range, populations <=0.65% (<0.0065 in population units). Gate error 5.6e-5 (< 1e-4) and conditional phase -0.99985*pi reproduce the paper's claim."
+          "score": 35.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 14.0,
-          "max_score": 15.0,
-          "reason": "All three panels (d),(e),(f) reproduced at the paper's parameters."
+          "score": 15.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/data/fig3_amplitude.csv",
-        "outputs/data/fig3_amplitude_summary.json",
-        "outputs/checks/fig3_amplitude.json",
-        "outputs/checks/fig3_digitization_comparison.json",
-        "outputs/figures/fig3_digitized_overlay.png",
-        "outputs/figures/fig3_original_vs_repro.png"
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
+        "outputs/checks/formula_verification.json"
       ],
-      "remaining_gap": "Same as T001: phase deviation confined to 2pi-jump columns; comparison uses digitized raster curves as the paper reports no numeric tables. Peak leakage 1.0e-4 vs 1.2e-5 for the hybrid case, still meeting the < 1e-4 claim.",
+      "remaining_gap": "None.",
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "reference_comparison": "digitized_curve",
+        "reference_comparison": "analytic_reference",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
         "formula_dependencies": [
@@ -172,73 +164,104 @@
           "h_sector11",
           "cz_gate_metric"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ]
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t002_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 3(d-f) single-photon amplitude-only BAM CZ"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Main Figure 3(d)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 3(e)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 3(f)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
       },
       "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
-      "reference_score_cap": 95.0,
-      "component_total": 94.0,
-      "score": 94.0,
-      "similarity_level": "complete_reproduction"
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T003",
-      "label": "Fig. 7 gate-error vs overall buffer/qubit Rabi-amplitude ratio",
-      "weight": 0.5,
+      "label": "Main Fig. 7 Rabi-amplitude robustness map",
       "figure_refs": [
-        "Fig. 7"
+        "Main Figure 7"
       ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "map",
-            "status": "reproduced",
-            "note": "2D gate-error colormap over [0.99,1.01]^2 of the Fig. 3(a) waveforms; bone colormap, vmax 1.2e-4",
-            "evidence": "outputs/figures/fig7_original_vs_repro.png"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      },
+      "weight": 0.12,
       "components": {
         "feature_match": {
-          "score": 44.0,
-          "max_score": 50.0,
-          "reason": "Full 2D structure reproduced: dark central valley along the main diagonal, brightest error at the anti-diagonal corners (top-left 0.99/1.01 and bottom-right 1.01/0.99), monotonic growth away from center. Same bone colormap and axis ranges."
+          "score": 50.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 24.0,
-          "max_score": 35.0,
-          "reason": "Center error 6.5e-6 matches Fig. 3(a) exactly; the paper's headline conclusion (control precision better than ~1% needed to keep error near 1e-4) is reproduced. Absolute corner peak 9.0e-5 vs the paper colorbar max 1.2e-4 (~25% lower); a fixed-local-Z metric was ruled out (it gives 2.2e-3, far above the paper), so the residual is a small Hamiltonian-reconstruction / colorbar-padding gap, not a metric error."
+          "score": 35.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 13.0,
-          "max_score": 15.0,
-          "reason": "The single robustness colormap reproduced at the paper's Fig. 3(a) parameters over the paper's ratio range."
+          "score": 15.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/data/fig7_error_grid.npz",
-        "outputs/checks/fig7_scan.json",
-        "outputs/figures/fig7_scan.png",
-        "outputs/figures/fig7_original_vs_repro.png"
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
+        "outputs/checks/formula_verification.json"
       ],
-      "remaining_gap": "Absolute corner error ~9.0e-5 vs the paper's colorbar max 1.2e-4 (~25% low); structure, symmetry, central value and the >1% precision conclusion all reproduce. Comparison is visual/feature-level against the raster colormap (full colormap-to-value inversion on the low-contrast bone map deferred).",
+      "remaining_gap": "None.",
       "evaluation": {
-        "critical": false,
-        "paper_level_role": "supporting",
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "reference_comparison": "visual_feature_contract",
+        "reference_comparison": "analytic_reference",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
         "formula_dependencies": [
@@ -248,332 +271,1204 @@
           "h_sector11",
           "cz_gate_metric"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ]
       },
-      "critical": false,
+      "physics_assertions": [
+        {
+          "assertion_id": "t003_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 7 Rabi-amplitude robustness map"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Main Figure 7",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 100.0,
-      "reference_score_cap": 80.0,
-      "component_total": 81.0,
-      "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T004",
-      "label": "Fig. 4(a-c) two-photon ground-Rydberg BAM CZ, hybrid modulation",
-      "weight": 1.0,
+      "label": "Main Fig. 4(a-c) two-photon hybrid BAM CZ",
       "figure_refs": [
-        "Fig. 4"
+        "Main Figure 4(a)",
+        "Main Figure 4(b)",
+        "Main Figure 4(c)"
+      ],
+      "weight": 0.12,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 5.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
+        "outputs/checks/formula_verification.json"
+      ],
+      "remaining_gap": "Fresh-context scientific adjudication of the stable mismatch.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "fourier_waveform",
+          "twophoton_ladder_a5a6",
+          "cz_gate_metric"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The clean-room paper-parameter calculation does not meet the numerical claim printed by the publication.",
+            "evidence": [
+              "outputs/data/scientific_closure/targets.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Paper-exact parameters, an independent sparse-basis implementation, convergence checks, and code invariants reproduce the same stable mismatch; a discrepancy in the published numerical claim is therefore the leading open attribution pending fresh-context adjudication.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/data/scientific_closure/targets.json",
+              "outputs/checks/formula_verification.json",
+              "parameter_provenance.json",
+              "outputs/review/fresh_independent_check.py",
+              "outputs/review/fresh_independent_checks.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after four independent classes of check: paper-parameter provenance, solver convergence, a separately authored numerical implementation, and Hamiltonian/unitarity invariants.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every waveform coefficient and physical parameter used by the disputed target is traced to the frozen publication, with no author arrays or source pixels used as numerical input.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Tighter and coarser ODE tolerances preserve the disputed gate errors while norm drift remains at floating-point scale.",
+                "evidence": [
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A reviewer-authored sparse product-basis implementation, importing no case implementation module, independently reproduces the disputed results.",
+                "evidence": [
+                  "outputs/review/fresh_independent_check.py",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Hermiticity, norm conservation, analytic scaling, dark-state, and reduced-versus-product-basis checks pass for the implemented Hamiltonians.",
+                "evidence": [
+                  "tests/test_bam_gate.py",
+                  "tests/test_scientific_closure.py",
+                  "outputs/checks/formula_verification.json",
+                  "outputs/data/scientific_closure/targets.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A transcription, solver, basis-construction, or gate-metric implementation error could have created the mismatch, but the independent implementation and cross-check suite did not find one.",
+              "evidence": [
+                "outputs/data/scientific_closure/targets.json",
+                "parameter_provenance.json",
+                "outputs/review/fresh_independent_check.py",
+                "outputs/review/fresh_independent_checks.json"
+              ]
+            },
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "A fresh reviewer may identify an omitted basis convention, metric convention, or Hamiltonian interpretation in the clean-room implementation.",
+              "evidence": [
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch affects the atomic items linked to T004.",
+            "items": [
+              "T004",
+              "Main Figure 4(a)",
+              "Main Figure 4(b)",
+              "Main Figure 4(c)"
+            ],
+            "completion": "3/3 items attempted; scientific verdict awaits fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Perform fresh-context claim-level review from the full paper, equations, code, frozen arrays, and attestation; try to falsify both the reproduction and the printed claim.",
+            "expected_resolution": "Each item becomes paper-supported, reproduction-defect, paper-error-candidate, or explicitly inconclusive.",
+            "evidence_to_produce": [
+              "outputs/review/independent_review_result.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t004_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 4(a-c) two-photon hybrid BAM CZ"
+        }
       ],
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "a",
+            "panel_id": "Main Figure 4(a)",
             "status": "reproduced",
-            "note": "Omega_1p/Omega_2p, constant Omega_1S/Omega_2S, delta_1/delta_2 two-photon waveforms",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "evidence": "outputs/data/scientific_closure/targets.json"
           },
           {
-            "panel_id": "b",
-            "status": "reproduced",
-            "note": "W-shaped return populations; digitized RMS P00 0.15%, P01 0.40% of range",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "panel_id": "Main Figure 4(b)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
           },
           {
-            "panel_id": "c",
-            "status": "reproduced",
-            "note": "accumulated phases match the paper",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "panel_id": "Main Figure 4(c)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
           }
         ],
-        "panel_scope_cap": 15.0
+        "panel_scope_cap": 5.0
       },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 35.0,
+      "score": 35.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T005",
+      "label": "Main Fig. 4(d-f) two-photon amplitude-only BAM CZ",
+      "figure_refs": [
+        "Main Figure 4(d)",
+        "Main Figure 4(e)",
+        "Main Figure 4(f)"
+      ],
+      "weight": 0.12,
       "components": {
         "feature_match": {
-          "score": 44.0,
-          "max_score": 50.0,
-          "reason": "Full three-level (a5/a6) model reproduces the hybrid two-photon CZ: the W-shaped |00> return population, deep |01>/|11> oscillations and the phase evolution all match Fig. 4(a-c); populations digitized to RMS 0.15% (P00) and 0.40% (P01) of axis range."
+          "score": 30.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
         },
         "numeric_closeness": {
-          "score": 24.0,
-          "max_score": 35.0,
-          "reason": "Populations match to <0.4%; conditional phase -0.985*pi. The independent full-3-level gate error is 1.3e-3 (vs the paper's <1e-4, which was likely optimised in a reduced/effective model) -- the honest full-physics residual from transient intermediate-state population (Omega_p/2*Delta_0 ~ 0.32)."
+          "score": 0.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
         },
         "paper_scope_coverage": {
-          "score": 13.0,
-          "max_score": 15.0,
-          "reason": "All three hybrid panels reproduced at the paper's parameters (Delta_0=2pi*5 GHz, published Omega_p/Omega_S/delta)."
+          "score": 5.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
         }
       },
       "evidence": [
-        "outputs/data/fig4_hybrid.csv",
-        "outputs/checks/fig4_twophoton.json",
-        "outputs/figures/fig4_paper_style.png",
-        "outputs/figures/fig4_original_vs_repro.png"
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
+        "outputs/checks/formula_verification.json"
       ],
-      "remaining_gap": "Full-model gate error 1.3e-3 vs paper <1e-4: the paper's two-photon waveforms were optimised to their model; the adiabatic-elimination effective model is worse (1.9e-2), so the full three-level model is the faithful choice and 1.3e-3 is its honest error. Populations/phases match the figure to sub-percent.",
+      "remaining_gap": "Fresh-context scientific adjudication of the stable mismatch.",
       "evaluation": {
-        "critical": false,
-        "paper_level_role": "supporting",
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "fourier_waveform",
+          "twophoton_ladder_a5a6",
+          "cz_gate_metric"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The clean-room paper-parameter calculation does not meet the numerical claim printed by the publication.",
+            "evidence": [
+              "outputs/data/scientific_closure/targets.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Paper-exact parameters, an independent sparse-basis implementation, convergence checks, and code invariants reproduce the same stable mismatch; a discrepancy in the published numerical claim is therefore the leading open attribution pending fresh-context adjudication.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/data/scientific_closure/targets.json",
+              "outputs/checks/formula_verification.json",
+              "parameter_provenance.json",
+              "outputs/review/fresh_independent_check.py",
+              "outputs/review/fresh_independent_checks.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after four independent classes of check: paper-parameter provenance, solver convergence, a separately authored numerical implementation, and Hamiltonian/unitarity invariants.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every waveform coefficient and physical parameter used by the disputed target is traced to the frozen publication, with no author arrays or source pixels used as numerical input.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Tighter and coarser ODE tolerances preserve the disputed gate errors while norm drift remains at floating-point scale.",
+                "evidence": [
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A reviewer-authored sparse product-basis implementation, importing no case implementation module, independently reproduces the disputed results.",
+                "evidence": [
+                  "outputs/review/fresh_independent_check.py",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Hermiticity, norm conservation, analytic scaling, dark-state, and reduced-versus-product-basis checks pass for the implemented Hamiltonians.",
+                "evidence": [
+                  "tests/test_bam_gate.py",
+                  "tests/test_scientific_closure.py",
+                  "outputs/checks/formula_verification.json",
+                  "outputs/data/scientific_closure/targets.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A transcription, solver, basis-construction, or gate-metric implementation error could have created the mismatch, but the independent implementation and cross-check suite did not find one.",
+              "evidence": [
+                "outputs/data/scientific_closure/targets.json",
+                "parameter_provenance.json",
+                "outputs/review/fresh_independent_check.py",
+                "outputs/review/fresh_independent_checks.json"
+              ]
+            },
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "A fresh reviewer may identify an omitted basis convention, metric convention, or Hamiltonian interpretation in the clean-room implementation.",
+              "evidence": [
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch affects the atomic items linked to T005.",
+            "items": [
+              "T005",
+              "Main Figure 4(d)",
+              "Main Figure 4(e)",
+              "Main Figure 4(f)"
+            ],
+            "completion": "3/3 items attempted; scientific verdict awaits fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Perform fresh-context claim-level review from the full paper, equations, code, frozen arrays, and attestation; try to falsify both the reproduction and the printed claim.",
+            "expected_resolution": "Each item becomes paper-supported, reproduction-defect, paper-error-candidate, or explicitly inconclusive.",
+            "evidence_to_produce": [
+              "outputs/review/independent_review_result.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t005_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 4(d-f) two-photon amplitude-only BAM CZ"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Main Figure 4(d)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 4(e)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 4(f)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          }
+        ],
+        "panel_scope_cap": 5.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 35.0,
+      "score": 35.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T006",
+      "label": "Main Fig. 5 and Appendix Fig. a5 Doppler-cancelling protocol",
+      "figure_refs": [
+        "Main Figure 5(a)",
+        "Main Figure 5(b)",
+        "Main Figure 5(c)",
+        "Appendix Figure a5(a)",
+        "Appendix Figure a5(b)",
+        "Appendix Figure a5(c)"
+      ],
+      "weight": 0.12,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/scientific_closure/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json",
+        "outputs/checks/formula_verification.json"
+      ],
+      "remaining_gap": "None.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
         "failure_type": "none",
         "parameter_match": "paper_exact",
-        "reference_comparison": "digitized_curve",
+        "reference_comparison": "analytic_reference",
         "generated_data_provenance": "independent_numerics",
-        "formula_gate": "reconstructed",
+        "formula_gate": "verified",
         "formula_dependencies": [
           "fourier_waveform",
-          "twophoton_ladder_a5a6",
+          "h_sector00",
+          "h_sector01",
           "h_sector11",
           "cz_gate_metric"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/scientific_closure/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-scientific-closure-v3/run_attestation.json"
+        ]
       },
-      "critical": false,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
-      "formula_score_cap": 80.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 95.0,
-      "component_total": 81.0,
-      "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
-    },
-    {
-      "target_id": "T005",
-      "label": "Fig. 4(d-f) two-photon BAM CZ, amplitude-only modulation",
-      "weight": 0.5,
-      "figure_refs": [
-        "Fig. 4"
+      "physics_assertions": [
+        {
+          "assertion_id": "t006_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/scientific_closure/targets.json",
+          "claim": "Main Fig. 5 and Appendix Fig. a5 Doppler-cancelling protocol"
+        }
       ],
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "d",
+            "panel_id": "Main Figure 5(a)",
             "status": "reproduced",
-            "note": "multi-lobe Omega_1p/Omega_2p, constant detunings",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "evidence": "outputs/data/scientific_closure/targets.json"
           },
           {
-            "panel_id": "e",
-            "status": "partial",
-            "note": "return-population structure reproduced but shallower than the paper",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "panel_id": "Main Figure 5(b)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
           },
           {
-            "panel_id": "f",
-            "status": "partial",
-            "note": "phase structure reproduced",
-            "evidence": "outputs/figures/fig4_original_vs_repro.png"
+            "panel_id": "Main Figure 5(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a5(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a5(b)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a5(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/scientific_closure/targets.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T007",
+      "label": "Main Fig. 6 three-qubit Toffoli/CCZ phase gate",
+      "figure_refs": [
+        "Main Figure 6(a)",
+        "Main Figure 6(b)",
+        "Main Figure 6(c)"
+      ],
+      "weight": 0.12,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 5.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/remaining_targets/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-remaining-targets-v2/run_attestation.json",
+        "outputs/checks/formula_verification.json"
+      ],
+      "remaining_gap": "Fresh-context scientific adjudication of the stable mismatch.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "fourier_waveform",
+          "twophoton_ladder_a5a6",
+          "cz_gate_metric"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/remaining_targets/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-remaining-targets-v2/run_attestation.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The clean-room paper-parameter calculation does not meet the numerical claim printed by the publication.",
+            "evidence": [
+              "outputs/data/remaining_targets/targets.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Paper-exact parameters, an independent sparse-basis implementation, convergence checks, and code invariants reproduce the same stable mismatch; a discrepancy in the published numerical claim is therefore the leading open attribution pending fresh-context adjudication.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/data/remaining_targets/targets.json",
+              "outputs/checks/formula_verification.json",
+              "parameter_provenance.json",
+              "outputs/review/fresh_independent_check.py",
+              "outputs/review/fresh_independent_checks.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after four independent classes of check: paper-parameter provenance, solver convergence, a separately authored numerical implementation, and Hamiltonian/unitarity invariants.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every waveform coefficient and physical parameter used by the disputed target is traced to the frozen publication, with no author arrays or source pixels used as numerical input.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Tighter and coarser ODE tolerances preserve the disputed gate errors while norm drift remains at floating-point scale.",
+                "evidence": [
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A reviewer-authored sparse product-basis implementation, importing no case implementation module, independently reproduces the disputed results.",
+                "evidence": [
+                  "outputs/review/fresh_independent_check.py",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Hermiticity, norm conservation, analytic scaling, dark-state, and reduced-versus-product-basis checks pass for the implemented Hamiltonians.",
+                "evidence": [
+                  "tests/test_bam_gate.py",
+                  "tests/test_scientific_closure.py",
+                  "outputs/checks/formula_verification.json",
+                  "outputs/data/remaining_targets/targets.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A transcription, solver, basis-construction, or gate-metric implementation error could have created the mismatch, but the independent implementation and cross-check suite did not find one.",
+              "evidence": [
+                "outputs/data/remaining_targets/targets.json",
+                "parameter_provenance.json",
+                "outputs/review/fresh_independent_check.py",
+                "outputs/review/fresh_independent_checks.json"
+              ]
+            },
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "A fresh reviewer may identify an omitted basis convention, metric convention, or Hamiltonian interpretation in the clean-room implementation.",
+              "evidence": [
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch affects the atomic items linked to T007.",
+            "items": [
+              "T007",
+              "Main Figure 6(a)",
+              "Main Figure 6(b)",
+              "Main Figure 6(c)"
+            ],
+            "completion": "3/3 items attempted; scientific verdict awaits fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Perform fresh-context claim-level review from the full paper, equations, code, frozen arrays, and attestation; try to falsify both the reproduction and the printed claim.",
+            "expected_resolution": "Each item becomes paper-supported, reproduction-defect, paper-error-candidate, or explicitly inconclusive.",
+            "evidence_to_produce": [
+              "outputs/review/independent_review_result.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t007_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/data/remaining_targets/targets.json",
+          "claim": "Main Fig. 6 three-qubit Toffoli/CCZ phase gate"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Main Figure 6(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 6(b)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Main Figure 6(c)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          }
+        ],
+        "panel_scope_cap": 5.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 35.0,
+      "score": 35.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T008",
+      "label": "Appendix Figs. a6-a8 six BAM CZ protocols",
+      "figure_refs": [
+        "Appendix Figure a6(a)",
+        "Appendix Figure a6(b)",
+        "Appendix Figure a6(c)",
+        "Appendix Figure a6(d)",
+        "Appendix Figure a7(a)",
+        "Appendix Figure a7(b)",
+        "Appendix Figure a7(c)",
+        "Appendix Figure a7(d)",
+        "Appendix Figure a8(a)",
+        "Appendix Figure a8(b)",
+        "Appendix Figure a8(c)",
+        "Appendix Figure a8(d)"
+      ],
+      "weight": 0.12,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "reason": "Derived from clean-room formula evaluation.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "Compared against the publication's quantitative claim.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 10.0,
+          "reason": "Credit is derived arithmetically from the atomic panel ledger.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/remaining_targets/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-remaining-targets-v2/run_attestation.json",
+        "outputs/checks/formula_verification.json"
+      ],
+      "remaining_gap": "Fresh-context scientific adjudication of the stable mismatch.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "fourier_waveform",
+          "h_sector00",
+          "h_sector01",
+          "h_sector11",
+          "twophoton_ladder_a5a6",
+          "cz_gate_metric"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This closure adjudicates frozen scientific arrays and paper claims; source pixels remain a separate render diagnostic and never enter the calculation.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "outputs/data/remaining_targets/targets.json",
+          "outputs/runs/10.1007-s11433-024-2478-8-remaining-targets-v2/run_attestation.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The clean-room paper-parameter calculation does not meet the numerical claim printed by the publication.",
+            "evidence": [
+              "outputs/data/remaining_targets/targets.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Paper-exact parameters, an independent sparse-basis implementation, convergence checks, and code invariants reproduce the same stable mismatch; a discrepancy in the published numerical claim is therefore the leading open attribution pending fresh-context adjudication.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/data/remaining_targets/targets.json",
+              "outputs/checks/formula_verification.json",
+              "parameter_provenance.json",
+              "outputs/review/fresh_independent_check.py",
+              "outputs/review/fresh_independent_checks.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after four independent classes of check: paper-parameter provenance, solver convergence, a separately authored numerical implementation, and Hamiltonian/unitarity invariants.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every waveform coefficient and physical parameter used by the disputed target is traced to the frozen publication, with no author arrays or source pixels used as numerical input.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Tighter and coarser ODE tolerances preserve the disputed gate errors while norm drift remains at floating-point scale.",
+                "evidence": [
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A reviewer-authored sparse product-basis implementation, importing no case implementation module, independently reproduces the disputed results.",
+                "evidence": [
+                  "outputs/review/fresh_independent_check.py",
+                  "outputs/review/fresh_independent_checks.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Hermiticity, norm conservation, analytic scaling, dark-state, and reduced-versus-product-basis checks pass for the implemented Hamiltonians.",
+                "evidence": [
+                  "tests/test_bam_gate.py",
+                  "tests/test_scientific_closure.py",
+                  "outputs/checks/formula_verification.json",
+                  "outputs/data/remaining_targets/targets.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A transcription, solver, basis-construction, or gate-metric implementation error could have created the mismatch, but the independent implementation and cross-check suite did not find one.",
+              "evidence": [
+                "outputs/data/remaining_targets/targets.json",
+                "parameter_provenance.json",
+                "outputs/review/fresh_independent_check.py",
+                "outputs/review/fresh_independent_checks.json"
+              ]
+            },
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "A fresh reviewer may identify an omitted basis convention, metric convention, or Hamiltonian interpretation in the clean-room implementation.",
+              "evidence": [
+                "outputs/checks/formula_verification.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch affects the atomic items linked to T008.",
+            "items": [
+              "T008",
+              "Appendix Figure a6(a)",
+              "Appendix Figure a6(b)",
+              "Appendix Figure a6(c)",
+              "Appendix Figure a6(d)",
+              "Appendix Figure a7(a)",
+              "Appendix Figure a7(b)",
+              "Appendix Figure a7(c)",
+              "Appendix Figure a7(d)",
+              "Appendix Figure a8(a)",
+              "Appendix Figure a8(b)",
+              "Appendix Figure a8(c)",
+              "Appendix Figure a8(d)"
+            ],
+            "completion": "12/12 items attempted; scientific verdict awaits fresh review."
+          },
+          "next_discriminating_test": {
+            "action": "Perform fresh-context claim-level review from the full paper, equations, code, frozen arrays, and attestation; try to falsify both the reproduction and the printed claim.",
+            "expected_resolution": "Each item becomes paper-supported, reproduction-defect, paper-error-candidate, or explicitly inconclusive.",
+            "evidence_to_produce": [
+              "outputs/review/independent_review_result.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t008_paper_claim",
+          "tier": "numeric",
+          "essential": true,
+          "status": "failed",
+          "evidence": "outputs/data/remaining_targets/targets.json",
+          "claim": "Appendix Figs. a6-a8 six BAM CZ protocols"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Appendix Figure a6(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a6(b)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a6(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a6(d)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a7(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a7(b)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a7(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a7(d)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a8(a)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a8(b)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a8(c)",
+            "status": "reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
+          },
+          {
+            "panel_id": "Appendix Figure a8(d)",
+            "status": "not_reproduced",
+            "evidence": "outputs/data/remaining_targets/targets.json"
           }
         ],
         "panel_scope_cap": 10.0
       },
-      "components": {
-        "feature_match": {
-          "score": 38.0,
-          "max_score": 50.0,
-          "reason": "Waveforms match; the amplitude-only population dips are reproduced qualitatively but shallower than the paper (0.4 vs 0.15 for the |00> central dip), consistent with a larger full-model residual for this harder protocol."
-        },
-        "numeric_closeness": {
-          "score": 20.0,
-          "max_score": 35.0,
-          "reason": "Conditional phase -0.976*pi; full-model gate error 3.7e-3 (vs paper <1e-4). Same intermediate-state origin as T004, larger here."
-        },
-        "paper_scope_coverage": {
-          "score": 10.0,
-          "max_score": 15.0,
-          "reason": "Waveform panel reproduced; population/phase panels partial (shallower dips) -> 2/3 panel credit."
-        }
-      },
-      "evidence": [
-        "outputs/data/fig4_amplitude.csv",
-        "outputs/checks/fig4_twophoton.json",
-        "outputs/figures/fig4_original_vs_repro.png"
-      ],
-      "remaining_gap": "Amplitude-only population dips shallower than the paper; full-model error 3.7e-3. The two-photon mechanism and phase structure reproduce, but this protocol is more sensitive to the model residual.",
-      "evaluation": {
-        "critical": false,
-        "paper_level_role": "supporting",
-        "artifact_pass": true,
-        "data_backed": true,
-        "manual_interventions": 0,
-        "failure_type": "none",
-        "parameter_match": "paper_exact",
-        "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics",
-        "formula_gate": "reconstructed",
-        "formula_dependencies": [
-          "fourier_waveform",
-          "twophoton_ladder_a5a6",
-          "h_sector11",
-          "cz_gate_metric"
-        ],
-        "artifact_stage": "final_reproduction"
-      },
-      "critical": false,
+      "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
-      "formula_score_cap": 80.0,
-      "generated_data_provenance_score_cap": 100.0,
-      "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
-      "parameter_score_cap": 100.0,
-      "reference_score_cap": 80.0,
-      "component_total": 68.0,
-      "score": 68.0,
-      "similarity_level": "numerical_feature_reproduction"
-    },
-    {
-      "target_id": "T006",
-      "label": "Fig. 5 Doppler-insensitive dual-pulse CZ",
-      "weight": 1.0,
-      "figure_refs": [
-        "Fig. 5"
-      ],
-      "panel_coverage": {
-        "panels": [
-          {
-            "panel_id": "a",
-            "status": "reproduced",
-            "note": "dual-pulse waveform (single pulse repeated over [0,0.5] us)",
-            "evidence": "outputs/figures/fig5_original_vs_repro.png"
-          },
-          {
-            "panel_id": "b",
-            "status": "reproduced",
-            "note": "zero-velocity phases over the dual pulse",
-            "evidence": "outputs/figures/fig5_original_vs_repro.png"
-          },
-          {
-            "panel_id": "c",
-            "status": "reproduced",
-            "note": "phase-difference trajectory returns toward 0 -> first-order Doppler cancellation",
-            "evidence": "outputs/figures/fig5_original_vs_repro.png"
-          }
-        ],
-        "panel_scope_cap": 15.0
-      },
-      "components": {
-        "feature_match": {
-          "score": 46.0,
-          "max_score": 50.0,
-          "reason": "All three panels reproduce: dual-pulse waveform, zero-velocity phase evolution (incl. 2pi jumps), and the phase-difference trajectory shape; the single pulse returns all populations (>0.9999) and imparts pi/2 so the dual pulse composes a full CZ."
-        },
-        "numeric_closeness": {
-          "score": 30.0,
-          "max_score": 35.0,
-          "reason": "Dual-pulse conditional phase 0.99988*pi; first-order Doppler cancellation demonstrated quantitatively -- the flipped dual pulse suppresses the end-of-gate Doppler phase deviation ~2600x (|00>) to ~32000x (|11>) vs a single-direction pulse."
-        },
-        "paper_scope_coverage": {
-          "score": 13.0,
-          "max_score": 15.0,
-          "reason": "All three panels reproduced at the paper's Fig. 5 parameters."
-        }
-      },
-      "evidence": [
-        "outputs/checks/fig5_dualpulse.json",
-        "outputs/figures/fig5_paper_style.png",
-        "outputs/figures/fig5_original_vs_repro.png"
-      ],
-      "remaining_gap": "The panel (c) residual-velocity Doppler shift (0.025 MHz) is chosen to match the paper's ~0.03 rad excursion scale (the paper does not state the velocity); the cancellation physics and curve shapes match.",
-      "evaluation": {
-        "critical": false,
-        "paper_level_role": "supporting",
-        "artifact_pass": true,
-        "data_backed": true,
-        "manual_interventions": 0,
-        "failure_type": "none",
-        "parameter_match": "paper_exact",
-        "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics",
-        "formula_gate": "verified",
-        "formula_dependencies": [
-          "fourier_waveform",
-          "h_sector00",
-          "h_sector01",
-          "h_sector11",
-          "cz_gate_metric"
-        ],
-        "artifact_stage": "final_reproduction"
-      },
-      "critical": false,
-      "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "failed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 100.0,
+      "physics_score_cap": 55.0,
       "parameter_score_cap": 100.0,
-      "reference_score_cap": 80.0,
-      "component_total": 89.0,
-      "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 40.0,
+      "score": 40.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
-  "overall_score": 84.6,
+  "overall_score": 63.12,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 6,
-    "critical_items": 2,
+    "scored_items": 8,
+    "critical_items": 8,
     "artifact_pass_rate": 1.0,
     "data_backed_rate": 1.0,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "none": 6
+      "none": 4,
+      "source_discrepancy": 4
     },
     "parameter_match_counts": {
-      "paper_exact": 6
+      "paper_exact": 8
     },
     "reference_comparison_counts": {
-      "digitized_curve": 3,
-      "visual_feature_contract": 3
+      "analytic_reference": 8
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 6
+      "independent_numerics": 8
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 6
+      "physics_reproduction": 8
     },
     "formula_gate_counts": {
-      "verified": 4,
-      "reconstructed": 2
+      "verified": 8
     },
     "paper_level_role_counts": {
-      "main_claim": 2,
-      "supporting": 4
+      "main_claim": 7,
+      "supporting": 1
     },
     "physics_status_counts": {
-      "undeclared": 6
+      "passed": 4,
+      "failed": 4
     },
-    "physics_assertion_status_counts": {},
-    "essential_physics_failures": [],
-    "final_reproduction_ready": true,
+    "physics_assertion_status_counts": {
+      "passed": 4,
+      "failed": 4
+    },
+    "essential_physics_failures": [
+      "T004",
+      "T005",
+      "T007",
+      "T008"
+    ],
+    "final_reproduction_ready": false,
     "final_reproduction_target_ids": [
       "T001",
       "T002",
       "T003",
       "T004",
       "T005",
-      "T006"
+      "T006",
+      "T007",
+      "T008"
     ],
-    "final_reproduction_blocked_target_ids": [],
-    "exploratory_target_ids": []
-  },
-  "status": "passed"
+    "final_reproduction_blocked_target_ids": [
+      "T004",
+      "T005",
+      "T007",
+      "T008"
+    ],
+    "final_reproduction_block_reasons": {
+      "T004": [
+        "science_checks_not_passed"
+      ],
+      "T005": [
+        "science_checks_not_passed"
+      ],
+      "T007": [
+        "science_checks_not_passed"
+      ],
+      "T008": [
+        "science_checks_not_passed"
+      ]
+    },
+    "exploratory_target_ids": [],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "not_required": 4,
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 4,
+      "react_loop_required": 4
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T004",
+      "T005",
+      "T007",
+      "T008"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T004",
+      "T005",
+      "T007",
+      "T008"
+    ],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 4
+    },
+    "root_cause_counts": {
+      "paper_claim_discrepancy": 4
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 4
+    }
+  }
 }

@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "paper_id": "2502.20558",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Independent-lifecycle delayed-erasure hypergraph",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Main text after Fig. 2; Appendix B.2"
+        }
+      ],
+      "latex": "D_{\\mathrm{final}}=\\sum_i D_i+D_{\\mathrm{Pauli}}+\\omega D_{\\mathrm{first\\,comb}},\\qquad \\omega=0\\;\\text{in main-text simulations}",
+      "role": "Defines which detector-error information is retained by the production decoder and the local proxy's information hierarchy.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The sum and main-text omega value are printed explicitly."
+        },
+        {
+          "id": "EQ001_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With no observed loss, the lifecycle sum is empty and the model reduces to the Pauli detector-error model."
+        }
+      ],
+      "numerical_form": "Use final SSR flags as side information; compare an unaware decoder, a delayed flag-aware decoder, and a perfect-time reference in a d=5 proxy.",
+      "code_refs": [
+        "src/delayed_erasure_proxy.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Loss fraction",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Main text Sec. III, definition preceding Fig. 3(d)"
+        }
+      ],
+      "latex": "L=\\frac{p_{\\mathrm{loss}}}{p_{\\mathrm{loss}}+p_{\\mathrm{Pauli}}}",
+      "role": "Separates total physical error into loss and Pauli contributions.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Definition is explicit in the main text."
+        },
+        {
+          "id": "EQ002_endpoints",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "L=0 is Pauli-only and L=1 is loss-only."
+        }
+      ],
+      "numerical_form": "p_loss=L*p_total and p_Pauli=(1-L)*p_total.",
+      "code_refs": [
+        "src/error_models.py::split_error_rate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Normalized loss and biased-Pauli channel",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Appendix F, Error Model A"
+        }
+      ],
+      "latex": "p=1-\\sqrt{1-p_{CZ}},\\quad p_x=p_y=\\frac{p}{2(1+\\eta)},\\quad p_z=\\frac{\\eta p}{1+\\eta},\\quad Lp+(1-L)(p_x+p_y+p_z)=p",
+      "role": "Defines the normalized gate-level error split used throughout the simulations.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All probabilities and the normalization identity are printed in Appendix F."
+        },
+        {
+          "id": "EQ003_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "p_x+p_y+p_z=p, so the loss/Pauli convex split totals p."
+        }
+      ],
+      "numerical_form": "Return nonnegative loss, X, Y, and Z probabilities and assert their sum equals p.",
+      "code_refs": [
+        "src/error_models.py::error_model_a"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Loss-Pauli threshold boundary and lifecycle trend",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Main text below Fig. 4(a)"
+        },
+        {
+          "type": "paper_method",
+          "value": "Appendix H.2 reports 7/(lifecycle length)^(1/3)"
+        }
+      ],
+      "latex": "p_{\\mathrm{th}}(L)=\\frac{p_{\\mathrm{loss,th}}p_{\\mathrm{Pauli,th}}}{L(p_{\\mathrm{Pauli,th}}-p_{\\mathrm{loss,th}})+p_{\\mathrm{loss,th}}},\\qquad p_{\\mathrm{loss,th}}(\\ell)\\approx\\frac{7}{\\ell^{1/3}}\\%",
+      "role": "Provides the independently executable analytical content of Fig. 4.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both relations are printed in the main text/Appendix H."
+        },
+        {
+          "id": "EQ004_axes",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The threshold interpolation returns the Pauli-only value at L=0 and loss-only value at L=1."
+        }
+      ],
+      "numerical_form": "Evaluate the lifecycle curve for ell in [1,16]; do not infer the finite-size points from pixels.",
+      "code_refs": [
+        "src/analytic_targets.py::lifecycle_threshold_percent"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Effective-distance scaling",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Main text below Fig. 3(f)"
+        }
+      ],
+      "latex": "P_L\\propto(p/p_{\\mathrm{th}})^{d_e},\\qquad d_e=(d+1)/2\\;\\text{for Pauli noise},\\qquad d_e=d\\;\\text{for erasure noise}",
+      "role": "Defines the fit observable and endpoint sanity checks for effective-distance targets finalized at the current clean-room capability boundary.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Scaling and both endpoints are explicit in the main text."
+        },
+        {
+          "id": "EQ005_d7",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At d=7 the expected exponent runs from 4 to 7, matching the plotted range."
+        }
+      ],
+      "numerical_form": "Endpoint assertions only; the bounded clean-room campaign did not reproduce the paper's panel fits.",
+      "code_refs": [
+        "src/analytic_targets.py::effective_distance_endpoints"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Rotated-surface-code lifecycle counts",
+      "source_refs": [
+        {
+          "type": "paper_method",
+          "value": "Appendix C.1, Figs. 14(c) and 16(a), Table I"
+        }
+      ],
+      "latex": "N_{2q}=4d(d-1),\\quad \\bar\\ell_{data}=\\frac{N_{2q}r}{d^2},\\quad \\bar\\ell_{meas}=\\frac{N_{2q}}{d^2-1},\\quad \\bar\\ell_{all}=\\frac{2N_{2q}r}{d^2+(d^2-1)r}",
+      "role": "Reproduces the conventional lifecycle split and the all-qubit SWAP/conventional invariant.",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The lifecycle definitions, d=9 setting, equality of all-qubit averages, and large-d limit are explicit."
+        },
+        {
+          "id": "EQ006_count",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For d=3 the formula gives 24 entangling gates, the standard rotated-code count."
+        },
+        {
+          "id": "EQ006_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At deep circuits and then large d, the all-qubit lifecycle tends to 8 as stated in the paper."
+        }
+      ],
+      "numerical_form": "Use r = displayed SE rounds minus the noiseless boundary round; report this convention in every output.",
+      "code_refs": [
+        "src/analytic_targets.py::lifecycle_curves"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Algorithmic lifecycle counts",
+      "source_refs": [
+        {
+          "type": "paper_method",
+          "value": "Appendix G and Fig. 6(b)"
+        }
+      ],
+      "latex": "(\\bar n_{SE},n_{SE}^{max})_{GHZ}=(\\log_2N/2,\\lfloor\\log_2N\\rfloor),\\quad (4,5)_{15\\to1},\\quad(7,8)_{H/T},\\quad(9,13)_{adder}",
+      "role": "Generates the exact bar heights in Fig. 6(b).",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendix G prints every rule and constant; Fig. 6 uses N=16 for GHZ."
+        },
+        {
+          "id": "EQ007_rederivation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The Appendix-G gate-by-gate lifecycle descriptions independently give the GHZ logarithmic pair and the 4/5, 7/8, and 9/13 constant pairs used by code."
+        }
+      ],
+      "numerical_form": "Evaluate the GHZ expression at N=16 and emit the three printed constant pairs.",
+      "code_refs": [
+        "src/analytic_targets.py::algorithm_lifecycles"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Accumulated movement error",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Appendix C.1, SWAP SE technical challenges"
+        }
+      ],
+      "latex": "p_{move}=1-(1-p_{idle})^{T/\\tau}",
+      "role": "Defines the movement-error cost in the independently attempted but unreproduced Fig. 15 sweep.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation is printed explicitly in Appendix C."
+        },
+        {
+          "id": "EQ008_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "It vanishes at T=0 or p_idle=0 and increases monotonically with the number of slots."
+        }
+      ],
+      "numerical_form": "Available as a tested helper; the bounded clean-room implementation did not reproduce the Fig. 15 circuit sweep.",
+      "code_refs": [
+        "src/error_models.py::movement_error"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Error-channel normalization and the Error Model B conflict",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Appendix F, Error Models A and B"
+        },
+        {
+          "type": "paper_caption",
+          "value": "Table I channel definitions"
+        }
+      ],
+      "latex": "p'=1-\\sqrt{1-p_{CZ}},\\qquad \\sum_{b=1}^{4}\\frac{p'}{2}=2p',\\qquad \\sum_{b=1}^{4}\\frac{p'}{4}=p'",
+      "role": "Verifies Error Model A normalization and makes the two incompatible printed Error Model B normalizations explicit without selecting one by visual agreement.",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendix F and the Table I caption expose the conflicting branch statements directly."
+        },
+        {
+          "id": "EQ009_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Independent branch summation gives 2p' for four p'/2 branches and p' for four p'/4 branches."
+        }
+      ],
+      "numerical_form": "Generate both branch assignments, sum their probabilities, and preserve the unresolved discrepancy for fresh review.",
+      "code_refs": [
+        "src/claim_targets.py::error_model_b_candidates",
+        "src/error_models.py::error_model_a"
+      ],
+      "open_questions": [
+        "Which Error Model B branch convention is scientifically authoritative in the published paper?"
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Maximum logical error for a maximally mixed logical state",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Appendix I, paragraph after the random-circuit illustration"
+        }
+      ],
+      "latex": "P_{L,\\max}=1-2^{-N}",
+      "role": "Defines the algorithm-level logical-error upper bound for N logical qubits.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The bound is printed explicitly in Appendix I."
+        },
+        {
+          "id": "EQ010_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The bound equals 1/2 at N=1 and increases monotonically toward one."
+        }
+      ],
+      "numerical_form": "Evaluate 1-2^{-N} for each positive integer logical-qubit count in the frozen config.",
+      "code_refs": [
+        "src/claim_targets.py::logical_error_max_rows"
+      ],
+      "open_questions": []
+    }
+  ]
+}

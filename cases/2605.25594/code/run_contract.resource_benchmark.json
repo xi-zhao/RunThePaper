@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "run_id": "2605.25594-resource-boundary-v1-20260825",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T010",
+    "T011",
+    "T012",
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T021",
+    "T022",
+    "T023",
+    "T024"
+  ],
+  "working_directory": "workspace",
+  "command": [
+    "python",
+    "scripts/benchmark_resource_boundary.py",
+    "--config",
+    "config/resource_benchmark.json"
+  ],
+  "inputs": [
+    "scripts/benchmark_resource_boundary.py",
+    "src/paper_scale_campaign.py",
+    "src/anderson_sensitivity.py",
+    "config/resource_benchmark.json",
+    "config/paper_scale.json",
+    "outputs/checks/compute_budget_profile.json",
+    "outputs/data/remote/results_L24.jsonl",
+    "outputs/data/remote/results_L28.jsonl",
+    "outputs/data/remote/results_L31.jsonl"
+  ],
+  "parameter_file": "config/resource_benchmark.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "paper_scale_config": "config/paper_scale.json",
+    "host_profile": "outputs/checks/compute_budget_profile.json",
+    "timing_inputs": [
+      {
+        "L": 24,
+        "path": "outputs/data/remote/results_L24.jsonl"
+      },
+      {
+        "L": 28,
+        "path": "outputs/data/remote/results_L28.jsonl"
+      },
+      {
+        "L": 31,
+        "path": "outputs/data/remote/results_L31.jsonl"
+      }
+    ],
+    "available_accelerator": {
+      "model": "NVIDIA A100",
+      "count": 1,
+      "memory_gib": 80,
+      "largest_completed_L": 31
+    },
+    "memory_model": {
+      "float_bytes": 8,
+      "minimum_full_dense_arrays_during_observable_reduction": 2,
+      "explanation": "The current code must hold the full eigenvector matrix and operator-times-eigenvector matrix simultaneously; eigensolver input/output/workspace is additional."
+    },
+    "output": "outputs/checks/resource_benchmark.json"
+  },
+  "outputs": [
+    "outputs/checks/resource_benchmark.json"
+  ],
+  "timeout_seconds": 120,
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

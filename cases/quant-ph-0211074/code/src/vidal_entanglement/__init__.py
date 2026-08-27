@@ -4,6 +4,8 @@ from .model import (
     block_covariance,
     correlation_coefficients,
     entanglement_spectrum,
+    finite_chain_correlation_coefficients,
+    finite_xy_parity_diagnostics,
     majorization_margin,
     xy_entropy,
 )
@@ -15,6 +17,8 @@ __all__ = [
     "correlation_coefficients",
     "dicke_entropy",
     "entanglement_spectrum",
+    "finite_chain_correlation_coefficients",
+    "finite_xy_parity_diagnostics",
     "majorization_margin",
     "xy_entropy",
     "xxx_ground_state",

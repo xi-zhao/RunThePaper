@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "paper_id": "1910.08980",
   "score_model": "post_run_bar_height_distribution_v1",
   "primary_metric": {
@@ -64,8 +64,135 @@
           "EQ004",
           "EQ005"
         ],
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison."
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison.",
+        "pixel_alternative_evidence": [
+          "outputs/data/main_fig1_n32.csv",
+          "outputs/data/main_fig1_n32_instances.npz",
+          "outputs/checks/target_checks.json#T001"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "not_comparable_with_evidence",
+          "reason_code": "stochastic_instances_not_identical"
+        },
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T001 cannot become paper_exact because the publication omits the exact graph edge lists, coupling arrays, and random seed behind the 16 displayed instances.",
+            "evidence": [
+              "FIGURE_CLASSIFICATION.md",
+              "TARGET_LEDGER.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper discloses the ensemble rule and benchmark sizes, but not the indispensable per-instance sample identity needed to replay the exact 16+16 bars.",
+            "confidence": "confirmed",
+            "evidence": [
+              "FIGURE_CLASSIFICATION.md",
+              "TARGET_LEDGER.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula checks, target-level physics checks, and the isolated run attestation all pass; no reproduction-code defect is supported by current evidence.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The Appendix C correlation formula and recursive RQAOA logic are independently verified.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All exact solves are zero-gap, the ratios satisfy the declared bounds, and the independent ensemble reproduces the reported RQAOA-over-QAOA advantage.",
+                "evidence": [
+                  "outputs/checks/target_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The source-free isolated runner attests the exact scientific input bundle and generated outputs for both targets.",
+                "evidence": [
+                  "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The target ledger and figure classification record that the paper fixes the ensemble rule and benchmark size but omits the exact 16 graph/coupling/seed instances required for a paper-exact replay.",
+                "evidence": [
+                  "FIGURE_CLASSIFICATION.md",
+                  "TARGET_LEDGER.md"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The source-access boundary traces the figure PDFs into comparison-only evidence and confirms that the publication ships no author code or numerical arrays from which the hidden sample identities could be recovered.",
+                "evidence": [
+                  "SOURCE_ACCESS_BOUNDARY.md"
+                ]
+              },
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The provenance contract binds the attested protocol configuration and separates disclosed ensemble rules from independently chosen graph seeds, optimization grids, and MILP settings.",
+                "evidence": [
+                  "SOURCE_ACCESS_BOUNDARY.md",
+                  "parameter_provenance.json",
+                  "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The current checks rule out a known implementation defect as the reason the target cannot be paper_exact.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+              ]
+            },
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The current independent review is stale, but that is a separate lifecycle gate rather than the cause of the paper_subset cap.",
+              "evidence": [
+                "outputs/checks/independent_review.json",
+                "outputs/review/review_request.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The publication-input boundary applies to T001 only: the scientific protocol is reproduced, but the hidden sample identity behind the 16 displayed bars is not recoverable from the paper.",
+            "items": [
+              "T001"
+            ],
+            "completion": "0/1 paper-exact sample identities recovered from the publication"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the unpublished graph/coupling samples or original author seed list and rerun the frozen isolated protocol against those exact instances.",
+            "expected_resolution": "Either the target upgrades from paper_subset to paper_exact, or a genuine paper-vs-reproduction discrepancy can be isolated on matched instances.",
+            "evidence_to_produce": [
+              "outputs/runs/1910.08980-paper-exact/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -88,9 +215,14 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "a",
+            "panel_id": "F1-L-QAOA",
             "status": "reproduced",
-            "evidence": "outputs/figures/main_fig1_n32.png"
+            "evidence": "outputs/data/main_fig1_n32.csv"
+          },
+          {
+            "panel_id": "F1-L-RQAOA",
+            "status": "reproduced",
+            "evidence": "outputs/data/main_fig1_n32.csv"
           }
         ],
         "panel_scope_cap": 15.0
@@ -108,7 +240,10 @@
       "score_aggregation": "included",
       "component_total": 99.15,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
@@ -164,8 +299,135 @@
           "EQ004",
           "EQ005"
         ],
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison."
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison.",
+        "pixel_alternative_evidence": [
+          "outputs/data/main_fig1_n100.csv",
+          "outputs/data/main_fig1_n100_instances.npz",
+          "outputs/checks/target_checks.json#T002"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Direct pixel registration would pair different unpublished random instances; source pixels instead support a post-run distribution comparison.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "not_comparable_with_evidence",
+          "reason_code": "stochastic_instances_not_identical"
+        },
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T002 cannot become paper_exact because the publication omits the exact graph edge lists, coupling arrays, and random seed behind the 16 displayed instances.",
+            "evidence": [
+              "FIGURE_CLASSIFICATION.md",
+              "TARGET_LEDGER.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper discloses the ensemble rule and benchmark sizes, but not the indispensable per-instance sample identity needed to replay the exact 16+16 bars.",
+            "confidence": "confirmed",
+            "evidence": [
+              "FIGURE_CLASSIFICATION.md",
+              "TARGET_LEDGER.md",
+              "SOURCE_ACCESS_BOUNDARY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula checks, target-level physics checks, and the isolated run attestation all pass; no reproduction-code defect is supported by current evidence.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The Appendix C correlation formula and recursive RQAOA logic are independently verified.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All exact solves are zero-gap, the ratios satisfy the declared bounds, and the independent ensemble reproduces the reported RQAOA-over-QAOA advantage.",
+                "evidence": [
+                  "outputs/checks/target_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The source-free isolated runner attests the exact scientific input bundle and generated outputs for both targets.",
+                "evidence": [
+                  "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The target ledger and figure classification record that the paper fixes the ensemble rule and benchmark size but omits the exact 16 graph/coupling/seed instances required for a paper-exact replay.",
+                "evidence": [
+                  "FIGURE_CLASSIFICATION.md",
+                  "TARGET_LEDGER.md"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The source-access boundary traces the figure PDFs into comparison-only evidence and confirms that the publication ships no author code or numerical arrays from which the hidden sample identities could be recovered.",
+                "evidence": [
+                  "SOURCE_ACCESS_BOUNDARY.md"
+                ]
+              },
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The provenance contract binds the attested protocol configuration and separates disclosed ensemble rules from independently chosen graph seeds, optimization grids, and MILP settings.",
+                "evidence": [
+                  "SOURCE_ACCESS_BOUNDARY.md",
+                  "parameter_provenance.json",
+                  "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The current checks rule out a known implementation defect as the reason the target cannot be paper_exact.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/runs/1910.08980-paper-protocol-v2/run_attestation.json"
+              ]
+            },
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The current independent review is stale, but that is a separate lifecycle gate rather than the cause of the paper_subset cap.",
+              "evidence": [
+                "outputs/checks/independent_review.json",
+                "outputs/review/review_request.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The publication-input boundary applies to T002 only: the scientific protocol is reproduced, but the hidden sample identity behind the 16 displayed bars is not recoverable from the paper.",
+            "items": [
+              "T002"
+            ],
+            "completion": "0/1 paper-exact sample identities recovered from the publication"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the unpublished graph/coupling samples or original author seed list and rerun the frozen isolated protocol against those exact instances.",
+            "expected_resolution": "Either the target upgrades from paper_subset to paper_exact, or a genuine paper-vs-reproduction discrepancy can be isolated on matched instances.",
+            "evidence_to_produce": [
+              "outputs/runs/1910.08980-paper-exact/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -188,9 +450,14 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "b",
+            "panel_id": "F1-R-QAOA",
             "status": "reproduced",
-            "evidence": "outputs/figures/main_fig1_n100.png"
+            "evidence": "outputs/data/main_fig1_n100.csv"
+          },
+          {
+            "panel_id": "F1-R-RQAOA",
+            "status": "reproduced",
+            "evidence": "outputs/data/main_fig1_n100.csv"
           }
         ],
         "panel_scope_cap": 15.0
@@ -208,58 +475,1048 @@
       "score_aggregation": "included",
       "component_total": 99.85,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T003",
+      "label": "Symmetry-protected NLTS theorem and constants",
+      "figure_refs": [
+        "Theorem 1"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no independent accepted artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific generated or analytic-verification artifact exists.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The required independent claim check is absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No accepted independent analytic or small-n result exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Every assigned atomic claim remains uncovered."
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "scripts/build_atomic_inventory.py"
+      ],
+      "remaining_gap": "The finite claim-audit runner is implemented and attested; proof-level scientific acceptance and fresh-context review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display analytic claims have no scientific pixel verdict.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A claim-addressed finite falsification runner now executes successfully, but finite checks do not close the paper-level theorem or replace fresh proof review.",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json",
+              "tests/test_claim_audit.py"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is proof-level evidence and independent adversarial review, not missing case-local code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The unified claim runner passed focused unit tests and a raw/reference-free isolated execution; this excludes an observed implementation failure but does not certify the theorem.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Claim formulas, gauge invariance, signed-ring optima, family-local rule, and the exact 16-item inventory passed focused tests.",
+                "evidence": [
+                  "tests/test_claim_audit.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The 16-item campaign ran in the isolated channel with every declared input read and no forbidden paper/reference access.",
+                "evidence": [
+                  "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The present W1 gap is missing claim implementation/evidence; additional paper-scale compute is not the discriminating action.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The printed analytic statements contain enough definitions for an independent symbolic or small-n test; missing random Fig. 1 samples do not cause this claim gap.",
+              "evidence": [
+                "raw/paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 1 atomic claims assigned to T003 remain explicitly uncovered.",
+            "items": [
+              "C-MAIN-T1-NLTS"
+            ],
+            "completion": "1/1 items have executable finite checks; 0/1 are promoted to proof-level scientific coverage by this implementation step"
+          },
+          "next_discriminating_test": {
+            "action": "Give the paper, equation cards, claim-audit code, and generated checks to a fresh-context reviewer for proof-level rederivation and active falsification.",
+            "expected_resolution": "The reviewer will either accept the derivation, localize a reproduction defect, or sustain a paper-discrepancy candidate without relying on finite tests as proof.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t003_analytic_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Symmetry-protected NLTS theorem and constants"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C-MAIN-T1-NLTS",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "paper_error_candidate_status": "not_assessed",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T004",
+      "label": "Expander QAOA bound, depth, and gauge identities",
+      "figure_refs": [
+        "Corollary 1 and Appendix A"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no independent accepted artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific generated or analytic-verification artifact exists.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The required independent claim check is absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No accepted independent analytic or small-n result exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Every assigned atomic claim remains uncovered."
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "scripts/build_atomic_inventory.py"
+      ],
+      "remaining_gap": "The finite claim-audit runner is implemented and attested; proof-level scientific acceptance and fresh-context review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display analytic claims have no scientific pixel verdict.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A claim-addressed finite falsification runner now executes successfully, but finite checks do not close the paper-level theorem or replace fresh proof review.",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json",
+              "tests/test_claim_audit.py"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is proof-level evidence and independent adversarial review, not missing case-local code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The unified claim runner passed focused unit tests and a raw/reference-free isolated execution; this excludes an observed implementation failure but does not certify the theorem.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Claim formulas, gauge invariance, signed-ring optima, family-local rule, and the exact 16-item inventory passed focused tests.",
+                "evidence": [
+                  "tests/test_claim_audit.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The 16-item campaign ran in the isolated channel with every declared input read and no forbidden paper/reference access.",
+                "evidence": [
+                  "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The present W1 gap is missing claim implementation/evidence; additional paper-scale compute is not the discriminating action.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The printed analytic statements contain enough definitions for an independent symbolic or small-n test; missing random Fig. 1 samples do not cause this claim gap.",
+              "evidence": [
+                "raw/paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 3 atomic claims assigned to T004 remain explicitly uncovered.",
+            "items": [
+              "C-MAIN-C1-QAOA-BOUND",
+              "C-APP-A-L1-DEPTH",
+              "C-APP-A-L2-GAUGE"
+            ],
+            "completion": "3/3 items have executable finite checks; 0/3 are promoted to proof-level scientific coverage by this implementation step"
+          },
+          "next_discriminating_test": {
+            "action": "Give the paper, equation cards, claim-audit code, and generated checks to a fresh-context reviewer for proof-level rederivation and active falsification.",
+            "expected_resolution": "The reviewer will either accept the derivation, localize a reproduction defect, or sustain a paper-discrepancy candidate without relying on finite tests as proof.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t004_analytic_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Expander QAOA bound, depth, and gauge identities"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C-MAIN-C1-QAOA-BOUND",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-A-L1-DEPTH",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-A-L2-GAUGE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "paper_error_candidate_status": "not_assessed",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T005",
+      "label": "Range-R ring bound, construction, and tightness",
+      "figure_refs": [
+        "Theorem 2 and Appendix B"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no independent accepted artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific generated or analytic-verification artifact exists.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The required independent claim check is absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No accepted independent analytic or small-n result exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Every assigned atomic claim remains uncovered."
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "scripts/build_atomic_inventory.py"
+      ],
+      "remaining_gap": "The finite claim-audit runner is implemented and attested; proof-level scientific acceptance and fresh-context review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display analytic claims have no scientific pixel verdict.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A claim-addressed finite falsification runner now executes successfully, but finite checks do not close the paper-level theorem or replace fresh proof review.",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json",
+              "tests/test_claim_audit.py"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is proof-level evidence and independent adversarial review, not missing case-local code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The unified claim runner passed focused unit tests and a raw/reference-free isolated execution; this excludes an observed implementation failure but does not certify the theorem.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Claim formulas, gauge invariance, signed-ring optima, family-local rule, and the exact 16-item inventory passed focused tests.",
+                "evidence": [
+                  "tests/test_claim_audit.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The 16-item campaign ran in the isolated channel with every declared input read and no forbidden paper/reference access.",
+                "evidence": [
+                  "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The present W1 gap is missing claim implementation/evidence; additional paper-scale compute is not the discriminating action.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The printed analytic statements contain enough definitions for an independent symbolic or small-n test; missing random Fig. 1 samples do not cause this claim gap.",
+              "evidence": [
+                "raw/paper.pdf"
+              ]
+            },
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "hypothesis_status": "paper_error_candidate_pending",
+              "statement": "Lemma B.2 appears to omit a factor n in its statement; its own proof gives n(2p+1/2)/(2p+1). This remains pending until independent small-n and fresh-review checks pass.",
+              "evidence": [
+                "raw/paper.pdf",
+                "paper-source/main.tex"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 4 atomic claims assigned to T005 remain explicitly uncovered.",
+            "items": [
+              "C-MAIN-T2-RANGE-BOUND",
+              "C-MAIN-T2-TIGHTNESS",
+              "C-APP-B-L1-GHZ",
+              "C-APP-B-L2-PRINTED-ENERGY"
+            ],
+            "completion": "4/4 items have executable finite checks; 0/4 are promoted to proof-level scientific coverage by this implementation step"
+          },
+          "next_discriminating_test": {
+            "action": "Give the paper, equation cards, claim-audit code, and generated checks to a fresh-context reviewer for proof-level rederivation and active falsification.",
+            "expected_resolution": "The reviewer will either accept the derivation, localize a reproduction defect, or sustain a paper-discrepancy candidate without relying on finite tests as proof.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t005_analytic_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Range-R ring bound, construction, and tightness"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C-MAIN-T2-RANGE-BOUND",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-MAIN-T2-TIGHTNESS",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-B-L1-GHZ",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-B-L2-PRINTED-ENERGY",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "paper_error_candidate_status": "pending_independent_confirmation",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T006",
+      "label": "Level-1 correlation formula and O(n^4) simulation claim",
+      "figure_refs": [
+        "Appendix C.4"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no independent accepted artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific generated or analytic-verification artifact exists.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The required independent claim check is absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No accepted independent analytic or small-n result exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Every assigned atomic claim remains uncovered."
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "scripts/build_atomic_inventory.py"
+      ],
+      "remaining_gap": "The finite claim-audit runner is implemented and attested; proof-level scientific acceptance and fresh-context review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [
+          "EQ003"
+        ],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display analytic claims have no scientific pixel verdict.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A claim-addressed finite falsification runner now executes successfully, but finite checks do not close the paper-level theorem or replace fresh proof review.",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json",
+              "tests/test_claim_audit.py"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is proof-level evidence and independent adversarial review, not missing case-local code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The unified claim runner passed focused unit tests and a raw/reference-free isolated execution; this excludes an observed implementation failure but does not certify the theorem.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Claim formulas, gauge invariance, signed-ring optima, family-local rule, and the exact 16-item inventory passed focused tests.",
+                "evidence": [
+                  "tests/test_claim_audit.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The 16-item campaign ran in the isolated channel with every declared input read and no forbidden paper/reference access.",
+                "evidence": [
+                  "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The present W1 gap is missing claim implementation/evidence; additional paper-scale compute is not the discriminating action.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The printed analytic statements contain enough definitions for an independent symbolic or small-n test; missing random Fig. 1 samples do not cause this claim gap.",
+              "evidence": [
+                "raw/paper.pdf"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 2 atomic claims assigned to T006 remain explicitly uncovered.",
+            "items": [
+              "C-APP-C-L1-CORRELATION",
+              "C-APP-C-RUNTIME-O-N4"
+            ],
+            "completion": "2/2 items have executable finite checks; 0/2 are promoted to proof-level scientific coverage by this implementation step"
+          },
+          "next_discriminating_test": {
+            "action": "Give the paper, equation cards, claim-audit code, and generated checks to a fresh-context reviewer for proof-level rederivation and active falsification.",
+            "expected_resolution": "The reviewer will either accept the derivation, localize a reproduction defect, or sustain a paper-discrepancy candidate without relying on finite tests as proof.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t006_analytic_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Level-1 correlation formula and O(n^4) simulation claim"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C-APP-C-L1-CORRELATION",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-C-RUNTIME-O-N4",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "paper_error_candidate_status": "not_assessed",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T007",
+      "label": "Signed-ring classical/QAOA/RQAOA claims",
+      "figure_refs": [
+        "Theorem 3 and Appendix D"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "W1 uncovered analytic target has no independent accepted artifact and remains zero-credit.",
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific generated or analytic-verification artifact exists.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The required independent claim check is absent."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No accepted independent analytic or small-n result exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Every assigned atomic claim remains uncovered."
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "scripts/build_atomic_inventory.py"
+      ],
+      "remaining_gap": "The finite claim-audit runner is implemented and attested; proof-level scientific acceptance and fresh-context review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "not_applicable",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ003",
+          "EQ004",
+          "EQ005"
+        ],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display analytic claims have no scientific pixel verdict.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A claim-addressed finite falsification runner now executes successfully, but finite checks do not close the paper-level theorem or replace fresh proof review.",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json",
+              "tests/test_claim_audit.py"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The remaining gap is proof-level evidence and independent adversarial review, not missing case-local code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/claim_implementation_audit.json",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The unified claim runner passed focused unit tests and a raw/reference-free isolated execution; this excludes an observed implementation failure but does not certify the theorem.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Claim formulas, gauge invariance, signed-ring optima, family-local rule, and the exact 16-item inventory passed focused tests.",
+                "evidence": [
+                  "tests/test_claim_audit.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The 16-item campaign ran in the isolated channel with every declared input read and no forbidden paper/reference access.",
+                "evidence": [
+                  "outputs/runs/1910.08980-claim-audit-v1/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The present W1 gap is missing claim implementation/evidence; additional paper-scale compute is not the discriminating action.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The printed analytic statements contain enough definitions for an independent symbolic or small-n test; missing random Fig. 1 samples do not cause this claim gap.",
+              "evidence": [
+                "raw/paper.pdf"
+              ]
+            },
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "hypothesis_status": "paper_error_candidate_pending",
+              "statement": "Lemma D.1(ii) prints raw energy 1 for an unnormalised n-edge Hamiltonian, and Lemma D.2 prints impossible unfrustrated maxima n_c+1 and n+1. Both remain pending hypotheses until independent enumeration and fresh review pass.",
+              "evidence": [
+                "raw/paper.pdf",
+                "paper-source/main.tex"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 6 atomic claims assigned to T007 remain explicitly uncovered.",
+            "items": [
+              "C-MAIN-T3-LOCAL",
+              "C-MAIN-T3-QAOA",
+              "C-MAIN-T3-RQAOA",
+              "C-APP-D-L1-PRINTED-ENERGY",
+              "C-APP-D-L2-RQAOA-1D",
+              "C-APP-D-L2-ENDPOINT-ENERGY"
+            ],
+            "completion": "6/6 items have executable finite checks; 0/6 are promoted to proof-level scientific coverage by this implementation step"
+          },
+          "next_discriminating_test": {
+            "action": "Give the paper, equation cards, claim-audit code, and generated checks to a fresh-context reviewer for proof-level rederivation and active falsification.",
+            "expected_resolution": "The reviewer will either accept the derivation, localize a reproduction defect, or sustain a paper-discrepancy candidate without relying on finite tests as proof.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t007_analytic_claims",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Signed-ring classical/QAOA/RQAOA claims"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "C-MAIN-T3-LOCAL",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-MAIN-T3-QAOA",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-MAIN-T3-RQAOA",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-D-L1-PRINTED-ENERGY",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-D-L2-RQAOA-1D",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "C-APP-D-L2-ENDPOINT-ENERGY",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "paper_error_candidate_status": "pending_independent_confirmation",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0
     }
   ],
   "overall_score": 89.0,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 2,
-    "critical_items": 2,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "scored_items": 7,
+    "critical_items": 7,
+    "artifact_pass_rate": 0.29,
+    "data_backed_rate": 0.29,
     "manual_interventions_total": 1,
-    "manual_interventions_per_item": 0.5,
+    "manual_interventions_per_item": 0.14,
     "failure_type_counts": {
-      "missing_benchmark_metadata": 2
+      "missing_benchmark_metadata": 2,
+      "formula_or_method_error": 5
     },
     "parameter_match_counts": {
-      "paper_subset": 2
+      "paper_subset": 2,
+      "not_applicable": 5
     },
     "reference_comparison_counts": {
-      "digitized_curve": 2
+      "digitized_curve": 2,
+      "not_available": 5
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 2
+      "independent_numerics": 2,
+      "unknown": 5
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 2
+      "physics_reproduction": 2,
+      "unknown": 5
     },
     "formula_gate_counts": {
-      "verified": 2
+      "verified": 2,
+      "blocked": 5
     },
     "paper_level_role_counts": {
-      "main_claim": 2
+      "main_claim": 7
     },
     "physics_status_counts": {
-      "passed": 2
+      "passed": 2,
+      "pending": 5
     },
     "physics_assertion_status_counts": {
-      "passed": 4
+      "passed": 4,
+      "blocked": 5
     },
     "essential_physics_failures": [],
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
-      "T002"
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
     ],
     "aggregate_included_target_ids": [
       "T001",
       "T002"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 7
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 2,
+      "react_loop_required": 5
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 2,
+      "implementation_not_ready": 5
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 2,
+      "scope_definition_gap": 5
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 2,
+      "not_applicable": 3,
+      "not_excluded": 2
+    }
   },
-  "status": "passed"
+  "status": "passed",
+  "summary": "Whole-paper W1 audit: 20 eligible atomic items, 4 covered and 16 explicitly uncovered; five supporting duplicates are not double-counted.",
+  "atomic_inventory_summary": {
+    "items_total": 27,
+    "display_items_total": 6,
+    "quantitative_claims_total": 21,
+    "eligible_total": 20,
+    "covered_total": 4,
+    "uncovered_total": 16,
+    "excluded_total": 2,
+    "supporting_not_double_counted": 5
+  },
+  "source_render_boundary": {
+    "author_code_used": false,
+    "author_arrays_used": false,
+    "source_pixels_used_as_scientific_input": false,
+    "scientific_runner": "The attested T001/T002 staging bundle contains only case-authored code/config and a Matplotlib cache; sandbox policy denies raw/ and references/.",
+    "render_contract": "Source images are read only by the post-freeze comparison script; it cannot modify frozen instances, energies, ratios, or solver outputs."
+  }
 }

@@ -12,4 +12,4 @@ python scripts/run_reproduction.py
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: No author code, author numerical arrays or source pixels are scientific inputs.
+Boundary: The Section VI Cantor-spectrum theorem and Section VII continuity theorem family remain uncovered pending independent claim-specific artifacts. No author code, author numerical arrays or source pixels are scientific inputs.

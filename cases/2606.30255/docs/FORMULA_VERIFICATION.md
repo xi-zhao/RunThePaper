@@ -1,57 +1,50 @@
 # Formula Verification
 
-本文件说明哪些公式获准进入冻结理论目标。机器可读结果位于
-`outputs/checks/formula_verification.json`；完整推导见
-`DERIVATION_TRACE.md`，由 equation cards 生成的快照见 `DERIVATION.md`。
+## 结论
 
-运行：
+冻结范围依赖的 7 张 equation card 全部达到 `verified`，公式门结果为 `passed`，0 finding。每个数值目标都绑定同一组已核验公式和 `MTH-SCANS` 方法卡。
 
-```bash
-python private validation harness/scripts/check_formula_gate.py case/2606.30255 --write
-```
+机器证据：
+
+- `outputs/checks/formula_symbolic_checks.json`
+- `outputs/checks/formula_verification.json`
+- `outputs/checks/target_readiness/*.final_reproduction.json`
 
 ## Gate Summary
 
-公式 gate 状态为 `passed`：6 张 equation cards 全部 `verified`，
-`trusted_for_numerics=6`，`blocked_for_numerics=0`，未留 open question。
+| Formula card | 论文来源 | 数值角色 | Gate | 独立检查 |
+| --- | --- | --- | --- | --- |
+| `EQC-MEASUREMENT` | Eq. (7) | 偏振测量 ket | `verified` | \(\sin^2\theta+\cos^2\theta=1\) |
+| `EQC-SOURCE-STATE` | Eq. (18) | 两光子纯态 | `verified` | \(w+(1-w)=1\) |
+| `EQC-DENSITY` | Eq. (20) | 白噪声混态 | `verified` | 厄米、迹为 1、半正定 |
+| `EQC-BORN` | Eqs. (8)–(9) | \(P_{++}\) | `verified` | singlet 化为 \(\frac12\sin^2(\alpha-\beta)\) |
+| `EQC-WIGNER` | Eq. (5) | \(\mathcal W=P_{ab}+P_{bc}-P_{ac}\) | `verified` | 逐点恒等式误差 0 |
+| `EQC-SINGLET-LIMIT` | Eqs. (10)–(13) | 对称/非对称解析极限 | `verified` | \(-1/8\) 与 \((1-\sqrt3)/4\) 精确通过 |
+| `EQC-FIDELITY` | Eq. (21) | singlet fidelity | `verified` | 从舍入后的 \(w,v\) 独立重算 |
 
-| Formula | Role | Gate | Main verification |
-| --- | --- | --- | --- |
-| EQC001 | 偏振测量态 \(|m(x)\rangle\) | verified | 论文 Eq. (7) 来源明确且 \(\sin^2x+\cos^2x=1\)。 |
-| EQC002 | 含白噪声的两光子密度矩阵 | verified | 论文 Eqs. (18),(20)；迹为 1，eigenvalues 对全部论文 \(v\) 非负。 |
-| EQC003 | 联合 Born 透射概率 | verified | 从 EQC001/002 独立收缩；singlet 极限严格回到论文 Eq. (9)。 |
-| EQC004 | Alice/Bob 三设置角度几何 | verified | 对称时相对角为 \(\phi,\phi,2\phi\)，非对称时为 \(15^\circ,15^\circ,45^\circ\)。 |
-| EQC005 | Wigner observable | verified | 论文 Eqs. (5),(10)；经典表化简为 \(p_3+p_6\geq0\)。 |
-| EQC006 | 对称与非对称理想极限 | verified | 直接得到 \(-1/8\) 与 \((1-\sqrt3)/4\)。 |
+## 方法边界
 
-## Independent Numerical Form
+- Figure 3 扫描相对间隔 \(\phi\)。
+- Figure 4 横轴 \(\Theta\) 是中间设置 \(b\) 的绝对角，因此基组起点为 \(\Theta-\phi\)。
+- Figure 5 上固定 Alice、扫描 Bob；下固定 Bob、扫描 Alice。
+- 投影测量具有 180° 周期性，所有四个目标的数值周期误差均小于 \(10^{-15}\)。
 
-生成路径计算
+## 已记录的论文舍入效应
 
-\[
-\operatorname{Tr}\left[\rho\left(\Pi_x\otimes\Pi_y\right)\right].
-\]
+正文只报告两位小数的拟合参数。由这些数值重算的 fidelity 与正文值之差为：
 
-核验路径单独实现
+| Target | 重算值 | 正文值 | 绝对差 |
+| --- | ---: | ---: | ---: |
+| `T-FIG003` | 0.985000 | 0.985 | 0 |
+| `T-FIG004` | 0.972700 | 0.978 | 0.0053 |
+| `T-FIG005A` | 0.897003 | 0.896 | 0.0010 |
+| `T-FIG005B` | 0.917650 | 0.914 | 0.0036 |
 
-\[
-v\left(\sqrt w\sin x\cos y-\sqrt{1-w}\cos x\sin y\right)^2
-+\frac{1-v}{4}.
-\]
+这些差值小于预先记录的 `0.006` 舍入容差，不需要修改论文参数。
 
-二者没有共享概率实现；四个 target 的逐点最大差不超过
-\(5.56\times10^{-16}\)，从而把 tensor-product 顺序、相位符号和
-角度映射纳入可执行检查。
+## 复验命令
 
-## Closed Or Unclear Formulas
-
-| Formula | Reason | Numerical consequence |
-| --- | --- | --- |
-| None | 所有冻结目标依赖项均已验证。 | 无数值 gate blocker。 |
-
-## Scope Boundary
-
-论文有关 detector efficiency、公平采样、perfect anticorrelation
-loophole 和实验 coincidence normalization 的表达式用于全文理解，
-但不为冻结 theory-only 曲线提供生成数据。它们没有被伪装成已复现的
-实验方法。
+```bash
+python case/2606.30255/scripts/verify_formulas.py
+PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/check_formula_gate.py case/2606.30255 --write
+```

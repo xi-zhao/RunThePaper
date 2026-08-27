@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "run_id": "1608.02589-paper-scale-all-v1",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale_all.py",
+    "--config",
+    "config/paper_scale_all.json",
+    "run-all",
+    "--profile",
+    "paper",
+    "--workers",
+    "16",
+    "--skip-render",
+    "--resume"
+  ],
+  "inputs": [
+    "src/dtc_feature_sim.py",
+    "src/dtc_paper_scale.py",
+    "scripts/run_paper_scale_all.py",
+    "config/paper_scale_all.json"
+  ],
+  "parameter_file": "config/paper_scale_all.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "seed_base": 160802589000,
+    "pulse_angle_center": 1.5707963267948966,
+    "period_parts": [
+      1.0,
+      1.0
+    ],
+    "field_disorder": [
+      0.0,
+      6.283185307179586
+    ],
+    "nearest_coupling_disorder_relative": [
+      0.8,
+      1.2
+    ],
+    "long_range_alpha": 1.5,
+    "fourier_window": [
+      10,
+      150
+    ]
+  },
+  "parameter_scope_notes": {
+    "T001": "Main Fig. 1 plus Supplement Figs. S1 and S3 nearest-neighbor row, including L=14 traces, Fourier spectra and paper-declared disorder models.",
+    "T002": "Main Fig. 2 phase statistics and Fourier-height variance, including L=8/10/12 dense Floquet spectra and the coupling-disorder inset.",
+    "T003": "Main Fig. 3 and Supplement Fig. S2 endpoint mutual information, dense full spectra through L=14 and matrix-free eigenstate subsets at L=16/18.",
+    "T004": "Main Fig. 4 and Supplement Fig. S3 long-range row, alpha=1.5 with paper-scale time traces and variance curves."
+  },
+  "outputs": [
+    "outputs/data/paper_scale/main_fig1_rigidity.json",
+    "outputs/data/paper_scale/main_fig2_level_statistics.json",
+    "outputs/data/paper_scale/main_fig2_variance.json",
+    "outputs/data/paper_scale/main_fig3_and_supp_s2.json",
+    "outputs/data/paper_scale/main_fig4_long_range.json",
+    "outputs/data/paper_scale/supp_fig_s1.json",
+    "outputs/data/paper_scale/supp_fig_s3.json",
+    "outputs/checks/paper_scale/paper_scale_acceptance.json",
+    "outputs/checks/paper_scale/manifest.json",
+    "outputs/checks/paper_scale/run_summary.json"
+  ],
+  "forbidden_scientific_inputs": [
+    "raw/",
+    "references/",
+    "author code",
+    "author numerical arrays",
+    "digitized curves",
+    "source or PDF pixels",
+    "network"
+  ],
+  "scheduler": {
+    "recommended_machine": "High-memory multicore CPU nodes; A100 may accelerate a separately validated dense or matrix-free backend, but is not assumed by this contract.",
+    "recommended_workers": 16,
+    "timeout_seconds": 604800,
+    "shard_command": [
+      "python",
+      "scripts/run_paper_scale_all.py",
+      "--config",
+      "config/paper_scale_all.json",
+      "run",
+      "--profile",
+      "paper",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "${ARRAY_COUNT}",
+      "--resume"
+    ],
+    "merge_command": [
+      "python",
+      "scripts/run_paper_scale_all.py",
+      "--config",
+      "config/paper_scale_all.json",
+      "aggregate",
+      "--profile",
+      "paper",
+      "--skip-render"
+    ],
+    "resume_identity": "Each atomic result is bound to configuration SHA-256, implementation SHA-256 and canonical work-unit SHA-256."
+  },
+  "acceptance_criteria": [
+    "All deterministic work units finish exactly once or resume from digest-matched atomic shards; aggregation refuses missing or stale shards.",
+    "Every one of the 38 numeric items in the main paper and supplement is produced from the published Floquet model or the explicitly disclosed independent protocol reconstruction.",
+    "Trace, level-ratio, mutual-information and variance invariants pass; all generated numerical arrays are hashed in the final manifest before rendering.",
+    "The numerical path reads no raw paper assets, reference images, author code, author numerical arrays, digitized curves or source pixels.",
+    "Unpublished sampling grids, seeds, phase-boundary weights and the Supplement S1 susceptibility interpretation remain reconstructed and cannot be promoted to paper-exact without further evidence.",
+    "A stable disagreement is classified through protocol-v2 falsification and fresh-context review; execution failure alone never becomes a paper-error claim."
+  ],
+  "timeout_seconds": 604800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "compute_status": "code_ready_full_production_not_run"
+}

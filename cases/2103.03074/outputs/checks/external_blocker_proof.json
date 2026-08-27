@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "paper_id": "2103.03074",
+  "audit_kind": "source_trace",
+  "result": "inconclusive",
+  "audited_publication_inputs": [
+    {
+      "path": "raw/paper.pdf",
+      "sha256": "dbbcc8dc717811ed46c4bc76f89f162c229df9231cbd31f6b37312340ddf81b6"
+    },
+    {
+      "path": "paper-source/extracted/main.tex",
+      "sha256": "bfa7b1965475601bc8c0a4e20eacdb46fe258c2f109e79e9792b09444afdc1c6"
+    },
+    {
+      "path": "paper-source/extracted/refs.bib",
+      "scope": "publication locators for the Dryad Sycamore circuit dataset and author repository"
+    }
+  ],
+  "author_artifact_boundary": "The author repository, contraction orders, slicing-index files, probability arrays, and plotting code were not opened. The cited Dryad Sycamore circuit dataset is a parameter source, not author result data, but it has not yet been frozen or audited.",
+  "conclusion": "A terminal publication omission is not proven for any queued target. The paper identifies the public circuit dataset, seed, cycle sequence, open qubits, closed assignment, slice count, tensor sizes, numerical precision, hardware, and method. Author-identical contraction orders and seeds are not scientifically indispensable to an independent implementation. Paper-scale resource insufficiency is plausible but has not been established by an executed resource benchmark.",
+  "shared_publication_facts": [
+    "main.tex lines 155-163: public circuit dataset locator, 53-qubit instance, seed/cycle family, open-qubit and slicing counts",
+    "main.tex lines 209-228 and 374-408: fixed bitstring assignment, histogram/XEB definitions and 14/20-cycle scopes",
+    "main.tex lines 270 and refs.bib: author code is public but remains prohibited as an implementation input",
+    "main.tex lines 314-319 and 358-375: precision, GPU memory, per-subtask complexity, hardware and timing disclosures"
+  ],
+  "target_findings": [
+    {
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T005"
+      ],
+      "affected_item_count": 14,
+      "proof_result": "insufficient",
+      "reason": "The exact Sycamore circuit is explicitly delegated to a public Dryad parameter dataset and the paper prints the experiment seed, cycle sequence, open-qubit sets, fixed closed bits, slice counts, and observables. The dataset has not been parameter-only ingested and a fresh contraction order has not been generated, so the present gap is unfinished clean-room implementation rather than proven publication omission.",
+      "deciding_test": "Freeze only the Dryad circuit parameter file, independently generate a contraction tree and slice set, reproduce the complete 14-cycle distribution or a predeclared 20-cycle amplitude subset, and verify normalization/XEB identities."
+    },
+    {
+      "target_ids": [
+        "T006",
+        "T007"
+      ],
+      "affected_item_count": 9,
+      "proof_result": "insufficient",
+      "reason": "The paper reports 2^23 subtasks, 2^30 per-subtask space, complex64, 48 V100 plus 12 A100 GPUs, and about five days. This suggests a large resource boundary, but the local/A100 path has not run even one matched subtask, so no passed resource_benchmark exists.",
+      "deciding_test": "After parameter-only circuit ingestion, run one matched 20-cycle subtask on the available A100, record peak memory and wall time, then extrapolate the frozen task count with uncertainty and compare to the paper's hardware contract."
+    },
+    {
+      "target_ids": [
+        "T008"
+      ],
+      "affected_item_count": 5,
+      "proof_result": "insufficient",
+      "reason": "The five printed bitstrings and amplitudes are output checks, not missing inputs. Their independent recomputation requires the public circuit parameter dataset and a fresh contraction implementation; neither has yet been attempted at a matched instance.",
+      "deciding_test": "Freeze the cited circuit parameter file, independently contract the five printed bitstrings with convergence/precision checks, and compare complex amplitudes without reading author arrays."
+    }
+  ]
+}

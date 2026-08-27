@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "run_id": "10.1038-s41586-024-08262-7-paper-exact-v2",
+  "target_ids": [
+    "T1",
+    "T2"
+  ],
+  "command": [
+    "python",
+    "scripts/run_attested_reproduction.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "scripts/run_attested_reproduction.py",
+    "scripts/gen_fig2.py",
+    "scripts/run_ed_validation.py",
+    "src/paraparticles.py",
+    "src/spin_model_1d.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "fig2": {
+      "species": {
+        "ex2_m": 2,
+        "ex3_m": 2,
+        "ex4_m": 3
+      },
+      "n_max": 4,
+      "beta_eps": {
+        "start": -4.0,
+        "end": 4.0,
+        "points": 401
+      }
+    },
+    "ed_validation": {
+      "cases": [
+        {
+          "N": 4,
+          "m": 2,
+          "seed": 1
+        },
+        {
+          "N": 5,
+          "m": 2,
+          "seed": 7
+        },
+        {
+          "N": 4,
+          "m": 3,
+          "seed": 3
+        }
+      ],
+      "j_uniform": [
+        0.5,
+        1.5
+      ],
+      "mu_uniform": [
+        -1.0,
+        1.0
+      ]
+    }
+  },
+  "outputs": [
+    "outputs/data/fig2_left_degeneracies.csv",
+    "outputs/data/fig2_right_occupation.csv",
+    "outputs/checks/fig2.json",
+    "outputs/checks/ed_validation.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

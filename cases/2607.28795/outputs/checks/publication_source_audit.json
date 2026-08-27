@@ -1,0 +1,223 @@
+{
+  "schema_version": 2,
+  "paper_id": "2607.28795",
+  "audit_kind": "source_trace",
+  "status": "passed",
+  "result": "confirmed_for_named_targets_only",
+  "audited_publication_inputs": [
+    {
+      "path": "raw/paper.pdf",
+      "sha256": "4ac964874e5c49e8d02a284b6a877f590927e61523fe7f086d7b5f8bff2b7d2e",
+      "scope": "Complete 92-page arXiv v1 manuscript, including Appendices A-K, all captions, tables, footnotes, and references"
+    }
+  ],
+  "audit_coverage": {
+    "sections_read": [
+      "main text Sections I-VII",
+      "Appendix A: mathematical foundations",
+      "Appendices D-E: surgery and magic-state constructions",
+      "Appendix H: sQetch and hook-error-free schedules",
+      "Appendix I: telescoping decoder",
+      "Appendix J: hardware implementations",
+      "Appendix K: code construction data",
+      "all figure captions and Tables I-XIII",
+      "references and artifact locators"
+    ],
+    "search_terms": [
+      "QDistRnd",
+      "CPU",
+      "RTX 5090",
+      "seed",
+      "schedule",
+      "detector error model",
+      "decoder stage",
+      "hook-error-free",
+      "optimized layout",
+      "aspect ratio",
+      "HAL",
+      "runtime",
+      "software version"
+    ],
+    "source_pixels_used_as_numeric_input": false,
+    "author_code_or_arrays_opened": false
+  },
+  "author_artifact_boundary": "Ref. 61 is the target paper's author repository and is not admissible as independent numerical logic or data. Its existence is not itself a blocker. A blocker is accepted below only where the PDF explicitly makes the reported observable depend on a named exact schedule, benchmark corpus, hardware contract, or optimized layout that the complete PDF does not disclose.",
+  "target_findings": [
+    {
+      "target_id": "T003",
+      "affected_items": [
+        "FIG08_SQETCH"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "the exact candidate-code corpus at each of the four system sizes",
+        "the sketch dimension and any size-dependent launch parameters",
+        "timing repetitions, warm-up, aggregation, and random seeds",
+        "the complete GPU runtime and software-build contract"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Figure 8 caption and Appendix H.4, PDF p. 70",
+          "published": "approximately 10^7 candidates, approximately 10^5 trials per code, four approximate sizes, and a single NVIDIA RTX 5090",
+          "omitted": "candidate matrices, exact per-size workloads, sketch size, seeds, timing protocol, dependency versions, and launch configuration",
+          "why_indispensable": "The target is wall-clock time. Both per-trial work and GPU timing depend directly on the omitted matrices, sketch dimension, batching, and runtime contract; another corpus or launch geometry is a different benchmark."
+        }
+      ]
+    },
+    {
+      "target_id": "T007",
+      "affected_items": [
+        "FIG08_QDISTRND"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "the high-end CPU model and thread count",
+        "the exact QDistRnd version, command, and stopping settings",
+        "the exact candidate-code corpus at every plotted size",
+        "timing repetitions, warm-up, aggregation, and seeds"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Figure 8 caption and Appendix H.4, PDF p. 70",
+          "published": "QDistRnd is named as the CPU baseline and the text says only high-end CPU",
+          "omitted": "CPU identity, core/thread allocation, QDistRnd invocation and version, exact matrices, seeds, and timing protocol",
+          "why_indispensable": "A wall-clock CPU baseline is not hardware invariant, and QDistRnd runtime depends on its invocation and the matrix ensemble. The omitted fields prevent a like-for-like numeric baseline even if the cited method is independently available."
+        }
+      ]
+    },
+    {
+      "target_id": "T008",
+      "affected_items": [
+        "FIG09_TELESCOPING",
+        "TABLE09_CONVERGENCE_THROUGHPUT"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "a frozen detector-model payload for every basis and physical error rate",
+        "complete BP and Relay-BP iteration, damping, convergence, and deferral settings",
+        "the custom CUDA/C implementation and build/runtime versions",
+        "the CPU model used beside the H100 and the timing aggregation contract"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Figure 9 caption, PDF p. 74",
+          "published": "J144 benchmark identity, p=0.1% and p=0.2%, equal X/Z shots, 95% confidence intervals, and a locator to Ref. 122 detector models",
+          "omitted": "the exact frozen model files consumed by each experiment and a hash/version binding",
+          "why_indispensable": "Logical-error rates are functions of the detector graph and logical-observable definitions; a locator without a frozen payload does not identify the numerical input."
+        },
+        {
+          "source_ref": "Appendix I.1-I.3 and Tables IX-X, PDF pp. 71-77",
+          "published": "four decoder stages, broad schedules, H100 class, shot counts, stage fractions, and selected latency values",
+          "omitted": "complete stage hyperparameters, custom kernel implementation/build, CPU identity, warm-up/repetition rules, and an executable stopping/deferral contract",
+          "why_indispensable": "Stage fractions, logical failures, and throughput all change with convergence and deferral rules; throughput also changes with the omitted code and hardware contract."
+        }
+      ]
+    },
+    {
+      "target_id": "T015",
+      "affected_items": [
+        "TABLE08_CIRCUIT_DISTANCE"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "the exact two-qubit-gate ordering for each of the eight schedules",
+        "the corresponding detector and logical-observable definitions",
+        "the frozen circuit-distance search settings and seeds"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Appendix H.5 and Table VIII, PDF p. 71",
+          "published": "the schedule-search method and the eight resulting circuit-distance rows",
+          "omitted": "the schedules themselves; the text explicitly says the exact schedules and visualizations are available only in Ref. 61",
+          "why_indispensable": "Circuit distance is a property of a particular gate ordering and fault-to-detector map, not of H_X and H_Z alone. The missing schedules define the scientific object being measured."
+        }
+      ]
+    },
+    {
+      "target_id": "T016",
+      "affected_items": [
+        "FIG12_2AOD_MITTEN",
+        "FIG12_2AOD_STRUCTURED",
+        "FIG12_4AOD_MITTEN",
+        "FIG12_4AOD_STRUCTURED",
+        "FIG12_SLM_MITTEN",
+        "FIG12_SLM_STRUCTURED",
+        "TABLE11_TRANSFERS",
+        "TABLE11_MAX_SPEED"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "the optimized data-block assignments P_D for every code",
+        "the complete hook-free transition sequence for every syndrome-extraction cycle",
+        "AOD ownership and hand-off assignments at every move",
+        "optimization seeds and stopping rules"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Appendix J.1 and Figure 12/Table XI, PDF pp. 82-84",
+          "published": "the relative-permutation identity, spacing, acceleration, AOD constraints, and final values",
+          "omitted": "the optimized P_D maps and complete per-code transition/hand-off schedules; the text points to Ref. 61 videos for the complete cycles",
+          "why_indispensable": "The paper defines each physical move as P_D' composed with pi composed with P_D^-1 and says Table XI measures exactly these optimized permutations. Times, transfers, and peak speed cannot be computed without those maps and schedules."
+        }
+      ]
+    },
+    {
+      "target_id": "T017",
+      "affected_items": [
+        "TABLE12_MITTEN_HAL"
+      ],
+      "root_cause": "publication_underspecified",
+      "proof_result": "confirmed",
+      "indispensable_missing_fields": [
+        "the custom first-tier layout supplied to HAL for each code",
+        "the enumerated super-grid aspect ratios and random seeds",
+        "the simulated-annealing schedule and stopping settings",
+        "the exact HAL version/configuration and resulting routed netlists"
+      ],
+      "source_trace": [
+        {
+          "source_ref": "Appendix J.2 and Table XII, PDF pp. 89-91",
+          "published": "the placement objectives, two heuristic families, broad metric definitions, and final HAL rows",
+          "omitted": "the actual custom layouts, aspect-ratio set, seeds, annealing contract, HAL version/configuration, and routed outputs",
+          "why_indispensable": "The text says HAL hardware complexity is not monotone in the preprocessing cost and that the best result is selected across aspect ratios and seeds. Therefore the omitted search and routing state is necessary to identify each reported row."
+        }
+      ]
+    }
+  ],
+  "non_external_findings": [
+    {
+      "target_ids": [
+        "T005",
+        "T006",
+        "T011",
+        "T012",
+        "T013"
+      ],
+      "result": "not_external",
+      "reason": "The PDF gives enough algebraic and procedural information to begin clean-room construction. The terminal campaign executes a real paper-instance substage and records the remaining limitation as system capability, not as a publication omission."
+    },
+    {
+      "target_ids": [
+        "T009",
+        "T010",
+        "T028"
+      ],
+      "result": "not_external",
+      "reason": "The target matrices and algorithms are sufficiently identified for an executable attempt. The bounded MILP and sQetch probes reach local capability limits and are not relabeled as objective external blockers."
+    },
+    {
+      "target_ids": [
+        "T014",
+        "T027"
+      ],
+      "result": "not_external",
+      "reason": "Table XIII fully specifies the structured J300 and abelian J560 base matrices. Independent expansion exposes a structured-row paper inconsistency and reproduces the J560 dimensions and canonical weight sets."
+    }
+  ],
+  "conclusion": "Only T003, T007, T008, T015, T016, and T017 meet the publication_underspecified evidence standard. Every accepted blocker names an indispensable input, cites the exact paper location that defines its role, and records the complete-source omission. All other gaps remain reproduced, paper-discrepant, or evidenced capability failures."
+}

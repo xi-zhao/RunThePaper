@@ -1,54 +1,21 @@
-# Complete numerical reproduction of non-Hermitian topological band theory
+# Topological Band Theory for Non-Hermitian Hamiltonians: scientific reproduction note
 
-This case reproduces Shen, Zhen, and Fu, *Topological Band Theory for
-Non-Hermitian Hamiltonians*, Phys. Rev. Lett. **120**, 146402 (2018). It is not
-an image-tracing exercise. We first followed the derivations of the topological
-invariants, generalized Dirac model, domain-wall matching, exceptional-point
-vorticity, and lattice cylinder, then generated the numerical results from the
-equations and independent eigensolvers.
+## Result
 
-## Scope
+Full paper and six-page supplement read before target selection.
 
-All reproducible theory-numerical content is covered: six targets and fifteen
-numerical panels across Main Figs. 1–3 and Supplement Figs. 2–4. The schematic
-Supplement Fig. 1 and contextual Supplement Table I are intentionally outside
-the numerical scope. If a panel contains schematic or experimental material,
-only its formula-defined theoretical part would be eligible.
+The public status is **Scientific reproduction — independent review pending**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Scientific result
+## What is reproduced
 
-All six targets pass. Analytic spectra agree with sampled direct
-diagonalization to at most $1.03\times10^{-15}$; the domain-wall common-spinor
-residual is at most $1.43\times10^{-14}$; one loop exchanges the exceptional
-point sheets and carries vorticity magnitude $1/2$; the exceptional-point pair
-has charges $+1/2$ and $-1/2$; the hybrid-point directional exponents are
-$0.5$ and $1.0$; and the paper-exact $80\times80$ cylinder eigensystems have a
-maximum normalized residual of $1.60\times10^{-15}$ with minimum matched edge
-weight $0.985$.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-The scientific score is 90/100. It is capped because no author numerical arrays
-are available, so the evidence supports an independent equation-level
-reproduction rather than author-data-level equivalence. The initial raster
-presentation score is 60.28/100 and separately tracks aspect ratio, 3D camera,
-typography, and ink density.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=passed, causal_resolution=not_required, science=passed, execution=attested, pixel=passed, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 
-```bash
-cd cases/1706.07435/code
-python -m unittest discover -s tests -v
-python scripts/run_main_fig1.py
-python scripts/run_main_fig2.py
-python scripts/run_main_fig3.py
-python scripts/run_supp_fig2.py
-python scripts/run_supp_fig3.py
-python scripts/run_supp_fig4.py
-```
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-Each runner writes structured data and machine-readable checks before rendering
-its figure. The public package contains no paper PDF, standalone source figure,
-or digitized source curve, and the generation path accepts no paper image as an
-input.
+## Paper-review boundary
 
-See the [derivation](../docs/DERIVATION.md), [numerical methods](../docs/NUMERICAL_METHODS.md),
-and [score interpretation](../docs/SIMILARITY_SCORECARD.md).
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: All 15 visible theory-numerical panels are frozen in the reproduction scope. Source figures are validation-only; generated values must come from formulas or independent eigensolvers.

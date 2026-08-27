@@ -62,6 +62,16 @@ terms, each with coefficient \(J/4\).  This is the Pauli-string construction
 in `toy_hamiltonian`.  The fully polarized state has support only on the
 embedded total-spin multiplet and therefore returns at integer periods.
 
+For the perfect-revival lemma, write the initial state in the energy basis.
+Unit-modulus return at a fixed time forces every occupied energy to have one
+common phase, hence \(E_\mu=(\alpha+2\pi m)/\tau\).  Local bounded terms give
+\(\lVert H\rVert\le Nh\), so the spectral width is at most \(2Nh\) and contains
+at most \(K\le\lfloor 2Nh\tau/(2\pi)\rfloor+1=O(N)\) distinct compatible
+energies.  Finally, \(\sum_\mu|c_\mu|^2=1\) implies
+\(\max_\mu|c_\mu|^2\ge1/K=O(1/N)\).  The case-local checker constructs the
+energy lattice and verifies the phase, count, and normalization steps without
+using paper pixels or author arrays.
+
 ## Assumptions and execution boundaries
 
 - Periodic boundary conditions are used for main-text targets; open boundaries
@@ -88,3 +98,4 @@ embedded total-spin multiplet and therefore returns at integer periods.
 | EQ007 | reduced `fsa_basis`; paper scale `_streaming_fsa` |
 | EQ008 | reduced `run_supp_figure_s3`; paper scale `paper_scale.run_t006` |
 | EQ009 | `toy_hamiltonian_sparse`, `paper_scale.run_t009` |
+| EQ010 | `atomic_closure.perfect_revival_overlap_bound` and its analytic tests |

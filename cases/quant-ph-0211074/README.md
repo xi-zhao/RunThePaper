@@ -6,7 +6,7 @@ Published as: [Entanglement in Quantum Critical Phenomena](https://doi.org/10.11
 
 Formal citation: Phys. Rev. Lett. 90, 227902 (2003) · DOI `10.1103/PhysRevLett.90.227902` · Locator `90, 227902`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **82.47/100**
+Public status: **Partial scientific reproduction** · Audit score: **87.33/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -49,7 +49,7 @@ cd cases/quant-ph-0211074/code
 python scripts/run_reproduction.py --config config/smoke.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

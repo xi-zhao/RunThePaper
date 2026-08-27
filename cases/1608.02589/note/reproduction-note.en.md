@@ -1,54 +1,21 @@
-# Reproduction Report
+# Discrete time crystals: rigidity, criticality, and realizations: scientific reproduction note
 
-Similarity score: `73.56/100` (`numerical_feature_reproduction`). Public status: `medium_scale_partial_reproduction`.
+## Result
 
-## Completed
+Existing frozen evidence covers 32 of 89 eligible atomic reproduction items. Fifty-seven uncovered items are now explicit zero-credit targets with direct/root cause, code-fault status, and next discriminating tests.
 
-- Ingested arXiv PDF and TeX source.
-- Rendered original main-text figures from source.
-- Derived the Floquet model and observables before numerical work.
-- Implemented exact Floquet evolution and explicit Floquet diagonalization.
-- Generated structured CSV data before plotting.
-- Reproduced the main DTC rigidity feature at `L=14`.
-- Generated level-statistics, variance, long-range variance, and corrected mutual-information outputs.
-- Added an observable sanity check for endpoint mutual information.
-- Completed a mixed CuPy/NumPy medium campaign for Fig. 3b-d: 168 jobs, 55 paper-parameter points, and `L=8,10,12`.
-- Wrote machine-readable checks and passed the harness audit.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Commands
+## What is reproduced
 
-```bash
-python3 cases/1608.02589/code/scripts/run_reproduction.py
-python3 cases/1608.02589/code/scripts/plot_reproduction.py
-python3 cases/1608.02589/code/scripts/run_reproduction_iteration2.py
-python3 cases/1608.02589/code/scripts/plot_reproduction_iteration2.py
-python3 cases/1608.02589/code/scripts/extract_fig3_scaling_collapse.py
-```
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Second Iteration Results
+Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=attempted_not_reproduced, science=failed, execution=failed, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
-| Target | Result |
-| --- | --- |
-| Fig. 1b-d | Feature reproduced at `L=14`; interacting peak locking error is `0.0`. |
-| Fig. 1a | Local phase-boundary proxy generated from `Var(h)` peak; not a full phase diagram. |
-| Fig. 2a | Same level-statistics observable generated through `L=10`; crossing remains sample-limited. |
-| Fig. 2b | Feature reproduced: variance peak appears and moves with interaction strength. |
-| Fig. 3a | Feature reproduced after correcting endpoint mutual information; `epsilon=0` gives `log 2`, large detuning drops near zero. |
-| Fig. 3b-d | Medium campaign completed at `L=8,10,12`; strong-coupling collapses are tight, but the weak-coupling panel and fitted critical exponents have not converged. |
-| Fig. 4 | Feature reproduced at `L=10` for the long-range `alpha=1.5` model. |
+## Run
 
-## Evidence
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-- `../outputs/checks/iteration2_dtc_feature_checks.json`
-- `../outputs/figures/iteration2_fig1_L14_subharmonic_rigidity.png`
-- `../outputs/figures/iteration2_fig1_phase_boundary_proxy.png`
-- `../outputs/figures/iteration2_fig2_level_statistics_variance_L10.png`
-- `../outputs/figures/iteration2_fig3_mutual_information_corrected.png`
-- `../outputs/figures/fig3_scaling_collapse.png`
-- `../outputs/checks/completion_assessment.json`
-- `../outputs/figures/iteration2_fig4_long_range_variance_L10.png`
-## Scope
+## Paper-review boundary
 
-This is a medium-scale partial reproduction of the main numerical physics. It is still not a full PRL-scale rerun because the paper-scale exponent fit requires `L=14`, optional `L=16,18` checks, and much larger disorder averaging. The final campaign was not launched under the stop-at-resource-boundary policy.
-
-Difference reason shown on the Fig. 3 comparison: the medium campaign stops at `L=12` and uses reduced disorder sampling; missing sizes and statistics prevent paper-level critical-exponent agreement.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Second iteration reproduces core DTC rigidity features at L=14. Corrected endpoint mutual information reproduces the main finite-size-flow feature. Full phase diagram, scaling collapse, and critical exponents remain large-scale ED targets.

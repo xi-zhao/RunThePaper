@@ -1,0 +1,316 @@
+{
+  "schema_version": 2,
+  "paper_id": "1206.2505",
+  "_howto": [
+    "One item per paper figure/table (or panel group). This file is the machine-readable coverage contract:",
+    "kind: numeric | non_numeric.",
+    "decision for numeric items: target (with target_ids) | deferred_blocked (with blocker).",
+    "decision for non_numeric items: excluded | target.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', or 'similar to another figure' are NOT blockers: reproduce the item instead.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If scientific input is missing, deferred_blocked with evidence is an honest partial state.",
+    "If execution is compute/hardware-limited or a mapped target is reduced_scale, add a code-ready implementation contract: status=ready, case-local code_refs, config config_ref, working_directory=workspace, argv-style entrypoint, expected_outputs, and acceptance_criteria.",
+    "Put reusable contracts in top-level implementations and reference them from items with implementation_ref; an inline implementation object is also accepted.",
+    "Compute may postpone execution; it may not postpone writing runnable code.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "whole_paper_v7": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_scale.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dqpt_tfim/model.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/fisher_zero_lines.csv",
+        "outputs/data/work_rate_curves.csv",
+        "outputs/data/work_rate_surface.csv",
+        "outputs/data/dqpt_rate.csv",
+        "outputs/data/magnetization_curves.csv",
+        "outputs/data/magnetization_paths.csv",
+        "outputs/data/spin_size_convergence.csv",
+        "outputs/data/postselected_magnetization.csv",
+        "outputs/data/supplement_loschmidt_matrix.csv",
+        "outputs/data/supplement_formula_checks.csv",
+        "outputs/data/ramp_mode_occupations.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "acceptance_criteria": [
+        "Across-critical Fisher lines cross the time axis while same-phase lines remain in the left half-plane.",
+        "The work rate is nonnegative, normalized, and its zero-work cut equals the Loschmidt rate.",
+        "The N=256 Majorana-Pfaffian channel passes exact-spin parity and three-scale convergence checks.",
+        "Postselection sector switches track Fisher times and corrected normalization identities close.",
+        "Literal supplement formulas and independently corrected formulas remain frozen separately for review."
+      ]
+    },
+    "finite_g1_clean_room_audit": {
+      "status": "ready",
+      "target_ids": [
+        "T015"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_finite_g1_audit.py",
+        "--config",
+        "config/finite_g1_audit.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dqpt_tfim/finite_g1.py",
+        "scripts/run_finite_g1_audit.py"
+      ],
+      "config_ref": "config/finite_g1_audit.json",
+      "run_contract_ref": "run_contract.finite_g1.json",
+      "expected_outputs": [
+        "outputs/data/finite_g1_correction_audit.csv",
+        "outputs/checks/finite_g1_correction_audit.json"
+      ],
+      "acceptance_criteria": [
+        "The exact finite-chain return amplitudes preserve norm and approach the published g1-to-infinity limit over the frozen g1 sequence.",
+        "The audit never guesses the unpublished 1/g1 expansion or promotes the exploratory finite-chain sequence to a paper-exact correction."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_left",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 1 left",
+      "reason": "All six Fisher branches are generated from the closed formula.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "main_fig1_right",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 1 right",
+      "reason": "All branches and marked time-axis crossings are generated.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "main_fig2_top",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 2 top",
+      "reason": "Every printed fixed-work curve is generated by saddle inversion.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "main_fig2_bottom",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 2 bottom",
+      "reason": "The full work-time surface and mean-work ridge are generated with a bracketed saddle solve.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "main_fig3_upper_left",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 3 upper left",
+      "reason": "The printed quench is executed independently; the physical precession feature is reproduced, while the exact displayed finite-size/thermodynamic protocol is absent from the paper.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "main_fig3_upper_right",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 3 upper right",
+      "reason": "The printed quench is executed independently; the decay feature is reproduced, while the exact displayed finite-size/thermodynamic protocol is absent from the paper.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "main_fig3_bottom",
+      "item_type": "numerical_subfigure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main Fig. 3 bottom",
+      "reason": "All four quenches use a formula-derived N=256 Majorana-Pfaffian channel; the oscillation period is reproduced, but the paper omits its fit-shift value and Pfaffian size/distance grid.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    },
+    {
+      "item_id": "supp_fig1",
+      "item_type": "numerical_figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Supplement Fig. 1",
+      "reason": "Ordinary and ground-sector-postselected magnetizations are independently evolved; their printed curve labels are tested as a paper-discrepancy candidate rather than silently swapped.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "critical_mode_and_fisher_period",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main text around Eq. (Fisher times)",
+      "reason": "Half occupation, critical momentum, period, and Loschmidt nonanalyticity are checked.",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    },
+    {
+      "item_id": "work_large_deviation_identity",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main text work-distribution section",
+      "reason": "Normalization, mean-work derivative, Legendre rate, unique zero locus, and zero-work identity are checked.",
+      "claim_refs": [
+        "CLM_T010"
+      ]
+    },
+    {
+      "item_id": "supp_loschmidt_matrix",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Supplement Loschmidt matrix section",
+      "reason": "Diagonal/off-diagonal sector rates and switching times are generated exactly.",
+      "claim_refs": [
+        "CLM_T011"
+      ]
+    },
+    {
+      "item_id": "supp_postselection_normalization",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Supplement postselection section",
+      "reason": "The normalized and literal unnormalized expectations are frozen separately.",
+      "claim_refs": [
+        "CLM_T012"
+      ]
+    },
+    {
+      "item_id": "supp_complex_time_identity",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Supplement complex-time section",
+      "reason": "The normalized characteristic identity and literal source expression are frozen separately.",
+      "claim_refs": [
+        "CLM_T013"
+      ]
+    },
+    {
+      "item_id": "arbitrary_ramp_guarantee",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "implementation_ref": "whole_paper_v7",
+      "source_ref": "Main text arbitrary-ramping claim and Ref. Ramping definition",
+      "reason": "The endpoint occupation contrast plus continuity proves the arbitrary-ramp half-mode claim; independent linear and smoothstep runs are falsification examples, not the definition of the theorem.",
+      "claim_refs": [
+        "CLM_T014"
+      ]
+    },
+    {
+      "item_id": "finite_g1_corrections",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "finite_g1_clean_room_audit",
+      "coverage_status": "uncovered",
+      "source_ref": "Supplement line 540",
+      "reason": "A clean-room exact finite-chain sequence is runnable and attested, but the paper explicitly withholds the 1/g1 expansion, so the paper-exact claim remains input-blocked.",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    }
+  ]
+}

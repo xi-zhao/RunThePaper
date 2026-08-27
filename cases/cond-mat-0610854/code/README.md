@@ -12,4 +12,4 @@ python scripts/run_reproduction.py --config config/reduced_scale.json
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=terminal_blocker, pixel=passed_with_not_comparable, review_scope=incomplete, paper_assessment=reproduction_defect.
+Boundary: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, parameter_provenance=missing, causal_resolution=terminal_blocker, execution=missing, pixel=passed_with_not_comparable, independent_review=stale, review_scope=stale, paper_assessment=stale.

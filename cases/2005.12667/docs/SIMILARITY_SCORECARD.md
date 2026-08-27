@@ -1,32 +1,12 @@
-# Similarity Scorecard
+# Similarity Scorecard — 2005.12667
 
-## 当前全篇结果
+- Atomic scientific coverage: 93/107 = 86.92%.
+- Covered-item scientific fidelity: 89.94/100.
+- Whole-paper reproduction degree: 78.17/100 (`coverage × covered-item fidelity`).
+- Target-level similarity score: 89.88/100 across 36 declared targets.
+- Final disposition: 93 reproduced, 14 externally blocked, 0 attempted-not-reproduced, 0 pending.
+- Zero-credit partition: 14 items across 3 publication-underspecified targets.
+- These values are derived by `project inspect`; they are not inferred from pixel similarity or the legacy 18-target aggregate.
+- Every non-reproduced item carries paper location, scientific object, direct cause, root cause, code-fault assessment, and next discriminating test.
 
-- Overall score: **90.28 / 100**
-- Similarity level: **numerical_feature_reproduction**
-- Status: **passed**
-- Scope: **18 个独立数值/表格目标全部有结构化数据和检查证据**；12 个主目标、6 个支持目标。
-- Formula gate: **30 / 30 公式族通过**。
-- Artifact pass rate / data-backed rate: **100% / 100%**。
-
-分数衡量的是论文定义物理特征的独立数值复现，不是对原图像素的临摹。九项使用论文完整参数，五项使用论文可恢复的参数子集，四项属于无绝对参数的解析示意。
-
-## 当前目标状态
-
-| 状态 | 目标 | 说明 |
-| --- | --- | --- |
-| 数值已通过 | T001、T002、T005–T020 | 全部具有 CSV、图或表、数值检查；总计 18 项 |
-| 公式已验证 | T003、T004、T021–T027 | 30 个公式族覆盖正文 Eq. (1)–(164) 与附录 A–C，不混入图像平均分 |
-| 最终复现级 | T007、T008、T010、T012、T013、T017–T020 | 论文参数完整，机器门禁通过 |
-| 探索/参数子集 | T001、T002、T005、T006、T009、T011、T014–T016 | 物理特征通过，但论文未提供全部绝对参数或实验数据 |
-| 外部证据阻塞 | Fig. 4(b–e)、Fig. 21 实验、Fig. 28 实验、Fig. 32 实验 | 缺 COMSOL 工程或作者级原始数据；报告不把理论重算冒充实验复现 |
-
-## 评分原则
-
-1. 每个图表先输出结构化 CSV/JSON，再绘图。
-2. 参数不完整时只允许 `exploratory` 或 `analytic_reference`，不得标为 exact。
-3. 实验曲线缺作者数据时，独立理论重算与原始实验数据复现分开记账。
-4. 公式门禁关闭、数据产物缺失或失败原因不明确时，该目标不得计入接受分。
-5. 视觉样式不代替物理量、极限行为、峰位、线宽或守恒律验证。
-
-因此机器记录中的 `final_reproduction_ready=false` 是范围诚实性标记：整篇理论/数值合同已执行，但不能把缺失的作者实验数据宣称为“最终实验复现”。机器记录见 `outputs/checks/similarity_scorecard.json`。
+Coverage and fidelity remain separate. A covered item has an existing independent artifact but may still be parameter-subset or method-limited; that limitation is preserved in the target diagnosis. Pixel/layout comparison is diagnostic only and cannot change scientific arrays, physical parameters, or coverage.

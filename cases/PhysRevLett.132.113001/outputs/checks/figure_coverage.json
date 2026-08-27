@@ -1,0 +1,631 @@
+{
+  "schema_version": 2,
+  "paper_id": "PhysRevLett.132.113001",
+  "inventory_boundary": {
+    "status": "source_blocked",
+    "source_ref": "Formal Supplemental Material associated with the PRL article",
+    "known_items": [
+      "field-free energy table",
+      "0.4/0.8 V/cm Stark-shift table"
+    ],
+    "unknown_remainder": true,
+    "blocker": "missing_source_input",
+    "reason": "The formal Supplement was not obtained; the paper package identifies at least two tables, but any additional display or quantitative claim cannot be enumerated without guessing.",
+    "next_action": "Acquire the formal Supplement through a legitimate publisher or author route, freeze its hash, and replace this lower-bound inventory with a complete atomic enumeration."
+  },
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T003",
+        "T005",
+        "T006",
+        "T013"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--profile",
+        "attestation",
+        "--output-root",
+        "outputs/data/implementation_closure"
+      ],
+      "code_refs": [
+        "src/hydrogen_metrology/metrology.py",
+        "src/hydrogen_metrology/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/data/implementation_closure/T003.json",
+        "outputs/data/implementation_closure/T005.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T013.json",
+        "outputs/data/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The line-shape implementation follows the full i,m_f sum and distinct Gaussian/erf widths; the validation fixture is explicitly not paper parameters.",
+        "Regression implementations use the published 0--1.6 V/cm and 0--9 MHz domains.",
+        "The full-QED binding runner fails closed on a named, source-hashed term schema and never guesses missing theory inputs."
+      ]
+    },
+    "independent_feature": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/feature.json"
+      ],
+      "code_refs": [
+        "src/hydrogen_metrology/constants.py",
+        "src/hydrogen_metrology/stark.py",
+        "src/hydrogen_metrology/spectra.py",
+        "src/hydrogen_metrology/metrology.py",
+        "src/hydrogen_metrology/campaign.py",
+        "src/hydrogen_metrology/rendering.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/feature.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/feature/stark_branches.csv",
+        "outputs/data/feature/spectrum.csv",
+        "outputs/data/feature/literature_points.csv",
+        "outputs/data/feature/regressions.csv",
+        "outputs/data/feature/uncertainty_budget.csv",
+        "outputs/data/feature/rydberg_table.csv",
+        "outputs/data/feature/field_free_table.csv",
+        "outputs/data/feature/stark_table.csv",
+        "outputs/data/feature/claim_arithmetic.csv",
+        "outputs/checks/feature/target_checks.json",
+        "outputs/checks/feature/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All twelve targets are generated from formulas and printed scalar parameters without raw/reference images, author code, or author numeric arrays as computational inputs.",
+        "The same-n Stark matrix agrees with exact parabolic eigenvalues, the inter-manifold correction scales as field squared, and all scientific outputs are finite and hash-frozen.",
+        "Leading-Dirac and scaled-hyperfine approximations remain explicitly labelled and cannot be promoted to paper exact."
+      ]
+    },
+    "experimental_reanalysis": {
+      "status": "blocked_missing_inputs",
+      "target_ids": [
+        "T003",
+        "T005",
+        "T006"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json"
+      ],
+      "code_refs": [
+        "src/hydrogen_metrology/experimental.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/paper_scale/input_inventory.json",
+        "outputs/checks/paper_scale/plan.json",
+        "outputs/checks/paper_scale/reanalysis.json"
+      ],
+      "acceptance_criteria": [
+        "Fail closed until all four author-supplied point-level CSV files exist with exact schemas and recorded hashes.",
+        "When inputs are available, re-fit quadratic Stark and linear Doppler models and recompute the 525-point weighted ionization estimate.",
+        "Never accept synthetic arrays or digitized source-image pixels as substitutes for author measurement data."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M-F1-SCHEM",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Hydrogen energy levels and transition arrows",
+      "decision": "excluded",
+      "reason": "Explanatory level diagram; only the inset Stark branches are numerical targets."
+    },
+    {
+      "item_id": "M-F1-N20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1 inset, PDF p. 2",
+      "scientific_object": "n=20, k=0 Stark branch versus electric field",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_STARK"
+      ]
+    },
+    {
+      "item_id": "M-F1-N24",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1 inset, PDF p. 2",
+      "scientific_object": "n=24, k=0 Stark branch versus electric field",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_STARK"
+      ]
+    },
+    {
+      "item_id": "M-F2-APPARATUS",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 2, PDF p. 2",
+      "scientific_object": "Experimental apparatus and optical path",
+      "decision": "excluded",
+      "reason": "Experimental apparatus schematic, not a numerical observable."
+    },
+    {
+      "item_id": "M-F3-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3 black series, PDF p. 3",
+      "scientific_object": "Measured transition spectrum",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "reason": "A new physical measurement is outside the theoretical numerical denominator."
+    },
+    {
+      "item_id": "M-F3-LINESHAPE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 blue series, PDF p. 3",
+      "scientific_object": "Calculated asymmetric Stark/Doppler line shape",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "The complete fitted m_f Stark shifts, component intensities, line-shape parameters, covariance, and point-level spectrum required for the paper-exact Fig. 3 calculated curve are not published.",
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "publication_underspecified",
+      "claim_refs": [
+        "CLM_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "M-F3-STARK-BRIDGE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 orange series, PDF p. 3",
+      "scientific_object": "n=24 Stark bridge from the measured transition to field-free energy",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_STARK"
+      ]
+    },
+    {
+      "item_id": "M-T1-BUDGET",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "source_parameter",
+      "source_ref": "Main Table I, PDF p. 4",
+      "scientific_object": "Experimental corrections and uncertainty budget",
+      "decision": "excluded",
+      "consumed_by_target_ids": [
+        "T005",
+        "T006"
+      ],
+      "reason": "Printed experimental inputs support the systematic-model targets; replaying them is not an independent result."
+    },
+    {
+      "item_id": "M-F4-CODATA18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "CODATA 2018 covariance-ellipse family",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-CODATA10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "CODATA 2010 covariance-ellipse family",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-THISWORK-RINF",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "This-work horizontal R-infinity band",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-2S2P",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "2S-2P vertical constraint band",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-N27_30",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "n=27-30 Rydberg-state horizontal constraint",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-MUH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "Muonic-hydrogen constraint",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-2S4P",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "Literature 2S-4P point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-1S3S-2018",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "2018 literature 1S-3S point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-1S3S-2020",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "2020 literature 1S-3S point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-2S8D",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "Literature 2S-8D point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-THISWORK-MUH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "This-work plus muonic-hydrogen derived point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F4-THISWORK-1S2S",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 5",
+      "scientific_object": "This-work plus 1S-2S derived point",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004"
+      ],
+      "reason": "External metrology input or experimentally derived comparison, not formula-generated paper output."
+    },
+    {
+      "item_id": "M-F5A-20-2S0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5",
+      "scientific_object": "Fig. 5(a) n=20, 2S(F=0) measurement series",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T011"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5A-20-2S1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5",
+      "scientific_object": "Fig. 5(a) n=20, 2S(F=1) measurement series",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T011"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5A-24-2S1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5",
+      "scientific_object": "Fig. 5(a) n=24, 2S(F=1) measurement series",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T011"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5A-POOLED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5",
+      "scientific_object": "Fig. 5(a) pooled mean, standard deviation, and total uncertainty",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T011"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5B-OBS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(b), PDF p. 5",
+      "scientific_object": "Fig. 5(b) observed points and sample means",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T005"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5B-MEAN",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(b), PDF p. 5",
+      "scientific_object": "Fig. 5(b) experimental mean and interval",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T005"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5C-OBS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(c), PDF p. 5",
+      "scientific_object": "Fig. 5(c) observed points and sample means",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T006"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5C-MEAN",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(c), PDF p. 5",
+      "scientific_object": "Fig. 5(c) experimental mean and interval",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T006"
+      ],
+      "reason": "Point-level author measurements are reference evidence and are not recreated by theory code."
+    },
+    {
+      "item_id": "M-F5B-REG",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5(b) orange series, PDF p. 5",
+      "scientific_object": "Quadratic residual-Stark regression and one-sigma band",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_SYSTEMATICS"
+      ]
+    },
+    {
+      "item_id": "M-F5C-REG",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5(c) orange series, PDF p. 5",
+      "scientific_object": "Linear residual-Doppler regression and one-sigma band",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_SYSTEMATICS"
+      ]
+    },
+    {
+      "item_id": "M-T2-RINF",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "source_parameter",
+      "source_ref": "Main Table II, PDF p. 6",
+      "scientific_object": "R-infinity literature comparison",
+      "decision": "excluded",
+      "consumed_by_target_ids": [
+        "T012"
+      ],
+      "reason": "Published metrology values are comparison inputs; copying and recombining them is supporting arithmetic."
+    },
+    {
+      "item_id": "S-T1-FIELD-FREE",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Formal Supplement field-free table; source file unavailable",
+      "scientific_object": "Field-free n=2, n=20, and n=24 energy differences",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "The formal supplemental field-free table is subscription-gated; without it the higher-order QED and finite-size corrections cannot be compared at the declared table granularity.",
+      "implementation_ref": "independent_feature",
+      "blocker": "external_dependency_unavailable",
+      "claim_refs": [
+        "CLM_STARK"
+      ]
+    },
+    {
+      "item_id": "S-T2-STARK",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Formal Supplement Stark table; source file unavailable",
+      "scientific_object": "n=20 and n=24 Stark shifts at 0.4 and 0.8 V/cm",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent formula-derived data are accepted as scientific coverage; remaining differences are fidelity diagnostics.",
+      "implementation_ref": "independent_feature",
+      "claim_refs": [
+        "CLM_STARK"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C-EXP-1S-BIND",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "experimental_derived_claim",
+      "source_ref": "Main text p. 4, experimental 1S binding-frequency result",
+      "scientific_object": "Experimentally inferred 1S binding frequency",
+      "decision": "excluded",
+      "reason": "The scalar is an experimental result and remains supporting context, not a formula-generated output."
+    },
+    {
+      "item_id": "C-TH-1S-BIND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main text p. 4, theoretical 1S binding from Ref. 2 Eqs. (7)-(41)",
+      "scientific_object": "Full theoretical hydrogen 1S binding frequency including QED, finite-size, and HFS terms",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "The paper delegates the complete QED, recoil, finite-size, polarizability, weak/hadronic, and hyperfine term package to Ref. 2 Eqs. (7)--(41), which is not part of the frozen publication bundle.",
+      "blocker": "external_dependency_unavailable",
+      "claim_refs": [
+        "CLM_QED_BINDING"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "packet_type": "distance_tiebreak_approval_decision",
+  "status": "approved",
+  "decision": "approved",
+  "paper_id": "2604.08669",
+  "case_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669",
+  "source_approval_packet_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/checks/distance_tiebreak_approval_packet.json",
+  "reviewed_by": "xizhao",
+  "reason": "User authorized remote A100 run of the shard32 u0512 distance-tiebreak short probe",
+  "approval_authorizes": "one 512-update shard32 distance-tiebreak probe only",
+  "approval_does_not_authorize": [
+    "train256",
+    "curriculum",
+    "new_training_scaleup",
+    "long_remote_training",
+    "claiming_paper_success_without_gate_result"
+  ],
+  "remote_execution_contract": {
+    "workspace": "remote-system/projects/RRAgent-2604-a100-training/case/2604.08669/workspace",
+    "command": "/opt/conda/bin/python scripts/run_fixed_shard_overfit.py --profile distance_tiebreak_shard32_u0512",
+    "environment": {
+      "PYTHONPATH_PREFIX": "remote-system/projects/rra-2604-torch/lib/python3.12/site-packages",
+      "NO_PROXY": "*"
+    },
+    "log_file": "remote-system/logs/RRAgent-2604-stage13-distance-tiebreak-u0512.log",
+    "starts_training_only_after_user_approval": true
+  },
+  "monitor_contract": {
+    "output": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512",
+    "pid_file": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512/remote_pid.txt",
+    "result_file": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512/distance_tiebreak_probe_result.json",
+    "progress_file": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512/training_progress.jsonl",
+    "gate_file": "outputs/checks/paper_gnn_target_stage13_distance_tiebreak_shard32_u0512/distance_tiebreak_gate.json",
+    "required_gate_fields": [
+      "mean_predicted_average_distance",
+      "mean_predicted_max_distance",
+      "predicted_max_distance_p90",
+      "predicted_max_distance_p99",
+      "mean_average_distance_gap",
+      "mean_max_distance_gap",
+      "rank1_rate",
+      "mean_positive_rank",
+      "decision"
+    ]
+  },
+  "decision_contract": {
+    "primary_metrics": [
+      "mean_predicted_average_distance",
+      "mean_predicted_max_distance",
+      "predicted_max_distance_p90",
+      "predicted_max_distance_p99"
+    ],
+    "diagnostic_metrics": [
+      "rank1_rate",
+      "mean_positive_rank",
+      "mean_average_distance_gap",
+      "mean_max_distance_gap"
+    ],
+    "pass_conditions": [
+      "mean_predicted_average_distance_must_decrease",
+      "mean_predicted_max_distance_must_not_increase",
+      "max_tail_p90_p99_must_not_worsen",
+      "rank1_is_diagnostic_not_primary"
+    ]
+  },
+  "allowed_next_actions": [
+    "launch_distance_tiebreak_remote_short_probe"
+  ],
+  "automation": {
+    "safe_local_only": true,
+    "starts_training": false,
+    "launches_remote_jobs": false,
+    "requires_human_approval_for_remote_run": true
+  },
+  "findings": [],
+  "output_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/checks/distance_tiebreak_approval_decision.json"
+}

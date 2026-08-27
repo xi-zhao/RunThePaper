@@ -1,8 +1,8 @@
 {
   "paper_id": "1807.03311",
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_scientific_crop_pixel_primary",
-  "summary": "Eleven executable numerical regions are formula-derived; two external first-principles DFT panels remain explicitly deferred.",
+  "summary": "Eleven executable targets cover fourteen atomic theory items; two external first-principles DFT panels remain explicitly deferred.",
   "raw_pixel_summary": {
     "primary_metric": "foreground_mean_absolute_pixel_similarity_0_100",
     "mean_scientific_region_score": 61.8215,
@@ -52,13 +52,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T001_*",
-        "outputs/figures/T001_*",
         "outputs/checks/target_checks.json#T001",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T001"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T001",
+        "outputs/data/T001_main_fig2b_pseudospin.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -102,7 +103,10 @@
       "reference_score_cap": 70.0,
       "component_total": 89.44,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
@@ -146,13 +150,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T002_*",
-        "outputs/figures/T002_*",
         "outputs/checks/target_checks.json#T002",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T002"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T002",
+        "outputs/data/T002_main_fig3a_bands.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -196,7 +201,10 @@
       "reference_score_cap": 70.0,
       "component_total": 80.31,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T003",
@@ -239,13 +247,110 @@
         "parameter_match": "reduced_scale",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "T003 has an attested reduced-grid feature reproduction; the separate paper-scale sharded campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json",
+              "outputs/checks/target_checks.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The feature-level numerical object is implemented and passes checks, but the optional higher-resolution campaign has not produced a frozen paper-scale evidence artifact.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/paper_scale.json",
+              "run_contract.paper_scale.json",
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the reproduced feature: model invariants, cutoff checks, focused tests, and the isolated numerical run pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific physical feature check passes for T003.",
+                "evidence": [
+                  "outputs/checks/target_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Independent reciprocal-cutoff comparisons are finite and frozen.",
+                "evidence": [
+                  "outputs/checks/convergence.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The restartable paper-scale implementation and continuum model pass focused tests.",
+                "evidence": [
+                  "tests/test_model.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T003 was regenerated in isolation with all inputs read and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The checked feature is stable across invariants, focused tests, convergence evidence, and a fresh clean-room execution.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/convergence.json",
+                "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "No measured paper-scale campaign has established a local compute shortfall, so compute is not claimed as an objective blocker.",
+              "evidence": [
+                "run_contract.paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 1 atomic item(s) mapped to T003 are feature-reproduced; only higher-resolution fidelity remains unrun.",
+            "items": [
+              "main_fig3b_density_of_states"
+            ],
+            "completion": "1/1 scientific features reproduced; 0/1 paper-scale artifacts executed"
+          },
+          "next_discriminating_test": {
+            "action": "Execute run_contract.paper_scale.json unchanged and compare the high-resolution aggregate with the current feature artifact.",
+            "expected_resolution": "The run either raises parameter fidelity or exposes a scale-dependent scientific mismatch without changing the current feature disposition.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/run_summary.json",
+              "outputs/data/paper_scale/checks/scientific_assessment.json",
+              "outputs/runs/1807.03311-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T003_*",
-        "outputs/figures/T003_*",
         "outputs/checks/target_checks.json#T003",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T003"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T003",
+        "outputs/data/T003_main_fig3b_dos.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -289,7 +394,10 @@
       "reference_score_cap": 70.0,
       "component_total": 79.89,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T004",
@@ -332,13 +440,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T004_*",
-        "outputs/figures/T004_*",
         "outputs/checks/target_checks.json#T004",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T004"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T004",
+        "outputs/data/T004_main_fig3c_berry.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -382,7 +491,10 @@
       "reference_score_cap": 70.0,
       "component_total": 87.96,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T005",
@@ -424,13 +536,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T005_*",
-        "outputs/figures/T005_*",
         "outputs/checks/target_checks.json#T005",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T005"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T005",
+        "outputs/data/T005_main_fig4a_bands.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -474,7 +587,10 @@
       "reference_score_cap": 70.0,
       "component_total": 84.92,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T006",
@@ -517,13 +633,111 @@
         "parameter_match": "reduced_scale",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "T006 has an attested reduced-grid feature reproduction; the separate paper-scale sharded campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json",
+              "outputs/checks/target_checks.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The feature-level numerical object is implemented and passes checks, but the optional higher-resolution campaign has not produced a frozen paper-scale evidence artifact.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/paper_scale.json",
+              "run_contract.paper_scale.json",
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the reproduced feature: model invariants, cutoff checks, focused tests, and the isolated numerical run pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific physical feature check passes for T006.",
+                "evidence": [
+                  "outputs/checks/target_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Independent reciprocal-cutoff comparisons are finite and frozen.",
+                "evidence": [
+                  "outputs/checks/convergence.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The restartable paper-scale implementation and continuum model pass focused tests.",
+                "evidence": [
+                  "tests/test_model.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T006 was regenerated in isolation with all inputs read and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The checked feature is stable across invariants, focused tests, convergence evidence, and a fresh clean-room execution.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/convergence.json",
+                "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "No measured paper-scale campaign has established a local compute shortfall, so compute is not claimed as an objective blocker.",
+              "evidence": [
+                "run_contract.paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 2 atomic item(s) mapped to T006 are feature-reproduced; only higher-resolution fidelity remains unrun.",
+            "items": [
+              "main_fig4b_gap23",
+              "main_fig4b_gap12"
+            ],
+            "completion": "2/2 scientific features reproduced; 0/2 paper-scale artifacts executed"
+          },
+          "next_discriminating_test": {
+            "action": "Execute run_contract.paper_scale.json unchanged and compare the high-resolution aggregate with the current feature artifact.",
+            "expected_resolution": "The run either raises parameter fidelity or exposes a scale-dependent scientific mismatch without changing the current feature disposition.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/run_summary.json",
+              "outputs/data/paper_scale/checks/scientific_assessment.json",
+              "outputs/runs/1807.03311-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T006_*",
-        "outputs/figures/T006_*",
         "outputs/checks/target_checks.json#T006",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T006"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T006",
+        "outputs/data/T006_main_fig4b_gaps.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -567,7 +781,10 @@
       "reference_score_cap": 70.0,
       "component_total": 81.7,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T007",
@@ -611,13 +828,111 @@
         "parameter_match": "reduced_scale",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "T007 has an attested reduced-grid feature reproduction; the separate paper-scale sharded campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json",
+              "outputs/checks/target_checks.json",
+              "run_contract.paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The feature-level numerical object is implemented and passes checks, but the optional higher-resolution campaign has not produced a frozen paper-scale evidence artifact.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/paper_scale.json",
+              "run_contract.paper_scale.json",
+              "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the reproduced feature: model invariants, cutoff checks, focused tests, and the isolated numerical run pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The target-specific physical feature check passes for T007.",
+                "evidence": [
+                  "outputs/checks/target_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "Independent reciprocal-cutoff comparisons are finite and frozen.",
+                "evidence": [
+                  "outputs/checks/convergence.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The restartable paper-scale implementation and continuum model pass focused tests.",
+                "evidence": [
+                  "tests/test_model.py",
+                  "tests/test_paper_scale.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T007 was regenerated in isolation with all inputs read and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The checked feature is stable across invariants, focused tests, convergence evidence, and a fresh clean-room execution.",
+              "evidence": [
+                "outputs/checks/target_checks.json",
+                "outputs/checks/convergence.json",
+                "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "No measured paper-scale campaign has established a local compute shortfall, so compute is not claimed as an objective blocker.",
+              "evidence": [
+                "run_contract.paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All 2 atomic item(s) mapped to T007 are feature-reproduced; only higher-resolution fidelity remains unrun.",
+            "items": [
+              "main_fig4c_continuum_phase_boundaries",
+              "main_fig4c_tight_binding_boundary"
+            ],
+            "completion": "2/2 scientific features reproduced; 0/2 paper-scale artifacts executed"
+          },
+          "next_discriminating_test": {
+            "action": "Execute run_contract.paper_scale.json unchanged and compare the high-resolution aggregate with the current feature artifact.",
+            "expected_resolution": "The run either raises parameter fidelity or exposes a scale-dependent scientific mismatch without changing the current feature disposition.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/run_summary.json",
+              "outputs/data/paper_scale/checks/scientific_assessment.json",
+              "outputs/runs/1807.03311-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T007_*",
-        "outputs/figures/T007_*",
         "outputs/checks/target_checks.json#T007",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T007"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T007",
+        "outputs/data/T007_main_fig4c_phase.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -661,7 +976,10 @@
       "reference_score_cap": 70.0,
       "component_total": 91.16,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T008",
@@ -703,13 +1021,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T008_*",
-        "outputs/figures/T008_*",
         "outputs/checks/target_checks.json#T008",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T008"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T008",
+        "outputs/data/T008_supp_dirac_valence.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -753,7 +1072,10 @@
       "reference_score_cap": 70.0,
       "component_total": 83.85,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T009",
@@ -795,13 +1117,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T009_*",
-        "outputs/figures/T009_*",
         "outputs/checks/target_checks.json#T009",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T009"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T009",
+        "outputs/data/T009_supp_dirac_conduction.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -845,7 +1168,10 @@
       "reference_score_cap": 70.0,
       "component_total": 80.04,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T010",
@@ -887,13 +1213,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T010_*",
-        "outputs/figures/T010_*",
         "outputs/checks/target_checks.json#T010",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T010"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T010",
+        "outputs/data/T010_supp_spin_1p2.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -937,7 +1264,10 @@
       "reference_score_cap": 70.0,
       "component_total": 82.47,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T011",
@@ -979,13 +1309,14 @@
         "parameter_match": "paper_exact",
         "pixel_status": "measured_post_freeze_scientific_region",
         "pixel_status_reason": "Original pixels entered only the post-freeze comparison channel.",
-        "reference_comparison": "source_figure_only"
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T011_*",
-        "outputs/figures/T011_*",
         "outputs/checks/target_checks.json#T011",
-        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T011"
+        "outputs/checks/scientific_pixel_metrics.json#PIXEL_T011",
+        "outputs/data/T011_supp_spin_2p0.npz",
+        "outputs/runs/1807.03311-final-disposition-v3-20260825/run_attestation.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -1029,47 +1360,415 @@
       "reference_score_cap": 70.0,
       "component_total": 77.27,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "D001",
+      "label": "Supplement Figure 5(a), fully relativistic DFT at d_0,0",
+      "figure_refs": [
+        "Supplement Figure 5(a), fully relativistic DFT at d_0,0"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent first-principles band array has been generated.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No paper-comparable generated DFT array exists.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The panel is enumerated, but its first-principles input contract is underdetermined.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": false,
+        "failure_type": "missing_benchmark_metadata",
+        "formula_dependencies": [],
+        "formula_gate": "not_applicable",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "method_validation",
+        "parameter_match": "unknown",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No accepted independent DFT array exists.",
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Supplement Figures 5(a) and 5(b) cannot be regenerated independently because the publication does not define an executable first-principles calculation: the exact Quantum ESPRESSO version, fully relativistic pseudopotentials, relaxed atomic coordinates, numerical cutoffs, convergence thresholds, occupations and Wannier windows are absent.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "PAPER_MAP.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The complete paper identifies a fully relativistic LDA Quantum ESPRESSO and Wannier workflow but publishes only downstream fitted continuum parameters, not the input files and settings required to reproduce either DFT band panel uniquely.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "A strict QE-to-Wannier input schema and parameterized execution plan now exist and pass isolated attestation; numerical DFT correctness remains inapplicable until the indispensable publication inputs are supplied.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The complete PDF was audited for reproducibility-critical first-principles metadata.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "PAPER_MAP.md"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The frozen DFT input schema fails closed for both panels without guessing missing values.",
+                "evidence": [
+                  "tests/test_dft_input_boundary.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The parameterized two-panel boundary campaign ran in isolation with all declared inputs read and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1807.03311-dft-input-boundary-v2-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "The two DFT panels are explicitly enumerated as D001 and D002, so the gap is not an inventory omission.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "Additional CPU or GPU capacity cannot infer unpublished pseudopotentials, structures, convergence settings or Wannier windows.",
+              "evidence": [
+                "PAPER_MAP.md"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The accepted external-input boundary affects only Supplement Figures 5(a) and 5(b).",
+            "items": [
+              "D001",
+              "D002"
+            ],
+            "completion": "2/2 implementation paths isolated-attested; 0/2 first-principles band panels independently generated"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain a citable first-principles input contract, freeze every input hash, and independently implement converged QE/Wannier calculations without consulting author numerical code or arrays.",
+            "expected_resolution": "Hash-bound converged DFT arrays close D001 and D002; a mismatch after the contract is fixed reopens the method or implementation diagnosis.",
+            "evidence_to_produce": [
+              "config/dft_input_boundary.json",
+              "outputs/data/dft_input_boundary/D001.json",
+              "outputs/data/dft_input_boundary/D002.json",
+              "references/dft_benchmark_contract.json",
+              "outputs/data/D001_supp_fig5a_dft_bands.npz",
+              "outputs/data/D002_supp_fig5b_dft_bands.npz",
+              "outputs/checks/dft_convergence.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "TARGET_LEDGER.md#D001",
+        "PAPER_MAP.md",
+        "outputs/data/dft_input_boundary/D001.json",
+        "outputs/checks/dft_input_boundary/D001.json",
+        "outputs/runs/1807.03311-dft-input-boundary-v2-20260824/run_attestation.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Supplement Figure 5(a), fully relativistic DFT at d_0,0",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#supp_fig5a_dft_d00_bands"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "d001_relativistic_dft_bands",
+          "claim": "Independently reproduce the displayed fully relativistic DFT bands and layer/spin characters.",
+          "essential": true,
+          "evidence": "figure_coverage.json#supp_fig5a_dft_d00_bands",
+          "status": "blocked",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "Exact QE version, fully relativistic pseudopotentials, relaxed structure, numerical cutoffs, convergence thresholds and Wannier windows are not published.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered panel contributes zero to reproduction degree without rewriting the historical target aggregate.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "D002",
+      "label": "Supplement Figure 5(b), fully relativistic DFT at d_0,1",
+      "figure_refs": [
+        "Supplement Figure 5(b), fully relativistic DFT at d_0,1"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent first-principles band array has been generated.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No paper-comparable generated DFT array exists.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The panel is enumerated, but its first-principles input contract is underdetermined.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": false,
+        "failure_type": "missing_benchmark_metadata",
+        "formula_dependencies": [],
+        "formula_gate": "not_applicable",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "method_validation",
+        "parameter_match": "unknown",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No accepted independent DFT array exists.",
+        "reference_comparison": "source_figure_only",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Supplement Figures 5(a) and 5(b) cannot be regenerated independently because the publication does not define an executable first-principles calculation: the exact Quantum ESPRESSO version, fully relativistic pseudopotentials, relaxed atomic coordinates, numerical cutoffs, convergence thresholds, occupations and Wannier windows are absent.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "PAPER_MAP.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The complete paper identifies a fully relativistic LDA Quantum ESPRESSO and Wannier workflow but publishes only downstream fitted continuum parameters, not the input files and settings required to reproduce either DFT band panel uniquely.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "A strict QE-to-Wannier input schema and parameterized execution plan now exist and pass isolated attestation; numerical DFT correctness remains inapplicable until the indispensable publication inputs are supplied.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The complete PDF was audited for reproducibility-critical first-principles metadata.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "PAPER_MAP.md"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The frozen DFT input schema fails closed for both panels without guessing missing values.",
+                "evidence": [
+                  "tests/test_dft_input_boundary.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The parameterized two-panel boundary campaign ran in isolation with all declared inputs read and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1807.03311-dft-input-boundary-v2-20260824/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "The two DFT panels are explicitly enumerated as D001 and D002, so the gap is not an inventory omission.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "Additional CPU or GPU capacity cannot infer unpublished pseudopotentials, structures, convergence settings or Wannier windows.",
+              "evidence": [
+                "PAPER_MAP.md"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The accepted external-input boundary affects only Supplement Figures 5(a) and 5(b).",
+            "items": [
+              "D001",
+              "D002"
+            ],
+            "completion": "2/2 implementation paths isolated-attested; 0/2 first-principles band panels independently generated"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain a citable first-principles input contract, freeze every input hash, and independently implement converged QE/Wannier calculations without consulting author numerical code or arrays.",
+            "expected_resolution": "Hash-bound converged DFT arrays close D001 and D002; a mismatch after the contract is fixed reopens the method or implementation diagnosis.",
+            "evidence_to_produce": [
+              "config/dft_input_boundary.json",
+              "outputs/data/dft_input_boundary/D001.json",
+              "outputs/data/dft_input_boundary/D002.json",
+              "references/dft_benchmark_contract.json",
+              "outputs/data/D001_supp_fig5a_dft_bands.npz",
+              "outputs/data/D002_supp_fig5b_dft_bands.npz",
+              "outputs/checks/dft_convergence.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "TARGET_LEDGER.md#D002",
+        "PAPER_MAP.md",
+        "outputs/data/dft_input_boundary/D002.json",
+        "outputs/checks/dft_input_boundary/D002.json",
+        "outputs/runs/1807.03311-dft-input-boundary-v2-20260824/run_attestation.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "Supplement Figure 5(b), fully relativistic DFT at d_0,1",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#supp_fig5b_dft_d01_bands"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "d002_relativistic_dft_bands",
+          "claim": "Independently reproduce the displayed fully relativistic DFT bands and layer/spin characters.",
+          "essential": true,
+          "evidence": "figure_coverage.json#supp_fig5b_dft_d01_bands",
+          "status": "blocked",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "Exact QE version, fully relativistic pseudopotentials, relaxed structure, numerical cutoffs, convergence thresholds and Wannier windows are not published.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered panel contributes zero to reproduction degree without rewriting the historical target aggregate.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
   "overall_score": 70.0,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 11,
-    "critical_items": 11,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "scored_items": 13,
+    "critical_items": 13,
+    "artifact_pass_rate": 0.85,
+    "data_backed_rate": 0.85,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
       "none": 8,
-      "not_paper_parameters": 3
+      "not_paper_parameters": 3,
+      "missing_benchmark_metadata": 2
     },
     "parameter_match_counts": {
       "paper_exact": 8,
-      "reduced_scale": 3
+      "reduced_scale": 3,
+      "unknown": 2
     },
     "reference_comparison_counts": {
-      "source_figure_only": 11
+      "source_figure_only": 13
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 11
+      "independent_numerics": 11,
+      "unknown": 2
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 11
+      "physics_reproduction": 11,
+      "unknown": 2
     },
     "formula_gate_counts": {
-      "verified": 11
+      "verified": 11,
+      "not_applicable": 2
     },
     "paper_level_role_counts": {
       "main_claim": 7,
-      "method_validation": 4
+      "method_validation": 6
     },
     "physics_status_counts": {
-      "passed": 11
+      "passed": 11,
+      "pending": 2
     },
     "physics_assertion_status_counts": {
-      "passed": 11
+      "passed": 11,
+      "blocked": 2
     },
     "essential_physics_failures": [],
     "final_reproduction_ready": false,
@@ -1084,10 +1783,13 @@
       "T011"
     ],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T003",
       "T006",
-      "T007"
+      "T007",
+      "D001",
+      "D002"
     ],
     "aggregate_included_target_ids": [
       "T001",
@@ -1102,7 +1804,49 @@
       "T010",
       "T011"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [
+      "D001",
+      "D002"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 8,
+      "complete": 5
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 8,
+      "react_loop_required": 3,
+      "terminal_blocker": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T003",
+      "T006",
+      "T007",
+      "D001",
+      "D002"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "D001",
+      "D002"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T003",
+      "T006",
+      "T007"
+    ],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 3,
+      "indispensable_input_unavailable": 2
+    },
+    "root_cause_counts": {
+      "review_or_evidence_process_gap": 3,
+      "publication_underspecified": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3,
+      "not_applicable": 2
+    }
   },
   "status": "passed"
 }

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "run_id": "2412.14271-implementation-closure-v1",
+  "target_ids": [
+    "T001",
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/dicke.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "reduced_implementation_attestation",
+    "fig2": {
+      "system_size": 1,
+      "cutoffs": [
+        5,
+        6
+      ],
+      "lambdas": [
+        0.2,
+        0.8,
+        1.25
+      ],
+      "omega_c": 1.0,
+      "omega_a": 2.0,
+      "kappa1": 0.4,
+      "acceptance_tolerances": {
+        "trace_error": 1e-10,
+        "hermiticity_error": 1e-10,
+        "positivity": 1e-08,
+        "liouvillian_residual": 1e-08
+      },
+      "paper_target_boundary": {
+        "system_size": 5,
+        "cutoffs": [
+          60,
+          80,
+          100
+        ],
+        "fock_distribution_coupling": 1.25,
+        "execution_status": "not_run",
+        "method": "sparse steady-state Liouvillian ED"
+      }
+    },
+    "formal_supplement": {
+      "status": "missing_indispensable_input",
+      "supplement_sha256": null,
+      "required_fields": [
+        "panel_inventory",
+        "caption",
+        "observables",
+        "model_parameters",
+        "numerical_method",
+        "acceptance_conditions"
+      ],
+      "figures": {
+        "S3": {
+          "panel_inventory": null,
+          "caption": null,
+          "observables": null,
+          "model_parameters": null,
+          "numerical_method": null,
+          "acceptance_conditions": null
+        },
+        "S4": {
+          "panel_inventory": null,
+          "caption": null,
+          "observables": null,
+          "model_parameters": null,
+          "numerical_method": null,
+          "acceptance_conditions": null
+        }
+      },
+      "unblock_rule": "Acquire the authorized formal supplement, freeze its SHA-256, and populate every required field from that source before selecting or executing a numerical method."
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json",
+    "outputs/checks/implementation_closure/formal_supplement_blocked.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

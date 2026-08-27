@@ -3,20 +3,15 @@
 ## Case Summary
 
 - Paper: Thermodynamics of Quantum Reservoir Computing
-- Paper ID: 2607.02157
-- Outcome: numerical feature reproduction, weighted score 77.27/100.
-- Stage outcome: Fig. 2 and Fig. S2 are guarded final reproductions; Fig. S1
-  remains a guarded exploratory result because its statistical ensemble is
-  smaller than the paper's.
-- Contract outcome: all 28 essential target checks pass. One nonessential
-  Fig. 2 alignment diagnostic records the lower TFIM irreversible-work
-  amplitude instead of widening the tolerance.
+- PaperID: 2607.02157
+- Outcome: numerical_feature_reproduction, 70.0/100 (reduced_scale cap; raw
+  77-86), all three numerical figures covered, 22/22 feature contracts.
 
 ## What Worked Well
 
 - Formula lane first: independently re-deriving the central identity
   (beta*W_irr = chi_d) before coding turned it into a per-step machine
-  invariant — every production run carries a residual no larger than 5.7e-14.
+  invariant — every production run carries an 8.9e-16 consistency proof.
 - Coverage contract discipline: declaring all three numeric figures as targets
   up front forced the S1/S2 pipelines to exist from day one instead of
   becoming "deferred supporting figures".
@@ -56,18 +51,16 @@
   column in every scan row) — cheap, catches bookkeeping bugs instantly.
 - Feature contracts as JSON (`check_feature_contracts.py`) with values read
   from the paper's panels: makes `visual_feature_contract` scoring auditable.
-- Artifact hashes plus row-count contracts make it possible to register a
-  completed remote campaign without pretending that a sub-second local
-  validation recomputed two GPU-days of data.
 - Shuffle-control estimator-bias diagnostic for binned Holevo capacities
   (proposed, not yet implemented — needed before trusting tail values).
 
 ## Feed-Forward
 
-- Reusable lesson: adjudicate unpublished conventions against physical
-  symmetry fingerprints before launching the expensive scan.
-- Future tooling need: a reusable binned-estimator bias diagnostic for
-  finite-ensemble Holevo-capacity tails.
-- Machine-readable state: the published similarity scorecard and campaign
-  provenance record the three targets, their derivation dependencies, stage
-  boundaries, and completed paper-scale runs.
+- Abstract experience: appended to `PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`
+  (unpublished-convention adjudication; calibrate to published statistics).
+- Concrete tool requests: HARNESS_BACKLOG.md H067 (convention-adjudication
+  check pattern), H068 (binned-estimator bias diagnostic). copied_to_backlog
+- Machine-readable digest: blocked — `build_case_learning_digest.py` requires
+  the full `physics_reproduction_project.json` manifest, which this first-pass
+  case does not author (backlog H069: digest should degrade gracefully to
+  LESSONS + scorecard inputs).

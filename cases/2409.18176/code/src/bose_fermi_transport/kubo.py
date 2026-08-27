@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from .kinetic import hole_mass_ratio, radial_grid
+from .kinetic import hole_mass_ratio, hole_scattering_rate, radial_grid
 from .thermodynamics import HBAR_MEV_PS, EquilibriumState, ModelParameters, bose, fermi
 
 
@@ -83,12 +83,30 @@ def kubo_resistivity(
         angle_points,
         broadening_mev,
     )
-    eh = params.fermi_energy_mev * p * p - equilibrium.mu_h_mev
+    return resistivity_from_hole_rates(params, equilibrium, p, weights, rates)
+
+
+def resistivity_from_hole_rates(
+    params: ModelParameters,
+    equilibrium: EquilibriumState,
+    hole_nodes: np.ndarray,
+    hole_weights: np.ndarray,
+    rates_ps_inverse: np.ndarray,
+) -> float:
+    """Evaluate the printed relaxation-time conductivity for supplied rates."""
+
+    eh = params.fermi_energy_mev * hole_nodes * hole_nodes - equilibrium.mu_h_mev
     fh = fermi(eh, equilibrium.temperature_k)
     thermal = fh * (1.0 - fh)
-    tau_total = 1.0 / (1.0 / params.relaxation_time_ps + rates)
-    numerator = float(np.sum(weights * thermal * p * p * tau_total))
-    denominator = float(np.sum(weights * thermal * p * p * params.relaxation_time_ps))
+    tau_total = 1.0 / (1.0 / params.relaxation_time_ps + rates_ps_inverse)
+    numerator = float(
+        np.sum(hole_weights * thermal * hole_nodes * hole_nodes * tau_total)
+    )
+    denominator = float(
+        np.sum(
+            hole_weights * thermal * hole_nodes * hole_nodes * params.relaxation_time_ps
+        )
+    )
     sigma = (
         equilibrium.n_h_cm2
         / params.hole_reference_density_cm2
@@ -96,3 +114,39 @@ def kubo_resistivity(
         / denominator
     )
     return float(1.0 / sigma)
+
+
+def leading_order_boltzmann_resistivity(
+    params: ModelParameters,
+    equilibrium: EquilibriumState,
+    tunnel_mev: float,
+    hole_points: int = 96,
+    hole_max_pf: float = 3.5,
+    exciton_points: int = 240,
+    exciton_max_pf: float = 4.5,
+) -> float:
+    """Leading-order relaxation-time lane using the analytic delta root.
+
+    This is deliberately *not* the full coupled Boltzmann result.  It evaluates
+    the same leading self-energy used by Kubo, but replaces the broadened delta
+    quadrature with the analytic on-shell root from Main Eq. (2).  Agreement as
+    the Kubo broadening is narrowed diagnoses the regularization independently
+    of the higher-order/vertex terms in the full three-species solve.
+    """
+
+    nodes, weights = radial_grid(hole_points, hole_max_pf)
+    rates = np.array(
+        [
+            hole_scattering_rate(
+                params,
+                equilibrium,
+                tunnel_mev,
+                float(momentum),
+                exciton_points,
+                exciton_max_pf,
+            )
+            for momentum in nodes
+        ],
+        dtype=float,
+    )
+    return resistivity_from_hole_rates(params, equilibrium, nodes, weights, rates)

@@ -1,17 +1,22 @@
 # 2602.12212: Quantum-Coherent Thermodynamics: Leaf Typicality via Minimum-Variance Foliation
 
-Preprint: [arXiv:2602.12212 — Quantum-Coherent Thermodynamics: Leaf Typicality via Minimum-Variance Foliation](https://arxiv.org/abs/2602.12212)
+Preprint: [arXiv:2602.12212v3 — Quantum-Coherent Thermodynamics: Leaf Typicality via Minimum-Variance Foliation](https://arxiv.org/abs/2602.12212v3)
 
-Formal publication: **Not recorded as of 2026-08-04**
+Formal publication: **Not recorded as of 2026-07-26**
 
-Public status: **Partial scientific reproduction** · Audit score: **72.05/100**
+Public status: **Scientific reproduction — visual review pending** · Audit score: **72.05/100**
 
-Publishes the independently generated numerical artifacts retained by the historical case: 8 public generated data files, 10 public generated figures, and 10 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
+Case scaffolded from framework/templates/paper_case.
 
 ## Start Here / 从这里开始
 
 - [中文复现 Note](note/reproduction-note.zh-CN.md)
 - [English reproduction note](note/reproduction-note.en.md)
+- [Equation-level derivation](docs/DERIVATION.md)
+- [Numerical methods](docs/NUMERICAL_METHODS.md)
+- [Public evidence index](docs/EVIDENCE_INDEX.md)
+- [Comparison policy](docs/COMPARISON_POLICY.md)
+- [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -19,60 +24,49 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
-## Main Reproduced Results
+## Paper Reference vs Independent Reproduction
 
-| Paper item | Reproduced result | Figure | Check |
-| --- | --- | --- | --- |
-| MAIN_FIG_1 | Spin-1 minimum-variance leaf geometry and leaf-canonical curves. | [PNG](outputs/figures/t001_spin1_foliation.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| MAIN_FIG_2_LEFT | Finite-size leaf-typicality outlier diagnostics. | [PNG](outputs/figures/t002_main_typicality.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| MAIN_FIG_2_RIGHT | Exact mixed-state dynamics compared with one delta-selected optimal representative. | [PNG](outputs/figures/t003_dynamics.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S1 | Full local-observable typicality at beta=0.25. | [PNG](outputs/figures/t004_s1_beta025.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S2 | Full local-observable typicality at beta=0.75. | [PNG](outputs/figures/t005_s2_beta075.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S3 | Full local-observable typicality at beta=1.75. | [PNG](outputs/figures/t006_s3_beta175.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S4 | Integrable-foliation counterexample with H and H0 interchanged. | [PNG](outputs/figures/t007_s4_integrable.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S5 | Spectral-compression clouds for h0,z=1.5. | [PNG](outputs/figures/t008a_main_compression.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S5 | Spectral-compression clouds for h0,z=0.5. | [PNG](outputs/figures/t008b_supp_compression.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG_S6 | Population-weighted diagonal-entropy gain per site. | [PNG](outputs/figures/t009_entropy_gain.png) | [JSON](outputs/checks/similarity_scorecard.json) |
+Each board contains only the minimum paper excerpt needed for validation and places it beside an independently generated result. Visual agreement is a scientific-region diagnostic, not author-data-level equivalence.
 
-### MAIN_FIG_1: Spin-1 minimum-variance leaf geometry and leaf-canonical curves.
+### t001 source vs reproduction comparison
 
-![MAIN_FIG_1 reproduction](outputs/figures/t001_spin1_foliation.png)
+![t001 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t001_source_vs_reproduction.png)
 
-### MAIN_FIG_2_LEFT: Finite-size leaf-typicality outlier diagnostics.
+### t002 source vs reproduction comparison
 
-![MAIN_FIG_2_LEFT reproduction](outputs/figures/t002_main_typicality.png)
+![t002 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t002_source_vs_reproduction.png)
 
-### MAIN_FIG_2_RIGHT: Exact mixed-state dynamics compared with one delta-selected optimal representative.
+### t003 source vs reproduction comparison
 
-![MAIN_FIG_2_RIGHT reproduction](outputs/figures/t003_dynamics.png)
+![t003 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t003_source_vs_reproduction.png)
 
-### FIG_S1: Full local-observable typicality at beta=0.25.
+### t004 source vs reproduction comparison
 
-![FIG_S1 reproduction](outputs/figures/t004_s1_beta025.png)
+![t004 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t004_source_vs_reproduction.png)
 
-### FIG_S2: Full local-observable typicality at beta=0.75.
+### t005 source vs reproduction comparison
 
-![FIG_S2 reproduction](outputs/figures/t005_s2_beta075.png)
+![t005 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t005_source_vs_reproduction.png)
 
-### FIG_S3: Full local-observable typicality at beta=1.75.
+### t006 source vs reproduction comparison
 
-![FIG_S3 reproduction](outputs/figures/t006_s3_beta175.png)
+![t006 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t006_source_vs_reproduction.png)
 
-### FIG_S4: Integrable-foliation counterexample with H and H0 interchanged.
+### t007 source vs reproduction comparison
 
-![FIG_S4 reproduction](outputs/figures/t007_s4_integrable.png)
+![t007 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t007_source_vs_reproduction.png)
 
-### FIG_S5: Spectral-compression clouds for h0,z=1.5.
+### t008a source vs reproduction comparison
 
-![FIG_S5 reproduction](outputs/figures/t008a_main_compression.png)
+![t008a source vs reproduction paper reference versus independent reproduction](docs/comparisons/t008a_source_vs_reproduction.png)
 
-### FIG_S5: Spectral-compression clouds for h0,z=0.5.
+### t008b source vs reproduction comparison
 
-![FIG_S5 reproduction](outputs/figures/t008b_supp_compression.png)
+![t008b source vs reproduction paper reference versus independent reproduction](docs/comparisons/t008b_source_vs_reproduction.png)
 
-### FIG_S6: Population-weighted diagonal-entropy gain per site.
+### t009 source vs reproduction comparison
 
-![FIG_S6 reproduction](outputs/figures/t009_entropy_gain.png)
+![t009 source vs reproduction paper reference versus independent reproduction](docs/comparisons/t009_source_vs_reproduction.png)
 
 ## Quick Run
 
@@ -81,15 +75,47 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2602.12212/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --config config/paper_scale_closure.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 10 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Frozen non-final target states: T002=evidence_compared, T003=evidence_compared, T004=evidence_compared, T005=evidence_compared, T006=evidence_compared, T007=evidence_compared, T008A=evidence_compared, T008B=evidence_compared, T009=evidence_compared. No source-image comparison panel or digitized source curve is published in this projection.
+Remaining limitation: All active v3 numerical figures were regenerated independently at the paper's published sizes. Boundary, shell-edge, and confidence-interval conventions omitted by the paper are disclosed reconstructions.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
+
+## Generated Figures
+
+![eth scaling summary](outputs/figures/eth_scaling_summary.png)
+
+![t001 spin1 foliation](outputs/figures/implementation_probe/t001_spin1_foliation.png)
+
+![t003 dynamics](outputs/figures/implementation_probe/t003_dynamics.png)
+
+![local canary l6](outputs/figures/local_canary_l6.png)
+
+![t003 dynamics](outputs/figures/paper_scale_full_shell/t003_dynamics.png)
+
+![t001 spin1 foliation](outputs/figures/t001_spin1_foliation.png)
+
+![t002 main typicality](outputs/figures/t002_main_typicality.png)
+
+![t003 dynamics](outputs/figures/t003_dynamics.png)
+
+![t004 s1 beta025](outputs/figures/t004_s1_beta025.png)
+
+![t005 s2 beta075](outputs/figures/t005_s2_beta075.png)
+
+![t006 s3 beta175](outputs/figures/t006_s3_beta175.png)
+
+![t007 s4 integrable](outputs/figures/t007_s4_integrable.png)
+
+![t008a main compression](outputs/figures/t008a_main_compression.png)
+
+![t008b supp compression](outputs/figures/t008b_supp_compression.png)
+
+![t009 entropy gain](outputs/figures/t009_entropy_gain.png)

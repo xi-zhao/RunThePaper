@@ -1,0 +1,32 @@
+paper_id: "2103.03074"
+target: "Table III and exact 53-qubit Big-Batch tensor-network outputs"
+current_status: "planned_large_scale"
+resource_classification:
+  direct_statevector: "memory_impossible"
+  tensor_network_rerun: "external_required"
+local_default:
+  run_scale: "feature"
+  qubits: 18
+  closed_qubits: 6
+  open_qubits: 12
+  batch_size: 4096
+recommended_external_setup:
+  hardware:
+    - "GPU tensor-network contraction environment"
+    - "high-memory CPU/GPU nodes"
+    - "batch scheduler for independent contractions"
+  data:
+    - "released Sycamore circuit files"
+    - "author probability or amplitude outputs"
+    - "Table III target bitstrings"
+staged_plan:
+  pilot:
+    goal: "parse released circuits and validate one contraction slice"
+  medium:
+    goal: "validate a subset of Table III bitstrings against author data"
+  final:
+    goal: "rerun all Table III bitstrings and exact figure-data batches"
+acceptance:
+  formula_chain_valid: true
+  compare_against_author_data_if_available: true
+  do_not_claim_exact_without_full_scale_data: true

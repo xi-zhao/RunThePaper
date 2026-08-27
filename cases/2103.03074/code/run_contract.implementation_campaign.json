@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "run_id": "2103.03074-implementation-campaign-v1-20260824",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012",
+    "T013"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_campaign.py",
+    "--config",
+    "config/implementation_campaign.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "scripts/run_implementation_campaign.py",
+    "src/implementation_campaign.py",
+    "src/big_batch_feature_sim.py",
+    "config/implementation_campaign.json"
+  ],
+  "parameter_file": "config/implementation_campaign.json",
+  "parameter_selector": "targets",
+  "expected_parameters": {
+    "T001": {
+      "mode": "reduced_probability_features",
+      "n_qubits": 8,
+      "n_open": 4,
+      "depth": 4,
+      "seed": 210301
+    },
+    "T002": {
+      "mode": "reduced_probability_features",
+      "n_qubits": 8,
+      "n_open": 4,
+      "depth": 3,
+      "seed": 210302
+    },
+    "T003": {
+      "mode": "reduced_probability_features",
+      "n_qubits": 8,
+      "n_open": 4,
+      "depth": 2,
+      "seed": 210303
+    },
+    "T004": {
+      "mode": "analytic_contraction_cost",
+      "n_a": 4,
+      "n_b": 5,
+      "n_ab": 3,
+      "expected_exponent": 12
+    },
+    "T005": {
+      "mode": "head_tail_factorization",
+      "n_qubits": 4,
+      "cycles": 4,
+      "output_index": 11,
+      "tolerance": 1e-12,
+      "paper_exact_boundary": "The identity is validated independently on a small fSim circuit; the published 53-qubit circuit and 381-node partition remain unavailable."
+    },
+    "T006": {
+      "mode": "input_boundary",
+      "required_paper_exact_inputs": [
+        "exact_53_qubit_20_cycle_circuit_instance",
+        "independently_derived_contraction_order",
+        "dynamic_slicing_plan",
+        "per_step_tensor_shape_ledger"
+      ],
+      "supplied_paper_exact_inputs": [],
+      "acceptance_boundary": "Execute the clean-room contraction planner and emit independently computed FLOP, space, and slice ledgers; printed Table I values are comparison-only."
+    },
+    "T007": {
+      "mode": "input_boundary",
+      "required_paper_exact_inputs": [
+        "independently_computed_paper_workload",
+        "measured_a100_kernel_throughput",
+        "measured_60_gpu_scaling_efficiency"
+      ],
+      "supplied_paper_exact_inputs": [],
+      "acceptance_boundary": "Derive runtime from an independently computed workload and measured hardware throughput, never from the reported 149-day or 60-GPU values."
+    },
+    "T008": {
+      "mode": "input_boundary",
+      "required_paper_exact_inputs": [
+        "exact_53_qubit_circuit_instance",
+        "five_table3_bitstrings",
+        "independently_derived_contraction_and_slicing_plan"
+      ],
+      "supplied_paper_exact_inputs": [
+        "five_table3_bitstrings"
+      ],
+      "acceptance_boundary": "Independently contract all five amplitudes and square them; paper amplitudes and probabilities are comparison-only."
+    },
+    "T009": {
+      "mode": "complex_precision",
+      "n_qubits": 5,
+      "cycles": 4,
+      "tolerance": 5e-06
+    },
+    "T010": {
+      "mode": "branch_merge",
+      "n_qubits": 5,
+      "cycles": 4,
+      "branches": 4
+    },
+    "T011": {
+      "mode": "mixed_xeb",
+      "n_qubits": 6,
+      "cycles": 4,
+      "sample_count": 8,
+      "top_weight": 0.5,
+      "seed": 210311
+    },
+    "T012": {
+      "mode": "marginal_identity",
+      "n_qubits": 5,
+      "cycles": 4,
+      "tolerance": 1e-12
+    },
+    "T013": {
+      "mode": "memory_formula",
+      "tensor_rank": 30,
+      "bytes_per_complex": 8
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/manifest.json",
+    "outputs/checks/implementation_closure/T001.json",
+    "outputs/checks/implementation_closure/T002.json",
+    "outputs/checks/implementation_closure/T003.json",
+    "outputs/checks/implementation_closure/T004.json",
+    "outputs/checks/implementation_closure/T005.json",
+    "outputs/checks/implementation_closure/T006.json",
+    "outputs/checks/implementation_closure/T007.json",
+    "outputs/checks/implementation_closure/T008.json",
+    "outputs/checks/implementation_closure/T009.json",
+    "outputs/checks/implementation_closure/T010.json",
+    "outputs/checks/implementation_closure/T011.json",
+    "outputs/checks/implementation_closure/T012.json",
+    "outputs/checks/implementation_closure/T013.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

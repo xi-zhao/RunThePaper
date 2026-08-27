@@ -1,0 +1,46 @@
+# Paper-exact rerun specification for Fig. 2 / Fig. S2 (arXiv:2607.02157)
+# Consumed by a future GPU runner; mirrors run_scan.py/run_nmse.py semantics.
+schema_version: 1
+paper_id: "2607.02157"
+engine: scripts/qrc_engine.py
+physics:
+  L: 6
+  beta: 1.0
+  gamma0: 0.1
+  dt: 1.0
+  lambda: 0.05
+  bins: 50
+  eig_truncation: 1.0e-12
+drive:
+  kind: mackey_glass
+  beta_mg: 0.2
+  gamma_mg: 0.1
+  tau_mg: 18.0
+  sample_interval: 3.0
+  normalization: centered_sigma_s2_0.11   # see EQC002 open question
+protocol:
+  n_wash: 500
+  n_eval: 2000
+  taus: [0, 1, 2]
+  horizons: [1, 2, 3]
+scans:
+  cluster:
+    alphas: {start: 0.0, stop: 1.0, points: 21}
+    sequences_per_point: 5000
+    realizations: 1
+  tfim:
+    J_log10: {start: -1.0, stop: 2.0, points: 25}
+    sequences_per_point: 5000
+    realizations: 100
+    realization_seed_base: 10000
+nmse:
+  n_train: 2000
+  n_test: 2000
+  eta: 1.0e-5
+  sequences: 500
+  tfim_realizations: 4        # matches the frozen stage-4 campaign command
+  readout_basis: full_pauli   # 4^L - 1 observables (paper protocol)
+hardware_recommendation:
+  device: A100-or-comparable-GPU
+  framework: torch (batched eigh + matmul); avoid cupy eig paths on the known remote node
+  estimated_walltime: 1-2 days for both rows + NMSE

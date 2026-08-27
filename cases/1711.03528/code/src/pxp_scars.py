@@ -511,7 +511,7 @@ def run_case(workspace: Path) -> None:
 
 
 # --- Translation x inversion symmetry sector (k=0, I=+1) -----------------
-# The paper's Fig. 2 / Fig. 4 sectors: zero momentum, inversion even. At
+# The paper's Fig. 3 / Fig. 4 sectors: zero momentum, inversion even. At
 # k=0 with even parity every group character is +1, so each group orbit
 # contributes exactly one symmetrized sector state and matrix elements
 # reduce to sqrt(N_a/N_b) weighted sums over orbit representatives.

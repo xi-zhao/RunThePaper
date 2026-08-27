@@ -2,45 +2,43 @@
 
 ## Overall
 
-- Overall score: `67.49/100`
-- Level: `numerical_feature_reproduction`
-- Check status: `partial`
+- Scientific similarity score: `34.19/100`
+- Similarity level: `feature_not_accepted`
+- Atomic final resolution: `73/73` (`100%`)
+- Paper-exact reproduced: `0/73`
+- Objectively externally blocked: `73/73`
+- Attempted but not reproduced: `0/73`
 
-The score includes the completed A100 campaign at `L=24,28,31` with 605
-disorder realizations, plus the smaller mechanism and phenomenological checks.
-It remains a paper-scale subset reproduction: all nine targets are explicitly
-exploratory, and none is promoted to a final reproduction.
+The final-disposition result does not erase the useful partial evidence. The
+case independently reproduces several Anderson-model features at reduced or
+paper-subset scale, but no atomic item is promoted to paper-exact completion.
+The score stays separate from lifecycle/final disposition.
 
-## Figure-Level Scores
+## Proven boundaries
 
-| Paper item | Score | Parameter match | Main boundary |
-| --- | ---: | --- | --- |
-| Fig. 1 — susceptibility versus disorder | 79 | paper subset | A100 sizes resolve the delocalized-side peak, but do not complete the paper's full size ladder. |
-| Fig. 2 — weak-crossover scaling | 62 | reduced scale | The asymptotic `41/sqrt(V)` fit is not closed. |
-| Fig. 3 — spectral function | 65 | paper subset | The mechanism is reproduced, but the large-volume exponent and width remain incomplete. |
-| Fig. 8 — typical/average separation | 72 | paper subset | The localized-regime split is visible without the paper's full large-size `mu` sweeps. |
-| Fig. A1 — adjacent-gap ratio | 79 | paper subset | GOE-to-Poisson endpoints and the transition window agree at the completed A100 sizes. |
-| Fig. A3 — large-volume spectral scaling | 41 | paper subset | Insufficient compute for the paper's large-volume scaling target. |
-| Fig. 9 — typical susceptibility | 70 | paper subset | Feature-level agreement; the full size ladder remains incomplete. |
-| Fig. 10 — perturbative trend | 60 | reduced scale | The implementation validates the strong-disorder trend, not an absolute normalization. |
-| Fig. 11 — phenomenological envelope | 65 | paper subset | The exponent is self-consistent, but exact curve tuning needs unpublished inputs. |
+| Boundary | Targets | Atomic items | Evidence |
+| --- | ---: | ---: | --- |
+| Current compute capacity | 23 | 71 | 12,495 frozen eigensystems; measured A100 timings imply an 11.37-day serial lower bound; the current L=38 reduction needs at least 44.87 GiB before eigensolver workspace, versus 18 GiB locally. |
+| Publication underspecification | 1 (`T009`) | 2 | Appendix Fig. 11 omits the numerical Gamma cutoffs, ordinate normalization and parameter-selection protocol required for unique paper-exact curves. |
 
-## Reproduction Boundary
+All 24 target implementations execute through raw/reference-free code paths at
+reduced validation scale. The compute-blocked targets have runnable paper-scale
+code and config; `T009` has an attested analytic implementation whose limiting
+families pass.
 
-The paper's central claims are scale-sensitive:
+## Existing feature evidence
 
-- The completed `L=24,28,31` campaign supports the fidelity-susceptibility and
-  level-statistics trends, but the paper's `L=32-38` ladder is not complete.
-- `L=32` hit a 32-bit eigensolver-workspace failure and `L=38` exceeds the
-  practical single-A100 dense-eigensolver path.
-- The `T` and randomized-site `n` operator panels remain outside the completed
-  subset.
-- The printed slow-mode continuum exponent is internally inconsistent; the
-  reproduction publishes the corrected derivation as `reconstructed`.
+- A100 `L=24/28/31` data place the gap-ratio midpoint at `W=16.56-16.60`.
+- The critical spectral tail is approximately `0.48`, versus the paper's `0.52`.
+- Average/typical susceptibility separation grows in the localized regime.
+- The broadened-Drude analytic runner reproduces both Lorentzian and power-law limits.
 
-For these reasons, the evidence is useful and paper-scale, but every target
-keeps the `exploratory` stage label.
+These are feature-level results, not substitutions for the missing paper-scale
+finite-size ladders or undisclosed Appendix parameters.
 
-## Machine-Readable Record
+## Machine-readable record
 
-See `outputs/checks/similarity_scorecard.json`.
+See `outputs/checks/similarity_scorecard.json`,
+`outputs/checks/authoritative_reproduction_state.json`,
+`outputs/checks/resource_benchmark.json`, and
+`outputs/checks/publication_input_audit.json`.

@@ -1,41 +1,38 @@
 # Method Trace
 
-## M001: Propagate Errors, Then Simulate A Stabilizer Problem
+## Scientific method
 
-The paper's method can be read as a compiler pass:
+The paper propagates circuit-level Pauli errors through a magic-state
+preparation circuit and evaluates the resulting Clifford/stabilizer problem.
+This case follows that logic without reading author code or numerical arrays.
 
-```text
-noisy MSP circuit
--> sample circuit-level Pauli errors
--> propagate them through PSC/stabilizer measurements
--> store the final error as a Clifford circuit
--> evaluate fidelity/acceptance using stabilizer-rank or Pauli-rank data
-```
+## Clean-room implementation
 
-The value of this method is that the runtime depends polynomially on the number of qubits and on the nonstabilizerness rank of the target magic state. It avoids a direct state-vector simulation of every noisy non-Clifford circuit instance.
+`src/steane_h_prep.py` independently implements the public Fig. 9 Steane
+logical-H circuit, uniform circuit-level Pauli noise, postselection, and ideal
+decoding. The frozen configuration uses the literal gate columns, deterministic
+ASAP scheduling, full-lifetime idling, five preregistered physical-error probes,
+and 2048 shots per probe.
 
-## M002: What This Case Implements
+`scripts/run_attested_reproduction.py` runs the four targets in an isolated
+directory. Its attestation records the Git SHA, configuration hash, declared
+inputs, file-access list, output hashes, and zero forbidden reference/source
+reads. Only after those outputs are frozen does
+`scripts/compare_frozen_outputs.py` read the digitized paper curves for
+diagnosis.
 
-This case implements:
+## Result boundary
 
-- PSC formula checks;
-- a controlled-H propagation identity check;
-- Pauli-rank reconstruction for `|H><H|`;
-- the complete reconstructed Steane `|Hbar>` preparation circuit for exact-circuit infidelity and acceptance Monte Carlo;
-- a legacy Monte Carlo feature model retained only as a lightweight supporting check;
-- a local calibrated runtime proxy for state-vector-like versus propagated-error simulation;
-- a sampling-precision check with slope close to `-1/2`.
+- T001 and T002 were genuinely attempted. Structural and intrinsic physics
+  checks pass, but their frozen values do not reproduce the paper curves. They
+  are `attempted_not_reproduced`, with an implementation defect still a live
+  hypothesis for fresh review.
+- T003 is `externally_blocked`: the publication omits the original machine,
+  software builds, timer protocol, repetitions, and raw absolute timing table.
+  The local runtime proxy is mechanism evidence only.
+- T004 is `reproduced`: the fitted sampling exponent is
+  `-0.49814326365138706`, consistent with `-1/2`.
 
-The full reconstructed flag-gadget circuit is implemented. The remaining scientific gap is the unpublished panel-(c) gate/idle schedule that controls second-order damaging-pair counts; runtime equality also requires the authors' hardware/software environment.
-
-## M003: Acceptance Gates
-
-The exact-circuit numerical run is accepted only if:
-
-- all 12 acceptance points pass the declared internal validation tolerance;
-- infidelity agrees in the edge regimes and any mid-range residual is recorded explicitly;
-- circuit structure and ideal decoding tests pass;
-- runtime proxy shows a low-`p` speedup above `10x`;
-- sampling standard deviation scales close to `1/sqrt(N)`.
-
-The exact-circuit record is `outputs/checks/steane_exact_benchmark.json`; legacy feature and sampling gates remain in `outputs/checks/numerical_feature_checks.json`.
+The authoritative evidence is under `outputs/checks/`, especially
+`attested_science_checks.json`, `frozen_reference_comparison.json`, and
+`publication_input_audit.json`.

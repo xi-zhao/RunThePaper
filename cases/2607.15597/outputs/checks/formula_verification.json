@@ -1,21 +1,218 @@
 {
+  "status": "failed",
   "schema_version": 1,
   "paper_id": "2607.15597",
-  "status": "passed",
-  "summary": {"cards_total": 13, "numeric_open": 13, "numeric_closed": 0},
-  "cards": [
-    {"id": "EQC001", "status": "verified", "code": "code/src/gate_model.py::branch_forces"},
-    {"id": "EQC002", "status": "verified", "code": "code/src/gate_model.py::displacement"},
-    {"id": "EQC003", "status": "verified", "code": "code/src/gate_model.py::GateParameters"},
-    {"id": "EQC004", "status": "verified", "code": "code/src/gate_model.py::reduced_spin_state"},
-    {"id": "EQC005", "status": "verified", "code": "code/src/gate_model.py::decay_infidelity"},
-    {"id": "EQC006", "status": "reconstructed", "code": "code/src/gate_model.py::anharmonic_infidelity"},
-    {"id": "EQC007", "status": "reconstructed", "code": "code/src/gate_model.py::chain_gate_duration_us"},
-    {"id": "EQC008", "status": "reconstructed", "code": "code/src/gate_model.py::interconnect_times_us"},
-    {"id": "EQC009", "status": "verified", "code": "code/src/gate_model.py::hybrid_storage_error_per_operation"},
-    {"id": "EQC010", "status": "source_only", "code": "code/src/gate_model.py::fowler_logical_error"},
-    {"id": "EQC011", "status": "verified", "code": "code/src/ion_chain.py::optimize_toggle_schedule"},
-    {"id": "EQC012", "status": "verified", "code": "code/src/gate_model.py::cz_distance_m"},
-    {"id": "EQC013", "status": "source_only", "code": "code/src/gate_model.py::total_gate_infidelity"}
-  ]
+  "summary": {
+    "cards_total": 14,
+    "numeric_open": 13,
+    "numeric_closed": 1,
+    "blocked_cards": [
+      "EQC010"
+    ]
+  },
+  "formulas": {
+    "EQC001": {
+      "title": "Matched C4 and Magnus branch forces",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::branch_forces"
+      ],
+      "open_questions": []
+    },
+    "EQC002": {
+      "title": "Forced-oscillator displacement and phase",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::displacement",
+        "src/gate_model.py::geometric_phase"
+      ],
+      "open_questions": []
+    },
+    "EQC003": {
+      "title": "Controlled-Z phase condition",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::GateParameters"
+      ],
+      "open_questions": []
+    },
+    "EQC004": {
+      "title": "Motion-traced spin state and concurrence",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::reduced_spin_state",
+        "src/gate_model.py::concurrence"
+      ],
+      "open_questions": []
+    },
+    "EQC005": {
+      "title": "Process-averaged Rydberg decay",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::decay_infidelity"
+      ],
+      "open_questions": []
+    },
+    "EQC006": {
+      "title": "Anharmonic thermal feature model",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::anharmonic_infidelity"
+      ],
+      "open_questions": [
+        "Not a replacement for the paper's full Taylor-Hamiltonian QuTiP simulation."
+      ]
+    },
+    "EQC007": {
+      "title": "Ion-chain gate-duration surrogate",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::chain_gate_duration_us"
+      ],
+      "open_questions": [
+        "Author optimized durations are not supplied."
+      ]
+    },
+    "EQC008": {
+      "title": "Interconnect timing curves",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::interconnect_times_us"
+      ],
+      "open_questions": [
+        "The QCCD affine law is inferred from the source panel because no equation is given."
+      ]
+    },
+    "EQC009": {
+      "title": "Hybrid storage-error amortization",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::hybrid_storage_error_per_operation"
+      ],
+      "open_questions": [
+        "Why source Fig. 4(b) plots rising curves despite the caption's decreasing law."
+      ]
+    },
+    "EQC010": {
+      "title": "Fowler qLDPC projection",
+      "numeric_gate": "closed",
+      "numeric_gate_policy": "source_only",
+      "derivation_status": "source_only",
+      "failed_checks": [
+        "EQC010_table_substitution"
+      ],
+      "source_verified": true,
+      "derivation_verified": false,
+      "code_refs": [
+        "src/gate_model.py::fowler_logical_error"
+      ],
+      "open_questions": [
+        "The 66x herald boost is based on a single failure and is not independently re-estimated.",
+        "The displayed Fowler formula and constants do not uniquely reproduce the rounded Table S11 values."
+      ]
+    },
+    "EQC011": {
+      "title": "Piecewise multi-mode closure",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/ion_chain.py::optimize_toggle_schedule"
+      ],
+      "open_questions": [
+        "Source uses both 25 and 17 segments for N=10; this case follows 2N+5=25."
+      ]
+    },
+    "EQC012": {
+      "title": "CZ operating distance",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::cz_distance_m"
+      ],
+      "open_questions": []
+    },
+    "EQC013": {
+      "title": "Circular-state decay and thermal floors",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::total_gate_infidelity"
+      ],
+      "open_questions": [
+        "The text quotes C4=3-7e-47 but the adopted table/figures use 2.15e-46 J m^4."
+      ]
+    },
+    "EQC014": {
+      "title": "Formula-defined Fowler and timing projection curves",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/gate_model.py::fowler_logical_error",
+        "scripts/run_reproduction.py::reproduce_qldpc_projection"
+      ],
+      "open_questions": []
+    }
+  },
+  "findings": []
 }

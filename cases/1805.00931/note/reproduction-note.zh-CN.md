@@ -2,7 +2,7 @@
 
 ## 结论
 
-All five numerical targets are formula-derived; Table I is paper-exact, while Figures 2 and 3 remain reduced-scale and therefore exploratory.
+Existing reproduced items are preserved; t=10..15 are externally compute-blocked after smoke/resource checks, and the unrestricted IID claim is publication-underspecified.
 
 公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
@@ -10,7 +10,7 @@ All five numerical targets are formula-derived; Table I is paper-exact, while Fi
 
 本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-当前权威维度：`see checks`。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=failed, causal_resolution=repair_required, science=failed, execution=attested, pixel=passed_with_not_comparable, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 

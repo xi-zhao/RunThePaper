@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. X 15, 011051 (2025) · DOI `10.1103/PhysRevX.15.0110
 
 Public status: **Partial scientific reproduction** · Audit score: **70.00/100**
 
-All 17 reproducible theory/model targets pass independent scientific checks. Four experiment-only numerical items remain missing-author-data blockers, reconstructed MD/f-wave inputs prevent paper-exact promotion, and fresh-context review is pending.
+Whole-paper atomic audit: 10 formula/analytic items are independently reproduced and 13 model-driven items reach an objective publication-underspecification boundary. All eligible items have a final disposition; 23 experimental series and two schematics remain outside the formula-driven denominator.
 
 ## Start Here / 从这里开始
 
@@ -109,7 +109,7 @@ cd cases/2406.13410/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
@@ -154,3 +154,37 @@ Final-parameter rule: final public figures use the paper parameters when feasibl
 ![T016 main fig6i](outputs/figures/T016_main_fig6i.png)
 
 ![T017 appendix fig8](outputs/figures/T017_appendix_fig8.png)
+
+![T001 main fig2a](outputs/figures/paper_scale_smoke/T001_main_fig2a.png)
+
+![T002 main fig2b](outputs/figures/paper_scale_smoke/T002_main_fig2b.png)
+
+![T003 main fig3a](outputs/figures/paper_scale_smoke/T003_main_fig3a.png)
+
+![T004 main fig3b](outputs/figures/paper_scale_smoke/T004_main_fig3b.png)
+
+![T005 main fig3c](outputs/figures/paper_scale_smoke/T005_main_fig3c.png)
+
+![T006 main fig4](outputs/figures/paper_scale_smoke/T006_main_fig4.png)
+
+![T007 main fig5b](outputs/figures/paper_scale_smoke/T007_main_fig5b.png)
+
+![T008 main fig6a](outputs/figures/paper_scale_smoke/T008_main_fig6a.png)
+
+![T009 main fig6b](outputs/figures/paper_scale_smoke/T009_main_fig6b.png)
+
+![T010 main fig6c](outputs/figures/paper_scale_smoke/T010_main_fig6c.png)
+
+![T011 main fig6d](outputs/figures/paper_scale_smoke/T011_main_fig6d.png)
+
+![T012 main fig6e](outputs/figures/paper_scale_smoke/T012_main_fig6e.png)
+
+![T013 main fig6f](outputs/figures/paper_scale_smoke/T013_main_fig6f.png)
+
+![T014 main fig6g](outputs/figures/paper_scale_smoke/T014_main_fig6g.png)
+
+![T015 main fig6h](outputs/figures/paper_scale_smoke/T015_main_fig6h.png)
+
+![T016 main fig6i](outputs/figures/paper_scale_smoke/T016_main_fig6i.png)
+
+![T017 appendix fig8](outputs/figures/paper_scale_smoke/T017_appendix_fig8.png)

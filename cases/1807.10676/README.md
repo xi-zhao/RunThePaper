@@ -19,6 +19,7 @@ Forty-two executable numerical subpanels are formula-derived; the licensed DFT c
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -88,7 +89,7 @@ cd cases/1807.10676/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

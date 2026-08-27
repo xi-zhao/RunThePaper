@@ -1,0 +1,189 @@
+{
+  "schema_version": 3,
+  "paper_id": "2605.02873",
+  "_howto": [
+    "Read the full paper, then inventory every figure, panel, visible series, and table. PhysicsReproductionProject.reproduction_scope freezes the complete theory-numerical scope.",
+    "kind: numeric | non_numeric.",
+    "item_type: figure | figure_panel | figure_series | table.",
+    "Split mixed experiment/theory panels into figure_series items with parent_item_id and scientific_role.",
+    "Every theory_numerical item id must be frozen in reproduction_scope.target_item_ids and declare reproduction_content=theory_numerical_only; selecting only an easy subset is invalid.",
+    "Every generated target must come from independent formula/method numericalization (independent_numerics or analytic_reference); digitized source pixels are reference-only and mixed generated/reference data is forbidden.",
+    "decision for every theory_numerical item: target (with target_ids) | deferred_blocked (with an objective blocker).",
+    "Numerical tables follow the same target/deferred rule as numerical figures; only genuinely non-numerical schematics and context are excluded.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', 'similar to another figure', 'covered by another target', and user descope are NOT blockers.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If compute or data is genuinely insufficient, deferred_blocked with an honest reason is the correct final state; do not fake coverage.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "try_fresnel_smoke": {
+      "status": "ready",
+      "code_refs": [
+        "src/try_fresnel.py",
+        "src/implementation_smoke.py",
+        "scripts/run_implementation_smoke.py"
+      ],
+      "config_ref": "config/implementation_smoke.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_smoke.py",
+        "--config",
+        "config/implementation_smoke.json",
+        "--output-root",
+        "outputs"
+      ],
+      "run_contract_ref": "run_contract.implementation_smoke.json",
+      "expected_outputs": [
+        "outputs/data/implementation_validation/fig001a_baseline.csv",
+        "outputs/data/implementation_validation/fig001b_scores.csv",
+        "outputs/data/implementation_validation/fig001c_codes.csv",
+        "outputs/data/implementation_validation/fig001d_retention.csv",
+        "outputs/data/implementation_validation/figs001_width_scan.csv",
+        "outputs/checks/implementation_validation/fig001a_baseline.json",
+        "outputs/checks/implementation_validation/fig001b_scores.json",
+        "outputs/checks/implementation_validation/fig001c_codes.json",
+        "outputs/checks/implementation_validation/fig001d_retention.json",
+        "outputs/checks/implementation_validation/figs001_width_scan.json"
+      ],
+      "acceptance_criteria": [
+        "All five target implementations independently generate structured Fresnel/Fisher data and pass normalization, noise-orthogonality, information-retention, and finite-width sanity checks without paper pixels or author numerical assets."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "FIG001A",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001A"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(a): baseline source-resolved TRY response R0(y), generated from the finite-width Fresnel field integral.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG001B",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001B"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(b): exact local tilt and defocus score functions from differentiated Fresnel moments.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG001C_OPTIMIZED",
+      "parent_item_id": "FIG001C",
+      "kind": "numeric",
+      "item_type": "figure_series_group",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001C"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(c), optimized series: nuisance-orthogonal source codes from the verified noise-metric construction.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "FIG001C_TOY",
+      "parent_item_id": "FIG001C",
+      "kind": "numeric",
+      "item_type": "figure_series_group",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001C"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(c), toy series: independently constructed Gaussian parity-only comparator codes.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "FIG001D_OPTIMIZED",
+      "parent_item_id": "FIG001D",
+      "kind": "numeric",
+      "item_type": "figure_series_group",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001D"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(d), optimized bars: principal Fisher-information retention of the nuisance-orthogonal code pair.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "FIG001D_TOY",
+      "parent_item_id": "FIG001D",
+      "kind": "numeric",
+      "item_type": "figure_series_group",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG001D"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Main Figure 1(d), toy bars: low principal Fisher-information retention of the Gaussian comparator pair.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "TABLES001",
+      "kind": "numeric",
+      "item_type": "table",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIGS001"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "The supplementary slit-width table and Figure S1 are two renderings of the same independently generated Fisher-information scan, both covered by T-FIGS001.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "FIGS001",
+      "kind": "numeric",
+      "item_type": "figure",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIGS001"
+      ],
+      "implementation_ref": "try_fresnel_smoke",
+      "reason": "Supplementary Figure S1: defocus-to-tilt Fisher-information ratio versus slit width from repeated Fresnel calculations.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    }
+  ]
+}

@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
   "status": "passed",
-  "policy": "Computational sources must not read paper-figure pixels. Published comparison composites are external to the numerical pipeline.",
+  "policy": "Paper-figure pixels may be read only after numerical generation and only inside the comparison renderer; they are forbidden as computational inputs.",
   "source_figure_data_used_as_computational_input": false,
   "scanned_sources": [
-    "code/src/__init__.py",
-    "code/src/fidelity_response.py",
-    "code/src/gate_protocols.py",
-    "code/src/many_body_response.py",
-    "code/src/theory_targets.py",
-    "code/scripts/run_formula_theory_targets.py",
-    "code/scripts/run_reproduction.py"
+    "src/__init__.py",
+    "src/fidelity_response.py",
+    "src/gate_protocols.py",
+    "src/many_body_response.py",
+    "src/theory_targets.py",
+    "scripts/run_formula_theory_targets.py",
+    "scripts/run_reproduction.py"
   ],
   "generated_data_provenance_allowlist": [
     "analytic_reference",
@@ -20,5 +20,18 @@
     "independent_numerics"
   ],
   "forbidden_findings": [],
-  "comparison_only_image_reads": []
+  "comparison_only_image_reads": [
+    {
+      "path": "scripts/run_reproduction.py",
+      "line": 303,
+      "symbol": "plt.imread",
+      "reason": "image pixels read by Python code"
+    },
+    {
+      "path": "scripts/run_reproduction.py",
+      "line": 304,
+      "symbol": "plt.imread",
+      "reason": "image pixels read by Python code"
+    }
+  ]
 }

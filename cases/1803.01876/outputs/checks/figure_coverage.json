@@ -1,0 +1,519 @@
+{
+  "schema_version": 2,
+  "paper_id": "1803.01876",
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--profile",
+        "attestation",
+        "--output-root",
+        "outputs/data/implementation_closure"
+      ],
+      "code_refs": [
+        "src/nonhermitian_ssh.py",
+        "src/implementation_campaign.py",
+        "scripts/run_implementation_campaign.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/implementation_closure/T004.json",
+        "outputs/data/implementation_closure/T005.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T007.json",
+        "outputs/data/implementation_closure/T008.json",
+        "outputs/data/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "All 24 fixed-denominator items map exactly once to a formula-derived target output or an explicit indispensable-input blocker.",
+        "The numerical path reads only the frozen config and clean-room case source; raw, author arrays/code, reference pixels, and legacy outputs are forbidden.",
+        "Reduced-scale attestation proves implementation wiring only and cannot promote scientific coverage, paper-exact status, pixel acceptance, or independent review."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M1",
+      "item_type": "figure",
+      "source_ref": "Main PDF p. 1, Fig. 1",
+      "scientific_object": "Non-Hermitian SSH lattice and unit-cell convention.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Model schematic without an independently adjudicable numerical observable."
+    },
+    {
+      "item_id": "M2a",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 2(a)",
+      "scientific_object": "Open-boundary |E| spectrum, zero modes, and transition locations versus t1.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the L=40 open-chain Hamiltonian and bound to fig2_open_spectrum.csv column abs_E.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "M2b",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 2(b)",
+      "scientific_object": "Real part of the open-boundary spectrum versus t1.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the same open-chain spectrum and bound to fig2_open_spectrum.csv column real_E.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "M2c",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 2(c)",
+      "scientific_object": "Imaginary part of the open-boundary spectrum versus t1.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the same open-chain spectrum and bound to fig2_open_spectrum.csv column imag_E.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "M2d",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 2(d)",
+      "scientific_object": "Boundary-perturbed |E| spectrum with leftmost intracell hopping t1-0.8.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the perturbed finite Hamiltonian and bound to fig2_boundary_perturbation.csv.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "M3a-main",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(a), dark curves",
+      "scientific_object": "Paired beta-root modulus branches at t1=1 and their equal-modulus bulk-energy interval.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "The beta1 and beta2 branches form one jointly adjudicated family bound to fig3_beta_roots.csv series main_t1_1.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M3a-transition",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(a), light curves",
+      "scientific_object": "Paired beta-root modulus branches at the non-Bloch transition touching E=0.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently evaluates the transition family and is bound to fig3_beta_roots.csv series transition.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M3b-Cbeta",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(b), solid curve",
+      "scientific_object": "Generalized Brillouin-zone curve C_beta at t1=1.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the verified beta-radius relation and bound to fig3_cbeta.csv curve C_beta.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M3b-unit-circle",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(b), dashed curve",
+      "scientific_object": "Hermitian unit-circle reference in the beta plane.",
+      "kind": "numeric",
+      "scientific_role": "analytic_reference",
+      "coverage_role": "supporting_reference",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "An independently reproducible analytic comparator bound to fig3_cbeta.csv curve unit_circle; supporting status is not an exclusion.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M3c-zero",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(c), main axes",
+      "scientific_object": "Site-resolved zero-mode spatial profile at t1=1.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated analytic zero-mode profile bound to fig3_profiles.csv profile_id zero_mode.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M3c-bulk",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 3(c), inset",
+      "scientific_object": "Skin-localized profiles of eight representative bulk right eigenstates.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Eight profiles form one jointly adjudicated localization family bound to fig3_profiles.csv profiles bulk_1 through bulk_8.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "M4",
+      "item_type": "figure",
+      "source_ref": "Main PDF p. 4, Fig. 4",
+      "scientific_object": "Non-Bloch winding number W versus t1 for N_beta=150.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently evaluated from the non-Bloch Q matrix and bound to fig4_winding.csv.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "M5a-spectrum",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 4, Fig. 5(a), upper axes",
+      "scientific_object": "Nonzero-t3 open-boundary |E| spectrum for L=100.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently generated from the paper-parameter finite Hamiltonian and bound to fig5_t3_spectrum.csv.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "M5a-winding",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 4, Fig. 5(a), lower axes",
+      "scientific_object": "Nonzero-t3 topological invariant and transitions near t1=+-1.56.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently evaluated from middle beta-root ordering and bound to fig5_t3_winding.csv.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "M5b",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 4, Fig. 5(b)",
+      "scientific_object": "Non-circular generalized Brillouin zone at t1=1.1 and nonzero t3.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "Independently reconstructed from the middle beta-root pair and bound to fig5_t3_cbeta.csv.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "S6-r1-theory",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 1 left",
+      "scientific_object": "Equal-modulus theoretical complex-energy spectrum at t1=0.2.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_theory_complex_spectra.csv at t1=0.2.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S6-r1-obc",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 1 right",
+      "scientific_object": "L=120 open-chain complex eigenenergies at t1=0.2.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_open_chain_complex_spectra.csv at t1=0.2.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S6-r2-theory",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 2 left",
+      "scientific_object": "Equal-modulus theoretical complex-energy spectrum at t1=0.6.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_theory_complex_spectra.csv at t1=0.6.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S6-r2-obc",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 2 right",
+      "scientific_object": "L=120 open-chain complex eigenenergies at t1=0.6.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_open_chain_complex_spectra.csv at t1=0.6.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S6-r3-theory",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 3 left",
+      "scientific_object": "Equal-modulus theoretical complex-energy spectrum at t1=1.0.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_theory_complex_spectra.csv at t1=1.0.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S6-r3-obc",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 6, row 3 right",
+      "scientific_object": "L=120 open-chain complex eigenenergies at t1=1.0.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig1_open_chain_complex_spectra.csv at t1=1.0.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S7a",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 7(a)",
+      "scientific_object": "Large-gamma open-chain |E| spectrum for L=40, t2=1, gamma=2.4.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig2_gamma24_spectrum.csv.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "S7b",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 8, Fig. 7(b)",
+      "scientific_object": "Large-gamma winding pattern with four transition points.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "Bound to supplemental_fig2_gamma24_winding.csv.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C1-zero-mode-end-migration",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 4, right column, paragraph beginning 'Quantitatively, 2W counts...'",
+      "scientific_object": "Endpoint-resolved allocation of the two zero modes across three exact t1 intervals: both left, one at each end, and both right.",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM006_ZERO_MODE_MIGRATION"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "No claim-specific artifact currently checks both zero-mode count and endpoint allocation over all three intervals."
+    },
+    {
+      "item_id": "C2-multiband-winding-sum",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 4, final paragraph before Conclusions",
+      "scientific_object": "Multiband extension in which each paired band has C_beta^(l) and W^(l), with total invariant W=sum_l W^(l).",
+      "kind": "numeric",
+      "scientific_role": "analytic_method_claim",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM007_MULTIBAND_ADDITIVITY"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "No independent block-diagonal multiband consistency artifact is registered."
+    },
+    {
+      "item_id": "C3-ref49-zero-mode-correction",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main PDF p. 7, footnote [92] attached to the open-boundary-spectrum discussion",
+      "scientific_object": "Correction of Ref. 49: its zero-mode line should span the full interval [-1/sqrt(2), 1/sqrt(2)] rather than two disconnected segments.",
+      "kind": "numeric",
+      "scientific_role": "external_paper_correction_claim",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM008_REF49_CORRECTION"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "The cited arXiv source and parameter mapping are now frozen; an independent analytic interval check and finite-chain scaling support the correction without using source pixels."
+    }
+  ]
+}

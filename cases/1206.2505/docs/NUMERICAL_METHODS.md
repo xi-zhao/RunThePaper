@@ -17,9 +17,12 @@ Production checks `N/r = 128/24, 192/36, 256/48`.
 
 ## Ramp channel
 
-Two-component modes are evolved by analytic midpoint exponentials. The update
-is unitary and vectorized over 401 momenta. Linear and smoothstep protocols are
-declared reconstructions because no paper ramp is printed.
+For an arbitrary continuous across-critical ramp, the endpoint occupations
+retain opposite signs at `k=0` and `k=pi`; continuity therefore guarantees at
+least one half-occupied mode. This is the reproduced theorem and requires no
+single ramp parameter set. Two-component modes are additionally evolved by
+analytic midpoint exponentials over 401 momenta. Linear and smoothstep
+protocols are declared reconstructions used only to falsify the mechanism.
 
 ## Reproducibility
 

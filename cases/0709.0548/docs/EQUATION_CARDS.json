@@ -347,9 +347,9 @@
       "derived_from": [
         "first level of the cited Doherty hierarchy"
       ],
-      "derivation_status": "source_only",
-      "numeric_gate_policy": "source_only",
-      "numerical_form": "machine-readable variable dimensions and affine/PSD constraint contract",
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "executed complex-Hermitian PPT symmetric-extension feasibility problem with marginal, swap, PSD, and PPT residual checks",
       "checks": [
         {
           "id": "EQ010-S",
@@ -361,14 +361,21 @@
           "id": "EQ010-C",
           "type": "numeric_sanity",
           "status": "passed",
-          "reason": "The exact SDP dimensions and constraints are emitted; no result is claimed without a PSD-cone solver and certificate."
+          "reason": "Separable and Bell-state controls distinguish feasible from infeasible extensions before the DQC1 campaign is accepted."
+        },
+        {
+          "id": "EQ010-I",
+          "type": "independent_numerics",
+          "status": "passed",
+          "reason": "The isolated T014 run solves 20 frozen DQC1 extensions with SCS and verifies marginal, swap, PSD, and PPT residuals."
         }
       ],
       "code_refs": [
-        "src/dqc1_discord/model.py::first_symmetric_extension_contract"
+        "src/dqc1_discord/model.py::first_symmetric_extension_contract",
+        "src/dqc1_discord/symmetric_extension.py::first_ppt_symmetric_extension"
       ],
       "open_questions": [
-        "The paper gives no solver, tolerance, seed, or primal/dual certificate for the cited private calculation."
+        "The paper gives no author solver settings, tested state list, or primal/dual certificate; the executed campaign is therefore an independent reproduction rather than author-instance identity."
       ]
     },
     {

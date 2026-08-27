@@ -1,97 +1,21 @@
-# 任意维非厄米趋肤效应：复现说明
+# Geometry-adaptive formulation of non-Bloch bands in arbitrary dimensions and spectral instability：科学复现讲义
 
 ## 结论
 
-本案例完成了正式论文的全部数值科学范围。主文 Fig. 2(a–d)、Fig. 3 和
-Fig. 4(a–f) 由 Python/SciPy 从论文模型重新计算；Fig. 1 与 Fig. 5 属于示意图
-上下文，不进入数值范围，也不再作为公开包的复现结果展示。所有生成数值面板都
-不读取作者 ED 表、数字化曲线或论文原图像素。
+Independent Python/SciPy reproduction of formal Fig. 2(a-c) and Fig. 4(d).
 
-Fig. 2(d) 的 317 个能量探针全部由有限 OBC 稀疏
-`log|det(H_L-E)|/N` 与 Eq. (10) 独立计算。三种稀疏 LU 排序只依据预先声明的
-数值一致性阈值确定可靠拟合前缀，不查看预期收敛趋势；所有不稳定的大尺寸尾点
-仍保留在公开数据和图中。十条可靠曲线均满足 `R²>0.9988`，外推截距绝对值低于
-`6.3e-4`。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-这不是论文原图的像素副本。主文数值画布已按出版尺寸注册，但严格阈值
-`SSIM >= 0.95` 没有通过。机器合同确认 8/8 个科学主张、15/15 张公式卡、
-15/15 条运行记录和 35/35 个数值子图全部通过。像素通道单独统计：18 个主文子图
-已有注册证据，布局分为 `89.27/100`；17 个补充材料子图在源 PDF 面板尚未分别
-裁切冻结前明确延后。补充材料 Fig. S2、S4、S5、S6、S7 的科学数值复现本身已经
-全部独立完成。
+## 我们复现的是什么
 
-补充 Fig. S2 完全从 Eqs. (S14)–(S22) 生成：包括可分离的 `N=5625` 精确谱、
-精确/Amoeba 谱密度，以及两个图注能量的绕数洞分类。作者公开数组只由独立的
-事后比较脚本读取，不进入复现 runner。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-补充 Fig. S5 完全从正式 Eq. (S27) 和 Eq. (10) 生成：包括 `N=6400/6385`
-两套完整谱、11 个尺寸的普通/尺度自由态展宽、菱形切边态和两套谱密度。A/B 态
-按声明能窗内最窄/最宽 RMS 宽度确定性选择，不查看原图。作者 release 中同名目录
-使用不同的旧哈密顿量，因此不作为生成输入。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=failed, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
-## 补充材料方程检查
+## 运行
 
-对于 Supplementary Fig. S4，代码直接构造 Eq. (S24) 的双链 OBC 矩阵，完成
-图注中的 `L=20,40,60,80` 全部尺寸，并按 Eq. (S25) 拟合中心态的逆局域化长度。
-拟合得到 `R²=0.9990`、截距 `-0.00559`，选定本征对残差低于 `3.7e-15`。灰色
-TDL 连续谱由 Eq. (S24) 特征四次方程和 Eq. (4) 的
-`|beta_2(E)|=|beta_3(E)|` 条件独立生成；1242 个正式点的最大根差为 `9.37e-9`，
-有限 OBC 谱到 TDL 的 p95 距离由 `L=20` 的 `0.3061` 降至 `L=80` 的 `0.0822`。
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-对于 Supplementary Fig. S6，代码在独立采样的动量切片上计算 Eq. (S28) 的闭环
-相位绕数，并独立求解复 Bloch 哈密顿量的零点。普通模型的绕数集合为 `{0,1}`，
-有两个电荷相反的费米点；临界菱形模型的绕数集合为 `{-1,1}`，有四个费米点且
-总电荷守恒。
+## 论文审查边界
 
-对于 Supplementary Fig. S7，代码在全部六个论文尺度上独立求解左右本征系，
-并对每个尺度使用 100 组全新均匀无序样本计算 Eq. (S29)。普通模型响应系数跨
-尺寸仅变化 `0.37%`；临界模型由 `3.40` 增至 `356.17`，最大值达到普通模型的
-`705x`。作者公开数据只在独立生成完成后用于斜率验证。图注中间临界尺寸写为
-`N=935`，但精确菱形格点和作者 `r=43` runner 都给出 `N=925`，该差异被显式记录。
-
-## Fig. 3 的画法
-
-针对早期版本中 Fig. 3(a) 线条和 Fig. 3(b) 视角的问题，当前版本作了三项修正：
-
-- Fig. 3(a) 从规则 `101 x 101` 动量网格投影到两个 beta 平面，不再直接连接
-  不规则求解点；
-- Fig. 3(b) 对周期动量面做无缝插值，消除边界接缝；
-- 三维视角固定为仰角 `24°`、方位角 `-41°`，并统一三轴比例。
-
-科学门禁全部通过，但整图 SSIM 为 `0.6969`，因此状态仍是
-`pixel_registered_not_identical`。差异主要来自采样密度、曲面插值、视角投影、
-字体和抗锯齿，而不是把独立计算结果说成像素完全一致。
-
-## Fig. 4 的画法
-
-Fig. 4 的六个面板均有独立数值检查。整图 SSIM 为 `0.5823`；各面板分别为
-`0.9107`、`0.5717`、`0.7042`、`0.4353`、`0.4181`、`0.4946`。其中较低的
-面板受论文未报告的选态序列、整数边界顶点、随机种子、能量探针网格和排版细节
-影响。这些不确定性保留在机器检查中，没有通过复制论文像素来隐藏。
-
-## 公开内容与边界
-
-公开包包含独立数值内核、轻量运行脚本、生成数据、生成图、机器检查，以及带明确
-出处的有限对照板。它不包含论文 PDF、独立原图、矢量路径、数字化曲线或内部试错
-记录。对照板只用于审计视觉结构；数值计算不读取其中的像素。
-
-## 快速运行
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/2407.01296/code
-python scripts/run_reproduction_smoke.py
-python scripts/run_fig2d_finite_size.py --scale smoke
-python scripts/run_supplementary_fig2.py --scale smoke
-python scripts/run_supplementary_fig4.py
-python scripts/run_supplementary_fig5.py --scale smoke --workers 4
-python scripts/run_supplementary_fig6.py
-python scripts/run_supplementary_fig7.py --scale paper
-```
-
-这些命令运行主文与 Fig. 2(d) 的缩小尺度 smoke 检查、S2/S5 的快速公式检查，以及 S4/S6/S7 的
-独立补充材料计算。论文尺度生成结果已随案例发布，方法和计算边界见
-[`../docs/NUMERICAL_METHODS.md`](../docs/NUMERICAL_METHODS.md) 与
-[`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md)。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Fig. 2(c) uses the paper 101x101 grid and 200 momentum samples; mean hierarchical-potential errors against finite OBC are 0.00667/0.00623. Author Zenodo outputs are reference comparators only; generated evidence is independent numerics.

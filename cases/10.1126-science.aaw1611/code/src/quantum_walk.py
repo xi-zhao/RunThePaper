@@ -28,6 +28,15 @@ class BackendResult:
     accelerator: str
 
 
+@dataclass(frozen=True)
+class LindbladResult:
+    """Single-excitation density evolution including the vacuum state."""
+
+    site_density: RealArray
+    traces: RealArray
+    density_matrices: ComplexArray
+
+
 def mhz_to_rad_per_ns(values: Sequence[float] | RealArray) -> RealArray:
     """Convert f/(2*pi) in MHz to angular frequency in rad/ns."""
 
@@ -250,7 +259,143 @@ def normalized_correlation_distance(left: RealArray, right: RealArray) -> float:
     return float(np.linalg.norm(left_vector / left_norm - right_vector / right_norm))
 
 
-def uniform_group_velocity(couplings_rad_per_ns: Sequence[float] | RealArray) -> float:
-    """Uniform-chain ballistic scale in sites per microsecond."""
+def effective_couplings_from_detuning(
+    couplings: Sequence[float] | RealArray,
+    onsite_offsets: Sequence[float] | RealArray,
+) -> RealArray:
+    """Apply Supplement Sec. IV.C's detuning-renormalized hopping formula."""
 
-    return float(2.0 * np.mean(couplings_rad_per_ns) * 1000.0)
+    coupling_array = np.asarray(couplings, dtype=np.float64)
+    onsite_array = np.asarray(onsite_offsets, dtype=np.float64)
+    if coupling_array.ndim != 1 or onsite_array.shape != (coupling_array.size + 1,):
+        raise ValueError("onsite offsets must contain one value per coupling endpoint")
+    detuning = np.diff(onsite_array)
+    return coupling_array**2 / np.sqrt(coupling_array**2 + detuning**2)
+
+
+def distribution_fidelity(left: RealArray, right: RealArray) -> RealArray:
+    """Bhattacharyya fidelity used in Supplement Fig. S11."""
+
+    left_array = np.asarray(left, dtype=np.float64)
+    right_array = np.asarray(right, dtype=np.float64)
+    if left_array.shape != right_array.shape or left_array.ndim < 1:
+        raise ValueError("distributions must have identical non-scalar shapes")
+    if np.any(left_array < -1.0e-12) or np.any(right_array < -1.0e-12):
+        raise ValueError("distributions cannot contain negative probabilities")
+    return np.sum(
+        np.sqrt(np.clip(left_array, 0.0, None) * np.clip(right_array, 0.0, None)),
+        axis=-1,
+    )
+
+
+def evolve_single_excitation_lindblad(
+    hamiltonian: RealArray,
+    initial_site: int,
+    times_ns: Sequence[float] | RealArray,
+    t1_us: Sequence[float] | RealArray,
+    t2_star_us: Sequence[float] | RealArray,
+) -> LindbladResult:
+    """Evolve a vacuum-plus-one-excitation Lindblad master equation.
+
+    Amplitude damping is fixed by ``T1``.  Projector dephasing is chosen so the
+    vacuum-to-site coherence decays with the printed ``T2*``.  This convention
+    is declared as a reconstruction because the supplement does not publish
+    the exact QuTiP collapse operators used for Fig. S11.
+    """
+
+    from scipy.sparse import csc_matrix
+    from scipy.sparse.linalg import expm_multiply
+
+    hamiltonian_array = np.asarray(hamiltonian, dtype=np.float64)
+    if hamiltonian_array.ndim != 2 or hamiltonian_array.shape[0] != hamiltonian_array.shape[1]:
+        raise ValueError("hamiltonian must be square")
+    site_count = hamiltonian_array.shape[0]
+    if initial_site < 0 or initial_site >= site_count:
+        raise IndexError("initial site outside the chain")
+    t1_ns = np.asarray(t1_us, dtype=np.float64) * 1000.0
+    t2_star_ns = np.asarray(t2_star_us, dtype=np.float64) * 1000.0
+    if t1_ns.shape != (site_count,) or t2_star_ns.shape != (site_count,):
+        raise ValueError("T1 and T2-star must contain one value per site")
+    if np.any(t1_ns <= 0.0) or np.any(t2_star_ns <= 0.0):
+        raise ValueError("decoherence times must be positive")
+    times = np.asarray(times_ns, dtype=np.float64)
+    if times.ndim != 1 or times.size == 0 or np.any(np.diff(times) < 0.0):
+        raise ValueError("times must be a non-empty sorted one-dimensional array")
+    if times.size > 2 and not np.allclose(np.diff(times), np.diff(times)[0], atol=1.0e-12):
+        raise ValueError("Lindblad evolution currently requires a uniform time grid")
+
+    dimension = site_count + 1
+    full_hamiltonian = np.zeros((dimension, dimension), dtype=np.complex128)
+    full_hamiltonian[1:, 1:] = hamiltonian_array
+    identity = np.eye(dimension, dtype=np.complex128)
+    liouvillian = -1.0j * (
+        np.kron(identity, full_hamiltonian)
+        - np.kron(full_hamiltonian.T, identity)
+    )
+
+    collapse_operators: list[ComplexArray] = []
+    for site in range(site_count):
+        gamma_1 = 1.0 / t1_ns[site]
+        relaxation = np.zeros((dimension, dimension), dtype=np.complex128)
+        relaxation[0, site + 1] = np.sqrt(gamma_1)
+        collapse_operators.append(relaxation)
+
+        gamma_projector = max(0.0, 2.0 / t2_star_ns[site] - gamma_1)
+        if gamma_projector > 0.0:
+            dephasing = np.zeros((dimension, dimension), dtype=np.complex128)
+            dephasing[site + 1, site + 1] = np.sqrt(gamma_projector)
+            collapse_operators.append(dephasing)
+
+    for collapse in collapse_operators:
+        number = collapse.conj().T @ collapse
+        liouvillian += np.kron(collapse.conj(), collapse)
+        liouvillian -= 0.5 * np.kron(identity, number)
+        liouvillian -= 0.5 * np.kron(number.T, identity)
+
+    initial_density = np.zeros((dimension, dimension), dtype=np.complex128)
+    initial_density[initial_site + 1, initial_site + 1] = 1.0
+    initial_vector = initial_density.reshape(-1, order="F")
+    if times.size == 1:
+        if times[0] == 0.0:
+            evolved_vectors = initial_vector[None, :]
+        else:
+            evolved_vectors = expm_multiply(csc_matrix(liouvillian * times[0]), initial_vector)[
+                None, :
+            ]
+    else:
+        evolved_vectors = expm_multiply(
+            csc_matrix(liouvillian),
+            initial_vector,
+            start=float(times[0]),
+            stop=float(times[-1]),
+            num=times.size,
+            endpoint=True,
+        )
+    density_matrices = np.asarray(
+        [vector.reshape((dimension, dimension), order="F") for vector in evolved_vectors]
+    )
+    traces = np.real(np.trace(density_matrices, axis1=1, axis2=2))
+    densities = np.real(np.diagonal(density_matrices[:, 1:, 1:], axis1=1, axis2=2))
+    return LindbladResult(densities, traces, density_matrices)
+
+
+def spectral_group_velocity(couplings_rad_per_ns: Sequence[float] | RealArray) -> float:
+    """Paper Eq. S29 group velocity from the calibrated open-chain spectrum.
+
+    For an ``L``-site chain the supplement samples momenta at
+    ``k_n = n*pi/(L+1)``. The finite-difference derivative is therefore the
+    largest adjacent eigenfrequency gap divided by ``pi/(L+1)``. Frequencies
+    are supplied in rad/ns and the result is returned in sites/microsecond.
+    """
+
+    couplings = np.asarray(couplings_rad_per_ns, dtype=np.float64)
+    if couplings.ndim != 1 or couplings.size == 0:
+        raise ValueError("couplings must be a non-empty one-dimensional array")
+    site_count = couplings.size + 1
+    hamiltonian = np.zeros((site_count, site_count), dtype=np.float64)
+    indices = np.arange(couplings.size)
+    hamiltonian[indices, indices + 1] = couplings
+    hamiltonian[indices + 1, indices] = couplings
+    eigenfrequencies = np.linalg.eigvalsh(hamiltonian)
+    delta_k = np.pi / (site_count + 1)
+    return float(np.max(np.abs(np.diff(eigenfrequencies))) / delta_k * 1000.0)

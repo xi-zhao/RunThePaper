@@ -12,7 +12,7 @@
 | --- | ---: | --- | --- | --- | ---: |
 | Fig. 1 subharmonic rigidity | 1.0 | 50/50 - 相互作用系统半频峰锁定，自由自旋峰随 pulse error 漂移，核心现象清楚出现。 | 28/35 - 峰位置锁定误差为 0，但没有原文 disorder-averaged 曲线逐点比较。 | 9/15 - Fig. 1 主要目标已覆盖，统计规模仍不是完整论文级。 | 87 |
 | Fig. 2 level statistics / variance peak | 1.0 | 43/50 - level statistics 和 variance peak 的转变信号出现。 | 18/35 - 趋势可见，但小规模样本噪声较大。 | 9/15 - 覆盖了本地图，但没有达到原文大样本 campaign。 | 70 |
-| Fig. 3 endpoint mutual information / scaling | 1.5 | 40/50 - endpoint mutual information 在 epsilon=0 精确命中 log 2，大 detuning 下降。 | 24/35 - `L=8,10,12` medium campaign 中 Fig. 3c/d 塌缩较紧，Fig. 3b 和临界指数仍未收敛。 | 13/15 - Fig. 3a、3c、3d 已覆盖，3b 为 partial；缺少 `L=14–18` 和最终统计。 | 70 |
+| Fig. 3 endpoint mutual information / scaling | 1.5 | 40/50 - endpoint mutual information 在 epsilon=0 精确给出 log 2，大 detuning 下降。 | 24/35 - 解析锚点和强耦合 collapse 通过，弱耦合临界区仍受有限尺寸限制。 | 13/15 - Fig. 3a 与已计算的 collapse 有数据支撑，论文尺度生产运行仍未完成。 | 70 |
 | Fig. 4 long-range diagnostic | 1.0 | 42/50 - 长程相互作用版本也出现方差峰。 | 18/35 - 趋势出现，但数值稳定性和统计精度还不够。 | 9/15 - 本地复现覆盖核心诊断，没有完成大规模 disorder 平均。 | 69 |
 
 ## 结论

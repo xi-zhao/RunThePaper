@@ -1,31 +1,21 @@
-# Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain: scientific numerical reproduction note
+# Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain: scientific reproduction note
 
-## Bottom line
+## Result
 
-This is the public package for the historical `2510.12880` scientific reproduction. Its public status is **Historical scientific artifact (4 numerical targets; 4 evidence_compared)** and its frozen audit score is **95.00/100**. The score records evidence strength; it is neither a percentage of correctness nor a declaration that the whole paper is complete.
+The two Main Fig. 5 panels and two central periodic analytic families are independently covered, while a full-paper audit exposes five supplemental claim families without accepted implementations. The legacy two-panel similarity score remains 95; whole-paper coverage and reproduction degree are derived separately.
 
-Here, reproduction means understanding the paper, following its equations or method, implementing the numerical work independently, and then generating data and figures. The data come from equations, independent numerics, or analytic derivation, not sampled pixels from paper figures. The public package excludes the paper PDF, standalone source figures, digitized image points, comparison boards, author code, and private runtime state. This is a legacy case without a machine-verifiable author-code isolation attestation, so publication does not upgrade it to complete.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Numerical targets
+## What is reproduced
 
-| Target | Paper item | Scientific meaning | Frozen status | Parameter match |
-| --- | --- | --- | --- | --- |
-| `V001` | VALIDATION001 | Exact algebraic and finite-size validation of the frustration-free 2^N+1 ground-state manifold. | evidence_compared | paper_subset |
-| `V002` | VALIDATION002 | Energy-bound and symmetry checks behind the schematic phase diagram. | evidence_compared | paper_exact |
-| `T001` | FIG005A | Squared fidelity of the uniform-positive-w fractionalized MPS with the exact ground state. | evidence_compared | paper_exact |
-| `T002` | FIG005B | Squared fidelity of a one-w-flip MPS with the exact first-excited manifold. | evidence_compared | paper_exact |
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Public artifacts
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
-- 4 independently generated data files;
-- 2 independently generated figures;
-- runnable and inspectable code under `code/`;
-- machine-readable boundaries and scoring under `outputs/checks/`.
+## Run
 
-Run `python code/scripts/verify_public_artifacts.py` to recompute hashes and format/non-empty checks for every published artifact. Numerical entrypoint sources are retained under `code/scripts/` and `code/src/`; some legacy scripts require paper-specific parameters or external public data, as documented in their comments and the numerical-method note.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-## Remaining boundary
+## Paper-review boundary
 
-Frozen non-final target states: V001=evidence_compared, V002=evidence_compared, T001=evidence_compared, T002=evidence_compared. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
-
-Layout, typography, axes, line styles, palettes, and interpolation may be optimized for rendering diagnostics, but they must not alter physical parameters or numerical arrays and must never replace scientific computation with source-image pixels.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: All 25 first-excited values agree with the digitized source within 0.0015. The ground-state panel has one retained 0.00364 discrepancy at theta=10 degrees, N=12; the remaining 24 values agree within 0.0015. The paper omits eigensolver and tolerance details, so the two rendered overlap artifacts remain exploratory despite their strong numerical agreement. The full-paper item audit finds 9 eligible scientific items: 4 covered and 5 uncovered, for 44.44% coverage and reproduction degree 40.90. V003-V007 expose three open-chain results, one parity-selection rule, and one perturbative-sector claim that still lack independent implementations.

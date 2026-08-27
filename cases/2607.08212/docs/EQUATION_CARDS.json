@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.08212",
+  "cards": [
+    {
+      "id": "MOB001",
+      "title": "Projector-phase accumulation",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (4)-(6)"
+        }
+      ],
+      "latex": "F(T)=\\sum_{S\\subseteq T}\\theta_S",
+      "role": "Defines the subset-zeta map from projector phases to basis-state phases.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MOB001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The accumulation rule is explicit in Eqs. (4)-(6) and Appendix A."
+        },
+        {
+          "id": "MOB001_roundtrip",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The executable zeta map reconstructs every one of the 256 Boolean phase tables on three variables."
+        }
+      ],
+      "numerical_form": "zeta_reconstruct(coefficients, variables)",
+      "code_refs": [
+        "src/mobius_compiler.py:zeta_reconstruct"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MOB002",
+      "title": "Subset-lattice Möbius inverse",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (7), (9), Appendix A"
+        }
+      ],
+      "latex": "\\theta_S=\\sum_{R\\subseteq S}(-1)^{|S|-|R|}F(R)",
+      "role": "Recovers genuine k-body projector phases from a local phase table.",
+      "derived_from": [
+        "MOB001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MOB002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The inverse and cancellation proof are explicit in the source."
+        },
+        {
+          "id": "MOB002_exhaustive",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All 256 three-variable 0/pi phase tables invert and reconstruct with zero wrapped error."
+        }
+      ],
+      "numerical_form": "mobius_inversion(phase_table, variables)",
+      "code_refs": [
+        "src/mobius_compiler.py:mobius_inversion"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MOB003",
+      "title": "3-SAT violating-pattern projector",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (21)-(22)"
+        }
+      ],
+      "latex": "\\Pi_C(x)=\\prod_{j\\in C_+}(1-x_j)\\prod_{j\\in C_-}x_j=\\sum_{T\\subseteq C_+}(-1)^{|T|}\\prod_{j\\in C_-\\cup T}x_j",
+      "role": "Turns literal-controlled clauses into ordinary occupation-projector supports.",
+      "derived_from": [
+        "MOB002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MOB003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source gives both product and expanded forms."
+        },
+        {
+          "id": "MOB003_polarities",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "All eight literal polarity patterns mark exactly one violating assignment and retain one degree-three term."
+        }
+      ],
+      "numerical_form": "clause_phase_table(...) followed by mobius_inversion(...)",
+      "code_refs": [
+        "src/mobius_compiler.py:clause_phase_table",
+        "scripts/run_feature_reproduction.py:exhaustive_clause_polarities"
+      ],
+      "open_questions": [
+        "The concrete six clauses and literal polarities used for Fig. 3 are not published."
+      ]
+    },
+    {
+      "id": "MOB004",
+      "title": "Routed no-fault fidelity roll-up",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equation (23) and Table I"
+        }
+      ],
+      "latex": "F_{\\rm no\\ fault}=F_{1q}^{N_{1q}}F_{2q}^{N_{2q}}\\prod_{g\\in\\mathcal G_{\\rm nat}}F_{\\rm nat}^{(|g|)}F_{\\rm transfer}^{N_{\\rm transfer}}F_{\\rm idle}^{N_{\\rm idle}}\\exp[-T_2^{-1}\\sum_q(T_{\\rm tot}-T_q^{\\rm busy})]",
+      "role": "Combines routed gate, transfer, idle, and coherence exposures under the published Table-I factors.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MOB004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Every multiplicative factor and timing/fidelity constant is explicit in Eq. (23) and Table I."
+        },
+        {
+          "id": "MOB004_one_qubit_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "One storage-local phase gate gives exactly log(F_1q), zero transfers, and duration t_1q."
+        },
+        {
+          "id": "MOB004_bounds",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All 320 main proxy-route rows have log fidelity <= 0 and no-fault probability in [0,1]; the fixed-route scan adds 5,043 bounded sensitivity rows."
+        }
+      ],
+      "numerical_form": "route_gate_stream(...).log_no_fault",
+      "code_refs": [
+        "src/proxy_router.py:route_gate_stream",
+        "src/proxy_router.py:log_no_fault_with_native_fidelities",
+        "tests/test_proxy_router.py:test_single_qubit_limiting_case_matches_table_i_factor"
+      ],
+      "open_questions": [
+        "Exact paper route-state counts remain unavailable; the executable route state is explicitly proxy_model."
+      ]
+    }
+  ]
+}

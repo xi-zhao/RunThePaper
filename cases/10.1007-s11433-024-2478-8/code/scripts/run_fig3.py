@@ -16,8 +16,8 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code" / "src"))
+HERE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(HERE / "src"))
 
 import matplotlib
 
@@ -28,9 +28,9 @@ import coefficients as C  # noqa: E402
 import gate  # noqa: E402
 from waveforms import TAU_US, TWO_PI  # noqa: E402
 
-DATA = ROOT / "outputs" / "data"
-CHECKS = ROOT / "outputs" / "checks"
-FIGS = ROOT / "outputs" / "figures"
+DATA = HERE / "outputs" / "data"
+CHECKS = HERE / "outputs" / "checks"
+FIGS = HERE / "outputs" / "figures"
 for d in (DATA, CHECKS, FIGS):
     d.mkdir(parents=True, exist_ok=True)
 

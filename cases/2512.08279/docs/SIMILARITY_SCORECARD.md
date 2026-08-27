@@ -43,6 +43,18 @@ fidelity is reported separately and cannot raise the scientific score.
 | Main Fig. 2 | 0.9872 | 0.6000 | 85.06 | passed |
 | Main Fig. 3 | 0.9873 | 0.6193 | 86.38 | passed |
 
+## T005 Author-Repair Status
+
+- C06/C31 now execute the six paper maps with coefficients
+  \((1,1,1,1,-1/2,-1/2)\), sampling overhead \(\kappa=5\), and program
+  dimension 12.
+- The reconstructed CNOT is checked on all 16 matrix units, and the resulting
+  amplitude-damping channel is checked against its Kraus form at boundary and
+  interior damping probabilities.
+- This is author-side repair evidence only. T005 remains excluded from the
+  scientific score until a different fresh-context reviewer adjudicates the
+  rebuilt bundles; C05/C30 are outside this repair.
+
 ## Machine-Readable Record
 
 `outputs/checks/similarity_scorecard.json`

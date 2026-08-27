@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "paper_id": "2412.14271",
   "score_model": "scientific_foreground_pixel_v1",
   "primary_metric": {
@@ -10,18 +10,6 @@
     "raw_comparable_target_mean": 46.715203716432946,
     "source": "outputs/checks/render_similarity.json"
   },
-  "unscored_targets": [
-    {
-      "target_id": "T006",
-      "figure_refs": [
-        "formal Supplement Figs. S3-S4"
-      ],
-      "pixel_status": "not_available",
-      "science_status": "blocked_missing_source_input",
-      "reason": "The formal supplemental parameter and panel inventory could not be acquired; no proxy score is assigned.",
-      "evidence": "figure_coverage.json#FIGS3_S4"
-    }
-  ],
   "targets": [
     {
       "target_id": "T001",
@@ -86,7 +74,7 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "insufficient_compute",
         "parameter_match": "paper_exact",
         "artifact_stage": "exploratory",
         "reference_comparison": "source_figure_only",
@@ -97,7 +85,92 @@
           "DPT007"
         ],
         "formula_gate": "reconstructed",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The finite-time trajectory object differs from the paper's steady-state ED array, so pixel distance is a post-freeze diagnostic rather than a lifecycle comparison.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The clean-room sparse steady-state ED path has measured the paper's N=5, M=60 point, but the complete M=60,80,100 family has not been executed.",
+            "evidence": [
+              "outputs/runs/2412.14271-fig2-resource-benchmark-v1-20260824/run_attestation.json",
+              "outputs/checks/fig2_steady_state_ed_scaling.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The isolated N=5 cutoff scaling run measured M=60 at 6.85 GB peak RSS and projects M=100 at 17.87 GB, above the 16 GiB physical memory and 12 GiB safe envelope of this host; the complete target cannot be attempted safely here.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/fig2_steady_state_ed_scaling.json",
+              "outputs/data/fig2_resource_benchmark.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The direct SciPy construction of the printed Hamiltonian and Lindblad Liouvillian passes trace, Hermiticity, positivity, normalization, and steady-state residual checks at reduced cutoffs; no defect was found in the new method path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The sparse density-matrix and Liouvillian invariants pass without QuTiP or source-derived numerical inputs.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated benchmark executes the paper's N=5, M=60 sparse ED point with no forbidden source access and with all density-matrix invariants passing.",
+                "evidence": [
+                  "outputs/runs/2412.14271-fig2-resource-benchmark-v1-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Three measured cutoff points produce an explicit memory/runtime model; the M=100 projection exceeds physical host memory.",
+                "evidence": [
+                  "outputs/checks/fig2_steady_state_ed_scaling.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The printed Hamiltonian and Lindblad generator are implemented directly and pass unit, invariant, and isolated paper-cutoff checks; the remaining boundary is resource capacity rather than missing method code.",
+              "evidence": [
+                "src/dicke.py",
+                "tests/test_fig2_resource_benchmark.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All seven Fig. 2 panels have a runnable clean-room method; M=60 is measured paper-scale evidence, while the full cutoff family remains outside the local safe resource envelope.",
+            "items": [
+              "T001"
+            ],
+            "completion": "7/7 item code paths attested; 1/3 paper cutoffs measured; complete target blocked by M=100 memory"
+          },
+          "next_discriminating_test": {
+            "action": "Resume the frozen M=80 and M=100 contracts on a host with at least 32 GiB RAM, or replace sparse LU with a separately validated lower-memory steady-state solver.",
+            "expected_resolution": "The larger-memory run supplies the complete paper cutoff family without changing the equations or numerical inputs.",
+            "evidence_to_produce": [
+              "outputs/runs/2412.14271-fig2-paper-scale/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -136,7 +209,11 @@
       "reference_score_cap": 70.0,
       "component_total": 47.65,
       "score": 47.65,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
@@ -213,7 +290,92 @@
           "DPT007"
         ],
         "formula_gate": "reconstructed",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Reduced trajectory sampling and an unpublished final-time/seed protocol define a different stochastic array from the paper panel.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The main distributions, Wigner fields, and convergence panel use 4-16 trajectories instead of the paper's 500/3000-trajectory ensembles.",
+            "evidence": [
+              "TARGET_LEDGER.md",
+              "outputs/checks/paper_scale_quantum_smoke_plan.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Measured CPU trajectory throughput makes the full independent ensemble exceed the bounded local run, and no validated CUDA production path is available.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The historical shared-initial-state defect is repaired in the paper-scale runner; focused unit tests and an isolated two-trajectory/two-shard execution confirm the corrected per-trajectory randomization path. No remaining fault was found in that path, while the old arrays remain disqualified.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Seed assignment, disjoint shard coverage, independent initial-state draws, checkpoint identity, resume, and fail-closed aggregation pass focused tests.",
+                "evidence": [
+                  "tests/test_paper_scale_trajectories.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The corrected paper-scale code path generated two independently initialized trajectories across two shards with all smoke science checks passing and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/2412.14271-quantum-main-paper-scale-smoke-v4-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The measured 519-second reduced run and projected ensemble sizes establish the CPU throughput boundary.",
+                "evidence": [
+                  "COMPUTE_BUDGET.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "Final time, seed, and some production-protocol details are not fully printed and may remain after the ensemble is run.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The two-photon main figures and trajectory convergence panel are scientifically generated but statistically underconverged.",
+            "items": [
+              "T002",
+              "T003",
+              "T007"
+            ],
+            "completion": "3/3 target families feature-run; 0/3 paper-scale ensembles complete"
+          },
+          "next_discriminating_test": {
+            "action": "Run a resumable measured pilot with increasing trajectory counts and require stable observables before launching 500/3000 trajectories.",
+            "expected_resolution": "The pilot supplies a defensible resource projection and determines whether the frozen estimator converges toward the paper features.",
+            "evidence_to_produce": [
+              "outputs/runs/2412.14271-trajectory-pilot/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -237,7 +399,8 @@
         "outputs/data/main_quantum.npz",
         "outputs/figures/fig3.png",
         "outputs/checks/fig3_science.json",
-        "outputs/checks/render_similarity.json#fig3"
+        "outputs/checks/render_similarity.json#fig3",
+        "outputs/checks/paper_scale_quantum_smoke_science.json"
       ],
       "remaining_gap": "Paper-scale ensembles and N=5 ED are not run; foreground score is 39.90/100.",
       "critical": true,
@@ -252,7 +415,11 @@
       "reference_score_cap": 70.0,
       "component_total": 39.9,
       "score": 39.9,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -323,7 +490,92 @@
           "DPT008"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Reduced trajectory sampling leaves a measured Z4 residual, so source-pixel parity is not a like-for-like scientific contract.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The main distributions, Wigner fields, and convergence panel use 4-16 trajectories instead of the paper's 500/3000-trajectory ensembles.",
+            "evidence": [
+              "TARGET_LEDGER.md",
+              "outputs/checks/paper_scale_quantum_smoke_plan.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Measured CPU trajectory throughput makes the full independent ensemble exceed the bounded local run, and no validated CUDA production path is available.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The historical shared-initial-state defect is repaired in the paper-scale runner; focused unit tests and an isolated two-trajectory/two-shard execution confirm the corrected per-trajectory randomization path. No remaining fault was found in that path, while the old arrays remain disqualified.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Seed assignment, disjoint shard coverage, independent initial-state draws, checkpoint identity, resume, and fail-closed aggregation pass focused tests.",
+                "evidence": [
+                  "tests/test_paper_scale_trajectories.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The corrected paper-scale code path generated two independently initialized trajectories across two shards with all smoke science checks passing and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/2412.14271-quantum-main-paper-scale-smoke-v4-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The measured 519-second reduced run and projected ensemble sizes establish the CPU throughput boundary.",
+                "evidence": [
+                  "COMPUTE_BUDGET.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "Final time, seed, and some production-protocol details are not fully printed and may remain after the ensemble is run.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The two-photon main figures and trajectory convergence panel are scientifically generated but statistically underconverged.",
+            "items": [
+              "T002",
+              "T003",
+              "T007"
+            ],
+            "completion": "3/3 target families feature-run; 0/3 paper-scale ensembles complete"
+          },
+          "next_discriminating_test": {
+            "action": "Run a resumable measured pilot with increasing trajectory counts and require stable observables before launching 500/3000 trajectories.",
+            "expected_resolution": "The pilot supplies a defensible resource projection and determines whether the frozen estimator converges toward the paper features.",
+            "evidence_to_produce": [
+              "outputs/runs/2412.14271-trajectory-pilot/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -347,7 +599,8 @@
         "outputs/data/main_quantum.npz",
         "outputs/figures/fig4.png",
         "outputs/checks/fig4_science.json",
-        "outputs/checks/render_similarity.json#fig4"
+        "outputs/checks/render_similarity.json#fig4",
+        "outputs/checks/paper_scale_quantum_smoke_science.json"
       ],
       "remaining_gap": "Z4 residual is 0.13-0.62 and paper-scale sampling remains pending; foreground score is 62.66/100.",
       "critical": true,
@@ -362,7 +615,11 @@
       "reference_score_cap": 70.0,
       "component_total": 62.66,
       "score": 62.66,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
@@ -384,14 +641,18 @@
         },
         "paper_scope_coverage": {
           "score": 9.51,
-          "reason": "15% allocation; the complete numerical spectrum panel is generated.",
+          "reason": "15% allocation; both numerical spectrum panels are generated.",
           "max_score": 15.0
         }
       },
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "all",
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
             "status": "reproduced"
           }
         ],
@@ -413,7 +674,18 @@
           "DPT004"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -444,7 +716,11 @@
       "reference_score_cap": 70.0,
       "component_total": 63.42,
       "score": 63.42,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T005",
@@ -466,14 +742,22 @@
         },
         "paper_scope_coverage": {
           "score": 7.23,
-          "reason": "15% allocation; all numerical spectrum content is generated.",
+          "reason": "15% allocation; all three numerical spectrum panels are generated.",
           "max_score": 15.0
         }
       },
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "all",
+            "panel_id": "a",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced"
+          },
+          {
+            "panel_id": "c",
             "status": "reproduced"
           }
         ],
@@ -485,7 +769,7 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "numeric_mismatch",
+        "failure_type": "source_discrepancy",
         "parameter_match": "paper_exact",
         "artifact_stage": "final_reproduction",
         "reference_comparison": "source_figure_only",
@@ -494,8 +778,101 @@
           "DPT005",
           "DPT006"
         ],
-        "formula_gate": "reconstructed",
-        "pixel_status": "scored"
+        "formula_gate": "verified",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The independent printed-equation branch disagrees with the source branch-to-spectrum attribution; pixel repair must not hide or penalize that scientific discrepancy.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The independently derived printed-equation Jacobian does not reproduce the paper's positive-eigenvalue attribution for the smaller superradiant branch in Fig. S2(c).",
+            "evidence": [
+              "outputs/checks/figS2_science.json",
+              "outputs/data/stability_implementation_closure/T005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Parameter, exact-rederivation, independent-implementation, and invariant checks leave a stable discrepancy with the published branch-to-spectrum assignment; only fresh-context review may adjudicate whether this is a paper error.",
+            "confidence": "probable",
+            "evidence": [
+              "outputs/checks/figS2_science.json",
+              "outputs/checks/stability_implementation_closure/T005.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Four independent check classes preserve the same discrepancy and find no reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The physical constants and coupling points are bound to the frozen clean-room campaign configuration.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The fixed-point residuals and analytic Jacobian are rederived from the printed cumulant equations.",
+                "evidence": [
+                  "outputs/checks/figS2_science.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The clean-room numerical branch solver and Jacobian spectrum run without author code or author arrays.",
+                "evidence": [
+                  "outputs/runs/2412.14271-stability-implementation-v1-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The stability implementation tests root count, residual tolerance, and eight-mode spectra.",
+                "evidence": [
+                  "tests/test_stability_implementation_campaign.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No parameter, algebraic, numerical-method, or invariant check identifies a defect in the clean-room implementation.",
+              "evidence": [
+                "tests/test_stability_implementation_campaign.py",
+                "outputs/checks/stability_implementation_closure/T005.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The mismatch is confined to the Fig. S2(c) smaller-branch stability attribution; the generated spectra and fixed points remain auditable.",
+            "items": [
+              "T005"
+            ],
+            "completion": "3/3 panels generated; 1/3 branch attributions pending fresh adjudication"
+          },
+          "next_discriminating_test": {
+            "action": "Run protocol-v3 fresh-context review against the full paper, equation cards, clean-room code, generated arrays, and isolated attestations.",
+            "expected_resolution": "The reviewer will classify the discrepancy as paper-supported, reproduction defect, paper-error candidate, or inconclusive without relying on the reproduction session.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -526,7 +903,7 @@
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
       "physics_status": "passed",
-      "formula_score_cap": 80.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
@@ -534,7 +911,11 @@
       "reference_score_cap": 70.0,
       "component_total": 48.19,
       "score": 48.19,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T007",
@@ -563,7 +944,7 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "all",
+            "panel_id": "main",
             "status": "reproduced"
           }
         ],
@@ -584,7 +965,92 @@
           "DPT007"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The 4 versus 6-16 trajectory diagnostic is not the paper's 500 versus 3000 stochastic ensemble.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The main distributions, Wigner fields, and convergence panel use 4-16 trajectories instead of the paper's 500/3000-trajectory ensembles.",
+            "evidence": [
+              "TARGET_LEDGER.md",
+              "outputs/checks/paper_scale_quantum_smoke_plan.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Measured CPU trajectory throughput makes the full independent ensemble exceed the bounded local run, and no validated CUDA production path is available.",
+            "confidence": "confirmed",
+            "evidence": [
+              "COMPUTE_BUDGET.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The historical shared-initial-state defect is repaired in the paper-scale runner; focused unit tests and an isolated two-trajectory/two-shard execution confirm the corrected per-trajectory randomization path. No remaining fault was found in that path, while the old arrays remain disqualified.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Seed assignment, disjoint shard coverage, independent initial-state draws, checkpoint identity, resume, and fail-closed aggregation pass focused tests.",
+                "evidence": [
+                  "tests/test_paper_scale_trajectories.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The corrected paper-scale code path generated two independently initialized trajectories across two shards with all smoke science checks passing and no forbidden access.",
+                "evidence": [
+                  "outputs/runs/2412.14271-quantum-main-paper-scale-smoke-v4-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The measured 519-second reduced run and projected ensemble sizes establish the CPU throughput boundary.",
+                "evidence": [
+                  "COMPUTE_BUDGET.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "publication_underspecified",
+              "status": "supported",
+              "statement": "Final time, seed, and some production-protocol details are not fully printed and may remain after the ensemble is run.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The two-photon main figures and trajectory convergence panel are scientifically generated but statistically underconverged.",
+            "items": [
+              "T002",
+              "T003",
+              "T007"
+            ],
+            "completion": "3/3 target families feature-run; 0/3 paper-scale ensembles complete"
+          },
+          "next_discriminating_test": {
+            "action": "Run a resumable measured pilot with increasing trajectory counts and require stable observables before launching 500/3000 trajectories.",
+            "expected_resolution": "The pilot supplies a defensible resource projection and determines whether the frozen estimator converges toward the paper features.",
+            "evidence_to_produce": [
+              "outputs/runs/2412.14271-trajectory-pilot/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -600,7 +1066,8 @@
         "outputs/data/main_quantum.npz",
         "outputs/figures/figS5.png",
         "outputs/checks/figS5_science.json",
-        "outputs/checks/render_similarity.json#figS5"
+        "outputs/checks/render_similarity.json#figS5",
+        "outputs/checks/paper_scale_quantum_smoke_science.json"
       ],
       "remaining_gap": "The paper's 500/3000-trajectory campaign remains a measured time tradeoff; foreground score is 28.50/100.",
       "critical": false,
@@ -615,7 +1082,11 @@
       "reference_score_cap": 70.0,
       "component_total": 28.5,
       "score": 28.5,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T008",
@@ -644,15 +1115,15 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "kernel",
+            "panel_id": "a",
             "status": "reproduced"
           },
           {
-            "panel_id": "odd",
+            "panel_id": "b",
             "status": "reproduced"
           },
           {
-            "panel_id": "even",
+            "panel_id": "c",
             "status": "reproduced"
           }
         ],
@@ -664,7 +1135,7 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "insufficient_compute",
+        "failure_type": "none",
         "parameter_match": "paper_exact",
         "artifact_stage": "final_reproduction",
         "reference_comparison": "source_figure_only",
@@ -673,7 +1144,18 @@
           "DPT009"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The exact Liouvillian invariants are primary; the rendered distribution uses a reduced stochastic sample and is not a like-for-like pixel target.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -712,7 +1194,174 @@
       "reference_score_cap": 70.0,
       "component_total": 36.68,
       "score": 36.68,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T006",
+      "label": "Formal Supplement Figs. S3-S4 source-access boundary",
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The two already-counted deferred figures contribute zero to reproduction degree; this target only closes their causal record and does not change the covered-target score.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "The formal S3/S4 scientific contents are unavailable and were not guessed.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No formal S3/S4 panels, parameters, observables, or reference arrays are frozen.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Both formal supplemental figures remain explicit uncovered items.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "The inaccessible formal supplement prevents a falsifiable panel contract.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "method_validation",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [],
+        "reference_comparison": "not_available",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No panel inventory is available, so no scientific region or image target can be declared without guessing.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "TARGET_LEDGER.md#T006",
+          "figure_coverage.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "external_resource_unavailable",
+            "statement": "The authorized formal supplement containing S3 and S4 is not frozen, so their panel inventories, observables, parameters, and acceptance conditions are unavailable.",
+            "evidence": [
+              "TARGET_LEDGER.md",
+              "outputs/checks/implementation_closure/formal_supplement_blocked.json"
+            ]
+          },
+          "root_cause": {
+            "category": "external_dependency_unavailable",
+            "statement": "The missing authorized formal supplement is an indispensable external source dependency; the available arXiv v1 material predates these figures.",
+            "confidence": "confirmed",
+            "evidence": [
+              "PAPER_MAP.md",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "A strict parameterized input contract and blocked artifact now exist and reject guessed S3/S4 fields; scientific code correctness cannot be assessed until the source defines the actual numerical objects.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The input-boundary test rejects any populated panel field while the supplement hash is absent.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated campaign emits the S3/S4 blocked artifact from the frozen schema without accessing raw sources.",
+                "evidence": [
+                  "outputs/runs/2412.14271-implementation-closure-v1/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The version of record cites S3/S4, the public APS page marks the supplement subscription-required, and the frozen arXiv v1 source predates those figures.",
+                "evidence": [
+                  "outputs/checks/formal_s3_s4_source_audit.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "The local scope is explicit: S3 and S4 must be enumerated exactly once the authorized source is acquired; no discretionary scope decision remains.",
+              "evidence": [
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only formal Supplement Figs. S3 and S4 are source-blocked; their unknown panel inventories remain explicit and unguessed.",
+            "items": [
+              "T006"
+            ],
+            "completion": "2/2 item input contracts attested; 0/2 scientific figures available for implementation"
+          },
+          "next_discriminating_test": {
+            "action": "Acquire and hash the authorized formal supplement, enumerate S3 and S4 exactly, and populate every required input field before selecting a numerical method.",
+            "expected_resolution": "The source will convert the blocked schema into falsifiable item contracts without inventing panels or parameters.",
+            "evidence_to_produce": [
+              "outputs/checks/formal_s3_s4_source_audit.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "TARGET_LEDGER.md#T006",
+        "PAPER_MAP.md#formal-supplement-source-boundary",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "The authorized formal S3/S4 source, including its exact panel inventory, observables, and parameters, is not frozen.",
+      "figure_refs": [
+        "Formal Supplement Fig. S3",
+        "Formal Supplement Fig. S4"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "S3-inventory-unavailable",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#Formal Fig. S3"
+          },
+          {
+            "panel_id": "S4-inventory-unavailable",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#Formal Fig. S4"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
   "visual_evidence": {
@@ -724,42 +1373,47 @@
   "overall_score": 46.71,
   "similarity_level": "feature_not_accepted",
   "evaluation_summary": {
-    "scored_items": 7,
+    "scored_items": 8,
     "critical_items": 4,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "artifact_pass_rate": 0.88,
+    "data_backed_rate": 0.88,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "partial_target_coverage": 1,
-      "insufficient_compute": 4,
-      "none": 1,
-      "numeric_mismatch": 1
+      "insufficient_compute": 5,
+      "none": 2,
+      "source_discrepancy": 1
     },
     "parameter_match_counts": {
       "paper_exact": 4,
-      "reduced_scale": 3
+      "reduced_scale": 3,
+      "unknown": 1
     },
     "reference_comparison_counts": {
-      "source_figure_only": 7
+      "source_figure_only": 7,
+      "not_available": 1
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 7
+      "independent_numerics": 7,
+      "unknown": 1
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 7
+      "physics_reproduction": 7,
+      "unknown": 1
     },
     "formula_gate_counts": {
-      "reconstructed": 3,
-      "verified": 4
+      "reconstructed": 2,
+      "verified": 5,
+      "source_only": 1
     },
     "paper_level_role_counts": {
       "main_claim": 3,
       "supporting": 3,
-      "method_validation": 1
+      "method_validation": 2
     },
     "physics_status_counts": {
-      "passed": 7
+      "passed": 7,
+      "undeclared": 1
     },
     "physics_assertion_status_counts": {
       "passed": 11,
@@ -773,12 +1427,69 @@
       "T008"
     ],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
       "T003",
-      "T007"
-    ]
+      "T007",
+      "T006"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T007",
+      "T008"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T006"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 6,
+      "not_required": 2
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 5,
+      "not_required": 2,
+      "react_loop_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T005",
+      "T007",
+      "T006"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T007",
+      "T006"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T005"
+    ],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 4,
+      "scientific_result_mismatch": 1,
+      "external_resource_unavailable": 1
+    },
+    "root_cause_counts": {
+      "compute_capacity_shortfall": 4,
+      "paper_claim_discrepancy": 1,
+      "external_dependency_unavailable": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 5,
+      "not_applicable": 1
+    }
   },
   "status": "passed"
 }

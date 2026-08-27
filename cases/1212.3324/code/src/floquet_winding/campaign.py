@@ -81,7 +81,7 @@ def _square_strip_spectrum(
     return energies, edge_weight, edge_polarization, maximum_unitarity_residual
 
 
-def _scan_square_phase(
+def _scan_square_phase_cut(
     config: dict[str, Any], *, period: float, sublattice: float
 ) -> tuple[list[dict[str, float]], dict[str, float]]:
     scan = config["phase_scan"]
@@ -127,17 +127,206 @@ def _scan_square_phase(
         "second_hopping_pi": second["hopping_pi"],
         "second_gap_zero_pi": second["gap_zero_pi"],
     }
-    for row in rows:
-        if row["hopping_pi"] < transitions["first_hopping_pi"]:
-            row.update({"winding_zero": 0.0, "winding_pi": 0.0, "chern_upper": 0.0})
-        elif row["hopping_pi"] < transitions["second_hopping_pi"]:
-            row.update({"winding_zero": 0.0, "winding_pi": 1.0, "chern_upper": 1.0})
-        else:
-            row.update({"winding_zero": 1.0, "winding_pi": 1.0, "chern_upper": 0.0})
     return rows, transitions
 
 
-def _write_phase_csv(path: Path, rows: list[dict[str, float]]) -> None:
+def _scan_square_phase_map(
+    config: dict[str, Any],
+    *,
+    period: float,
+    convention: str,
+    coefficient_factor: float,
+) -> list[dict[str, Any]]:
+    """Independently evaluate both gap invariants on every phase-map point.
+
+    ``delta_difference_pi`` is always the paper's declared onsite-energy
+    difference.  ``coefficient_factor`` is one half for that definition and
+    one for the literal displayed ``delta_AB * sigma_z`` equation.  Keeping
+    both branches on the same grid makes the source-level factor-two conflict
+    visible without fitting either branch to the published raster.
+    """
+
+    scan = config["phase_scan"]
+    hoppings_pi = np.linspace(
+        float(scan["hopping_pi_min"]),
+        float(scan["hopping_pi_max"]),
+        int(scan["map_hopping_points"]),
+    )
+    deltas_pi = np.linspace(
+        float(scan["delta_difference_pi_min"]),
+        float(scan["delta_difference_pi_max"]),
+        int(scan["delta_points"]),
+    )
+    rows: list[dict[str, Any]] = []
+    for delta_pi in deltas_pi:
+        sublattice = coefficient_factor * float(delta_pi) * np.pi / period
+        for hopping_pi in hoppings_pi:
+            hopping = float(hopping_pi) * np.pi / period
+            gap_zero, gap_pi = square_bulk_gaps(
+                hopping,
+                sublattice,
+                grid_points=int(scan["map_momentum_points"]),
+                period=period,
+            )
+            minimum_gap_pi = min(gap_zero, gap_pi) * period / np.pi
+            if minimum_gap_pi <= float(scan["map_gap_closing_tolerance_pi"]):
+                status = "gap_closing"
+                winding_zero: float | None = None
+                winding_pi: float | None = None
+                coarse_winding_zero: float | None = None
+                coarse_winding_pi: float | None = None
+                chern: float | None = None
+                integers: tuple[int | None, int | None, int | None] = (
+                    None,
+                    None,
+                    None,
+                )
+                quantization_residual: float | None = None
+                relation_residual: int | None = None
+                momentum_points_used: int | None = None
+                time_points_used: int | None = None
+                refined = False
+            else:
+                try:
+                    chern = square_floquet_chern(
+                        hopping,
+                        sublattice,
+                        grid_points=int(scan["map_momentum_points"]),
+                        period=period,
+                    )
+                    coarse_momentum_points = int(
+                        scan["map_winding_momentum_points"]
+                    )
+                    coarse_time_points = int(scan["map_winding_time_points"])
+                    coarse_winding_zero = square_winding_number(
+                        hopping,
+                        sublattice,
+                        0.0,
+                        momentum_points=coarse_momentum_points,
+                        time_points=coarse_time_points,
+                        period=period,
+                    )
+                    coarse_winding_pi = square_winding_number(
+                        hopping,
+                        sublattice,
+                        np.pi / period,
+                        momentum_points=coarse_momentum_points,
+                        time_points=coarse_time_points,
+                        period=period,
+                    )
+                except ValueError:
+                    winding_zero = None
+                    winding_pi = None
+                    coarse_winding_zero = None
+                    coarse_winding_pi = None
+                    chern = None
+                    integers = (None, None, None)
+                    quantization_residual = None
+                    relation_residual = None
+                    momentum_points_used = None
+                    time_points_used = None
+                    refined = False
+                    status = "unresolved_numerical"
+                else:
+                    winding_zero = coarse_winding_zero
+                    winding_pi = coarse_winding_pi
+                    momentum_points_used = coarse_momentum_points
+                    time_points_used = coarse_time_points
+                    integers = tuple(
+                        int(np.rint(value))
+                        for value in (winding_zero, winding_pi, chern)
+                    )
+                    quantization_residual = max(
+                        abs(winding_zero - integers[0]),
+                        abs(winding_pi - integers[1]),
+                        abs(chern - integers[2]),
+                    )
+                    relation_residual = abs(
+                        (integers[1] - integers[0]) - integers[2]
+                    )
+                    refined = False
+                    if (
+                        quantization_residual
+                        > float(scan["map_refine_trigger_tolerance"])
+                        or relation_residual != 0
+                    ):
+                        refined_momentum_points = int(
+                            scan["map_refined_winding_momentum_points"]
+                        )
+                        refined_time_points = int(
+                            scan["map_refined_winding_time_points"]
+                        )
+                        winding_zero = square_winding_number(
+                            hopping,
+                            sublattice,
+                            0.0,
+                            momentum_points=refined_momentum_points,
+                            time_points=refined_time_points,
+                            period=period,
+                        )
+                        winding_pi = square_winding_number(
+                            hopping,
+                            sublattice,
+                            np.pi / period,
+                            momentum_points=refined_momentum_points,
+                            time_points=refined_time_points,
+                            period=period,
+                        )
+                        momentum_points_used = refined_momentum_points
+                        time_points_used = refined_time_points
+                        refined = True
+                        integers = tuple(
+                            int(np.rint(value))
+                            for value in (winding_zero, winding_pi, chern)
+                        )
+                        quantization_residual = max(
+                            abs(winding_zero - integers[0]),
+                            abs(winding_pi - integers[1]),
+                            abs(chern - integers[2]),
+                        )
+                        relation_residual = abs(
+                            (integers[1] - integers[0]) - integers[2]
+                        )
+                    if (
+                        quantization_residual
+                        <= float(scan["map_winding_quantization_tolerance"])
+                        and relation_residual == 0
+                    ):
+                        status = "gapped_quantized"
+                    elif minimum_gap_pi <= float(
+                        scan["map_boundary_neighborhood_tolerance_pi"]
+                    ):
+                        status = "gap_closing_neighborhood"
+                    else:
+                        status = "unresolved_numerical"
+            rows.append(
+                {
+                    "convention": convention,
+                    "hopping_pi": float(hopping_pi),
+                    "delta_difference_pi": float(delta_pi),
+                    "sigma_z_coefficient_pi": coefficient_factor * float(delta_pi),
+                    "gap_zero_pi": float(gap_zero * period / np.pi),
+                    "gap_pi_pi": float(gap_pi * period / np.pi),
+                    "coarse_winding_zero_raw": coarse_winding_zero,
+                    "coarse_winding_pi_raw": coarse_winding_pi,
+                    "winding_zero_raw": winding_zero,
+                    "winding_pi_raw": winding_pi,
+                    "chern_upper_raw": chern,
+                    "winding_zero": integers[0],
+                    "winding_pi": integers[1],
+                    "chern_upper": integers[2],
+                    "quantization_residual": quantization_residual,
+                    "bulk_edge_relation_residual": relation_residual,
+                    "winding_momentum_points_used": momentum_points_used,
+                    "winding_time_points_used": time_points_used,
+                    "adaptive_refinement_used": refined,
+                    "status": status,
+                }
+            )
+    return rows
+
+
+def _write_phase_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
@@ -352,11 +541,25 @@ def run_campaign(config: dict[str, Any], *, config_path: Path, output_root: Path
     maximum_square_unitarity = max(maximum_square_unitarity, ideal_unitarity)
     np.savez_compressed(data_root / "square_strip_spectra.npz", **square_arrays)
 
-    phase_rows, transitions = _scan_square_phase(
+    _, transitions = _scan_square_phase_cut(
         square, period=period, sublattice=sublattice
     )
-    _, literal_transitions = _scan_square_phase(
+    _, literal_transitions = _scan_square_phase_cut(
         square, period=period, sublattice=literal_sublattice
+    )
+    phase_rows = _scan_square_phase_map(
+        square,
+        period=period,
+        convention="onsite_difference",
+        coefficient_factor=0.5,
+    )
+    phase_rows.extend(
+        _scan_square_phase_map(
+            square,
+            period=period,
+            convention="literal_equation",
+            coefficient_factor=1.0,
+        )
     )
     _write_phase_csv(data_root / "square_phase_diagram.csv", phase_rows)
 
@@ -413,6 +616,30 @@ def run_campaign(config: dict[str, Any], *, config_path: Path, output_root: Path
         "square_representatives": representative_results,
         "square_transitions": transitions,
         "square_literal_equation_transitions": literal_transitions,
+        "square_phase_map": {
+            "rows": len(phase_rows),
+            "conventions": ["onsite_difference", "literal_equation"],
+            "hopping_points_per_convention": int(
+                square["phase_scan"]["map_hopping_points"]
+            ),
+            "delta_points_per_convention": int(
+                square["phase_scan"]["delta_points"]
+            ),
+            "invariants_evaluated_per_grid_point": [
+                "winding_zero",
+                "winding_pi",
+                "chern_upper",
+            ],
+            "status_counts": {
+                status: sum(row["status"] == status for row in phase_rows)
+                for status in (
+                    "gapped_quantized",
+                    "gap_closing",
+                    "gap_closing_neighborhood",
+                    "unresolved_numerical",
+                )
+            },
+        },
         "sublattice_convention": {
             "printed_difference_pi": float(square["sublattice_difference_pi"]),
             "primary_sigma_z_coefficient_pi": float(
@@ -535,6 +762,67 @@ def run_campaign(config: dict[str, Any], *, config_path: Path, output_root: Path
         literal_anchor_error - primary_anchor_error,
         0.05,
         "min",
+    )
+    expected_phase_rows = (
+        2
+        * int(square["phase_scan"]["map_hopping_points"])
+        * int(square["phase_scan"]["delta_points"])
+    )
+    record(
+        "CHK_PHASE_MAP_ALL_GRID_POINTS",
+        ["T005", "T009"],
+        "Both gaps and, wherever the gaps are open, both winding invariants and the upper-band Chern number are evaluated independently at every point of both two-dimensional convention grids; gap-closing points are explicitly marked undefined.",
+        float(len(phase_rows)),
+        float(expected_phase_rows),
+        "min",
+    )
+    unresolved_phase_rows = sum(
+        row["status"] == "unresolved_numerical" for row in phase_rows
+    )
+    record(
+        "CHK_PHASE_MAP_NUMERICAL_RESOLUTION",
+        ["T005", "T009"],
+        "Every resolved gapped phase-map point quantizes consistently; exact closings and adaptively identified closing neighborhoods remain explicitly unlabeled.",
+        float(unresolved_phase_rows),
+        0.0,
+        "max",
+    )
+    map_primary_cut = [
+        row
+        for row in phase_rows
+        if row["convention"] == "onsite_difference"
+        and abs(row["delta_difference_pi"] - 0.5) < 1e-12
+    ]
+    map_first = min(
+        (
+            row
+            for row in map_primary_cut
+            if float(square["phase_scan"]["first_transition_window"][0])
+            <= row["hopping_pi"]
+            <= float(square["phase_scan"]["first_transition_window"][1])
+        ),
+        key=lambda row: row["gap_pi_pi"],
+    )
+    map_second = min(
+        (
+            row
+            for row in map_primary_cut
+            if float(square["phase_scan"]["second_transition_window"][0])
+            <= row["hopping_pi"]
+            <= float(square["phase_scan"]["second_transition_window"][1])
+        ),
+        key=lambda row: row["gap_zero_pi"],
+    )
+    refinement_error = abs(
+        map_first["hopping_pi"] - transitions["first_hopping_pi"]
+    ) + abs(map_second["hopping_pi"] - transitions["second_hopping_pi"])
+    record(
+        "CHK_PHASE_MAP_GRID_REFINEMENT",
+        ["T005"],
+        "The two-dimensional map and the independently refined delta_AB=0.5 pi/T cut locate the same two phase boundaries within one coarse hopping step each.",
+        float(refinement_error),
+        float(square["phase_scan"]["map_refinement_tolerance_pi"]),
+        "max",
     )
     record(
         "CHK_WEAK_STATIC_CHERN",

@@ -1,0 +1,349 @@
+{
+  "schema_version": 1,
+  "run_id": "10.1038-s41586-026-10720-3-formula-only-smoke-v2",
+  "target_ids": [
+    "T_F2A",
+    "T_F2B",
+    "T_F2C",
+    "T_F4A",
+    "T_F4B",
+    "T_F4C",
+    "T_F4D",
+    "T_F4E",
+    "T_F4F",
+    "T_F5C",
+    "T_S1A",
+    "T_S1B",
+    "T_S1C"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--profile",
+    "smoke",
+    "--shard-index",
+    "0",
+    "--shard-count",
+    "1",
+    "--resume",
+    "--device",
+    "cpu"
+  ],
+  "inputs": [
+    "src/optical_hawking/model.py",
+    "src/optical_hawking/physical_dispersion.py",
+    "src/optical_hawking/analysis.py",
+    "src/optical_hawking/solver.py",
+    "src/optical_hawking/theory.py",
+    "src/optical_hawking/paper_scale_campaign.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "",
+  "expected_parameters": {
+    "schema_version": 1,
+    "paper_id": "10.1038-s41586-026-10720-3",
+    "scientific_input_policy": {
+      "paper_equations_and_scalar_parameters_only": true,
+      "author_code": "forbidden",
+      "author_numeric_arrays": "forbidden",
+      "digitized_curves": "forbidden",
+      "source_pixels": "forbidden_for_numerics_allowed_post_freeze_render_comparison"
+    },
+    "paper_parameters": {
+      "pump": {
+        "wavelength_nm": 800.0,
+        "fwhm_fs": 8.0,
+        "average_power_mw": 45.0,
+        "repetition_rate_mhz": 80.0
+      },
+      "probe": {
+        "wavelength_nm": 1400.0,
+        "fwhm_fs": 30.0,
+        "average_power_mw": 4.0
+      },
+      "probe_wavelengths_nm": [
+        1100.0,
+        1200.0,
+        1300.0,
+        1400.0,
+        1450.0,
+        1600.0
+      ],
+      "propagation": {
+        "length_mm": 7.0,
+        "step_mm": 0.0005,
+        "fft_points": 65536,
+        "omega_window_rad_fs": [
+          -16.2,
+          16.2
+        ],
+        "gamma_spm_w_inv_mm_approximate": 0.0001
+      },
+      "related_pcf_geometry": {
+        "source": "Bermudez 2016 related fibre model, not an exact Nature-case coefficient table",
+        "pitch_um": 1.079,
+        "hole_diameter_um": 0.763,
+        "effective_core_radius_um": 1.079
+      },
+      "printed_landmarks": {
+        "horizon_nm": 1551.0,
+        "uv_signal_approximately_nm": 233.0
+      },
+      "fig4_mu": [
+        10.0,
+        1.2,
+        1.1,
+        10.0,
+        1.0,
+        1.05
+      ]
+    },
+    "reconstructed_parameters": {
+      "effective_core_radius_rule": "scalar capillary radius equals related-paper pitch; swept independently",
+      "frame_velocity_rule": "inverse surrogate group index at the 800 nm incident pump",
+      "delta_beta_0": "set to zero because the fitted value is not published",
+      "silica_gdd_fs2_per_cm_at_800nm": 360.0,
+      "fig4_parameter_family": "dimensionless sensitivity grid; never fitted to figure markers",
+      "fig5_slope_and_intercepts": "dimensionless gauge; only the equal-slope consequence is tested",
+      "supplement_scan_grid_rule": "independent evenly spaced evaluation grids spanning the published axis domains; these are not the paper's undisclosed sampling points"
+    },
+    "missing_indispensable_inputs": [
+      "measured_and_modelled_effective_fibre_dispersion_coefficients",
+      "fitted_delta_beta_0_and_per_dataset_frame_velocities",
+      "raw_Fig3_spectra",
+      "six_Fig4_fitted_parameter_tables",
+      "raw_NRR_Hawking_backreaction_fluxes_and_fitted_frequencies_for_Fig5",
+      "measured_pulse_shapes_delays_and_chirps"
+    ],
+    "profiles": {
+      "paper": {
+        "artifact_stage": "paper_scale_code_ready_not_run",
+        "dispersion": {
+          "effective_core_radius_um": [
+            0.9,
+            1.0,
+            1.079,
+            1.2,
+            1.5,
+            2.0,
+            4.5
+          ],
+          "omega_rad_fs": [
+            0.05,
+            9.0
+          ],
+          "points": 12001
+        },
+        "propagation": {
+          "grid_points": 65536,
+          "omega_max_rad_fs": 16.2,
+          "length_mm": 7.0,
+          "step_mm": 0.0005,
+          "integrator": "dopri5",
+          "precision": "complex64",
+          "compile_step": false,
+          "gamma_spm_w_inv_mm": 0.0001
+        },
+        "supplement_scans": {
+          "grid_provenance": "independent_evaluation_grid_not_paper_sampling",
+          "probe_wavelength_nm": [
+            1100.0,
+            1150.0,
+            1200.0,
+            1250.0,
+            1300.0,
+            1350.0,
+            1400.0,
+            1450.0,
+            1500.0,
+            1550.0,
+            1600.0
+          ],
+          "pump_power_mw": [
+            20.0,
+            24.0,
+            28.0,
+            32.0,
+            36.0,
+            40.0,
+            44.0,
+            48.0,
+            52.0,
+            56.0,
+            60.0
+          ],
+          "prechirp_cm": [
+            -1.0,
+            -0.8,
+            -0.6,
+            -0.4,
+            -0.2,
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            1.0
+          ]
+        },
+        "fig4_formula_family": {
+          "wavelength_nm": [
+            228.0,
+            238.0
+          ],
+          "points": 2001,
+          "spectral_width_rad_fs": [
+            0.006,
+            0.012,
+            0.024
+          ],
+          "modulation_x": [
+            0.25,
+            0.5,
+            0.75
+          ],
+          "backreaction_to_hawking": [
+            0.0,
+            0.5,
+            1.0
+          ]
+        },
+        "fig5_formula_family": {
+          "frequency_ratio": [
+            0.5,
+            0.65
+          ],
+          "points": 301,
+          "dimensionless_slope_gauge": -1.0,
+          "hawking_intercept_gauge": 1.0,
+          "backreaction_intercept_gauge": 1.4
+        }
+      },
+      "smoke": {
+        "artifact_stage": "smoke_not_scientific_evidence",
+        "dispersion": {
+          "effective_core_radius_um": [
+            1.079
+          ],
+          "omega_rad_fs": [
+            0.05,
+            9.0
+          ],
+          "points": 1001
+        },
+        "propagation": {
+          "grid_points": 256,
+          "omega_max_rad_fs": 16.2,
+          "length_mm": 0.002,
+          "step_mm": 0.001,
+          "integrator": "ifrk4",
+          "precision": "complex128",
+          "compile_step": false,
+          "gamma_spm_w_inv_mm": 0.0001
+        },
+        "supplement_scans": {
+          "grid_provenance": "independent_three_point_smoke_grid_not_paper_sampling",
+          "probe_wavelength_nm": [
+            1200.0,
+            1400.0,
+            1600.0
+          ],
+          "pump_power_mw": [
+            20.0,
+            40.0,
+            60.0
+          ],
+          "prechirp_cm": [
+            -1.0,
+            0.0,
+            1.0
+          ]
+        },
+        "fig4_formula_family": {
+          "wavelength_nm": [
+            220.0,
+            240.0
+          ],
+          "points": 201,
+          "spectral_width_rad_fs": [
+            0.012
+          ],
+          "modulation_x": [
+            0.5
+          ],
+          "backreaction_to_hawking": [
+            0.5
+          ]
+        },
+        "fig5_formula_family": {
+          "frequency_ratio": [
+            0.5,
+            0.65
+          ],
+          "points": 31,
+          "dimensionless_slope_gauge": -1.0,
+          "hawking_intercept_gauge": 1.0,
+          "backreaction_intercept_gauge": 1.4
+        }
+      }
+    },
+    "acceptance": {
+      "all_numeric_paper_items_have_code_or_explicit_missing_author_data": true,
+      "no_author_code_arrays_digitized_curves_or_source_pixels_as_scientific_inputs": true,
+      "all_checkpoints_bind_config_and_implementation_hashes": true,
+      "paper_exact_requires_unpublished_inputs_and_is_not_claimed": true,
+      "fresh_context_review_required_for_any_paper_error_candidate": true
+    }
+  },
+  "outputs": [
+    "outputs/data/paper_scale/smoke/plan.json",
+    "outputs/data/paper_scale/smoke/units/T_F2-dispersion-a1.0790.json",
+    "outputs/data/paper_scale/smoke/units/T_F2-dispersion-a1.0790.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1200nm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1200nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1400nm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1400nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1600nm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1A-probe-1600nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-20.0mW.json",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-20.0mW.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-40.0mW.json",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-40.0mW.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-60.0mW.json",
+    "outputs/data/paper_scale/smoke/units/T_S1B-power-60.0mW.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp--1.00cm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp--1.00cm.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp-+0.00cm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp-+0.00cm.npz",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp-+1.00cm.json",
+    "outputs/data/paper_scale/smoke/units/T_S1C-chirp-+1.00cm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4A-1100nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4A-1100nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4B-1200nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4B-1200nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4C-1300nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4C-1300nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4D-1400nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4D-1400nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4E-1450nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4E-1450nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F4F-1600nm.json",
+    "outputs/data/paper_scale/smoke/units/T_F4F-1600nm.npz",
+    "outputs/data/paper_scale/smoke/units/T_F5C-equal-slope.json",
+    "outputs/data/paper_scale/smoke/units/T_F5C-equal-slope.npz",
+    "outputs/data/paper_scale/smoke/manifest.json",
+    "outputs/data/paper_scale/smoke/acceptance.json"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {},
+  "scientific_input_boundary": {
+    "author_code_used": false,
+    "author_numeric_arrays_used": false,
+    "digitized_curves_used": false,
+    "source_pixels_used": false
+  }
+}

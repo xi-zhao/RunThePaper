@@ -1,0 +1,1352 @@
+{
+  "implementations": {
+    "iid_distribution_universality": {
+      "acceptance_criteria": [
+        "Gaussian, bounded-uniform, symmetric-binary, and Laplace IID laws preserve the formula-derived protected unit-modulus multiplicity on the frozen finite-time grid.",
+        "Every centered characteristic function is normalized at zero and every nonprotected mode remains strictly inside the unit disk."
+      ],
+      "code_refs": [
+        "src/kicked_ising/iid_universality.py",
+        "scripts/run_iid_universality.py"
+      ],
+      "config_ref": "config/iid_universality.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_iid_universality.py",
+        "--config",
+        "config/iid_universality.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/checks/iid_distribution_universality.json"
+      ],
+      "run_contract_ref": "run_contract.iid_universality.json",
+      "status": "ready",
+      "target_ids": [
+        "T006"
+      ],
+      "working_directory": "workspace"
+    },
+    "paper_scale": {
+      "acceptance_criteria": [
+        "T001/T002 cover L=15, 9490 disorder realizations, all integer times 1..1000, and all three paper disorder widths.",
+        "The unbiased independent-random-phase cross estimator passes split-ensemble agreement, field-moment, norm-drift, and checkpoint-hash checks declared in config/paper_scale.json.",
+        "T003 covers t=9..15 at hbar=0 and T004 covers t=13 at all six paper mean fields over the declared sigma grid.",
+        "Every positive-disorder gap point converges for two independent seeds with residual <=3e-5, leading-modulus disagreement <=2e-3, and the theory-derived protected rank implied by Table I multiplicities plus the explicit even-sector constructions.",
+        "The run manifest confirms that no author code, author numerical arrays, source pixels, PDFs, or reference curves were numerical inputs."
+      ],
+      "acceptance_ref": "config/paper_scale.json",
+      "code_refs": [
+        "src/kicked_ising/model.py",
+        "src/kicked_ising/paper_scale.py",
+        "src/kicked_ising/reproduction.py",
+        "scripts/run_reproduction.py"
+      ],
+      "compute_status": "not_run_requires_a100_campaign",
+      "config_ref": "config/paper_scale.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_scale.json",
+        "--targets",
+        "T001,T002,T003,T004",
+        "--resume"
+      ],
+      "expected_outputs": [
+        "outputs/data/paper_scale/fig2_sff.csv",
+        "outputs/data/paper_scale/fig3_gap_left.csv",
+        "outputs/data/paper_scale/fig3_gap_right.csv",
+        "outputs/checks/paper_scale/target_checks.json",
+        "outputs/checks/paper_scale/generated_data_manifest.json"
+      ],
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T003-T10",
+        "T003-T11",
+        "T003-T12",
+        "T003-T13",
+        "T003-T14",
+        "T003-T15",
+        "T004"
+      ],
+      "working_directory": "workspace"
+    }
+  },
+  "inventory_boundary": {
+    "next_action": "Keep this denominator fixed; W2 should run the six missing t=10..15 transfer-gap series and independently test the distribution-independence claim.",
+    "reason": "Every displayed curve, Table I time row, and independent no-display quantitative or analytic result is explicit. The source archive contains TeX and rendered comparison figures but no author numerical code or arrays.",
+    "source_ref": "raw/paper.pdf and paper-source/SelfDualQCArxiv.tex were read in full, including the embedded supplemental material through its numerical-method section.",
+    "status": "complete",
+    "unknown_remainder": false
+  },
+  "inventory_summary": {
+    "covered_total": 38,
+    "display_items_total": 38,
+    "eligible_total": 45,
+    "excluded_total": 2,
+    "items_total": 54,
+    "primary_no_display_claims_total": 8,
+    "quantitative_claims_total": 16,
+    "supporting_not_double_counted": 7,
+    "uncovered_total": 7
+  },
+  "items": [
+    {
+      "coverage_status": "excluded",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "item_id": "F1-SCHEMATIC",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "reason": "Pictorial explanation without a data-bearing axis.",
+      "scientific_object": "Space-time transfer-matrix tensor-network construction.",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1, PDF p. 2"
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T001"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-MAIN-SIGMA-PI20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent L=8 data cover the series feature; T001's reduced-scale cap preserves the L=15 and 9490-realization gap.",
+      "scientific_object": "Disorder-averaged SFF for sigma=pi/20 through t=1000.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 main axes, sigma=pi/20, PDF p. 3",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T001"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-MAIN-SIGMA-PI10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-scale data cover the scientific series without source-pixel input.",
+      "scientific_object": "Disorder-averaged SFF for sigma=pi/10 through t=1000.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 main axes, sigma=pi/10, PDF p. 3",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T001"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-MAIN-SIGMA-100PI",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-scale data cover the scientific series without source-pixel input.",
+      "scientific_object": "Disorder-averaged SFF for sigma=100pi through t=1000.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 main axes, sigma=100pi, PDF p. 3",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "EQUATION_CARDS.json#EQ004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-MAIN-RMT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Generated analytically from the printed COE expression.",
+      "scientific_object": "Finite-N circular-orthogonal-ensemble SFF reference curve.",
+      "scientific_role": "analytic_reference",
+      "source_ref": "Main Fig. 2 main axes, black RMT curve, PDF p. 3",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T002"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-INSET-SIGMA-PI20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Distinct short-time scientific region generated from the frozen independent dataset.",
+      "scientific_object": "Short-time SFF window for sigma=pi/20.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 inset, sigma=pi/20, PDF p. 3",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T002"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-INSET-SIGMA-PI10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Distinct short-time scientific region generated from the frozen independent dataset.",
+      "scientific_object": "Short-time SFF window for sigma=pi/10.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 inset, sigma=pi/10, PDF p. 3",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "outputs/checks/target_checks.json#T002"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-INSET-SIGMA-100PI",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Distinct short-time scientific region generated from the frozen independent dataset.",
+      "scientific_object": "Short-time SFF window for sigma=100pi.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 inset, sigma=100pi, PDF p. 3",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig2_sff.csv",
+        "EQUATION_CARDS.json#EQ004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F2-INSET-RMT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Generated analytically from the printed COE expression.",
+      "scientific_object": "Short-time COE reference curve.",
+      "scientific_role": "analytic_reference",
+      "source_ref": "Main Fig. 2 inset, black RMT curve, PDF p. 3",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_left.csv",
+        "outputs/checks/target_checks.json#T003"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T9",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Three paper-time points plus lower-time full grids independently establish the feature; incomplete grid density remains a fidelity limitation.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=9.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=9, PDF p. 3",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T10",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=10.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=10, PDF p. 3",
+      "target_ids": [
+        "T003-T10"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T11",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T11",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=11.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=11, PDF p. 3",
+      "target_ids": [
+        "T003-T11"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T12",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=12.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=12, PDF p. 3",
+      "target_ids": [
+        "T003-T12"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T13",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T13",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=13.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=13, PDF p. 3",
+      "target_ids": [
+        "T003-T13"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T14",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=14.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=14, PDF p. 3",
+      "target_ids": [
+        "T003-T14"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003-T15",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/smoke/paper_scale/target_checks.json",
+        "outputs/runs/1805.00931-paper-scale-smoke-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-LEFT-T15",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The exact CUDA campaign is externally compute-blocked on the measured host; the shared NumPy solver path is isolated-smoke-attested.",
+      "scientific_object": "Transfer spectral gap versus sigma at hbar=0 and t=15.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 left, t=15, PDF p. 3",
+      "target_ids": [
+        "T003-T15"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent t=7 data cover the mean-field dependence feature; the t=13 mismatch remains in fidelity.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=0.0 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=0.0, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-time data cover the scientific series.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=0.1 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=0.1, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H03",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-time data cover the scientific series.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=0.3 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=0.3, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H06",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-time data cover the scientific series.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=0.6 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=0.6, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H09",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-time data cover the scientific series.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=0.9 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=0.9, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/fig3_gap_right.csv",
+        "outputs/checks/target_checks.json#T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "item_id": "F3-RIGHT-H12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent reduced-time data cover the scientific series.",
+      "scientific_object": "Transfer spectral gap versus sigma for hbar=1.2 at fixed time.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 right, hbar=1.2, PDF p. 3",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T2",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=2.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=2",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T3",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=3.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=3",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T4",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=4.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=4",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T5",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=5.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=5",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T6",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both exceptional printed cells are independently derived exactly.",
+      "scientific_object": "The exceptional (+1,-1) transfer-eigenvalue multiplicities at t=6.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=6",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T7",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=7.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=7",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T8",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both exceptional printed cells are independently derived exactly.",
+      "scientific_object": "The exceptional (+1,-1) transfer-eigenvalue multiplicities at t=8.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=8",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T9",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=9.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=9",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T10",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both exceptional printed cells are independently derived exactly.",
+      "scientific_object": "The exceptional (+1,-1) transfer-eigenvalue multiplicities at t=10.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=10",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T11",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=11.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=11",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T12",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=12.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=12",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T13",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=13.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=13",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T14",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=14.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=14",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T15",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=15.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=15",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T16",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=16.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=16",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "outputs/checks/target_checks.json#T005"
+      ],
+      "item_id": "TABLE1-T17",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Both printed cells are independently derived exactly.",
+      "scientific_object": "The (+1,-1) transfer-eigenvalue multiplicities at t=17.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Table I, t=17",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    }
+  ],
+  "paper_id": "1805.00931",
+  "quantitative_claims": [
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "item_id": "Q-COE-FORMULA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "The analytic expression is already counted as the visible RMT series.",
+      "scientific_object": "K_COE(t)=2t-t log(1+2t/N) for 0<t<N.",
+      "scientific_role": "analytic_reference",
+      "source_ref": "Main text after the SFF definition, PDF p. 2",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "item_id": "Q-FIG2-FINITE-SAMPLE-FLUCTUATIONS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Supporting interpretation of the three displayed SFF series.",
+      "scientific_object": "Large-time fluctuations arise from N=9490 disorder realizations.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2 caption, PDF p. 3",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "item_id": "Q-GAP-FINITE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Aggregate claim represented by the thirteen Fig. 3 curves; not counted twice.",
+      "scientific_object": "For sigma nonzero the transfer spectral gap remains finite for all mean fields and times.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main text before Fig. 3, PDF p. 3",
+      "target_ids": [
+        "T003",
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "item_id": "Q-GAP-EVEN-ODD-LIMIT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Cross-series interpretation of Fig. 3 left.",
+      "scientific_object": "The gap shows an even-odd effect and approaches finite limiting curves at large t.",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3 caption, PDF p. 3",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_GAP"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ006",
+        "DERIVATION.md"
+      ],
+      "item_id": "Q-TRANSFER-CONTRACTION",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independently traced and derived as the contraction gate for the multiplicity result.",
+      "scientific_object": "All transfer eigenvalues have modulus at most one and every unit-modulus eigenvalue is semisimple.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Property 1, PDF p. 4",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/data/table1_multiplicities.csv",
+        "EQUATION_CARDS.json#EQ008"
+      ],
+      "item_id": "Q-DIHEDRAL-RANK",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Independent Gram-rank calculation verifies the formula.",
+      "scientific_object": "The dihedral operator rank is 2t for t>=6, 2t-1 for t in {1,3,4,5}, and 2 for t=2.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Property 2, PDF p. 4",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ008",
+        "DERIVATION.md"
+      ],
+      "item_id": "Q-ODD-COMMUTANT-COMPLETE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The derivation and independently calculated ranks reproduce the theorem's finite-dimensional consequence.",
+      "scientific_object": "For odd t, the commutant is exactly the span of the dihedral operators.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Theorem 1 and supplement proof",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ008",
+        "outputs/data/table1_multiplicities.csv"
+      ],
+      "item_id": "Q-KODD-SHORT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Derived independently and exactly consistent with Table I.",
+      "scientific_object": "For odd t<=5, lim_{L->infinity} Kbar(t)=2t-1.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Eq. Kodd, PDF p. 4",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ008",
+        "outputs/data/table1_multiplicities.csv"
+      ],
+      "item_id": "Q-KODD-LONG",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Derived independently and exactly consistent with Table I.",
+      "scientific_object": "For odd t>=7, lim_{L->infinity} Kbar(t)=2t.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Eq. Kodd, PDF p. 4",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ008",
+        "outputs/data/table1_multiplicities.csv"
+      ],
+      "item_id": "Q-EVEN-SINGLET",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The independently implemented exceptional-sector ledger reproduces its multiplicity contribution.",
+      "scientific_object": "Every even t has an additional singlet-projector commutant sector beyond the dihedral span.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main even-t construction and supplement",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "item_id": "Q-EVEN-EXTRA-8-10",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Exceptional cells are already counted in Table I rows t=8 and t=10.",
+      "scientific_object": "t=8 and t=10 each contain a further +1 sector.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main text and supplement even-t cases",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "item_id": "Q-MINUS-SECTORS-6-10",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Exceptional cells are already counted in Table I rows t=6 and t=10.",
+      "scientific_object": "t=6 and t=10 each contain two -1 transfer eigenoperators.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main text and supplement even-t cases",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "EQUATION_CARDS.json#EQ008",
+        "outputs/data/table1_multiplicities.csv"
+      ],
+      "item_id": "Q-KEVEN-LONG",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The conjecture label is preserved and every available t<=17 consequence is reproduced exactly.",
+      "scientific_object": "The paper conjectures lim_{L->infinity} Kbar(t)=2t+1 for even t>11.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main Eq. Keven, PDF p. 5",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_MULTIPLICITY"
+      ]
+    },
+    {
+      "blocker": "missing_publication_definition",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T006",
+      "coverage_status": "uncovered",
+      "decision": "target",
+      "denominator_role": "primary",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/source_trace.json",
+        "outputs/checks/final_resolution/iid_resonant_counterexample.json",
+        "outputs/runs/1805.00931-final-resolution-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "iid_distribution_universality",
+      "item_id": "Q-IID-DISTRIBUTION-INDEPENDENCE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "supporting",
+      "reason": "A source trace confirms the missing non-resonance condition; an isolated resonant IID counterexample is preserved without claiming fresh review.",
+      "scientific_object": "After the thermodynamic limit, any nonzero disorder width and any IID longitudinal-field distribution give the same universal SFF result.",
+      "scientific_role": "analytic_result",
+      "source_ref": "Main discussion after Table I, PDF p. 5",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_IID_UNIVERSALITY"
+      ]
+    },
+    {
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "item_id": "Q-HEISENBERG-TIME-SCOPE",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "reason": "Explicit scope boundary rather than a reproduced numerical result.",
+      "scientific_object": "The thermodynamic-limit analysis does not access level repulsion at t approximately 2^L.",
+      "scientific_role": "scope_context",
+      "source_ref": "Main discussion after Table I, PDF p. 5"
+    },
+    {
+      "decision": "target",
+      "denominator_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "item_id": "Q-DIRECT-SFF-COMPLEXITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "reason": "Method-complexity statement supporting Fig. 2 generation, not a second result.",
+      "scientific_object": "Direct SFF propagation costs O(t L 4^L), advantageous to diagonalization when t is much smaller than 2^L.",
+      "scientific_role": "method_validation",
+      "source_ref": "Supplement numerical methods",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_SFF"
+      ]
+    }
+  ],
+  "schema_version": 2
+}

@@ -1,68 +1,691 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
+  "score_model": "rra_similarity_v1",
   "paper_id": "2605.02873",
-  "overall_score": 90.0,
-  "source_score_model": "rra_similarity_v1",
-  "source_status": "passed",
-  "similarity_level": "complete_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 5,
-    "target_status_counts": {
-      "reproduced": 5
-    },
-    "published_generated_datasets": 5,
-    "published_generated_figures": 10
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "summary": "All five frozen theory-numerical targets were independently regenerated at paper-exact physical parameters. Four main panels use analytic/textual references and are capped at 90; Fig. S1 uses the exact supplementary table and scores 98 with its near-null first-row deviation disclosed.",
   "targets": [
     {
       "target_id": "T-FIG001A",
-      "figure_id": "FIG001A",
-      "meaning": "Unaberrated fixed-detector response across the upstream source coordinate.",
-      "status": "reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Fig. 1(a) baseline TRY response",
+      "figure_refs": [
+        "Fig. 1(a)"
+      ],
+      "weight": 1.0,
+      "critical": true,
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "evidence": "outputs/data/fig001a_baseline.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT-FIG001A"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT-FIG001A"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ASSERT-FIG001A-NONNEGATIVE",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001a_baseline_science.json",
+          "claim": "The baseline intensity is nonnegative over the paper source range."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001A-UNIT-PEAK",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/fig001a_baseline.csv",
+          "claim": "The displayed baseline is normalized to unit peak."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001A-CONVERGED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001a_baseline_science.json",
+          "claim": "The cross-grid maximum absolute difference is 2.81e-5."
+        }
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The independent finite-width field reproduces all three principal peaks, the two shoulders, and the intervening minima of the source panel.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 25.0,
+          "reason": "Nonnegativity, unit peak, quadrature convergence, and the same physical model are checked; no author curve or table exists for strict pointwise values.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The complete panel and full paper source range are generated at the paper geometry.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig001a_baseline.csv",
+        "outputs/checks/fig001a_baseline_science.json",
+        "outputs/figures/fig001a_baseline.png"
+      ],
+      "remaining_gap": "No released author curve exists; strict scientific comparison is analytic plus source-panel feature agreement.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 90.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T-FIG001B",
-      "figure_id": "FIG001B",
-      "meaning": "Exact first-order tilt and defocus intensity-response functions.",
-      "status": "reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Fig. 1(b) exact local score functions",
+      "figure_refs": [
+        "Fig. 1(b)"
+      ],
+      "weight": 1.0,
+      "critical": true,
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "evidence": "outputs/data/fig001b_scores.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC003"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT-FIG001B"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT-FIG001B"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ASSERT-FIG001B-DERIVATIVE",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001b_scores_science.json",
+          "claim": "Moment-derived scores agree with direct central differences to 8.03e-11 relative L2 error."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001B-CONVERGED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001b_scores_science.json",
+          "claim": "Both separately normalized response curves are stable across denser grids."
+        }
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The generated tilt and defocus lines preserve their identities and reproduce the paper's oscillation counts, extrema ordering, signs, and distinct envelopes.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 25.0,
+          "reason": "The analytic score identity is independently verified by direct field finite differences at 8.03e-11 relative error; no author pointwise curve is available.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both visible series and the complete source-coordinate range are reproduced.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig001b_scores.csv",
+        "outputs/checks/fig001b_scores_science.json",
+        "outputs/figures/fig001b_scores.png"
+      ],
+      "remaining_gap": "No released author curve exists for pointwise subtraction.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 90.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T-FIG001C",
-      "figure_id": "FIG001C",
-      "meaning": "Optimized fringe-locked source codes and smooth Gaussian toy-code comparison.",
-      "status": "reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Fig. 1(c) optimized and toy source codes",
+      "figure_refs": [
+        "Fig. 1(c)"
+      ],
+      "weight": 1.0,
+      "critical": true,
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "evidence": "outputs/data/fig001c_codes.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC002",
+          "EQC003",
+          "EQC004",
+          "EQC005",
+          "EQC007"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT-FIG001C"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT-FIG001C"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ASSERT-FIG001C-ORTHONORMAL",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001c_codes_science.json",
+          "claim": "Nuisance means, pair inner products, and unit norms have maximum residual 2.78e-17."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001C-FRINGE-LOCKED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/fig001c_codes.csv",
+          "claim": "The optimized codes have 11 and 7 zero crossings versus 1 and 2 for the toy pair."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001C-CONVERGED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001c_codes_science.json",
+          "claim": "All four code curves change by less than 1.99e-4 relative under denser grids."
+        }
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "All four visible series are independently generated; the optimized pair is strongly fringe-locked while the toy pair remains smooth.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 25.0,
+          "reason": "The complete noise-metric construction closes to 2.78e-17 and yields the paper's downstream retention values; no author code arrays are released.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both optimized and both toy series over the complete paper range are present.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig001c_codes.csv",
+        "outputs/checks/fig001c_codes_science.json",
+        "outputs/figures/fig001c_codes.png"
+      ],
+      "remaining_gap": "No released author code arrays exist for pointwise residuals.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 90.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T-FIG001D",
-      "figure_id": "FIG001D",
-      "meaning": "Principal information-retention fractions for optimized and Gaussian toy two-channel receivers.",
-      "status": "reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Fig. 1(d) Fisher-information retention",
+      "figure_refs": [
+        "Fig. 1(d)"
+      ],
+      "weight": 1.0,
+      "critical": true,
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "d",
+            "status": "reproduced",
+            "evidence": "outputs/data/fig001d_retention.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC003",
+          "EQC004",
+          "EQC005",
+          "EQC006",
+          "EQC007"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT-FIG001D"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT-FIG001D"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ASSERT-FIG001D-PAPER-MATRICES",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001d_retention_science.json",
+          "claim": "Full and optimized Fisher matrices agree with the paper at 1.12e-6 relative Frobenius error."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001D-RETENTION",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/fig001d_retention.csv",
+          "claim": "All four optimized/toy retention values agree with paper text within 1.14e-4 absolute."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001D-BOUNDS",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001d_retention_science.json",
+          "claim": "Every projection-retention eigenvalue lies in [0,1] within roundoff."
+        },
+        {
+          "assertion_id": "ASSERT-FIG001D-CONVERGED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig001d_retention_science.json",
+          "claim": "All retention values are stable to 2.12e-6 under denser quadrature."
+        }
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The four bars reproduce the near-unity optimized pair and severe, unequal toy-code losses.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The full and coded matrices agree at 1.12e-6 relative error; optimized retention differs by 7.72e-9 and toy retention by at most 1.14e-4.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All four bars and both principal modes are reproduced.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig001d_retention.csv",
+        "outputs/checks/fig001d_retention_science.json",
+        "outputs/figures/fig001d_retention.png"
+      ],
+      "remaining_gap": "The reference is exact paper text rather than released author arrays, so the analytic-reference cap is 90.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T-FIGS001",
-      "figure_id": "FIGS001",
-      "meaning": "Relative first-order defocus information as finite slit width increases.",
-      "status": "reproduced",
-      "formula_gate": "not_recorded",
-      "parameter_match": "paper_exact"
+      "label": "Supplementary Fig. S1 finite-slit width scan",
+      "figure_refs": [
+        "Fig. S1"
+      ],
+      "weight": 1.0,
+      "critical": true,
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "S1",
+            "status": "reproduced",
+            "evidence": "outputs/data/figs001_width_scan.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC001",
+          "EQC002",
+          "EQC003",
+          "EQC004",
+          "EQC008"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT-FIGS001"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT-FIGS001"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "ASSERT-FIGS001-NARROW",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/figs001_width_scan_science.json",
+          "claim": "The 20 micrometre ratio is below 2e-5, consistent with the point-slit limit."
+        },
+        {
+          "assertion_id": "ASSERT-FIGS001-MONOTONIC",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/figs001_width_scan.csv",
+          "claim": "The ratio increases strictly across all five widths."
+        },
+        {
+          "assertion_id": "ASSERT-FIGS001-TABLE",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/figs001_width_scan.csv",
+          "claim": "All five rows pass the declared hybrid tolerance, with the smallest-row discrepancy disclosed."
+        },
+        {
+          "assertion_id": "ASSERT-FIGS001-CONVERGED",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/figs001_width_scan_science.json",
+          "claim": "The maximum convergence change is 8.53e-6 relative."
+        }
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The generated ratio is strictly increasing and spans the same five widths and four-order-of-magnitude transition.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 33.0,
+          "reason": "Four rows agree within 0.42%; the stable near-null 20 micrometre row differs by 4.25e-7 absolute (2.43% relative).",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All five table/figure widths and the full plotted range are reproduced.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 98.0,
+      "cap_reason": "The smallest rounded near-null table row retains a disclosed 2.43% relative mismatch.",
+      "evidence": [
+        "outputs/data/figs001_width_scan.csv",
+        "outputs/checks/figs001_width_scan_science.json",
+        "outputs/figures/figs001_width_scan.png"
+      ],
+      "remaining_gap": "The stable 20 micrometre value is 1.79249e-5 versus the paper's rounded 1.75e-5.",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 98.0,
+      "score": 98.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
-  "source_scorecard_sha256": "5747ca0de3c626a3aebdb9a452db7c48021da63b608d59af4f133a32dd54cdce"
+  "overall_score": 91.6,
+  "similarity_level": "complete_reproduction",
+  "evaluation_summary": {
+    "scored_items": 5,
+    "critical_items": 5,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "none": 5
+    },
+    "parameter_match_counts": {
+      "paper_exact": 5
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 4,
+      "table_exact": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 5
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 5
+    },
+    "formula_gate_counts": {
+      "verified": 5
+    },
+    "paper_level_role_counts": {
+      "supporting": 2,
+      "main_claim": 3
+    },
+    "physics_status_counts": {
+      "passed": 5
+    },
+    "physics_assertion_status_counts": {
+      "passed": 16
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": true,
+    "final_reproduction_target_ids": [
+      "T-FIG001A",
+      "T-FIG001B",
+      "T-FIG001C",
+      "T-FIG001D",
+      "T-FIGS001"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [],
+    "aggregate_included_target_ids": [
+      "T-FIG001A",
+      "T-FIG001B",
+      "T-FIG001C",
+      "T-FIG001D",
+      "T-FIGS001"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "not_required": 5
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 5
+    },
+    "causal_diagnosis_required_target_ids": [],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {},
+    "root_cause_counts": {},
+    "code_fault_status_counts": {}
+  },
+  "status": "passed"
 }

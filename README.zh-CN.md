@@ -80,27 +80,27 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | 论文 | 复现状态 | 查看 |
 | --- | --- | --- |
 | [Tackling the Qubit Mapping Problem for NISQ-Era Quantum Devices](cases/10.1145-3297858.3304023/README.md) | 部分科学复现 | [中文讲义](cases/10.1145-3297858.3304023/note/reproduction-note.zh-CN.md) · [代码](cases/10.1145-3297858.3304023/code/README.md) |
-| [Simulating the Sycamore quantum supremacy circuits](cases/2103.03074/README.md) | 部分科学复现 | [中文讲义](cases/2103.03074/note/reproduction-note.zh-CN.md) · [代码](cases/2103.03074/code/README.md) |
+| [Simulating the Sycamore quantum supremacy circuits](cases/2103.03074/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/2103.03074/note/reproduction-note.zh-CN.md) · [代码](cases/2103.03074/code/README.md) |
 | [Efficient simulation of logical magic state preparation protocols](cases/2512.23799/README.md) | 部分科学复现 | [中文讲义](cases/2512.23799/note/reproduction-note.zh-CN.md) · [代码](cases/2512.23799/code/README.md) |
-| [Boson Sampling as a Probe of Chaotic and Integrable Quantum Dynamics](cases/2605.25398/README.md) | 部分科学复现 | [中文讲义](cases/2605.25398/note/reproduction-note.zh-CN.md) · [代码](cases/2605.25398/code/README.md) |
+| [Boson Sampling as a Probe of Chaotic and Integrable Quantum Dynamics](cases/2605.25398/README.md) | 科学复现，待视觉评审 | [中文讲义](cases/2605.25398/note/reproduction-note.zh-CN.md) · [代码](cases/2605.25398/code/README.md) |
 | [Buffer-atom-mediated quantum logic gates with off-resonant modulated driving](cases/10.1007-s11433-024-2478-8/README.md) | 部分科学复现 | [中文讲义](cases/10.1007-s11433-024-2478-8/note/reproduction-note.zh-CN.md) · [代码](cases/10.1007-s11433-024-2478-8/code/README.md) |
 | [Strongly correlated quantum walks with a 12-qubit superconducting processor](cases/10.1126-science.aaw1611/README.md) | 部分科学复现 | [中文讲义](cases/10.1126-science.aaw1611/note/reproduction-note.zh-CN.md) · [代码](cases/10.1126-science.aaw1611/code/README.md) |
 | [Benchmarking and Fidelity Response Theory of High-Fidelity Rydberg Entangling Gates](cases/10.1103-PRXQuantum.6.010331/README.md) | 部分科学复现 | [中文讲义](cases/10.1103-PRXQuantum.6.010331/note/reproduction-note.zh-CN.md) · [代码](cases/10.1103-PRXQuantum.6.010331/code/README.md) |
 | [Thermodynamics of Quantum Reservoir Computing](cases/2607.02157/README.md) | 部分科学复现 | [中文讲义](cases/2607.02157/note/reproduction-note.zh-CN.md) · [代码](cases/2607.02157/code/README.md) |
 | [Leveraging Qubit Loss Detection in Fault-Tolerant Quantum Algorithms](cases/2502.20558/README.md) | 部分科学复现 | [中文讲义](cases/2502.20558/note/reproduction-note.zh-CN.md) · [代码](cases/2502.20558/code/README.md) |
-| [Deterministic atom-shuttle interconnects via ultrafast atom-ion entangling gate](cases/2607.15597/README.md) | 科学复现无效 | [中文讲义](cases/2607.15597/note/reproduction-note.zh-CN.md) · [代码](cases/2607.15597/code/README.md) |
+| [Deterministic atom-shuttle interconnects via ultrafast atom-ion entangling gate](cases/2607.15597/README.md) | 部分科学复现 | [中文讲义](cases/2607.15597/note/reproduction-note.zh-CN.md) · [代码](cases/2607.15597/code/README.md) |
 | [Programmable Open Quantum Systems](cases/2512.08279/README.md) | 部分科学复现 | [中文讲义](cases/2512.08279/note/reproduction-note.zh-CN.md) · [代码](cases/2512.08279/code/README.md) |
-| [Quantum Error Correction in Scrambling Dynamics and Measurement-Induced Phase Transition](cases/1903.05124/README.md) | 科学复现无效 | [中文讲义](cases/1903.05124/note/reproduction-note.zh-CN.md) · [代码](cases/1903.05124/code/README.md) |
-| [Demonstrating quantum error mitigation on logical qubits](cases/10.1038-s41467-025-67768-4/README.md) | 科学复现无效 | [中文讲义](cases/10.1038-s41467-025-67768-4/note/reproduction-note.zh-CN.md) · [代码](cases/10.1038-s41467-025-67768-4/code/README.md) |
-| [Amplitude Estimation without Phase Estimation](cases/1904.10246/README.md) | 科学复现无效 | [中文讲义](cases/1904.10246/note/reproduction-note.zh-CN.md) · [代码](cases/1904.10246/code/README.md) |
-| [Graph coloring via quantum optimization on a Rydberg-qudit atom array](cases/2504.08598/README.md) | 科学复现无效 | [中文讲义](cases/2504.08598/note/reproduction-note.zh-CN.md) · [代码](cases/2504.08598/code/README.md) |
-| [Remote Entanglement Generation Via Enhanced Quantum State Transfer](cases/2506.06669/README.md) | 科学复现无效 | [中文讲义](cases/2506.06669/note/reproduction-note.zh-CN.md) · [代码](cases/2506.06669/code/README.md) |
+| [Quantum Error Correction in Scrambling Dynamics and Measurement-Induced Phase Transition](cases/1903.05124/README.md) | 部分科学复现 | [中文讲义](cases/1903.05124/note/reproduction-note.zh-CN.md) · [代码](cases/1903.05124/code/README.md) |
+| [Demonstrating quantum error mitigation on logical qubits](cases/10.1038-s41467-025-67768-4/README.md) | 部分科学复现 | [中文讲义](cases/10.1038-s41467-025-67768-4/note/reproduction-note.zh-CN.md) · [代码](cases/10.1038-s41467-025-67768-4/code/README.md) |
+| [Amplitude estimation without phase estimation](cases/1904.10246/README.md) | 部分科学复现 | [中文讲义](cases/1904.10246/note/reproduction-note.zh-CN.md) · [代码](cases/1904.10246/code/README.md) |
+| [Graph coloring via quantum optimization on a Rydberg-qudit atom array](cases/2504.08598/README.md) | 部分科学复现 | [中文讲义](cases/2504.08598/note/reproduction-note.zh-CN.md) · [代码](cases/2504.08598/code/README.md) |
+| [Remote entanglement generation via enhanced quantum state transfer](cases/2506.06669/README.md) | 部分科学复现 | [中文讲义](cases/2506.06669/note/reproduction-note.zh-CN.md) · [代码](cases/2506.06669/code/README.md) |
 | [Möbius-Guided Diagonal-Gate Compilation with Native Multiqubit Controlled-Phase Gates on Neutral-Atom Processors](cases/2607.08212/README.md) | 部分科学复现 | [中文讲义](cases/2607.08212/note/reproduction-note.zh-CN.md) · [代码](cases/2607.08212/code/README.md) |
 | [Plaquette: A hardware-aware design platform for fault-tolerant quantum computers](cases/2607.08767/README.md) | 部分科学复现 | [中文讲义](cases/2607.08767/note/reproduction-note.zh-CN.md) · [代码](cases/2607.08767/code/README.md) |
-| [Optimising Trotter-Suzuki Simulations of Markovian Open Quantum Systems via Classical Search](cases/2607.27060/README.md) | 科学复现无效 | [中文讲义](cases/2607.27060/note/reproduction-note.zh-CN.md) · [代码](cases/2607.27060/code/README.md) |
-| [High-rate qLDPC processors](cases/2607.28795/README.md) | 科学复现无效 | [中文讲义](cases/2607.28795/note/reproduction-note.zh-CN.md) · [代码](cases/2607.28795/code/README.md) |
+| [Optimising Trotter-Suzuki Simulations of Markovian Open Quantum Systems via Classical Search](cases/2607.27060/README.md) | 科学复现，待独立评审 | [中文讲义](cases/2607.27060/note/reproduction-note.zh-CN.md) · [代码](cases/2607.27060/code/README.md) |
+| [High-rate qLDPC processors](cases/2607.28795/README.md) | 部分科学复现 | [中文讲义](cases/2607.28795/note/reproduction-note.zh-CN.md) · [代码](cases/2607.28795/code/README.md) |
 | [Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators](cases/2608.03987/README.md) | 部分科学复现 | [中文讲义](cases/2608.03987/note/reproduction-note.zh-CN.md) · [代码](cases/2608.03987/code/README.md) |
-| [Quantum machine learning in feature Hilbert spaces](cases/1803.07128/README.md) | 部分科学复现 | [中文讲义](cases/1803.07128/note/reproduction-note.zh-CN.md) · [代码](cases/1803.07128/code/README.md) |
+| [Quantum machine learning in feature Hilbert spaces](cases/1803.07128/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1803.07128/note/reproduction-note.zh-CN.md) · [代码](cases/1803.07128/code/README.md) |
 | [A random compiler for fast Hamiltonian simulation](cases/1811.08017/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1811.08017/note/reproduction-note.zh-CN.md) · [代码](cases/1811.08017/code/README.md) |
 | [Obstacles to State Preparation and Variational Optimization from Symmetry Protection](cases/1910.08980/README.md) | 部分科学复现 | [中文讲义](cases/1910.08980/note/reproduction-note.zh-CN.md) · [代码](cases/1910.08980/code/README.md) |
 | [Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas](cases/quant-ph-0403025/README.md) | 部分科学复现 | [中文讲义](cases/quant-ph-0403025/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-0403025/code/README.md) |
@@ -120,20 +120,20 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | [Sufficient Wigner Negativity Implies Genuine Multipartite Entanglement](cases/2510.26761/README.md) | 部分科学复现 | [中文讲义](cases/2510.26761/note/reproduction-note.zh-CN.md) · [代码](cases/2510.26761/code/README.md) |
 | [Enhancing Nonreciprocity through Squeezing-Induced Symmetry Breaking](cases/2607.00718/README.md) | 部分科学复现 | [中文讲义](cases/2607.00718/note/reproduction-note.zh-CN.md) · [代码](cases/2607.00718/code/README.md) |
 | [Information and Majorization Theory for Fermionic Phase-Space Distributions](cases/2401.08523/README.md) | 部分科学复现 | [中文讲义](cases/2401.08523/note/reproduction-note.zh-CN.md) · [代码](cases/2401.08523/code/README.md) |
-| [Quantum-Coherent Thermodynamics: Leaf Typicality via Minimum-Variance Foliation](cases/2602.12212/README.md) | 部分科学复现 | [中文讲义](cases/2602.12212/note/reproduction-note.zh-CN.md) · [代码](cases/2602.12212/code/README.md) |
-| [Fixed-detector tilt--defocus sensing by upstream source coding in a time-reversed Young interferometer](cases/2605.02873/README.md) | 科学复现无效 | [中文讲义](cases/2605.02873/note/reproduction-note.zh-CN.md) · [代码](cases/2605.02873/code/README.md) |
-| [Photonic Violation of Wigner's Inequality](cases/2606.30255/README.md) | 科学复现无效 | [中文讲义](cases/2606.30255/note/reproduction-note.zh-CN.md) · [代码](cases/2606.30255/code/README.md) |
+| [Quantum-Coherent Thermodynamics: Leaf Typicality via Minimum-Variance Foliation](cases/2602.12212/README.md) | 科学复现，待视觉评审 | [中文讲义](cases/2602.12212/note/reproduction-note.zh-CN.md) · [代码](cases/2602.12212/code/README.md) |
+| [Fixed-detector tilt--defocus sensing by upstream source coding in a time-reversed Young interferometer](cases/2605.02873/README.md) | 科学复现，待独立评审 | [中文讲义](cases/2605.02873/note/reproduction-note.zh-CN.md) · [代码](cases/2605.02873/code/README.md) |
+| [Photonic Violation of Wigner's Inequality](cases/2606.30255/README.md) | 科学复现，待独立评审 | [中文讲义](cases/2606.30255/note/reproduction-note.zh-CN.md) · [代码](cases/2606.30255/code/README.md) |
 | [Non-Hermitian-enhanced quantum sensing in an optical interferometer](cases/2607.23978/README.md) | 部分科学复现 | [中文讲义](cases/2607.23978/note/reproduction-note.zh-CN.md) · [代码](cases/2607.23978/code/README.md) |
-| [Inverse Mpemba Effect Demonstrated on a Single Trapped Ion Qubit](cases/2401.05830/README.md) | 部分科学复现 | [中文讲义](cases/2401.05830/note/reproduction-note.zh-CN.md) · [代码](cases/2401.05830/code/README.md) |
-| [Optimal Generators for Quantum Sensing](cases/2305.15556/README.md) | 科学复现，待独立评审 | [中文讲义](cases/2305.15556/note/reproduction-note.zh-CN.md) · [代码](cases/2305.15556/code/README.md) |
+| [Inverse Mpemba Effect Demonstrated on a Single Trapped Ion Qubit](cases/2401.05830/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/2401.05830/note/reproduction-note.zh-CN.md) · [代码](cases/2401.05830/code/README.md) |
+| [Optimal Generators for Quantum Sensing](cases/2305.15556/README.md) | 科学复现，待视觉评审 | [中文讲义](cases/2305.15556/note/reproduction-note.zh-CN.md) · [代码](cases/2305.15556/code/README.md) |
 | [New Constraints on Axion-Mediated Spin Interactions Using Magnetic Amplification](cases/PhysRevLett.133.191801/README.md) | 部分科学复现 | [中文讲义](cases/PhysRevLett.133.191801/note/reproduction-note.zh-CN.md) · [代码](cases/PhysRevLett.133.191801/code/README.md) |
 | [Precision-Spectroscopic Determination of the Binding Energy of a Two-Body Quantum System: The Hydrogen Atom and the Proton-Size Puzzle](cases/PhysRevLett.132.113001/README.md) | 部分科学复现 | [中文讲义](cases/PhysRevLett.132.113001/note/reproduction-note.zh-CN.md) · [代码](cases/PhysRevLett.132.113001/code/README.md) |
 | [Squeezed Spin States](cases/PhysRevA.47.5138/README.md) | 科学复现，待独立评审 | [中文讲义](cases/PhysRevA.47.5138/note/reproduction-note.zh-CN.md) · [代码](cases/PhysRevA.47.5138/code/README.md) |
-| [Entanglement in Quantum Critical Phenomena](cases/quant-ph-0211074/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/quant-ph-0211074/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-0211074/code/README.md) |
-| [Entanglement of Formation of an Arbitrary State of Two Qubits](cases/quant-ph-9709029/README.md) | 部分科学复现 | [中文讲义](cases/quant-ph-9709029/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-9709029/code/README.md) |
-| [Necessary and Sufficient Condition for Nonzero Quantum Discord](cases/1004.0190/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1004.0190/note/reproduction-note.zh-CN.md) · [代码](cases/1004.0190/code/README.md) |
-| [Quantum Speed Limit for Non-Markovian Dynamics](cases/1302.5069/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1302.5069/note/reproduction-note.zh-CN.md) · [代码](cases/1302.5069/code/README.md) |
-| [Quantum Discord and the Power of One Qubit](cases/0709.0548/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/0709.0548/note/reproduction-note.zh-CN.md) · [代码](cases/0709.0548/code/README.md) |
+| [Entanglement in Quantum Critical Phenomena](cases/quant-ph-0211074/README.md) | 部分科学复现 | [中文讲义](cases/quant-ph-0211074/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-0211074/code/README.md) |
+| [Entanglement of Formation of an Arbitrary State of Two Qubits](cases/quant-ph-9709029/README.md) | 科学复现，待独立评审 | [中文讲义](cases/quant-ph-9709029/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-9709029/code/README.md) |
+| [Necessary and Sufficient Condition for Nonzero Quantum Discord](cases/1004.0190/README.md) | 部分科学复现 | [中文讲义](cases/1004.0190/note/reproduction-note.zh-CN.md) · [代码](cases/1004.0190/code/README.md) |
+| [Quantum Speed Limit for Non-Markovian Dynamics](cases/1302.5069/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1302.5069/note/reproduction-note.zh-CN.md) · [代码](cases/1302.5069/code/README.md) |
+| [Quantum Discord and the Power of One Qubit](cases/0709.0548/README.md) | 部分科学复现 | [中文讲义](cases/0709.0548/note/reproduction-note.zh-CN.md) · [代码](cases/0709.0548/code/README.md) |
 
 </details>
 
@@ -154,25 +154,25 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | [Boundary time crystals](cases/1708.05014/README.md) | 部分科学复现 | [中文讲义](cases/1708.05014/note/reproduction-note.zh-CN.md) · [代码](cases/1708.05014/code/README.md) |
 | [Exploring the Single-Particle Mobility Edge in a One-Dimensional Quasiperiodic Optical Lattice](cases/1709.03478/README.md) | 部分科学复现 | [中文讲义](cases/1709.03478/note/reproduction-note.zh-CN.md) · [代码](cases/1709.03478/code/README.md) |
 | [Self-Bound Quantum Droplets of Atomic Mixtures in Free Space](cases/1710.10890/README.md) | 部分科学复现 | [中文讲义](cases/1710.10890/note/reproduction-note.zh-CN.md) · [代码](cases/1710.10890/code/README.md) |
-| [Symmetry-resolved entanglement in many-body systems](cases/1711.09418/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1711.09418/note/reproduction-note.zh-CN.md) · [代码](cases/1711.09418/code/README.md) |
+| [Symmetry-resolved entanglement in many-body systems](cases/1711.09418/README.md) | 部分科学复现 | [中文讲义](cases/1711.09418/note/reproduction-note.zh-CN.md) · [代码](cases/1711.09418/code/README.md) |
 | [Exact Spectral Form Factor in a Minimal Model of Many-Body Quantum Chaos](cases/1805.00931/README.md) | 部分科学复现 | [中文讲义](cases/1805.00931/note/reproduction-note.zh-CN.md) · [代码](cases/1805.00931/code/README.md) |
 | [Periodic Orbits, Entanglement, and Quantum Many-Body Scars in Constrained Models: Matrix Product State Approach](cases/1807.01815/README.md) | 部分科学复现 | [中文讲义](cases/1807.01815/note/reproduction-note.zh-CN.md) · [代码](cases/1807.01815/code/README.md) |
 | [Hydrodynamic Diffusion in Integrable Systems](cases/1807.02414/README.md) | 部分科学复现 | [中文讲义](cases/1807.02414/note/reproduction-note.zh-CN.md) · [代码](cases/1807.02414/code/README.md) |
 | [Emergent SU(2) dynamics and perfect quantum many-body scars](cases/1812.05561/README.md) | 部分科学复现 | [中文讲义](cases/1812.05561/note/reproduction-note.zh-CN.md) · [代码](cases/1812.05561/code/README.md) |
 | [Scalable probes of measurement-induced criticality](cases/1910.00020/README.md) | 部分科学复现 | [中文讲义](cases/1910.00020/note/reproduction-note.zh-CN.md) · [代码](cases/1910.00020/code/README.md) |
 | [Entanglement transition in a monitored free fermion chain -- from extended criticality to area law](cases/2005.09722/README.md) | 部分科学复现 | [中文讲义](cases/2005.09722/note/reproduction-note.zh-CN.md) · [代码](cases/2005.09722/code/README.md) |
-| [Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain](cases/1810.00888/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1810.00888/note/reproduction-note.zh-CN.md) · [代码](cases/1810.00888/code/README.md) |
+| [Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom Chain](cases/1810.00888/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1810.00888/note/reproduction-note.zh-CN.md) · [代码](cases/1810.00888/code/README.md) |
 | [Realization of a Laughlin State of Two Rapidly Rotating Fermions](cases/2402.14814/README.md) | 部分科学复现 | [中文讲义](cases/2402.14814/note/reproduction-note.zh-CN.md) · [代码](cases/2402.14814/code/README.md) |
 | [Tuning Transport in Solid-State Bose-Fermi Mixtures by Feshbach Resonances](cases/2409.18176/README.md) | 部分科学复现 | [中文讲义](cases/2409.18176/note/reproduction-note.zh-CN.md) · [代码](cases/2409.18176/code/README.md) |
 | [Measurement-Induced Dark State Phase Transitions in Long-Ranged Fermion Systems](cases/2105.08076/README.md) | 部分科学复现 | [中文讲义](cases/2105.08076/note/reproduction-note.zh-CN.md) · [代码](cases/2105.08076/code/README.md) |
 | [Thermodynamics of Quantum Jump Trajectories](cases/0911.0556/README.md) | 部分科学复现 | [中文讲义](cases/0911.0556/note/reproduction-note.zh-CN.md) · [代码](cases/0911.0556/code/README.md) |
-| [Exact nonequilibrium steady state of a strongly driven open XXZ chain](cases/1106.2978/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1106.2978/note/reproduction-note.zh-CN.md) · [代码](cases/1106.2978/code/README.md) |
+| [Exact nonequilibrium steady state of a strongly driven open XXZ chain](cases/1106.2978/README.md) | 科学复现无效 | [中文讲义](cases/1106.2978/note/reproduction-note.zh-CN.md) · [代码](cases/1106.2978/code/README.md) |
 | [Phase Structure of Driven Quantum Systems](cases/1508.03344/README.md) | 部分科学复现 | [中文讲义](cases/1508.03344/note/reproduction-note.zh-CN.md) · [代码](cases/1508.03344/code/README.md) |
 | [Dynamics of a Quantum Phase Transition](cases/cond-mat-0503511/README.md) | 部分科学复现 | [中文讲义](cases/cond-mat-0503511/note/reproduction-note.zh-CN.md) · [代码](cases/cond-mat-0503511/code/README.md) |
 | [Localization of Interacting Fermions at High Temperature](cases/cond-mat-0610854/README.md) | 部分科学复现 | [中文讲义](cases/cond-mat-0610854/note/reproduction-note.zh-CN.md) · [代码](cases/cond-mat-0610854/code/README.md) |
-| [Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model](cases/cond-mat-0509490/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/cond-mat-0509490/note/reproduction-note.zh-CN.md) · [代码](cases/cond-mat-0509490/code/README.md) |
-| [Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model](cases/quant-ph-0507004/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/quant-ph-0507004/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-0507004/code/README.md) |
-| [Dynamical Quantum Phase Transitions in the Transverse-Field Ising Model](cases/1206.2505/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/1206.2505/note/reproduction-note.zh-CN.md) · [代码](cases/1206.2505/code/README.md) |
+| [Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model](cases/cond-mat-0509490/README.md) | 科学复现，待独立评审 | [中文讲义](cases/cond-mat-0509490/note/reproduction-note.zh-CN.md) · [代码](cases/cond-mat-0509490/code/README.md) |
+| [Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model](cases/quant-ph-0507004/README.md) | 部分科学复现 | [中文讲义](cases/quant-ph-0507004/note/reproduction-note.zh-CN.md) · [代码](cases/quant-ph-0507004/code/README.md) |
+| [Dynamical Quantum Phase Transitions in the Transverse-Field Ising Model](cases/1206.2505/README.md) | 部分科学复现 | [中文讲义](cases/1206.2505/note/reproduction-note.zh-CN.md) · [代码](cases/1206.2505/code/README.md) |
 
 </details>
 
@@ -189,9 +189,9 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | [Non-Hermitian Chern bands](cases/1804.04672/README.md) | 部分科学复现 | [中文讲义](cases/1804.04672/note/reproduction-note.zh-CN.md) · [代码](cases/1804.04672/code/README.md) |
 | [Sensitivity to perturbations in the three-dimensional Anderson model](cases/2605.25594/README.md) | 部分科学复现 | [中文讲义](cases/2605.25594/note/reproduction-note.zh-CN.md) · [代码](cases/2605.25594/code/README.md) |
 | [Lyapunov formulation of band theory for disordered non-Hermitian systems](cases/2507.09447/README.md) | 部分科学复现 | [中文讲义](cases/2507.09447/note/reproduction-note.zh-CN.md) · [代码](cases/2507.09447/code/README.md) |
-| [Interband coherence induced correction to adiabatic pumping in periodically driven systems](cases/10.1103-PhysRevB.91.085420/README.md) | 部分科学复现 | [中文讲义](cases/10.1103-PhysRevB.91.085420/note/reproduction-note.zh-CN.md) · [代码](cases/10.1103-PhysRevB.91.085420/code/README.md) |
+| [Interband coherence induced correction to adiabatic pumping in periodically driven systems](cases/10.1103-PhysRevB.91.085420/README.md) | 科学复现，待视觉评审 | [中文讲义](cases/10.1103-PhysRevB.91.085420/note/reproduction-note.zh-CN.md) · [代码](cases/10.1103-PhysRevB.91.085420/code/README.md) |
 | [Geometry-adaptive formulation of non-Bloch bands in arbitrary dimensions and spectral instability](cases/2407.01296/README.md) | 部分科学复现 | [中文讲义](cases/2407.01296/note/reproduction-note.zh-CN.md) · [代码](cases/2407.01296/code/README.md) |
-| [Topological Band Theory for Non-Hermitian Hamiltonians](cases/1706.07435/README.md) | 部分科学复现 | [中文讲义](cases/1706.07435/note/reproduction-note.zh-CN.md) · [代码](cases/1706.07435/code/README.md) |
+| [Topological Band Theory for Non-Hermitian Hamiltonians](cases/1706.07435/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1706.07435/note/reproduction-note.zh-CN.md) · [代码](cases/1706.07435/code/README.md) |
 | [Topological Phase Transition in Non-Hermitian Quasicrystals](cases/1905.09460/README.md) | 部分科学复现 | [中文讲义](cases/1905.09460/note/reproduction-note.zh-CN.md) · [代码](cases/1905.09460/code/README.md) |
 | [Relaxation toward an Ideal Chern Band through Coupling to a Markovian Bath](cases/2511.11394/README.md) | 部分科学复现 | [中文讲义](cases/2511.11394/note/reproduction-note.zh-CN.md) · [代码](cases/2511.11394/code/README.md) |
 | [Spectral Topology and Non-Bloch Band Theory for Domain-Wall Systems](cases/2607.22976/README.md) | 部分科学复现 | [中文讲义](cases/2607.22976/note/reproduction-note.zh-CN.md) · [代码](cases/2607.22976/code/README.md) |
@@ -205,7 +205,7 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | [Anomalous edge states and the bulk-edge correspondence for periodically driven two-dimensional systems](cases/1212.3324/README.md) | 部分科学复现 | [中文讲义](cases/1212.3324/note/reproduction-note.zh-CN.md) · [代码](cases/1212.3324/code/README.md) |
 | [Energy Levels and Wave Functions of Bloch Electrons in Rational and Irrational Magnetic Fields](cases/PhysRevB.14.2239/README.md) | 部分科学复现 | [中文讲义](cases/PhysRevB.14.2239/note/reproduction-note.zh-CN.md) · [代码](cases/PhysRevB.14.2239/code/README.md) |
 | [Quantum Spin Hall Effect in Graphene](cases/cond-mat-0411737/README.md) | 部分科学复现 | [中文讲义](cases/cond-mat-0411737/note/reproduction-note.zh-CN.md) · [代码](cases/cond-mat-0411737/code/README.md) |
-| [Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry](cases/physics-9712001/README.md) | 科学复现，发现论文错误候选 | [中文讲义](cases/physics-9712001/note/reproduction-note.zh-CN.md) · [代码](cases/physics-9712001/code/README.md) |
+| [Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry](cases/physics-9712001/README.md) | 部分科学复现 | [中文讲义](cases/physics-9712001/note/reproduction-note.zh-CN.md) · [代码](cases/physics-9712001/code/README.md) |
 
 </details>
 
@@ -221,7 +221,7 @@ RunThePaper 从论文复现开始，因为复现同时检验理解、执行和�
 | [An Algorithm for Fast Assembling Large-Scale Defect-Free Atom Arrays](cases/2604.08669/README.md) | 部分科学复现 | [中文讲义](cases/2604.08669/note/reproduction-note.zh-CN.md) · [代码](cases/2604.08669/code/README.md) |
 | [Backreaction of stimulated Hawking radiation in an optical analogue](cases/10.1038-s41586-026-10720-3/README.md) | 部分科学复现 | [中文讲义](cases/10.1038-s41586-026-10720-3/note/reproduction-note.zh-CN.md) · [代码](cases/10.1038-s41586-026-10720-3/code/README.md) |
 | [Circuit Quantum Electrodynamics](cases/2005.12667/README.md) | 部分科学复现 | [中文讲义](cases/2005.12667/note/reproduction-note.zh-CN.md) · [代码](cases/2005.12667/code/README.md) |
-| [Casimir effect for a massive scalar field confined between parallel plates with a spatially varying effective mass](cases/2607.15070/README.md) | 科学复现无效 | [中文讲义](cases/2607.15070/note/reproduction-note.zh-CN.md) · [代码](cases/2607.15070/code/README.md) |
+| [Casimir effect for a massive scalar field confined between parallel plates with a spatially varying effective mass](cases/2607.15070/README.md) | 科学复现，待独立评审 | [中文讲义](cases/2607.15070/note/reproduction-note.zh-CN.md) · [代码](cases/2607.15070/code/README.md) |
 | [Boundary element method for resonances in dielectric microcavities](cases/physics-0206018/README.md) | 部分科学复现 | [中文讲义](cases/physics-0206018/note/reproduction-note.zh-CN.md) · [代码](cases/physics-0206018/code/README.md) |
 | [Decoherence-Free Interaction between Giant Atoms in Waveguide QED](cases/1711.08863/README.md) | 科学复现，待独立评审 | [中文讲义](cases/1711.08863/note/reproduction-note.zh-CN.md) · [代码](cases/1711.08863/code/README.md) |
 | [Nonreciprocal Photon Blockade](cases/1807.10084/README.md) | 部分科学复现 | [中文讲义](cases/1807.10084/note/reproduction-note.zh-CN.md) · [代码](cases/1807.10084/code/README.md) |

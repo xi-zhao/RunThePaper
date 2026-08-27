@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "paper_id": "2401.08523",
+  "_howto": [
+    "One item per paper figure/table (or panel group). This file is the machine-readable coverage contract:",
+    "kind: numeric | non_numeric.",
+    "decision for numeric items: target (with target_ids) | deferred_blocked (with blocker).",
+    "decision for non_numeric items: excluded | target.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', or 'similar to another figure' are NOT blockers: reproduce the item instead.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If compute or data is genuinely insufficient, deferred_blocked with an honest reason is the correct final state; do not fake coverage.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "source": "arXiv:2401.08523v2 / Physical Review Letters 135, 110201 (2025)",
+  "scope_audit": {
+    "main_figures": 2,
+    "supplement_figures": 0,
+    "numeric_panels": 4,
+    "targeted_numeric_panels": 4
+  },
+  "implementations": {
+    "paper_exact_formula_runner": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_formula_numerics.py",
+        "src/fermionic_phase_space.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_formula_numerics.py",
+        "--config",
+        "config/paper_exact.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/figure_1_fermi_dirac.csv",
+        "outputs/data/figure_2_moments.csv",
+        "outputs/data/figure_2_entropies.csv",
+        "outputs/checks/formula_implementation_validation.json"
+      ],
+      "acceptance_criteria": [
+        "The Fermi-Dirac, covariance, entropy, crossing, and thermal-channel invariants pass using only the frozen formula config and case-local science code."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Fig. 1",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 1 and its caption",
+      "reason": "The complete Fermi-Dirac occupation curve and both temperature branches follow from <n>=1/(1+exp(epsilon/T)).",
+      "claim_refs": [
+        "CLM001_THERMAL_GAUSSIANITY"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(a) - covariance order",
+      "parent_item_id": "Main Fig. 2(a)",
+      "item_type": "figure_series_group",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 2(a) and its caption",
+      "scientific_object": "P/W/Q covariance-determinant branches and their occupation-dependent ordering.",
+      "reason": "All covariance-determinant branches and their crossings are generated from the closed-form phase-space bodies.",
+      "claim_refs": [
+        "CLM002_PHASE_SPACE_ORDER"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(a) - uncertainty bounds",
+      "parent_item_id": "Main Fig. 2(a)",
+      "item_type": "figure_series_group",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 2(a), its caption, and Eq. (4)",
+      "scientific_object": "Exact covariance lower bounds and their saturation at extremal occupations.",
+      "reason": "The lower-bound lines and saturation points are evaluated from the exact covariance formulas.",
+      "claim_refs": [
+        "CLM003_UNCERTAINTY"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(b) - entropy order",
+      "parent_item_id": "Main Fig. 2(b)",
+      "item_type": "figure_series_group",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 2(b) and its caption",
+      "scientific_object": "P/W/Q Shannon-entropy branches and their stated crossing order.",
+      "reason": "All entropy branches and crossing locations are generated from the paper equations.",
+      "claim_refs": [
+        "CLM002_PHASE_SPACE_ORDER"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(b) - uncertainty bounds",
+      "parent_item_id": "Main Fig. 2(b)",
+      "item_type": "figure_series_group",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 2(b), its caption, and Eqs. (5)-(6)",
+      "scientific_object": "Exact Shannon-entropy lower bounds and their saturation at extremal occupations.",
+      "reason": "The entropy lower bounds and saturation points are evaluated independently from the closed formulas.",
+      "claim_refs": [
+        "CLM003_UNCERTAINTY"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(c) - Renyi-order monotonicity",
+      "parent_item_id": "Main Fig. 2(c)",
+      "item_type": "figure_series_group",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Main Fig. 2(c) and its caption",
+      "scientific_object": "Wigner Rényi-entropy branches are monotonically ordered by the Rényi index.",
+      "reason": "Every displayed branch is independently generated and tested for the paper's monotonic order in r.",
+      "claim_refs": [
+        "CLM005_RENYI_ORDER"
+      ]
+    },
+    {
+      "item_id": "Appendix B thermal-loss channel",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_formula_runner",
+      "source_ref": "Appendix B and equation card EQ007",
+      "scientific_object": "Affine thermal-loss occupation map and the resulting closed Wigner-entropy value.",
+      "reason": "The channel is evaluated independently in occupation and phase-space form, including the S_2=ln(2.5) benchmark.",
+      "claim_refs": [
+        "CLM004_THERMAL_CHANNEL"
+      ]
+    }
+  ]
+}

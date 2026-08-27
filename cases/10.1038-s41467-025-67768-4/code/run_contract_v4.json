@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "run_id": "logical-qem-v4-20260804",
+  "target_ids": [
+    "T001",
+    "T002-MAIN",
+    "T002-SUPP",
+    "T003",
+    "T004-MAIN",
+    "T004-SUPP",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "src",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "feedback": {
+      "p": 0.088,
+      "r_min": 1.0,
+      "r_max": 10.0,
+      "r_points": 91,
+      "theta_over_pi": [
+        0.0,
+        -0.4
+      ]
+    },
+    "repetition": {
+      "distances": [
+        3,
+        5,
+        7
+      ],
+      "one_round_p": 0.036,
+      "r_min": 1.0,
+      "r_max": 10.0,
+      "r_points": 91,
+      "multi_round_distance": 7,
+      "multi_rounds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "multi_round_p": [
+        0.136,
+        0.094,
+        0.072,
+        0.057
+      ],
+      "multi_r_max": 2.5,
+      "multi_r_points": 61,
+      "processor_i_median": {
+        "one_qubit_pauli_error": 0.00085,
+        "two_qubit_pauli_error": 0.0056,
+        "method_i_readout_error": 0.0047,
+        "two_qubit_events_per_layer": 2
+      }
+    },
+    "surface_code": {
+      "preparation_depolarizing_probability": 0.075,
+      "assumed_injection_probability": 0.036,
+      "injection_layers": 2,
+      "r_min": 1.0,
+      "r_max": 10.0,
+      "r_points": 91,
+      "psi_angle_over_pi": 0.16666666666666666,
+      "bloch_angle_points": 181
+    },
+    "complete_zne": {
+      "distances": [
+        3,
+        5,
+        7,
+        9,
+        11
+      ],
+      "rounds": 1,
+      "injected_probability": 0.036,
+      "r1_min": 1.1,
+      "r1_max": 10.0,
+      "r1_points": 90,
+      "reference_overhead": 1.93
+    },
+    "logical_memory": {
+      "physical_error_probability": 0.001,
+      "distances": [
+        7,
+        11,
+        15
+      ],
+      "orders": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "logical_error_budgets": [
+        0.01,
+        0.001
+      ]
+    },
+    "fixed_total_error": {
+      "rounds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "anchor_round": 1,
+      "anchor_probability": 0.136,
+      "paper_percentages": [
+        13.6,
+        9.4,
+        7.2,
+        5.7
+      ]
+    }
+  },
+  "outputs": [
+    "outputs/data/feedback_curves.npz",
+    "outputs/data/repetition_one_round.npz",
+    "outputs/data/repetition_multi_round.npz",
+    "outputs/data/surface_code.npz",
+    "outputs/data/complete_zne.npz",
+    "outputs/data/logical_memory.npz",
+    "outputs/data/fixed_total_error.json",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}

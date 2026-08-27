@@ -1,32 +1,21 @@
-# Fixed-detector tilt--defocus sensing by upstream source coding in a time-reversed Young interferometer: scientific numerical reproduction note
+# Fixed-detector tilt--defocus sensing by upstream source coding in a time-reversed Young interferometer: scientific reproduction note
 
-## Bottom line
+## Result
 
-This is the public package for the historical `2605.02873` scientific reproduction. Its public status is **Historical scientific artifact (5 numerical targets; 5 reproduced)** and its frozen audit score is **90.00/100**. The score records evidence strength; it is neither a percentage of correctness nor a declaration that the whole paper is complete.
+All five frozen theory-numerical targets were independently regenerated at paper-exact physical parameters. Four main panels use analytic/textual references and are capped at 90; Fig. S1 uses the exact supplementary table and scores 98 with its near-null first-row deviation disclosed.
 
-Here, reproduction means understanding the paper, following its equations or method, implementing the numerical work independently, and then generating data and figures. The data come from equations, independent numerics, or analytic derivation, not sampled pixels from paper figures. The public package excludes the paper PDF, standalone source figures, digitized image points, comparison boards, author code, and private runtime state. This is a legacy case without a machine-verifiable author-code isolation attestation, so publication does not upgrade it to complete.
+The public status is **Scientific reproduction — independent review pending**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Numerical targets
+## What is reproduced
 
-| Target | Paper item | Scientific meaning | Frozen status | Parameter match |
-| --- | --- | --- | --- | --- |
-| `T-FIG001A` | FIG001A | Unaberrated fixed-detector response across the upstream source coordinate. | reproduced | paper_exact |
-| `T-FIG001B` | FIG001B | Exact first-order tilt and defocus intensity-response functions. | reproduced | paper_exact |
-| `T-FIG001C` | FIG001C | Optimized fringe-locked source codes and smooth Gaussian toy-code comparison. | reproduced | paper_exact |
-| `T-FIG001D` | FIG001D | Principal information-retention fractions for optimized and Gaussian toy two-channel receivers. | reproduced | paper_exact |
-| `T-FIGS001` | FIGS001 | Relative first-order defocus information as finite slit width increases. | reproduced | paper_exact |
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Public artifacts
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=passed, causal_resolution=not_required, science=passed, execution=attested, pixel=passed, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
-- 5 independently generated data files;
-- 10 independently generated figures;
-- runnable and inspectable code under `code/`;
-- machine-readable boundaries and scoring under `outputs/checks/`.
+## Run
 
-Run `python code/scripts/verify_public_artifacts.py` to recompute hashes and format/non-empty checks for every published artifact. Numerical entrypoint sources are retained under `code/scripts/` and `code/src/`; some legacy scripts require paper-specific parameters or external public data, as documented in their comments and the numerical-method note.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-## Remaining boundary
+## Paper-review boundary
 
-The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
-
-Layout, typography, axes, line styles, palettes, and interpolation may be optimized for rendering diagnostics, but they must not alter physical parameters or numerical arrays and must never replace scientific computation with source-image pixels.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=not_required, independent_review=missing, review_scope=missing, paper_assessment=missing.

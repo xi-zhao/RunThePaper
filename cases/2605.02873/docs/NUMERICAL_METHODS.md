@@ -1,35 +1,39 @@
 # Numerical Methods
 
-## MTH001
+## Shared Physical Solver
 
-- Targets: T-FIG001A, T-FIG001B, T-FIG001C, T-FIG001D, T-FIGS001.
-- Equations: EQ001--EQ008 as listed per target.
-- Paper parameters: \(\lambda=633\) nm, \(L_1=L_2=0.35\) m,
-  \(d=500\,\mu\mathrm m\), \(a=250\,\mu\mathrm m\),
-  \(X_D=-L_2\lambda/(4d)\), \(y\in[-1.5,1.5]\) mm, and
-  \(B=0.02\max R_0\).
-- Grid: uniform full-window source samples; fixed Gauss--Legendre quadrature on
-  each finite slit. Grid sizes are recorded in every check.
-- Boundary conditions: exact finite slit endpoints; no Gaussian or point-slit
-  replacement.
-- Solver: vectorized deterministic NumPy quadrature and trapezoidal source
-  integration.
-- Tolerance: convergence and printed-value thresholds are target-specific and
-  machine-readable.
-- Random seed: not applicable; calculation is deterministic.
-- Output schema: CSV numerical arrays plus JSON checks containing parameters,
-  timing, metrics, tolerances, and verdict.
-- Validation: central finite differences, doubled quadrature order, refined
-  source grid, symmetry/positivity/orthogonality checks, and analytic-reference
-  comparisons.
+`src/try_fresnel.py` is the single case-local implementation of EQC001-EQC008.
+It evaluates each slit on its exact finite interval with independent
+Gauss--Legendre quadrature. The main final grid uses 1,201 source points and
+192 nodes per slit. A second 1,801-point, 256-node calculation is used only as
+a convergence check.
 
-## Efficiency And Reuse
+The solver returns the physical state
+\((E_0,R_0,M_t,M_f,g_t,g_f)\). Full Fisher information, optimized codes, toy
+codes, coded Fisher matrices, retention eigenvalues, and the width scan are
+pure functions derived from that state. Original PNGs and paper reference
+numbers do not appear in the solver.
 
-- Core model: one case-local `TryModel` implementation shared by all targets.
-- Main cost: complex kernel evaluation over source-by-slit quadrature grids.
-- Optimization: vectorization in bounded source chunks; no production
-  dependency added.
-- Scaling: \(O(N_yN_x)\) per slit width with \(O(N_{\rm chunk}N_x)\) working
-  memory.
-- Case boundary: optical parameters, expected values, plot contracts, and all
-  target runners remain under this case.
+## Target Isolation
+
+`scripts/run_target.py --target <id>` requires both
+`PRAGENT_GUARDED_TARGET_ID=<id>` and
+`PRAGENT_GUARDED_STAGE=final_reproduction`. Each invocation writes only the
+CSV, figure, scientific check, and run record belonging to that target.
+
+## Independent Checks
+
+- Fig. 1(a): intensity nonnegativity, unit normalization, denser-grid
+  convergence.
+- Fig. 1(b): analytic moment derivatives versus direct central finite
+  differences of the field intensity.
+- Fig. 1(c): nuisance zero mean, pair orthogonality, unit noise norm,
+  fringe-oscillation count, and convergence.
+- Fig. 1(d): full/coded Fisher matrices and four retention values versus paper
+  text, projection bounds, and convergence.
+- Fig. S1: analytic narrow-slit suppression, strict monotonicity, all five
+  independently generated values versus Supplementary Table S1, and
+  convergence.
+
+Paper values are introduced only after independent generation in the
+target-specific comparison/check functions.

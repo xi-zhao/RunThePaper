@@ -6,7 +6,7 @@ Published as: [New Constraints on Axion-Mediated Spin Interactions Using Magneti
 
 Formal citation: Phys. Rev. Lett. 133, 191801 (2024) · DOI `10.1103/PhysRevLett.133.191801` · Locator `191801`
 
-Public status: **Partial scientific reproduction** · Audit score: **51.07/100**
+Public status: **Partial scientific reproduction** · Audit score: **53.93/100**
 
 Seven main-text formula/method components pass independently; experimental arrays, finite geometry, and supplemental scope remain unavailable.
 
@@ -68,7 +68,7 @@ cd cases/PhysRevLett.133.191801/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
@@ -79,3 +79,17 @@ Remaining limitation: Unpublished experimental arrays are not reconstructed from
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
+
+![T001 fig2a free decay response](outputs/figures/feature/T001_fig2a_free_decay_response.png)
+
+![T002 fig2a gaussian response](outputs/figures/feature/T002_fig2a_gaussian_response.png)
+
+![T003 fig2a chirp response](outputs/figures/feature/T003_fig2a_chirp_response.png)
+
+![T004 fig2b matched filter injection](outputs/figures/feature/T004_fig2b_matched_filter_injection.png)
+
+![T005 fig2c filter sensitivity](outputs/figures/feature/T005_fig2c_filter_sensitivity.png)
+
+![T006 fig4a statistical model](outputs/figures/feature/T006_fig4a_statistical_model.png)
+
+![T007 fig4b point source constraint](outputs/figures/feature/T007_fig4b_point_source_constraint.png)

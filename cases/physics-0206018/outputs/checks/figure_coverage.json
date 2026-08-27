@@ -1,0 +1,128 @@
+{
+  "schema_version": 2,
+  "paper_id": "physics-0206018",
+  "implementations": {
+    "paper_scale_bem_campaign": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_paper_scale.py",
+        "scripts/render_figures.py",
+        "src/bem.py",
+        "src/paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--stage",
+        "all"
+      ],
+      "run_contract_ref": "run_contract_paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale_bem/data/bem_paper_scale.npz",
+        "outputs/data/paper_scale_bem/data/bem_paper_scale_summary.json",
+        "outputs/data/paper_scale_bem/checks/acceptance.json",
+        "outputs/data/paper_scale_bem/checks/manifest.json",
+        "outputs/data/paper_scale_bem/checks/campaign_state.json",
+        "outputs/data/paper_scale_bem/figures/fig5_cross_section.png",
+        "outputs/data/paper_scale_bem/figures/fig6_near_field.png",
+        "outputs/data/paper_scale_bem/figures/fig7_far_field.png"
+      ],
+      "acceptance_criteria": [
+        "The explicit segment map has exactly N=1600 boundary elements and a 2N=3200 BEM matrix.",
+        "All configured scan points and near-field rows are covered exactly once by config-hashed checkpoints before aggregation.",
+        "The maximum scattering linear residual is <=1e-9 and the median optical-theorem relative error is <=0.03.",
+        "The boundary resolution is b>=16 and the declared circular fillet satisfies the printed rho/lambda and rho/Delta-s ratios within 8%.",
+        "The reported resonance is sampled within 0.0025 kR, its finest-mesh boundary residual is <=5e-4, and the smallest singular value decreases from the coarsest mesh.",
+        "Near- and far-field arrays are finite and nonzero, while the far-field pi-rotation maximum error is <=1e-4.",
+        "The manifest records that no source pixels, author numerical arrays, or author code entered the numerical path; the mesh can satisfy the paper-declared equivalence class, while the prose/Figure 4 displacement-sign conflict keeps the publication-wide parameter state below unqualified paper-exact."
+      ],
+      "compute_status": "paper_scale_attested",
+      "run_id": "paper-scale-figure-geometry-bem-v2",
+      "run_attestation_ref": "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json",
+      "acceptance_ref": "outputs/data/paper_scale_bem/checks/acceptance.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_domain_schematic",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1",
+      "reason": "Domain schematic only; it does not define an independent numerical observable."
+    },
+    {
+      "item_id": "fig2_symmetry_reduction",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2",
+      "reason": "Symmetry illustration only; no numeric output is read from this panel."
+    },
+    {
+      "item_id": "fig3_corner_rounding_algorithm",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 3",
+      "reason": "Rounded-corner mesh sketch only; the executable numerical content lives in the BEM solver."
+    },
+    {
+      "item_id": "fig4_geometry_input",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 4",
+      "reason": "Input-geometry schematic; its printed parameters are consumed by the numerical targets below rather than counted as reproduced output."
+    },
+    {
+      "item_id": "fig5_cross_section_curve",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_bem_campaign",
+      "source_ref": "Fig. 5",
+      "reason": "The scattering cross section is generated from the independent boundary-integral solve and Eq. (22), using the attested paper-scale campaign rather than any source-curve digitization.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig6_near_field_intensity_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_bem_campaign",
+      "source_ref": "Fig. 6",
+      "reason": "The near-field intensity map is reconstructed from the same frozen resonance state and Eq. (38); all rows come from the paper-scale BEM campaign.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig7_far_field_pattern",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_bem_campaign",
+      "source_ref": "Fig. 7",
+      "reason": "The far-field pattern is generated from the frozen BEM resonance vector on an explicit angular grid, with no use of source pixels or digitized arrays.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    }
+  ]
+}

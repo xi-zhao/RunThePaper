@@ -6,9 +6,9 @@ Published as: [Energy Levels and Wave Functions of Bloch Electrons in Rational a
 
 Formal citation: Phys. Rev. B 14, 2239-2249 (1976) · DOI `10.1103/PhysRevB.14.2239` · Locator `2239-2249`
 
-Public status: **Partial scientific reproduction** · Audit score: **89.57/100**
+Public status: **Partial scientific reproduction** · Audit score: **89.43/100**
 
-Full paper audited: six numerical figures and one quantitative-claim target.
+Atomic full-paper inventory: 10 eligible items, 8 covered, 2 explicitly uncovered; coverage 80.00%.
 
 ## Start Here / 从这里开始
 
@@ -36,19 +36,17 @@ cd cases/PhysRevB.14.2239/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: No author code, author numerical arrays or source pixels are scientific inputs.
+Remaining limitation: The Section VI Cantor-spectrum theorem and Section VII continuity theorem family remain uncovered pending independent claim-specific artifacts. No author code, author numerical arrays or source pixels are scientific inputs.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
-
-![contact](outputs/figures/contact.png)
 
 ![main fig1 reproduction](outputs/figures/main_fig1_reproduction.png)
 

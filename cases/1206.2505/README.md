@@ -6,7 +6,7 @@ Published as: [Dynamical Quantum Phase Transitions in the Transverse-Field Ising
 
 Formal citation: Phys. Rev. Lett. 110, 135704 (2013) · DOI `10.1103/PhysRevLett.110.135704` · Locator `135704`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **84.64/100**
+Public status: **Partial scientific reproduction** · Audit score: **84.29/100**
 
 All published numerical figures have formula-derived code and frozen v7 outputs.
 
@@ -57,7 +57,7 @@ cd cases/1206.2505/code
 python scripts/run_reproduction.py --config config/paper_scale.json --output-root outputs/public_quick_run
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

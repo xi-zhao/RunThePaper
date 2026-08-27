@@ -40,10 +40,11 @@ def main() -> int:
 
     config_path = (WORKSPACE / args.config).resolve()
     config = json.loads(config_path.read_text(encoding="utf-8"))
-    codes = config.get("codes")
+    parameters = config["parameters"]
+    codes = parameters.get("codes")
     if not isinstance(codes, list):
         raise ValueError("config.codes must be an array")
-    required_sizes = {int(value) for value in config["required_n_qubits"]}
+    required_sizes = {int(value) for value in parameters["required_n_qubits"]}
     output_root = (WORKSPACE / args.output_root).resolve()
     checks = output_root / "checks"
     data = output_root / "data"
@@ -65,14 +66,36 @@ def main() -> int:
     }
     plan_path = checks / "gf4_campaign_plan.json"
     plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
-    if args.validate_only or not codes:
+    if not codes:
+        blocked_payload = {
+            "schema_version": 1,
+            "paper_id": config["paper_id"],
+            "target_id": config["target_id"],
+            "status": "blocked_missing_source_input",
+            "results": [],
+            "required_n_qubits": sorted(required_sizes),
+            "required_code_schema": config["required_code_schema"],
+            "scientific_boundary": {
+                "source_pixels_used": False,
+                "author_code_used": False,
+                "author_numeric_arrays_used": False,
+                "code_generators_guessed": False,
+            },
+        }
+        blocked_path = data / "gf4_threshold_campaign.json"
+        blocked_path.write_text(
+            json.dumps(blocked_payload, indent=2) + "\n", encoding="utf-8"
+        )
+        print(json.dumps(plan, indent=2))
+        return 0
+    if args.validate_only:
         print(json.dumps(plan, indent=2))
         return 0
 
     epsilon = np.linspace(
-        float(config["epsilon_grid"]["minimum"]),
-        float(config["epsilon_grid"]["maximum"]),
-        int(config["epsilon_grid"]["points"]),
+        float(parameters["epsilon_grid"]["minimum"]),
+        float(parameters["epsilon_grid"]["maximum"]),
+        int(parameters["epsilon_grid"]["points"]),
     )
     results = []
     for raw_code in codes:

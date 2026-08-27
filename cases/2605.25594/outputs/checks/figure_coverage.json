@@ -1,20 +1,1429 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "paper_id": "2605.25594",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf, 20 pages including Appendices A-G",
+    "known_items": [
+      "Printed Figs. 1-17",
+      "two independent no-display quantitative claims"
+    ],
+    "unknown_remainder": false,
+    "reason": "The archived PDF contains the full article and embedded appendices; no separate supplement is referenced."
+  },
+  "implementations": {
+    "anderson_paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T024"
+      ],
+      "code_refs": [
+        "src/anderson_sensitivity.py",
+        "src/paper_scale_campaign.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "run-all"
+      ],
+      "expected_outputs": [
+        "outputs/data/paper_scale/target_index.json",
+        "outputs/checks/paper_scale_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "Every deterministic paper-scale work unit has a config- and implementation-hash-bound checkpoint.",
+        "Every declared target receives independently generated sufficient statistics for its plotted observable.",
+        "Boundary disorder is applied only to T_s families, matching the paper's stated convention.",
+        "Full-spectrum spacing, central-state susceptibility, spectral, distribution, and perturbative quantities pass their target-specific scientific checks.",
+        "The numerical runner reads no paper PDF/TeX, author code/arrays, or reference pixels."
+      ]
+    },
+    "appendix_a00_phenomenology": {
+      "status": "ready",
+      "target_ids": [
+        "T009"
+      ],
+      "code_refs": [
+        "scripts/run_fig11_phenomenological_model.py"
+      ],
+      "config_ref": "config/figA00_phenomenology.json",
+      "run_contract_ref": "run_contract.figA00.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_fig11_phenomenological_model.py",
+        "--config",
+        "config/figA00_phenomenology.json",
+        "--no-render"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig11_model_curves.csv",
+        "outputs/checks/fig11_phenomenological_model.json"
+      ],
+      "acceptance_criteria": [
+        "The Monte Carlo quadrature recovers the analytic broadened-Drude exponent within the frozen tolerance.",
+        "The recovered exponent agrees with the paper-reported a approximately 0.52 within the frozen tolerance.",
+        "The single-rate branch recovers Lorentzian half-widths without reading paper pixels or author arrays."
+      ]
+    },
+    "implementation_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T024"
+      ],
+      "code_refs": [
+        "src/anderson_sensitivity.py",
+        "src/paper_scale_campaign.py",
+        "src/implementation_campaign.py",
+        "scripts/run_implementation_campaign.py"
+      ],
+      "config_ref": "config/implementation_campaign.json",
+      "run_contract_ref": "run_contract.implementation_campaign.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_campaign.json",
+        "--paper-config",
+        "config/paper_scale.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All 24 target projections execute through one shared clean-room eigensystem campaign and pass their target-specific low-cost invariants.",
+        "The full paper-scale work-unit plan remains frozen and machine-readable, while this run is explicitly reduced validation only.",
+        "Every target writes structured data and a check file without promoting scientific coverage.",
+        "No paper PDF, source figure, digitized curve, author numerical array, or author code enters the numerical runner."
+      ]
+    }
+  },
   "items": [
-    {"item_id": "Fig. 1", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "target_ids": ["T001"], "reason": "Reduced-scale susceptibility features pass, but the L=34-38 paper comparison needs the large-memory eigensolver path."},
-    {"item_id": "Fig. 2", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "target_ids": ["T002"], "reason": "The weak-disorder exponent requires the larger size set recorded in the remote plan."},
-    {"item_id": "Fig. 3", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "target_ids": ["T003"], "reason": "Paper-exact spectral-function fits require V=38^3 and a denser weak-disorder grid."},
-    {"item_id": "Figs. 4-7", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "reason": "Transition peak, cutoff, peak scaling, and collapse campaigns require larger L and dense parameter grids."},
-    {"item_id": "Fig. 8", "kind": "numeric", "decision": "target", "target_ids": ["T004"], "reason": "The localized-regime typical-versus-average separation is independently generated."},
-    {"item_id": "Fig. 9", "kind": "numeric", "decision": "target", "target_ids": ["T007"], "reason": "The three-size remote campaign is extracted into structured data and checked quantitatively."},
-    {"item_id": "Fig. 10", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "target_ids": ["T008"], "reason": "The perturbative mechanism is present, while a paper-size overlay requires the next remote spectral run."},
-    {"item_id": "Fig. 11", "kind": "numeric", "decision": "deferred_blocked", "blocker": "missing_source_input", "target_ids": ["T009"], "reason": "The panel parameters were tuned to an unpublished V=38^3 dataset; additional compute cannot infer the missing tuning contract."},
-    {"item_id": "Fig. A00", "kind": "numeric", "decision": "deferred_blocked", "blocker": "covered_by_target", "target_ids": ["T009"], "reason": "The same phenomenological model is evaluated by the Fig. 11 target."},
-    {"item_id": "Fig. A0", "kind": "non_numeric", "decision": "excluded", "reason": "Lattice-sublattice schematic."},
-    {"item_id": "Fig. A1", "kind": "numeric", "decision": "target", "target_ids": ["T005"], "reason": "The gap-ratio transition trend is independently checked."},
-    {"item_id": "Fig. A2", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "reason": "A separate paper-scale level-spacing campaign has not been run."},
-    {"item_id": "Fig. A3", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "target_ids": ["T006"], "reason": "The T_s spectral-function operator requires the declared remote operator-swap run."},
-    {"item_id": "Fig. A4", "kind": "numeric", "decision": "deferred_blocked", "blocker": "insufficient_compute", "reason": "The n-operator localized-phase campaign is not part of the completed remote data."}
+    {
+      "item_id": "PFIG-001-A-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(a), PDF p. 5",
+      "scientific_object": "unregularized tilde-chi_typ(W), operator=T_s, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-A-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(a), PDF p. 5",
+      "scientific_object": "unregularized tilde-chi_typ(W), operator=T, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-A-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(a), PDF p. 5",
+      "scientific_object": "unregularized tilde-chi_typ(W), operator=n, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-B-TS-WEAK",
+      "parent_item_id": "PFIG-001-B-TS",
+      "item_type": "figure_series_region",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(b), PDF p. 5",
+      "scientific_object": "weak-disorder peak of regularized tilde-chi_typ^r(W) at mu*=2 log(V) omega_av, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-B-TS-ANDERSON",
+      "parent_item_id": "PFIG-001-B-TS",
+      "item_type": "figure_series_region",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(b), PDF p. 5",
+      "scientific_object": "Anderson-transition peak of regularized tilde-chi_typ^r(W) near W2*=16.5, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-B-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(b), PDF p. 5",
+      "scientific_object": "regularized tilde-chi_typ^r(W) at mu*=2 log(V) omega_av, operator=T, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-B-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(b), PDF p. 5",
+      "scientific_object": "regularized tilde-chi_typ^r(W) at mu*=2 log(V) omega_av, operator=n, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-C-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(c), PDF p. 5",
+      "scientific_object": "regularized tilde-chi_typ^r versus W sqrt(V), operator=T_s, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-C-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(c), PDF p. 5",
+      "scientific_object": "regularized tilde-chi_typ^r versus W sqrt(V), operator=T, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-C-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 1(c), PDF p. 5",
+      "scientific_object": "regularized tilde-chi_typ^r versus W sqrt(V), operator=n, finite-size family",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 2(a), PDF p. 5",
+      "scientific_object": "W1* versus V^-1/2 and fit coefficient c approximately 41",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 2(b), PDF p. 5",
+      "scientific_object": "regularized peak height at W1* versus mu^-1 and exponent approximately 0.98",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 3(a), PDF p. 6",
+      "scientific_object": "T_s spectral function at W1*, Lorentzian plateau and Gamma fit",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-INSET",
+      "item_type": "figure_inset",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 3(a) inset, PDF p. 6",
+      "scientific_object": "|f(omega)|^2/V versus omega V collapse",
+      "decision": "target",
+      "target_ids": [
+        "T021"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 3(b), PDF p. 6",
+      "scientific_object": "T_s spectral tail at W2*=16.5 and exponent approximately 0.52",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-A-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(a), PDF p. 7",
+      "scientific_object": "unregularized W2* finite-size extrapolation, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-A-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(a), PDF p. 7",
+      "scientific_object": "unregularized W2* finite-size extrapolation, operator=T",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-A-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(a), PDF p. 7",
+      "scientific_object": "unregularized W2* finite-size extrapolation, operator=n",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-B-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(b), PDF p. 7",
+      "scientific_object": "unregularized peak height versus omega_typ^-1, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-B-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(b), PDF p. 7",
+      "scientific_object": "unregularized peak height versus omega_typ^-1, operator=T",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-B-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(b), PDF p. 7",
+      "scientific_object": "unregularized peak height versus omega_typ^-1, operator=n",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-C-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(c), PDF p. 7",
+      "scientific_object": "regularized W2* finite-size extrapolation, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-C-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(c), PDF p. 7",
+      "scientific_object": "regularized W2* finite-size extrapolation, operator=T",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-C-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(c), PDF p. 7",
+      "scientific_object": "regularized W2* finite-size extrapolation, operator=n",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-D-TS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(d), PDF p. 7",
+      "scientific_object": "regularized peak height versus mu^-1, operator=T_s",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-D-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(d), PDF p. 7",
+      "scientific_object": "regularized peak height versus mu^-1, operator=T",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-D-N",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 4(d), PDF p. 7",
+      "scientific_object": "regularized peak height versus mu^-1, operator=n",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-005-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 5(a), PDF p. 8",
+      "scientific_object": "L=38 fixed-mu T_s susceptibility curves versus W",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-005-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 5(b), PDF p. 8",
+      "scientific_object": "L=38 fixed-mu T_s scaling versus W/sqrt(mu)",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 6(a), PDF p. 8",
+      "scientific_object": "W1* versus mu^1/2, L=28,34,38",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 6(b), PDF p. 8",
+      "scientific_object": "peak height at W1* versus mu^-1, L=28,34,38",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-C",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 6(c), PDF p. 8",
+      "scientific_object": "W2* versus mu^1/3, L=28,34,38",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-D",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 6(d), PDF p. 8",
+      "scientific_object": "peak height at W2* versus mu^-1, L=28,34,38",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-007-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 7(a), PDF p. 9",
+      "scientific_object": "weak-crossover peak-height collapse versus mu V",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-007-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 7(b), PDF p. 9",
+      "scientific_object": "Anderson peak-height collapse versus mu V",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-007-C",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 7(c), PDF p. 9",
+      "scientific_object": "Anderson peak-location collapse versus mu V",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-A-AV",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(a,b,inset), PDF p. 9",
+      "scientific_object": "regularized average susceptibility versus W",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-A-TYP",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(a,b,inset), PDF p. 9",
+      "scientific_object": "regularized typical susceptibility versus W",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-B-RATIO",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(a,b,inset), PDF p. 9",
+      "scientific_object": "average-to-typical susceptibility ratio versus W",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-B-INSET-W16P5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(a,b,inset), PDF p. 9",
+      "scientific_object": "ratio versus mu at W=16.5",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-B-INSET-W25",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(a,b,inset), PDF p. 9",
+      "scientific_object": "ratio versus mu at W=25",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-B-INSET-W12P5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 8(b) inset, PDF p. 9",
+      "scientific_object": "ratio versus mu at W=12.5 and L=28,38",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-A-ED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(a), PDF p. 11",
+      "scientific_object": "full Anderson T_s log chi_typ^r versus W at mu=0",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-A-PT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(a), PDF p. 11",
+      "scientific_object": "T_s strong-disorder perturbative branch at mu=0",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-B-ED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(b), PDF p. 11",
+      "scientific_object": "full Anderson T_s log chi_typ^r versus W at mu=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-B-PT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(b), PDF p. 11",
+      "scientific_object": "T_s strong-disorder perturbative branch at mu=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-C-W19P6",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(c), PDF p. 11",
+      "scientific_object": "T_s log chi_typ^r versus log10(mu) at W=19.6",
+      "decision": "target",
+      "target_ids": [
+        "T022"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-009-C-W28P2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 9(c), PDF p. 11",
+      "scientific_object": "T_s log chi_typ^r versus log10(mu) at W=28.2",
+      "decision": "target",
+      "target_ids": [
+        "T022"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-010-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 10(a,b,inset), PDF pp. 11-12",
+      "scientific_object": "W3* crossings between neighboring mu curves at L=38",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-010-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 10(a,b,inset), PDF pp. 11-12",
+      "scientific_object": "W3* versus mu^-1 for L=20..38",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-010-B-INSET",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 10(a,b,inset), PDF pp. 11-12",
+      "scientific_object": "max(W3*) versus L^-1 extrapolation to approximately 27.92",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-011-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 11(a), PDF p. 13",
+      "scientific_object": "broadened-Drude fading-ergodicity spectral limit",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_PHENOMENOLOGY"
+      ]
+    },
+    {
+      "item_id": "PFIG-011-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 11(b), PDF p. 13",
+      "scientific_object": "broadened-Drude polynomial-relaxation spectral limit",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_PHENOMENOLOGY"
+      ]
+    },
+    {
+      "item_id": "PFIG-012-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Printed Fig. 12, PDF p. 14",
+      "scientific_object": "Cross-section showing two next-nearest-neighbor sublattices",
+      "decision": "excluded",
+      "reason": "Geometry schematic with no numerical series."
+    },
+    {
+      "item_id": "PFIG-013-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 13(a), PDF p. 15",
+      "scientific_object": "gap ratio or its log-W derivative across weak and Anderson crossovers",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-013-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 13(b), PDF p. 15",
+      "scientific_object": "gap ratio or its log-W derivative across weak and Anderson crossovers",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-013-C",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 13(c), PDF p. 15",
+      "scientific_object": "gap ratio or its log-W derivative across weak and Anderson crossovers",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-013-D",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 13(d), PDF p. 15",
+      "scientific_object": "gap ratio or its log-W derivative across weak and Anderson crossovers",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-014-OMEGA-TYP",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 14, PDF p. 15",
+      "scientific_object": "V-rescaled typical level spacing versus W",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-014-OMEGA-AV",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 14, PDF p. 15",
+      "scientific_object": "V-rescaled average level spacing versus W",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(a), PDF p. 16",
+      "scientific_object": "n spectral function",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(b), PDF p. 16",
+      "scientific_object": "n fitted exponent versus disorder",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-C",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(c), PDF p. 16",
+      "scientific_object": "T spectral function",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-D",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(d), PDF p. 16",
+      "scientific_object": "T fitted exponent versus disorder",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-E",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(e), PDF p. 16",
+      "scientific_object": "T_s spectral function across disorder",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-015-F",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 15(f), PDF p. 16",
+      "scientific_object": "T_s fitted exponent versus disorder",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent data exist, but only at a declared reduced/paper-subset boundary.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_ANDERSON"
+      ]
+    },
+    {
+      "item_id": "PFIG-016-DISTRIBUTION",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 16, PDF p. 17",
+      "scientific_object": "P(chi_n) distribution and polynomial tail fits for L=28, W=10..30",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-A-ED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n full numerics versus W at mu=0",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-A-PT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n W^-4 perturbative branch at mu=0",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-B-ED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n full numerics versus W at mu=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-B-PT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n W^-4 perturbative branch at mu=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-C-W19P6",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n mu sweep at W=19.6",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PFIG-017-C-W28P2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Printed Fig. 17(a-c), PDF p. 18",
+      "scientific_object": "randomized-site n mu sweep at W=28.2",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The scientific object is enumerated but has no valid directly bound generated artifact.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "PCLM-IVB-W4-APPROX40",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Sec. IV.B, PDF p. 10; explicitly marked not shown",
+      "scientific_object": "Finite-system estimate W4* approximately 40",
+      "decision": "target",
+      "target_ids": [
+        "T023"
+      ],
+      "reason": "A target-specific reduced implementation is now isolated and attested; scientific coverage remains open until the declared paper-scale disorder sweep is executed and reviewed.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_LOCALIZED"
+      ]
+    },
+    {
+      "item_id": "PCLM-APPC-BOUNDARY-INVARIANCE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Appendix C, PDF p. 14",
+      "scientific_object": "Boundary-disorder term leaves fidelity susceptibilities unchanged for W>0.3",
+      "decision": "target",
+      "target_ids": [
+        "T024"
+      ],
+      "reason": "A paired same-disorder reduced implementation is now isolated and attested; scientific coverage remains open until the paper-scale boundary-invariance claim is executed and reviewed.",
+      "implementation_ref": "implementation_campaign",
+      "claim_refs": [
+        "CLM_WEAK"
+      ]
+    }
   ]
 }

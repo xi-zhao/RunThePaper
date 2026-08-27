@@ -1,0 +1,481 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1038-s41586-026-10720-3",
+  "source": "Nature 2026 main article and supplementary information",
+  "implementations": {
+    "formula_only_all_theory": {
+      "status": "ready",
+      "target_ids": [
+        "T_F2A",
+        "T_F2B",
+        "T_F2C",
+        "T_F4A",
+        "T_F4B",
+        "T_F4C",
+        "T_F4D",
+        "T_F4E",
+        "T_F4F",
+        "T_F5C",
+        "T_S1A",
+        "T_S1B",
+        "T_S1C"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--profile",
+        "paper",
+        "--shard-index",
+        "0",
+        "--shard-count",
+        "1",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/optical_hawking/model.py",
+        "src/optical_hawking/physical_dispersion.py",
+        "src/optical_hawking/analysis.py",
+        "src/optical_hawking/solver.py",
+        "src/optical_hawking/theory.py",
+        "src/optical_hawking/paper_scale_campaign.py",
+        "src/optical_hawking/normalization.py",
+        "scripts/run_paper_scale.py",
+        "scripts/check_supplement_normalization.py",
+        "run_contract.supplement_normalization.json"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale/paper/plan.json",
+        "outputs/data/paper_scale/paper/manifest.json",
+        "outputs/data/paper_scale/paper/acceptance.json",
+        "outputs/checks/supplement_normalization.json"
+      ],
+      "acceptance_criteria": [
+        "All 47 declared work units complete from equations, published scalars, or labelled physical surrogate assumptions.",
+        "The 13 theoretical paper items each have a target-bound numerical or analytic artifact.",
+        "The runner never reads author code, author arrays, digitized curves, source pixels, raw/, or original-figure directories.",
+        "Supplement scan grids remain explicitly independent evaluation grids, never paper-exact sampling claims.",
+        "Pulse-energy, FFT, chirp, power and frequency-dependent-gamma normalization checks pass independently.",
+        "Missing fibre coefficients, pulse state, experimental arrays, and Fig. 4 fit tables continue to cap fidelity after any successful compute run."
+      ],
+      "acceptance_ref": "config/paper_scale.json#/acceptance",
+      "compute_status": "code_ready_full_production_not_run"
+    }
+  },
+  "items": [
+    {
+      "item_id": "M1a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.2, Fig. 1(a)",
+      "scientific_object": "astrophysical horizon schematic",
+      "reason": "Conceptual diagram; no independent numerical observable."
+    },
+    {
+      "item_id": "M1b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.2, Fig. 1(b)",
+      "scientific_object": "fibre-optical horizon schematic",
+      "reason": "Conceptual apparatus/field diagram; no independent numerical observable."
+    },
+    {
+      "item_id": "M2a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.3, Fig. 2(a)",
+      "scientific_object": "full co-moving dispersion",
+      "reason": "Eq. (1) is executable with a declared physical surrogate; exact fibre dispersion is unpublished.",
+      "target_ids": [
+        "T_F2A"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F2A"
+      ]
+    },
+    {
+      "item_id": "M2b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.3, Fig. 2(b)",
+      "scientific_object": "infrared dispersion and landmarks",
+      "reason": "Formula-derived landmarks are computed without source coordinates; exact alignment needs missing fibre/frame parameters.",
+      "target_ids": [
+        "T_F2B"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F2B"
+      ]
+    },
+    {
+      "item_id": "M2c",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.3, Fig. 2(c)",
+      "scientific_object": "ultraviolet phase-matching roots",
+      "reason": "Root equations are solved directly on the clean surrogate; exact roots remain parameter-blocked.",
+      "target_ids": [
+        "T_F2C"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F2C"
+      ]
+    },
+    {
+      "item_id": "M3a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(a)",
+      "scientific_object": "measured UV spectra at 1100 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4A"
+      ]
+    },
+    {
+      "item_id": "M3b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(b)",
+      "scientific_object": "measured UV spectra at 1200 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4B"
+      ]
+    },
+    {
+      "item_id": "M3c",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(c)",
+      "scientific_object": "measured UV spectra at 1300 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4C"
+      ]
+    },
+    {
+      "item_id": "M3d",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(d)",
+      "scientific_object": "measured UV spectra at 1400 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4D"
+      ]
+    },
+    {
+      "item_id": "M3e",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(e)",
+      "scientific_object": "measured UV spectra at 1450 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4E"
+      ]
+    },
+    {
+      "item_id": "M3f",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.6, Fig. 3(f)",
+      "scientific_object": "measured UV spectra at 1600 nm probe",
+      "reason": "Reproducing this item requires the physical experiment and unpublished photon-count arrays; it is reference evidence, not a numerical-runner output.",
+      "reference_for_target_ids": [
+        "T_F4F"
+      ]
+    },
+    {
+      "item_id": "M4a-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(a), red markers",
+      "scientific_object": "corrected experimental markers at 1100 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4A"
+      ]
+    },
+    {
+      "item_id": "M4a-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(a), black curve; Methods D, mu=10.0",
+      "scientific_object": "Eq. (D.1) theory curve at 1100 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4A"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4A"
+      ]
+    },
+    {
+      "item_id": "M4b-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(b), red markers",
+      "scientific_object": "corrected experimental markers at 1200 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4B"
+      ]
+    },
+    {
+      "item_id": "M4b-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(b), black curve; Methods D, mu=1.2",
+      "scientific_object": "Eq. (D.1) theory curve at 1200 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4B"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4B"
+      ]
+    },
+    {
+      "item_id": "M4c-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(c), red markers",
+      "scientific_object": "corrected experimental markers at 1300 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4C"
+      ]
+    },
+    {
+      "item_id": "M4c-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(c), black curve; Methods D, mu=1.1",
+      "scientific_object": "Eq. (D.1) theory curve at 1300 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4C"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4C"
+      ]
+    },
+    {
+      "item_id": "M4d-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(d), red markers",
+      "scientific_object": "corrected experimental markers at 1400 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4D"
+      ]
+    },
+    {
+      "item_id": "M4d-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(d), black curve; Methods D, mu=10.0",
+      "scientific_object": "Eq. (D.1) theory curve at 1400 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4D"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4D"
+      ]
+    },
+    {
+      "item_id": "M4e-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(e), red markers",
+      "scientific_object": "corrected experimental markers at 1450 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4E"
+      ]
+    },
+    {
+      "item_id": "M4e-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(e), black curve; Methods D, mu=1.0",
+      "scientific_object": "Eq. (D.1) theory curve at 1450 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4E"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4E"
+      ]
+    },
+    {
+      "item_id": "M4f-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.7, Fig. 4(f), red markers",
+      "scientific_object": "corrected experimental markers at 1600 nm probe",
+      "reason": "The marker array and correction metadata are unpublished experimental evidence.",
+      "reference_for_target_ids": [
+        "T_F4F"
+      ]
+    },
+    {
+      "item_id": "M4f-T",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.7, Fig. 4(f), black curve; Methods D, mu=1.05",
+      "scientific_object": "Eq. (D.1) theory curve at 1600 nm probe",
+      "reason": "The formula is implemented as a sensitivity family; exact fitted curve parameters are unpublished and no source markers are fitted.",
+      "target_ids": [
+        "T_F4F"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F4F"
+      ]
+    },
+    {
+      "item_id": "M5-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main PDF p.8, Fig. 5, dots and regression lines",
+      "scientific_object": "experimental normalized points and their regressions",
+      "reason": "Points, slopes, intercepts, and RMS values derive from unpublished upstream experimental arrays.",
+      "reference_for_target_ids": [
+        "T_F5C"
+      ]
+    },
+    {
+      "item_id": "M5-C",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main PDF p.8, Fig. 5; Methods Eqs. (D.2-D.3)",
+      "scientific_object": "equal-slope analytic constraint",
+      "reason": "The shared-slope consequence is independently derived; this target does not claim the plotted regression lines or experimental two-percent agreement.",
+      "target_ids": [
+        "T_F5C"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_F5C"
+      ]
+    },
+    {
+      "item_id": "S1a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Supplement PDF p.4, Fig. 1(a)",
+      "scientific_object": "signal wavelengths versus probe wavelength",
+      "reason": "UPPE code evaluates an independently declared grid spanning the published axis; the paper's exact sample grid and fibre/pulse state are unpublished.",
+      "target_ids": [
+        "T_S1A"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_S1A"
+      ]
+    },
+    {
+      "item_id": "S1b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Supplement PDF p.4, Fig. 1(b)",
+      "scientific_object": "signal wavelengths versus pump power",
+      "reason": "UPPE code evaluates an independently declared grid spanning the published axis; it is not the undisclosed paper sampling.",
+      "target_ids": [
+        "T_S1B"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_S1B"
+      ]
+    },
+    {
+      "item_id": "S1c",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Supplement PDF p.4, Fig. 1(c)",
+      "scientific_object": "signal intensities versus pump prechirp",
+      "reason": "UPPE code evaluates an independently declared grid; exact chirp convention, pulse state, and paper sampling are unavailable.",
+      "target_ids": [
+        "T_S1C"
+      ],
+      "implementation_ref": "formula_only_all_theory",
+      "claim_refs": [
+        "CLM_T_S1C"
+      ]
+    }
+  ]
+}

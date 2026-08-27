@@ -1,9 +1,9 @@
 {
   "paper_id": "1710.10890",
-  "schema_version": 3,
+  "schema_version": 4,
   "status": "passed",
   "score_model": "rra_similarity_v3_scientific_theory_mask_pixel_primary",
-  "summary": "All independently recoverable baseline targets are generated; Fig. 3(b) has an inconclusive method-equivalence gap, Supplement Fig. S2 is a declared proxy with a code-ready 3D rerun, and unpublished experimental arrays/curve-specific atom numbers remain deferred.",
+  "summary": "Whole-paper atomic audit: 25 eligible scientific items, 18 backed by existing independent artifacts, and 7 explicitly uncovered.",
   "raw_pixel_summary": {
     "primary_metric": "scientific_theory_mask_symmetric_f1_0_100",
     "mean_scientific_region_score": 59.6688,
@@ -54,9 +54,96 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T001"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T001"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The target paper does not publish its coupled-channel scattering model or a dense parameter table; the frozen artifact therefore uses three independently published parameter rows and quadratic interpolation.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper identifies the interaction model and Bc but omits the target-specific coefficients needed to reconstruct the paper-exact magnetic-field dependence.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Interpolation reproduces all supplied rows and the printed Bc zero; no arithmetic defect was found, but checks cannot make the unpublished coupled-channel curve paper-exact.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All three public parameter rows are reproduced to floating-point precision.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json#EQ001"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The independently reconstructed delta-a has a single zero near the printed Bc=56.85 G.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T001"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "Changing solver resolution cannot recover coefficients that are absent from the publication; the remaining cap is an input boundary, not a compute shortfall.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 4 atomic item(s) bound to T001.",
+            "items": [
+              "PFIG-001-A-A11",
+              "PFIG-001-A-A22",
+              "PFIG-001-A-A12",
+              "PFIG-001-A-DELTA-A"
+            ],
+            "completion": "4/4 feature items generated; 0/4 paper-exact parameter mappings established"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain an author-supplied coupled-channel parameterization or independently reconstruct the resonance model from primary spectroscopy, without fitting any physical parameter to source-figure pixels.",
+            "expected_resolution": "Either a paper-exact scattering lane becomes available or the current paper-subset cap remains an accepted publication boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/t001_focused_assessment.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T001_*.npz",
@@ -67,9 +154,24 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Main Fig. 1(a) theory curves",
+            "panel_id": "PFIG-001-A-A11",
             "status": "reproduced",
-            "evidence": "outputs/figures/T001.png"
+            "evidence": "figure_coverage.json#PFIG-001-A-A11"
+          },
+          {
+            "panel_id": "PFIG-001-A-A22",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-001-A-A22"
+          },
+          {
+            "panel_id": "PFIG-001-A-A12",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-001-A-A12"
+          },
+          {
+            "panel_id": "PFIG-001-A-DELTA-A",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-001-A-DELTA-A"
           }
         ],
         "panel_scope_cap": 15.0
@@ -108,7 +210,10 @@
       "reference_score_cap": 70.0,
       "component_total": 86.11,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
@@ -152,9 +257,93 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T002"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T002"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The target paper does not publish its coupled-channel scattering model or a dense parameter table; the frozen artifact therefore uses three independently published parameter rows and quadratic interpolation.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper identifies the interaction model and Bc but omits the target-specific coefficients needed to reconstruct the paper-exact magnetic-field dependence.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Interpolation reproduces all supplied rows and the printed Bc zero; no arithmetic defect was found, but checks cannot make the unpublished coupled-channel curve paper-exact.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All three public parameter rows are reproduced to floating-point precision.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json#EQ001"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The independently reconstructed delta-a has a single zero near the printed Bc=56.85 G.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T001"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "Changing solver resolution cannot recover coefficients that are absent from the publication; the remaining cap is an input boundary, not a compute shortfall.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 1 atomic item(s) bound to T002.",
+            "items": [
+              "PFIG-001-B-NC"
+            ],
+            "completion": "1/1 feature items generated; 0/1 paper-exact parameter mappings established"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain an author-supplied coupled-channel parameterization or independently reconstruct the resonance model from primary spectroscopy, without fitting any physical parameter to source-figure pixels.",
+            "expected_resolution": "Either a paper-exact scattering lane becomes available or the current paper-subset cap remains an accepted publication boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/t002_focused_assessment.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T002_*.npz",
@@ -165,9 +354,9 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Main Fig. 1(b) theory boundary",
+            "panel_id": "PFIG-001-B-NC",
             "status": "reproduced",
-            "evidence": "outputs/figures/T002.png"
+            "evidence": "figure_coverage.json#PFIG-001-B-NC"
           }
         ],
         "panel_scope_cap": 15.0
@@ -206,7 +395,10 @@
       "reference_score_cap": 70.0,
       "component_total": 94.28,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -248,9 +440,96 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T003"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T003"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The target paper does not publish its coupled-channel scattering model or a dense parameter table; the frozen artifact therefore uses three independently published parameter rows and quadratic interpolation.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper identifies the interaction model and Bc but omits the target-specific coefficients needed to reconstruct the paper-exact magnetic-field dependence.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Interpolation reproduces all supplied rows and the printed Bc zero; no arithmetic defect was found, but checks cannot make the unpublished coupled-channel curve paper-exact.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All three public parameter rows are reproduced to floating-point precision.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json#EQ001"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The independently reconstructed delta-a has a single zero near the printed Bc=56.85 G.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T001"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "Changing solver resolution cannot recover coefficients that are absent from the publication; the remaining cap is an input boundary, not a compute shortfall.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 4 atomic item(s) bound to T003.",
+            "items": [
+              "PFIG-002-C-RATIO-EQ",
+              "PFIG-002-C-RATIO-BAND",
+              "PFIG-003-C-RATIO-EQ",
+              "PFIG-003-C-RATIO-BAND"
+            ],
+            "completion": "4/4 feature items generated; 0/4 paper-exact parameter mappings established"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain an author-supplied coupled-channel parameterization or independently reconstruct the resonance model from primary spectroscopy, without fitting any physical parameter to source-figure pixels.",
+            "expected_resolution": "Either a paper-exact scattering lane becomes available or the current paper-subset cap remains an accepted publication boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/t003_focused_assessment.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T003_*.npz",
@@ -261,14 +540,24 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Main Fig. 2(c) theory band",
+            "panel_id": "PFIG-002-C-RATIO-EQ",
             "status": "reproduced",
-            "evidence": "outputs/figures/T003.png"
+            "evidence": "figure_coverage.json#PFIG-002-C-RATIO-EQ"
           },
           {
-            "panel_id": "Main Fig. 3(c) theory band",
+            "panel_id": "PFIG-002-C-RATIO-BAND",
             "status": "reproduced",
-            "evidence": "outputs/figures/T003.png"
+            "evidence": "figure_coverage.json#PFIG-002-C-RATIO-BAND"
+          },
+          {
+            "panel_id": "PFIG-003-C-RATIO-EQ",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-003-C-RATIO-EQ"
+          },
+          {
+            "panel_id": "PFIG-003-C-RATIO-BAND",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-003-C-RATIO-BAND"
           }
         ],
         "panel_scope_cap": 15.0
@@ -307,7 +596,10 @@
       "reference_score_cap": 70.0,
       "component_total": 73.04,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
@@ -350,9 +642,94 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T004"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T004"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The target paper does not publish its coupled-channel scattering model or a dense parameter table; the frozen artifact therefore uses three independently published parameter rows and quadratic interpolation.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper identifies the interaction model and Bc but omits the target-specific coefficients needed to reconstruct the paper-exact magnetic-field dependence.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Interpolation reproduces all supplied rows and the printed Bc zero; no arithmetic defect was found, but checks cannot make the unpublished coupled-channel curve paper-exact.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All three public parameter rows are reproduced to floating-point precision.",
+                "evidence": [
+                  "outputs/checks/formula_verification.json#EQ001"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "The independently reconstructed delta-a has a single zero near the printed Bc=56.85 G.",
+                "evidence": [
+                  "outputs/checks/target_checks.json#T001"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "Changing solver resolution cannot recover coefficients that are absent from the publication; the remaining cap is an input boundary, not a compute shortfall.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 2 atomic item(s) bound to T004.",
+            "items": [
+              "PFIG-003-A-NC-STABLE",
+              "PFIG-003-A-NC-METASTABLE"
+            ],
+            "completion": "2/2 feature items generated; 0/2 paper-exact parameter mappings established"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain an author-supplied coupled-channel parameterization or independently reconstruct the resonance model from primary spectroscopy, without fitting any physical parameter to source-figure pixels.",
+            "expected_resolution": "Either a paper-exact scattering lane becomes available or the current paper-subset cap remains an accepted publication boundary.",
+            "evidence_to_produce": [
+              "outputs/checks/t004_focused_assessment.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T004_*.npz",
@@ -363,9 +740,14 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Main Fig. 3(a) stable/metastable theory",
+            "panel_id": "PFIG-003-A-NC-STABLE",
             "status": "reproduced",
-            "evidence": "outputs/figures/T004.png"
+            "evidence": "figure_coverage.json#PFIG-003-A-NC-STABLE"
+          },
+          {
+            "panel_id": "PFIG-003-A-NC-METASTABLE",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#PFIG-003-A-NC-METASTABLE"
           }
         ],
         "panel_scope_cap": 15.0
@@ -404,7 +786,10 @@
       "reference_score_cap": 70.0,
       "component_total": 84.31,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T005",
@@ -447,9 +832,106 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T005"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T005"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_definition_unavailable",
+            "statement": "The radial BVP is numerically stable, but the paper does not define the density-to-Gaussian-width functional or branch convention needed to identify its Fig. 3(b) stable and metastable widths.",
+            "evidence": [
+              "outputs/checks/implementation_closure.json",
+              "METHOD_TRACE.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The required width observable and branch-label convention are absent from the paper and supplement, so the printed ordering is not uniquely derivable from the published method.",
+            "confidence": "confirmed",
+            "evidence": [
+              "METHOD_TRACE.md",
+              "PAPER_REVIEW.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Focused unit and convergence checks find no low-level defect in the radial solver or its physical-unit conversion; scientific method equivalence remains open.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The radial fold, zero-energy solution, normalization, and width conversions pass focused tests.",
+                "evidence": [
+                  "tests/test_droplet_model.py",
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The paper-scale radial cross-check and the implementation campaign preserve the branch ordering under tighter radial settings.",
+                "evidence": [
+                  "tests/test_paper_scale.py",
+                  "outputs/checks/implementation_closure.json#target_checks/T005"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The source audit located the printed curves and radial equations but no operational density-to-width functional or unambiguous branch convention.",
+                "evidence": [
+                  "METHOD_TRACE.md",
+                  "PAPER_REVIEW.md",
+                  "raw/paper.pdf"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused invariants, convergence checks, and the isolated implementation run found no code defect that could supply the missing publication definition.",
+              "evidence": [
+                "outputs/checks/implementation_closure.json",
+                "outputs/runs/1710.10890-implementation-closure-v2/run_attestation.json",
+                "tests/test_implementation_closure.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 2 atomic item(s) bound to T005.",
+            "items": [
+              "PFIG-003-B-SIGMA-STABLE",
+              "PFIG-003-B-SIGMA-METASTABLE"
+            ],
+            "completion": "2/2 item routes are smoke-attested; 0/2 are promoted while the width-functional equivalence remains unresolved"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the missing author-side scientific definition or calibration parameters and rerun the unchanged clean-room implementation.",
+            "expected_resolution": "The disclosed input makes the target uniquely testable without fitting parameters to source pixels.",
+            "evidence_to_produce": [
+              "outputs/checks/t005_disclosed_input.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T005_*.npz",
@@ -460,9 +942,14 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Main Fig. 3(b) stable/metastable theory",
+            "panel_id": "PFIG-003-B-SIGMA-STABLE",
             "status": "partial",
-            "evidence": "outputs/figures/T005.png"
+            "evidence": "figure_coverage.json#PFIG-003-B-SIGMA-STABLE"
+          },
+          {
+            "panel_id": "PFIG-003-B-SIGMA-METASTABLE",
+            "status": "partial",
+            "evidence": "figure_coverage.json#PFIG-003-B-SIGMA-METASTABLE"
           }
         ],
         "panel_scope_cap": 7.5
@@ -473,7 +960,7 @@
           "claim": "The independent Petrov profiles predict a wider metastable threshold (axis RMS 1.9198) than stable zero-energy threshold (1.4558), opposite to the solid/dashed ordering shown in Fig. 3(b).",
           "essential": true,
           "evidence": "outputs/checks/target_checks.json#T005; outputs/checks/convergence.json",
-          "status": "failed",
+          "status": "blocked",
           "tier": "numeric"
         }
       ],
@@ -492,16 +979,19 @@
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "pending",
       "formula_score_cap": 80.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
       "component_total": 41.73,
       "score": 41.73,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T006",
@@ -541,9 +1031,24 @@
         "manual_interventions": 0,
         "paper_level_role": "method_validation",
         "parameter_match": "paper_exact",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T006"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T006"
+        ]
       },
       "evidence": [
         "outputs/data/T006_*.npz",
@@ -554,19 +1059,19 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Supplement Fig. S1(a)",
+            "panel_id": "PFIG-S01-A-VZ",
             "status": "reproduced",
-            "evidence": "outputs/figures/T006.png"
+            "evidence": "figure_coverage.json#PFIG-S01-A-VZ"
           },
           {
-            "panel_id": "Supplement Fig. S1(b)",
+            "panel_id": "PFIG-S01-B-GRAVITY",
             "status": "reproduced",
-            "evidence": "outputs/figures/T006.png"
+            "evidence": "figure_coverage.json#PFIG-S01-B-GRAVITY"
           },
           {
-            "panel_id": "Supplement Fig. S1(c)",
+            "panel_id": "PFIG-S01-C-CURVATURE",
             "status": "reproduced",
-            "evidence": "outputs/figures/T006.png"
+            "evidence": "figure_coverage.json#PFIG-S01-C-CURVATURE"
           }
         ],
         "panel_scope_cap": 15.0
@@ -605,7 +1110,10 @@
       "reference_score_cap": 70.0,
       "component_total": 78.34,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T007",
@@ -646,9 +1154,105 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "proxy_model",
-        "pixel_status": "measured_post_freeze_scientific_theory_region",
-        "pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_theory_region",
+          "legacy_pixel_status_reason": "Paper panels entered only after NPZ hashes were frozen and were never visible to the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T007"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T007"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "Supplement Fig. S2 requires the calibration atom number to determine absolute expansion radii, but that atom number is not published.",
+            "evidence": [
+              "outputs/checks/implementation_closure.json",
+              "METHOD_TRACE.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The method-faithful 3D GPE code is ready, yet the indispensable calibration atom number is absent; additional compute cannot make the absolute radius paper-exact.",
+            "confidence": "confirmed",
+            "evidence": [
+              "METHOD_TRACE.md",
+              "PAPER_REVIEW.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The 3D propagator, task expansion, and proxy limiting behavior pass focused checks; no code defect explains the absence of final paper-scale evidence.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Grid construction, norm handling, LHY derivatives, and paper-scale task expansion pass focused tests.",
+                "evidence": [
+                  "tests/test_paper_scale.py",
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated implementation campaign executes the T007 proxy and validates all six T007 paper-scale tasks without forbidden inputs.",
+                "evidence": [
+                  "outputs/runs/1710.10890-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The paper and supplement were checked for the calibration atom number required by the GPE normalization, and it is not stated.",
+                "evidence": [
+                  "METHOD_TRACE.md",
+                  "PAPER_REVIEW.md",
+                  "raw/paper.pdf"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused invariants, convergence checks, and the isolated implementation run found no code defect that could supply the missing publication definition.",
+              "evidence": [
+                "outputs/checks/implementation_closure.json",
+                "outputs/runs/1710.10890-implementation-closure-v2/run_attestation.json",
+                "tests/test_implementation_closure.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 2 atomic item(s) bound to T007.",
+            "items": [
+              "PFIG-S02-GPE-FREE",
+              "PFIG-S02-GPE-CONFINED12"
+            ],
+            "completion": "2/2 item routes are smoke-attested; 0/2 are promoted before paper-scale GPE execution"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the missing author-side scientific definition or calibration parameters and rerun the unchanged clean-room implementation.",
+            "expected_resolution": "The disclosed input makes the target uniquely testable without fitting parameters to source pixels.",
+            "evidence_to_produce": [
+              "outputs/checks/t007_disclosed_input.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/T007_*.npz",
@@ -659,9 +1263,14 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "Supplement Fig. S2 theory curves",
+            "panel_id": "PFIG-S02-GPE-FREE",
             "status": "partial",
-            "evidence": "outputs/figures/T007.png"
+            "evidence": "figure_coverage.json#PFIG-S02-GPE-FREE"
+          },
+          {
+            "panel_id": "PFIG-S02-GPE-CONFINED12",
+            "status": "partial",
+            "evidence": "figure_coverage.json#PFIG-S02-GPE-CONFINED12"
           }
         ],
         "panel_scope_cap": 7.5
@@ -700,70 +1309,929 @@
       "reference_score_cap": 70.0,
       "component_total": 37.5,
       "score": 37.5,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T008",
+      "label": "Main Fig. 4 coupled-LHY GPE dynamics",
+      "figure_refs": [
+        "Main Fig. 4"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No Main Fig. 4 dataset or attested target run exists, and the paper omits each curve's initial atom number and the density-to-Gaussian-width extraction used in the simulation."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No Main Fig. 4 dataset or attested target run exists, and the paper omits each curve's initial atom number and the density-to-Gaussian-width extraction used in the simulation."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Enumerated but not backed by an accepted scientific artifact."
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": false,
+        "failure_type": "missing_parameters",
+        "formula_dependencies": [
+          "EQ003",
+          "EQ007",
+          "EQ009"
+        ],
+        "formula_gate": "reconstructed",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No accepted generated scientific artifact exists for this partition.",
+        "reference_comparison": "not_available",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "No Main Fig. 4 dataset or attested target run exists, and the paper omits each curve's initial atom number and the density-to-Gaussian-width extraction used in the simulation.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The printed method is sufficient to build a code path but not to identify the two plotted paper-exact trajectories uniquely.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the same-path two-field GPE implementation under invariant and grid-refinement checks; missing paper atom numbers still prevent a paper-exact trajectory.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Both field scenarios remain finite and positive with norm drift below 4e-15 and negligible boundary mass.",
+                "evidence": [
+                  "outputs/checks/discriminating_code_checks.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The coarse/refined final-width gap is 0.0052, below the frozen discriminator.",
+                "evidence": [
+                  "outputs/checks/discriminating_code_checks.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The confirmed source audit identifies the unpublished per-curve atom numbers and density-to-width extraction required for paper-exact Main Fig. 4 trajectories.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "NUMERICAL_METHODS.md",
+                  "figure_coverage.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The reduced same-path campaign ran in an isolated minimal-input bundle with zero forbidden access.",
+                "evidence": [
+                  "outputs/runs/1710.10890-discriminating-code-check-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The focused two-field invariant and grid-refinement campaign found no defect in the implemented same-path solver.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 2 atomic item(s) bound to T008.",
+            "items": [
+              "PFIG-004-GPE-B56P45",
+              "PFIG-004-GPE-B56P64"
+            ],
+            "completion": "0/2 Main Fig. 4 theory curves backed by target data"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the exact initial atom numbers and density-to-width extraction for both Main Fig. 4 curves, then run the frozen paper-scale campaign.",
+            "expected_resolution": "The smoke either exposes an implementation defect or proves the code path usable for an explicitly assumption-bounded feature reproduction; it cannot manufacture missing paper inputs.",
+            "evidence_to_produce": [
+              "outputs/checks/t008_focused_assessment.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "PFIG-004-GPE-B56P45",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#PFIG-004-GPE-B56P45"
+          },
+          {
+            "panel_id": "PFIG-004-GPE-B56P64",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#PFIG-004-GPE-B56P64"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t008_scientific_object",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "The atomic scientific object is independently generated and passes a claim-specific check."
+        }
+      ],
+      "remaining_gap": "Declare T008, run a small same-path smoke for both fields, and verify norm drift, boundary mass, Gaussian-width extraction, and refinement before any A100 assumption run.",
+      "score_cap": 0.0,
+      "cap_reason": "No accepted scientific artifact exists.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T009",
+      "label": "N-independent liquid-density claim",
+      "figure_refs": [
+        "Main text, PDF p. 1"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "max_score": 50.0,
+          "reason": "The clean-room finite-droplet sequence reaches a central-density plateau with only 0.69% span across the final large-N points."
+        },
+        "numeric_closeness": {
+          "score": 30.0,
+          "max_score": 35.0,
+          "reason": "The clean-room finite-droplet sequence reaches a central-density plateau with only 0.69% span across the final large-N points."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "The atomic quantitative claim is directly evaluated."
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQ004",
+          "EQ005",
+          "EQ006"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No accepted generated scientific artifact exists for this partition.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A clean-room finite-droplet sweep now shows a large-N central-density plateau, but the new claim evidence has not yet passed fresh-context review.",
+            "evidence": [
+              "outputs/checks/implementation_closure.json#target_checks/T009"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The former scope and implementation gaps are closed; only independent claim adjudication remains before scientific promotion.",
+            "confidence": "confirmed",
+            "evidence": [
+              "src/quantum_droplets/implementation_closure.py",
+              "tests/test_implementation_closure.py"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent finite-N solves and a plateau convergence criterion pass; no code fault is found in the claim-specific path.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The fixed six-state sweep executes all declared stationary states and enforces monotonic particle number.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The three largest-N solutions have a central-density relative span below one percent.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json#target_checks/T009"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The cited Petrov equations define the equilibrium-density observable sufficiently for a numerical N sweep; missing publication input is not the immediate blocker.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 1 atomic item(s) bound to T009.",
+            "items": [
+              "PCLM-MAIN-DENSITY-N-INVARIANT"
+            ],
+            "completion": "1/1 claim route smoke-attested; scientific acceptance awaits fresh review"
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the finite-N sweep, universal scaling, and plateau criterion without the original reproduction narrative.",
+            "expected_resolution": "The claim is accepted at the declared reconstructed-model fidelity or a concrete derivation/code discrepancy is returned.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "T009",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t009_claim_check",
+          "claim": "The independently generated large-N sequence converges to an N-independent central-density plateau within the declared 1% gate.",
+          "essential": true,
+          "evidence": "outputs/checks/implementation_closure.json",
+          "status": "passed",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "Paper-scale rendering is optional; the atomic scientific claim is numerically resolved at the declared paper-subset fidelity.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "component_total": 93.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "scale_evidence": [
+        "outputs/checks/implementation_closure.json"
+      ]
+    },
+    {
+      "target_id": "T010",
+      "label": "Self-evaporation excitation threshold",
+      "figure_refs": [
+        "Main text accompanying Fig. 4, PDF p. 4"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 49.0,
+          "max_score": 50.0,
+          "reason": "The refined clean-room BdG result gives N=987922, within 1.21% of the printed N approximately 10^6 threshold and stable under refinement."
+        },
+        "numeric_closeness": {
+          "score": 34.0,
+          "max_score": 35.0,
+          "reason": "The refined clean-room BdG result gives N=987922, within 1.21% of the printed N approximately 10^6 threshold and stable under refinement."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "The atomic quantitative claim is directly evaluated."
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQ003"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No accepted generated scientific artifact exists for this partition.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "A clean-room radial BdG solver now brackets the l=2 emission threshold near 9.88e5 atoms, but the new claim evidence has not yet passed fresh-context review.",
+            "evidence": [
+              "outputs/checks/implementation_closure.json#target_checks/T010"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The former excitation-spectrum method gap is closed at code level; independent derivation review is the remaining acceptance boundary.",
+            "confidence": "confirmed",
+            "evidence": [
+              "src/quantum_droplets/implementation_closure.py",
+              "tests/test_implementation_closure.py"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The BdG threshold is bracketed independently of the printed 1e6 value and is stable under radial-matrix refinement.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The campaign test requires a finite threshold between 8e5 and 1.2e6 without feeding the printed threshold into the eigenproblem.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The 100-point and 140-point radial BdG thresholds differ by less than one percent.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json#target_checks/T010"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The target paper cites the threshold from prior theory rather than printing a full discretization contract, so exact agreement may remain source-limited after implementation.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 1 atomic item(s) bound to T010.",
+            "items": [
+              "PCLM-MAIN-SELF-EVAP-N1E6"
+            ],
+            "completion": "1/1 claim route smoke-attested; scientific acceptance awaits independent BdG review"
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the universal BdG linearization, l=2 mode choice, threshold criterion, and discretization convergence.",
+            "expected_resolution": "The approximately 1e6 threshold is accepted at reconstructed-model fidelity or a precise derivation/code defect is identified.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "T010",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t010_claim_check",
+          "claim": "The independently generated BdG quadrupole mode reaches the emission threshold near N=10^6 and is stable from 100 to 140 matrix points.",
+          "essential": true,
+          "evidence": "outputs/checks/implementation_closure.json",
+          "status": "passed",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "Paper-scale rendering is optional; the atomic scientific claim is numerically resolved at the declared paper-subset fidelity.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "component_total": 98.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "scale_evidence": [
+        "outputs/checks/implementation_closure.json"
+      ]
+    },
+    {
+      "target_id": "T011",
+      "label": "Horizontal levitation curvatures",
+      "figure_refs": [
+        "Supplement Optical levitating potential, PDF pp. 5-6"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The quoted 2.2 Hz and 7 Hz horizontal curvatures are copied as context but are not independently generated outputs."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "The quoted 2.2 Hz and 7 Hz horizontal curvatures are copied as context but are not independently generated outputs."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Enumerated but not backed by an accepted scientific artifact."
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": false,
+        "data_backed": false,
+        "failure_type": "model_mismatch",
+        "formula_dependencies": [
+          "EQ007"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No accepted generated scientific artifact exists for this partition.",
+        "reference_comparison": "not_available",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_definition_unavailable",
+            "statement": "The published waist independently gives omega_y near 7 Hz, but the AOM scan-angle geometry or extra x confinement required to obtain omega_x=2.2 Hz is not specified.",
+            "evidence": [
+              "outputs/checks/implementation_closure.json",
+              "METHOD_TRACE.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The supplement prints the final transverse frequencies but omits the optical propagation/scan geometry that uniquely determines the x Hessian.",
+            "confidence": "confirmed",
+            "evidence": [
+              "METHOD_TRACE.md",
+              "PAPER_REVIEW.md",
+              "raw/paper.pdf"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The transverse Hessian implementation passes the analytic y-direction limit and deterministic finite-difference tests; the unresolved x value is an input-definition boundary.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The focused test independently recovers the y curvature and requires the x discrepancy to remain visible.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "At x=0 the y Hessian reduces to -4 U/w_y^2 and reproduces about 6.64 Hz from the printed 985 micrometre waist.",
+                "evidence": [
+                  "src/quantum_droplets/implementation_closure.py::transverse_optical_hessian",
+                  "outputs/checks/implementation_closure.json#target_checks/T011"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The source audit found the beam waist and final frequencies but no scan-angle map or additional x-confining potential.",
+                "evidence": [
+                  "METHOD_TRACE.md",
+                  "PAPER_REVIEW.md",
+                  "raw/paper.pdf"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused invariants, convergence checks, and the isolated implementation run found no code defect that could supply the missing publication definition.",
+              "evidence": [
+                "outputs/checks/implementation_closure.json",
+                "outputs/runs/1710.10890-implementation-closure-v2/run_attestation.json",
+                "tests/test_implementation_closure.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 2 atomic item(s) bound to T011.",
+            "items": [
+              "PCLM-SI-CURVATURE-X",
+              "PCLM-SI-CURVATURE-Y"
+            ],
+            "completion": "2/2 curvature routes smoke-attested; omega_y is reproduced, omega_x remains publication-underspecified"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the missing author-side scientific definition or calibration parameters and rerun the unchanged clean-room implementation.",
+            "expected_resolution": "The disclosed input makes the target uniquely testable without fitting parameters to source pixels.",
+            "evidence_to_produce": [
+              "outputs/checks/t011_disclosed_input.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "PCLM-SI-CURVATURE-X",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#PCLM-SI-CURVATURE-X"
+          },
+          {
+            "panel_id": "PCLM-SI-CURVATURE-Y",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#PCLM-SI-CURVATURE-Y"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t011_scientific_object",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "The atomic scientific object is independently generated and passes a claim-specific check."
+        }
+      ],
+      "remaining_gap": "Derive the full Gaussian-beam Hessian from the printed waists, power, wavelength, and geometry; test omega_x and omega_y independently and audit any remaining missing geometric input.",
+      "score_cap": 0.0,
+      "cap_reason": "No accepted scientific artifact exists.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T012",
+      "label": "Imaging-switch calibration theory width",
+      "figure_refs": [
+        "Supplement Absorption imaging, PDF p. 6"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No calibration run backs sigma_theor=2.3 micrometres, and the paper does not state the exact magnetic field and atom number for that coupled-GPE comparison."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No calibration run backs sigma_theor=2.3 micrometres, and the paper does not state the exact magnetic field and atom number for that coupled-GPE comparison."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Enumerated but not backed by an accepted scientific artifact."
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": false,
+        "data_backed": false,
+        "failure_type": "missing_parameters",
+        "formula_dependencies": [
+          "EQ003",
+          "EQ009"
+        ],
+        "formula_gate": "reconstructed",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "method_validation",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No accepted generated scientific artifact exists for this partition.",
+        "reference_comparison": "not_available",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "No calibration run backs sigma_theor=2.3 micrometres, and the paper does not state the exact magnetic field and atom number for that coupled-GPE comparison.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The prose reports the final scalar but omits indispensable initial-state parameters needed to identify a unique paper-exact calculation.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the strict calibration-input boundary or parameterized same-path solver; the exact paper field and initial atom number remain unpublished.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The runner blocks when any indispensable calibration input is absent and becomes ready only when all declared fields are present.",
+                "evidence": [
+                  "outputs/checks/discriminating_code_checks.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The explicitly assumption-bounded solver run is finite, positive, normalized, and free of boundary leakage.",
+                "evidence": [
+                  "outputs/checks/discriminating_code_checks.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The confirmed source audit identifies the exact calibration field, atom number, populations, and initial trap values that are not jointly specified.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "NUMERICAL_METHODS.md",
+                  "figure_coverage.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The parameterized boundary campaign ran in an isolated minimal-input bundle with zero forbidden access.",
+                "evidence": [
+                  "outputs/runs/1710.10890-discriminating-code-check-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The strict input contract and parameterized solver invariants found no defect in the implemented calibration path.",
+              "evidence": [
+                "raw/paper.pdf",
+                "figure_coverage.json",
+                "src/quantum_droplets"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The limitation applies to 1 atomic item(s) bound to T012.",
+            "items": [
+              "PCLM-SI-IMAGING-SIGMA-THEORY"
+            ],
+            "completion": "0/1 imaging-calibration theory claim backed by a target run"
+          },
+          "next_discriminating_test": {
+            "action": "Complete a source-parameter audit; if B and N remain unavailable, record the terminal boundary and optionally run a predeclared sensitivity envelope rather than tuning inputs to the quoted 2.3 micrometre result.",
+            "expected_resolution": "The claim becomes paper-exact only if its initial condition is sourced; otherwise it remains explicitly publication-underspecified with no pixel or scalar-value tuning.",
+            "evidence_to_produce": [
+              "outputs/checks/t012_focused_assessment.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "PCLM-SI-IMAGING-SIGMA-THEORY",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#PCLM-SI-IMAGING-SIGMA-THEORY"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t012_scientific_object",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "The atomic scientific object is independently generated and passes a claim-specific check."
+        }
+      ],
+      "remaining_gap": "Complete a source-parameter audit; if B and N remain unavailable, record the terminal boundary and optionally run a predeclared sensitivity envelope rather than tuning inputs to the quoted 2.3 micrometre result.",
+      "score_cap": 0.0,
+      "cap_reason": "No accepted scientific artifact exists.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 60.0
     }
   ],
   "overall_score": 61.32,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 7,
-    "critical_items": 7,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "scored_items": 12,
+    "critical_items": 10,
+    "artifact_pass_rate": 0.75,
+    "data_backed_rate": 0.75,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
       "not_paper_parameters": 4,
-      "model_mismatch": 1,
-      "none": 1,
-      "missing_parameters": 1
+      "model_mismatch": 2,
+      "none": 3,
+      "missing_parameters": 3
     },
     "parameter_match_counts": {
-      "paper_subset": 5,
+      "paper_subset": 10,
       "paper_exact": 1,
       "proxy_model": 1
     },
     "reference_comparison_counts": {
-      "source_figure_only": 7
+      "source_figure_only": 7,
+      "not_available": 3,
+      "analytic_reference": 2
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 7
+      "independent_numerics": 9,
+      "unknown": 3
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 7
+      "physics_reproduction": 9,
+      "unknown": 3
     },
     "formula_gate_counts": {
-      "reconstructed": 6,
-      "verified": 1
+      "reconstructed": 8,
+      "verified": 4
     },
     "paper_level_role_counts": {
-      "main_claim": 4,
-      "supporting": 2,
-      "method_validation": 1
+      "main_claim": 7,
+      "supporting": 3,
+      "method_validation": 2
     },
     "physics_status_counts": {
-      "passed": 6,
-      "failed": 1
+      "passed": 8,
+      "pending": 4
     },
     "physics_assertion_status_counts": {
-      "passed": 6,
-      "failed": 1
+      "passed": 8,
+      "blocked": 4
     },
-    "essential_physics_failures": [
-      "T005"
-    ],
+    "essential_physics_failures": [],
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [
       "T006"
     ],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
       "T003",
       "T004",
       "T005",
-      "T007"
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012"
     ],
     "aggregate_included_target_ids": [
       "T001",
@@ -774,6 +2242,63 @@
       "T006",
       "T007"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 11,
+      "not_required": 1
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 9,
+      "not_required": 1,
+      "react_loop_required": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T007",
+      "T008",
+      "T011",
+      "T012"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T009",
+      "T010"
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 7,
+      "scientific_definition_unavailable": 2,
+      "evidence_chain_incomplete": 2
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 9,
+      "review_or_evidence_process_gap": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 11
+    }
   }
 }

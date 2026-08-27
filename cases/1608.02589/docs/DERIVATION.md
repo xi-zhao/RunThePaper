@@ -21,7 +21,7 @@ Numerical form:
 Defines one-period binary Floquet evolution.
 ```
 
-Code: `code/src/dtc_feature_sim.py::floquet_step`, `code/src/dtc_feature_sim.py::floquet_matrix`
+Code: `src/dtc_feature_sim.py::floquet_step`, `src/dtc_feature_sim.py::floquet_matrix`
 
 
 ### DTC002 — Pulse Hamiltonian
@@ -40,7 +40,7 @@ Numerical form:
 Defines imperfect global spin flip and the noninteracting peak shift.
 ```
 
-Code: `code/src/dtc_feature_sim.py::apply_x_rotation`, `code/src/dtc_feature_sim.py::noninteracting_peak_location`
+Code: `src/dtc_feature_sim.py::apply_x_rotation`, `src/dtc_feature_sim.py::noninteracting_peak_location`
 
 
 ### DTC003 — Interaction and disorder Hamiltonian
@@ -59,7 +59,7 @@ Numerical form:
 Defines diagonal disorder phases for the driven spin chain.
 ```
 
-Code: `code/src/dtc_feature_sim.py::sample_disorder`, `code/src/dtc_feature_sim.py::diagonal_energy`
+Code: `src/dtc_feature_sim.py::sample_disorder`, `src/dtc_feature_sim.py::diagonal_energy`
 
 
 ### DTC004 — Autocorrelation and half-frequency response
@@ -78,7 +78,7 @@ Numerical form:
 Defines stroboscopic spin autocorrelation and subharmonic response.
 ```
 
-Code: `code/src/dtc_feature_sim.py::autocorrelation_trace`, `code/src/dtc_feature_sim.py::averaged_trace`, `code/src/dtc_feature_sim.py::peak_near_half`
+Code: `src/dtc_feature_sim.py::autocorrelation_trace`, `src/dtc_feature_sim.py::averaged_trace`, `src/dtc_feature_sim.py::peak_near_half`
 
 
 ### DTC005 — Floquet level statistics
@@ -97,7 +97,7 @@ Numerical form:
 Defines quasienergy adjacent-gap ratio.
 ```
 
-Code: `code/src/dtc_feature_sim.py::level_statistic_r`
+Code: `src/dtc_feature_sim.py::level_statistic_r`
 
 
 ### DTC006 — Endpoint mutual information
@@ -116,7 +116,7 @@ Numerical form:
 Defines endpoint mutual information for Floquet eigenstates.
 ```
 
-Code: `code/src/dtc_feature_sim.py::endpoint_mutual_information`, `code/src/dtc_feature_sim.py::ghz_endpoint_mutual_information`
+Code: `src/dtc_feature_sim.py::endpoint_mutual_information`, `src/dtc_feature_sim.py::ghz_endpoint_mutual_information`
 
 
 ### DTC007 — Half-frequency peak variance
@@ -135,4 +135,4 @@ Numerical form:
 Defines sample-to-sample half-frequency variance diagnostic.
 ```
 
-Code: `code/scripts/run_reproduction_iteration2.py::variance_scan`
+Code: `scripts/run_reproduction_iteration2.py::variance_scan`

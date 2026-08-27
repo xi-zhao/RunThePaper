@@ -21,7 +21,7 @@ Numerical form:
 Use integer local states as colors; validate every decoded assignment by checking color[u] != color[v] for each graph edge.
 ```
 
-Code: `code/src/rydberg_qudit.py:proper_coloring_indices`, `code/src/rydberg_qudit.py:paper_figure_target_indices`
+Code: `src/rydberg_qudit.py:proper_coloring_indices`, `src/rydberg_qudit.py:paper_figure_target_indices`
 
 
 ### EQ002 — Multilevel Rydberg-qudit Hamiltonian
@@ -40,7 +40,7 @@ Numerical form:
 Enumerate the local basis |g>,|r1>,...,|rk>; precompute pairwise diagonal C6/R^6 energies and sparse |g><->|ri> drive matrices.
 ```
 
-Code: `code/src/rydberg_qudit.py:RydbergLevelProfile`, `code/src/rydberg_qudit.py:_interaction_energies`, `code/src/rydberg_qudit.py:_operators`, `code/src/rydberg_qudit.py:simulate_program`
+Code: `src/rydberg_qudit.py:RydbergLevelProfile`, `src/rydberg_qudit.py:_interaction_energies`, `src/rydberg_qudit.py:_operators`, `src/rydberg_qudit.py:simulate_program`
 
 
 ### EQ003 — Encoding interval under finite negative inter-level interactions
@@ -59,7 +59,7 @@ Numerical form:
 Evaluate all source C6/R^6 terms rather than replacing them by a binary blockade graph; report failures instead of clipping negative interactions.
 ```
 
-Code: `code/src/rydberg_qudit.py:_interaction_energies`, `code/scripts/reproduce_qudit_annealing.py:_distribution_metrics`
+Code: `src/rydberg_qudit.py:_interaction_energies`, `scripts/reproduce_qudit_annealing.py:_distribution_metrics`
 
 
 ### EQ004 — Normalized annealing schedules and time propagation
@@ -78,4 +78,4 @@ Numerical form:
 Use the 300 author time samples and left-endpoint piecewise-constant expm_multiply propagation from |gg...g>; phi_i(t)=0 for the printed real drives.
 ```
 
-Code: `code/src/rydberg_qudit.py:AnnealingSchedule.normalized`, `code/src/rydberg_qudit.py:QuditAnnealingProgram.control_at_time`, `code/src/rydberg_qudit.py:simulate_program`, `code/src/rydberg_qudit.py:hardware_control_rows`
+Code: `src/rydberg_qudit.py:AnnealingSchedule.normalized`, `src/rydberg_qudit.py:QuditAnnealingProgram.control_at_time`, `src/rydberg_qudit.py:simulate_program`, `src/rydberg_qudit.py:hardware_control_rows`

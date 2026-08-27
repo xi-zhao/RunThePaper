@@ -1,63 +1,21 @@
-# 2512.23799 Reproduction Note
+# Efficient simulation of logical magic state preparation protocols: scientific reproduction note
 
 ## Result
 
-This case now runs the reconstructed full Steane `[[7,1,3]]` `|Hbar>` preparation circuit rather than a toy acceptance/infidelity model. The published campaign covers the paper's 12 physical-error-rate points and 790,000 state-vector Monte Carlo shots.
+A source-free literal-circuit Steane implementation and sampling test were rerun in isolation. T001-T002 are attempted numerical mismatches, T003 reaches a proven publication benchmark boundary, and T004 reproduces the inverse-square-root sampling law.
 
-Status: `exact_circuit_partial_reproduction` · Audit score: `73.00/100`.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-- Acceptance: all 12 internally digitized validation points pass.
-- Logical infidelity: the trend and both edge regimes agree; the mid-range is `0.42–0.68x` of the paper curve.
-- Runtime: still a local proxy, not author wall-clock timing.
+## What is reproduced
 
-## Exact Protocol
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-The implementation contains the non-fault-tolerant Steane `|Hbar>` encoder, the flagged transversal logical-H measurement, one mutual-flag stabilizer round, circuit-level Pauli noise, postselection, and ideal logical decoding.
-
-Tests verify the noiseless logical-H eigenstate, all six stabilizers, the perfect Hamming syndrome map, and correction of every single-qubit Pauli error.
-
-## Paper Comparison
-
-The orange curves below were digitized internally from the published PNGs solely for validation. The source-derived points are not distributed, the comparison panels are outside the repository's open-content license, and the panels do not establish author-data-level equivalence. Paper: [PRX Quantum 7, 020329 (2026)](https://doi.org/10.1103/fby6-xjbm).
-
-### Logical infidelity
-
-![Exact-circuit infidelity comparison](../outputs/figures/steane_exact_infidelity_comparison.png)
-
-Difference reason: in the mid-range, second-order damaging-pair counts depend on reconstructed panel-(c) gate/idle ordering. The author implementation is not public. More shots would reduce Monte Carlo error but cannot identify that schedule detail.
-
-### Postselection acceptance
-
-![Exact-circuit acceptance comparison](../outputs/figures/steane_exact_acceptance_comparison.png)
-
-Difference reason: no numerical residual is accepted—12/12 points pass within `max(0.012, 3 sigma)`. The remaining boundary is that exact time-slice details were reconstructed from the paper rather than confirmed against author code.
-
-### Runtime
-
-![Runtime proxy](../outputs/figures/fig3_runtime_reproduction.png)
-
-Difference reason: the paper's wall-clock values depend on the authors' hardware, Stim/Cirq versions, compiler, and benchmark harness. The public curve remains explicitly labeled as proxy timing.
-
-## Stop Decision
-
-The remaining scientific discrepancy is not compute-limited. The 790,000-shot exact campaign is complete, and additional shots cannot recover unpublished circuit scheduling. The mid-range residual is recorded as `author_implementation_detail_required`; author wall-clock equality is `author_environment_required`.
-
-See `../outputs/checks/completion_assessment.json` for the machine-readable decision.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, causal_resolution=attempted_not_reproduced, science=failed, execution=attested, pixel=not_comparable, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 
-Smoke profile:
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-```bash
-cd cases/2512.23799/code
-python scripts/run_steane_exact_benchmark.py --profile smoke
-```
+## Paper-review boundary
 
-Full profile:
-
-```bash
-python scripts/run_steane_exact_benchmark.py --profile paper
-python scripts/plot_steane_exact_comparison.py
-```
-
-The public runner generates independent data only; digitized source point sets are not redistributed.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Numerical benchmark figures are proxy checks only because the exact Steane circuit and benchmark parameters have not been run.

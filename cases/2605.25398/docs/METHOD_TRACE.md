@@ -10,16 +10,19 @@ The paper combines theory, simulation, and experiment. This case reproduces the 
 4. derive all plotted diagnostics from those probability vectors;
 5. compare physical features, not visual styling.
 
-## Local Run Scale
+## Paper-Scale Repair Run
 
-The paper's experimental setting is small enough to reproduce locally at feature level:
+The paper's ideal-curve setting is small enough to run locally at the published ensemble scale:
 
 - modes: `M=8`;
 - photons: `N=2`;
 - collision-free states: `D=28`;
 - paper times: `[1, 1.79, 29.29, 100, 1000]`;
 - sparse paper-style samples: `16` realizations per time, except chaotic `t=1.79` uses `75`, matching the paper's special treatment of the SFF dip time;
-- ideal curves: locally averaged over hundreds of Hamiltonian instances on a denser time grid.
+- Fig. 3, Fig. 4, and Fig. S5 ideal curves: `2000` independently sampled Hamiltonians, matching the captions;
+- Fig. 3 extrema: a 41-point grid, an independently refined 81-point grid, and an extended logarithmic domain through `t=1000`;
+- Fig. S4: the printed even grid `M=4,6,...,22`, with `M=22` retained as an explicit acceptance boundary;
+- Fig. S5: all 28 collision-free configurations, including the input pair `(3,4)` traced to the main-text OTOC setup.
 
 ## Main Algorithms
 
@@ -33,6 +36,8 @@ The paper's experimental setting is small enough to reproduce locally at feature
 | OTOC equivalent | target and sector probability curves | `fig4_otoc_pr_reproduction.png`, `figS5_ideal_otocs_reproduction.png` |
 | Frequency analysis | FFT participation ratio of late-time OTOC fluctuations | `figS6_extra_otoc_reproduction.png` |
 
+Every probability-based probe now calls the same conditional distribution primitive. The generator applies collision-free normalization per realization and time before pooling or averaging; no appendix path uses the unnormalized permanent probability.
+
 ## Acceptance Checks
 
 The numerical feature checks require:
@@ -44,6 +49,10 @@ The numerical feature checks require:
 - chaotic entropy much larger than integrable entropy at `t*=1.79`;
 - short-time OTOC slopes close to `2` and `4`;
 - chaotic FFT participation ratio larger than integrable FFT participation ratio.
+- 2000-instance contracts for Fig. 3, Fig. 4, and Fig. S5;
+- stability of Fig. 3 extrema under grid refinement and late-domain extension;
+- exact even `M=4,6,...,22` coverage with `M=22` present;
+- all 28 Fig. S5 configurations, including the initial state, and unit probability sum at every time.
 
 All checks pass in:
 

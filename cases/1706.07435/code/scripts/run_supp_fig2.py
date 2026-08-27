@@ -9,9 +9,8 @@ import sys
 import time
 from pathlib import Path
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", "/private/tmp/pragent-1706-matplotlib-cache")
 
 import matplotlib
 
@@ -20,7 +19,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 from scipy.optimize import root  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from nonhermitian_topology import (  # noqa: E402
     DiracDomain,
@@ -32,6 +31,13 @@ from nonhermitian_topology import (  # noqa: E402
 TARGET_ID = "T004"
 MASS_SCALE = 1.0
 KAPPA_SAMPLES = 121
+
+
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
 
 
 def matching_root_residual(values: np.ndarray, kappa_left: float, kappa_right: float) -> np.ndarray:
@@ -185,10 +191,11 @@ def render_figure(path: Path, kappa_left: np.ndarray, kappa_right: np.ndarray, e
 
 
 def main() -> int:
+    require_guard()
     started = time.perf_counter()
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -225,9 +232,9 @@ def main() -> int:
                 "target_id": TARGET_ID,
                 "runtime_seconds": time.perf_counter() - started,
                 "outputs": [
-                    str(data_path.relative_to(CASE)),
-                    str(check_path.relative_to(CASE)),
-                    str(figure_path.relative_to(CASE)),
+                    str(data_path.relative_to(WORKSPACE)),
+                    str(check_path.relative_to(WORKSPACE)),
+                    str(figure_path.relative_to(WORKSPACE)),
                 ],
             },
             indent=2,

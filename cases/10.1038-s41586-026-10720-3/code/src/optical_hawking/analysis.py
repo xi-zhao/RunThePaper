@@ -2,19 +2,23 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Protocol
 
 import torch
 
-from .dispersion import PaperTracedDispersion
+from .physical_dispersion import CleanRoomPCFDispersion
 from .model import (
     PulseSpec,
     wavelength_nm_from_angular_frequency,
 )
 
 
+class DispersionLike(Protocol):
+    def omega_prime(self, omega_rad_fs: torch.Tensor) -> torch.Tensor: ...
+
+
 def _bisect_root(
-    dispersion: PaperTracedDispersion,
+    dispersion: DispersionLike,
     target: float,
     lower: float,
     upper: float,
@@ -43,7 +47,7 @@ def _bisect_root(
 
 
 def _golden_section_extremum(
-    dispersion: PaperTracedDispersion,
+    dispersion: DispersionLike,
     lower: float,
     upper: float,
     *,
@@ -82,11 +86,11 @@ def _golden_section_extremum(
 def phase_matching_from_angular_frequencies(
     pump_omega_rad_fs: float,
     probe_omega_rad_fs: float,
-    dispersion: PaperTracedDispersion | None = None,
+    dispersion: DispersionLike | None = None,
 ) -> dict[str, Any]:
     """Evaluate the paper's three UV roots from the carrier frequencies."""
 
-    dispersion = dispersion or PaperTracedDispersion()
+    dispersion = dispersion or CleanRoomPCFDispersion()
 
     def wp(value: float) -> float:
         return float(dispersion.omega_prime(torch.tensor(value, dtype=torch.float64)))
@@ -105,22 +109,47 @@ def phase_matching_from_angular_frequencies(
         "probe_omega_prime_rad_fs": probe_prime,
     }
     for name, target in targets.items():
-        omega = _bisect_root(dispersion, target, 8.05, 8.15)
+        # The exact measured fibre coefficients are unavailable, so a clean
+        # physical surrogate may move the UV roots by several percent.  Scan
+        # a broad physical UV interval rather than encoding Fig. 2 pixels.
+        grid = torch.linspace(7.0, 10.0, 1501, dtype=torch.float64)
+        residual = dispersion.omega_prime(grid) - target
+        sign_change = residual[:-1] * residual[1:] <= 0
+        candidates = torch.nonzero(sign_change, as_tuple=False).flatten()
+        if candidates.numel() == 0:
+            markers[name] = {
+                "omega_prime_rad_fs": target,
+                "status": "no_root_in_188_to_269_nm_surrogate_window",
+            }
+            continue
+        index = int(candidates[-1])
+        omega = _bisect_root(
+            dispersion,
+            target,
+            float(grid[index]),
+            float(grid[index + 1]),
+        )
         markers[name] = {
             "omega_prime_rad_fs": target,
             "omega_rad_fs": omega,
             "wavelength_nm": wavelength_nm_from_angular_frequency(omega),
         }
-    markers["backreaction_shift_nm"] = (
-        markers["hawking_partner"]["wavelength_nm"]
-        - markers["backreaction"]["wavelength_nm"]
-    )
+    if all(
+        "wavelength_nm" in markers[name]
+        for name in ("hawking_partner", "backreaction")
+    ):
+        markers["backreaction_shift_nm"] = (
+            markers["hawking_partner"]["wavelength_nm"]
+            - markers["backreaction"]["wavelength_nm"]
+        )
+    else:
+        markers["backreaction_shift_nm"] = None
     return markers
 
 
 def figure2_landmarks(
     probe: PulseSpec,
-    dispersion: PaperTracedDispersion | None = None,
+    dispersion: DispersionLike | None = None,
 ) -> dict[str, Any]:
     """Return the IR and UV landmarks drawn in the paper's Fig. 2.
 
@@ -130,9 +159,11 @@ def figure2_landmarks(
     necessary to reproduce all three UV phase-matching levels at once.
     """
 
-    dispersion = dispersion or PaperTracedDispersion()
+    dispersion = dispersion or CleanRoomPCFDispersion()
+    horizon_lower = 1.0
+    horizon_upper = 1.4
     horizon_omega = _golden_section_extremum(
-        dispersion, 1.0, 1.4, maximize=True
+        dispersion, horizon_lower, horizon_upper, maximize=True
     )
     pump_omega = _golden_section_extremum(
         dispersion, 1.7, 2.2, maximize=False
@@ -142,9 +173,19 @@ def figure2_landmarks(
             torch.tensor(probe.omega_rad_fs, dtype=torch.float64)
         )
     )
-    redshifted_omega = _bisect_root(
-        dispersion, probe_prime, 0.95, horizon_omega
+    horizon_is_interior = (
+        horizon_lower + 1.0e-4
+        < horizon_omega
+        < horizon_upper - 1.0e-4
     )
+    redshifted_omega: float | None = None
+    if horizon_is_interior:
+        try:
+            redshifted_omega = _bisect_root(
+                dispersion, probe_prime, 0.75, horizon_omega
+            )
+        except ValueError:
+            redshifted_omega = None
     phase_matching = phase_matching_from_angular_frequencies(
         pump_omega,
         probe.omega_rad_fs,
@@ -159,10 +200,20 @@ def figure2_landmarks(
                     torch.tensor(horizon_omega, dtype=torch.float64)
                 )
             ),
+            "status": (
+                "stationary_point"
+                if horizon_is_interior
+                else "not_resolved_by_formula_only_surrogate"
+            ),
         },
         "redshifted_probe": {
             "omega_rad_fs": redshifted_omega,
             "omega_prime_rad_fs": probe_prime,
+            "status": (
+                "root_found"
+                if redshifted_omega is not None
+                else "not_resolved_by_formula_only_surrogate"
+            ),
         },
     }
 
@@ -170,7 +221,7 @@ def figure2_landmarks(
 def phase_matching_markers(
     pump: PulseSpec,
     probe: PulseSpec,
-    dispersion: PaperTracedDispersion | None = None,
+    dispersion: DispersionLike | None = None,
 ) -> dict[str, Any]:
     """Return NRR, Hawking-partner, and backreaction marker positions.
 

@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "run_id": "1903.05124-clean-room-chain-v7-20260825",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/isolation_chain.json"
+  ],
+  "inputs": [
+    "config/isolation_chain.json",
+    "scripts/run_reproduction.py",
+    "scripts/run_main_fig2.py",
+    "scripts/run_supp_fig_s2.py",
+    "scripts/run_supp_fig_s3.py",
+    "scripts/run_supp_fig_s4.py",
+    "scripts/run_supp_fig_s5.py",
+    "scripts/run_supp_fig_s6.py",
+    "mplconfig/fontlist-v390.json",
+    "src/finite_size_scaling.py",
+    "src/frame_potential.py",
+    "src/stabilizer_dynamics.py"
+  ],
+  "parameter_file": "config/isolation_chain.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "clean-room-feature-chain",
+    "workers": 8,
+    "steps": [
+      {
+        "target_id": "T001",
+        "module": "run_main_fig2",
+        "args": [
+          "--scale",
+          "feature",
+          "--workers",
+          "8",
+          "--seed",
+          "1903051240",
+          "--no-resume"
+        ]
+      },
+      {
+        "target_id": "T002",
+        "module": "run_supp_fig_s2",
+        "args": [
+          "--scale",
+          "smoke",
+          "--workers",
+          "1",
+          "--seed",
+          "190305124"
+        ]
+      },
+      {
+        "target_id": "T003",
+        "module": "run_supp_fig_s3",
+        "args": [
+          "--scale",
+          "smoke",
+          "--workers",
+          "8",
+          "--seed",
+          "190305124",
+          "--no-resume"
+        ]
+      },
+      {
+        "target_id": "T004",
+        "module": "run_supp_fig_s4",
+        "args": [
+          "--input",
+          "outputs/data/frozen_main_fig2_numerical_data.csv",
+          "--bootstrap-samples",
+          "10",
+          "--seed",
+          "1903051244"
+        ]
+      },
+      {
+        "target_id": "T005",
+        "module": "run_supp_fig_s5",
+        "args": [
+          "--input",
+          "outputs/data/frozen_main_fig2_numerical_data.csv",
+          "--bootstrap-samples",
+          "10",
+          "--seed",
+          "1903051245"
+        ]
+      },
+      {
+        "target_id": "T006",
+        "module": "run_supp_fig_s6",
+        "args": [
+          "--scale",
+          "smoke",
+          "--workers",
+          "8",
+          "--seed",
+          "1903051266",
+          "--bootstrap-samples",
+          "5",
+          "--no-resume"
+        ]
+      }
+    ]
+  },
+  "outputs": [
+    "outputs/checks/implementation_probe/implementation_probe_summary.json",
+    "outputs/checks/implementation_probe/t001_scientific_checks.json",
+    "outputs/checks/implementation_probe/t002_scientific_checks.json",
+    "outputs/checks/implementation_probe/t003_scientific_checks.json",
+    "outputs/checks/implementation_probe/t004_scientific_checks.json",
+    "outputs/checks/implementation_probe/t005_scientific_checks.json",
+    "outputs/checks/implementation_probe/t006_scientific_checks.json",
+    "outputs/data/implementation_probe/main_fig2_numerical_data.csv",
+    "outputs/data/implementation_probe/main_fig2_raw.npz",
+    "outputs/data/implementation_probe/main_fig2_transition_fits.csv",
+    "outputs/data/implementation_probe/main_fig2_metadata.json",
+    "outputs/data/frozen_main_fig2_numerical_data.csv",
+    "outputs/data/implementation_probe/supp_fig_s2_frame_potential.csv",
+    "outputs/data/implementation_probe/supp_fig_s2_q_samples.npz",
+    "outputs/data/implementation_probe/supp_fig_s2_metadata.json",
+    "outputs/data/implementation_probe/supp_fig_s3_trajectories.csv",
+    "outputs/data/implementation_probe/supp_fig_s3_raw.npz",
+    "outputs/data/implementation_probe/supp_fig_s3_metadata.json",
+    "outputs/data/implementation_probe/supp_fig_s4_numerical_data.csv",
+    "outputs/data/implementation_probe/supp_fig_s4_transition_fits.csv",
+    "outputs/data/implementation_probe/supp_fig_s4_metadata.json",
+    "outputs/data/implementation_probe/supp_fig_s5_numerical_data.csv",
+    "outputs/data/implementation_probe/supp_fig_s5_transition_fits.csv",
+    "outputs/data/implementation_probe/supp_fig_s5_metadata.json",
+    "outputs/data/implementation_probe/supp_fig_s6_numerical_data.csv",
+    "outputs/data/implementation_probe/supp_fig_s6_block_size_fits.csv",
+    "outputs/data/implementation_probe/supp_fig_s6_metadata.json",
+    "outputs/figures/implementation_probe/main_fig2_reproduction.png",
+    "outputs/figures/implementation_probe/supp_fig_s2_reproduction.png",
+    "outputs/figures/implementation_probe/supp_fig_s3_reproduction.png",
+    "outputs/figures/implementation_probe/supp_fig_s4_reproduction.png",
+    "outputs/figures/implementation_probe/supp_fig_s5_reproduction.png",
+    "outputs/figures/implementation_probe/supp_fig_s6_reproduction.png"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MPLCONFIGDIR": "mplconfig"
+  }
+}

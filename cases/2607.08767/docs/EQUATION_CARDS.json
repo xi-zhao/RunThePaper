@@ -1,0 +1,250 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.08767",
+  "cards": [
+    {
+      "id": "PLAQ009",
+      "title": "Coherent single-qubit over-rotation",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equation (9)"
+        }
+      ],
+      "latex": "U=\\exp[-i\\theta\\pi(X+Z)],\\quad\\theta=0.05",
+      "role": "Defines the exact coherent error used in Fig. 5(a).",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PLAQ009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation and theta are present in raw/paper.txt around Eq. (9)."
+        },
+        {
+          "id": "PLAQ009_unitary",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Because (X+Z)^2=2I, the closed-form exponential is unitary; the test checks U dagger U=I."
+        }
+      ],
+      "numerical_form": "scipy.linalg.expm(-1j*theta*pi*(X+Z))",
+      "code_refs": [
+        "scripts/run_fig5a_proxy.py:coherent_error_unitary"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PLAQ010",
+      "title": "Pauli-twirled coherent error",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equation (10)"
+        }
+      ],
+      "latex": "E_{PT}(\\rho)=(1-2p)\\rho+pX\\rho X+pZ\\rho Z,\\quad p=\\sin^2(\\sqrt{2}\\theta\\pi)/2",
+      "role": "Defines the Clifford-compatible approximation compared with the coherent model.",
+      "derived_from": [
+        "PLAQ009"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PLAQ010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation (10) states the I/X/Z Pauli channel and p approximately 0.0243."
+        },
+        {
+          "id": "PLAQ010_probability",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "At theta=0.05, p=0.024270800923 and (1-2p)+p+p=1."
+        }
+      ],
+      "numerical_form": "Aer Pauli error [('I',1-2p),('X',p),('Z',p)]",
+      "code_refs": [
+        "scripts/run_fig5a_proxy.py:pauli_twirl_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PLAQ012",
+      "title": "Two-Kraus leakage channel and generalized-Pauli twirl",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equation (12) and Table III"
+        }
+      ],
+      "latex": "K_1=\\sqrt{p_t}(|02\\rangle\\langle11|+|11\\rangle\\langle02|),\\quad K_0=\\sqrt{I-K_1^\\dagger K_1}",
+      "role": "Generates every transition and Pauli weight printed in Table III.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PLAQ012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation (12), p_t=0.2, the sector labels, and all printed Table III values are explicit in the paper."
+        },
+        {
+          "id": "PLAQ012_cptp",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The independently constructed K0/K1 channel is CPTP for p_t=0.2."
+        },
+        {
+          "id": "PLAQ012_twirl",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Blockwise Pauli coefficients reproduce transition probabilities 0.95/0.05/0.10/0.90 and every printed nonidentity weight."
+        },
+        {
+          "id": "PLAQ012_header",
+          "type": "source_consistency",
+          "status": "passed",
+          "reason": "The printed error values sum to p_tr and become normalized only after division by p_tr, so they are joint rather than conditional weights."
+        }
+      ],
+      "numerical_form": "Blockwise Pauli expansion of K0 and K1 with source-sector dimension normalization",
+      "code_refs": [
+        "src/public_targets.py::leakage_generalized_pauli_twirl"
+      ],
+      "open_questions": [
+        "Table III labels the listed values p_err|tr although the numbers are joint transition-and-error weights; fresh review must adjudicate the header."
+      ]
+    },
+    {
+      "id": "PLAQ020",
+      "title": "Thermal heating Lindbladian",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (20)-(21) and Figure 10"
+        }
+      ],
+      "latex": "\\mathcal L[\\rho]=\\Gamma_h n_{th}\\mathcal D[a^\\dagger]\\rho+\\Gamma_h(n_{th}+1)\\mathcal D[a]\\rho",
+      "role": "Generates the five-sector transition matrix in Figure 10.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PLAQ020_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Gamma_h=0.2, n_th=1, five sectors and one idling interval are printed with Figure 10."
+        },
+        {
+          "id": "PLAQ020_stochastic",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Every independently exponentiated transition column sums to one within 4.44e-16."
+        },
+        {
+          "id": "PLAQ020_values",
+          "type": "numeric_reference",
+          "status": "passed",
+          "reason": "All 25 entries agree with the paper's printed five-decimal matrix within 1e-4; maximum difference is 5.29e-5."
+        }
+      ],
+      "numerical_form": "exp(L Delta t) applied to each diagonal sector basis state",
+      "code_refs": [
+        "src/public_targets.py::heating_transition_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PLAQ015_016",
+      "title": "Transmon-CZ Hamiltonian and dissipative channel",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (15)-(16) and Figures 6-7"
+        }
+      ],
+      "latex": "H=H_{trans,1}+H_{trans,2}+g(a_1^\\dagger a_2+a_1a_2^\\dagger),\\quad L_{heat}=\\sqrt{\\Gamma_{heat}}a^\\dagger",
+      "role": "Defines the hardware-derived transmon channel used by the logical-error and threshold scans.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "PLAQ015_016_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the coupled-transmon Hamiltonian, jump operators, scan variable, code distances, rounds, and shot allocations."
+        }
+      ],
+      "numerical_form": "Integrate the finite-dimensional Lindblad generator for each CZ error channel, then compile independent Stim, XPauli-like, and full-state QEC samplers.",
+      "code_refs": [],
+      "open_questions": [
+        "The exact commercial circuit schedule and sampler conversion are not published; an independent canonical implementation must declare any resulting convention cap."
+      ]
+    },
+    {
+      "id": "PLAQ018_019",
+      "title": "Neutral-atom Rydberg channel and threshold surface",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equations (18)-(19) and Figure 8"
+        }
+      ],
+      "latex": "H_{2ph}=H(\\Omega,\\Delta,V),\\quad \\dot\\rho=-i[H_{2ph},\\rho]+\\sum_k\\mathcal D[L_k]\\rho",
+      "role": "Defines the three physical noise axes used for the neutral-atom threshold surface.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "PLAQ018_019_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper gives the driven-level model, decay channels, three scan axes, code family, and threshold-surface interpretation."
+        }
+      ],
+      "numerical_form": "Integrate the printed Rydberg pulse channel, construct declared barycentric scan rays, and fit thresholds for independent Clifford and leakage-aware representations.",
+      "code_refs": [],
+      "open_questions": [
+        "The precise 15 barycentric ray coordinates are not tabulated, so exact marker locations require author metadata; a declared grid can still test the scientific surface separation."
+      ]
+    },
+    {
+      "id": "PLAQ022",
+      "title": "Sector-dependent trapped-ion depolarization",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Equation (22) and Figure 11"
+        }
+      ],
+      "latex": "p_{depol}(n)=p_0+\\kappa(2n+1),\\quad p_0=10^{-4},\\;\\kappa=5\\times10^{-3}",
+      "role": "Couples the thermal sector history to the non-stationary logical-noise scan.",
+      "derived_from": [
+        "PLAQ020"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "PLAQ022_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper prints the sector-to-error relation, Gamma_h interval, distance and round ranges, initial sector, truncation, shots, decoder, and fitted threshold."
+        }
+      ],
+      "numerical_form": "Propagate the sector Markov history through an independently generated rotated-planar memory circuit and fit the logical threshold.",
+      "code_refs": [],
+      "open_questions": [
+        "No independent sector-history QEC runner is registered in this case."
+      ]
+    }
+  ]
+}

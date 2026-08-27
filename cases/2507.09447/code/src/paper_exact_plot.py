@@ -9,6 +9,7 @@ matplotlib.use("Agg")
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.ndimage
 from PIL import Image
 
 from lyapunov_band import write_json
@@ -23,8 +24,8 @@ FIGURE_SPECS = {
 
 def plot_paper_exact(workspace: Path) -> dict[str, Any]:
     workspace = workspace.resolve()
-    data_dir = workspace / "outputs" / "data"
-    figure_dir = workspace / "outputs" / "figures"
+    data_dir = workspace / "outputs" / "paper_exact" / "data"
+    figure_dir = workspace / "outputs" / "paper_exact" / "figures"
     figure_dir.mkdir(parents=True, exist_ok=True)
     required = [
         data_dir / "paper_ed_histograms.npz",
@@ -44,16 +45,34 @@ def plot_paper_exact(workspace: Path) -> dict[str, Any]:
         "fig4": _plot_fig4(data_dir, figure_dir),
         "fig5": _plot_fig5(data_dir, figure_dir),
     }
-    qa = _run_geometry_qa(workspace, outputs)
+    qa = _run_pixel_qa(workspace, outputs)
     result = {
         "status": "passed" if qa["geometry_all_exact"] else "failed",
         "artifact_stage": "paper_matched_reproduction",
         "parameter_match": "paper_reported_plus_documented_inference",
         "figures": outputs,
-        "geometry_qa": qa,
+        "pixel_qa": qa,
     }
     write_json(workspace / "outputs" / "checks" / "paper_plot_artifacts.json", result)
     return result
+
+
+def local_structural_similarity(left: np.ndarray, right: np.ndarray) -> float:
+    left_gray = _as_gray(left)
+    right_gray = _as_gray(right)
+    if left_gray.shape != right_gray.shape:
+        raise ValueError("SSIM inputs must have identical shapes")
+    window = 7
+    mu_left = scipy.ndimage.uniform_filter(left_gray, size=window, mode="reflect")
+    mu_right = scipy.ndimage.uniform_filter(right_gray, size=window, mode="reflect")
+    var_left = scipy.ndimage.uniform_filter(left_gray**2, size=window, mode="reflect") - mu_left**2
+    var_right = scipy.ndimage.uniform_filter(right_gray**2, size=window, mode="reflect") - mu_right**2
+    covariance = scipy.ndimage.uniform_filter(left_gray * right_gray, size=window, mode="reflect") - mu_left * mu_right
+    c1 = 0.01**2
+    c2 = 0.03**2
+    numerator = (2.0 * mu_left * mu_right + c1) * (2.0 * covariance + c2)
+    denominator = (mu_left**2 + mu_right**2 + c1) * (var_left + var_right + c2)
+    return float(np.mean(numerator / np.maximum(denominator, np.finfo(float).tiny)))
 
 
 def _plot_fig3(data_dir: Path, figure_dir: Path) -> dict[str, str]:
@@ -281,28 +300,67 @@ def _plot_fig5(data_dir: Path, figure_dir: Path) -> dict[str, str]:
     return outputs
 
 
-def _run_geometry_qa(workspace: Path, outputs: dict[str, dict[str, str]]) -> dict[str, Any]:
-    """Check only public, independently generated canvases.
-
-    Export-time source-image metrics are published as a static audit check, but
-    the public plotting command never requires or reconstructs publisher assets.
-    """
-
+def _run_pixel_qa(workspace: Path, outputs: dict[str, dict[str, str]]) -> dict[str, Any]:
+    reference_dir = workspace / "references" / "original_figures"
+    panel_boxes = {
+        "fig3": [(55, 4, 330, 210), (400, 4, 662, 210), (55, 260, 330, 466), (400, 260, 662, 466)],
+        "fig4": [(50, 4, 326, 211), (395, 4, 685, 211)],
+        "fig5": [(35, 0, 281, 211), (320, 0, 561, 211)],
+    }
     results: dict[str, Any] = {}
     geometry_all_exact = True
     for name, output in outputs.items():
+        reference = np.asarray(Image.open(reference_dir / f"Fig{name[-1]}.png").convert("RGB"), dtype=float) / 255.0
         generated_path = workspace / output["png"]
-        with Image.open(generated_path) as generated:
-            actual_size = generated.size
-        expected_size = tuple(FIGURE_SPECS[name]["pixels_180dpi"])
-        dimensions_exact = actual_size == expected_size
+        generated = np.asarray(Image.open(generated_path).convert("RGB"), dtype=float) / 255.0
+        dimensions_exact = reference.shape == generated.shape
         geometry_all_exact &= dimensions_exact
+        if not dimensions_exact:
+            results[name] = {
+                "dimensions_exact": False,
+                "reference_shape": list(reference.shape),
+                "generated_shape": list(generated.shape),
+            }
+            continue
+        panel_ssim: list[float] = []
+        for left, top, right, bottom in panel_boxes[name]:
+            panel_ssim.append(local_structural_similarity(reference[top:bottom, left:right], generated[top:bottom, left:right]))
         results[name] = {
-            "dimensions_exact": dimensions_exact,
-            "expected_pixels": list(expected_size),
-            "generated_pixels": list(actual_size),
+            "dimensions_exact": True,
+            "shape": list(reference.shape),
+            "full_ssim": local_structural_similarity(reference, generated),
+            "panel_ssim": panel_ssim,
+            "panel_ssim_mean": float(np.mean(panel_ssim)),
+            "rgb_mae": float(np.mean(np.abs(reference - generated))),
+            "foreground_iou": _foreground_iou(reference, generated),
         }
-    return {"geometry_all_exact": geometry_all_exact, "figures": results}
+        _save_difference_board(reference, generated, workspace / "outputs" / "paper_exact" / "figures" / f"{name}_comparison.png")
+    panel_scores = [value["panel_ssim_mean"] for value in results.values() if value.get("dimensions_exact")]
+    strict_pixel_exact = bool(panel_scores) and all(score >= 0.95 for score in panel_scores)
+    payload = {
+        "status": "pixel_exact" if strict_pixel_exact else "paper_matched_not_pixel_identical",
+        "geometry_all_exact": geometry_all_exact,
+        "strict_pixel_exact_threshold": 0.95,
+        "strict_pixel_exact": strict_pixel_exact,
+        "figures": results,
+    }
+    write_json(workspace / "outputs" / "checks" / "paper_pixel_similarity.json", payload)
+    return payload
+
+
+def _save_difference_board(reference: np.ndarray, generated: np.ndarray, path: Path) -> None:
+    difference = np.mean(np.abs(reference - generated), axis=2)
+    fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.4), constrained_layout=True)
+    axes[0].imshow(reference)
+    axes[0].set_title("original", fontsize=8)
+    axes[1].imshow(generated)
+    axes[1].set_title("independent reproduction", fontsize=8)
+    axes[2].imshow(difference, cmap="inferno", vmin=0.0, vmax=1.0)
+    axes[2].set_title("absolute pixel difference", fontsize=8)
+    for axis in axes:
+        axis.axis("off")
+    fig.savefig(path, dpi=220, facecolor="white")
+    plt.close(fig)
 
 
 def _configure_matplotlib() -> None:
@@ -319,7 +377,6 @@ def _configure_matplotlib() -> None:
             "ytick.major.size": 2.2,
             "pdf.fonttype": 42,
             "svg.fonttype": "none",
-            "svg.hashsalt": "runthepaper-2507.09447",
             "savefig.facecolor": "white",
         }
     )
@@ -406,27 +463,20 @@ def _panel_label(
 def _save_figure_bundle(fig: plt.Figure, stem: Path, spec: dict[str, Any]) -> dict[str, str]:
     paths = {
         "png": stem.with_suffix(".png"),
+        "pdf": stem.with_suffix(".pdf"),
         "svg": stem.with_suffix(".svg"),
+        "tiff": stem.with_suffix(".tiff"),
     }
     vector_size = fig.get_size_inches().copy()
     png_width, png_height = spec["pixels_180dpi"]
     fig.set_size_inches(png_width / 180.0, png_height / 180.0, forward=True)
     fig.savefig(paths["png"], dpi=180, facecolor="white")
     fig.set_size_inches(vector_size, forward=True)
-    fig.savefig(
-        paths["svg"],
-        dpi=600,
-        facecolor="white",
-        metadata={"Date": "2026-07-14", "Creator": "RunThePaper"},
-    )
-    _normalize_svg_whitespace(paths["svg"])
-    workspace = stem.parents[2]
+    fig.savefig(paths["pdf"], dpi=600, facecolor="white")
+    fig.savefig(paths["svg"], dpi=600, facecolor="white")
+    fig.savefig(paths["tiff"], dpi=600, facecolor="white")
+    workspace = stem.parents[3]
     return {key: str(path.relative_to(workspace)) for key, path in paths.items()}
-
-
-def _normalize_svg_whitespace(path: Path) -> None:
-    lines = path.read_text(encoding="utf-8").splitlines()
-    path.write_text("\n".join(line.rstrip() for line in lines) + "\n", encoding="utf-8")
 
 
 def _load_npz(path: Path) -> dict[str, np.ndarray]:
@@ -437,3 +487,21 @@ def _load_npz(path: Path) -> dict[str, np.ndarray]:
 def _read_csv(path: Path) -> np.ndarray:
     data = np.genfromtxt(path, delimiter=",", names=True, dtype=None, encoding="utf-8")
     return np.atleast_1d(data)
+
+
+def _as_gray(image: np.ndarray) -> np.ndarray:
+    values = np.asarray(image, dtype=float)
+    if values.ndim == 2:
+        return values
+    if values.shape[-1] < 3:
+        raise ValueError("expected a grayscale or RGB image")
+    return values[..., 0] * 0.2126 + values[..., 1] * 0.7152 + values[..., 2] * 0.0722
+
+
+def _foreground_iou(reference: np.ndarray, generated: np.ndarray) -> float:
+    reference_mask = _as_gray(reference) < 0.97
+    generated_mask = _as_gray(generated) < 0.97
+    union = np.logical_or(reference_mask, generated_mask)
+    if not np.any(union):
+        return 1.0
+    return float(np.logical_and(reference_mask, generated_mask).sum() / union.sum())

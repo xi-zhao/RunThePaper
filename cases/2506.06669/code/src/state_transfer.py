@@ -322,6 +322,8 @@ def pulsed_lindblad_final(
     tau_ns: float,
     *,
     sigma_ns: float,
+    onsite_sigma_ns: float | None = None,
+    coupling_sigma_ns: float | None = None,
     buffer_ns: float,
     initial_site: int = 0,
     t1_ns: float,
@@ -330,11 +332,24 @@ def pulsed_lindblad_final(
     rtol: float = 1.0e-7,
     atol: float = 1.0e-9,
 ) -> PulsedResult:
-    """Integrate QS009 with a shared effective Hamiltonian envelope."""
+    """Integrate QS009 with explicit onsite and coupling pulse envelopes.
+
+    ``sigma_ns`` preserves the original shared-envelope contract.  The two
+    optional channel values expose the paper's distinct qubit and coupler
+    widths without silently guessing how the hardware channels were aligned.
+    Setting both channel values to ``sigma_ns`` is exactly the legacy model.
+    """
 
     single = np.asarray(single_excitation_hamiltonian, dtype=float)
     n_sites = single.shape[0]
-    full = embed_vacuum(single)
+    diagonal_single = np.diag(np.diag(single))
+    coupling_single = single - diagonal_single
+    diagonal = embed_vacuum(diagonal_single)
+    coupling = embed_vacuum(coupling_single)
+    onsite_sigma = float(sigma_ns if onsite_sigma_ns is None else onsite_sigma_ns)
+    coupling_sigma = float(
+        sigma_ns if coupling_sigma_ns is None else coupling_sigma_ns
+    )
     operators = collapse_operators(
         n_sites,
         t1_ns=t1_ns,
@@ -343,12 +358,15 @@ def pulsed_lindblad_final(
     )
     gram_operators = [(operator, operator.conj().T, operator.conj().T @ operator) for operator in operators]
 
-    initial = np.zeros_like(full)
+    initial = np.zeros_like(diagonal)
     initial[initial_site + 1, initial_site + 1] = 1.0
 
     def right_hand_side(time: float, vector: ComplexArray) -> ComplexArray:
-        density = vector.reshape(full.shape)
-        current_hamiltonian = float(flattop_gaussian(time, tau_ns, sigma_ns)) * full
+        density = vector.reshape(diagonal.shape)
+        current_hamiltonian = (
+            float(flattop_gaussian(time, tau_ns, onsite_sigma)) * diagonal
+            + float(flattop_gaussian(time, tau_ns, coupling_sigma)) * coupling
+        )
         derivative = -1j * (current_hamiltonian @ density - density @ current_hamiltonian)
         for operator, adjoint, gram in gram_operators:
             derivative += operator @ density @ adjoint - 0.5 * (gram @ density + density @ gram)
@@ -364,7 +382,7 @@ def pulsed_lindblad_final(
     )
     if not solution.success:
         raise RuntimeError(f"pulsed Lindblad integration failed: {solution.message}")
-    density = solution.y[:, -1].reshape(full.shape)
+    density = solution.y[:, -1].reshape(diagonal.shape)
     return PulsedResult(
         density_matrix=density,
         nfev=int(solution.nfev),

@@ -1,32 +1,61 @@
-# Lessons learned
+# Lessons Learned
 
-## Scientific lessons
+## Case Summary
 
-- The tensor hypergraph is the useful core model: one lowering path covers
+- Paper: *Realified tensor networks: quantum circuit simulation on real-valued
+  matrix accelerators*
+- PaperID: `2608.03987`
+- Final status: `completed_with_differences`
+- Main targets: Figures 8 and 9 at all 67 circuits
+- Blockers: none; the remaining gap is an empirical optimizer mismatch
+
+## What Worked
+
+- The tensor hypergraph is the right core model: one lowering path supports
   random, Clifford+T, QAOA, and VQE circuits.
-- Exact algebraic claims and optimizer-dependent empirical claims need separate
-  acceptance gates. Figure 8 can pass even when Figure 9 retains differences.
-- A normalized overhead ratio is not enough when its denominator changes with
-  the tree; the underlying real arithmetic cost must be audited as well.
-- Stochastic tree search is part of the scientific method. Matching search-step
-  counts does not make two optimizers equivalent.
+- Integer bit masks make hyperedge boundaries exact and NNI updates local.
+- An exact dynamic-programming optimizer for tiny networks catches cost-model
+  and tree-update errors before large stochastic runs.
+- Per-circuit configuration/topology hashes make a long campaign safely
+  resumable and deterministic.
+- Separating primary clean-room evidence from post-hoc author comparison keeps
+  provenance clear.
 
-## Reproducibility lessons
+## What Was Difficult
 
-- Record every input member opened by the primary calculation. Here that makes
-  the raw-input-only boundary inspectable rather than rhetorical.
-- Test circuit topology and tensor classes before attributing a discrepancy to
-  optimization.
-- Use an exact dynamic-programming solver on tiny networks as an oracle for the
-  cost model and local tree moves.
-- Store seeds, configuration hashes, topology hashes, tree child pairs, and
-  tree hashes so a stochastic campaign is resumable and auditable.
-
-## Case-specific traps
-
-- qsim `sqrt(Y)` is real while `sqrt(X)` is structurally complex; gate names are
-  not a safe proxy for nonzero imaginary entries.
+- Qsim's `sqrt(Y)` is real while `sqrt(X)` is complex; gate names alone are an
+  unsafe proxy for structural complexity.
 - Expectation networks require an explicit rank-2 middle operator on every
-  wire, including identity operators, to separate ket and bra topology.
-- A post-hoc comparison against author results must remain downstream of the
-  optimizer and must never become an implicit search target.
+  wire, including identities, to separate ket and bra topology correctly.
+- Figure 9's overhead denominator changes with the tree. Reporting only
+  `|o_convert-o_full|/o_full` can obscure actual cost changes, so the run also
+  audits `|C_convert-C_full|/C_full`.
+- Stochastic tree search is part of the scientific result, not a disposable
+  implementation detail: a different optimizer reproduced the law but changed
+  nine threshold classifications.
+
+## Generalized Experience
+
+| Lesson | Why it matters | Recommendation |
+| --- | --- | --- |
+| Freeze an explicit source boundary | A reproduction can silently become an author-code rerun | Audit every input payload and distinguish primary from post-hoc data. |
+| Test topology before optimization | Parser mistakes can imitate optimizer disagreement | Compare index sets and tensor classes independently on the full corpus. |
+| Keep exact and empirical claims separate | Algebraic identities and search-budget observations have different failure semantics | Use separate gates and allow empirical differences to survive plotting. |
+| Audit the underlying objective | Ratios with per-result denominators can be misleading | Report both normalized metric and absolute/relative objective gap. |
+| Store full stochastic outputs | Aggregate curves cannot establish reproducibility | Save seeds, configuration hashes, tree child pairs, and tree hashes. |
+
+## New Failure Modes
+
+| Failure mode | Where it appeared | Detection |
+| --- | --- | --- |
+| Optimizer-equivalence assumption | Figure 9 | Compare threshold labels circuit by circuit under an independent search. |
+| Denominator-induced gap distortion | VQE YY circuit | Audit real cost and overhead gap together. |
+| Concurrent manifest race | Parallel full campaign | Regenerate one final all-skip manifest after every circuit checkpoint exists. |
+
+## Reusable Checks Or Tools
+
+| Candidate | Value | Suggested destination |
+| --- | --- | --- |
+| ZIP payload source-boundary audit | Proves which artifact classes were actually consumed | paper-reproduction harness |
+| Exact small-tree DP oracle | Verifies arbitrary contraction cost models | tensor-network helper library |
+| Python multi-format figure QA | Checks PDF dimensions/fonts, editable SVG text, dpi, opacity, and TIFF compression | nature-figure workflow |

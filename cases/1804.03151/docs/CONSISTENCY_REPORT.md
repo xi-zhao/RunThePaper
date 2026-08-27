@@ -7,7 +7,13 @@
 | exact_match | 0 | Author numerical arrays are unavailable, so no target claims value-by-value equality. |
 | feature_match | 12 | Formula-derived data pass scientific checks and reproduce the plotted numerical feature. |
 | blocked | 1 | Main Fig. 1(c) lacks a uniquely specified DFT environment. |
-| not_in_scope | 3 | Main Fig. 1(a), 1(b), and Fig. 4(b-c) are schematics. |
+| not_in_scope | 4 | Main Fig. 1(a), 1(b), 4(b), and 4(c) are schematics. |
+
+The single blocked item is `D001`, Main Fig. 1(c). Its direct cause is absent
+first-principles inputs, its root cause is publication underspecification, and code
+fault is not applicable until a unique DFT benchmark contract exists. It contributes
+zero to the 64.62/100 paper reproduction degree; it is not silently removed from the
+92.31% coverage denominator.
 
 ## Quantitative anchors
 

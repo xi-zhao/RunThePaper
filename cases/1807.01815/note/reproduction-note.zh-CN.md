@@ -10,7 +10,7 @@ Thirteen of fifteen independently generated numerical subpanels reproduce their 
 
 本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, science=failed, execution=attested, pixel=not_applicable, independent_review=missing, paper_assessment=missing`。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=needs_repair, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`。
 
 ## 运行
 
@@ -18,4 +18,4 @@ Thirteen of fifteen independently generated numerical subpanels reproduce their 
 
 ## 论文审查边界
 
-如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, science=failed, pixel=not_applicable, independent_review=missing, paper_assessment=missing.
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=repair_required, science=failed, pixel=needs_repair, paper_assessment=inconclusive.

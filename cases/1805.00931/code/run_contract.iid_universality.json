@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_id": "1805.00931-iid-universality-v1-20260824",
+  "target_ids": [
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_iid_universality.py",
+    "--config",
+    "config/iid_universality.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/kicked_ising/__init__.py",
+    "src/kicked_ising/model.py",
+    "src/kicked_ising/iid_universality.py",
+    "scripts/run_iid_universality.py",
+    "config/iid_universality.json"
+  ],
+  "parameter_file": "config/iid_universality.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "h_mean": 0.37,
+    "standard_deviation": 0.4,
+    "times": [
+      2,
+      3,
+      4
+    ],
+    "distributions": [
+      "gaussian",
+      "uniform",
+      "symmetric_binary",
+      "laplace"
+    ]
+  },
+  "outputs": [
+    "outputs/checks/iid_distribution_universality.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

@@ -11,143 +11,160 @@ This report is a human-readable projection of the validated structured independe
 | Protocol status | `passed` |
 | Protocol valid | `true` |
 | Whole-paper scope | `complete` |
-| Paper assessment | `mixed` |
-| Reviewed atomic claims | `78` |
-| Candidate atomic claims | `3` |
+| Paper assessment | `paper_error_candidate` |
+| Reviewed atomic claims | `47` |
+| Candidate atomic claims | `7` |
 | Candidate targets | `3` |
 
 ## Atomic claim adjudication
 
 | Claim | Targets | Assessment | Independent-review reason |
 | --- | --- | --- | --- |
-| R001 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R002 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R003 | T001 | `inconclusive` | Purification of states is standard, but neither the paper nor bundle defines the corresponding enlarged generator or proves that the QSL generator norm is purification independent. |
-| R004 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R005 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R006 | T001 | `paper_error_candidate` | Direct chain-rule differentiation requires f(t)=<psi_0\|rho_t\|psi_0> in both denominators. Published Eq. (2) fixes rho_tau while differentiating rho_t; for f(t)=exp(-t), t=0.2, tau=1, the exact derivative is 1.062621236 and the printed one is 0.848903631. |
-| R007 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R008 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R009 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R010 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R011 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R012 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R013 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R014 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R015 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R016 | T002 | `paper_error_candidate` | For positive H and pure rho=\|psi><psi\|, H rho is rank one and its trace norm is sqrt(<H^2>), not <H>. The frozen exact example H=diag(1,2), \|psi>=\|+> gives sqrt(2.5)=1.581138830 versus 1.5. |
-| R017 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R018 | T002 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R019 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R020 | T001 | `inconclusive` | The physical requirement that rho_t remain positive is sound, but the paper does not uniquely define positive generator; a time-local derivative superoperator is not itself a positive state map. |
-| R021 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R022 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R023 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R024 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R025 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R026 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R027 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R028 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R029 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R030 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R031 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R032 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R033 | T001 | `reproduction_defect` | Independent algebra gives \|\|dot(rho)\|\|_hs=sqrt(2)*DeltaE/hbar for pure unitary motion, not an unqualified equality to the energy variance. No claim-specific frozen unitary dataset exists, so the paper-error gate is not met. |
-| R034 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R035 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R036 | T001 | `reproduction_defect` | The open norm inequality is supported, but the bundle never demonstrates that Eq. (21) recovers both standard MT and ML formulas in a unitary limit; the disputed Eq. (10) step makes the ML reduction unsafe. |
-| R037 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R038 | T001 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R039 | T004, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R040 | T003 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R041 | T003 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R042 | T003 | `paper_error_candidate` | With standard Pauli matrices, sigma_x +/- i sigma_y is twice the normalized ladder. Substitution into Eq. (23) multiplies the dissipator by four, while Eqs. (25)-(26) and the figures use normalized ladders. |
-| R043 | T003 | `reproduction_defect` | The literal Eq. (24) is not reproduced: integrating its one-lambda Lorentzian gives a kernel scale gamma_0/2, while Eq. (25) and the code require gamma_0*lambda/2. This is a strong paper-discrepancy hypothesis, but no frozen Eq. (24)-specific dataset exists. |
-| R044 | T003 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R045 | T003, T006 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R046 | T003 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R047 | T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R048 | T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R049 | T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R050 | T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R051 | T004 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R052 | T004 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R053 | T004 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R054 | T004, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R055 | T004, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R056 | T004, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R057 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R058 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R059 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R060 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R061 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R062 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R063 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R064 | T005 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R065 | T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R066 | T006 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R067 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R068 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R069 | T004, T005, T007 | `reproduction_defect` | The bundle does not optimize trace-distance backflow over state pairs. A fresh Bloch-map check raises an equatorial-pair counterexample hypothesis, but paper-error promotion is blocked until a converged paper-exact optimization is frozen. |
-| R070 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R071 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R072 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R073 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R074 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R075 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R076 | T004, T005, T007 | `inconclusive` | The master equation is a valid single-channel time-local form, but no proof or evidence shows that the preceding backflow/speed-up argument holds for arbitrary Lindblad-type L. |
-| R077 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
-| R078 | T004, T005, T007 | `paper_supported` | The atomic claim is consistent with an independent derivation or invariant and survived an active counterexample or limit test. Numerical claims also agree with the attested paper-parameter data and independent pseudomode integration. |
+| R001 | T001 | `paper_supported` | The standard orthogonal closed-system MT/ML maximum was independently recovered for a two-level Hamiltonian. |
+| R002 | T001 | `paper_supported` | Direct evaluation of Uhlmann fidelity with a pure initial state gives the displayed Bures-angle expression. |
+| R003 | T001 | `paper_supported` | Uhlmann purification recovers the mixed-state Bures angle; this geometric statement survives finite-rank mixed-qubit tests. |
+| R004 | T001 | `paper_error_candidate` | The denominator in printed Eq. (2) is evaluated at rho_tau while the numerator and differentiated angle are evaluated at t. For F(t)=exp(-t), t=0.4 and tau=1, direct differentiation gives 0.71295946, whereas the literal rho_tau denominator gives 0.69502351. |
+| R005 | T001 | `paper_supported` | Direct differentiation with the mathematically required current-time overlap yields the displayed time-local inequality; R004 separately records the rho_tau typo in the preceding line. |
+| R006 | T002 | `paper_supported` | The von Neumann equation follows directly from unitary density-matrix evolution. |
+| R007 | T002 | `paper_supported` | Substitution of the commutator generator into the corrected geometric inequality reproduces Eq. (5). |
+| R008 | T002 | `paper_supported` | Applying the scalar triangle inequality to the two commutator traces gives the displayed upper bound. |
+| R009 | T001 | `paper_supported` | A singular-value proof and random finite-matrix checks reproduce the von Neumann trace inequality. |
+| R010 | T002 | `paper_supported` | The rank-one singular spectrum of rho_0 reduces both trace-inequality terms to the largest singular value. |
+| R011 | T002 | `paper_supported` | The Schatten ordering \|\|A\|\|op <= \|\|A\|\|tr independently reproduces Eq. (9). |
+| R012 | T002 | `paper_error_candidate` | Positivity of H does not make the non-Hermitian product H rho positive or equate its trace norm with its trace. For H=diag(1,2) and rho=\|+><+\|, tr(H rho)=1.5 but \|\|H rho\|\|tr=sqrt(2.5)=1.58113883008419. |
+| R013 | T002 | `paper_error_candidate` | Choosing an energy zero can make H positive but cannot enforce the missing commutation condition behind Eq. (10). After a scalar energy shift makes H positive, the same noncommuting \|+> state still gives \|\|H rho\|\|tr=1.58113883008419 versus <H>=1.5. |
+| R014 | T002 | `paper_error_candidate` | The integrated expression lacks the standard orthogonal ML factor and also relies on the invalid trace-norm identity in Eq. (10). For H=diag(0,1), \|psi0>=\|+>, hbar=1 and first orthogonalization tau=pi, Eq. (11)'s trace/mean-energy branch is 1 while the standard ML time is pi. |
+| R015 | T001 | `paper_supported` | The norm bound needs only a differentiable density path; positive dynamical maps are within that scope despite the paper's nonstandard phrase 'positive generator'. |
+| R016 | T001 | `paper_supported` | Substituting dot(rho)=L_t(rho) into the geometric inequality independently gives Eq. (13). |
+| R017 | T001 | `paper_supported` | The rank-one initial state and von Neumann trace inequality give the largest-singular-value bound. |
+| R018 | T001 | `paper_supported` | Pointwise Schatten ordering reproduces the operator/trace velocity hierarchy. |
+| R019 | T001 | `paper_supported` | Integrating the operator- and trace-norm velocity inequalities yields the stated open ML-type lower bound. |
+| R020 | T001 | `paper_supported` | Hilbert-Schmidt Cauchy-Schwarz with tr(rho_0^2)=1 reproduces Eqs. (17)-(18). |
+| R021 | T001 | `paper_supported` | The Hilbert-Schmidt norm identity gives the displayed velocity bound. |
+| R022 | T001 | `paper_supported` | Time integration of the Hilbert-Schmidt velocity bound yields Eq. (20). |
+| R023 | T001 | `paper_error_candidate` | The sentence after Eq. (20) omits sqrt(2)/hbar and calls a speed an energy variance. For every pure unitary path, \|\|dot(rho)\|\|hs=sqrt(2)*DeltaE/hbar, not the energy variance and not DeltaE/hbar. |
+| R024 | T001 | `paper_supported` | Eq. (21) is a valid lower bound obtained by maximizing the three norm branches; its claimed exact reduction to standard closed-system MT/ML is assessed separately in R014. |
+| R025 | T001 | `paper_supported` | The singular-value definitions directly give \|\|A\|\|op <= \|\|A\|\|hs <= \|\|A\|\|tr. |
+| R026 | T001, T004, T007 | `paper_supported` | Pointwise norm ordering makes the reciprocal operator-norm branch no smaller than the other two on every finite test path. |
+| R027 | T003 | `paper_error_candidate` | The printed ladder definition omits the factor 1/2 required by the generator and survival solution. The literal sigma_pm=sigma_x +/- i sigma_y are twice the standard ladders and multiply every term of the amplitude-damping dissipator by four. |
+| R028 | T003 | `paper_error_candidate` | Eq. (24)'s Lorentzian numerator is missing one factor of spectral width lambda. Under the paper's Fourier convention the literal Eq. (24) has zero-time kernel gamma0/2, while Eqs. (25)-(26) require gamma0*lambda/2. |
+| R029 | T003 | `paper_supported` | Solving the intended Lorentzian memory equation gives the printed decay-rate expression; R028 separately flags the missing spectral-width factor in Eq. (24). |
+| R030 | T003, T006 | `paper_supported` | An independent damped-pseudomode ODE agrees with the printed reduced-state solution to 4.21e-11. |
+| R031 | T003 | `paper_supported` | The source, frozen paper-exact configuration and initial condition all specify the excited qubit. |
+| R032 | T007 | `paper_supported` | Dimensional inversion of lambda and gamma0 gives the stated bath-correlation and system-relaxation times. |
+| R033 | T007 | `paper_supported` | The discriminant d^2=lambda^2-2 gamma0 lambda changes sign exactly at gamma0=lambda/2. |
+| R034 | T004, T007 | `paper_supported` | A clean-room evaluation of the exact survival amplitude reproduces the operator-norm plateau and strong-coupling falloff. |
+| R035 | T004, T007 | `paper_supported` | Independent singular values give the Hilbert-Schmidt curve as the operator denominator multiplied by sqrt(2). |
+| R036 | T004, T007 | `paper_supported` | Independent singular values give the trace-norm curve as the operator denominator multiplied by 2. |
+| R037 | T004 | `paper_supported` | The source caption and frozen provenance agree on lambda=50, omega0=1 and tau=1. |
+| R038 | T004, T005, T007 | `paper_supported` | A 65,537-point clean-room quadrature resolves a unit plateau followed by a decrease to about 0.886 at gamma0=150. |
+| R039 | T004, T007 | `paper_supported` | For monotone excited-state decay, total variation equals endpoint population loss, so the operator branch saturates tau over the weak/moderate interval. |
+| R040 | T005, T007 | `paper_supported` | For p(t)=exp(-gamma0 t), dot(rho)=diag(-gamma0 p,+gamma0 p), giving the two stated equal singular values. |
+| R041 | T005, T007 | `paper_supported` | The exact limit gamma0 exp(-gamma0 tau)->0 confirms the stated asymptotic near-zero behavior. |
+| R042 | T005, T007 | `paper_supported` | Clean-room total-variation quadrature reproduces the Markovian saturation and strong-coupling excess of the generator-speed curve. |
+| R043 | T003, T006 | `paper_supported` | The exact amplitude gives cos(L)=sqrt(p(tau)), reproducing the reported inset behavior while remaining in [0,1]. |
+| R044 | T005, T007 | `paper_supported` | Analytic integration of \|dot p\| for p=exp(-gamma0 t) gives n[1-exp(-gamma0 tau)]/tau with n=2^(1/p). |
+| R045 | T004, T005, T007 | `paper_supported` | The analytic plateau values are tau, tau/sqrt(2) and tau/2, so only the operator branch reaches the driving time. |
+| R046 | T004, T005, T007 | `paper_supported` | At fixed gamma0 the exact non-Markovian trajectory exceeds the matched monotone exponential's total variation; the excess is generated by revivals, not by a norm convention. |
+| R047 | T004, T005, T007 | `paper_supported` | Within this amplitude-damping comparison, revival-induced total variation raises the average generator norm and lowers the QSL; no separate BLP-maximizer claim exists in the paper. |
 
 ## Target adjudication
 
 | Target | Assessment | Independent-review reason |
 | --- | --- | --- |
-| T001 | `mixed` | Derived from linked atomic claim assessments. |
+| T001 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
 | T002 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
-| T003 | `mixed` | Derived from linked atomic claim assessments. |
-| T004 | `mixed` | Derived from linked atomic claim assessments. |
-| T005 | `mixed` | Derived from linked atomic claim assessments. |
+| T003 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T004 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T005 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T006 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T007 | `mixed` | Derived from linked atomic claim assessments. |
+| T007 | `paper_supported` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### R006
+### R004
 
 - Linked targets: T001
-- Paper source: Published paper p.2, second line of Eq. (2)
-- Paper claim: The absolute Bures-angle derivative equals |<psi_0|dot(rho_t)|psi_0>| divided by 2*sqrt(<psi_0|rho_tau|psi_0>)*sqrt(1-<psi_0|rho_tau|psi_0>), as printed.
-- Independent result: The exact derivative is |dot f(t)|/[2 sqrt(f(t)) sqrt(1-f(t))]; the explicit smooth test gives 1.062621236 versus 0.848903631.
-- Observed gap: Absolute derivative gap 0.213717604 plus an exact symbolic time-index mismatch.
-- Tolerance basis: The symbolic result is exact; centered finite differences agree to about 1e-9, far below the 0.214 gap.
-- Assessment reason: Direct chain-rule differentiation requires f(t)=<psi_0|rho_t|psi_0> in both denominators. Published Eq. (2) fixes rho_tau while differentiating rho_t; for f(t)=exp(-t), t=0.2, tau=1, the exact derivative is 1.062621236 and the printed one is 0.848903631.
-- Convergence evidence: `machine_evidence/outputs/checks/science_checks.json`, `formula/EQUATION_CARDS.json`
-- Independent cross-check evidence: `paper/raw/paper.pdf`, `formula/DERIVATION_TRACE.md`
+- Paper source: paper/paper-source/openqsl_final.tex :: Eq. (2)
+- Paper claim: Eq. (2) is the exact time derivative of the Bures angle along rho_t.
+- Independent result: For F(t)=exp(-t), t=0.4 and tau=1, direct differentiation gives 0.71295946, whereas the literal rho_tau denominator gives 0.69502351.
+- Observed gap: Absolute derivative gap 0.01793595 at the stated test point; the mismatch is exact and not a discretization effect.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: The denominator in printed Eq. (2) is evaluated at rho_tau while the numerator and differentiated angle are evaluated at t. For F(t)=exp(-t), t=0.4 and tau=1, direct differentiation gives 0.71295946, whereas the literal rho_tau denominator gives 0.69502351.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `formula/FORMULA_VERIFICATION.md`, `formula/EQUATION_CARDS.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `formula/FORMULA_VERIFICATION.md`, `formula/EQUATION_CARDS.json`
 
-### R016
+### R012
 
 - Linked targets: T002
-- Paper source: Published paper p.2, Eq. (10)
-- Paper claim: If all instantaneous eigenvalues of H_t are positive, ||H_t rho_t||_tr = tr(|H_t rho_t|) = <H_t>.
-- Independent result: For the frozen counterexample, ||H rho||_tr=sqrt(2.5)=1.5811388300841895 while tr(H rho)=1.4999999999999996.
-- Observed gap: Absolute gap 0.08113883008418998 under all stated assumptions.
-- Tolerance basis: The values are exact algebraic quantities and SVD agrees to floating-point precision.
-- Assessment reason: For positive H and pure rho=|psi><psi|, H rho is rank one and its trace norm is sqrt(<H^2>), not <H>. The frozen exact example H=diag(1,2), |psi>=|+> gives sqrt(2.5)=1.581138830 versus 1.5.
-- Convergence evidence: `generated_data/outputs/data/formula_counterexamples.csv`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `implementation/tests/test_model.py`, `formula/EQUATION_CARDS.json`
+- Paper source: paper/paper-source/openqsl_final.tex :: Eq. (10)
+- Paper claim: For positive H_t, ||H_t rho_t||_tr equals tr(H_t rho_t).
+- Independent result: For H=diag(1,2) and rho=|+><+|, tr(H rho)=1.5 but ||H rho||tr=sqrt(2.5)=1.58113883008419.
+- Observed gap: Absolute gap 0.08113883008419 for an exactly positive two-level Hamiltonian.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: Positivity of H does not make the non-Hermitian product H rho positive or equate its trace norm with its trace. For H=diag(1,2) and rho=|+><+|, tr(H rho)=1.5 but ||H rho||tr=sqrt(2.5)=1.58113883008419.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
 
-### R042
+### R013
+
+- Linked targets: T002
+- Paper source: paper/paper-source/openqsl_final.tex :: Text after Eq. (10)
+- Paper claim: Choosing the zero of energy can always justify Eq. (10) without changing the bound's physical content.
+- Independent result: After a scalar energy shift makes H positive, the same noncommuting |+> state still gives ||H rho||tr=1.58113883008419 versus <H>=1.5.
+- Observed gap: The positive-shift counterexample retains the 0.08113883008419 norm/mean gap although the scalar shift leaves unitary density dynamics unchanged.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: Choosing an energy zero can make H positive but cannot enforce the missing commutation condition behind Eq. (10). After a scalar energy shift makes H positive, the same noncommuting |+> state still gives ||H rho||tr=1.58113883008419 versus <H>=1.5.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`
+
+### R014
+
+- Linked targets: T002
+- Paper source: paper/paper-source/openqsl_final.tex :: Eq. (11)
+- Paper claim: Eq. (11) follows from Eq. (9) and reduces to the driven Margolus-Levitin bound.
+- Independent result: For H=diag(0,1), |psi0>=|+>, hbar=1 and first orthogonalization tau=pi, Eq. (11)'s trace/mean-energy branch is 1 while the standard ML time is pi.
+- Observed gap: The orthogonal-limit gap is pi-1=2.141592653589793; even the sharper Eq. (21) operator branch is only 2 rather than pi.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: The integrated expression lacks the standard orthogonal ML factor and also relies on the invalid trace-norm identity in Eq. (10). For H=diag(0,1), |psi0>=|+>, hbar=1 and first orthogonalization tau=pi, Eq. (11)'s trace/mean-energy branch is 1 while the standard ML time is pi.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/closed_unitary_qsl_audit.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/closed_unitary_qsl_audit.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+
+### R023
+
+- Linked targets: T001
+- Paper source: paper/paper-source/openqsl_final.tex :: Text after Eq. (20)
+- Paper claim: For pure unitary dynamics, ||dot rho_t||_hs equals the energy standard deviation in the units implied by Eq. (20).
+- Independent result: For every pure unitary path, ||dot(rho)||hs=sqrt(2)*DeltaE/hbar, not the energy variance and not DeltaE/hbar.
+- Observed gap: With hbar=1 and DeltaE=1, the exact HS speed is sqrt(2)=1.414213562373095 rather than 1; calling it a variance also has incompatible dimensions.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: The sentence after Eq. (20) omits sqrt(2)/hbar and calls a speed an energy variance. For every pure unitary path, ||dot(rho)||hs=sqrt(2)*DeltaE/hbar, not the energy variance and not DeltaE/hbar.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/unitary_speed_audit.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/unitary_speed_audit.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+
+### R027
 
 - Linked targets: T003
-- Paper source: Published paper p.3, sentence immediately following Eq. (23)
-- Paper claim: The ladder operators in Eq. (23) are defined as sigma_+/- = sigma_x +/- i*sigma_y.
-- Independent result: The printed operators are twice the normalized ladders and yield D_printed=4 D_standard.
-- Observed gap: Multiplicative factor 4 in the dissipator; frozen residual to that factor is 0.0.
-- Tolerance basis: Exact finite-dimensional matrix algebra; no convergence uncertainty.
-- Assessment reason: With standard Pauli matrices, sigma_x +/- i sigma_y is twice the normalized ladder. Substitution into Eq. (23) multiplies the dissipator by four, while Eqs. (25)-(26) and the figures use normalized ladders.
-- Convergence evidence: `generated_data/outputs/data/formula_counterexamples.csv`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `implementation/tests/test_model.py`, `formula/EQUATION_CARDS.json`, `generated_data/outputs/data/independent_crosschecks.csv`
+- Paper source: paper/paper-source/openqsl_final.tex :: Eq. (23)
+- Paper claim: Eq. (23), together with the paper's definition sigma_pm=sigma_x +/- i sigma_y, generates the stated population dynamics.
+- Independent result: The literal sigma_pm=sigma_x +/- i sigma_y are twice the standard ladders and multiply every term of the amplitude-damping dissipator by four.
+- Observed gap: Direct matrix action gives a factor 4 rather than 1 in the population-decay generator, an absolute normalization gap of 3.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: The printed ladder definition omits the factor 1/2 required by the generator and survival solution. The literal sigma_pm=sigma_x +/- i sigma_y are twice the standard ladders and multiply every term of the amplitude-damping dissipator by four.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/formula_counterexamples.csv`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+
+### R028
+
+- Linked targets: T003
+- Paper source: paper/paper-source/openqsl_final.tex :: Eq. (24)
+- Paper claim: Eq. (24) is normalized and parametrized as stated.
+- Independent result: Under the paper's Fourier convention the literal Eq. (24) has zero-time kernel gamma0/2, while Eqs. (25)-(26) require gamma0*lambda/2.
+- Observed gap: At the paper-exact lambda=50, the required spectral density and kernel are exactly 50 times the printed Eq. (24) values.
+- Tolerance basis: The decisive comparison is analytic or finite-dimensional to displayed precision; numerical uncertainty is negligible relative to the reported gap.
+- Assessment reason: Eq. (24)'s Lorentzian numerator is missing one factor of spectral width lambda. Under the paper's Fourier convention the literal Eq. (24) has zero-time kernel gamma0/2, while Eqs. (25)-(26) require gamma0*lambda/2.
+- Convergence evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/lorentzian_kernel_audit.csv`, `formula/DERIVATION_TRACE.md`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
+- Independent cross-check evidence: `paper/paper-source/openqsl_final.tex`, `generated_data/outputs/data/lorentzian_kernel_audit.csv`, `formula/DERIVATION_TRACE.md`, `formula/EQUATION_CARDS.json`, `machine_evidence/outputs/checks/science_checks.json`
 
 ## Interpretation boundary
 

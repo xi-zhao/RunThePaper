@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1007-s11433-024-2478-8",
+  "cards": [
+    {
+      "id": "fourier_waveform",
+      "title": "Truncated Fourier waveform f(t) for Rabi frequencies and detunings",
+      "statement": "f(t) = 2*pi*(a0 + sum_{n=1..N}[a_n exp(2j*pi*n*t/tau) + conj(a_n) exp(-2j*pi*n*t/tau)])/(2N+1) MHz, tau=0.25 us. Real coefficients give f(t)=2*pi*(a0 + 2 sum a_n cos(2*pi*n*t/tau))/(2N+1).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_p4",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text p.4 definition of f(t); tau=0.25 us."
+        },
+        {
+          "id": "turn_on_peak",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "hybrid Omega_2(0)~0 and Omega_2(tau/2)~2*pi*16.4 MHz match Fig. 3(a); test_fourier_turn_on_and_peak."
+        }
+      ],
+      "code_refs": [
+        "src/waveforms.py::fourier_waveform"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "twophoton_ladder_a5a6",
+      "title": "Two-photon ground-Rydberg local Hamiltonian H_b/H_u (eqs. a5/a6)",
+      "statement": "H_local = (Omega_p/2)|1><e| + (Omega_S/2)|e><r| + h.c. + Delta_0|e><e| + delta|r><r|. The many-body interaction (Foerster B, delta_q, detunings) is the single-photon eq. (a4) with each |1><->|r> coupling replaced by this ladder.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "checks": [
+        {
+          "id": "src_a5a6",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Appendix eqs. (a5)/(a6) transcribed verbatim; interaction structure inherited from verified eq. (a4)."
+        },
+        {
+          "id": "hermitian_reduce",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Sector Hamiltonians Hermitian; all-|1> state decoupled with drive off; test_twophoton_model_is_hermitian_and_reduces."
+        },
+        {
+          "id": "fig4_selfconsistency",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Fig. 4(a) hybrid: populations return, conditional phase -0.985*pi, full-model gate error 1.3e-3; Fig. 4 populations digitized to <0.4% RMS."
+        }
+      ],
+      "code_refs": [
+        "src/hamiltonians_2p.py::build_sector",
+        "src/gate_2p.py::run_protocol"
+      ],
+      "open_questions": [
+        "Full tensor-product model includes the triple-excitation states the paper's reduced a4 omits (negligible, 2.6e-8 population). Full-model gate error is 1.3e-3 (Fig. 4a) vs the paper's <1e-4, plausibly because the paper optimised its waveforms in a reduced/effective model."
+      ]
+    },
+    {
+      "id": "h_sector00",
+      "title": "Buffer-only Hamiltonian H_b (eq. a1) for register input |00> -> |010>",
+      "statement": "H_b = (1/2)*Omega1*|1_b><r_b| + h.c. + Delta1*|r_b><r_b|.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_a1",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Appendix eq. (a1)."
+        },
+        {
+          "id": "rabi_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "note": "Constant Omega, Delta=0 -> P_e=sin^2(Omega t/2); test_rabi_analytic_limit."
+        }
+      ],
+      "code_refs": [
+        "src/hamiltonians.py::h_sector00"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "h_sector01",
+      "title": "Buffer+one-qubit Hamiltonian H_s (eq. a3) for register input |01>/|10>",
+      "statement": "5-state Hamiltonian in {|1b1u>,|rb1u>,|1br'u>,|rbr'u>,|qbq'u>} with Omega1 (buffer), Omega2 (qubit), detunings Delta1/Delta2/(Delta1+Delta2), and Foerster coupling B: |rr'><->|qq'>, delta_q=0.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_a3",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Appendix eq. (a3)."
+        },
+        {
+          "id": "unitary_return",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Norm conserved to 1e-9 and population returns; test_unitarity_and_dark_states / run checks."
+        }
+      ],
+      "code_refs": [
+        "src/hamiltonians.py::h_sector01"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "h_sector11",
+      "title": "Three-body Hamiltonian H_d (eq. a4) for register input |11> -> |111>",
+      "statement": "9-state product-basis Hamiltonian (control,buffer,target) with single-atom Omega1/Omega2 drivings, detunings counting Rydberg quanta, and Foerster couplings B on the two adjacent (control-buffer, buffer-target) pairs. Triply-excited states are blockaded (excluded).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_a4",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Appendix eq. (a4) (Morris-Shore reduced form) transcribed verbatim in h_sector11_bright."
+        },
+        {
+          "id": "morris_shore_equiv",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "Product basis reproduces published sqrt(2) symmetric couplings; antisymmetric combinations remain dark (<1e-10) when starting from |111>; test_unitarity_and_dark_states."
+        },
+        {
+          "id": "product_vs_bright",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "9-state product H_d and verbatim 6-state eq.(a4) form give identical |111> dynamics to <1e-8; test_product_and_bright_sector11_agree."
+        }
+      ],
+      "code_refs": [
+        "src/hamiltonians.py::h_sector11",
+        "src/hamiltonians.py::h_sector11_bright"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "cz_gate_metric",
+      "title": "CZ conditional phase and average gate error (paper 'typical way', refs [48,49])",
+      "statement": "Conditional phase Phi = phi_11 + phi_00 - 2*phi_01 (=pi for CZ). Average gate fidelity F=(|tr(U_t^dag U)|^2 + tr(U^dag U))/(d(d+1)), d=4, with U=diag(a_k) and U_t = e^{i theta}(Z_c x Z_t)CZ optimised over local Z; gate error = 1-F.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_p2",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text p.2: CZ fidelity 'evaluated in the typical way [48,49]' (Pedersen 2007)."
+        },
+        {
+          "id": "error_below_1e4",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Fig. 3 hybrid error=6.5e-6, amplitude error=5.6e-5, both <1e-4 and Phi=pi; test_fig3_*."
+        }
+      ],
+      "code_refs": [
+        "src/gate.py::conditional_phase",
+        "src/gate.py::average_gate_error"
+      ],
+      "open_questions": []
+    }
+  ]
+}

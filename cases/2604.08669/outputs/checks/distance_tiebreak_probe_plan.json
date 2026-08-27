@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "packet_type": "distance_tiebreak_probe_plan",
+  "status": "ready",
+  "paper_id": "2604.08669",
+  "case_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669",
+  "source_stage": "FailureAttributionStage",
+  "source_decision": "design_small_multiobjective_distance_tiebreak_probe",
+  "rationale": "The current squared-distance label contract is safer for max distance, while Euclidean labels are better for average distance. Probe a small distance tiebreak term before scaling training.",
+  "baseline": {
+    "candidate_id": "objective_pair_treatment_freshopt_src_tgt_topk",
+    "split": "val64",
+    "mean_predicted_average_distance": 0.5179771007969975,
+    "mean_predicted_max_distance": 1.9430985357612371,
+    "average_distance_delta_to_paper": 0.0059771007969975365,
+    "max_distance_delta_to_paper": 0.013098535761237207,
+    "rank1_rate": 0.7763316709146162,
+    "mean_positive_rank": 1.3074300313694736
+  },
+  "metric_contract": {
+    "tradeoff": "squared_label_max_safe_euclidean_label_average_safe_tradeoff",
+    "selected_label_cost": "squared_distance",
+    "recommendation": "freeze_squared_distance_hungarian_labels_and_report_euclidean_avg_max",
+    "squared_label_mean_average": 0.5161581709980965,
+    "squared_label_mean_max": 1.907858669757843,
+    "euclidean_label_mean_average": 0.5122294537723064,
+    "euclidean_label_mean_max": 2.287072192877531
+  },
+  "row_level_context": {
+    "primary_failure_mode": "paper_reference_dataset_mismatch_candidate",
+    "data_oracle_average_over_paper_count": 56,
+    "model_induced_average_over_paper_count": 3,
+    "data_oracle_max_over_paper_count": 18,
+    "model_induced_max_over_paper_count": 11
+  },
+  "probe_scope": {
+    "dataset": "paper_gnn_target_fig3_v1_shard32",
+    "validation_split": "paper_gnn_target_fig3_v1_val64",
+    "updates": 512,
+    "control": "current_source_target_topk_recipe",
+    "treatment": "source_target_topk_plus_distance_tiebreak",
+    "single_variable": "distance_tiebreak_term"
+  },
+  "treatment": {
+    "objective": "source_target_topk_plus_distance_tiebreak",
+    "distance_tiebreak_weight": "small_grid_prefer_0.01_to_0.03",
+    "fixed_recipe": [
+      "same_dataset",
+      "same_model",
+      "same_decoder",
+      "same_optimizer_schedule",
+      "same_evaluation_metrics"
+    ]
+  },
+  "gate": {
+    "primary_metric": "val64_average_and_max_distance",
+    "paper_average_distance": 0.512,
+    "paper_max_distance": 1.93,
+    "current_average_distance": 0.5179771007969975,
+    "current_max_distance": 1.9430985357612371,
+    "pass_conditions": [
+      "mean_predicted_average_distance_must_decrease",
+      "mean_predicted_max_distance_must_not_increase",
+      "max_tail_p90_p99_must_not_worsen",
+      "rank1_is_diagnostic_not_primary"
+    ],
+    "strong_pass_conditions": [
+      "mean_predicted_average_distance_below_paper_average",
+      "mean_predicted_max_distance_below_paper_max"
+    ],
+    "stop_conditions": [
+      "average_distance_does_not_improve",
+      "max_distance_or_tail_regresses",
+      "only_rank1_improves_without_paper_metric_improvement"
+    ]
+  },
+  "forbidden_actions_until_gate": [
+    "train256",
+    "curriculum",
+    "new_training_scaleup",
+    "long_remote_training"
+  ],
+  "allowed_next_actions": [
+    "prepare_distance_tiebreak_dry_run",
+    "request_human_approval_for_remote_short_probe"
+  ],
+  "output_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/checks/distance_tiebreak_probe_plan.json"
+}

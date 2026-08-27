@@ -1,31 +1,21 @@
-# Graph coloring via quantum optimization on a Rydberg-qudit atom array: scientific numerical reproduction note
+# Graph coloring via quantum optimization on a Rydberg-qudit atom array: scientific reproduction note
 
-## Bottom line
+## Result
 
-This is the public package for the historical `2504.08598` scientific reproduction. Its public status is **Historical scientific artifact (4 numerical targets; 2 evidence_compared, 2 partially_reproduced)** and its frozen audit score is **82.30/100**. The score records evidence strength; it is neither a percentage of correctness nor a declaration that the whole paper is complete.
+A clean-room Eq. (3)-Eq. (6) run reproduces Main Figures 5 and 6 at feature level; author CSVs are comparison-only after generation is frozen. Appendix Figures 8 and 9 retain stable named numeric mismatches, and Figure 7 is source-blocked.
 
-Here, reproduction means understanding the paper, following its equations or method, implementing the numerical work independently, and then generating data and figures. The data come from equations, independent numerics, or analytic derivation, not sampled pixels from paper figures. The public package excludes the paper PDF, standalone source figures, digitized image points, comparison boards, author code, and private runtime state. This is a legacy case without a machine-verifiable author-code isolation attestation, so publication does not upgrade it to complete.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Numerical targets
+## What is reproduced
 
-| Target | Paper item | Scientific meaning | Frozen status | Parameter match |
-| --- | --- | --- | --- | --- |
-| `T001` | FIG005 | k=3 target-coloring probability versus annealing time and final E/F basis distributions | evidence_compared | paper_exact |
-| `T002` | FIG006 | k=4 G-I final coloring distributions | evidence_compared | paper_exact |
-| `T003A` | FIG008 | k=2 A-F appendix annealing curves and E/F final distributions | partially_reproduced | paper_exact |
-| `T003B` | FIG009 | k=3 G-J appendix final distributions | partially_reproduced | paper_exact |
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Public artifacts
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
-- 9 independently generated data files;
-- 1 independently generated figures;
-- runnable and inspectable code under `code/`;
-- machine-readable boundaries and scoring under `outputs/checks/`.
+## Run
 
-Run `python code/scripts/verify_public_artifacts.py` to recompute hashes and format/non-empty checks for every published artifact. Numerical entrypoint sources are retained under `code/scripts/` and `code/src/`; some legacy scripts require paper-specific parameters or external public data, as documented in their comments and the numerical-method note.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-## Remaining boundary
+## Paper-review boundary
 
-Frozen non-final target states: T001=evidence_compared, T002=evidence_compared, T003A=partially_reproduced, T003B=partially_reproduced. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
-
-Layout, typography, axes, line styles, palettes, and interpolation may be optimized for rendering diagnostics, but they must not alter physical parameters or numerical arrays and must never replace scientific computation with source-image pixels.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Figure 8 curve E/F and distribution E, and Figure 9 distribution H remain named mismatches. Pasqal/Pulser qubit validation is not applicable to the multilevel qudit Hamiltonian; no real hardware or advantage claim.

@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "run_id": "1805.00931-paper-scale-smoke-v2-20260825",
+  "target_ids": [
+    "T003-T10",
+    "T003-T11",
+    "T003-T12",
+    "T003-T13",
+    "T003-T14",
+    "T003-T15"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_scale_smoke.json",
+    "--targets",
+    "T003,T004"
+  ],
+  "inputs": [
+    "src/kicked_ising/__init__.py",
+    "src/kicked_ising/model.py",
+    "src/kicked_ising/paper_scale.py",
+    "src/kicked_ising/reproduction.py",
+    "scripts/run_reproduction.py",
+    "config/paper_scale_smoke.json"
+  ],
+  "parameter_file": "config/paper_scale_smoke.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "model": {
+      "J": 0.7853981633974483,
+      "b": 0.7853981633974483
+    },
+    "fig2": {
+      "L": 3,
+      "paper_L": 15,
+      "h_mean": 0.6,
+      "sigmas": [
+        0.15707963267948966,
+        0.3141592653589793,
+        314.1592653589793
+      ],
+      "disorder_realizations": 6,
+      "paper_disorder_realizations": 9490,
+      "t_min": 1,
+      "t_max": 6,
+      "seed": 180500931,
+      "trace_estimator": {
+        "method": "independent_random_phase_cross",
+        "probe_group_size": 2,
+        "backend": "numpy",
+        "dtype": "complex128",
+        "butterfly_chunk_size": 16,
+        "norm_check_interval": 2,
+        "checkpoint_every_realizations": 1
+      }
+    },
+    "fig3_left": {
+      "h_mean": 0.0,
+      "times": [
+        3,
+        4
+      ],
+      "sigmas": [
+        0.0,
+        0.4
+      ]
+    },
+    "fig3_right": {
+      "t": 4,
+      "h_means": [
+        0.0,
+        0.3
+      ],
+      "sigmas": [
+        0.0,
+        0.4
+      ]
+    },
+    "solver": {
+      "method": "restarted_arnoldi",
+      "backend": "numpy",
+      "dtype": "complex128",
+      "krylov_dimension": 12,
+      "residual_tolerance": 0.0005,
+      "eigenvalue_tolerance": 0.0001,
+      "stable_iterations": 2,
+      "max_iterations": 120,
+      "seeds": [
+        264101,
+        264102
+      ],
+      "dephasing_block_rows": 8,
+      "butterfly_chunk_size": 16,
+      "projection_block_rows": 8,
+      "checkpoint_every_iterations": 2,
+      "checkpoint_chunk_elements": 4096,
+      "memory_limit_gib": 1.0
+    }
+  },
+  "outputs": [
+    "outputs/checks/smoke/paper_scale/gap_convergence.json",
+    "outputs/checks/smoke/paper_scale/target_checks.json",
+    "outputs/checks/smoke/paper_scale/performance_profile.json",
+    "outputs/checks/smoke/paper_scale/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

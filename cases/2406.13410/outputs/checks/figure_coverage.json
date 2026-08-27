@@ -1,0 +1,875 @@
+{
+  "schema_version": 2,
+  "paper_id": "2406.13410",
+  "implementations": {
+    "independent_feature_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/feature.json"
+      ],
+      "code_refs": [
+        "src/atom_ion_feshbach/statistics.py",
+        "src/atom_ion_feshbach/trap.py",
+        "src/atom_ion_feshbach/md.py",
+        "src/atom_ion_feshbach/classical.py",
+        "src/atom_ion_feshbach/polarization.py",
+        "src/atom_ion_feshbach/recombination.py",
+        "src/atom_ion_feshbach/rendering.py",
+        "src/atom_ion_feshbach/reproduction.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/feature.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/T001_number_variance.csv",
+        "outputs/data/T003_ion_energy_scaling.csv",
+        "outputs/data/T007_s_p_peak_loss.csv",
+        "outputs/data/T017_dimer_coupling.csv",
+        "outputs/checks/target_checks.json",
+        "outputs/checks/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All 17 theory/model targets are independently generated without raw, reference, author-code, author-array, or source-pixel inputs.",
+        "Poisson/GOE normalization, collision conservation, quadratic energy scaling, classical E^-3/4 loss, polarization unitarity/threshold/barrier laws, and partial-wave peak behavior pass their machine checks.",
+        "Missing author experimental arrays remain four explicit missing_author_data blockers rather than reconstructed points."
+      ]
+    },
+    "paper_scale_a100_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--mode",
+        "run-all",
+        "--backend",
+        "auto",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/atom_ion_feshbach/md.py",
+        "src/atom_ion_feshbach/torch_backend.py",
+        "src/atom_ion_feshbach/paper_scale.py",
+        "src/atom_ion_feshbach/polarization.py",
+        "src/atom_ion_feshbach/recombination.py",
+        "src/atom_ion_feshbach/reproduction.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/paper_scale/plan.json",
+        "outputs/data/paper_scale/aggregated/md_velocity_samples.npz",
+        "outputs/checks/paper_scale/target_checks.json",
+        "outputs/checks/paper_scale/campaign_manifest.json",
+        "outputs/checks/paper_scale/target_acceptance.json"
+      ],
+      "acceptance_criteria": [
+        "All 32 config-and-implementation-hash-bound shards complete or resume without seed overlap.",
+        "Every printed energy condition aggregates exactly 262144 float64 trajectories after 800 collision updates per trajectory.",
+        "The 121-point polarization grid and 131072-sample three-body averages produce all 17 target artifacts and pass all scientific checks.",
+        "CUDA on the available A100 is used when present; NumPy is an equivalent slower backend and no GPU-only numerical shortcut changes the model.",
+        "Omitted author MD inputs and f-wave short-range parameters remain reconstructed, preventing paper-exact promotion even after a full campaign."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "PFIG-001-A-APPARATUS",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), PDF p. 2",
+      "scientific_object": "Hybrid atom-ion trap and displacement-field geometry",
+      "decision": "excluded",
+      "reason": "Apparatus or mechanism schematic with no independently generated numerical observable."
+    },
+    {
+      "item_id": "PFIG-001-B-MECHANISM",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(b), PDF p. 2",
+      "scientific_object": "Two-step three-body recombination mechanism",
+      "decision": "excluded",
+      "reason": "Apparatus or mechanism schematic with no independently generated numerical observable."
+    },
+    {
+      "item_id": "PFIG-001-C-SPECTRUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 1(c), PDF p. 2, main axes",
+      "scientific_object": "Measured 290-340 G ion-loss spectrum",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-001-C-INSET",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 1(c) inset, PDF p. 2",
+      "scientific_object": "Measured narrow resonance near 322 G",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-002-A-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, orange markers",
+      "scientific_object": "Experimental number variance of detected resonances",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T001"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-POISSON",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_reference",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, dashed line",
+      "scientific_object": "Poisson number-variance reference",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-GOE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_reference",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, dash-dotted line",
+      "scientific_object": "GOE/Wigner-Dyson number-variance reference",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, green markers",
+      "scientific_object": "Experimental normalized nearest-neighbor spacing distribution",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T002"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-POISSON",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_reference",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, dashed line",
+      "scientific_object": "Poisson nearest-neighbor spacing distribution",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-WIGNER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_reference",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, dash-dotted line",
+      "scientific_object": "Wigner-surmise nearest-neighbor spacing distribution",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-ENERGY",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 3(a), PDF p. 3",
+      "scientific_object": "MD median ion energy and quadratic displacement-field scaling",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_NONTHERMAL_ION"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-B-RADIAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 3(b), PDF p. 3",
+      "scientific_object": "Radial ion-velocity distributions and Gaussian comparators at three fields",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_NONTHERMAL_ION"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-C-AXIAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 3(c), PDF p. 3",
+      "scientific_object": "Axial ion-velocity distributions and Gaussian comparators at three fields",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_NONTHERMAL_ION"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-DENSITY-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 4, gray diamonds",
+      "scientific_object": "Measured in-situ lithium density profile",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T006"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-DENSITY-GAUSSIAN",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4, PDF p. 4, solid gray line",
+      "scientific_object": "Printed Gaussian density model",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_CLASSICAL_LOSS"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-SURVIVAL-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4, PDF p. 4, orange markers",
+      "scientific_object": "Measured resonant ion survival versus excess energy",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T006"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-INSET-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4 inset, PDF p. 4, dark-orange markers",
+      "scientific_object": "Measured low-energy survival below the ion s-wave limit",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T006"
+      ]
+    },
+    {
+      "item_id": "PFIG-004-CLASSICAL-TBR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4, PDF p. 4, dashed orange line",
+      "scientific_object": "Classical E^-3/4 three-body-recombination survival branch",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_CLASSICAL_LOSS"
+      ]
+    },
+    {
+      "item_id": "PFIG-005-A-E0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5, Delta E/E_s=0",
+      "scientific_object": "Measured 321.9 G spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-005-A-E0P20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5, Delta E/E_s=0.20",
+      "scientific_object": "Measured 321.9 G spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.20",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-005-A-E0P45",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5, Delta E/E_s=0.45",
+      "scientific_object": "Measured 321.9 G spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.45",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-005-A-E0P80",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(a), PDF p. 5, Delta E/E_s=0.80",
+      "scientific_object": "Measured 321.9 G spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.80",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-005-B-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5(b), PDF p. 5, diamonds and black dashed line",
+      "scientific_object": "Measured peak-loss rates and empirical exponential fit",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T007"
+      ]
+    },
+    {
+      "item_id": "PFIG-005-B-S-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 5(b), PDF p. 5, black circles",
+      "scientific_object": "s-wave quantum-recombination peak-loss prediction",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-005-B-P-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "method_validation",
+      "source_ref": "Main Fig. 5(b), PDF p. 5, gray crosses",
+      "scientific_object": "p-wave quantum-recombination peak-loss comparator",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-A-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(a), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=3.21",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T008"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-A-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(a), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=3.21",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-B-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(b), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=1.81",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T009"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-B-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(b), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=1.81",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-C-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(c), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=1.26",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T010"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-C-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(c), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=1.26",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-D-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(d), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.80",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T011"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-D-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(d), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=0.80",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-E-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(e), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.45",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T012"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-E-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(e), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=0.45",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-F-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(f), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0.20",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T013"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-F-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(f), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=0.20",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-G-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(g), PDF p. 6, markers and solid fit",
+      "scientific_object": "Measured spectrum and empirical skewed-Gaussian fit at Delta E/E_s=0",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T014"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-G-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(g), PDF p. 6, dotted line",
+      "scientific_object": "Open-channel f-wave recombination spectrum at Delta E/E_s=0",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-H-B0-DATA-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(h), PDF p. 6",
+      "scientific_object": "Experimental resonance positions and 4.4 mG/microkelvin linear fit",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T015"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-I-LOSS-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 6(i), PDF p. 6, filled diamonds",
+      "scientific_object": "Experimental f-wave peak-loss rate versus excess energy",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output.",
+      "reference_for_target_ids": [
+        "T016"
+      ]
+    },
+    {
+      "item_id": "PFIG-006-I-F-WAVE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6(i), PDF p. 6, open circles",
+      "scientific_object": "f-wave quantum-recombination peak-loss prediction",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-007-66KHZ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Appendix Fig. 7, PDF p. 10, blue data and fit",
+      "scientific_object": "Measured 321.9 G spectrum at 66 kHz rf confinement",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-007-125KHZ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Appendix Fig. 7, PDF p. 10, second data series and fit",
+      "scientific_object": "Measured 321.9 G spectrum at 125 kHz rf confinement",
+      "decision": "excluded",
+      "reason": "Laboratory measurement or empirical fit requiring unpublished shot-level data; it is comparison evidence, not a formula-driven runner output."
+    },
+    {
+      "item_id": "PFIG-008-S-COUPLING",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, s-wave curve",
+      "scientific_object": "s-wave dimer-coupling probability versus collision energy",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-P-COUPLING",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, p-wave curve",
+      "scientific_object": "p-wave dimer-coupling probability versus collision energy",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-D-COUPLING",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, d-wave curve",
+      "scientific_object": "d-wave dimer-coupling probability versus collision energy",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-F-COUPLING",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, f-wave curve",
+      "scientific_object": "f-wave dimer-coupling probability versus collision energy",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Existing independently generated data implement this formula- or model-driven scientific series.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-THRESHOLD-GUIDES",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, black dashed guides",
+      "scientific_object": "Wigner-threshold k^(2l+1) guide lines",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Guide derived from the same T017 scattering solution; retained for audit but not counted as a second scientific result.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    },
+    {
+      "item_id": "PFIG-008-BARRIER-GUIDES",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "source_ref": "Appendix Fig. 8, PDF p. 11, vertical dotted guides",
+      "scientific_object": "Partial-wave barrier positions at 1, 9, and 36 E_s",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Guide derived from the same T017 scattering solution; retained for audit but not counted as a second scientific result.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    }
+  ],
+  "scope_mode": "whole_paper_scientific_items",
+  "formula_numericalization_required": true,
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf, 12 pages including Appendices A-F",
+    "known_items": [
+      "Main Figs. 1-6",
+      "Appendix Figs. 7-8",
+      "no tables"
+    ],
+    "unknown_remainder": false,
+    "reason": "The complete archived PDF was read end to end. TeX was used only to cross-check captions and equations; author code, author arrays, and source pixels were not used as scientific numerical input."
+  },
+  "quantitative_claims": [
+    {
+      "item_id": "PCLM-006-H-MODEL-DIAGNOSTIC",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 6(h) and accompanying text, PDF p. 6",
+      "scientific_object": "Positive f-wave resonance-position shift used as a model diagnostic",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "T015 reconstructs a diagnostic from the printed empirical slope; the source panel itself is experimental, so this claim is retained for target traceability but not counted as an independently reproduced item.",
+      "claim_refs": [
+        "CLM_PARTIAL_WAVE_RESONANCES"
+      ]
+    }
+  ]
+}

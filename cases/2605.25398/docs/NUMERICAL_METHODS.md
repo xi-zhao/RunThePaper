@@ -1,70 +1,51 @@
 # Numerical Methods
 
-## Numerical Object
+## Numerical object
 
-The numerical object is a time-dependent probability vector over collision-free two-photon output configurations:
+The independent model propagates two bosons under random-matrix Hamiltonians and forms the collision-free conditional probability vector
 
 ```text
-p(t) = {p_cond(r,s;t) | 1 <= r < s <= M}
+p_cond(r,s;t) = p_raw(r,s;t) / sum_{a<b} p_raw(a,b;t),  1 <= r < s <= M.
 ```
 
-For the main paper setting, `M=8`, `N=2`, so there are `D=C(8,2)=28` entries.
+The denominator is evaluated separately for every realization and time before ensemble averaging. For the main setting `M=8`, `N=2`, the vector has `D=C(8,2)=28` entries.
 
-## Parameters
+## Frozen paper parameters
 
 | Parameter | Value | Source |
 | --- | --- | --- |
-| Modes | `M=8` | paper experiment |
-| Photons | `N=2` | paper experiment |
-| Input pair | modes `(3,4)` in one-based notation | OTOC discussion in main text |
-| Integrable regime | `Lambda=0.01` | paper random-matrix section |
-| Chaotic regime | `Lambda=1000` | paper random-matrix section |
-| Paper times | `[1, 1.79, 29.29, 100, 1000]` | appendix construction of unitaries |
-| Collision-free dimension | `D=28` | appendix conditional probabilities |
+| Modes / photons | `M=8`, `N=2` | paper experiment |
+| Input pair | `(3,4)` one-based / `(2,3)` zero-based | main OTOC text |
+| Integrable / chaotic | `Lambda=0.01` / `Lambda=1000` | paper random-matrix section |
+| Paper times | `1`, `1.79`, `29.29`, `100`, `1000` | appendix unitary construction |
+| Fig. 3, Fig. 4, Fig. S5 ensembles | `2000` | corresponding captions |
+| Fig. S4 modes | `4,6,8,10,12,14,16,18,20,22` | vector text of Fig. S4 |
 
-## Data Products
+## Paper-scale grids and checks
 
-| Data file | Purpose |
-| --- | --- |
-| `outputs/data/sparse_*_metrics.csv` | Paper-time PT distance, entropy, PR, target OTOC, SFF proxy. |
-| `outputs/data/sparse_*_output_distributions.csv` | Output probability bars for Fig. 2g-h style reproduction. |
-| `outputs/data/ideal_*_metrics.csv` | Dense-time ideal diagnostic curves for Fig. 3 and Fig. 4. |
-| `outputs/data/ideal_*_otoc_sectors.csv` | Overlap-sector averaged OTOC probabilities. |
-| `outputs/data/appendix_conditional_probability_demo.csv` | Conditional probability validation for Fig. S1. |
-| `outputs/data/appendix_scaling_summary.csv` | Mode-scaling diagnostics for Fig. S4. |
-| `outputs/data/appendix_ideal_otocs_full.csv` | All-configuration OTOC curves for Fig. S5. |
-| `outputs/data/appendix_otoc_short_time.csv` | Short-time OTOC curves for Fig. S6a. |
-| `outputs/data/appendix_otoc_fft_spectrum.csv` | Late-time FFT spectrum for Fig. S6b. |
-| `outputs/data/appendix_otoc_fft_pr.csv` | Frequency-space participation ratio for Fig. S6c. |
+- Fig. 3 (`T002`): `2000` realizations; coarse `41`-point and refined `81`-point grids on `0.8…2.8`; logarithmic late-time extension through `1000`.
+- Fig. 4 (`T003`): `2000` realizations; mixed linear/logarithmic grid from `0.05` through `1000`.
+- Fig. S4 (`T005`): every printed even mode through `M=22`; `2000` chaotic realizations per mode.
+- Fig. S5 (`T006`): `2000` realizations; mixed grid from `0.02` through `1000`; all `28` configurations, including the initial pair.
+- Fig. S6 (`T007`): short-time power-law fit plus the paper's non-initial FFT scope.
 
-## Generated Figures
-
-| Generated figure | Paper target |
-| --- | --- |
-| `outputs/figures/fig2_output_distribution_reproduction.png` | Fig. 2g-h theoretical probability distributions |
-| `outputs/figures/fig3_main_probes_reproduction.png` | Fig. 3 |
-| `outputs/figures/fig4_otoc_pr_reproduction.png` | Fig. 4 |
-| `outputs/figures/figS1_conditional_probability_reproduction.png` | Fig. S1 |
-| `outputs/figures/figS4_scaling_reproduction.png` | Fig. S4 |
-| `outputs/figures/figS5_ideal_otocs_reproduction.png` | Fig. S5 |
-| `outputs/figures/figS6_extra_otoc_reproduction.png` | Fig. S6 |
-
-## Numerical Checks
-
-The central check values are:
-
-- PT distance minimum for chaotic ideal curve: `t=1.788`, close to paper `t*=1.79`;
-- entropy maximum for chaotic ideal curve: `t=1.8407`, close to paper `t*=1.79`;
-- SFF proxy minimum for chaotic ideal curve: `t=1.8407`, close to paper `t*=1.79`;
-- chaotic PR at `t=1.79`: `12.51`;
-- integrable PR at `t=1.79`: `1.05`;
-- chaotic entropy at `t=1.79`: `2.787`;
-- integrable entropy at `t=1.79`: `0.144`;
-- short-time slopes: overlap-one `1.999`, overlap-zero `3.999`;
-- mean FFT PR: chaotic `146.13`, integrable `9.07`.
-
-These are recorded in:
+The exact outputs and assertions are stored as paired files under:
 
 ```text
-outputs/checks/reproduction_feature_checks.json
+outputs/data/scientific_closure/T00X.json
+outputs/checks/scientific_closure/T00X.json
 ```
+
+The flat CSV files under `outputs/data/` and their PNG renderings are an older reduced-scale exploratory renderer path; they are not evidence for the paper-exact ensemble-count claims. They have been regenerated after the normalization repair so their Fig. S5 data now contain all `28` configurations, but fresh review must use the paired `scientific_closure` JSON and v2 isolated attestation for paper-scale adjudication.
+
+## Central v2 results
+
+- Fig. 3 extrema: entropy maximum and PT minimum at `t=1.79`, SFF minimum at `t=1.825`, PR maximum at `t=1.775`.
+- Fig. 3 convergence: maximum refinement shift `0.025`; maximum late-domain shift `0`.
+- Fig. 3 late-time separation: PT plateau/dip ratio `1.863`; SFF plateau/dip ratio `14.577`.
+- At `t=1.79`: chaotic PR `12.5765`, integrable PR `1.05238`; chaotic entropy `2.79295`, integrable entropy `0.15909`.
+- Fig. S4: PT endpoint reduction `0.91550`; entropy-gap drop `1.67762` percentage points; `M=22` uses all `2000` chaotic realizations.
+- Fig. S5: `28/28` configurations for each ensemble, three overlap sectors `{0,1,2}`, and probability sum one at every stored time.
+- Fig. S6 slopes: overlap-one `1.99959`, overlap-zero `3.99978`; pairwise chaotic FFT-PR win fraction `1.0`.
+
+The author-repair scaling benchmark separately times counts `16`, `64`, and `256` and projects paper-scale cost without promoting scientific coverage. The actual paper-scale isolated run, not the projection, is the primary evidence.

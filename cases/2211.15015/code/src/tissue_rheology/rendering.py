@@ -16,6 +16,8 @@ import numpy as np
 from .analysis import peclet_collapse, power_law_fit
 from .campaign import Condition, aggregate_flow_curves, atomic_json
 from .geometry import edge_displacement
+from .scope_targets import write_scope_target_artifacts
+from .target_selection import select_condition_results, select_curve
 
 TARGET_FILENAMES = {
     "T001": "T001_main_fig2a_flow_solid.png",
@@ -36,6 +38,8 @@ TARGET_FILENAMES = {
     "T016": "T016_main_fig7a_scaled_curves.png",
     "T017": "T017_main_fig7b_peclet_relation.png",
 }
+
+FEATURE_SCOPE_TARGET_IDS = {f"T{value:03d}" for value in range(18, 25)}
 
 
 def _style() -> None:
@@ -71,19 +75,6 @@ def _matching_curves(
     return sorted(
         [curve for curve in curves if abs(float(curve["p0"]) - p0) <= tolerance],
         key=lambda item: float(item["activity"]),
-    )
-
-
-def _closest_curve(
-    curves: list[dict[str, Any]],
-    *,
-    p0: float,
-    activity: float,
-) -> dict[str, Any]:
-    return min(
-        curves,
-        key=lambda curve: abs(float(curve["p0"]) - p0)
-        + abs(float(curve["activity"]) - activity),
     )
 
 
@@ -214,11 +205,11 @@ def _plot_stress_diagnostics(
     results: list[dict[str, Any]],
     time_path: Path,
     distribution_path: Path,
+    *,
+    selector: dict[str, Any],
+    strict: bool,
 ) -> list[dict[str, Any]]:
-    selected = _condition_results(results, p0=3.9, activity=0.12)
-    if len(selected) > 3:
-        indices = np.linspace(0, len(selected) - 1, 3).round().astype(int)
-        selected = [selected[index] for index in indices]
+    selected = select_condition_results(results, selector, strict=strict)
     selected = [_materialize(item) for item in selected]
     colors = ["#4c78a8", "#e45756", "#54a24b"]
     fig, axis = plt.subplots(figsize=(3.5, 2.75))
@@ -529,6 +520,7 @@ def render_all_targets(
     figures_root: Path,
     checks_root: Path,
     profile: str,
+    target_selectors: dict[str, dict[str, Any]],
 ) -> dict[str, Any]:
     _style()
     figures = figures_root
@@ -550,34 +542,58 @@ def render_all_targets(
     )
     _plot_viscosity_activity(curves, figures / TARGET_FILENAMES["T003"])
     _plot_viscosity_map(curves, figures / TARGET_FILENAMES["T004"])
-    dst_curve = _closest_curve(curves, p0=3.9, activity=0.12)
+    strict_selection = profile == "paper_scale"
+    dst_curve = select_curve(
+        curves,
+        target_selectors["T005"],
+        strict=strict_selection,
+    )
     _plot_single_curve(
         dst_curve, figures / TARGET_FILENAMES["T005"], "DST diagnostic curve"
     )
-    diagnostic_results = _plot_stress_diagnostics(
-        results, figures / TARGET_FILENAMES["T006"], figures / TARGET_FILENAMES["T007"]
+    _plot_stress_diagnostics(
+        results,
+        figures / TARGET_FILENAMES["T006"],
+        figures / TARGET_FILENAMES["T007"],
+        selector=target_selectors["T006"],
+        strict=strict_selection,
     )
-    if diagnostic_results:
+    low_network = select_condition_results(
+        results,
+        target_selectors["T008"],
+        strict=strict_selection,
+    )
+    high_network = select_condition_results(
+        results,
+        target_selectors["T009"],
+        strict=strict_selection,
+    )
+    if low_network:
         _plot_network(
-            diagnostic_results[0],
+            low_network[0],
             figures / TARGET_FILENAMES["T008"],
             "Low-rate generated tension network",
         )
+    if high_network:
         _plot_network(
-            diagnostic_results[-1],
+            high_network[0],
             figures / TARGET_FILENAMES["T009"],
             "High-rate generated tension network",
         )
     _plot_onsets(curves, figures / TARGET_FILENAMES["T010"])
     _plot_phase(curves, figures / TARGET_FILENAMES["T011"])
-    for target, p0, activity, title in [
-        ("T012", 3.65, 0.0, "Yield diagnostic"),
-        ("T013", 3.9, 0.25, "CST diagnostic"),
-        ("T014", 4.0, 0.04, "DST diagnostic"),
-        ("T015", 3.9, 0.5, "Newtonian diagnostic"),
+    for target, title in [
+        ("T012", "Yield diagnostic"),
+        ("T013", "CST diagnostic"),
+        ("T014", "DST diagnostic"),
+        ("T015", "Newtonian diagnostic"),
     ]:
         _plot_single_curve(
-            _closest_curve(curves, p0=p0, activity=activity),
+            select_curve(
+                curves,
+                target_selectors[target],
+                strict=strict_selection,
+            ),
             figures / TARGET_FILENAMES[target],
             title,
         )
@@ -616,6 +632,19 @@ def render_all_targets(
                     else "Paper-scale arrays are present; downstream claim-specific checks still govern authoritative completion."
                 ),
             }
+        )
+    if results:
+        target_checks.extend(
+            write_scope_target_artifacts(
+                curves,
+                results,
+                workspace=workspace,
+                data_root=data_root,
+                figures_root=figures_root,
+                checks_root=checks_root,
+                profile=profile,
+                target_ids=FEATURE_SCOPE_TARGET_IDS,
+            )
         )
     scientific = {
         "schema_version": 1,

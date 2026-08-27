@@ -1,0 +1,736 @@
+{
+  "schema_version": 1,
+  "paper_id": "2510.26761",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Multimode Wigner and characteristic conventions",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "W_{\\rho}(\\vec{\\alpha}) = (2/\\pi)^{M}"
+        },
+        {
+          "type": "tex_contains",
+          "value": "\\chi_{\\rho}(\\vec{\\xi}) \\coloneqq \\int"
+        }
+      ],
+      "latex": "W_\\rho(\\vec\\alpha)=\\left(\\frac{2}{\\pi}\\right)^M\\operatorname{tr}\\!\\left[\\rho e^{i\\pi|\\vec a-\\vec\\alpha|^2}\\right],\\qquad \\chi_\\rho(\\vec\\xi)=\\int d^{2M}\\vec\\alpha\\,W_\\rho(\\vec\\alpha)e^{\\sum_m(\\alpha_m^*\\xi_m-\\alpha_m\\xi_m^*)}",
+      "role": "Fixes every normalization, Fourier convention, and parity sign used downstream.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both definitions are printed in the main text."
+        },
+        {
+          "id": "EQC001_vacuum",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The convention gives W_0(alpha)=2 exp(-2|alpha|^2)/pi with unit phase-space integral and chi_0(xi)=exp(-|xi|^2/2)."
+        }
+      ],
+      "numerical_form": "Use one complex coordinate as two real quadratures; a vacuum factor at the origin equals 2/pi.",
+      "code_refs": [
+        "src/wigner_gme.py:wigner_fock_element",
+        "src/wigner_gme.py:wigner_from_density"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Collective coordinates and the equal-coordinate slice",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:Wigner-same-arg-is-collective"
+        },
+        {
+          "type": "tex_contains",
+          "value": "sqrt{3}a_{+} \\coloneqq \\sum_{m=1}^3 a_m"
+        }
+      ],
+      "latex": "a_+=\\frac{a_1+a_2+a_3}{\\sqrt3},\\quad a_-=\\frac{2a_1-a_2-a_3}{\\sqrt6},\\quad a_\\perp=\\frac{a_2-a_3}{\\sqrt2};\\qquad (\\alpha,\\alpha,\\alpha)\\mapsto(\\sqrt3\\alpha,0,0)",
+      "role": "Turns the paper's correlated two-dimensional slice into a one-mode center-of-mass coordinate with relative modes fixed at the origin.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The collective coordinates and equal-coordinate identity are printed in the End Matter and Supplemental S1."
+        },
+        {
+          "id": "EQC002_unitary",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The three coefficient vectors are mutually orthonormal, so they preserve the canonical commutators and the phase-space norm."
+        }
+      ],
+      "numerical_form": "gamma=sqrt(3)*alpha on the equal slice; use (alpha_plus, alpha_minus, alpha_perp) for the Fig. 1 cut.",
+      "code_refs": [
+        "src/wigner_gme.py:illustrative_wigner_cut",
+        "src/wigner_gme.py:illustrative_slice_wigner"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Slice negativity and the state-dependent GME bound",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "thm:GME-2D-slice"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:Criterion2lemma"
+        }
+      ],
+      "latex": "\\mathcal N_{2D}(\\rho)=\\left(\\frac\\pi2\\right)^{M-1}\\!\\int d^2\\alpha\\,\\max\\{0,-W_\\rho(\\alpha\\vec y+\\alpha^*\\vec z)\\},\\quad \\mathcal N_{2D}^{\\rm GME}=\\frac1{4\\sqrt{M-1}}-\\frac{\\pi^{M-1}}{2^M}\\int d^2\\alpha\\,W_\\rho",
+      "role": "Defines the first theorem's quantitative witness and the two integrals that must be evaluated for Fig. 1.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both quantities are printed in Theorem 1."
+        },
+        {
+          "id": "EQC003_bounds",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Supplemental S1 gives |integral W|<=M^{-1}(2/pi)^{M-1}, which makes the stated GME threshold finite and nonnegative."
+        }
+      ],
+      "numerical_form": "Integrate the negative part and signed function in polar coordinates; certify only when N2D exceeds the state-dependent bound.",
+      "code_refs": [
+        "src/wigner_gme.py:illustrative_slice_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Smoothed center-of-mass negativity witness",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "thm:GMN-reduced-state"
+        }
+      ],
+      "latex": "\\widetilde W_{\\operatorname{tr}_{-}\\rho}(\\alpha;\\mathcal R)=\\int d^2\\beta\\,W_{\\operatorname{tr}_{-}\\rho}(\\beta)K(\\alpha-\\beta;\\mathcal R),\\qquad \\max\\{0,-\\widetilde W\\}\\le\\frac2\\pi\\min_{\\sigma\\notin\\mathrm{GME}}\\|\\sigma-\\rho\\|_1",
+      "role": "Defines the second theorem's convolution and explains why a surviving negative value certifies GME.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The convolution and trace-distance inequality are printed in Theorem 2."
+        },
+        {
+          "id": "EQC004_sign",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For every non-GME state the right-hand distance can vanish at sigma=rho, forcing the smoothed function to be nonnegative."
+        }
+      ],
+      "numerical_form": "Evaluate a two-dimensional convolution or its analytic Fock-diagonal reduction; any negative result is the witness.",
+      "code_refs": [
+        "src/wigner_gme.py:smoothed_com_wigner",
+        "src/wigner_gme.py:smoothed_origin_exact"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Minimum-width Gaussian kernel for three modes",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:filter-function-Gaussian"
+        },
+        {
+          "type": "tex_contains",
+          "value": "K(alpha) = 8e^{-6"
+        }
+      ],
+      "latex": "M=3,\\quad K(\\alpha)=\\frac8\\pi e^{-6|\\alpha|^2},\\qquad \\int d^2\\alpha\\,K(\\alpha)=\\frac43",
+      "role": "Specializes the allowed Gaussian smoothing family to the kernel used in the Fig. 1 example.",
+      "derived_from": [
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The End Matter states this kernel, and it saturates the determinant constraint in the Gaussian-filter equation."
+        },
+        {
+          "id": "EQC005_integral",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Direct polar integration gives (8/pi)*(pi/6)=4/3; the theorem's kernel is not a probability-normalized blur."
+        }
+      ],
+      "numerical_form": "kernel(alpha)=8/pi*exp(-6*abs(alpha)**2).",
+      "code_refs": [
+        "src/wigner_gme.py:gaussian_kernel"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Finite-region absolute-volume GME criterion",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "col:GME-Wigner-witness"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:GMEWignerFiniteRegionDef"
+        }
+      ],
+      "latex": "\\mathcal V_{2D}(\\rho;\\omega)=\\left(\\frac\\pi2\\right)^{M-1}\\int_\\omega d^2\\alpha\\,|W_\\rho(\\alpha\\vec y+\\alpha^*\\vec z)|;\\qquad \\mathcal V_{2D}>\\frac1{2\\sqrt{M-1}}\\Longrightarrow\\rho\\in\\mathrm{GME}",
+      "role": "Turns a bounded set of Wigner measurements into the operational criterion shown in Fig. 2(a).",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The definition and sufficient threshold are printed in the finite-region corollary."
+        },
+        {
+          "id": "EQC006_implication",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The proof uses V_omega<=the full absolute integral and subtracts the signed-integral bound from Supplemental S1 to recover Theorem 1."
+        }
+      ],
+      "numerical_form": "For M=3 compare the disk integral against 1/(2*sqrt(2)).",
+      "code_refs": [
+        "src/wigner_gme.py:w_state_disk_volume"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Tripartite W-state Wigner slice",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "W_{\\ketW[3]}(\\vec{\\alpha}) ="
+        },
+        {
+          "type": "figure",
+          "value": "fig:W-state-combined(a)"
+        }
+      ],
+      "latex": "|W_3\\rangle=\\frac{|100\\rangle+|010\\rangle+|001\\rangle}{\\sqrt3},\\qquad W_{W_3}(\\alpha\\vec1)=\\left(\\frac2\\pi\\right)^3(12|\\alpha|^2-1)e^{-6|\\alpha|^2}",
+      "role": "Provides the exact field plotted in Fig. 2(a).",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The full vector expression is printed in the End Matter."
+        },
+        {
+          "id": "EQC007_collective",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The W state is one center-of-mass excitation with both relative modes in vacuum; multiplying W_1(sqrt(3)alpha) by two vacuum-origin factors gives the stated slice."
+        },
+        {
+          "id": "EQC007_zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The sign changes at |alpha|=1/(2*sqrt(3)), matching the central negative disk and positive annulus in the source panel."
+        }
+      ],
+      "numerical_form": "(2/pi)^3*(12*r2-1)*exp(-6*r2).",
+      "code_refs": [
+        "src/wigner_gme.py:w_state_wigner_slice"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Closed-form W-state disk volume",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "\\mathcal{V}_{2D}(\\ketW[3];\\omega_{r}) = \\begin{cases}"
+        }
+      ],
+      "latex": "\\mathcal V_{2D}(r)=\\begin{cases}[(1+12r^2)e^{-6r^2}-1]/3,&r<1/(2\\sqrt3),\\\\[1mm][4e^{-1/2}-(1+12r^2)e^{-6r^2}-1]/3,&r\\ge1/(2\\sqrt3).\\end{cases}",
+      "role": "Allows Fig. 2(a)'s finite-region statement to be checked without relying on image pixels or grid quadrature.",
+      "derived_from": [
+        "EQC006",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The piecewise result is printed in the End Matter."
+        },
+        {
+          "id": "EQC008_integral",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Writing d^2alpha=2*pi*r dr and splitting the absolute value at r=1/(2*sqrt(3)) gives both branches and a continuous join."
+        }
+      ],
+      "numerical_form": "Use the analytic branch rather than discretizing the disk.",
+      "code_refs": [
+        "src/wigner_gme.py:w_state_disk_volume"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Exact finite-disk threshold radius",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "any r \\gtrsim 0.7"
+        },
+        {
+          "type": "figure",
+          "value": "fig:W-state-combined(a)"
+        }
+      ],
+      "latex": "\\mathcal V_{2D}(r_{\\rm crit})=\\frac1{2\\sqrt2},\\qquad r_{\\rm crit}=0.699195329344\\ldots,\\qquad \\mathcal V_{2D}(0.7)=0.3541354750\\ldots",
+      "role": "Replaces the caption's rounded r approximately 0.7 statement with the independently solved crossing.",
+      "derived_from": [
+        "EQC006",
+        "EQC008"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper draws r=0.7 and states that radii around or above 0.7 certify GME."
+        },
+        {
+          "id": "EQC009_root",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "High-precision root finding on the second analytic branch gives 0.699195329344; substituting r=0.7 exceeds 1/(2*sqrt(2)) by 5.82084e-4."
+        }
+      ],
+      "numerical_form": "brentq(V(r)-1/(2*sqrt(2)), 0.6, 0.8).",
+      "code_refs": [
+        "src/wigner_gme.py:w_state_critical_radius"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Finite characteristic-function GME matrix",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "col:GME-characteristic-witness"
+        },
+        {
+          "type": "tex_label",
+          "value": "apd:GME-characteristic-witness"
+        }
+      ],
+      "latex": "C_{nn'}=\\frac1N\\chi_\\rho((\\xi_n-\\xi_{n'})\\vec y+(\\xi_n^*-\\xi_{n'}^*)\\vec z),\\quad K_{nn'}=\\prod_{m=1}^{M-2}\\chi_{\\varrho_m}(\\xi_n-\\xi_{n'}),\\quad \\mathcal N_C=\\max\\{0,-\\lambda_{\\min}(C\\circ K)\\}",
+      "role": "Defines the finite-point Bochner witness behind Fig. 2(b).",
+      "derived_from": [
+        "EQC001",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The corollary prints C, K, the Hadamard product, and the minimum-eigenvalue witness."
+        },
+        {
+          "id": "EQC010_hermitian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "chi(-xi)=chi(xi)* makes both matrices Hermitian; the Schur product therefore has a real eigenspectrum."
+        }
+      ],
+      "numerical_form": "Construct the 7x7 Hermitian matrix from pairwise complex-coordinate differences and use eigvalsh.",
+      "code_refs": [
+        "src/wigner_gme.py:characteristic_witness_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "W-state characteristic slice and seven-point witness",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "its characteristic function is"
+        },
+        {
+          "type": "tex_contains",
+          "value": "xi_0 = (85 + i147)/200"
+        },
+        {
+          "type": "figure",
+          "value": "fig:W-state-combined(b)"
+        }
+      ],
+      "latex": "\\chi_{W_3}(\\xi\\vec1)=(1-3|\\xi|^2)e^{-3|\\xi|^2/2},\\quad \\xi_0=(85+147i)/200,\\quad \\Xi=\\{0,\\pm(\\xi_0+\\xi_0^*),\\pm\\xi_0,\\pm\\xi_0^*\\}",
+      "role": "Provides the exact heat map, point set, and matrix entries used to reproduce Fig. 2(b).",
+      "derived_from": [
+        "EQC001",
+        "EQC010"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The characteristic function, Xi, and xi0 are printed in the main text and End Matter."
+        },
+        {
+          "id": "EQC011_collective",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "One center-of-mass excitation gives chi_1(sqrt(3)xi)=(1-3|xi|^2)exp(-3|xi|^2/2)."
+        },
+        {
+          "id": "EQC011_eigenvalue",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "With a vacuum filter, direct diagonalization gives lambda_min=-0.017580375648 and the remaining six eigenvalues positive, reproducing 0.0176."
+        }
+      ],
+      "numerical_form": "(C*K)[n,n']=(1/7)*(1-3*abs(delta)^2)*exp(-2*abs(delta)^2); enumerate 19 unique pairwise differences.",
+      "code_refs": [
+        "src/wigner_gme.py:w_state_characteristic_slice",
+        "src/wigner_gme.py:witness_points",
+        "src/wigner_gme.py:characteristic_witness_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC012",
+      "title": "Illustrative state in collective Fock modes",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "Details of plotted state in \\cref{fig:Overview}"
+        },
+        {
+          "type": "tex_contains",
+          "value": "|\\psi\\rangle= & \\frac{1}{5 \\sqrt{2}}"
+        }
+      ],
+      "latex": "|\\psi\\rangle=\\frac1{5\\sqrt2}(|1\\rangle_++|3\\rangle_+)(|0\\rangle_-+\\sqrt{19}|1\\rangle_-)+\\frac1{\\sqrt{10}}(|2\\rangle_++|4\\rangle_+)|2\\rangle_-",
+      "role": "Defines every coefficient needed for the numerical surfaces in Fig. 1.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The creation-operator state is printed in the End Matter."
+        },
+        {
+          "id": "EQC012_fock",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Applying (a_dagger^n)/sqrt(n!) to vacuum gives normalized |n>, yielding exactly the six stated collective-basis amplitudes."
+        },
+        {
+          "id": "EQC012_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The squared weights are 2/50+38/50+2/10=1."
+        }
+      ],
+      "numerical_form": "Sparse amplitudes: (1,0),(3,0)=1/(5sqrt2); (1,1),(3,1)=sqrt19/(5sqrt2); (2,2),(4,2)=1/sqrt10; third relative mode is vacuum.",
+      "code_refs": [
+        "src/wigner_gme.py:illustrative_state_amplitudes",
+        "src/wigner_gme.py:illustrative_wigner_cut"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC013",
+      "title": "Illustrative slice parity integral and corrected GME threshold",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "(75\\sqrt{2}+56)/600 < 0.2702"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:Wigner-same-arg-is-collective"
+        }
+      ],
+      "latex": "\\langle\\Pi_-\\rangle=\\frac{2}{50}-\\frac{38}{50}+\\frac{2}{10}=-\\frac{13}{25},\\quad \\int d^2\\alpha\\,W_\\psi(\\alpha\\vec1)=-\\frac{52}{75\\pi^2},\\quad \\mathcal N_{2D}^{\\rm GME}=\\frac1{4\\sqrt2}+\\frac{13}{150}=\\frac{75\\sqrt2+52}{600}",
+      "role": "Checks the Fig. 1 theorem-1 claim directly from the printed state and exposes a four-unit numerator inconsistency in the source.",
+      "derived_from": [
+        "EQC002",
+        "EQC003",
+        "EQC012"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source prints the state, the collective-slice identity, and a threshold numerator of 56."
+        },
+        {
+          "id": "EQC013_parity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Grouping the normalized state's probabilities by relative Fock parity gives -13/25; Supplemental S1 then fixes the signed integral and produces numerator 52, not 56."
+        },
+        {
+          "id": "EQC013_quadrature",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent polar quadrature gives N2D approximately 0.263699, above the corrected 0.263443 bound but below the printed 0.270110 bound."
+        }
+      ],
+      "numerical_form": "Report both the source-printed and state-derived thresholds; acceptance of the state witness uses only the state-derived value and carries a source_inconsistency flag.",
+      "code_refs": [
+        "src/wigner_gme.py:illustrative_slice_signed_integral",
+        "src/wigner_gme.py:illustrative_slice_metrics"
+      ],
+      "open_questions": [
+        "The End Matter's numerator 56 is incompatible with the normalized state printed immediately above it. No alternate state coefficient or convention that produces 56 is supplied."
+      ]
+    },
+    {
+      "id": "EQC014",
+      "title": "Reduced center-of-mass state and exact smoothed value",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "resulting function yields the negative value"
+        },
+        {
+          "type": "tex_contains",
+          "value": "K(alpha) = 8e^{-6"
+        }
+      ],
+      "latex": "\\rho_+=0.4(|1\\rangle+|3\\rangle)(\\langle1|+\\langle3|)+0.1(|2\\rangle+|4\\rangle)(\\langle2|+\\langle4|),\\quad \\int d^2\\beta\\,W_n(\\beta)K(\\beta)=\\frac{(-1)^n2^{1-n}}\\pi,\\quad \\widetilde W_{\\rho_+}(0)=-\\frac7{16\\pi}",
+      "role": "Independently derives the exact theorem-2 witness value quoted for Fig. 1.",
+      "derived_from": [
+        "EQC004",
+        "EQC005",
+        "EQC012"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The End Matter prints the kernel and -7/(16*pi) value."
+        },
+        {
+          "id": "EQC014_trace",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The reduced density matrix has trace 0.4*2+0.1*2=1."
+        },
+        {
+          "id": "EQC014_integral",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Angular integration removes off-diagonal Fock terms; Laguerre integration gives (-1)^n 2^(1-n)/pi, and the four diagonal populations sum to -7/(16*pi)."
+        }
+      ],
+      "numerical_form": "Weighted diagonal sum: 0.4*(-1/pi)+0.4*(-1/(4pi))+0.1*(1/(2pi))+0.1*(1/(8pi)).",
+      "code_refs": [
+        "src/wigner_gme.py:illustrative_com_density",
+        "src/wigner_gme.py:smoothed_origin_exact"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC015",
+      "title": "Discrete Wigner sampling counts",
+      "source_refs": [
+        {
+          "type": "companion_pdf",
+          "value": "arXiv:2510.26762, Sec. numerical integration, Fig. Wstate_discrete"
+        }
+      ],
+      "latex": "N_grid approximately pi*r^2/Delta^2",
+      "role": "Recomputes the approximately 76000 and approximately 78 phase-space point counts from printed radii and grid spacings.",
+      "derived_from": [
+        "EQC006",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC015_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The companion paper prints both radii, both grid spacings, and the approximate point counts."
+        },
+        {
+          "id": "EQC015_rigorous",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "r=0.9 and Delta=0.0058 give approximately 7.56e4 cells, rounding to 76000."
+        },
+        {
+          "id": "EQC015_heuristic",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "r=1 and Delta=0.2 give pi/0.04 approximately 78.54 points, consistent with the paper's approximate count."
+        }
+      ],
+      "numerical_form": "Evaluate pi*r^2/Delta^2 directly from the companion paper parameters.",
+      "code_refs": [
+        "src/analytic_claim_campaign.py:disk_area_point_estimate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC016",
+      "title": "All-finite-mode detected families",
+      "source_refs": [
+        {
+          "type": "companion_pdf",
+          "value": "arXiv:2510.26762, states generated via vacuum interference"
+        }
+      ],
+      "latex": "V_2D(U_M(|n>))=M^(-1)*integral d^2 alpha |W_n(alpha)|; tau_c(U_M(|1>))=1>1-M^(-1)",
+      "role": "Constructs explicit theorem-1 Fock inputs and theorem-2 W states for each tested mode count.",
+      "derived_from": [
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC016_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The companion paper states both multiport constructions and the eta<1/M lossy-W criterion."
+        },
+        {
+          "id": "EQC016_fock",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Root-split Laguerre quadrature finds a positive theorem-1 margin for every M=3..12."
+        },
+        {
+          "id": "EQC016_w",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The theorem-2 lossy-W lower bound is positive whenever eta<1/M."
+        }
+      ],
+      "numerical_form": "Search n<=32 for each M=3..12 using independent absolute-Wigner quadrature; evaluate the exact W-family bound.",
+      "code_refs": [
+        "src/analytic_claim_campaign.py:theorem_1_fock_family",
+        "src/analytic_claim_campaign.py:theorem_2_w_loss_family"
+      ],
+      "open_questions": [
+        "Finite numerical checks support but do not replace fresh proof review of the all-finite-M quantifier."
+      ]
+    },
+    {
+      "id": "EQC017",
+      "title": "Mode-count robustness law",
+      "source_refs": [
+        {
+          "type": "companion_pdf",
+          "value": "arXiv:2510.26762, robustness in the presence of noise"
+        }
+      ],
+      "latex": "eta_max(M)=1/M; d eta_max/dM=-1/M^2<0",
+      "role": "Makes the decreasing-robustness statement executable without importing plotted data.",
+      "derived_from": [
+        "EQC016"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC017_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The companion robustness section prints the exact loss condition eta<1/M and states decreasing robustness."
+        },
+        {
+          "id": "EQC017_monotonic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The exact loss threshold 1/M is strictly decreasing for positive M."
+        }
+      ],
+      "numerical_form": "Evaluate eta_max for M=3..12 and assert strict decrease.",
+      "code_refs": [
+        "src/analytic_claim_campaign.py:theorem_2_w_loss_family"
+      ],
+      "open_questions": []
+    }
+  ]
+}

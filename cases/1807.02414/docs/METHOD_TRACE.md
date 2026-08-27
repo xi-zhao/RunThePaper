@@ -8,6 +8,7 @@
 | MTH_FULL_GHD | EQ009, complete spectral mode state, x/t grid | full-operator Fig. 1 solid curves | code ready; four-variant A100 convergence run not executed |
 | MTH_RENDER | frozen arrays and render contract | PNG/SVG/PDF | verified; numerical hashes unchanged |
 | MTH_TDMRG | EQ008, finite XXZ chain, purified mixed state, TEBD controls | independent benchmark markers at t=10/20/40 | code ready; final A100 convergence campaign not run |
+| MTH_ANALYTIC_LIMITS | EQ010-EQ012 and paper assumptions | hard-rod reduction, free-model zero diffusion, and entropy-production positivity | declared; independent implementations and acceptance artifacts do not exist |
 
 The low-cost numerical runner receives case-local formula code and
 `config/paper_exact.json`. The full-GHD and T003 runners receive only their

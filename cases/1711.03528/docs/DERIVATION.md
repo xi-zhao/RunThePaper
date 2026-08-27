@@ -21,7 +21,7 @@ Numerical form:
 Defines constrained Rydberg blockade Hamiltonian.
 ```
 
-Code: `code/src/pxp_scars.py::build_basis`, `code/src/pxp_scars.py::build_hamiltonian`
+Code: `src/pxp_scars.py::build_basis`, `src/pxp_scars.py::build_hamiltonian`
 
 
 ### PXP002 — Z2 product state
@@ -40,7 +40,7 @@ Numerical form:
 Defines the special initial density-wave state.
 ```
 
-Code: `code/src/pxp_scars.py::pattern_state`, `code/src/pxp_scars.py::periodic_density_wave_state`
+Code: `src/pxp_scars.py::pattern_state`, `src/pxp_scars.py::periodic_density_wave_state`
 
 
 ### PXP003 — Particle-hole symmetry
@@ -59,7 +59,7 @@ Numerical form:
 Checks chiral particle-hole symmetry of the constrained Hamiltonian.
 ```
 
-Code: `code/src/pxp_scars.py::parity_values`, `code/src/pxp_scars.py::make_formula_checks`
+Code: `src/pxp_scars.py::parity_values`, `src/pxp_scars.py::make_formula_checks`
 
 
 ### PXP004 — Forward scattering approximation
@@ -78,7 +78,7 @@ Numerical form:
 Defines the FSA basis and tridiagonal effective Hamiltonian.
 ```
 
-Code: `code/src/pxp_scars.py::build_hplus`, `code/src/pxp_scars.py::fsa_basis_and_matrix`
+Code: `src/pxp_scars.py::build_hplus`, `src/pxp_scars.py::fsa_basis_and_matrix`
 
 
 ### PXP005 — Entanglement and revival diagnostics
@@ -97,7 +97,7 @@ Numerical form:
 Defines dynamics diagnostics used by the reproduction.
 ```
 
-Code: `code/src/pxp_scars.py::entanglement_entropy`, `code/src/pxp_scars.py::make_dynamics_data`
+Code: `src/pxp_scars.py::entanglement_entropy`, `src/pxp_scars.py::make_dynamics_data`
 
 
 ### PXP006 — Level statistics
@@ -116,4 +116,4 @@ Numerical form:
 Defines level-statistics target.
 ```
 
-Code: `code/src/pxp_scars.py::make_level_statistics_data`
+Code: `src/pxp_scars.py::make_level_statistics_data`

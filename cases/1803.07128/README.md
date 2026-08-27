@@ -6,9 +6,9 @@ Published as: [Quantum Machine Learning in Feature Hilbert Spaces](https://doi.o
 
 Formal citation: 122, 040504 (2019) · DOI `10.1103/PhysRevLett.122.040504` · Locator `040504`
 
-Public status: **Partial scientific reproduction** · Audit score: **70.00/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **66.00/100**
 
-All numerical panels are independently generated; missing benchmark/training metadata prevents paper-exact status for Fig. 5--8.
+Four display targets cover fourteen numerical items; the independent Appendix B-D claim is implemented and reveals qualified source-discrepancy candidates pending fresh review.
 
 ## Start Here / 从这里开始
 
@@ -19,6 +19,7 @@ All numerical panels are independently generated; missing benchmark/training met
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -57,7 +58,7 @@ cd cases/1803.07128/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

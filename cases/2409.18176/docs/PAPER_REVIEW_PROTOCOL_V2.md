@@ -26,10 +26,17 @@ No `paper_error_candidate` is emitted.
   omit mass factors.  The direct matrix and corrected expression agree to
   `1.67e-16`; the literal expression differs by `1.95e-3`.  Classification:
   `inconclusive` until independent symbolic review.
-- `DISC_KUBO_BOLTZMANN_SCALE`: our two blind lanes differ by `11.2776`, whereas
-  the paper reports a few-percent effect.  Classification:
-  `reproduction_discrepancy`; the unexecuted convergence campaign and method
-  uncertainty prevent attributing it to the paper.
+- `DISC_AC_FIT_INPUTS`: all six three-fluid fit coefficients are printed, but
+  the fitted species densities are not.  The ac panels therefore remain
+  reconstructed; their gaps cannot be called paper failures or repaired by
+  reading curve pixels.
+- `DISC_KUBO_BOLTZMANN_SCALE`: the feature lanes differ by `11.2776`, whereas
+  the paper reports a few-percent effect.  Direct and explicit
+  trion-eliminated full Boltzmann lanes now test retention of the effective
+  `g^4 Q` terms; broadened and analytic-delta leading-order lanes test the
+  regularization separately.  Classification: `pending_method_convergence`;
+  the unexecuted campaign and missing fresh review prevent attribution to the
+  paper.
 
 Machine-readable evidence is in
 `outputs/checks/paper_consistency_checks.json`.  The fresh-context review

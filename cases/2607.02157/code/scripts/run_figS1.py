@@ -14,18 +14,18 @@ import argparse
 import csv
 import json
 import sys
+from pathlib import Path
 
 import numpy as np
 
-from runtime_layout import CASE_ROOT, SOURCE_DIR
-
-sys.path.insert(0, str(SOURCE_DIR))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mackey_glass import generate_mg_sequences  # noqa: E402
 from qrc_engine import bin_indices, cluster_hamiltonian, tfim_hamiltonian  # noqa: E402
 
 P_TH = 1.0 - np.exp(-0.1)  # gamma0 = 0.1, dt = 1
-DATA_DIR = CASE_ROOT / "outputs" / "data"
-CHECK_DIR = CASE_ROOT / "outputs" / "checks"
+WORKSPACE = Path(__file__).resolve().parents[1]
+DATA_DIR = WORKSPACE / "outputs" / "data"
+CHECK_DIR = WORKSPACE / "outputs" / "checks"
 
 
 def g_factor_binned(sequences: np.ndarray, omegas: np.ndarray, n_wash: int = 500, n_bins: int = 50) -> np.ndarray:
@@ -79,26 +79,41 @@ def main() -> int:
     parser.add_argument("--tfim-realizations", type=int, default=500)
     parser.add_argument("--n-j", type=int, default=40)
     parser.add_argument("--n-alpha", type=int, default=101)
+    parser.add_argument("--omega-points", type=int, default=90)
+    parser.add_argument("--output-dir", type=Path, default=DATA_DIR)
+    parser.add_argument(
+        "--check-path", type=Path, default=CHECK_DIR / "figS1_features.json"
+    )
     args = parser.parse_args()
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    CHECK_DIR.mkdir(parents=True, exist_ok=True)
+    data_dir = (
+        args.output_dir
+        if args.output_dir.is_absolute()
+        else WORKSPACE / args.output_dir
+    )
+    check_path = (
+        args.check_path
+        if args.check_path.is_absolute()
+        else WORKSPACE / args.check_path
+    )
+    data_dir.mkdir(parents=True, exist_ok=True)
+    check_path.parent.mkdir(parents=True, exist_ok=True)
 
     # --- panel a ---------------------------------------------------------
     seqs = generate_mg_sequences(args.n_seq, args.n_samples, seed=42)
-    omegas = np.linspace(0.02, 3.0, 90)
+    omegas = np.linspace(0.02, 3.0, args.omega_points)
     G = g_factor_binned(seqs, omegas)
     om_f, F = mg_power_spectrum(seqs)
-    with (DATA_DIR / "figS1a_g_factor.csv").open("w", newline="") as fh:
+    with (data_dir / "figS1a_g_factor.csv").open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["omega", "G"])
         w.writerows(zip(omegas, G))
-    with (DATA_DIR / "figS1a_mg_spectrum.csv").open("w", newline="") as fh:
+    with (data_dir / "figS1a_mg_spectrum.csv").open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["omega", "power"])
         w.writerows(zip(om_f, F))
     mean_per_step = seqs.mean(axis=0)
     var_per_step = seqs.var(axis=0)
-    with (DATA_DIR / "figS1a_insets.csv").open("w", newline="") as fh:
+    with (data_dir / "figS1a_insets.csv").open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["n", "signal_example", "mean", "variance"])
         for n in range(args.n_samples):
@@ -116,7 +131,7 @@ def main() -> int:
             width = w[-1] - w[0]
             acc += (w - center) / width
         spec_b[j_idx] = acc / args.tfim_realizations
-    with (DATA_DIR / "figS1b_tfim_spectrum.csv").open("w", newline="") as fh:
+    with (data_dir / "figS1b_tfim_spectrum.csv").open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["J"] + [f"level_{k}" for k in range(64)])
         for j_idx, J in enumerate(Js):
@@ -125,7 +140,7 @@ def main() -> int:
     # --- panel c ---------------------------------------------------------
     alphas = np.linspace(0.0, 1.0, args.n_alpha)
     spec_c = np.array([np.linalg.eigvalsh(cluster_hamiltonian(6, float(a))) for a in alphas])
-    with (DATA_DIR / "figS1c_cluster_spectrum.csv").open("w", newline="") as fh:
+    with (data_dir / "figS1c_cluster_spectrum.csv").open("w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["alpha"] + [f"level_{k}" for k in range(64)])
         for a_idx, a in enumerate(alphas):
@@ -169,7 +184,7 @@ def main() -> int:
           and width_0 > width_1 + 2.0
           and edge_gap_1 < 1e-8)
     checks["status"] = "passed" if ok else "failed"
-    (CHECK_DIR / "figS1_features.json").write_text(json.dumps(checks, indent=2) + "\n")
+    check_path.write_text(json.dumps(checks, indent=2) + "\n")
     print(json.dumps(checks["features"], indent=2))
     print("status:", checks["status"])
     return 0 if ok else 1

@@ -1,60 +1,1320 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "2607.23978",
-  "overall_score": 78.48,
-  "source_score_model": "scientific_generated_theory_pixel_v2",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 4,
-    "target_status_counts": {
-      "evidence_compared": 4
-    },
-    "published_generated_datasets": 4,
-    "published_generated_figures": 9
+  "score_model": "masked_scientific_region_pixel_v2",
+  "primary_metric": {
+    "name": "pixel_similarity_score_0_100",
+    "definition": "100 * (1 - grayscale MAE / 255) inside a theory-only binary mask rendered from frozen independent numerical arrays",
+    "comparison_role": "post_run_masked_scientific_evidence_only",
+    "source_pixels_used_as_numerical_inputs": false,
+    "comparable_target_mean": 87.16,
+    "note": "The masks are generated without reading source figures or scores. They select only the independently generated theory-curve bands, so experimental markers and error bars cannot lower or raise the scientific render score outside those bands."
   },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "unscored_targets": [
+    {
+      "target_id": "T002",
+      "pixel_status": "not_comparable",
+      "reason": "Fig. 2(e-f) interleaves unavailable A1/A2 series and experimental samples with the independently regenerated optimal series, so no like-for-like raster target exists without misrepresenting scope.",
+      "science_status": "passed",
+      "generated_data_provenance": "independent_numerics",
+      "evidence": "outputs/checks/fig2_expectations_science.json"
+    }
+  ],
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "FIG2CD",
-      "meaning": "Optimal Hermitian and non-Hermitian interferometric fringe baselines.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Fig. 2(c-d) optimal theory fringes",
+      "figure_refs": [
+        "Fig. 2(c-d)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 45.05,
+          "reason": "Allocated as 50% of the masked theory-region pixel score; experimental markers are outside the generated-only comparison mask.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 31.54,
+          "reason": "Allocated as 35% of the same post-run masked theory-region score after the analytic baseline checks passed.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 13.52,
+          "reason": "Allocated as 15% of the masked theory-region score; both target theory panels are included and experimental content is explicitly excluded.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig2_optimal.npz",
+        "outputs/figures/fig2_optimal_pixel_registered.png",
+        "outputs/checks/fig2_science.json",
+        "outputs/checks/pixel_evidence.json#PXT_T001_FIG2CD",
+        "outputs/checks/operator_and_step_alignment_review.json"
+      ],
+      "remaining_gap": "The theoretical baselines are independently exact under the disclosed adjoint interpretation; the remaining masked-pixel difference is curve registration, line rasterization and antialiasing rather than omitted experimental markers.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "QS001",
+          "QS002",
+          "QS003"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T001_FIG2CD"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_FIG2CD"
+        ],
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper",
+        "scientific_alignment_status": "open_source_discrepancy",
+        "paper_exact_claim_allowed": false,
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The generated non-Hermitian fringe uses the adjoint orientation of printed Eq. (5), whereas the literal printed orientation does not yield the plotted baseline.",
+            "evidence": [
+              "EQUATION_CARDS.json",
+              "parameter_provenance.json",
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Independent transcription, exact finite-step identities, and a separate numerical implementation preserve the source-versus-claim discrepancy; fresh-context review remains the only missing adjudication.",
+            "confidence": "probable",
+            "evidence": [
+              "EQUATION_CARDS.json",
+              "parameter_provenance.json",
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after separate parameter, exact-algebra, independent-implementation, and unit/invariant checks.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The printed Eq. (5) entries and Delta-theta=0.1 are traced separately from the case-owned converged step.",
+                "evidence": [
+                  "paper-source/non_Hermitian_sensing_main.tex",
+                  "parameter_provenance.json",
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The audit verifies the exact (h/sin h)^2 factor and the additive-four operator-order identity across four p values and five steps.",
+                "evidence": [
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A local equation transcription built independently of src/sensing.py agrees with the production implementation to numerical precision.",
+                "evidence": [
+                  "scripts/audit_operator_and_step_alignment.py",
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Tests cover density-matrix physicality, polar normalization, both operator orders, Hermitian saturation, and the published finite-step factor.",
+                "evidence": [
+                  "tests/test_sensing.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The frozen production arrays were generated by the isolated runner with no denied file access and stable output hashes.",
+                "evidence": [
+                  "outputs/runs/paper-exact-v4/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The independent implementation, exact identities, and unit tests reproduce the same two-lane distinction.",
+              "evidence": [
+                "outputs/checks/operator_and_step_alignment_review.json",
+                "tests/test_sensing.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The absent Supplement may contain an operator-orientation or finite-difference convention that resolves the main-text mismatch.",
+              "evidence": [
+                "paper-source/non_Hermitian_sensing_main.tex",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The open source-alignment risk affects 4 atomic item(s) mapped to T001.",
+            "items": [
+              "T001",
+              "F2C_TH_ANH",
+              "F2C_TH_AH",
+              "F2D_TH_ANH",
+              "F2D_TH_AH"
+            ],
+            "completion": "4/4 arrays exist, but 0/4 are certified paper-exact while the source discrepancy remains open"
+          },
+          "next_discriminating_test": {
+            "action": "Run a fresh-context symbolic rederivation and independent implementation of both printed and adjoint operator orientations, then compare analytic baselines before any render comparison.",
+            "expected_resolution": "The test will distinguish a reproduction-code defect, a disclosed convention, and a stable paper-claim discrepancy without using source pixels as scientific input.",
+            "evidence_to_produce": [
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig2_optimal_baselines",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2_science.json#checks",
+          "claim": "The two Hermitian baselines equal 1/2 and the two intended non-Hermitian baselines equal 1/3 and 5/17."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig2_optimal.png"
+          },
+          {
+            "panel_id": "d",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig2_optimal.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "component_total": 90.11,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "alignment_risks": [
+        {
+          "risk_id": "OPERATOR_ORIENTATION_T001",
+          "status": "open",
+          "paper_contract": "printed Eq. (5) orientation",
+          "generated_contract": "adjoint orientation selected by analytic baseline, not by source pixels",
+          "next_test": "fresh symbolic and independent numerical two-lane adjudication"
+        }
+      ]
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG2EF_OPT",
-      "meaning": "Real and imaginary parts of optimal observable expectations.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Fig. 2(e-f) optimal expectation series",
+      "figure_refs": [
+        "Fig. 2(e-f), optimal series only"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The source panels interleave unavailable A1/A2 and experimental series, so no same-scope pixel metric exists for the independently generated optimal series.",
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "All printed optimal-observable real and imaginary series are generated and the adjoint-conjugacy invariant passes.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The optimal series are direct matrix traces and pass the independent adjoint-conjugacy check to 1.11e-16.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both p values and every printed optimal observable component over the stated theta range are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig2_expectations.npz",
+        "outputs/figures/fig2_expectations.png",
+        "outputs/checks/fig2_expectations_science.json"
+      ],
+      "remaining_gap": "The unavailable non-optimal and experimental series belong to separate blocked inventory items, not to this optimal-series target.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "QS001",
+          "QS002"
+        ],
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "The source raster interleaves unavailable A1/A2 and experimental series with the reproduced optimal series, so a same-observable pixel registration cannot be defined without source-driven curve extraction.",
+        "pixel_alternative_evidence": [
+          "outputs/checks/fig2_expectations_science.json",
+          "outputs/data/fig2_expectations.npz"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No like-for-like source raster exists because unavailable A1/A2 and experimental series are interleaved with the reproduced optimal series.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig2_optimal_adjoint_conjugacy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2_expectations_science.json#maximum_adjoint_conjugacy_error",
+          "claim": "The independently generated A_nH and A_nH-dagger expectation series are complex conjugates to 1.11e-16 across the full declared grid."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "e-optimal-series",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig2_expectations.png"
+          },
+          {
+            "panel_id": "f-optimal-series",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig2_expectations.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T003",
-      "figure_id": "FIG3A",
-      "meaning": "Noiseless Hermitian/non-Hermitian variances and the printed-order discrepancy.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Fig. 3(a) noiseless variance theory",
+      "figure_refs": [
+        "Fig. 3(a)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 40.87,
+          "reason": "Allocated as 50% of the masked theory-region pixel score after both analytic operator-order checks passed.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 28.61,
+          "reason": "Allocated as 35% of the same post-run masked theory-region score.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.27,
+          "reason": "Allocated as 15% of the masked theory-region score; both displayed theory branches are included and experimental points are explicitly excluded.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig3a.npz",
+        "outputs/figures/fig3a_pixel_registered.png",
+        "outputs/figures/fig3a_ordering_audit.png",
+        "outputs/checks/fig3a_science.json",
+        "outputs/checks/pixel_evidence.json#PXT_T003_FIG3A",
+        "outputs/checks/operator_and_step_alignment_review.json"
+      ],
+      "remaining_gap": "The paper curve is reproduced through the intended operator order. The remaining masked-pixel difference is curve registration and rasterization; the printed operator-order discrepancy still requires fresh-context paper review.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "QS001",
+          "QS002"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T003_FIG3A"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_FIG3A"
+        ],
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper",
+        "scientific_alignment_status": "open_source_discrepancy",
+        "paper_exact_claim_allowed": false,
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "Literal Eqs. (3)+(5) give 1/F_nH+4 while the plotted/intended lane gives 1/F_nH; additionally the frozen run uses theta step 1e-5 rather than the paper's stated Delta-theta=0.1.",
+            "evidence": [
+              "EQUATION_CARDS.json",
+              "parameter_provenance.json",
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "Independent transcription, exact finite-step identities, and a separate numerical implementation preserve the source-versus-claim discrepancy; fresh-context review remains the only missing adjudication.",
+            "confidence": "probable",
+            "evidence": [
+              "EQUATION_CARDS.json",
+              "parameter_provenance.json",
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after separate parameter, exact-algebra, independent-implementation, and unit/invariant checks.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The printed Eq. (5) entries and Delta-theta=0.1 are traced separately from the case-owned converged step.",
+                "evidence": [
+                  "paper-source/non_Hermitian_sensing_main.tex",
+                  "parameter_provenance.json",
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The audit verifies the exact (h/sin h)^2 factor and the additive-four operator-order identity across four p values and five steps.",
+                "evidence": [
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "A local equation transcription built independently of src/sensing.py agrees with the production implementation to numerical precision.",
+                "evidence": [
+                  "scripts/audit_operator_and_step_alignment.py",
+                  "outputs/checks/operator_and_step_alignment_review.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Tests cover density-matrix physicality, polar normalization, both operator orders, Hermitian saturation, and the published finite-step factor.",
+                "evidence": [
+                  "tests/test_sensing.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The frozen production arrays were generated by the isolated runner with no denied file access and stable output hashes.",
+                "evidence": [
+                  "outputs/runs/paper-exact-v4/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The independent implementation, exact identities, and unit tests reproduce the same two-lane distinction.",
+              "evidence": [
+                "outputs/checks/operator_and_step_alignment_review.json",
+                "tests/test_sensing.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The absent Supplement may contain an operator-orientation or finite-difference convention that resolves the main-text mismatch.",
+              "evidence": [
+                "paper-source/non_Hermitian_sensing_main.tex",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The open source-alignment risk affects 2 atomic item(s) mapped to T003.",
+            "items": [
+              "T003",
+              "F3A_TH_ANH_VAR",
+              "F3A_TH_AH_VAR"
+            ],
+            "completion": "2/2 arrays exist, but 0/2 are certified paper-exact while the source discrepancy remains open"
+          },
+          "next_discriminating_test": {
+            "action": "Independently rederive both operator orders and execute a two-lane Delta-theta test at 0.1 and the converged small-step limit, preserving separate arrays and checks.",
+            "expected_resolution": "The test will distinguish a reproduction-code defect, a disclosed convention, and a stable paper-claim discrepancy without using source pixels as scientific input.",
+            "evidence_to_produce": [
+              "outputs/checks/operator_and_step_alignment_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig3a_ordering_identity",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3a_science.json#maximum_identity_error",
+          "claim": "The paper-intended lane equals 1/F_nH and the literal printed Eq. (3)+(5) lane differs by exactly +4 within numerical tolerance."
+        },
+        {
+          "assertion_id": "fig3a_printed_order_source_discrepancy",
+          "tier": "alignment",
+          "essential": true,
+          "status": "source_figure_artifact",
+          "evidence": "outputs/figures/fig3a_ordering_audit.png",
+          "claim": "The literal printed operator order gives 1/F_nH+4, while the adjoint orientation gives the displayed 1/F_nH curve; this is retained as a paper-source discrepancy for fresh review, not classified as a reproduction implementation failure."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig3a.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "component_total": 81.75,
+      "score": 81.75,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "alignment_risks": [
+        {
+          "risk_id": "OPERATOR_ORDER_T003",
+          "status": "open",
+          "paper_contract": "literal Eqs. (3)+(5)",
+          "generated_contract": "paper-intended reversed/adjoint order",
+          "next_test": "fresh symbolic and independent numerical two-lane adjudication"
+        },
+        {
+          "risk_id": "DELTA_THETA_T003",
+          "status": "open",
+          "paper_contract": "Delta theta = 0.1",
+          "generated_contract": "theta_derivative_step = 1e-5",
+          "next_test": "freeze and compare paper-step and converged-step arrays"
+        }
+      ]
     },
     {
       "target_id": "T004",
-      "figure_id": "FIG3BC",
-      "meaning": "Variance and gamma derivative under amplitude damping.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Fig. 3(b-c) amplitude-damping theory",
+      "figure_refs": [
+        "Fig. 3(b-c)"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 44.81,
+          "reason": "Allocated as 50% of the masked theory-region pixel score after the channel-validity and curve-ordering checks passed.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 31.37,
+          "reason": "Allocated as 35% of the same post-run masked theory-region score.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 13.44,
+          "reason": "Allocated as 15% of the masked theory-region score; all four theory curves are rendered while experimental points are explicitly excluded.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fig3bc.npz",
+        "outputs/figures/fig3bc_pixel_registered.png",
+        "outputs/checks/fig3bc_science.json",
+        "outputs/checks/pixel_evidence.json#PXT_T004_FIG3BC"
+      ],
+      "remaining_gap": "The public source does not specify the finite Delta-gamma used for the plotted derivative, and the experimental symbols are outside the theory-only scope.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "QS001",
+          "QS002",
+          "QS004",
+          "QS005"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T004_FIG3BC"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T004_FIG3BC"
+        ],
+        "pixel_status_reason": "Lifecycle render status is derived independently for the generated-only theory mask under scientific_region_v1.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The finite Delta-gamma used for the displayed derivative curves is not specified in the public manuscript or available source bundle.",
+            "evidence": [
+              "PAPER_MAP.md",
+              "parameter_provenance.json",
+              "outputs/checks/fig3bc_science.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The publication defines the derivative observable and gamma range but omits the finite differencing interval needed to identify the exact plotted numerical array.",
+            "confidence": "confirmed",
+            "evidence": [
+              "PAPER_MAP.md",
+              "DERIVATION_TRACE.md",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found: the amplitude-damping channel remains physical and two independent numerical checks preserve the expected curve ordering.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Trace preservation, positivity and non-Hermitian-versus-Hermitian ordering pass on the declared grid.",
+                "evidence": [
+                  "outputs/checks/fig3bc_science.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All printed physical parameters are traced; only the unpublished finite derivative interval is reconstructed by convergence.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "config/paper_exact.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A channel or derivative implementation defect would violate the physicality or ordering checks, which both pass across the full generated grid.",
+              "evidence": [
+                "outputs/checks/fig3bc_science.json",
+                "tests/test_sensing.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only the two derivative curves in Fig. 3(c) lack a paper-exact finite Delta-gamma; the two variance curves in Fig. 3(b) use stated physical parameters.",
+            "items": [
+              "T004",
+              "Fig. 3(c) Hermitian derivative curve",
+              "Fig. 3(c) non-Hermitian derivative curve"
+            ],
+            "completion": "2/4 theory curves paper-exact; 2/4 convergence-reconstructed"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the missing Supplement or author-specified finite Delta-gamma and rerun the frozen T004 configuration.",
+            "expected_resolution": "An exact interval would either reproduce the displayed derivative arrays or isolate a stable paper-claim discrepancy.",
+            "evidence_to_produce": [
+              "config/paper_exact.json",
+              "outputs/data/fig3bc.npz",
+              "outputs/checks/fig3bc_science.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig3bc_density_and_ordering",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3bc_science.json",
+          "claim": "The Kraus map preserves density-matrix validity and the intended non-Hermitian variance and gamma derivative remain below their Hermitian counterparts over the full grid."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig3bc.png"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig3bc.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "component_total": 89.62,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker",
+      "alignment_risks": [
+        {
+          "risk_id": "DELTA_THETA_T004",
+          "status": "open",
+          "paper_contract": "Delta theta = 0.1",
+          "generated_contract": "theta_derivative_step = 1e-5",
+          "next_test": "freeze and compare paper-step and converged-step variance arrays"
+        },
+        {
+          "risk_id": "DELTA_GAMMA_T004",
+          "status": "publication_underspecified",
+          "paper_contract": "central difference in Eq. (13), finite Delta gamma not stated",
+          "generated_contract": "central difference over a 301-point gamma grid",
+          "next_test": "obtain the Supplement's finite Delta gamma and rerun only after W1 approval"
+        }
+      ]
+    },
+    {
+      "target_id": "T005",
+      "label": "Fig. 2 non-optimal theory series blocked by missing A1/A2",
+      "figure_refs": [
+        "Fig. 2(a-b,e-f), non-optimal theory series"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "Blocked target has no generated artifact or comparable score; its 16 atomic items remain zero-credit in reproduction coverage.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent numerical artifact exists because the required source-defined object is unavailable.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No generated array exists to compare.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every assigned atomic item remains explicitly uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "paper-source/non_Hermitian_sensing_main.tex",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json#QS006"
+      ],
+      "remaining_gap": "The public source bundle omits A1 and A2, blocking all 16 non-optimal theory series.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "blocked",
+        "formula_dependencies": [
+          "QS003",
+          "QS006"
+        ],
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No independently generated array exists; source pixels are not scientific inputs.",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The public paper/source do not define the non-optimal A1 and A2 matrices (including the adjoint needed in Fig. 2(e-f)), so 16 displayed theory series have no reproducible scientific input.",
+            "evidence": [
+              "paper-source/non_Hermitian_sensing_main.tex",
+              "figure_coverage.json",
+              "EQUATION_CARDS.json",
+              "outputs/checks/public_source_boundary_audit.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The indispensable non-optimal observable definitions are delegated to a Supplement that is absent from the public PDF and arXiv source bundle.",
+            "confidence": "confirmed",
+            "evidence": [
+              "paper-source/non_Hermitian_sensing_main.tex",
+              "figure_coverage.json",
+              "EQUATION_CARDS.json",
+              "outputs/checks/public_source_boundary_audit.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "No numerical implementation exists for the missing source-defined object, so there is no executed reproduction code whose arithmetic could explain the gap.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "A deterministic audit enumerated the full public source archive and confirmed that the delegated Supplement and the indispensable definitions are absent.",
+                "evidence": [
+                  "outputs/checks/public_source_boundary_audit.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "After the missing formulas become public, an implementation or method gap could still appear and must be tested then.",
+              "evidence": [
+                "paper-source/non_Hermitian_sensing_main.tex",
+                "figure_coverage.json",
+                "EQUATION_CARDS.json",
+                "outputs/checks/public_source_boundary_audit.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The missing public scientific definition blocks 16 atomic item(s) assigned to T005.",
+            "items": [
+              "T005",
+              "F2A_TH_A1_NH",
+              "F2A_TH_A2_H",
+              "F2B_TH_A1_NH",
+              "F2B_TH_A2_H",
+              "F2E_TH_A1_RE",
+              "F2E_TH_A1_IM",
+              "F2E_TH_A2_RE",
+              "F2E_TH_A2_IM",
+              "F2E_TH_A2_DAG_RE",
+              "F2E_TH_A2_DAG_IM",
+              "F2F_TH_A1_RE",
+              "F2F_TH_A1_IM",
+              "F2F_TH_A2_RE",
+              "F2F_TH_A2_IM",
+              "F2F_TH_A2_DAG_RE",
+              "F2F_TH_A2_DAG_IM"
+            ],
+            "completion": "0/16 atomic items covered"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain a public Supplement containing A1 and A2, transcribe only the formulas/parameters, and implement all 16 series independently.",
+            "expected_resolution": "The disclosed matrices will make all 16 items runnable or identify a narrower source inconsistency; no curve digitization or author array is required.",
+            "evidence_to_produce": [
+              "outputs/checks/nonoptimal_observables_science.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "nonoptimal_observable_definitions_available",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "EQUATION_CARDS.json#QS006",
+          "claim": "A1, A2 and the needed adjoint must be defined before their fringe and expectation series can be computed."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "F2A_TH_A1_NH",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2A_TH_A2_H",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2B_TH_A1_NH",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2B_TH_A2_H",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A1_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A1_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A2_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A2_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A2_DAG_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2E_TH_A2_DAG_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A1_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A1_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A2_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A2_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A2_DAG_RE",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "F2F_TH_A2_DAG_IM",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T006",
+      "label": "Complete-POVM CFI bound",
+      "figure_refs": [
+        "Eq. (14) and conclusion"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "Blocked no-display quantitative claim has no generated artifact; it remains zero-credit in reproduction coverage.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent numerical artifact exists because the required source-defined object is unavailable.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No generated array exists to compare.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every assigned atomic item remains explicitly uncovered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "paper-source/non_Hermitian_sensing_main.tex",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json#QS007"
+      ],
+      "remaining_gap": "The public source omits the complete POVM elements and port-probability formulas.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "blocked",
+        "formula_dependencies": [
+          "QS007"
+        ],
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "The claim has no display carrier and is judged by scientific evidence, not raster similarity.",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The public paper gives the complete-POVM CFI sum but omits the POVM elements and output-port probabilities required for an independent evaluation.",
+            "evidence": [
+              "paper-source/non_Hermitian_sensing_main.tex",
+              "figure_coverage.json",
+              "EQUATION_CARDS.json",
+              "outputs/checks/public_source_boundary_audit.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The numerical definition needed to test the resource-inclusive CFI bound is deferred entirely to a Supplement absent from the public PDF and source bundle.",
+            "confidence": "confirmed",
+            "evidence": [
+              "paper-source/non_Hermitian_sensing_main.tex",
+              "figure_coverage.json",
+              "EQUATION_CARDS.json",
+              "outputs/checks/public_source_boundary_audit.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "No numerical implementation exists for the missing source-defined object, so there is no executed reproduction code whose arithmetic could explain the gap.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "A deterministic audit enumerated the full public source archive and confirmed that the delegated Supplement and the indispensable definitions are absent.",
+                "evidence": [
+                  "outputs/checks/public_source_boundary_audit.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "open",
+              "statement": "After the missing formulas become public, an implementation or method gap could still appear and must be tested then.",
+              "evidence": [
+                "paper-source/non_Hermitian_sensing_main.tex",
+                "figure_coverage.json",
+                "EQUATION_CARDS.json",
+                "outputs/checks/public_source_boundary_audit.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The missing public scientific definition blocks 1 atomic item(s) assigned to T006.",
+            "items": [
+              "T006",
+              "CLM_COMPLETE_POVM_CFI_BOUND"
+            ],
+            "completion": "0/1 atomic items covered"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain a public Supplement containing the POVM elements, then independently verify positivity, completeness, loss-port normalization, and the CFI bound.",
+            "expected_resolution": "Explicit POVM formulas will either close the claim from independent algebra/numerics or expose a precisely localized claim discrepancy.",
+            "evidence_to_produce": [
+              "outputs/checks/complete_povm_cfi.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "complete_povm_cfi_bound",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "EQUATION_CARDS.json#QS007",
+          "claim": "The full physical POVM CFI does not exceed the standard Hermitian optimum."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "no_display_quantitative_claim",
+            "status": "not_applicable",
+            "evidence": "figure_coverage.json#CLM_COMPLETE_POVM_CFI_BOUND"
+          }
+        ]
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "source_scorecard_sha256": "369172f57c9ca5ad12c99737630ba0e644a5e11d6730b43744c888e6bcd63bf6"
+  "overall_score": 86.58,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 6,
+    "critical_items": 5,
+    "artifact_pass_rate": 0.67,
+    "data_backed_rate": 0.67,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "source_discrepancy": 2,
+      "none": 1,
+      "missing_parameters": 3
+    },
+    "parameter_match_counts": {
+      "paper_subset": 3,
+      "paper_exact": 1,
+      "unknown": 2
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 4,
+      "not_available": 2
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4,
+      "unknown": 2
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 4,
+      "unknown": 2
+    },
+    "formula_gate_counts": {
+      "verified": 4,
+      "blocked": 2
+    },
+    "paper_level_role_counts": {
+      "supporting": 3,
+      "main_claim": 3
+    },
+    "physics_status_counts": {
+      "passed": 4,
+      "pending": 2
+    },
+    "physics_assertion_status_counts": {
+      "passed": 4,
+      "source_figure_artifact": 1,
+      "blocked": 2
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T002"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T003",
+      "T004",
+      "T005",
+      "T006"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T002",
+      "T005",
+      "T006"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 5,
+      "not_required": 1
+    },
+    "causal_diagnosis_disposition_counts": {
+      "react_loop_required": 2,
+      "not_required": 1,
+      "terminal_blocker": 3
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T003",
+      "T004",
+      "T005",
+      "T006"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T004",
+      "T005",
+      "T006"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T001",
+      "T003"
+    ],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 2,
+      "parameter_values_unavailable": 3
+    },
+    "root_cause_counts": {
+      "paper_claim_discrepancy": 2,
+      "publication_underspecified": 3
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3,
+      "not_applicable": 2
+    }
+  },
+  "status": "passed",
+  "atomic_inventory_summary": {
+    "items_total": 80,
+    "display_items_total": 79,
+    "quantitative_claims_total": 1,
+    "eligible_total": 39,
+    "covered_total": 22,
+    "uncovered_total": 17,
+    "excluded_total": 41,
+    "supporting_not_double_counted": 0
+  },
+  "alignment_policy": {
+    "legacy_component_scores_preserved": true,
+    "note": "No frozen array, pixel score, or component score was changed. Source-alignment metadata may lower normalized scientific caps in memory."
+  }
 }

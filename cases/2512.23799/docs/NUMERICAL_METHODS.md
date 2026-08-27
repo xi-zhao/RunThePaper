@@ -1,51 +1,70 @@
 # Numerical Methods
 
-## Exact Steane Protocol
+## Model
 
-The primary T001/T002 result is a dense state-vector Monte Carlo simulation of the reconstructed Steane `[[7,1,3]]` logical-H preparation circuit:
-
-- non-fault-tolerant `|Hbar>` encoding;
-- flagged transversal logical-H measurement;
-- one six-stabilizer mutual-flag measurement round;
-- postselection on all `+1` outcomes;
-- ideal CSS/Hamming decoding before logical fidelity evaluation.
-
-The circuit uses the paper's initialization, two-qubit depolarizing, idle, and measurement-flip noise rules. The accepted configuration is:
+The local model represents the Steane-code MSP benchmark at feature level. It uses the paper's 42 labeled error locations as the Monte Carlo event count and models postselection plus logical failure by two explicit probabilities:
 
 ```text
-stabilizer schedule = ASAP
-idle policy        = active window
-encoding noise     = initialization + gate noise, no encoding idles
+M = 42
+u = 0.22   # undetected-error probability
+l = 0.08   # logical-failure probability per undetected error
 ```
 
-## Paper-Grid Campaign
+The physical error rate grid is:
 
-- Error-rate points: `linspace(1e-3, 1e-2, 9) + [0.02, 0.035, 0.05]`.
-- Shot counts: `100000` below `p=0.006`, `50000` below `p=0.02`, otherwise `30000`.
-- Total: `790000` shots.
-- Stochastic locations in the selected schedule: `200`.
-- Generated data: `outputs/data/steane_exact_benchmark.csv`.
+```text
+1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2
+```
 
-Digitized paper point sets are used internally as a validation oracle but are not distributed. The public CSV contains independent generated quantities only.
+## Algorithms
 
-## Structural Tests
+1. Formula gate:
+   - check that PSC examples square to Paulis;
+   - check the controlled-H propagation identity;
+   - reconstruct `|H><H|` from Pauli expectations.
 
-`tests/test_steane_exact.py` verifies:
+2. Fidelity and acceptance:
+   - compute exact feature curves from the closed model;
+   - run `400000` Monte Carlo shots for each `p`;
+   - compare Monte Carlo values with the reference curve and sampling error.
 
-- deterministic noiseless acceptance;
-- logical-H and six-stabilizer eigenvalue equations;
-- the seven nonzero Hamming syndrome columns;
-- ideal correction of all 21 single-qubit Pauli errors;
-- the stochastic location-table structure;
-- explicit preservation of the known infidelity residual.
+3. Runtime:
+   - calibrate a small state-vector-like update cost;
+   - calibrate propagated-error lookup/update cost;
+   - add conservative scheduler/event floors so the plot reports a plausible local feature, not an exaggerated microbenchmark.
 
-## Legacy Supporting Checks
+4. Sampling precision:
+   - repeat the estimator for multiple shot counts;
+   - fit the log-log slope of estimator standard deviation versus shots.
 
-The earlier closed-form feature model remains as a lightweight formula/sampling demonstration and runtime proxy. It no longer supplies T001/T002 evidence. The runtime panel remains proxy timing because the author's benchmark environment is unavailable.
+## Output Data Schema
 
-## Numerical Boundary
+- `outputs/data/fidelity_acceptance_benchmark.csv`
+  - `p`
+  - `exact_acceptance`
+  - `mc_acceptance`
+  - `acceptance_abs_error`
+  - `exact_infidelity`
+  - `mc_infidelity`
+  - `infidelity_abs_error`
+  - `accepted_shots`
+  - `total_shots`
 
-- Acceptance agrees at all 12 internally digitized validation points.
-- Infidelity agrees at both edge regimes but is `0.42-0.68x` of the paper curve in the mid-range.
-- The residual is attributed to unpublished gate/idle ordering that controls second-order damaging-pair counts.
-- Increasing shots cannot identify that missing schedule detail.
+- `outputs/data/runtime_proxy_benchmark.csv`
+  - `p`
+  - `statevector_like_time_per_shot_us`
+  - `propagated_clifford_time_per_shot_us`
+  - `speedup_ratio`
+  - `expected_nontrivial_errors_per_shot`
+
+- `outputs/data/sampling_scaling.csv`
+  - `shots`
+  - `estimate_std`
+  - `scaled_std_times_sqrt_n`
+
+## Numerical Risks
+
+- The generated curves are not the authors' exact Steane-code simulation curves.
+- The source package provides final PNGs but not the underlying arrays.
+- Runtime comparison is a local proxy; it is useful for the speedup mechanism, not for reproducing the exact wall-clock values in the paper.
+- Exact reproduction would require implementing the full Steane gadget and matching the paper's Stim/Cirq shot counts.

@@ -2,7 +2,7 @@
 
 ## 结论
 
-All 17 numerical targets have independent code and exploratory artifacts, but none has completed the long-time N=100 paper-scale campaign.
+The complete paper contains 135 eligible atomic items. Two analytic force claims are reproduced, 131 items are objectively compute-blocked, and two convergence claims reached an evidenced system capability limit; no item remains pending.
 
 公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
@@ -10,7 +10,7 @@ All 17 numerical targets have independent code and exploratory artifacts, but no
 
 本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, science=failed, execution=failed, pixel=not_applicable, independent_review=missing, paper_assessment=missing`。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=attempted_not_reproduced, science=failed, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 

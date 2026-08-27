@@ -11,8 +11,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from nonhermitian_ssh import generalized_brillouin_radius, non_bloch_ab, open_chain_eigenvalues  # noqa: E402
 

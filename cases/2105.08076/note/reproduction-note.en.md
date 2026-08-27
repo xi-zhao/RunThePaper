@@ -2,7 +2,7 @@
 
 ## Result
 
-All nine numerical panels are independently generated; T003 and T007 retain explicit finite-size slope failures, and the paper-scale A100 campaign remains unrun.
+All nine numerical panels are independently generated; failed targets are reported from their declared paper-defined scientific checks, and the paper-scale A100 campaign remains unrun.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, science=failed, execution=attested, pixel=passed, independent_review=missing, paper_assessment=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=needs_repair, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 

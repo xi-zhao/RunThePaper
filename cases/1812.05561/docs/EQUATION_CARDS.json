@@ -341,6 +341,50 @@
         "src/scar_reproduction.py::toy_diagnostics",
         "src/paper_scale.py::run_t009"
       ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Perfect-revival energy-count and overlap bound",
+      "source_refs": [
+        {
+          "type": "lemma",
+          "value": "Main-text Lemma, PDF p. 3"
+        },
+        {
+          "type": "derivation",
+          "value": "Supplement Sec. S7, Eq. (S39) and following proof"
+        }
+      ],
+      "latex": "e^{-iE_\\mu\\tau}=e^{-i\\alpha}\\Rightarrow E_\\mu=(\\alpha+2\\pi m)/\\tau;\\quad K\\le\\lfloor 2Nh\\tau/(2\\pi)\\rfloor+1=O(N);\\quad \\max_\\mu|c_\\mu|^2\\ge 1/K=O(1/N)",
+      "role": "perfect_revival_overlap_bound",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [],
+      "checks": [
+        {
+          "id": "EQ010-P",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Sec. S7 derives the common-phase energy lattice from exact revival."
+        },
+        {
+          "id": "EQ010-C",
+          "type": "analytic_sanity",
+          "status": "passed",
+          "reason": "A bounded spectral width contains only linearly many lattice energies at fixed tau."
+        },
+        {
+          "id": "EQ010-O",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The pigeonhole bound follows directly from sum_mu |c_mu|^2 = 1 over K occupied energies."
+        }
+      ],
+      "code_refs": [
+        "src/atomic_closure.py::perfect_revival_overlap_bound",
+        "tests/test_atomic_closure.py::test_perfect_revival_count_and_overlap_bounds_scale_linearly"
+      ]
     }
   ]
 }

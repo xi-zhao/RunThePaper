@@ -2,7 +2,7 @@
 
 ## Result
 
-All 17 reproducible theory/model targets pass independent scientific checks. Four experiment-only numerical items remain missing-author-data blockers, reconstructed MD/f-wave inputs prevent paper-exact promotion, and fresh-context review is pending.
+Whole-paper atomic audit: 10 formula/analytic items are independently reproduced and 13 model-driven items reach an objective publication-underspecification boundary. All eligible items have a final disposition; 23 experimental series and two schematics remain outside the formula-driven denominator.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, science=pending, execution=attested, pixel=passed, independent_review=missing, paper_assessment=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=passed, execution=attested, pixel=needs_repair, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 

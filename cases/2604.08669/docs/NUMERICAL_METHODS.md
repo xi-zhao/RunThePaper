@@ -19,7 +19,7 @@ The training labels use squared-distance Hungarian assignments. The public
 quality contract remains Euclidean: report average movement distance, maximum
 movement distance, and their gaps to the selected Hungarian baseline.
 
-## Reduced-scale pilot and A100 paper geometry
+## Reduced-scale pilot
 
 The pilot implements the path-planning target as a supervised edge prediction
 problem.
@@ -32,20 +32,14 @@ problem.
 - Probability-weighted Hungarian decoding converts edge scores into a valid
   one-to-one assignment.
 
-This first decoder is intentionally conservative. A CPU modified-auction
-reconstruction now validates the assignment object, but it is not the paper's
-GPU-parallel decoder.
-
-The A100-SXM4-80GB campaign generated 256 paper-geometry training-pool samples
-and 64 validation samples at `127 x 127 -> 101 x 101`, `k=128`. The best short
-probe reaches mean/max distances `0.51798/1.94310`, compared with paper
-references `0.512/1.93`. Long training is stopped at the metric-contract gate.
+This first decoder is intentionally conservative. It verifies the learning
+pipeline before implementing the paper's modified auction decoder.
 
 ## Current limitation
 
 The paper reports a six-layer GNN trained on a million-scale dataset for 288 GPU
-hours using four NVIDIA A40 GPUs. The A100 paper-geometry short probe proves the
-large-graph chain is live, but it is not million-sample paper training.
+hours using four NVIDIA A40 GPUs. This pilot is smaller and should be treated as
+a proof that the reproduction chain is live, not as paper-scale reproduction.
 
 ## P2WGS continuity object
 
@@ -62,10 +56,8 @@ The reported continuity metrics follow the paper text:
 - phase continuity is the mean wrapped frame-to-frame phase change normalized by
   `2 pi`.
 
-The public aggregate check reaches `N=10201`, `T=101`, and a `1024 x 1024` grid
-for 3, 5, 8, and 10 iterations over three stochastic realizations. Phase
-continuity is reproduced; the paper's 3-to-5 intensity improvement is not,
-because the exact Zhuifeng frame-trajectory protocol is unavailable.
+This reduced implementation verifies the metric and algorithm chain. It is not
+yet a substitute for the paper's `N=10201` GPU-scale P2WGS benchmark.
 
 ## Software assembly object
 

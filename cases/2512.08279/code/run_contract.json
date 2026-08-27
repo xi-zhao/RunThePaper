@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "run_id": "2512.08279-paper-protocol-v6",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_protocol.json"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/programmable_lindbladian.py",
+    "scripts/run_reproduction.py",
+    "scripts/run_swap_dephasing.py",
+    "scripts/run_programming_cost.py",
+    "config/paper_protocol.json"
+  ],
+  "parameter_file": "config/paper_protocol.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "fig2": {
+      "lambda": 0.5,
+      "time_interval": [
+        0.0,
+        10.0
+      ],
+      "time_points": 101,
+      "outer_cycles": 1000,
+      "inner_hptp_samples": 200,
+      "initial_state": "|01>",
+      "observable": "|01><01|",
+      "random_seed": 251208279,
+      "solver_epsilon": 1e-07
+    },
+    "fig3": {
+      "system_dimension": 2,
+      "damping_rate": 0.1,
+      "hamiltonians": [
+        "0",
+        "Z"
+      ],
+      "program_choi_copies": 1,
+      "nominal_time_interval": [
+        0.0,
+        10.0
+      ],
+      "source_script_time_grid": "0:0.01:9.99 (1000 points)",
+      "active_time_points": 101,
+      "full_source_grid_points_certified": 1000,
+      "epsilon_grid": "0:0.005:0.2 (41 points)",
+      "solver": "SCS",
+      "solver_epsilon": 2e-05,
+      "max_iterations": 100000
+    }
+  },
+  "outputs": [
+    "outputs/data/swap_dephasing.csv",
+    "outputs/data/swap_dephasing_summary.json",
+    "outputs/data/swap_processor_decomposition.npz",
+    "outputs/checks/t001_final_run.json",
+    "outputs/data/programming_cost.csv",
+    "outputs/data/programming_cost_summary.json",
+    "outputs/data/programming_cost_retrieval_choi.npz",
+    "outputs/checks/t002_final_run.json"
+  ],
+  "timeout_seconds": 2400,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

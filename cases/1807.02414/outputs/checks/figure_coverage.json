@@ -1,0 +1,449 @@
+{
+  "implementations": {
+    "implementation_closure_campaign": {
+      "acceptance_criteria": [
+        "The constant-scattering Eq. (9) discretization equals a separately coded hard-rod component formula and conserves the weighted mode sum.",
+        "Zero scattering yields an exactly zero diffusion operator.",
+        "The entropy-production kernel passes both an eigenspectrum check and independent random quadratic-form checks.",
+        "The reduced analytic attestation does not change scientific coverage or claim paper-scale execution."
+      ],
+      "code_refs": [
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json"
+      ],
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "status": "ready",
+      "target_ids": [
+        "T004",
+        "T005",
+        "T006"
+      ],
+      "working_directory": "workspace"
+    },
+    "paper_exact_euler": {
+      "acceptance_criteria": [
+        "Generate the three Euler profiles at t=10,20,40 from independently solved root-of-unity TBA data.",
+        "Pass density positivity, susceptibility, velocity parity, profile oddness, boundedness, and rapidity-grid convergence checks."
+      ],
+      "code_refs": [
+        "scripts/run_reproduction.py",
+        "src/xxz_diffusion/tba.py",
+        "src/xxz_diffusion/reproduction.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/T001_fig1_domain_wall.npz",
+        "outputs/checks/scientific_formula_checks.json",
+        "outputs/checks/convergence.json"
+      ],
+      "status": "ready",
+      "working_directory": "workspace"
+    },
+    "paper_scale_full_ghd": {
+      "acceptance_criteria": [
+        "Evolve the complete non-diagonal spectral diffusion operator of Eq. (13), not a scalar projected diffusivity.",
+        "Generate t=10,20,40 profiles and pass time-step, rapidity-grid, spatial-grid, spectrum, reality, oddness, and plateau checks."
+      ],
+      "code_refs": [
+        "scripts/run_full_ghd.py",
+        "src/xxz_diffusion/backend.py",
+        "src/xxz_diffusion/full_ghd.py",
+        "src/xxz_diffusion/tba.py"
+      ],
+      "config_ref": "config/full_ghd_paper_scale.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_full_ghd.py",
+        "--config",
+        "config/full_ghd_paper_scale.json",
+        "--profile",
+        "final"
+      ],
+      "expected_outputs": [
+        "outputs/data/T001_full_ghd_final_baseline_r192_x2048_dt01.npz",
+        "outputs/data/T001_full_ghd_final_time_r192_x2048_dt005.npz",
+        "outputs/data/T001_full_ghd_final_rapidity_r256_x2048_dt01.npz",
+        "outputs/data/T001_full_ghd_final_space_r192_x3072_dt01.npz",
+        "outputs/checks/T001_full_ghd_final_checks.json",
+        "outputs/checks/T001_full_ghd_final_manifest.json"
+      ],
+      "run_contract_ref": "run_contract_full_ghd.json",
+      "status": "ready",
+      "working_directory": "workspace"
+    },
+    "paper_scale_tdmrg": {
+      "acceptance_criteria": [
+        "Generate magnetization profiles at the paper times t=10,20,40 from the printed XXZ Hamiltonian and mixed domain-wall density matrix.",
+        "Pass the declared time-step, bond-dimension, and finite-size normalized-RMS convergence thresholds.",
+        "Pass norm, truncation-weight, and boundary-reflection checks without author code, author arrays, or source pixels as numerical inputs."
+      ],
+      "code_refs": [
+        "scripts/run_tdmrg.py",
+        "src/xxz_diffusion/backend.py",
+        "src/xxz_diffusion/tdmrg.py"
+      ],
+      "config_ref": "config/tdmrg_paper_scale.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_tdmrg.py",
+        "--config",
+        "config/tdmrg_paper_scale.json",
+        "--profile",
+        "final",
+        "--resume"
+      ],
+      "expected_outputs": [
+        "outputs/data/T003_tdmrg_final_baseline_L256_chi512_dt005.npz",
+        "outputs/data/T003_tdmrg_final_timestep_L256_chi512_dt0025.npz",
+        "outputs/data/T003_tdmrg_final_bond_L256_chi768_dt005.npz",
+        "outputs/data/T003_tdmrg_final_size_L320_chi512_dt005.npz",
+        "outputs/checks/T003_tdmrg_final_checks.json",
+        "outputs/checks/T003_tdmrg_final_manifest.json"
+      ],
+      "run_contract_ref": "run_contract_tdmrg.json",
+      "status": "ready",
+      "working_directory": "workspace"
+    }
+  },
+  "items": [
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/data/T001_fig1_domain_wall.npz",
+        "outputs/checks/scientific_formula_checks.json"
+      ],
+      "implementation_ref": "paper_exact_euler",
+      "item_id": "Main Fig. 1, Euler GHD t=10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Paper-parameter Euler profile reproduced from independent TBA data.",
+      "scientific_object": "Euler-scale weak-domain-wall magnetization profile at t=10",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption, TeX lines 204-207",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/data/T001_fig1_domain_wall.npz",
+        "outputs/checks/scientific_formula_checks.json"
+      ],
+      "implementation_ref": "paper_exact_euler",
+      "item_id": "Main Fig. 1, Euler GHD t=20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Paper-parameter Euler profile reproduced from independent TBA data.",
+      "scientific_object": "Euler-scale weak-domain-wall magnetization profile at t=20",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption, TeX lines 204-207",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/data/T001_fig1_domain_wall.npz",
+        "outputs/checks/scientific_formula_checks.json"
+      ],
+      "implementation_ref": "paper_exact_euler",
+      "item_id": "Main Fig. 1, Euler GHD t=40",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Paper-parameter Euler profile reproduced from independent TBA data.",
+      "scientific_object": "Euler-scale weak-domain-wall magnetization profile at t=40",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption, TeX lines 204-207",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T001_full_ghd_smoke_checks.json",
+        "outputs/runs/1807.02414-full-ghd-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_full_ghd",
+      "item_id": "Main Fig. 1, diffusive GHD t=10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Full Eq. (13) code is smoke-attested; the immutable A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "diffusive-GHD weak-domain-wall magnetization profile at t=10",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption and Eq. (13), TeX lines 204-207 and 289-294",
+      "target_ids": [
+        "T001-DIFFUSIVE"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T001_full_ghd_smoke_checks.json",
+        "outputs/runs/1807.02414-full-ghd-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_full_ghd",
+      "item_id": "Main Fig. 1, diffusive GHD t=20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Full Eq. (13) code is smoke-attested; the immutable A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "diffusive-GHD weak-domain-wall magnetization profile at t=20",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption and Eq. (13), TeX lines 204-207 and 289-294",
+      "target_ids": [
+        "T001-DIFFUSIVE"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T001_full_ghd_smoke_checks.json",
+        "outputs/runs/1807.02414-full-ghd-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_full_ghd",
+      "item_id": "Main Fig. 1, diffusive GHD t=40",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "Full Eq. (13) code is smoke-attested; the immutable A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "diffusive-GHD weak-domain-wall magnetization profile at t=40",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 caption and Eq. (13), TeX lines 204-207 and 289-294",
+      "target_ids": [
+        "T001-DIFFUSIVE"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T003_tdmrg_smoke_checks.json",
+        "outputs/runs/1807.02414-tdmrg-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_tdmrg",
+      "item_id": "Main Fig. 1, tDMRG t=10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "method_validation",
+      "reason": "Purification TEBD is smoke-attested; the four-variant A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "independent finite-chain tDMRG magnetization profile at t=10",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 circular markers and caption, TeX lines 204-207",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T003_tdmrg_smoke_checks.json",
+        "outputs/runs/1807.02414-tdmrg-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_tdmrg",
+      "item_id": "Main Fig. 1, tDMRG t=20",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "method_validation",
+      "reason": "Purification TEBD is smoke-attested; the four-variant A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "independent finite-chain tDMRG magnetization profile at t=20",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 triangular markers and caption, TeX lines 204-207",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    },
+    {
+      "blocker": "insufficient_compute",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "decision": "deferred_blocked",
+      "evidence_refs": [
+        "outputs/checks/final_resolution/resource_benchmark.json",
+        "outputs/checks/T003_tdmrg_smoke_checks.json",
+        "outputs/runs/1807.02414-tdmrg-smoke-v1-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "paper_scale_tdmrg",
+      "item_id": "Main Fig. 1, tDMRG t=40",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "paper_level_role": "method_validation",
+      "reason": "Purification TEBD is smoke-attested; the four-variant A100/CuPy campaign is unavailable locally.",
+      "scientific_object": "independent finite-chain tDMRG magnetization profile at t=40",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main Fig. 1 square markers and caption, TeX lines 204-207",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_DIFFUSIVE_WALL"
+      ]
+    }
+  ],
+  "paper_id": "1807.02414",
+  "quantitative_claims": [
+    {
+      "critical": true,
+      "decision": "target",
+      "item_id": "Claim: spin Onsager values for ell=3,4,7",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "main_claim",
+      "reason": "The values are printed in prose and have no active table or figure; independent root-of-unity TBA data cover all three.",
+      "scientific_object": "(D C)_SzSz = 0.137, 0.281, 0.744 at ell=3,4,7",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Numerical evaluations, TeX line 316",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_ONSAGER"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/1807.02414-implementation-closure-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "item_id": "Claim: hard-rod diffusion limit",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "method_validation",
+      "reason": "Author-side analytic reproduction is accepted from exact/invariant checks; no fresh independent review is claimed.",
+      "scientific_object": "the general diffusion kernel reduces exactly to the known hard-rod operator",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Discussion after Eq. (9), TeX line 237",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_HARD_ROD_LIMIT"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/1807.02414-implementation-closure-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "item_id": "Claim: free-model diffusion vanishes",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "sanity_check",
+      "reason": "Author-side analytic reproduction is accepted from exact/invariant checks; no fresh independent review is claimed.",
+      "scientific_object": "T=0 implies the diffusion matrix is identically zero in free models",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Discussion after Eq. (9), TeX line 254",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_FREE_MODEL_LIMIT"
+      ]
+    },
+    {
+      "coverage_status": "covered",
+      "critical": true,
+      "decision": "target",
+      "evidence_refs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/1807.02414-implementation-closure-v2-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "item_id": "Claim: Navier-Stokes entropy production is non-negative",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "paper_level_role": "supporting",
+      "reason": "Author-side analytic reproduction is accepted from exact/invariant checks; no fresh independent review is claimed.",
+      "scientific_object": "partial_t S = integral (sigma, D C sigma)/2 is non-negative",
+      "scientific_role": "theoretical_numerical",
+      "source_ref": "Main text entropy-production paragraph and Supplemental Material, TeX lines 265 and 350-491",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_ENTROPY_PRODUCTION"
+      ]
+    }
+  ],
+  "schema_version": 2,
+  "source": "arXiv:1807.02414 and embedded Supplemental Material"
+}

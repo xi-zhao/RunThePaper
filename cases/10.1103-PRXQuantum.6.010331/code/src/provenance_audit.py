@@ -21,7 +21,7 @@ FORBIDDEN_IMAGE_CALLS = {
     "plt.imread",
     "matplotlib.image.imread",
 }
-COMPARISON_ONLY_FUNCTIONS: set[str] = set()
+COMPARISON_ONLY_FUNCTIONS = {"render_side_by_side"}
 ALLOWED_PROVENANCE_VALUES = {
     "analytic_reference",
     "formula_numerics",
@@ -107,18 +107,18 @@ def _scan_source(path: Path, workspace: Path) -> tuple[list[AuditFinding], list[
     return visitor.forbidden, visitor.comparison_only
 
 
-def _computational_sources(code_root: Path) -> list[Path]:
+def _computational_sources(workspace: Path) -> list[Path]:
     sources = [
         path
-        for path in sorted((code_root / "src").glob("*.py"))
+        for path in sorted((workspace / "src").glob("*.py"))
         if path.name != "provenance_audit.py"
     ]
-    script_candidates = (
-        code_root / "scripts" / "run_formula_theory_targets.py",
-        code_root / "scripts" / "run_reproduction.py",
-        code_root / "scripts" / "run_core_responses.py",
+    sources.extend(
+        [
+            workspace / "scripts" / "run_formula_theory_targets.py",
+            workspace / "scripts" / "run_reproduction.py",
+        ]
     )
-    sources.extend(path for path in script_candidates if path.is_file())
     return sources
 
 
@@ -149,10 +149,9 @@ def _check_generated_data(workspace: Path) -> list[AuditFinding]:
 
 def audit_computational_provenance(workspace: Path) -> dict[str, Any]:
     workspace = workspace.resolve()
-    code_root = workspace / "code" if (workspace / "code").is_dir() else workspace
     forbidden: list[AuditFinding] = []
     comparison_only: list[AuditFinding] = []
-    sources = _computational_sources(code_root)
+    sources = _computational_sources(workspace)
     for path in sources:
         source_forbidden, source_comparison = _scan_source(path, workspace)
         forbidden.extend(source_forbidden)
@@ -174,7 +173,7 @@ def audit_computational_provenance(workspace: Path) -> dict[str, Any]:
 
     forbidden_cache = sorted(
         str(path.relative_to(workspace))
-        for path in code_root.glob("src/**/source_digitization*.pyc")
+        for path in workspace.glob("src/**/source_digitization*.pyc")
     )
     for relative_path in forbidden_cache:
         forbidden.append(
@@ -190,8 +189,8 @@ def audit_computational_provenance(workspace: Path) -> dict[str, Any]:
         "schema_version": 1,
         "status": "passed" if not forbidden else "failed",
         "policy": (
-            "Computational sources must not read paper-figure pixels. Published "
-            "comparison composites are external to the numerical pipeline."
+            "Paper-figure pixels may be read only after numerical generation and only "
+            "inside the comparison renderer; they are forbidden as computational inputs."
         ),
         "source_figure_data_used_as_computational_input": bool(forbidden),
         "scanned_sources": [str(path.relative_to(workspace)) for path in sources],

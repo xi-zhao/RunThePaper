@@ -8,9 +8,12 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping
 
 
-def ensure_output_tree(output_root: Path) -> dict[str, Path]:
+def ensure_output_tree(
+    output_root: Path,
+    namespace: str | None = None,
+) -> dict[str, Path]:
     paths = {
-        name: output_root / name
+        name: output_root / name / namespace if namespace else output_root / name
         for name in ("data", "figures", "checks", "comparisons")
     }
     for path in paths.values():

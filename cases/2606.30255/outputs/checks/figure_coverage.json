@@ -1,0 +1,282 @@
+{
+  "schema_version": 3,
+  "paper_id": "2606.30255",
+  "_howto": [
+    "Read the full paper, then inventory every figure, panel, visible series, and table. PhysicsReproductionProject.reproduction_scope freezes the complete theory-numerical scope.",
+    "kind: numeric | non_numeric.",
+    "item_type: figure | figure_panel | figure_series | table.",
+    "Split mixed experiment/theory panels into figure_series items with parent_item_id and scientific_role.",
+    "Every theory_numerical item id must be frozen in reproduction_scope.target_item_ids and declare reproduction_content=theory_numerical_only; selecting only an easy subset is invalid.",
+    "Every generated target must come from independent formula/method numericalization (independent_numerics or analytic_reference); digitized source pixels are reference-only and mixed generated/reference data is forbidden.",
+    "decision for every theory_numerical item: target (with target_ids) | deferred_blocked (with an objective blocker).",
+    "Experimental numeric series remain inventoried and are explicitly deferred under the user's theory-only reproduction scope; only genuinely non-numerical schematics and context are excluded.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', 'similar to another figure', 'covered by another target', and user descope are NOT blockers.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If compute or data is genuinely insufficient, deferred_blocked with an honest reason is the correct final state; do not fake coverage.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "wigner_theory_isolated": {
+      "status": "ready",
+      "code_refs": [
+        "src/wigner_model.py",
+        "src/implementation_smoke.py",
+        "scripts/run_implementation_smoke.py"
+      ],
+      "config_ref": "config/implementation_smoke.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_smoke.py",
+        "--config",
+        "config/implementation_smoke.json",
+        "--output-root",
+        "outputs"
+      ],
+      "run_contract_ref": "run_contract.implementation_smoke.json",
+      "expected_outputs": [
+        "outputs/data/isolated_reproduction/fig003_theory.csv",
+        "outputs/data/isolated_reproduction/fig004_theory.csv",
+        "outputs/data/isolated_reproduction/fig005a_theory.csv",
+        "outputs/data/isolated_reproduction/fig005b_theory.csv",
+        "outputs/checks/isolated_reproduction/fig003_theory.json",
+        "outputs/checks/isolated_reproduction/fig004_theory.json",
+        "outputs/checks/isolated_reproduction/fig005a_theory.json",
+        "outputs/checks/isolated_reproduction/fig005b_theory.json"
+      ],
+      "acceptance_criteria": [
+        "All four theory targets independently generate structured data and pass density-matrix, probability, Wigner-identity, periodicity, and analytic-limit checks without paper pixels or author numerical assets."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "TABLE001",
+      "kind": "non_numeric",
+      "item_type": "table",
+      "decision": "excluded",
+      "reason": "Table 1 enumerates logical hidden-variable outcome sets; tables are outside the numerical-figure execution scope."
+    },
+    {
+      "item_id": "FIG001A",
+      "kind": "non_numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Figure 1(a) visualizes Alice's measurement basis."
+    },
+    {
+      "item_id": "FIG001B",
+      "kind": "non_numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Figure 1(b) visualizes Bob's measurement basis."
+    },
+    {
+      "item_id": "FIG002A",
+      "kind": "non_numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "experimental_image",
+      "decision": "excluded",
+      "reason": "Figure 2(a) is the entangled-photon source schematic."
+    },
+    {
+      "item_id": "FIG002B",
+      "kind": "non_numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "experimental_image",
+      "decision": "excluded",
+      "reason": "Figure 2(b) is the polarization-measurement schematic."
+    },
+    {
+      "item_id": "FIG002C",
+      "kind": "non_numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "experimental_image",
+      "decision": "excluded",
+      "reason": "Figure 2(c) is the coincidence-counting schematic."
+    },
+    {
+      "item_id": "FIG003-THEORY",
+      "parent_item_id": "FIG003",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG003"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "reason": "Figure 3 theory/model curves: independently evaluate the density-matrix, Born-probability, and Wigner formulas with the paper-reported w=0.50 and v=0.98.",
+      "claim_refs": [
+        "CLM-FIG003-MODEL"
+      ]
+    },
+    {
+      "item_id": "FIG003-EXPERIMENT",
+      "parent_item_id": "FIG003",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reason": "Figure 3 measured markers and uncertainty bars require experimental acquisition or author data; the user explicitly scoped this project to independently generated theory numerics."
+    },
+    {
+      "item_id": "FIG004-THEORY",
+      "parent_item_id": "FIG004",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG004"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "reason": "Figure 4 theory/model curves: independently evaluate the density-matrix, Born-probability, and Wigner formulas with the paper-reported w=0.36 and v=0.99.",
+      "claim_refs": [
+        "CLM-FIG004-MODEL"
+      ]
+    },
+    {
+      "item_id": "FIG004-EXPERIMENT",
+      "parent_item_id": "FIG004",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reason": "Figure 4 measured markers and uncertainty bars require experimental acquisition or author data; the user explicitly scoped this project to independently generated theory numerics."
+    },
+    {
+      "item_id": "FIG005A-THEORY",
+      "parent_item_id": "FIG005A",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG005A"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "reason": "Figure 5 top theory/model curves: independently evaluate the density-matrix, Born-probability, and Wigner formulas with Alice fixed and the paper-reported w=0.35 and v=0.89.",
+      "claim_refs": [
+        "CLM-FIG005A-MODEL"
+      ]
+    },
+    {
+      "item_id": "FIG005A-EXPERIMENT",
+      "parent_item_id": "FIG005A",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reason": "Figure 5 top measured markers and uncertainty bars require experimental acquisition or author data; the user explicitly scoped this project to independently generated theory numerics."
+    },
+    {
+      "item_id": "FIG005B-THEORY",
+      "parent_item_id": "FIG005B",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG005B"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "reason": "Figure 5 bottom theory/model curves: independently evaluate the density-matrix, Born-probability, and Wigner formulas with Bob fixed and the paper-reported w=0.41 and v=0.90.",
+      "claim_refs": [
+        "CLM-FIG005B-MODEL"
+      ]
+    },
+    {
+      "item_id": "FIG005B-EXPERIMENT",
+      "parent_item_id": "FIG005B",
+      "kind": "numeric",
+      "item_type": "figure_series",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reason": "Figure 5 bottom measured markers and uncertainty bars require experimental acquisition or author data; the user explicitly scoped this project to independently generated theory numerics."
+    },
+    {
+      "item_id": "LHV Wigner bound",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG003",
+        "T-FIG004",
+        "T-FIG005A",
+        "T-FIG005B"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "source_ref": "Section III and Eqs. (1)-(6)",
+      "scientific_object": "Perfect-anticorrelation local hidden-variable models obey W >= 0.",
+      "reason": "The Wigner combination is evaluated from the paper's logical probability constraints before any quantum-state model is introduced.",
+      "claim_refs": [
+        "CLM-LHV-BOUND"
+      ]
+    },
+    {
+      "item_id": "Singlet Born probability",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG003",
+        "T-FIG004",
+        "T-FIG005A",
+        "T-FIG005B"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "source_ref": "Eqs. (7)-(10)",
+      "scientific_object": "For the singlet, P(++|a,b)=sin^2(a-b)/2.",
+      "reason": "Direct density-matrix evaluation is checked against the analytic relative-angle law over the full angular grid.",
+      "claim_refs": [
+        "CLM-BORN"
+      ]
+    },
+    {
+      "item_id": "Symmetric Wigner extremum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG003",
+        "T-FIG004"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "source_ref": "Eqs. (10) and (12)",
+      "scientific_object": "Symmetric 30-degree basis spacing attains the ideal Wigner value -1/8.",
+      "reason": "The analytic extremum and independently evaluated scan minimum are compared directly.",
+      "claim_refs": [
+        "CLM-SYMMETRIC-EXTREMUM"
+      ]
+    },
+    {
+      "item_id": "Asymmetric Wigner extremum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "decision": "target",
+      "target_ids": [
+        "T-FIG005A",
+        "T-FIG005B"
+      ],
+      "implementation_ref": "wigner_theory_isolated",
+      "source_ref": "Eqs. (10) and (13)",
+      "scientific_object": "The ideal asymmetric geometry attains 1/4-sqrt(3)/4.",
+      "reason": "The closed-form extremum and both fixed-party scan minima are compared directly.",
+      "claim_refs": [
+        "CLM-ASYMMETRIC-EXTREMUM"
+      ]
+    }
+  ]
+}

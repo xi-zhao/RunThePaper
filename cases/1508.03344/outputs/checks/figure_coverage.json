@@ -1,0 +1,166 @@
+{
+  "schema_version": 2,
+  "paper_id": "1508.03344",
+  "implementations": {
+    "paper_scale_all_targets": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--output-root",
+        "outputs",
+        "--shard-index",
+        "${ARRAY_INDEX}",
+        "--shard-count",
+        "${ARRAY_COUNT}",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/driven_ising/analytic.py",
+        "src/driven_ising/model.py",
+        "src/driven_ising/observables.py",
+        "src/driven_ising/campaign.py",
+        "scripts/run_reproduction.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/fig1_observables.json",
+        "outputs/data/fig2_level_statistics.json",
+        "outputs/data/fig2_spectral_functions.json",
+        "outputs/data/fig2_micromotion.json",
+        "outputs/data/fig2_phase_diagram.npz",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All 19,601 work units and 4,732,001 independent realizations are covered exactly once with config- and implementation-bound checkpoints.",
+        "All seven targets pass their scientific assertions and output hashes are frozen before any RenderContract tuning.",
+        "The complete printed L=8,10,12 families and Fig. 2 interaction series are generated without author code, arrays, digitization or source pixels.",
+        "Unprinted sample allocation, grid, sector, boundary and broadening choices remain disclosed reconstructed inputs rather than paper-exact claims."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Figure 1 level statistics",
+      "item_type": "figure",
+      "source_ref": "Main text Fig. 1, main axes",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Disorder-averaged Floquet adjacent-gap ratios for every printed system size.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1 spin-glass inset",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 1, inset",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "The inset is a distinct eigenvector-derived spin-glass observable.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(a) free phase diagram",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 2(a)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Analytic boundaries of the uniform noninteracting binary drive.",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(b) pi-phase level statistics",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 2(b)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Disorder-averaged interacting Floquet statistics for all printed sizes.",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(c) operator spectral function",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 2(c)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "All solid pi-SG and dashed zero-SG spectral-weight series are independently generated.",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(d) correlator micromotion",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 2(d)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Both Cxx and Cyy time series and their crossings are generated from one Floquet eigenstate.",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "Quantitative localization and phase claims",
+      "item_type": "quantitative_claim",
+      "source_ref": "Main-text results discussion and Figs. 1-2 captions",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Poisson/COE limits, interaction threshold, spectral-peak positions and crossing count are supporting checks of the six displayed numerical items, not a seventh independent reproduction item.",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007"
+      ],
+      "implementation_ref": "paper_scale_all_targets"
+    }
+  ]
+}

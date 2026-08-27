@@ -19,19 +19,21 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code" / "src"))
+HERE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(HERE / "src"))
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.image import imread  # noqa: E402
 
 import coefficients as C  # noqa: E402
 import gate  # noqa: E402
 
-DATA = ROOT / "outputs" / "data"
-CHECKS = ROOT / "outputs" / "checks"
-FIGS = ROOT / "outputs" / "figures"
+DATA = HERE / "outputs" / "data"
+CHECKS = HERE / "outputs" / "checks"
+FIGS = HERE / "outputs" / "figures"
+REF = HERE / "references" / "original_figures" / "page7_img107.png"
 
 BASE = C.FIG3_HYBRID
 _O1, _O2 = BASE.omega1, BASE.omega2  # base callables
@@ -107,6 +109,14 @@ def main():
     fig.tight_layout()
     repro = FIGS / "fig7_scan.png"
     fig.savefig(repro, dpi=150)
+    plt.close(fig)
+
+    # side-by-side with the paper figure
+    o = imread(str(REF)); r = imread(str(repro))
+    fig, axs = plt.subplots(1, 2, figsize=(13, 5))
+    axs[0].imshow(o); axs[0].axis("off"); axs[0].set_title("Original (Sun 2024, Fig. 7)")
+    axs[1].imshow(r); axs[1].axis("off"); axs[1].set_title("PRAgent reproduction")
+    fig.tight_layout(); fig.savefig(FIGS / "fig7_original_vs_repro.png", dpi=130)
     plt.close(fig)
 
     print(json.dumps(report, indent=2))

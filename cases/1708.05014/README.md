@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 121, 035301 (2018) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **69.29/100**
 
-All 24 numerical regions are formula-derived; quantum finite-size targets are reduced-scale, T009 is paper-exact, and phase portraits use printed couplings with independently reconstructed initials/sampling.
+Whole-paper atomic inventory: all eligible scientific items have runnable target evidence; T025 is paper-scale reproduced and T026 records a fresh-review-adjudicated paper-formula discrepancy.
 
 ## Start Here / 从这里开始
 
@@ -19,6 +19,7 @@ All 24 numerical regions are formula-derived; quantum finite-size targets are re
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -112,7 +113,7 @@ cd cases/1708.05014/code
 python scripts/run_reproduction.py --config config/feature.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

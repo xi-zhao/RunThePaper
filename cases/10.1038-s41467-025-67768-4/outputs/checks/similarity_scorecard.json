@@ -1,103 +1,1828 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "10.1038-s41467-025-67768-4",
-  "overall_score": 72.25,
-  "source_score_model": "scientific_features_with_registered_pixel_evidence_v1",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 9,
-    "target_status_counts": {
-      "failed": 1,
-      "partially_reproduced": 5,
-      "reproduced": 1,
-      "blocked_missing_method": 2
-    },
-    "published_generated_datasets": 7,
-    "published_generated_figures": 10
-  },
-  "independence_boundary": {
-    "numerical_implementation": "documented_no_author_code_use",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
+  "score_model": "scientific_features_with_registered_pixel_evidence_v1",
+  "primary_render_metric": {
+    "name": "registered_full_ssim",
+    "mean_over_applicable_targets": 0.615454889179986,
+    "applicable_targets": [
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "source_pixels_used_as_numerical_inputs": false
   },
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "MAIN_FIG2C",
-      "meaning": "Feedback/post-selection expectation under amplified Pauli injection.",
-      "status": "failed",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Main Fig. 2(c) feedback/post-selection simulation",
+      "figure_refs": [
+        "Main Fig. 2(c)"
+      ],
+      "weight": 1.2,
+      "components": {
+        "feature_match": {
+          "score": 28.0,
+          "reason": "The literal disclosed Pauli-injection model and feedback mechanism are independently reproduced, but the high-r curve crosses zero while the paper simulation remains positive.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 12.0,
+          "reason": "Low-r ordering and correction benefit agree; the high-r source curve is quantitatively incompatible with the literal rp/3 insertion probabilities.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The simulation component of panel c is generated for both printed input angles and the full displayed r range.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/feedback_curves.npz",
+        "outputs/checks/science_checks.json",
+        "comparison-artifacts/T001_main_fig2c_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The paper does not disclose an amplification convention that reconciles its positive high-r dashed curve with the stated X/Y/Z probabilities rp/3.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "FB001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The disclosed p_X=p_Y=p_Z=rp/3 injection mechanism is reproduced exactly, but the paper-exact Fig. 2(c) dashed curves additionally require the circuit-level gate and measurement error model that the publication does not provide.",
+            "evidence": [
+              "outputs/checks/T001_publication_input_audit.json",
+              "outputs/checks/science_checks.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The main text states that Fig. 2(c) uses gate and measurement errors, while the supplement publishes only aggregate processor statistics rather than the location-resolved channels, correlations, composition rule, and calibration snapshot needed to reconstruct those curves uniquely.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/main.pdf",
+              "raw/supplementary-information.pdf",
+              "outputs/checks/T001_publication_input_audit.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the independently implemented disclosed mechanism: a closed form and exhaustive 4^3 Pauli enumeration agree to 2e-15, focused tests pass, and the isolated run binds the generated feedback curves.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The analytic feedback expression agrees with exhaustive enumeration of all 64 injected Pauli patterns to machine precision.",
+                "evidence": [
+                  "outputs/checks/science_checks.json",
+                  "tests/test_qem_models.py"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "The source audit separates the printed p=8.8%, rp/3 injection law and 64 circuits from the unpublished circuit-level gate and measurement model.",
+                "evidence": [
+                  "outputs/checks/T001_publication_input_audit.json",
+                  "raw/main.pdf",
+                  "raw/supplementary-information.pdf"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The main article and Supplementary Note 3/Table 1 were audited directly; they contain aggregate calibration summaries but not the indispensable simulator input deck.",
+                "evidence": [
+                  "outputs/checks/T001_publication_input_audit.json",
+                  "raw/main.pdf",
+                  "raw/supplementary-information.pdf"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated logical-QEM run returned zero and froze the T001 feedback curves without forbidden scientific inputs.",
+                "evidence": [
+                  "outputs/runs/logical-qem-v3-20260804/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A defect in the disclosed injection/feedback implementation is ruled out by analytic-versus-enumeration agreement and focused tests.",
+              "evidence": [
+                "outputs/checks/science_checks.json",
+                "tests/test_qem_models.py"
+              ]
+            },
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "ruled_out",
+              "statement": "The high-r mismatch does not by itself identify a paper error because the paper explicitly says its dashed curves include gate and measurement errors absent from the disclosed injection-only contract.",
+              "evidence": [
+                "raw/main.pdf",
+                "outputs/checks/T001_publication_input_audit.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The literal feedback mechanism is reproduced; only the paper-exact dashed simulation curves remain blocked by unpublished circuit-level noise inputs.",
+            "items": [
+              "T001"
+            ],
+            "completion": "1/1 disclosed mechanisms reproduced; 0/1 paper-exact simulator input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the circuit-location-resolved gate, preparation, readout, correlation, and calibration contracts used by the Fig. 2(c) simulator, then rerun the existing clean-room implementation.",
+            "expected_resolution": "The supplied input deck either reproduces the dashed curves or exposes a genuine scientific discrepancy under a fixed model.",
+            "evidence_to_produce": [
+              "config/fig2c_simulator_input_deck.json",
+              "outputs/runs/logical-qem-fig2c-paper-exact/run_attestation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "feedback_closed_form_vs_64_pauli_patterns",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The closed form agrees with exhaustive 4^3 Pauli enumeration to machine precision."
+        },
+        {
+          "assertion_id": "feedback_high_r_source_alignment",
+          "tier": "alignment",
+          "essential": true,
+          "status": "failed",
+          "evidence": "comparison-artifacts/T001_main_fig2c_source_vs_reproduction.png",
+          "claim": "The literal disclosed model does not reproduce the positive high-r source simulation curve."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "c-simulation",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig2c_feedback.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "failed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 55.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 55.0,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
-      "target_id": "T002",
-      "figure_id": "MAIN_FIG3C",
-      "meaning": "One-round corrected and uncorrected repetition-code expectations.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "target_id": "T002-MAIN",
+      "label": "Main Fig. 3(c) one-round repetition-code simulation",
+      "figure_refs": [
+        "Main Fig. 3(c)"
+      ],
+      "weight": 1.5,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "reason": "The distance ordering, below-threshold flattening, and uncorrected decline all match the paper's simulation feature.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 24.0,
+          "reason": "Endpoint values are close in scale but differ by roughly 0.03-0.10 because only aggregate calibration statistics are disclosed.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All three distances, the uncorrected curve, and the full r range are generated.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/repetition_one_round.npz",
+        "comparison-artifacts/T002_main_fig3c_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The per-gate Processor-I depolarizing and readout map behind the dashed curves is not reported.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "REP001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T002-MAIN (Main Fig. 3(c) one-round repetition-code simulation) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T002-MAIN (Main Fig. 3(c) one-round repetition-code simulation).",
+            "items": [
+              "T002-MAIN"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T002-MAIN against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "repetition_distance_ordering",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Increasing odd distance suppresses the binomial-tail logical failure over the displayed range."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "c-simulation",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig3c_repetition.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 84.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T002-SUPP",
+      "label": "Supplementary Fig. 4 uncorrected repetition-code simulation",
+      "figure_refs": [
+        "Supplementary Fig. 4"
+      ],
+      "weight": 0.6,
+      "components": {
+        "feature_match": {
+          "score": 44.0,
+          "reason": "The three distances overlap analytically, reproducing the paper's central no-correction feature.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 23.0,
+          "reason": "The decline is close but the aggregate calibration lacks the source simulation's small distance-specific circuit-instance fluctuations.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All displayed distances and the full r range are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/repetition_one_round.npz",
+        "comparison-artifacts/T002_supp_fig4_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "Random circuit-instance selection and gate-level calibration are absent from the paper.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "REP001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T002-SUPP (Supplementary Fig. 4 uncorrected repetition-code simulation) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T002-SUPP (Supplementary Fig. 4 uncorrected repetition-code simulation).",
+            "items": [
+              "T002-SUPP"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T002-SUPP against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "uncorrected_distance_independence",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/repetition_one_round.npz",
+          "claim": "Without decoding, the logical-Z attenuation is independent of repetition distance in the injection model."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "single",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig4_repetition.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 82.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T003",
-      "figure_id": "MAIN_FIG3E",
-      "meaning": "Multi-round distance-7 repetition-code expectation at approximately fixed total error.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Main Fig. 3(e) multi-round repetition-code simulation",
+      "figure_refs": [
+        "Main Fig. 3(e)"
+      ],
+      "weight": 1.2,
+      "components": {
+        "feature_match": {
+          "score": 42.0,
+          "reason": "All four fixed-total-error schedules remain ordered and decline smoothly with r as in the source.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 21.0,
+          "reason": "M=1 is close, while M=2-4 are too optimistic because the hidden parity-round gate and measurement map is replaced by an aggregate proxy.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "M=1-4 and the full r=1-2.5 domain are generated.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/repetition_multi_round.npz",
+        "comparison-artifacts/T003_main_fig3e_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "Per-round calibrated noise channels are not disclosed.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "REP001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T003 (Main Fig. 3(e) multi-round repetition-code simulation) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T003 (Main Fig. 3(e) multi-round repetition-code simulation).",
+            "items": [
+              "T003"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T003 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "multi_round_composition",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "Independent logical-sign channels compose multiplicatively across M+1 injection layers."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "e-simulation",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig3e_repetition.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 78.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
-      "target_id": "T004",
-      "figure_id": "MAIN_FIG4BC",
-      "meaning": "Distance-3 surface-code logical Pauli channel, Bloch-circle contraction, and state-specific logical observables.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "target_id": "T004-MAIN",
+      "label": "Main Fig. 4(b,c) distance-3 surface-code simulation",
+      "figure_refs": [
+        "Main Fig. 4"
+      ],
+      "weight": 1.5,
+      "components": {
+        "feature_match": {
+          "score": 47.0,
+          "reason": "The independently enumerated logical Pauli channel reproduces Bloch-circle contraction and corrected/raw Z_L curves.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 27.0,
+          "reason": "At r=1 the psi-state values are 0.3949 corrected and 0.2713 raw, visually coincident with the source; high-r decay differs because the surface injection unit rate is unstated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both numerical panels b and c are generated; schematic a and experimental scatter d are not applicable.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/surface_code.npz",
+        "comparison-artifacts/T004_main_fig4b_source_vs_reproduction.png",
+        "comparison-artifacts/T004_main_fig4c_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The surface-specific injection probability and gate-level preparation circuit calibration are not reported.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "SURF001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T004-MAIN (Main Fig. 4(b,c) distance-3 surface-code simulation) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T004-MAIN (Main Fig. 4(b,c) distance-3 surface-code simulation).",
+            "items": [
+              "T004-MAIN"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T004-MAIN against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "surface_code_algebra_and_bloch_channel",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "The reconstructed code has distance three, normalized logical Pauli probabilities, and Bloch radii equal to the channel attenuation to machine precision."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "not_applicable",
+            "note": "circuit schematic"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig4b_bloch.png"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "evidence": "outputs/figures/main_fig4c_surface.png"
+          },
+          {
+            "panel_id": "d",
+            "status": "not_applicable",
+            "note": "experimental scatter"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 89.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T004-SUPP",
+      "label": "Supplementary Fig. 7(a,c,e) surface-code simulation",
+      "figure_refs": [
+        "Supplementary Fig. 7"
+      ],
+      "weight": 0.8,
+      "components": {
+        "feature_match": {
+          "score": 47.0,
+          "reason": "The corrected and raw Z_L/X_L decay is generated for all three requested logical states with the same state ordering as the paper.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 26.0,
+          "reason": "The r=1 anchors are close, especially the psi-state X_L value; high-r differences inherit the unstated surface injection rate.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All simulation-bearing panels a, c, and e are generated; experimental scatter panels b, d, and f are not applicable.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/surface_code.npz",
+        "comparison-artifacts/T004_supp_fig7ace_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "Exact surface injection and state-preparation calibration are unavailable.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "SURF001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The source panel interleaves experimental markers with an independently generated simulation series, so a full-panel pixel score is scientifically undefined.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T004-SUPP (Supplementary Fig. 7(a,c,e) surface-code simulation) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T004-SUPP (Supplementary Fig. 7(a,c,e) surface-code simulation).",
+            "items": [
+              "T004-SUPP"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T004-SUPP against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "surface_state_observable_mapping",
+          "tier": "line_contract",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/surface_code.npz",
+          "claim": "Zero uses Z_L, plus uses X_L, and psi uses X_L, each contracted by the independently enumerated logical channel."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig7ace_surface.png"
+          },
+          {
+            "panel_id": "b",
+            "status": "not_applicable",
+            "note": "experimental scatter"
+          },
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig7ace_surface.png"
+          },
+          {
+            "panel_id": "d",
+            "status": "not_applicable",
+            "note": "experimental scatter"
+          },
+          {
+            "panel_id": "e",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig7ace_surface.png"
+          },
+          {
+            "panel_id": "f",
+            "status": "not_applicable",
+            "note": "experimental scatter"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 70.0,
+      "component_total": 88.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T005",
-      "figure_id": "SUPP_FIG8",
-      "meaning": "Complete versus injection-only ZNE bias and sampling overhead.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Supplementary Fig. 8 complete versus partial ZNE",
+      "figure_refs": [
+        "Supplementary Fig. 8"
+      ],
+      "weight": 1.2,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "reason": "Complete ZNE improves over injection-only ZNE and no correction for every code distance; the paper's left-to-right distance ordering is reproduced.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 23.43,
+          "reason": "Registered post-freeze SSIM is 0.6695; suppression factors are 4.11-5.07 versus the paper annotations 3.2-4.1 because the hidden calibration map is approximated.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All five code distances, no-correction baseline, both ZNE modes, and the displayed bias/overhead range are generated.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/complete_zne.npz",
+        "outputs/checks/pixel_evidence.json",
+        "comparison-artifacts/T005_supp_fig8_pixel_board.png"
+      ],
+      "remaining_gap": "Aggregate median calibration overestimates the suppression factors and causes a slight d=11 downturn.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "ZNE002",
+          "ZNE003",
+          "REP001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T005 (Supplementary Fig. 8 complete versus partial ZNE) records legacy failure label=missing_parameters, parameter_match=paper_subset; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T005 (Supplementary Fig. 8 complete versus partial ZNE).",
+            "items": [
+              "T005"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T005 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "complete_zne_advantage",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "At eta approximately 1.93, every corrected distance has greater error suppression than the no-correction baseline."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "single",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig8_complete_zne.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 80.0,
+      "component_total": 83.43,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T006",
-      "figure_id": "SUPP_FIG9",
-      "meaning": "Large-scale surface-code logical-memory ZNE bias and overhead.",
-      "status": "reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Supplementary Fig. 9 logical-memory ZNE",
+      "figure_refs": [
+        "Supplementary Fig. 9"
+      ],
+      "weight": 1.2,
+      "components": {
+        "feature_match": {
+          "score": 49.0,
+          "reason": "Both relative-bias and overhead panels reproduce the distance/order trends and the K=3 bias minimum from the published analytic fit.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 24.52,
+          "reason": "Registered post-freeze SSIM is 0.7005 and the explicit d=11, p=0.001 logical-error anchor matches to floating-point precision.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Both panels, both logical-error budgets, all three distances, and K=1-4 are generated at paper parameters.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/logical_memory.npz",
+        "outputs/checks/pixel_evidence.json",
+        "comparison-artifacts/T006_supp_fig9_pixel_board.png"
+      ],
+      "remaining_gap": "Residual pixel difference comes from font/legend rasterization and small finite-fit rendering differences, not a missing physical branch.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "ZNE002",
+          "ZNE003",
+          "MEM001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception."
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "logical_memory_anchor_and_zne_moments",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/science_checks.json",
+          "claim": "P_L(10^-3,d=11)=2.033751778e-10 and all distance-aware moment constraints pass."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig9_logical_memory.png"
+          },
+          {
+            "panel_id": "b",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_fig9_logical_memory.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 88.52,
+      "score": 88.52,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T007",
-      "figure_id": "SUPP_TABLE3",
-      "meaning": "Per-layer unit-error probabilities intended to preserve cumulative injected error.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Supplementary Table 3 fixed-total-error schedule",
+      "figure_refs": [
+        "Supplementary Table 3"
+      ],
+      "weight": 0.6,
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "reason": "All four paper values are reproduced and independently checked against the cumulative-error invariant.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 16.67,
+          "reason": "The table values are exact, while registered SSIM is 0.4764 because of font rasterization; the claimed invariant itself is only approximate with 1.90% relative spread.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Every round and unit-error probability in the table is covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/fixed_total_error.json",
+        "outputs/checks/pixel_evidence.json",
+        "comparison-artifacts/T007_supp_table3_pixel_board.png"
+      ],
+      "remaining_gap": "The printed p values are not the exact fixed-cumulative-error schedule: 9.4% and 7.2% differ from 9.286% and 7.048%, beyond one-decimal rounding.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "sanity_check",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "REP001"
+        ],
+        "pixel_status": "pending_render_contract",
+        "assessment_subject": "paper",
+        "pixel_migration": {
+          "legacy_pixel_status": "scored",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception."
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "table3_approximately_fixed_total",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/data/fixed_total_error.json",
+          "claim": "The cumulative at-least-one-error probability has a 1.9005% relative range, so the paper statement is approximately but not exactly true."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "table",
+            "status": "reproduced",
+            "evidence": "outputs/figures/supp_table3_fixed_error.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "component_total": 79.67,
+      "score": 79.67,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T008",
-      "figure_id": "SUPP_FIG2",
-      "meaning": "[[72,12,6]] qLDPC Monte Carlo logical-error distribution.",
-      "status": "blocked_missing_method",
-      "formula_gate": "verified",
-      "parameter_match": "unknown"
+      "label": "Supplementary Fig. 2 qLDPC logical-error distribution",
+      "figure_refs": [
+        "Supplementary Fig. 2"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent qLDPC Monte Carlo distribution has been generated."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No paper-comparable generated histogram exists."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "The panel is enumerated but its benchmark contract is underdetermined."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "single",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#supp_fig2_qldpc_logical_error_distribution"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "verified",
+        "formula_dependencies": [],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No accepted scientific array exists for rendering comparison.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Supplementary Figure 2 cannot be regenerated independently because the publication does not define the qLDPC circuit/noise process, decoder configuration, or Monte Carlo trial contract.",
+            "evidence": [
+              "figure_coverage.json",
+              "physics_reproduction_project.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The complete main paper and Supplementary Information identify the [[72,12,6]] code and physical error rate but omit the executable benchmark definition needed to determine the plotted distribution.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/supplementary-information.pdf",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "A strict qLDPC circuit/fault/decoder Monte Carlo handler now exists and passes focused tests plus isolated execution; no code defect was found. The paper-specific distribution remains underdetermined because the required benchmark contract is unpublished.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The qLDPC discussion, caption, methods, and complete supplement were checked for the missing circuit, decoder, noise, and trial definitions.",
+                "evidence": [
+                  "raw/supplementary-information.pdf",
+                  "PAPER_MAP.md",
+                  "src/missing_benchmark_models.py",
+                  "tests/test_missing_benchmark_campaign.py",
+                  "outputs/runs/10.1038-s41467-025-67768-4-missing-benchmarks-v2-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The strict qLDPC input-boundary campaign ran in isolation and emitted the declared blocker artifact without forbidden input access.",
+                "evidence": [
+                  "outputs/runs/10.1038-s41467-025-67768-4-missing-benchmarks-v2-20260824/run_attestation.json",
+                  "outputs/checks/missing_benchmark_campaign/T008.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "The qLDPC panel is explicitly enumerated and linked to T008, so it is no longer hidden by the inventory.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The single qLDPC Monte Carlo distribution in Supplementary Figure 2 is uncovered.",
+            "items": [
+              "T008",
+              "supp_fig2_qldpc_logical_error_distribution"
+            ],
+            "completion": "0/1 qLDPC numerical panel covered"
+          },
+          "next_discriminating_test": {
+            "action": "Acquire a citable full qLDPC benchmark contract, freeze it, independently implement the decoder and Monte Carlo sampler, and validate the multiplicity distribution before rendering.",
+            "expected_resolution": "A complete contract either makes the panel reproducible or confirms the publication boundary as terminal.",
+            "evidence_to_produce": [
+              "references/qldpc_benchmark_contract.json",
+              "outputs/data/qldpc_error_multiplicity.csv",
+              "outputs/checks/qldpc_distribution_check.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t008_qldpc_distribution",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json#supp_fig2_qldpc_logical_error_distribution",
+          "claim": "Independently reproduce the [[72,12,6]] logical-error multiplicity distribution."
+        }
+      ],
+      "evidence": [
+        "figure_coverage.json",
+        "TARGET_LEDGER.md#T008",
+        "physics_reproduction_project.json"
+      ],
+      "remaining_gap": "The circuit, noise process, decoder configuration, and Monte Carlo trial contract are not published.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; this uncovered item contributes zero to reproduction degree but does not rewrite the historical aggregate.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T009",
-      "figure_id": "SUPP_FIG10BC",
-      "meaning": "Lattice-surgery circuit-level Monte Carlo ZNE bias and overhead.",
-      "status": "blocked_missing_method",
-      "formula_gate": "verified",
-      "parameter_match": "unknown"
+      "label": "Supplementary Fig. 10(b,c) lattice-surgery ZNE benchmark",
+      "figure_refs": [
+        "Supplementary Fig. 10(b,c)"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent circuit-level lattice-surgery benchmark has been generated."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No paper-comparable generated curves exist."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Both numeric panels are enumerated but their benchmark contract is underdetermined."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#supp_fig10b_logical_cnot_expectation"
+          },
+          {
+            "panel_id": "c",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#supp_fig10c_lattice_surgery_bias_overhead"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "ZNE002",
+          "ZNE003"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No accepted scientific arrays exist for rendering comparison.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Supplementary Figure 10(b,c) cannot be regenerated independently because the publication omits the exact lattice-surgery schedule, syndrome rounds, decoder, and sampling contract.",
+            "evidence": [
+              "figure_coverage.json",
+              "physics_reproduction_project.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The supplement gives the logical-CNOT sketch and high-level noise rates but not the executable circuit-level benchmark definition that determines either numeric panel.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/supplementary-information.pdf",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "A strict circuit-level logical expectation and distance-aware ZNE handler now exists and passes focused tests plus isolated execution; no code defect was found. Both paper-specific panels remain underdetermined because the schedule and decoder contract are unpublished.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "Supplementary Note 5C, Figure 10 caption, stated noise rates, and cited protocol description were checked for the missing schedule and decoder details.",
+                "evidence": [
+                  "raw/supplementary-information.pdf",
+                  "PAPER_MAP.md",
+                  "src/missing_benchmark_models.py",
+                  "tests/test_missing_benchmark_campaign.py",
+                  "outputs/runs/10.1038-s41467-025-67768-4-missing-benchmarks-v2-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The strict lattice-surgery input-boundary campaign ran in isolation and emitted the declared blocker artifact without forbidden input access.",
+                "evidence": [
+                  "outputs/runs/10.1038-s41467-025-67768-4-missing-benchmarks-v2-20260824/run_attestation.json",
+                  "outputs/checks/missing_benchmark_campaign/T009.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "Panels 10(b) and 10(c) are now separate items linked to one explicit target contract.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Both numerical panels of Supplementary Figure 10 are uncovered.",
+            "items": [
+              "T009",
+              "supp_fig10b_logical_cnot_expectation",
+              "supp_fig10c_lattice_surgery_bias_overhead"
+            ],
+            "completion": "0/2 lattice-surgery numerical panels covered"
+          },
+          "next_discriminating_test": {
+            "action": "Acquire a citable circuit-level lattice-surgery benchmark contract, freeze it, independently implement the schedule and decoder, and then generate both expectation and bias-overhead panels.",
+            "expected_resolution": "A complete contract either enables both panels or confirms the publication boundary as terminal.",
+            "evidence_to_produce": [
+              "references/lattice_surgery_benchmark_contract.json",
+              "outputs/data/lattice_surgery_zne.csv",
+              "outputs/checks/lattice_surgery_zne_check.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t009_lattice_surgery_zne",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json#supp_fig10b_logical_cnot_expectation",
+          "claim": "Independently reproduce the logical-CNOT expectation curves and ZNE bias-overhead relation."
+        }
+      ],
+      "evidence": [
+        "figure_coverage.json",
+        "TARGET_LEDGER.md#T009",
+        "physics_reproduction_project.json"
+      ],
+      "remaining_gap": "The exact schedule, syndrome rounds, decoder, and sampling contract are not published.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; these two uncovered items contribute zero to reproduction degree but do not rewrite the historical aggregate.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "source_scorecard_sha256": "139bc6ac8884a52146d13009cc3a3d9c4761f3fc58cb980fa154b1a90bbe959f"
+  "overall_score": 72.25,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 11,
+    "critical_items": 6,
+    "artifact_pass_rate": 0.82,
+    "data_backed_rate": 0.82,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "missing_parameters": 7,
+      "none": 2,
+      "missing_benchmark_metadata": 2
+    },
+    "parameter_match_counts": {
+      "paper_subset": 7,
+      "paper_exact": 2,
+      "unknown": 2
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 8,
+      "visual_feature_contract": 1,
+      "analytic_reference": 1,
+      "table_exact": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 9,
+      "unknown": 2
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 9,
+      "unknown": 2
+    },
+    "formula_gate_counts": {
+      "verified": 11
+    },
+    "paper_level_role_counts": {
+      "main_claim": 4,
+      "supporting": 6,
+      "sanity_check": 1
+    },
+    "physics_status_counts": {
+      "failed": 1,
+      "passed": 8,
+      "pending": 2
+    },
+    "physics_assertion_status_counts": {
+      "passed": 9,
+      "failed": 1,
+      "blocked": 2
+    },
+    "essential_physics_failures": [
+      "T001"
+    ],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T006",
+      "T007"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002-MAIN",
+      "T002-SUPP",
+      "T003",
+      "T004-MAIN",
+      "T004-SUPP",
+      "T005",
+      "T008",
+      "T009"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002-MAIN",
+      "T002-SUPP",
+      "T003",
+      "T004-MAIN",
+      "T004-SUPP",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T008",
+      "T009"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 9,
+      "not_required": 2
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 3,
+      "react_loop_required": 6,
+      "not_required": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002-MAIN",
+      "T002-SUPP",
+      "T003",
+      "T004-MAIN",
+      "T004-SUPP",
+      "T005",
+      "T008",
+      "T009"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T008",
+      "T009"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T002-MAIN",
+      "T002-SUPP",
+      "T003",
+      "T004-MAIN",
+      "T004-SUPP",
+      "T005"
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 1,
+      "unresolved": 6,
+      "indispensable_input_unavailable": 2
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 3,
+      "unresolved": 6
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3,
+      "not_excluded": 6
+    }
+  },
+  "status": "passed"
 }

@@ -11,7 +11,7 @@ object is a method rather than a formula.
 - Inputs: coordinates, C6 matrices, Omega/Delta maxima, Eqs. (5)-(6), 300 samples.
 - Steps: enumerate basis, build all-pair diagonal interactions and per-level
   sparse drives, apply one matrix exponential per interval, decode colorings.
-- Code: `code/src/rydberg_qudit.py:simulate_program`.
+- Code: `src/rydberg_qudit.py:simulate_program`.
 - Checks: norm, graph validity, deterministic outputs, author-reference metrics.
 - Status: verified.
 
@@ -28,7 +28,7 @@ object is a method rather than a formula.
 - Source: Strathclyde dataset DOI.
 - Metrics: curve correlation/errors, raw-index TVD, sorted TVD, paper-target
   fidelity, all-proper-coloring fidelity.
-- Code: `code/scripts/reproduce_qudit_annealing.py`.
+- Code: `scripts/reproduce_qudit_annealing.py`.
 - Status: verified.
 
 ### MTH004 — Pasqal cross-check

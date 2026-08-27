@@ -70,7 +70,7 @@ class SpectrumRunState:
 
 
 def load_paper_config(workspace: Path, config_path: Path | None = None) -> dict[str, Any]:
-    path = config_path or workspace / "code" / "config" / "paper_exact_run.json"
+    path = config_path or workspace / "config" / "paper_exact_run.json"
     config = json.loads(path.read_text(encoding="utf-8"))
     validate_paper_config(config)
     return config
@@ -121,7 +121,7 @@ def run_paper_ed(
         dtype=complex,
     )
     fingerprint = _ed_fingerprint(config)
-    checkpoint_dir = workspace / "outputs" / "checkpoints"
+    checkpoint_dir = workspace / "outputs" / "paper_exact" / "checkpoints"
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
     checkpoint_npz = checkpoint_dir / "ed_state.npz"
     checkpoint_json = checkpoint_dir / "ed_state.json"
@@ -265,7 +265,7 @@ def run_paper_profiles(workspace: Path, config_path: Path | None = None) -> dict
         model,
         qr_interval=int(profile_config["qr_interval"]),
     )
-    output_dir = workspace / "outputs" / "data"
+    output_dir = workspace / "outputs" / "paper_exact" / "data"
     output_dir.mkdir(parents=True, exist_ok=True)
     output = output_dir / "paper_profiles.npz"
     _atomic_savez(
@@ -318,7 +318,7 @@ def recompute_paper_scaling(workspace: Path, config_path: Path | None = None) ->
     config = load_paper_config(workspace, config_path)
     fig34 = config["fig3_fig4"]
     runtime = config["runtime"]
-    checkpoint_dir = workspace / "outputs" / "checkpoints"
+    checkpoint_dir = workspace / "outputs" / "paper_exact" / "checkpoints"
     checkpoint_npz = checkpoint_dir / "ed_state.npz"
     checkpoint_json = checkpoint_dir / "ed_state.json"
     if not checkpoint_npz.exists() or not checkpoint_json.exists():
@@ -399,8 +399,8 @@ def run_paper_theory(workspace: Path, config_path: Path | None = None) -> dict[s
     model = _model_from_config(config["model"])
     workers = int(config["runtime"]["workers"])
     seed = int(config["seed"])
-    output_dir = workspace / "outputs" / "data"
-    cache_dir = workspace / "outputs" / "checkpoints" / "theory"
+    output_dir = workspace / "outputs" / "paper_exact" / "data"
+    cache_dir = workspace / "outputs" / "paper_exact" / "checkpoints" / "theory"
     output_dir.mkdir(parents=True, exist_ok=True)
     cache_dir.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
@@ -576,7 +576,7 @@ def _finalize_ed_outputs(
     else:
         obc_density = state.obc_counts.astype(float)
         pbc_density = state.pbc_counts.astype(float)
-    output_dir = workspace / "outputs" / "data"
+    output_dir = workspace / "outputs" / "paper_exact" / "data"
     output_dir.mkdir(parents=True, exist_ok=True)
     _atomic_savez(
         output_dir / "paper_ed_histograms.npz",
@@ -800,7 +800,7 @@ def _run_alpha_grid(
                     flush=True,
                 )
     rows = [rows_by_w[value] for value in w_values]
-    write_csv(workspace / "outputs" / "data" / "paper_alpha.csv", rows)
+    write_csv(workspace / "outputs" / "paper_exact" / "data" / "paper_alpha.csv", rows)
     return rows
 
 
@@ -893,7 +893,7 @@ def _high_precision_scaling_potential(
             "seed": config["seed"],
         }
     )
-    cache_path = workspace / "outputs" / "checkpoints" / "scaling_theory_potential.npz"
+    cache_path = workspace / "outputs" / "paper_exact" / "checkpoints" / "scaling_theory_potential.npz"
     if cache_path.exists():
         with np.load(cache_path, allow_pickle=False) as cached:
             if str(cached["fingerprint"].item()) == fingerprint:

@@ -419,6 +419,92 @@
         "scripts/run_reproduction.py"
       ],
       "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Normalized trace of a phase-times-involution",
+      "role": "T009",
+      "latex": "Tr(e^{i phi}A)/d=e^{i phi}(N_+-N_-)/d, A^2=I",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:459-487"
+        }
+      ],
+      "derived_from": [
+        "the paper's zero-discord form U=e^{i phi}A",
+        "the +/-1 spectrum of a Hermitian involution"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "multiplicity formula with direct diagonal-matrix cross-checks",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly derives the phase-times-binary-observable family."
+        },
+        {
+          "id": "EQ011-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Multiplicity and explicit matrix traces agree to machine precision."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/dqc1_hardness.py::phase_involution_normalized_trace",
+        "scripts/run_t009_hardness_boundary.py"
+      ],
+      "open_questions": [
+        "The publication supplies no succinct input family, approximation tolerance, classical model, or hardness reduction for this subset."
+      ]
+    },
+    {
+      "id": "EQ012",
+      "title": "Negativity over DQC1 regrouped bipartitions",
+      "role": "T010",
+      "latex": "N_{A|B}(rho)=(||rho^{T_A}||_1-1)/2",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/2qubit_discord_revised1.tex:451-458"
+        }
+      ],
+      "derived_from": [
+        "the paper's qualitative all-bipartition entanglement statement",
+        "partial-transpose entanglement witness chosen independently"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "all 2^n-1 unique control-grouped bipartitions for each declared DQC1 state",
+      "checks": [
+        {
+          "id": "EQ012-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly quantifies over every split grouping the control with register qubits."
+        },
+        {
+          "id": "EQ012-L",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The control-versus-register split has zero negativity, matching the exact separable decomposition."
+        },
+        {
+          "id": "EQ012-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The enumerator returns exactly 2^n-1 unique partitions and Hermitian partial transposes."
+        }
+      ],
+      "code_refs": [
+        "src/geometric_discord/dqc1_entanglement.py",
+        "scripts/run_t010_bipartition_entanglement.py"
+      ],
+      "open_questions": [
+        "Negativity, the 0.02 diagnostic threshold, Haar sampling, and the finite n range are independent choices because the publication specifies none of them."
+      ]
     }
   ]
 }

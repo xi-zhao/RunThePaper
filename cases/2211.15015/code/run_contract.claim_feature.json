@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "run_id": "2211.15015-claim-feature-v5-20260825",
+  "target_ids": [
+    "T029",
+    "T030"
+  ],
+  "command": [
+    "python",
+    "scripts/run_claim_targets.py",
+    "--config",
+    "config/claim_feature.json"
+  ],
+  "inputs": [
+    "src/tissue_rheology",
+    "scripts/run_claim_targets.py",
+    "config/claim_feature.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/claim_feature.json",
+  "parameter_selector": "model",
+  "expected_parameters": {
+    "nx": 4,
+    "ny": 4,
+    "dt": 0.002,
+    "kappa_area": 0.5,
+    "kappa_perimeter": 1.0,
+    "zeta": 1.0,
+    "rotational_diffusion": 0.5,
+    "t1_threshold": 0.07,
+    "t1_reset_factor": 1.5,
+    "bidispersity": 1.4
+  },
+  "outputs": [
+    "outputs/data/claim_feature/auxiliary/T029_green_kubo_comparison.csv",
+    "outputs/data/claim_feature/auxiliary/T030_p0_double_star_scan.csv",
+    "outputs/figures/claim_feature/T029_green_kubo_vs_rheology.png",
+    "outputs/figures/claim_feature/T030_p0_double_star_scan.png",
+    "outputs/checks/claim_feature/plan.json",
+    "outputs/checks/claim_feature/auxiliary_target_checks.json",
+    "outputs/checks/claim_feature/campaign_summary.json",
+    "outputs/checks/claim_feature/generated_data_manifest.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

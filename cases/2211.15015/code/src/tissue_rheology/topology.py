@@ -13,6 +13,17 @@ from .geometry import box_matrix, edge_displacement, edge_length, wrap_fractiona
 FloatArray = NDArray[np.float64]
 
 
+def _periodic_coordinate(value: float, period: float) -> float:
+    """Return one canonical periodic coordinate, including roundoff at the seam."""
+
+    wrapped = float(np.mod(value, period))
+    if np.isclose(wrapped, 0.0, atol=1e-10) or np.isclose(
+        wrapped, period, atol=1e-10
+    ):
+        return 0.0
+    return wrapped
+
+
 @dataclass(frozen=True)
 class EdgeRecord:
     cell: int
@@ -46,8 +57,8 @@ def build_hexagonal_tiling(
             cycle: list[int] = []
             for corner in range(6):
                 angle = corner * np.pi / 3.0
-                x = (center_x + np.cos(angle)) % lx
-                y = (center_y + np.sin(angle)) % ly
+                x = _periodic_coordinate(center_x + np.cos(angle), lx)
+                y = _periodic_coordinate(center_y + np.sin(angle), ly)
                 key = (round(float(x), 10), round(float(y), 10))
                 if key not in vertex_ids:
                     vertex_ids[key] = len(positions)

@@ -8,9 +8,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2005.12667/code
 python scripts/run_reproduction.py
-python scripts/run_full_rmp_reproduction.py
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Full review means all theory recoverable from public equations and parameters, not unavailable author evidence. Fig. 4(b-e) remains blocked by the missing COMSOL project; the experimental panels of Figs. 21, 28, and 32 require author-level raw data and calibration. Targets with incomplete absolute parameters are explicitly labeled paper-subset or analytic-reference rather than exact.
+Boundary: Formal RMP publication is used to identify corrections to arXiv Eqs. 29, 51, and 67. Source spectral figures do not specify absolute plotting parameters; similarity is therefore feature-level, not exact-parameter reproduction.

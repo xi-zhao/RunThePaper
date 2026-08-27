@@ -11,9 +11,8 @@ import sys
 from pathlib import Path
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / "outputs" / "cache" / "matplotlib"))
 
 import matplotlib
 
@@ -21,7 +20,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from frame_potential import (  # noqa: E402
     TWO_QUBIT_CLIFFORD_GROUP_SIZE,
@@ -39,6 +38,13 @@ PAPER_N = 22
 PAPER_DEPTHS = tuple(range(2, 45, 2))
 PAPER_SAMPLES = 50_000
 DEFAULT_SEED = 190_305_124
+
+
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
 
 
 def parse_args() -> argparse.Namespace:
@@ -176,15 +182,16 @@ def build_checks(result, *, scale: str, dense_error: float) -> dict[str, object]
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
     depths, samples = scale_config(args.scale, args.samples)
     default_workers = 1 if args.scale == "smoke" else min(8, os.cpu_count() or 1)
     workers = args.workers if args.workers is not None else default_workers
     if workers <= 0:
         raise ValueError("workers must be positive")
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
 

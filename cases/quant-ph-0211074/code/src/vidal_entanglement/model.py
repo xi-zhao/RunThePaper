@@ -53,6 +53,133 @@ def correlation_coefficients(
     return coefficients
 
 
+def finite_chain_correlation_coefficients(
+    max_l: int,
+    *,
+    a: float,
+    gamma: float,
+    n_sites: int,
+    momentum_shift: float,
+) -> dict[int, float]:
+    """Return the finite-momentum-sum counterpart of paper Eq. (8).
+
+    ``momentum_shift=0`` and ``0.5`` select the periodic and antiperiodic
+    momentum grids, respectively.  The paper deliberately omits these
+    finite-``N`` corrections, so the sector is an explicit input rather than
+    an inferred author parameter.  For fixed ``L`` both grids converge to the
+    thermodynamic integral as ``N`` grows away from a sampled zero mode.
+    """
+
+    if max_l < 0:
+        raise ValueError("max_l must be non-negative")
+    if n_sites < 4 or n_sites % 2:
+        raise ValueError("n_sites must be an even integer >= 4")
+    if momentum_shift not in (0.0, 0.5):
+        raise ValueError("momentum_shift must be 0 or 0.5")
+    if gamma < 0 or gamma > 1:
+        raise ValueError("gamma must lie in [0, 1]")
+    if a < 0 or np.isinf(a):
+        raise ValueError("finite-chain audit requires finite non-negative a")
+
+    momenta = 2.0 * np.pi * (
+        np.arange(n_sites, dtype=float) + momentum_shift
+    ) / n_sites
+    numerator = (
+        a * np.cos(momenta)
+        - 1.0
+        - 1j * a * gamma * np.sin(momenta)
+    )
+    modulus = np.abs(numerator)
+    if np.any(modulus < 1e-14):
+        raise ValueError(
+            "the selected finite momentum grid samples a gap-closing zero mode"
+        )
+    phase = numerator / modulus
+
+    coefficients: dict[int, float] = {}
+    for ell in range(-max_l, max_l + 1):
+        value = np.mean(np.exp(-1j * momenta * ell) * phase)
+        if abs(value.imag) > 5e-11:
+            raise RuntimeError(f"finite g_{ell} has imaginary part {value.imag}")
+        coefficients[ell] = float(value.real)
+    return coefficients
+
+
+def finite_xy_parity_diagnostics(
+    n_sites: int,
+    *,
+    a: float,
+    gamma: float,
+) -> dict[str, float | int]:
+    """Independently test the paper's finite-chain :math:`Z_2` argument.
+
+    The dense Pauli construction follows Eqs. (1) and (5) directly.  It does
+    not reuse the covariance/Fourier implementation, which makes the
+    commutator, Majorana parity, and ground-state expectation checks a strong
+    independent certificate for the statement preceding Eq. (6).
+    """
+
+    if n_sites < 2 or n_sites > 10:
+        raise ValueError("n_sites must lie in [2, 10] for the dense audit")
+    if gamma < 0 or gamma > 1:
+        raise ValueError("gamma must lie in [0, 1]")
+    if a < 0 or np.isinf(a):
+        raise ValueError("a must be finite and non-negative")
+
+    identity = np.eye(2, dtype=complex)
+    sigma_x = np.array([[0.0, 1.0], [1.0, 0.0]], dtype=complex)
+    sigma_y = np.array([[0.0, -1.0j], [1.0j, 0.0]], dtype=complex)
+    sigma_z = np.diag([1.0, -1.0]).astype(complex)
+
+    def pauli_string(operators: dict[int, np.ndarray]) -> np.ndarray:
+        result = np.array([[1.0 + 0.0j]])
+        for site in range(n_sites):
+            result = np.kron(result, operators.get(site, identity))
+        return result
+
+    dimension = 2**n_sites
+    hamiltonian = np.zeros((dimension, dimension), dtype=complex)
+    for site in range(n_sites):
+        neighbor = (site + 1) % n_sites
+        hamiltonian -= (a / 2.0) * (1.0 + gamma) * pauli_string(
+            {site: sigma_x, neighbor: sigma_x}
+        )
+        hamiltonian -= (a / 2.0) * (1.0 - gamma) * pauli_string(
+            {site: sigma_y, neighbor: sigma_y}
+        )
+        hamiltonian -= pauli_string({site: sigma_z})
+
+    parity = pauli_string({site: sigma_z for site in range(n_sites)})
+    majoranas: list[np.ndarray] = []
+    for site in range(n_sites):
+        jordan_wigner = {prefix: sigma_z for prefix in range(site)}
+        majoranas.append(pauli_string({**jordan_wigner, site: sigma_x}))
+        majoranas.append(pauli_string({**jordan_wigner, site: sigma_y}))
+
+    eigenvalues, eigenvectors = np.linalg.eigh(hamiltonian)
+    ground = eigenvectors[:, 0]
+    parity_expectation = complex(np.vdot(ground, parity @ ground))
+    expectations = [complex(np.vdot(ground, operator @ ground)) for operator in majoranas]
+    return {
+        "n_sites": n_sites,
+        "hilbert_dimension": dimension,
+        "ground_energy": float(eigenvalues[0]),
+        "spectral_gap": float(eigenvalues[1] - eigenvalues[0]),
+        "parity_expectation_real": float(parity_expectation.real),
+        "parity_expectation_imag_abs": float(abs(parity_expectation.imag)),
+        "parity_eigenstate_residual": float(
+            np.linalg.norm(parity @ ground - parity_expectation * ground)
+        ),
+        "hamiltonian_parity_commutator_norm": float(
+            np.linalg.norm(hamiltonian @ parity - parity @ hamiltonian, ord="fro")
+        ),
+        "max_majorana_parity_anticommutator_norm": float(
+            max(np.linalg.norm(parity @ c + c @ parity, ord="fro") for c in majoranas)
+        ),
+        "max_odd_majorana_expectation_abs": float(max(abs(value) for value in expectations)),
+    }
+
+
 def block_covariance(block_length: int, coefficients: dict[int, float]) -> np.ndarray:
     """Assemble the paper's 2L by 2L real antisymmetric B_L matrix."""
 

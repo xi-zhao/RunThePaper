@@ -6,7 +6,7 @@ Published as: [Exact Quantum Many-Body Scar States in the Rydberg-Blockaded Atom
 
 Formal citation: Phys. Rev. Lett. 122, 173401 (2019) · DOI `10.1103/PhysRevLett.122.173401` · Locator `173401`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **80.33/100**
+Public status: **Scientific reproduction — independent review pending** · Audit score: **80.33/100**
 
 All nine numerical figure targets and nineteen reproducible quantitative claims are covered by formula-derived paper-scale implementations.
 
@@ -20,6 +20,7 @@ All nine numerical figure targets and nineteen reproducible quantitative claims 
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Paper review protocol](docs/PAPER_REVIEW_PROTOCOL_V2.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Paper-error candidates](docs/PAPER_ERROR_CANDIDATES.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
@@ -70,7 +71,7 @@ cd cases/1810.00888/code
 python scripts/run_reproduction.py --config config/smoke.json --output outputs/public_quick_run
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

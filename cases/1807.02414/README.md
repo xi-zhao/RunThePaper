@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 121, 160603 (2018) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **84.36/100**
 
-Independent TBA reproduces the six theory curves and text values; the full spectral diffusion operator and external tDMRG remain open.
+Euler GHD, spin Onsager values, and three analytic limits are reproduced; full diffusive GHD and tDMRG paper-time campaigns are externally compute-blocked.
 
 ## Start Here / 从这里开始
 
@@ -44,7 +44,7 @@ cd cases/1807.02414/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

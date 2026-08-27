@@ -1,0 +1,572 @@
+{
+  "schema_version": 2,
+  "paper_id": "2605.25398",
+  "implementations": {
+    "scaling_paper_scale": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_scaling_paper_scale.py",
+        "--config",
+        "config/scaling_paper_scale.json",
+        "--output-root",
+        "outputs/paper_scale_scaling"
+      ],
+      "code_refs": [
+        "scripts/run_scaling_paper_scale.py",
+        "src/boson_sampling_chaos.py"
+      ],
+      "config_ref": "config/scaling_paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale_scaling/data/appendix_scaling_summary.csv",
+        "outputs/paper_scale_scaling/figures/figS4_scaling_reproduction.png",
+        "outputs/paper_scale_scaling/checks/scaling_paper_scale.json"
+      ],
+      "acceptance_criteria": [
+        "The chaotic minimum-PT, maximum-entropy, and minimum-SFF times stay within the declared tolerance of the paper's t*=1.79 coincidence across the frozen mode grid.",
+        "The chaotic minimum PT distance decreases as mode count grows, showing the same finite-size trend stated in Appendix F.",
+        "The chaotic entropy gap to the Haar limit shrinks as mode count grows, matching the scientific content of Fig. S4(c).",
+        "The run uses only the reconstructed random-matrix model and frozen JSON parameters, never source-figure pixels or author code."
+      ]
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "scripts/run_implementation_campaign.py",
+        "src/implementation_campaign.py",
+        "src/boson_sampling_chaos.py"
+      ],
+      "config_ref": "config/implementation_campaign.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json",
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/implementation_closure/T003.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T007.json"
+      ],
+      "acceptance_criteria": [
+        "Each fixed-gap target executes a formula-derived reduced calculation with finite target-specific checks.",
+        "The runner reads only case-local code and frozen JSON configuration, never raw paper assets, source figures, author code, or author arrays.",
+        "Reduced implementation attestation remains separate from scientific coverage, paper-exact execution, pixel fidelity, and independent review."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_workflow",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1",
+      "reason": "Workflow schematic only; it does not encode a numerical target."
+    },
+    {
+      "item_id": "fig2a_setup_overview",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(a)",
+      "reason": "Experimental setup panel, not a generated numerical result."
+    },
+    {
+      "item_id": "fig2b_chip_layout",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(b)",
+      "reason": "Fabricated photonic-chip photograph and layout context."
+    },
+    {
+      "item_id": "fig2c_sources",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(c)",
+      "reason": "Source hardware characterization, not an independent numerical computation."
+    },
+    {
+      "item_id": "fig2d_splitter_network",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(d)",
+      "reason": "Experimental optical-routing context only."
+    },
+    {
+      "item_id": "fig2e_amzi_filter",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(e)",
+      "reason": "Experimental filtering schematic, not a reproduction target."
+    },
+    {
+      "item_id": "fig2f_clements_mesh",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2(f)",
+      "reason": "Programmable MZI-mesh schematic; this case reproduces the statistical theory, not the hardware diagram."
+    },
+    {
+      "item_id": "fig2g_theory_distribution_integrable",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 2(g)",
+      "reason": "The integrable conditional two-photon output distribution is generated from the reconstructed Hamiltonian and bosonic permanent rule.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "fig2g_experimental_distribution_integrable",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T001"
+      ],
+      "source_ref": "Fig. 2(g), red bars",
+      "reason": "Measured chip counts are paper evidence but require a new experiment or unpublished raw counts, not more theory code."
+    },
+    {
+      "item_id": "fig2h_theory_distribution_chaotic",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 2(h)",
+      "reason": "The chaotic conditional output distribution is independently generated from the paper's random-matrix model without source-pixel fitting.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "fig2h_experimental_distribution_chaotic",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T001"
+      ],
+      "source_ref": "Fig. 2(h), red bars",
+      "reason": "The experimental bars are excluded as measurement evidence; only the theory bars are reproducible numerically from the publication."
+    },
+    {
+      "item_id": "fig3a_top_pt_distance",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(a) top panel",
+      "reason": "The Wasserstein distance to Porter-Thomas is computed directly from independent boson-sampling probability ensembles.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig3a_top_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T002"
+      ],
+      "source_ref": "Fig. 3(a) top panel, red points",
+      "reason": "The paper's measured PT-distance points are not reproducible without the unpublished photon-count dataset."
+    },
+    {
+      "item_id": "fig3a_bottom_entropy",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(a) bottom panel",
+      "reason": "The Shannon entropy and Haar reference are independently generated from the reconstructed probability distributions.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig3a_bottom_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T002"
+      ],
+      "source_ref": "Fig. 3(a) bottom panel, red points",
+      "reason": "Experimental entropy points are reference measurements, not outputs of the theory runner."
+    },
+    {
+      "item_id": "fig3b_sff_curve",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(b)",
+      "reason": "The 4-point spectral-form-factor proxy is computed from the same Hamiltonian ensemble and provides the paper's t*=1.79 timing anchor.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig4a_chaotic_representative_otoc",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(a)",
+      "reason": "The representative chaotic output probability is generated from the paper's OTOC-equivalent boson-sampling mapping.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4a_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(a), red points",
+      "reason": "Measured OTOC-equivalent points require the unpublished chip-count record."
+    },
+    {
+      "item_id": "fig4b_integrable_representative_otoc",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(b)",
+      "reason": "The integrable representative output probability is independently generated from the reconstructed unitary dynamics.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4b_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(b), red points",
+      "reason": "The panel's experimental series are retained only as measurement evidence."
+    },
+    {
+      "item_id": "fig4c_chaotic_overlap_sectors",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(c)",
+      "reason": "All chaotic overlap-sector probabilities are computed from independent bosonic amplitudes and averaged by shared-mode class.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4c_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(c), red points",
+      "reason": "The experiment-level overlap-sector dots are not computational outputs."
+    },
+    {
+      "item_id": "fig4d_integrable_overlap_sectors",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(d)",
+      "reason": "The integrable overlap-sector memory structure is reproduced from the same independently generated probability ensembles.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4d_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(d), red points",
+      "reason": "These points come from the physical chip run and cannot be regenerated from theory alone."
+    },
+    {
+      "item_id": "fig4e_chaotic_pr",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(e)",
+      "reason": "The chaotic participation ratio is computed from all collision-free output probabilities.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4e_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(e), red points",
+      "reason": "Experimental PR points are retained only as measurement references."
+    },
+    {
+      "item_id": "fig4f_integrable_pr",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(f)",
+      "reason": "The integrable participation ratio is independently generated from the reconstructed distribution ensemble.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "fig4f_experimental_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "source_ref": "Fig. 4(f), red points",
+      "reason": "The panel's measurement series are excluded from numerical coverage because they require the original experiment."
+    },
+    {
+      "item_id": "figS1_conditional_pt_validation",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "source_ref": "Fig. S1",
+      "reason": "The conditional Porter-Thomas sanity check is independently generated for the paper's N0=36, D=28 setting.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "figS4a_probe_times",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "scaling_paper_scale",
+      "source_ref": "Fig. S4(a)",
+      "reason": "This panel studies how the diagnostic times align as mode count grows; the current public artifact is reduced-scale, and the paper-scale scaling sweep is code-ready via the frozen JSON contract.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "figS4b_min_pt_vs_modes",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "scaling_paper_scale",
+      "source_ref": "Fig. S4(b)",
+      "reason": "The minimum PT-distance trend is already visible locally and is backed by a code-ready higher-scale reconstruction path.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "figS4c_entropy_gap_vs_modes",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "scaling_paper_scale",
+      "source_ref": "Fig. S4(c)",
+      "reason": "The entropy-gap panel is reduced-scale in the current case, so it explicitly carries the same code-ready paper-scale implementation contract as the other scaling panels.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "figS5a_chaotic_all_configs",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. S5(a)",
+      "reason": "All chaotic collision-free OTOC-equivalent curves are independently generated and grouped by shared-mode overlap.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "figS5b_integrable_all_configs",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. S5(b)",
+      "reason": "The integrable all-configuration OTOC panel is generated from the same formula-driven runner without source-curve digitization.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "figS6a_short_time_power_laws",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. S6(a)",
+      "reason": "The t^2 and t^4 early-time scalings are derived from the paper's perturbative OTOC expression and verified numerically.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    },
+    {
+      "item_id": "figS6b_fft_spectrum",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. S6(b)",
+      "reason": "The late-time FFT spectrum is computed from independently generated long-time OTOC traces for the representative output configuration.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    },
+    {
+      "item_id": "figS6c_fft_participation_ratio",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. S6(c)",
+      "reason": "The frequency-space participation ratios are independently computed for every non-initial collision-free configuration.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_t_star_coincidence",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "source_ref": "Main text around Fig. 3 and Appendix E",
+      "reason": "The paper's core timing claim is that the chaotic PT dip, entropy peak, and SFF minimum coincide near t*=1.79; the same claim is checked from generated data.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "claim_short_time_otoc_exponents",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "source_ref": "Appendix G short-time analysis",
+      "reason": "The off-diagonal counting argument predicts t^2 and t^4 exponents, which are verified from the generated short-time OTOC curves.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    }
+  ]
+}

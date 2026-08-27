@@ -22,6 +22,14 @@
 - Output: normalized probabilities for `|2,0>` and `|0,2>`.
 - Status: reduced-scale scientific reproduction.
 
+## MTH_THEOREM_FALSIFICATION — Appendix B-D claim
+
+- Inputs: paper feature-state formulas plus case-authored phase sets, cutoffs, labels and exact counterexamples.
+- Algorithms: single-mode Vandermonde rank; tensor-Fock state rank; independent analytic-Gram positivity; exhaustive six-point binary-label interpolation.
+- Falsification: periodic duplicate phases and a three-point affine-rank counterexample to Proposition 1 as written.
+- Boundary: no author code, author arrays, `raw/`, references or original figures enter the isolated runner.
+- Status: implementation verified; paper-discrepancy candidates await fresh-context review.
+
 Paper-scale extension: `variational_scale.py` evaluates the same gates with exact
 fixed-total-photon beam-splitter sectors and tensor-factorized local gates. A separate
 dense Kronecker implementation cross-checks the optimized path at small cutoff. The

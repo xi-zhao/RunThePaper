@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "run_id": "0911.0556-t012-doob-v2-20260824",
+  "target_ids": [
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_t012_doob_probe.py",
+    "--config",
+    "config/t012_three_level_doob.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/quantum_jumps/__init__.py",
+    "src/quantum_jumps/doob.py",
+    "src/quantum_jumps/large_deviation.py",
+    "src/quantum_jumps/liouvillian.py",
+    "src/quantum_jumps/models.py",
+    "scripts/run_t012_doob_probe.py",
+    "config/t012_three_level_doob.json"
+  ],
+  "parameter_file": "config/t012_three_level_doob.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "omega_1": 1.0,
+    "omega_2": 0.1,
+    "kappa_1": 4.0,
+    "biases": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "acceptance_bias": 0.5
+  },
+  "outputs": [
+    "outputs/data/T012_three_level_doob_mapping.csv",
+    "outputs/checks/T012_three_level_doob_mapping.json"
+  ],
+  "timeout_seconds": 60,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "rendering": {
+    "separate_from_numerics": true
+  }
+}

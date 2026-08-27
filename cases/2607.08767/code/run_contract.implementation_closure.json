@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.08767-implementation-closure-v2",
+  "target_ids": [
+    "F5A_PROXY",
+    "T_FIG5B",
+    "T_FIG6A",
+    "T_FIG6B",
+    "T_FIG7",
+    "T_FIG8",
+    "T_FIG11"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/public_targets.py",
+    "src/fig5a_proxy_core.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "F5A_PROXY": {
+      "theta": 0.05,
+      "distance": 3,
+      "rounds": 3,
+      "coherent_shots": 64,
+      "twirled_shots": 512,
+      "seed": 260708767,
+      "paper_target_boundary": {
+        "full_state_shots": 5000,
+        "other_sampler_shots": 200000,
+        "scope": "paper circuit and decoder conventions not fully printed"
+      }
+    },
+    "transmon_public_parameters": {
+      "omega_untuned": 4.0,
+      "alpha_1": 2.0,
+      "alpha_2": 2.0,
+      "g": 0.005
+    },
+    "T_FIG5B": {
+      "p_transfer": 0.2,
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "noiseless_repetition_circuit_schedule",
+          "cz_error_location_map",
+          "generalized_pauli_sampler_semantics",
+          "full_state_sampler_semantics",
+          "decoder_graph_and_weights"
+        ],
+        "source_requirement": "Independently reconstructed exact distance-three X-memory circuit and decoder contract; commercial Plaquette code and author arrays are prohibited."
+      },
+      "boundary": "Equation (12) and Table III are independently implemented, but the paper logical-error values require the unprinted exact circuit-location, sampler-compilation, and decoder contracts."
+    },
+    "T_FIG6A": {
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "tuned_cz_pulse_schedule",
+          "distance_three_z_memory_circuit",
+          "channel_to_location_map",
+          "xpauli_and_full_state_sampler_contracts",
+          "decoder_graph_and_weights"
+        ],
+        "source_requirement": "Independent transmon-channel and QEC bundle for the distance-three validation scan."
+      },
+      "boundary": "The public Hamiltonian fixes scalar parameters, but not the complete tuned pulse, circuit-location, sampler compiler, and decoder objects needed for the logical-error scan."
+    },
+    "T_FIG6B": {
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "tuned_cz_pulse_schedule",
+          "distance_nine_z_memory_circuit",
+          "channel_to_location_map",
+          "stim_and_xpauli_sampler_contracts",
+          "decoder_graph_and_weights",
+          "shot_allocation_by_heating_value"
+        ],
+        "source_requirement": "Independent distance-nine QEC bundle including the variable shot allocation reported only as a range."
+      },
+      "boundary": "The distance-nine logical-error curve remains input-blocked until its exact circuit, sampler, decoder, and pointwise shot allocation are frozen."
+    },
+    "T_FIG7": {
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "rotated_planar_circuits_d5_to_d19",
+          "transmon_channel_location_map",
+          "stim_and_xpauli_sampler_contracts",
+          "pymatching_graphs_and_weights",
+          "finite_size_scaling_fit_contract"
+        ],
+        "source_requirement": "Independent rotated-planar threshold bundle for every distance and noise point."
+      },
+      "boundary": "The public rate scan is insufficient to determine the exact circuit/decoder-derived logical failures or threshold fit without independently frozen QEC objects."
+    },
+    "T_FIG8": {
+      "public_axis_bounds": {
+        "p_depol": [
+          0.0,
+          0.12
+        ],
+        "gamma_deph": [
+          0.0,
+          4e-06
+        ],
+        "gamma_iss": [
+          0.0,
+          3e-06
+        ]
+      },
+      "barycentric_ray_count": 15,
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "neutral_atom_channel_and_location_map",
+          "exact_fifteen_barycentric_ray_coordinates",
+          "rotated_planar_circuits_by_distance",
+          "stim_and_xpauli_sampler_contracts",
+          "decoder_graphs_and_weights",
+          "surface_interpolation_contract"
+        ],
+        "source_requirement": "Independent neutral-atom QEC threshold-surface bundle; exact ray coordinates and compiler semantics must not be inferred from pixels."
+      },
+      "boundary": "The paper prints axis bounds and ray count but not the exact 15 ray coordinates or full QEC/sampler/decoder contract; source-pixel digitization is prohibited as a numerical input."
+    },
+    "T_FIG11": {
+      "levels": 5,
+      "gamma_h": 0.03,
+      "n_thermal": 1.0,
+      "interval": 1.0,
+      "rounds": 3,
+      "p0": 0.0001,
+      "kappa": 0.005,
+      "input_bundle": {
+        "path": null,
+        "sha256": null,
+        "format": "clean_room_qec_input_bundle_v1",
+        "required_fields": [
+          "rotated_planar_circuits_d9_to_d23",
+          "sector_heating_location_schedule",
+          "sector_dependent_depolarizing_location_map",
+          "xpauli_sampler_contract",
+          "pymatching_graphs_and_weights",
+          "finite_size_scaling_fit_contract"
+        ],
+        "source_requirement": "Independent sector-history QEC bundle preserving non-stationary noise through every round and gate."
+      },
+      "boundary": "Equations (20)-(22) generate the heating and sector-dependent rate history, but the logical-error curves require the unprinted exact circuit-location and decoder contracts."
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

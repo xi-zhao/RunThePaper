@@ -10,155 +10,56 @@ This report is a human-readable projection of the validated structured independe
 | --- | --- |
 | Protocol status | `passed` |
 | Protocol valid | `true` |
-| Whole-paper scope | `incomplete` |
-| Paper assessment | `mixed` |
-| Reviewed atomic claims | `65` |
-| Candidate atomic claims | `4` |
-| Candidate targets | `5` |
-
-The review protocol and claim-level scientific adjudication are valid, but the fresh full-paper inventory exposed quantitative items that are not yet represented by an explicit exact or partition scope link in the authored model. This blocks lifecycle completion without masking the candidate findings below.
+| Whole-paper scope | `complete` |
+| Paper assessment | `inconclusive` |
+| Reviewed atomic claims | `11` |
+| Candidate atomic claims | `0` |
+| Candidate targets | `0` |
 
 ## Atomic claim adjudication
 
 | Claim | Targets | Assessment | Independent-review reason |
 | --- | --- | --- | --- |
-| R001 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The Schmidt coefficients of a supplied bipartite pure state and the resulting base-2 entropy computed from rho_A and rho_B.. |
-| R002 | T001, T002 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The 2^N by 2^N matrix and low-energy spectrum produced by the printed Hamiltonian for selected finite N and parameters.. |
-| R003 | T002, T009, T014 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The term-by-term Hamiltonian after gamma=1 substitution and its equivalence to a transverse-field Ising chain under the stated normalization.. |
-| R004 | T002, T009, T014 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The 2^N by 2^N matrix and low-energy spectrum produced by the printed Hamiltonian for selected finite N and parameters.. |
-| R005 | T002, T009, T014 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The equality of the xx, yy, and zz exchange coefficients at Delta=1 and the corresponding finite-chain spectrum.. |
-| R006 | T002, T009, T014 | `inconclusive` | Literal equality needs an unstated energy rescaling and lambda=2/a map. Root cause: The word coincide does not fix normalization or parameter identification. |
-| R007 | T001, T002, T004, T016 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The reduced density matrix and block entropy for exact finite-chain ground states at specified L.. |
-| R008 | T004, T005 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The transformed quadratic Hamiltonian, Bogoliubov mode energies, and agreement of its many-body spectrum with exact diagonalization.. |
-| R009 | T004, T005 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Two-point Majorana covariance matrices and independently evaluated four- and higher-point correlators for finite-chain ground states.. |
-| R010 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Finite-N Pauli-matrix representations of all c_m and their complete anticommutator table.. |
-| R011 | T004 | `inconclusive` | The periodic Majorana sum omits the Jordan-Wigner boundary/parity qualification. Root cause: The bulk identity is correct but the finite periodic operator is incomplete. |
-| R012 | — | `inconclusive` | The Z2 proof assumes a parity eigenstate but thermodynamic ground-state selection is unstated. Root cause: Broken and parity-symmetric ground states can differ on odd observables. |
-| R013 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The full covariance matrix from an exact ground state and residuals between direct higher-point correlators and their Wick contractions.. |
-| R014 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Entrywise covariance blocks B_{jk} grouped by separation and their residual from the Pi_{j-k} prescription.. |
-| R015 | T004, T006, T007 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of High-precision quadrature values of g_l over declared l,a,gamma and their convergence from finite N.. |
-| R016 | — | `inconclusive` | No finite-N covariance sequence tests disappearance of corrections at fixed L. Root cause: The implementation starts directly in the thermodynamic Toeplitz limit. |
-| R017 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The covariance computed from an explicit partial trace and the corresponding principal submatrix of the full covariance.. |
-| R018 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of An orthogonal canonical decomposition of B_L, its reconstruction residual, determinant of V, and the nonnegative nu_m spectrum.. |
-| R019 | T004 | `paper_error_candidate` | Eq. (11) assigns the opposite occupied probability from the preceding definitions. Root cause: The occupied/empty sign or label was transcribed incorrectly. |
-| R020 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The transformed rho_L matrix and its trace-distance residual from the tensor product of single-mode density matrices.. |
-| R021 | T004 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The entropy from the nu_m formula compared with direct diagonalization of rho_L for finite chains.. |
-| R022 | T004, T005 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Runtime, memory, conditioning, and cross-method entropy errors versus L through at least the stated several-tens range.. |
-| R023 | T006 | `paper_error_candidate` | At a=infinity the printed g0 is -1.5 while Eq. (8) gives exactly zero. Root cause: The XX shortcut is inconsistent with the paper's own integral. |
-| R024 | T006 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of S_L for L=1 through 100 at declared a values and fitted slope, uncertainty, fit window, and residuals against (1/3)log_2 L.. |
-| R025 | T006 | `inconclusive` | Only the a=infinity XX intercept was generated. Root cause: No finite-a XX sweep tests k1(a). |
-| R026 | T007 | `paper_error_candidate` | The odd/even critical-Ising shortcut disagrees with Eq. (8), including l=0 and l=1. Root cause: The prose likely lost pi and used an incompatible index. |
-| R027 | T007 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of S_L for L=1 through 100 and fitted slope, uncertainty, fit window, and residuals against (1/6)log_2 L.. |
-| R028 | T007 | `inconclusive` | The stable intercept is 0.690400, not pi/3. Root cause: Only one clean-room covariance implementation supplies this nonuniversal constant. |
-| R029 | T008 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Thermodynamic half-chain saturation entropies on both sides of a=1, with fitted slope, additive terms, range of validity, and convergence in block size.. |
-| R030 | T008 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The ratio between large-block interval entropy and one-cut half-chain entropy at matched a as the two boundaries become independent.. |
-| R031 | T009 | `reproduction_defect` | The solver is sparse exact diagonalization, not the claimed Bethe-ansatz procedure. Root cause: The result path substitutes for the paper method. |
-| R032 | T009 | `reproduction_defect` | No Delta/lambda scan locates level crossings or energy nonanalyticities. Root cause: Two fixed checkpoints cannot test the transition mechanism. |
-| R033 | T009 | `inconclusive` | One critical and one reviewer-chosen noncritical point do not establish regime-wide discrimination. Root cause: No paper-defined classifier or phase-domain sweep is supplied. |
-| R034 | T010 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Ground-state polarization, reduced-state spectra, and S_L over L in a rigorously identified polarized-field regime.. |
-| R035 | T010 | `inconclusive` | Finite Ising/XXZ examples cannot decide the all-noncritical-regimes quantifier. Root cause: The execution samples a small subset of the claimed domain. |
-| R036 | T010 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Large-L plateau entropies versus a and their slope and residual gap relative to (1/6)log_2[1/\|1-a\|].. |
-| R037 | T001 | `inconclusive` | The paper supplies no exact Fig. 1 grid or numerical array. Root cause: The reconstruction grid is declared, not paper-sourced. |
-| R038 | T010 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Entanglement and correlation length estimates versus a, their ratio or scaling exponent, and divergence behavior approaching a=1.. |
-| R039 | T010 | `inconclusive` | The scaling function f(x), normalization, and tolerance are unpublished. Root cause: A fixed-x collapse is only a reviewer-defined proxy. |
-| R040 | T010 | `inconclusive` | Small L has no threshold, a-domain, or closeness criterion. Root cause: The qualitative phrase has no numerical contract. |
-| R041 | T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Microscopic S_L sequences and fitted slopes for each critical chain compared with independently known c+cbar values.. |
-| R042 | T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Central-charge extraction from finite-size ground-energy or entanglement scaling and the corresponding predicted S_L slope.. |
-| R043 | T011 | `inconclusive` | Only XX and one XXX point are checked, not all remaining critical regimes. Root cause: The aggregated claim spans the full XY/XXZ critical domain. |
-| R044 | T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of S_L(L,gamma) over a predeclared gamma grid and fitted log slopes, uncertainties, and finite-L corrections.. |
-| R045 | T012 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of Large-L extrapolations of the entropy difference over multiple gamma, with residuals from -(1/6)log_2 gamma and behavior toward gamma=0.. |
-| R046 | T002 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The full plotted Ising S_L series at the caption parameters, its visual data object, and slope/intercept residuals.. |
-| R047 | T002 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The full plotted XX S_L series at the caption parameters, its visual data object, and slope/intercept residuals.. |
-| R048 | T013 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The ratio of successive entropy increments versus L, its approach to two, and finite-L deviations.. |
-| R049 | T002, T014 | `paper_error_candidate` | The literal negative-sign XXX operator has a degenerate ferromagnetic ground manifold, not one critical curve. Root cause: Eq. (3) and the Fig. 2 caption encode opposite coupling conventions. |
-| R050 | T002, T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The printed fermion guide-line values over the plotted L range and residuals from the Ising points.. |
-| R051 | T002, T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The printed boson guide-line values over the plotted L range and residuals from the XX and finite XXX points.. |
-| R052 | T002, T011 | `inconclusive` | The Ising guide has a 0.1668-bit intercept gap and remarkable has no tolerance. Root cause: The caption states a visual adjective, not an error criterion. |
-| R053 | T017 | `inconclusive` | Exact dimension is 2^L; bounded rank appears only after choosing epsilon. Root cause: Small bounded subspace has no discarded-weight or norm threshold. |
-| R054 | T017 | `reproduction_defect` | No finite-buffer reconstruction of rho_L is implemented. Root cause: The rank proxy does not test the local-neighbor claim. |
-| R055 | T017 | `inconclusive` | Finite epsilon ranks grow through L=16 but cannot prove unbounded growth. Root cause: Relevant is undefined and the quantifier is infinite. |
-| R056 | T017 | `inconclusive` | Impossible even approximately lacks a norm and error tolerance. Root cause: Finite kept dimension alone does not define failure. |
-| R057 | — | `inconclusive` | No 2+1D/3+1D entropy calculation or source dataset exists. Root cause: The authored scope explicitly defers Eq. (19). |
-| R058 | — | `inconclusive` | No critical 2D/3D spin-lattice model is tested. Root cause: Parameters, code, and data are absent. |
-| R059 | T011 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of S_L divided by two versus log L for critical 1D models, including fitted divergence coefficient.. |
-| R060 | T015 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of UV and IR central charges for explicit unitary flows and verification of the strict inequality, with fixed-point/equality cases distinguished.. |
-| R061 | T015 | `inconclusive` | The a-sweep is a mass deformation at fixed L, not an RG trajectory. Root cause: No transformation, rescaling, or observable matching is printed. |
-| R062 | T016 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The complete sorted 2^L spectrum from the product formula, its normalization/positivity, and residual from direct diagonalization for tractable L.. |
-| R063 | T003, T016 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of All increments S_{L+1}-S_L across L for representative infinite XY ground states, with finite-size and symmetry exceptions isolated.. |
-| R064 | T003 | `inconclusive` | L=1..16 numerics cannot prove the all-L majorization relation. Root cause: Survival of 32 cases is falsification evidence only. |
-| R065 | T003 | `paper_supported` | Two distinct passed checks support this atomic claim: a reviewer analytic derivation and an independent invariant/limiting/data audit of The number of nontrivial cumulative inequalities versus L and their complete set of numerical margins.. |
+| R001 | T004, T005, T006, T007, T019, T020 | `paper_supported` | The Gaussian-correlation pipeline from covariance data to product-spectrum entropy is strongly supported by passing science gates and finite-N convergence checks. |
+| R002 | T006 | `paper_supported` | Independent XX-chain checks recover the critical slope consistent with the reported 1/3 coefficient. |
+| R003 | T007 | `inconclusive` | The critical Ising logarithmic slope is supported, but the same frozen item also includes the printed offset k2≈π/3, which the bundle flags as a stable source-side discrepancy still pending fresh adjudication. |
+| R004 | T008 | `paper_supported` | The near-critical Ising half-chain trend is independently supported as an asymptotic paper-exact trend in the bundle. |
+| R005 | T011 | `paper_supported` | The general critical scaling law survives independent checks across the supported critical families. |
+| R006 | T002, T011 | `paper_supported` | Independent slope and increment-ratio checks support the central-charge coefficient assignments used to compare XX and Ising critical entanglement growth. |
+| R007 | T012 | `paper_supported` | The anisotropy-dependent subleading correction survives independent checks. |
+| R008 | T001, T009, T010, T017 | `inconclusive` | The noncritical saturation and entanglement-length story is supported, but this frozen item also absorbs DMRG-effect interpretation claims that the bundle treats as bounded or proxy-style rather than universally closed. |
+| R009 | T002, T013, T014 | `inconclusive` | The critical-curve figure is largely reproduced, but the mapped scope also includes source-side XXX convention/sign issues that the bundle leaves open rather than fully supported. |
+| R010 | T015, T018 | `inconclusive` | The RG monotonicity interpretation is plausible, but the mapped frozen item also includes a higher-dimensional area-law statement that the bundle marks publication-underspecified, so the whole item remains inconclusive. |
+| R011 | T003, T016 | `paper_supported` | The reduced-spectrum formula and the majorization relation are independently supported by product-spectrum and finite-sweep checks. |
 
 ## Target adjudication
 
 | Target | Assessment | Independent-review reason |
 | --- | --- | --- |
-| T001 | `inconclusive` | Projection only from 3 atomic claims: 2 paper_supported, 1 inconclusive. |
-| T002 | `mixed` | Projection only from 12 atomic claims: 9 paper_supported, 2 inconclusive, 1 paper_error_candidate. |
-| T003 | `inconclusive` | Projection only from 3 atomic claims: 2 paper_supported, 1 inconclusive. |
-| T004 | `mixed` | Projection only from 15 atomic claims: 13 paper_supported, 1 inconclusive, 1 paper_error_candidate. |
-| T005 | `paper_supported` | Projection only from 3 atomic claims: 3 paper_supported. |
-| T006 | `mixed` | Projection only from 4 atomic claims: 2 paper_supported, 1 paper_error_candidate, 1 inconclusive. |
-| T007 | `mixed` | Projection only from 4 atomic claims: 2 paper_supported, 1 paper_error_candidate, 1 inconclusive. |
-| T008 | `paper_supported` | Projection only from 2 atomic claims: 2 paper_supported. |
-| T009 | `mixed` | Projection only from 7 atomic claims: 3 paper_supported, 2 inconclusive, 2 reproduction_defect. |
-| T010 | `inconclusive` | Projection only from 6 atomic claims: 3 paper_supported, 3 inconclusive. |
-| T011 | `inconclusive` | Projection only from 8 atomic claims: 6 paper_supported, 2 inconclusive. |
-| T012 | `paper_supported` | Projection only from 1 atomic claims: 1 paper_supported. |
-| T013 | `paper_supported` | Projection only from 1 atomic claims: 1 paper_supported. |
-| T014 | `mixed` | Projection only from 5 atomic claims: 3 paper_supported, 1 inconclusive, 1 paper_error_candidate. |
-| T015 | `inconclusive` | Projection only from 2 atomic claims: 1 paper_supported, 1 inconclusive. |
-| T016 | `paper_supported` | Projection only from 3 atomic claims: 3 paper_supported. |
-| T017 | `mixed` | Projection only from 4 atomic claims: 3 inconclusive, 1 reproduction_defect. |
+| T001 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T002 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T003 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T004 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T005 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T006 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T007 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T008 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T009 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T010 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T011 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T012 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T013 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T014 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T015 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T016 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T017 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T018 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T019 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T020 | `paper_supported` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### R019
-
-- Linked targets: T004
-- Paper source: p.2, Eq. (11)
-- Paper claim: Eq. (11) prints <b†b>=(1+nu)/2.
-- Independent result: Algebra and Pauli matrices give (1-nu)/2; at nu=0.6 this is 0.2.
-- Observed gap: Printed 0.8 versus independent 0.2; absolute gap 0.6, while entropy is unchanged.
-- Tolerance basis: Exact identity; Pauli check tolerance 1e-15.
-- Assessment reason: Eq. (11) assigns the opposite occupied probability from the preceding definitions. Root cause: The occupied/empty sign or label was transcribed incorrectly.
-- Convergence evidence: `generated_data/outputs/data/quantitative_claim_checks.json`, `generated_data/outputs/data/formula_pipeline_checks.csv`, `attestations/outputs/runs/quant-ph-0211074-whole-paper-v6/run_attestation.json`
-- Independent cross-check evidence: `formula/DERIVATION_TRACE.md`, `implementation/tests/test_model.py`, `implementation/src/vidal_entanglement/model.py`
-
-### R023
-
-- Linked targets: T006
-- Paper source: p.2, prose before Eq. (14)
-- Paper claim: The XX shortcut prints g0=phi_a/pi-2.
-- Independent result: Eq. (8) gives g0=2phi_a/pi-1; at a=infinity this is 0.
-- Observed gap: Printed -1.5 versus exact and quadrature 0; gap 1.5.
-- Tolerance basis: Exact counterexample; quadrature residual 3.39e-20.
-- Assessment reason: At a=infinity the printed g0 is -1.5 while Eq. (8) gives exactly zero. Root cause: The XX shortcut is inconsistent with the paper's own integral.
-- Convergence evidence: `generated_data/outputs/data/coefficient_shortcut_audit.csv`, `generated_data/outputs/data/formula_pipeline_reliability.csv`, `attestations/outputs/runs/quant-ph-0211074-whole-paper-v6/run_attestation.json`
-- Independent cross-check evidence: `paper/paper-source/paper.tex`, `formula/DERIVATION_TRACE.md`, `implementation/tests/test_model.py`
-
-### R026
-
-- Linked targets: T007
-- Paper source: p.2-p.3, prose before Eq. (15)
-- Paper claim: The critical-Ising shortcut prints -2/l for odd l and 0 for even l.
-- Independent result: Eq. (8) gives -2/[pi(2l+1)].
-- Observed gap: At l=1: -2 versus -0.212206590789, gap 1.787793409; at l=0: 0 versus -0.636619772368.
-- Tolerance basis: Closed form and quadrature agree within 1.22e-9.
-- Assessment reason: The odd/even critical-Ising shortcut disagrees with Eq. (8), including l=0 and l=1. Root cause: The prose likely lost pi and used an incompatible index.
-- Convergence evidence: `generated_data/outputs/data/coefficient_shortcut_audit.csv`, `generated_data/outputs/data/formula_pipeline_reliability.csv`, `attestations/outputs/runs/quant-ph-0211074-whole-paper-v6/run_attestation.json`
-- Independent cross-check evidence: `formula/DERIVATION_TRACE.md`, `implementation/tests/test_model.py`, `implementation/src/vidal_entanglement/model.py`
-
-### R049
-
-- Linked targets: T002, T014
-- Paper source: p.1 Eq. (3) and p.4 Fig. 2 caption
-- Paper claim: Eq. (3) has a minus sign while Fig. 2 claims an N=20 antiferromagnetic-like critical XXX curve.
-- Independent result: The literal operator is ferromagnetic with energy -20 and a multiplet including S10=0; the opposite sign gives S10=1.953320640.
-- Observed gap: Literal ground representatives include S10=0 and Dicke S10=2.244763968, so no unique curve equals the caption-implied S10=1.953320640.
-- Tolerance basis: Bond bound and -20 are exact; opposite-sign residual is 2.75e-12 and small-N full-space parity passes.
-- Assessment reason: The literal negative-sign XXX operator has a degenerate ferromagnetic ground manifold, not one critical curve. Root cause: Eq. (3) and the Fig. 2 caption encode opposite coupling conventions.
-- Convergence evidence: `generated_data/outputs/data/xxz_regime_checks.csv`, `machine_evidence/outputs/checks/science_checks.json`, `attestations/outputs/runs/quant-ph-0211074-whole-paper-v6/run_attestation.json`
-- Independent cross-check evidence: `implementation/src/vidal_entanglement/xxx.py`, `implementation/tests/test_model.py`, `formula/DERIVATION_TRACE.md`
+No authoritative paper-error candidate is present in the current validated review.
 
 ## Interpretation boundary
 

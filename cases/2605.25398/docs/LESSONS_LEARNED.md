@@ -24,7 +24,7 @@
 | --- | --- | --- |
 | Panel-level classification | Mixed theory/experiment papers. | Fig. 2 was split into hardware context and probability-distribution target. |
 | Feature checks before visual comparison | Missing author data or noisy experimental figures. | Main checks pass through `reproduction_feature_checks.json`. |
-| Keep domain-specific physics in the case | Boson-sampling formulas are not a general workflow primitive yet. | The permanent/probability code stays in `../code/src/`. |
+| Keep domain-specific physics in the case | Boson-sampling formulas are not a general harness primitive yet. | The permanent/probability code stays in `case/2605.25398/src/`. |
 | Promote abstract rules only | Harness should stay general. | The reusable lesson is panel-level mixed-source handling, not "boson sampling" itself. |
 
 ## New Failure Modes
@@ -42,4 +42,4 @@
 ## copied_to_backlog
 
 - Added a new harness backlog item for panel-level mixed-source figure classification.
-- Recorded abstract experience about missing reference curves and analytical feature checks in the internal workflow.
+- Added abstract experience about missing reference curves and analytical feature checks to `PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`.

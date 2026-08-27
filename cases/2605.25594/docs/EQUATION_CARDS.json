@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "paper_id": "2605.25594",
+  "cards": [
+    {
+      "id": "FS001",
+      "title": "Eigenstate fidelity susceptibility",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Eigenstate fidelity susceptibility"
+        }
+      ],
+      "latex": "chi_n=sum_{m != n}|<n|O|m>|^2/(E_n-E_m)^2",
+      "role": "Defines unregularized eigenstate sensitivity to perturbation.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS001_diagonal",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "m=n terms are zeroed to avoid singular denominator."
+        }
+      ],
+      "numerical_form": "Defines unregularized eigenstate sensitivity to perturbation.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::operator_in_eigenbasis",
+        "src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS002",
+      "title": "Regularized susceptibility kernel",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Regularized susceptibility kernel"
+        }
+      ],
+      "latex": "omega^2/(omega^2+mu^2)^2",
+      "role": "Defines finite-frequency cutoff kernel.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS002_kernel",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Kernel is finite and vanishes on the diagonal."
+        }
+      ],
+      "numerical_form": "Defines finite-frequency cutoff kernel.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS003",
+      "title": "Average and typical susceptibility",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Average and typical susceptibility"
+        }
+      ],
+      "latex": "chi_av=mean chi_n; chi_typ=exp(mean log chi_n)",
+      "role": "Defines average and typical sensitivity observables.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS003_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines average and typical sensitivity observables.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::susceptibility_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS004",
+      "title": "3D Anderson Hamiltonian",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "3D Anderson Hamiltonian"
+        }
+      ],
+      "latex": "H_A=-sum_<ij> c_i^dag c_j + sum_i epsilon_i c_i^dag c_i",
+      "role": "Defines open-boundary cubic Anderson model.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS004_symmetry",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Matrix is real symmetric with open boundary conditions."
+        }
+      ],
+      "numerical_form": "Defines open-boundary cubic Anderson model.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::anderson_hamiltonian",
+        "src/paper_scale_campaign.py::anderson_hamiltonian_sparse"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS005",
+      "title": "Perturbation operators",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Perturbation operators"
+        }
+      ],
+      "latex": "T, T_s, n perturbation operators",
+      "role": "Defines perturbations used by susceptibility targets.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS005_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines perturbations used by susceptibility targets.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::sublattice_kinetic_matrix",
+        "src/anderson_sensitivity.py::randomized_site_operator",
+        "src/paper_scale_campaign.py::operator_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS006",
+      "title": "Rescaled susceptibility",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Rescaled susceptibility"
+        }
+      ],
+      "latex": "tilde chi_typ=chi_typ omega_typ; tilde chi^r=chi^r mu",
+      "role": "Defines plotted rescaled observables.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS006_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines plotted rescaled observables.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::susceptibility_metrics",
+        "src/paper_scale_campaign.py::operator_statistics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS007",
+      "title": "Spectral function mechanism",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Spectral function mechanism"
+        }
+      ],
+      "latex": "spectral function from |O_nm|^2 and omega bins",
+      "role": "Defines spectral-function diagnostic for mechanism figures.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS007_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines spectral-function diagnostic for mechanism figures.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::spectral_function",
+        "src/paper_scale_campaign.py::operator_statistics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS008",
+      "title": "Perturbative Ts trend",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Perturbative Ts trend"
+        }
+      ],
+      "latex": "perturbative estimate for sublattice kinetic perturbation",
+      "role": "Defines localized-regime perturbative trend proxy.",
+      "derived_from": [],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "FS008_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines localized-regime perturbative trend proxy.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::perturbation_theory_ts"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS009",
+      "title": "Level spacing and adjacent-gap ratio",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendix Spectral properties, definition following Fig. A1"
+        }
+      ],
+      "latex": "delta_n=E_n-E_{n-1}; r_n=min(delta_{n+1},delta_n)/max(delta_{n+1},delta_n)",
+      "role": "Defines the full-spectrum statistics in Appendix Figs. A1-A2.",
+      "derived_from": [
+        "FS004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula and GOE/Poisson references are printed in the appendix."
+        },
+        {
+          "id": "FS009_bounds",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The implementation removes numerical degeneracies and enforces 0<=r<=1 by construction."
+        }
+      ],
+      "numerical_form": "Sort all eigenvalues, form positive adjacent spacings, then average adjacent-gap ratios and log spacings.",
+      "code_refs": [
+        "src/anderson_sensitivity.py::spacing_stats",
+        "src/paper_scale_campaign.py::full_spacing_payload"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FS010",
+      "title": "Phenomenological broadened-Drude envelope",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendix Phenomenological model, Eqs. Drude, envelope, and explanation"
+        }
+      ],
+      "latex": "|f(omega)|^2 proportional to integral_[Gamma_min,Gamma_max] Gamma^(zeta+1)/(Gamma^2+omega^2) dGamma",
+      "role": "Generates both limiting panels of Appendix Fig. A00.",
+      "derived_from": [
+        "FS007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The slow-mode distribution and Lorentzian broadening are printed in the appendix."
+        },
+        {
+          "id": "FS010_power_law",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent Monte Carlo quadrature recovers the analytic exponent 2-zeta and the single-rate Lorentzian half-width."
+        }
+      ],
+      "numerical_form": "Sample Gamma from Gamma^(zeta-2), average normalized Lorentzians, and fit the intermediate-frequency envelope.",
+      "code_refs": [
+        "scripts/run_fig11_phenomenological_model.py"
+      ],
+      "open_questions": [
+        "The paper does not publish its exact panel-tuning parameters; only the printed exponent and limiting laws are independently checkable."
+      ]
+    },
+    {
+      "id": "FS011",
+      "title": "Strong-disorder randomized-site susceptibility",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendix Fidelity susceptibility in localized phase, equation following Fig. A4"
+        }
+      ],
+      "latex": "chi_n^r approximately sum_(m!=n) (r_n-r_m)^2 |<n0|T|m0>|^2 / ([omega_nm^0]^2+mu^2)^2",
+      "role": "Defines the independent perturbative baseline for Appendix Fig. A4.",
+      "derived_from": [
+        "FS001",
+        "FS002",
+        "FS004",
+        "FS005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FS011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The appendix prints the lowest nonzero order and the W^-4 limiting prediction."
+        },
+        {
+          "id": "FS011_scaling",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Every denominator contributes W^-4 at small mu while the bounded random-site numerator is W independent."
+        }
+      ],
+      "numerical_form": "Evaluate nearest-neighbor pairs using the same frozen r_i field and compare the geometric mean with full diagonalization.",
+      "code_refs": [
+        "src/paper_scale_campaign.py::randomized_site_values",
+        "src/paper_scale_campaign.py::localized_perturbation_payload"
+      ],
+      "open_questions": []
+    }
+  ]
+}

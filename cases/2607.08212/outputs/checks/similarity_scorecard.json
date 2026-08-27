@@ -1,78 +1,1353 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
+  "score_model": "rra_similarity_v1",
   "paper_id": "2607.08212",
-  "overall_score": 70.85,
-  "source_score_model": "rra_similarity_v1",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 6,
-    "target_status_counts": {
-      "reproduced": 1,
-      "evidence_compared": 4,
-      "partially_reproduced": 1
-    },
-    "published_generated_datasets": 5,
-    "published_generated_figures": 6
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
   "targets": [
     {
       "target_id": "ALGEBRA_CORE",
-      "figure_id": "FIG002",
-      "meaning": "Exact algebraic frontend for diagonal projector phases.",
-      "status": "reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Möbius algebra and 3-SAT clause expansion",
+      "weight": 0.18,
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "reason": "The zeta/Möbius transform and clause expansion satisfy every bounded exhaustive check.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 34.0,
+          "reason": "All 264 tested objects have zero wrapped phase error and zero failures.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 13.0,
+          "reason": "The complete public local algebra is covered; routed backend quantities are a separate target.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "method_validation",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB001",
+          "MOB002",
+          "MOB003"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "assessment_subject": "paper",
+        "artifact_stage": "final_reproduction"
+      },
+      "evidence": [
+        "outputs/data/implementation_probe/algebra_smoke.csv",
+        "outputs/checks/implementation_probe/implementation_probe_summary.json",
+        "outputs/data/mobius_validation_summary.csv",
+        "outputs/checks/feature_reproduction_result.json",
+        "tests/test_mobius_compiler.py"
+      ],
+      "remaining_gap": "The paper's concrete six-clause Fig. 3 input is not published; algebra validation is complete independently of that input.",
+      "figure_refs": [
+        "Eqs. (4)-(9), (21)-(22)"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "mobius_roundtrip",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.mobius_roundtrip_exhaustive",
+          "claim": "Möbius inversion exactly inverts the subset-zeta phase accumulation."
+        },
+        {
+          "assertion_id": "clause_polarities",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.all_clause_polarities_exact",
+          "claim": "Every three-literal polarity pattern marks one violating assignment and exposes a degree-three term."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "method_core",
+            "status": "reproduced",
+            "note": "All bounded algebra cases pass.",
+            "evidence": "outputs/checks/feature_reproduction_result.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 95.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "FIG3C_NATIVE",
-      "figure_id": "FIG003C",
-      "meaning": "Many-body projector phases remain visible as native CCZ operations.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Fig. 3(c) Möbius-native circuit",
+      "weight": 0.24,
+      "components": {
+        "feature_match": {
+          "score": 46.0,
+          "reason": "The degree spectrum, 19-gate total, and native CCZ structure match the source panel.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 32.0,
+          "reason": "Generated count 19 and DAG depth 12 exactly match the caption.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 11.0,
+          "reason": "Panel c is covered from independently recomputed numerics; the support stream is used only as published input because the clause generator is absent.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_subset",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "mixed_independent_and_source_reference",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB001",
+          "MOB002",
+          "MOB003"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Fig. 3(c) cannot be regenerated independently because the paper does not publish the six 3-SAT clauses and literal polarities that define its concrete native circuit.",
+            "evidence": [
+              "figure_coverage.json",
+              "PAPER_MAP.md",
+              "config/routing_benchmark_contract.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The publication specifies the Möbius method and reports the final gate census, but omits the scientific input needed to derive this instance from first principles. Transcribing supports from the panel is comparison evidence, not an acceptable numerical input.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "PAPER_MAP.md",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The clause-driven native compiler now exists and passes focused tests plus isolated execution; no code defect was found. The exact panel remains blocked only because the six source clauses are unpublished.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The full paper, caption, method description, and case map were checked for the missing clause instance.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "PAPER_MAP.md"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The strict input campaign and clause-driven compiler run in isolation without reading raw paper material, author arrays, source pixels, or legacy outputs.",
+                "evidence": [
+                  "outputs/runs/2607.08212-missing-paper-inputs-v2-20260824/run_attestation.json",
+                  "outputs/checks/missing_paper_input_campaign/FIG3C_NATIVE.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The algebra core passes exhaustive round-trip and polarity tests; more compute or a code patch cannot infer an unpublished clause instance.",
+              "evidence": [
+                "tests/test_mobius_compiler.py",
+                "outputs/data/implementation_probe/algebra_smoke.csv"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The accepted publication-input boundary affects only the exact Fig. 3(c) circuit instance.",
+            "items": [
+              "FIG3C_NATIVE",
+              "fig3c_mobius_native"
+            ],
+            "completion": "0/1 exact Fig. 3(c) panel independently generated"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain a citable six-clause instance with literal polarities, freeze its hash, and regenerate the native circuit from the paper equations without reading author numeric code or panel pixels.",
+            "expected_resolution": "The frozen clauses either reproduce the reported 4 Z, 9 CZ, 6 CCZ census and depth 12 or expose a paper/method discrepancy.",
+            "evidence_to_produce": [
+              "references/fig3_clause_instance.json",
+              "outputs/data/fig3c_native_circuit.json",
+              "outputs/checks/fig3c_native_check.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
+      },
+      "evidence": [
+        "outputs/data/fig3_gate_accounting.csv",
+        "outputs/checks/feature_reproduction_result.json",
+        "outputs/figures/fig3_gate_accounting_reproduction.png",
+        "internal-paper-reference/figure3.png"
+      ],
+      "remaining_gap": "The circuit support stream is taken from the published panel as input parameterization because the six underlying clauses are unpublished; the reported gate counts and depth are independently recomputed.",
+      "figure_refs": [
+        "Fig. 3(c)"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "native_gate_census",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.native_gate_counts_exact",
+          "claim": "The native stream has 4 Z, 9 CZ, and 6 CCZ gates."
+        },
+        {
+          "assertion_id": "native_depth",
+          "tier": "alignment",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.native_depth_exact",
+          "claim": "Per-qubit ASAP depth equals 12."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "c",
+            "status": "reproduced",
+            "note": "Gate census and depth exact; input stream taken from the published circuit parameterization, outputs independently recomputed.",
+            "evidence": "outputs/checks/feature_reproduction_result.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 89.0,
+      "evidence_tier": "reference_alignment",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 100.0,
+      "component_total": 89.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "FIG3A_ZAP",
-      "figure_id": "FIG003A",
-      "meaning": "Early lowering expands six CCZ blocks into a large one-/two-qubit stream.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Fig. 3(a) ZAP decomposition accounting",
+      "weight": 0.18,
+      "components": {
+        "feature_match": {
+          "score": 42.0,
+          "reason": "The fixed CCZ lowering reproduces every elementary gate count and the large depth expansion mechanism.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 25.0,
+          "reason": "All 163 gate counts are exact; generated depth is 121 versus paper 128.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "reason": "Gate accounting is complete, while exact within-block ordering is not available.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_subset",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "mixed_independent_and_source_reference",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB003"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The Fig. 3(a) target scope and executable input schema are now explicit, but the six-clause source instance and exact within-block ordering needed to regenerate it remain unpublished.",
+            "evidence": [
+              "figure_coverage.json",
+              "PAPER_MAP.md",
+              "config/routing_benchmark_contract.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper reports aggregate ZAP counts and depth but does not provide enough circuit input and ordering metadata to derive the complete DAG independently.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "REPRODUCTION_REPORT.md",
+              "outputs/checks/feature_reproduction_result.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The clause-to-Möbius-to-ZAP path and strict gate-order validator now exist and pass focused tests plus isolated execution; no code defect was found. The paper DAG remains scientifically underdetermined without the source instance and ordering convention.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The decomposition has the declared 6 CZ, 12 H, 3 T, and 4 T-dagger census per CCZ.",
+                "evidence": [
+                  "tests/test_mobius_compiler.py"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The paper and case audit identify both the absent source clauses and absent exact block ordering.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The decomposition identity and per-block gate census pass focused tests; the remaining depth difference depends on unpublished instance ordering.",
+              "evidence": [
+                "tests/test_mobius_compiler.py",
+                "outputs/checks/feature_reproduction_result.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The accepted publication-input boundary affects only the exact Fig. 3(a) circuit panel.",
+            "items": [
+              "FIG3A_ZAP",
+              "fig3a_zap_accounting"
+            ],
+            "completion": "0/1 exact Fig. 3(a) panel independently generated"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain and hash the six-clause source instance plus the paper's block-ordering convention, then derive and schedule the full ZAP circuit independently.",
+            "expected_resolution": "The regenerated DAG either reaches the reported 163 gates and depth 128 or establishes a reproducible discrepancy.",
+            "evidence_to_produce": [
+              "references/fig3_clause_instance.json",
+              "references/fig3_zap_ordering_contract.json",
+              "outputs/checks/fig3a_zap_check.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
+      },
+      "evidence": [
+        "outputs/data/fig3_gate_accounting.csv",
+        "outputs/checks/feature_reproduction_result.json",
+        "outputs/figures/fig3_gate_accounting_reproduction.png"
+      ],
+      "remaining_gap": "The gate census is exact, but the reconstructed per-qubit DAG depth is seven layers shorter than the paper drawing.",
+      "figure_refs": [
+        "Fig. 3(a)"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "zap_gate_census",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.zap_gate_counts_exact",
+          "claim": "Six CCZ blocks lower to the paper's 4 Z, 45 CZ, 72 H, 18 T, and 24 T-dagger census."
+        },
+        {
+          "assertion_id": "zap_depth",
+          "tier": "alignment",
+          "essential": false,
+          "status": "failed",
+          "evidence": "outputs/checks/feature_reproduction_result.json#checks.zap_depth_exact",
+          "claim": "The reconstructed ordering should have depth 128."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "partial",
+            "note": "Gate counts exact from independent recomputation; depth 121 vs 128.",
+            "evidence": "outputs/checks/feature_reproduction_result.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 89.0,
+      "evidence_tier": "reference_alignment",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 100.0,
+      "component_total": 74.5,
+      "score": 74.5,
+      "similarity_level": "numerical_feature_reproduction",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "ROUTING_PROXY",
-      "figure_id": "FIG004_008",
-      "meaning": "Preserving native three- and four-body supports reduces serialized routed work across six disclosed many-body proxy families, without creating an artificial advantage for pairwise controls.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "proxy_model"
+      "label": "Approved toy zoned-routing mechanism",
+      "weight": 0.18,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "reason": "All six declared many-body families favor retained native supports, while QFT/GHZ controls remain exactly coincident.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 8.0,
+          "reason": "Table-I timing and fidelity values are used, but no author routed data exists for pointwise numerical comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 14.0,
+          "reason": "The proxy covers all eight paper family classes, four sizes, five seeds, and fidelity/movement/stage observables.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "proxy_model",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB003",
+          "MOB004"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "Paper-exact Figs. 4, 5, and 8 remain unavailable because the benchmark generators, size grid, partitions, geometry, seeds, route traces, and aggregation rule are not published.",
+            "evidence": [
+              "config/routing_benchmark_contract.json",
+              "figure_coverage.json",
+              "PAPER_MAP.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The publication defines the compiler mechanism and Table-I hardware model but omits the executable benchmark contract that determines the paper's routed curves.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "config/routing_benchmark_contract.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The explicitly bounded proxy implementation passes deterministic, limiting-case, eight-family, and isolated execution checks; this does not upgrade it to paper exactness.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The paper text, captions, source package, and case map were audited; none publishes the benchmark generators, instance grid, geometry, seeds, route traces, or aggregation rule needed for paper-exact Figs. 4, 5, and 8.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/main.tex",
+                  "PAPER_MAP.md",
+                  "config/routing_benchmark_contract.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Twenty focused algebra and proxy-router tests pass, including control equality and all eight workload families.",
+                "evidence": [
+                  "tests/test_mobius_compiler.py",
+                  "tests/test_proxy_router.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The source-blind probe executed all eight proxy families from a clean Git revision with no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2607.08212-implementation-probe-v1-20260824/run_attestation.json",
+                  "outputs/data/implementation_probe/routing_smoke.csv"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "The proxy contract explicitly separates its approved mechanism scope from the missing paper-exact inputs.",
+              "evidence": [
+                "config/routing_benchmark_contract.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The proxy Fig. 4, 5, and 8 mechanism items are implemented; only a paper-exact upgrade is externally blocked.",
+            "items": [
+              "ROUTING_PROXY"
+            ],
+            "completion": "24/24 proxy routing items runnable; paper-exact curves unavailable"
+          },
+          "next_discriminating_test": {
+            "action": "Acquire a citable benchmark and architecture contract, freeze every generator/layout/seed hash, and rerun the same compiler and router at paper scale.",
+            "expected_resolution": "A fully specified contract enables paper-exact Fig. 4, 5, and 8 comparisons without changing physical parameters to fit pixels.",
+            "evidence_to_produce": [
+              "references/paper_routing_benchmark_contract.json",
+              "outputs/checks/paper_routing_result.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
+      },
+      "evidence": [
+        "outputs/data/implementation_probe/routing_smoke.csv",
+        "outputs/checks/implementation_probe/implementation_probe_summary.json",
+        "outputs/data/proxy_routing_runs.csv",
+        "outputs/data/proxy_routing_summary.csv",
+        "outputs/checks/proxy_routing_result.json",
+        "outputs/figures/proxy_fidelity_all_families.png",
+        "outputs/figures/proxy_moves_all_families.png",
+        "outputs/figures/proxy_stages_all_families.png",
+        "tests/test_proxy_router.py"
+      ],
+      "remaining_gap": "Every routing-geometry and benchmark-generator field is a disclosed proxy; author artifacts are still required for exact Figs. 4-8.",
+      "figure_refs": [
+        "Figs. 4, 5, and 8 qualitative feature contract"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "proxy_many_body_mechanism",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/proxy_routing_result.json#checks.all_six_many_body_families_improve_proxy_log_fidelity",
+          "claim": "All six many-body families improve proxy log fidelity, movement, and scheduled work under retained native supports."
+        },
+        {
+          "assertion_id": "proxy_pairwise_controls",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/proxy_routing_result.json#checks.qft_and_ghz_paths_match_exactly",
+          "claim": "QFT and GHZ pairwise controls have identical native and decomposed route metrics."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "proxy_mechanism",
+            "status": "reproduced",
+            "note": "The approved proxy mechanism passes; this panel is not an author-figure reconstruction.",
+            "evidence": "outputs/checks/proxy_routing_result.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 80.0,
+      "component_total": 67.0,
+      "score": 55.0,
+      "similarity_level": "feature_not_accepted",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "ROUTING_PROXY_SCALING",
-      "figure_id": "FIG006",
-      "meaning": "Compact native support streams reduce routed quantum duration and classical compilation/routing work as size grows.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "proxy_model"
+      "label": "Fig. 6 proxy duration and compile-time scaling",
+      "weight": 0.12,
+      "components": {
+        "feature_match": {
+          "score": 37.0,
+          "reason": "Native proxy duration and local compile-plus-route time are lower for 3-SAT, p-spin, and QRAM at every size from 20 to 100.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 5.0,
+          "reason": "The qubit range matches the paper, but author timing data and compile environment are unavailable.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 12.0,
+          "reason": "All three Fig. 6 family classes and both duration/timing rows are covered under the proxy.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "not_paper_parameters",
+        "parameter_match": "proxy_model",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB004"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "Paper-exact Fig. 6 timing curves cannot be generated because the exact benchmark instances, router settings, execution environment, repetition protocol, and timing aggregation are not published.",
+            "evidence": [
+              "config/routing_benchmark_contract.json",
+              "PERFORMANCE_PROFILE.md",
+              "figure_coverage.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper states the qualitative scaling comparison but does not publish a complete timing benchmark contract, so local timing can only be labeled as a disclosed proxy.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "config/routing_benchmark_contract.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The proxy scaling implementation runs across all three declared families and both bounded sizes, with positive measured runtimes and the expected routed-duration ordering.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The paper text, captions, source package, and performance notes were audited; they do not specify the benchmark instances, router settings, execution environment, repetition protocol, or timing aggregation required for a like-for-like Fig. 6 run.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/main.tex",
+                  "PAPER_MAP.md",
+                  "PERFORMANCE_PROFILE.md"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The scaling code path ran from a clean Git revision in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2607.08212-implementation-probe-v1-20260824/run_attestation.json",
+                  "outputs/data/implementation_probe/scaling_smoke.csv"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The bounded scaling probe produced positive compile-and-route timings for native and decomposed paths.",
+                "evidence": [
+                  "outputs/data/implementation_probe/scaling_smoke.csv"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The local proxy scaling path is executable and internally consistent; the limitation is comparison equivalence, not a failed implementation.",
+              "evidence": [
+                "outputs/checks/implementation_probe/implementation_probe_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All six Fig. 6 proxy items are runnable; their upgrade to author timing equivalence is externally blocked.",
+            "items": [
+              "ROUTING_PROXY_SCALING"
+            ],
+            "completion": "6/6 proxy scaling items runnable; paper-exact timing contract unavailable"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the author benchmark instances, router configuration, environment manifest, warm-up/repetition protocol, and aggregation rule, then rerun them without tuning scientific inputs.",
+            "expected_resolution": "The frozen timing contract enables a like-for-like Fig. 6 comparison and separates hardware effects from algorithmic differences.",
+            "evidence_to_produce": [
+              "references/paper_timing_benchmark_contract.json",
+              "outputs/checks/paper_scaling_result.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
+      },
+      "evidence": [
+        "outputs/data/implementation_probe/scaling_smoke.csv",
+        "outputs/checks/implementation_probe/implementation_probe_summary.json",
+        "outputs/data/proxy_duration_compile_scaling.csv",
+        "outputs/checks/proxy_scaling_result.json",
+        "outputs/figures/proxy_duration_compile_scaling.png"
+      ],
+      "remaining_gap": "Classical timings are Apple-M4 proxy measurements and cannot be compared pointwise to Fig. 6.",
+      "figure_refs": [
+        "Fig. 6 qualitative feature contract"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "proxy_duration_scaling",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/proxy_scaling_result.json#checks.native_total_duration_shorter_at_every_point",
+          "claim": "Native routed duration is shorter at every declared size."
+        },
+        {
+          "assertion_id": "proxy_compile_scaling",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/proxy_scaling_result.json#checks.native_median_compile_route_time_faster_at_every_point",
+          "claim": "Native median local compile-plus-route time is lower at every declared size."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "fig6_proxy",
+            "status": "reproduced",
+            "note": "All six proxy panels generated; timings are machine-specific.",
+            "evidence": "outputs/checks/proxy_scaling_result.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 80.0,
+      "component_total": 54.0,
+      "score": 54.0,
+      "similarity_level": "feature_not_accepted",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "ROUTING_PROXY_SENSITIVITY",
-      "figure_id": "FIG007",
-      "meaning": "Fixed routed streams isolate how assumed native three- and four-qubit errors alter the native-vs-ZAP decision.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "proxy_model"
+      "label": "Fig. 7 proxy native-error sensitivity",
+      "weight": 0.1,
+      "components": {
+        "feature_match": {
+          "score": 25.0,
+          "reason": "The proxy reproduces the p4-independent 3-SAT surface, mixed p3/p4 dependence, and favorable Table-I point, but not the published break-even contours.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 3.0,
+          "reason": "The 0-20% axes and Table-I marker match, but no author route stream or pointwise reference data is available.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.0,
+          "reason": "Three ZAP-comparison proxy panels are generated; ZX panels and break-even crossings are absent.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "model_mismatch",
+        "parameter_match": "proxy_model",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "MOB004"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_definition_unavailable",
+            "statement": "The exact Fig. 7(a-c) ZX sensitivity surfaces cannot be generated because the source circuits, ZX extractor version/options, and routed ZX baseline streams are unpublished.",
+            "evidence": [
+              "figure_coverage.json",
+              "config/routing_benchmark_contract.json",
+              "outputs/checks/proxy_sensitivity_result.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper's left-column observable depends on a concrete ZX comparator that is not determined by the published equations and hardware table alone.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "PAPER_MAP.md",
+              "config/routing_benchmark_contract.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The independently declared ZAP sensitivity path is runnable, finite, and has the expected three-body p4 invariance; it cannot substitute for the absent ZX comparator.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The paper text, Fig. 7 caption, methods, and source package were audited; they do not identify the exact input circuits, ZX extractor version/options, or routed ZX baseline streams that define panels (a-c).",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/main.tex",
+                  "PAPER_MAP.md",
+                  "config/routing_benchmark_contract.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The synthetic 3-SAT surface is independent of four-body error as required by its native support degree.",
+                "evidence": [
+                  "outputs/data/implementation_probe/sensitivity_smoke.csv"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The ZAP proxy sensitivity code path ran source-blind from a clean Git revision.",
+                "evidence": [
+                  "outputs/runs/2607.08212-implementation-probe-v1-20260824/run_attestation.json",
+                  "outputs/checks/implementation_probe/implementation_probe_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The right-column ZAP observable is implemented; the missing left-column ZX surfaces require absent comparator inputs, not a different numerical method within the current contract.",
+              "evidence": [
+                "scripts/run_proxy_sensitivity.py",
+                "figure_coverage.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The three ZAP sensitivity items are runnable; the exact ZX comparison items in Fig. 7(a-c) remain externally blocked.",
+            "items": [
+              "ROUTING_PROXY_SENSITIVITY",
+              "fig7a_3sat_vs_zx_sensitivity",
+              "fig7b_pspin_vs_zx_sensitivity",
+              "fig7c_qram_vs_zx_sensitivity"
+            ],
+            "completion": "3/3 ZAP proxy items runnable; 0/3 ZX comparison items independently generated"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain and hash the exact source circuits, ZX extraction version/options, and routed baseline streams, then evaluate the same frozen p3-p4 grid.",
+            "expected_resolution": "The acquired comparator contract either reproduces the three break-even surfaces or reveals a paper/router discrepancy.",
+            "evidence_to_produce": [
+              "references/zx_extractor_contract.json",
+              "outputs/data/fig7_zx_sensitivity.csv",
+              "outputs/checks/fig7_zx_sensitivity_check.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
+      },
+      "evidence": [
+        "outputs/data/implementation_probe/sensitivity_smoke.csv",
+        "outputs/checks/implementation_probe/implementation_probe_summary.json",
+        "outputs/data/proxy_native_error_sensitivity.csv",
+        "outputs/checks/proxy_sensitivity_result.json",
+        "outputs/figures/proxy_native_error_sensitivity.png",
+        "internal-paper-reference/figure7.png"
+      ],
+      "remaining_gap": "No break-even contour appears inside 0-20% because the toy return-to-storage router still over-penalizes decomposed ZAP; ZX route data is unavailable.",
+      "figure_refs": [
+        "Fig. 7 partial qualitative feature contract"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "proxy_sensitivity_degree_dependence",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/proxy_sensitivity_result.json#checks.three_sat_surface_is_p4_independent",
+          "claim": "3-SAT is p4-independent while p-spin and QRAM expose both native degrees."
+        },
+        {
+          "assertion_id": "proxy_sensitivity_break_even",
+          "tier": "alignment",
+          "essential": false,
+          "status": "failed",
+          "evidence": "outputs/checks/proxy_sensitivity_result.json#checks.all_surfaces_cross_break_even_within_declared_grid",
+          "claim": "Proxy surfaces cross break-even inside the paper's 0-20% grid."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "fig7_proxy_zap",
+            "status": "partial",
+            "note": "Degree dependence and representative point pass; break-even contours do not.",
+            "evidence": "outputs/checks/proxy_sensitivity_result.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": false,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 80.0,
+      "component_total": 35.0,
+      "score": 35.0,
+      "similarity_level": "feature_not_accepted",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "ZX_EXTRACTOR_INPUT_GAP",
+      "label": "Gap group: ZX extractor source and configuration",
+      "figure_refs": [
+        "Gap group ZX source/config"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "Fig. 3(b) and Fig. 9 remain uncovered and zero-credit until their source circuit and exact ZX extractor/insert contract are independently fixed.",
+      "score_cap": 0.0,
+      "cap_reason": "Publication-only inputs do not uniquely determine either paper-exact ZX output.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independently generated paper-exact ZX no-insert or insert structure is available.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The source circuit and extractor version/options are not frozen, so a scientific pointwise comparison is undefined.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Both assigned atomic items remain deferred and receive zero credit.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "figure_coverage.json",
+        "METHOD_TRACE.md",
+        "outputs/checks/paper_exact_readiness.json"
+      ],
+      "remaining_gap": "The paper omits the exact source circuit plus the ZX extractor/insert tool version and option set needed to define these two outputs from first principles.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "unknown",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "artifact_stage": "exploratory",
+        "pixel_status": "pending_scientific_data",
+        "pixel_status_reason": "A render comparison cannot substitute for an independently defined ZX scientific output.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The unpublished source circuit and exact ZX extractor/insert version and options are indispensable inputs for both paper-exact structures.",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The publication does not uniquely specify the circuit-to-ZX transformation contract, leaving multiple scientifically distinct structures compatible with the displayed results.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "figure_coverage.json",
+              "outputs/checks/paper_exact_readiness.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The scientific source-package validator and normalized ZX backend request now exist and pass focused tests plus isolated execution; no code defect was found. A paper-exact ZX result remains impossible until the publication-specific tool identity and options are supplied.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The full paper, Fig. 3 and Fig. 9 captions, method text, and source package were audited; they do not publish the source circuit or a versioned, option-complete ZX extraction and insertion contract.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "paper-source/main.tex",
+                  "PAPER_MAP.md",
+                  "METHOD_TRACE.md"
+                ]
+              },
+              {
+                "kind": "manual_code_review",
+                "result": "passed",
+                "statement": "The new handler derives its source circuit from explicit clauses, validates both target variants and the declared ZX tool contract, and does not claim the normalized request is a scientific result.",
+                "evidence": [
+                  "figure_coverage.json",
+                  "src/paper_input_models.py",
+                  "tests/test_missing_input_campaign.py",
+                  "outputs/runs/2607.08212-missing-paper-inputs-v2-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The shared strict-input campaign ran in isolation and emitted the ZX blocker without forbidden input access.",
+                "evidence": [
+                  "outputs/runs/2607.08212-missing-paper-inputs-v2-20260824/run_attestation.json",
+                  "outputs/checks/missing_paper_input_campaign/ZX_EXTRACTOR_INPUT_GAP.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "No resource benchmark shows a compute limit; execution cannot begin paper-exactly because the scientific input contract is not defined.",
+              "evidence": [
+                "outputs/checks/compute_budget_profile.json",
+                "figure_coverage.json"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The gap precedes implementation and is not evidence that existing algebra or proxy code produced an incorrect paper-exact result.",
+              "evidence": [
+                "outputs/checks/paper_exact_readiness.json",
+                "figure_coverage.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The missing ZX source/configuration contract affects exactly two deferred numeric display items.",
+            "items": [
+              "ZX_EXTRACTOR_INPUT_GAP",
+              "fig3b_zx_no_insert",
+              "fig9_zx_insert_diagnostic"
+            ],
+            "completion": "0/2 paper-exact atomic items covered"
+          },
+          "next_discriminating_test": {
+            "action": "Freeze the scientific source circuit together with the ZX tool name, version, extractor/insert algorithm and every relevant option, then independently generate both structures and hash the configuration and outputs; a support flow transcribed from the published figures may be used only for render diagnosis, never as scientific evidence.",
+            "expected_resolution": "Both items become independently executable paper-exact targets, or the audit proves the publication lacks the minimum source/configuration contract needed to identify them.",
+            "evidence_to_produce": [
+              "outputs/checks/zx_extractor_input_contract.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "zx_extractor_paper_exact_identity",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "Paper-exact ZX no-insert and insert structures generated from a frozen scientific source/configuration contract"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "fig3b_zx_no_insert",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          },
+          {
+            "panel_id": "fig9_zx_insert_diagnostic",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "source_scorecard_sha256": "972ad6cabe040cb475fa080f4eca0fd83120517046722b5567cf826315b37ae9"
+  "overall_score": 70.85,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 7,
+    "critical_items": 4,
+    "artifact_pass_rate": 0.86,
+    "data_backed_rate": 0.86,
+    "manual_interventions_total": 4,
+    "manual_interventions_per_item": 0.57,
+    "failure_type_counts": {
+      "none": 1,
+      "missing_benchmark_metadata": 4,
+      "not_paper_parameters": 1,
+      "model_mismatch": 1
+    },
+    "parameter_match_counts": {
+      "paper_exact": 1,
+      "paper_subset": 2,
+      "proxy_model": 3,
+      "unknown": 1
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 1,
+      "table_exact": 2,
+      "visual_feature_contract": 3,
+      "not_available": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4,
+      "mixed_independent_and_source_reference": 2,
+      "unknown": 1
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 4,
+      "reference_alignment": 2,
+      "unknown": 1
+    },
+    "formula_gate_counts": {
+      "verified": 6,
+      "blocked": 1
+    },
+    "paper_level_role_counts": {
+      "method_validation": 1,
+      "main_claim": 2,
+      "supporting": 4
+    },
+    "physics_status_counts": {
+      "passed": 6,
+      "pending": 1
+    },
+    "physics_assertion_status_counts": {
+      "passed": 10,
+      "failed": 2,
+      "blocked": 1
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "ALGEBRA_CORE"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "FIG3C_NATIVE",
+      "FIG3A_ZAP",
+      "ROUTING_PROXY",
+      "ROUTING_PROXY_SCALING",
+      "ROUTING_PROXY_SENSITIVITY",
+      "ZX_EXTRACTOR_INPUT_GAP"
+    ],
+    "aggregate_included_target_ids": [
+      "ALGEBRA_CORE",
+      "FIG3C_NATIVE",
+      "FIG3A_ZAP",
+      "ROUTING_PROXY",
+      "ROUTING_PROXY_SCALING",
+      "ROUTING_PROXY_SENSITIVITY"
+    ],
+    "aggregate_excluded_target_ids": [
+      "ZX_EXTRACTOR_INPUT_GAP"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 1,
+      "complete": 6
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 1,
+      "terminal_blocker": 6
+    },
+    "causal_diagnosis_required_target_ids": [
+      "FIG3C_NATIVE",
+      "FIG3A_ZAP",
+      "ROUTING_PROXY",
+      "ROUTING_PROXY_SCALING",
+      "ROUTING_PROXY_SENSITIVITY",
+      "ZX_EXTRACTOR_INPUT_GAP"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "FIG3C_NATIVE",
+      "FIG3A_ZAP",
+      "ROUTING_PROXY",
+      "ROUTING_PROXY_SCALING",
+      "ROUTING_PROXY_SENSITIVITY",
+      "ZX_EXTRACTOR_INPUT_GAP"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "indispensable_input_unavailable": 4,
+      "parameter_values_unavailable": 1,
+      "scientific_definition_unavailable": 1
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 6
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 6
+    }
+  },
+  "status": "passed"
 }

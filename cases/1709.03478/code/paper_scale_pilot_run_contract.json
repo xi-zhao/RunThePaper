@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "run_id": "1709.03478-paper-scale-stationary-pilot-v3-20260825",
+  "target_ids": [
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale_rerun.json",
+    "--action",
+    "run",
+    "--profile",
+    "production_q8_l738",
+    "--shard-index",
+    "0",
+    "--shard-count",
+    "512",
+    "--max-tasks",
+    "1",
+    "--no-resume"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/reproduce_spme.py",
+    "src/paper_scale_campaign.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale_rerun.json",
+    "mplconfig"
+  ],
+  "parameter_file": "config/paper_scale_rerun.json",
+  "parameter_selector": "parameters.paper_times_tau",
+  "expected_parameters": {
+    "experimental_imbalance": 200,
+    "numerical_imbalance": 3000,
+    "edge_density": 3000
+  },
+  "outputs": [
+    "outputs/checks/paper_scale/campaign_manifest.json",
+    "outputs/checks/paper_scale/checkpoints/production_q8_l738/t003-t004__stationary_sweep_phase__643d80326b75bbda.json",
+    "outputs/checks/paper_scale/checks/shards/shard-00000-of-00512.json"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0",
+    "MPLCONFIGDIR": "mplconfig"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

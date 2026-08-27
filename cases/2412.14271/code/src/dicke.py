@@ -11,7 +11,7 @@ from typing import Iterable, Sequence
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from scipy import optimize
+from scipy import optimize, sparse
 from scipy.sparse import linalg as sparse_linalg
 
 
@@ -448,7 +448,6 @@ def operators(
     import qutip as qt
 
     photon = qt.tensor(qt.destroy(photon_cutoff), qt.qeye(system_size + 1))
-    spin_identity = qt.qeye(system_size + 1)
     photon_identity = qt.qeye(photon_cutoff)
     jx = qt.tensor(photon_identity, 2 * qt.jmat(system_size / 2, "x"))
     jz = qt.tensor(photon_identity, 2 * qt.jmat(system_size / 2, "z"))
@@ -608,3 +607,127 @@ def parity_leakage(distribution: ArrayLike, parity: int) -> float:
     probability = np.asarray(distribution, dtype=float)
     indices = np.arange(probability.size)
     return float(probability[indices % 2 != parity].sum())
+
+
+def one_photon_steady_state_ed(
+    system_size: int,
+    photon_cutoff: int,
+    coupling: float,
+    *,
+    omega_c: float = 1.0,
+    omega_a: float = 2.0,
+    kappa1: float = 0.4,
+) -> dict[str, object]:
+    """Solve the printed one-photon Lindblad model by sparse exact diagonalization.
+
+    This implementation deliberately does not depend on QuTiP, paper arrays,
+    author code, or figure pixels.  It constructs the Hamiltonian and
+    Liouvillian directly from the printed operators, replaces one Liouvillian
+    row with the trace constraint, and solves the resulting sparse linear
+    system.  The method is general at the paper cutoffs, while its memory cost
+    remains explicit through the returned Liouvillian dimension and sparsity.
+    """
+    if system_size < 1:
+        raise ValueError("system_size must be positive")
+    if photon_cutoff < 3:
+        raise ValueError("photon_cutoff must be at least 3")
+    if kappa1 <= 0:
+        raise ValueError("one-photon steady state requires kappa1 > 0")
+
+    spin_dimension = system_size + 1
+    photon = sparse.diags(
+        np.sqrt(np.arange(1, photon_cutoff, dtype=float)),
+        offsets=1,
+        shape=(photon_cutoff, photon_cutoff),
+        format="csr",
+        dtype=np.complex128,
+    )
+    photon_identity = sparse.identity(photon_cutoff, format="csr", dtype=np.complex128)
+    spin_identity = sparse.identity(spin_dimension, format="csr", dtype=np.complex128)
+    spin_z_values = np.arange(system_size, -system_size - 1, -2, dtype=float)
+    spin_z = sparse.diags(spin_z_values, format="csr", dtype=np.complex128)
+    upper = np.sqrt(
+        np.arange(1, spin_dimension, dtype=float)
+        * np.arange(system_size, 0, -1, dtype=float)
+    )
+    spin_x = sparse.diags([upper, upper], offsets=[-1, 1], shape=(spin_dimension, spin_dimension), format="csr")
+
+    photon_full = sparse.kron(photon, spin_identity, format="csr")
+    number_full = photon_full.getH() @ photon_full
+    spin_z_full = sparse.kron(photon_identity, spin_z, format="csr")
+    spin_x_full = sparse.kron(photon_identity, spin_x, format="csr")
+    pair_field = photon_full.getH() @ photon_full.getH() + photon_full @ photon_full
+    hamiltonian = (
+        float(omega_c) * number_full
+        + 0.5 * float(omega_a) * spin_z_full
+        + float(coupling) * (spin_x_full @ pair_field) / float(system_size)
+    ).tocsr()
+    collapse = np.sqrt(float(kappa1)) * photon_full
+    liouvillian = _lindblad_liouvillian(hamiltonian, (collapse,))
+    hilbert_dimension = hamiltonian.shape[0]
+    trace_row = np.zeros(hilbert_dimension * hilbert_dimension, dtype=np.complex128)
+    trace_row[np.arange(hilbert_dimension) * (hilbert_dimension + 1)] = 1.0
+    constrained = liouvillian.tolil(copy=True)
+    constrained[0, :] = trace_row
+    rhs = np.zeros(hilbert_dimension * hilbert_dimension, dtype=np.complex128)
+    rhs[0] = 1.0
+    density_vector = sparse_linalg.spsolve(constrained.tocsc(), rhs)
+    density = np.asarray(density_vector, dtype=np.complex128).reshape(
+        (hilbert_dimension, hilbert_dimension), order="F"
+    )
+    density = 0.5 * (density + density.conj().T)
+    density /= np.trace(density)
+
+    physical_vector = density.reshape(-1, order="F")
+    residual = float(np.linalg.norm(liouvillian @ physical_vector))
+    trace_error = float(abs(np.trace(density) - 1.0))
+    hermiticity_error = float(np.linalg.norm(density - density.conj().T))
+    minimum_eigenvalue = float(np.min(np.linalg.eigvalsh(density)).real)
+    tensor_density = density.reshape(
+        photon_cutoff,
+        spin_dimension,
+        photon_cutoff,
+        spin_dimension,
+    )
+    photon_density = np.einsum("psqs->pq", tensor_density)
+    distribution = np.real(np.diag(photon_density))
+    distribution = np.maximum(distribution, 0.0)
+    distribution /= distribution.sum()
+    occupations = np.arange(photon_cutoff, dtype=float)
+    photon_mean = float(distribution @ occupations)
+    spin_z_mean = float(np.real(np.trace(density @ spin_z_full.toarray())) / system_size)
+    tail_start = max(0, photon_cutoff - 5)
+    return {
+        "system_size": int(system_size),
+        "photon_cutoff": int(photon_cutoff),
+        "coupling": float(coupling),
+        "photon_mean": photon_mean,
+        "spin_z_mean": spin_z_mean,
+        "fock_distribution": distribution,
+        "photon_tail": float(distribution[tail_start:].sum()),
+        "trace_error": trace_error,
+        "hermiticity_error": hermiticity_error,
+        "minimum_density_eigenvalue": minimum_eigenvalue,
+        "liouvillian_residual": residual,
+        "hilbert_dimension": int(hilbert_dimension),
+        "liouvillian_dimension": int(liouvillian.shape[0]),
+        "liouvillian_nnz": int(liouvillian.nnz),
+    }
+
+
+def _lindblad_liouvillian(
+    hamiltonian: sparse.spmatrix,
+    collapse_operators: Sequence[sparse.spmatrix],
+) -> sparse.csr_matrix:
+    dimension = int(hamiltonian.shape[0])
+    identity = sparse.identity(dimension, format="csr", dtype=np.complex128)
+    result = -1j * (
+        sparse.kron(identity, hamiltonian, format="csr")
+        - sparse.kron(hamiltonian.transpose(), identity, format="csr")
+    )
+    for collapse in collapse_operators:
+        rate = (collapse.getH() @ collapse).tocsr()
+        result = result + sparse.kron(collapse.conjugate(), collapse, format="csr")
+        result = result - 0.5 * sparse.kron(identity, rate, format="csr")
+        result = result - 0.5 * sparse.kron(rate.transpose(), identity, format="csr")
+    return result.tocsr()

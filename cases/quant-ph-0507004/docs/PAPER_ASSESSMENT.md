@@ -11,81 +11,48 @@ This report is a human-readable projection of the validated structured independe
 | Protocol status | `passed` |
 | Protocol valid | `true` |
 | Whole-paper scope | `complete` |
-| Paper assessment | `mixed` |
-| Reviewed atomic claims | `66` |
-| Candidate atomic claims | `2` |
-| Candidate targets | `3` |
+| Paper assessment | `inconclusive` |
+| Reviewed atomic claims | `33` |
+| Candidate atomic claims | `0` |
+| Candidate targets | `0` |
 
 ## Atomic claim adjudication
 
 | Claim | Targets | Assessment | Independent-review reason |
 | --- | --- | --- | --- |
-| R001 | T001 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R002 | T001 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R003 | T001 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R004 | T003 | `inconclusive` | The large-N bifurcation is defined, but the publication and bundle do not define a unique finite-N pseudocritical diagnostic for 'just beyond lambda=1'. |
-| R005 | T001 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R006 | T001 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R007 | T001, T013 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R008 | T003, T006, T016 | `inconclusive` | The separatrix topology is reproduced, but no publication-defined state order parameter is available to establish the full deformed-to-undeformed state claim. |
-| R009 | T002 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R010 | T002 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R011 | T002 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R012 | T002 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R013 | T003 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R014 | T003 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R015 | T003 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R016 | T003 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R017 | T003 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R018 | T003, T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R019 | T004 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R020 | T004 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R021 | T004 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R022 | T004 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R023 | T004 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R024 | T005 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R025 | T005 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R026 | T014 | `paper_error_candidate` | A literal full-band monotonic increase is incompatible with an exact spectral symmetry and is explicitly falsified by both parity sectors at N=2000, lambda=0.5. |
-| R027 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R028 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R029 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R030 | T006, T016 | `paper_error_candidate` | The printed leading expression gives a negative period for the separatrix regime \|2E/N+1\|<1; positivity and a direct saddle integral both require a leading minus sign or an absolute logarithm. |
-| R031 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R032 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R033 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R034 | T003, T006, T016 | `inconclusive` | No publication-defined order-parameter observable is present in the paper bundle or generated data, so the state-level below-threshold assertion cannot receive a scientific verdict. |
-| R035 | T003, T006, T016 | `inconclusive` | The paper claim is not decisively falsified, but the reviewed reproduction lacks the required claim-specific observable or coordinate-correct evidence; this is a method/evidence gap, not a confirmed code error. |
-| R036 | T003, T006, T016 | `inconclusive` | No publication-defined order-parameter observable is present in the paper bundle or generated data, so the state-level above-threshold assertion cannot receive a scientific verdict. |
-| R037 | T003, T006, T016 | `inconclusive` | The paper claim is not decisively falsified, but the reviewed reproduction lacks the required claim-specific observable or coordinate-correct evidence; this is a method/evidence gap, not a confirmed code error. |
-| R038 | T003, T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R039 | T003, T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R040 | T013 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R041 | T007 | `inconclusive` | The strict 500<N<1500 rerun is selector- and parity-sensitive and differs by as much as 62.5%, while the publication omits the raw gaps, lambda grid, parity block, and level-pair rule needed to identify its points. |
-| R042 | T006, T016 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R043 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R044 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R045 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R046 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R047 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R048 | T009 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R049 | T008, T010 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R050 | T017 | `inconclusive` | Two explicit self-adjoint reconstructions converge near N^-1 rather than N^-2, but the paper does not identify the 'careful' ordering whose O(N^-2) error it asserts. |
-| R051 | T018 | `inconclusive` | The finite N=10..30 trend approaches lambda=1 but cannot establish an N-to-infinity accumulation theorem. |
-| R052 | T019 | `inconclusive` | All discovered near-real roots lie near the separatrix, but 'high density' lacks a quantitative denominator and the search is not a complete root count. |
-| R053 | T020 | `inconclusive` | No near-real roots were found below lambda=1, but absence cannot be inferred from non-exhaustive local seeds. |
-| R054 | T020 | `inconclusive` | No near-real roots were found far from E_c at lambda>1, but the local-seed census cannot certify global exclusion. |
-| R055 | T011, T012 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R056 | T011, T012 | `inconclusive` | The paper claim is not decisively falsified, but the reviewed reproduction lacks the required claim-specific observable or coordinate-correct evidence; this is a method/evidence gap, not a confirmed code error. |
-| R057 | T011, T012 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R058 | T011, T012 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R059 | T011, T012 | `inconclusive` | The frozen first-20 masses range from 0.590 to 0.939 and trend with N and lambda; the publication gives neither its tested N values nor a tolerance for 'about 50% irrespective of N'. |
-| R060 | T011, T012 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R061 | T011, T012 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R062 | T011, T012 | `inconclusive` | The paper does not define 'more significant'; the frozen pair-minus-neighbour contrast is not monotone as lambda approaches 1 over the tested finite-N grid. |
-| R063 | T015 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R064 | T015 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R065 | T015 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
-| R066 | T015 | `paper_supported` | The claim survived a fresh strong check and the corresponding attested evidence; no sign, normalization, branch, parity, or indexing falsification succeeded. |
+| R002 | T010 | `paper_supported` | Independent critical spectra recover the advertised N^-1/3 finite-size exponent. |
+| R004 | T001 | `paper_supported` | The finite-N Hamiltonian used in the bundle matches the paper statement and reproduces the exact-spectrum observables. |
+| R005 | T001 | `paper_supported` | The 1/N interaction normalization is the one used throughout the clean-room implementation and preserves the intended extensive scaling. |
+| R007 | T001 | `paper_supported` | Exact parity-doublet calculations in the bundle support the deformed-phase near-degeneracy and shrinking splitting. |
+| R009 | T002 | `paper_supported` | The classical Hamiltonian map is reproduced cleanly from the finite-spin model. |
+| R010 | T002 | `paper_supported` | The Poisson-bracket structure used in the classical analysis is reproduced directly. |
+| R011 | T002 | `paper_supported` | The effective classical energy surface K(mu,phi) is reproduced and reused consistently in later asymptotics. |
+| R012 | T003 | `paper_supported` | The stationary condition sin(phi0)=0 follows directly from the reproduced minimization. |
+| R013 | T003 | `paper_supported` | The classical minima are reproduced exactly from the clean-room minimization analysis. |
+| R014 | T003 | `paper_supported` | The minimum-energy branches are analytically reproduced and remain consistent with the large-N exact checks. |
+| R015 | T004 | `paper_supported` | The quartic expansion around the normal minimum is reproduced and underlies the later harmonic formulas. |
+| R016 | T004 | `paper_supported` | The normal-phase low-lying spectrum matches the reproduced harmonic prediction. |
+| R017 | T004 | `paper_supported` | The deformed-phase quadratic expansion is reproduced and reused in the exact-gap checks. |
+| R018 | T004 | `paper_supported` | The deformed-phase harmonic frequency is supported by the clean-room derivation and exact low-gap checks. |
+| R019 | T005 | `paper_supported` | The WKB action formula is reproduced independently from the classical Hamiltonian. |
+| R020 | T005 | `paper_supported` | The spacing-period relation is reproduced analytically and remains compatible with the exact spacing observables. |
+| R021 | T014 | `inconclusive` | The bundle confirms non-constant normal-phase spacing, but not a literal full-band monotonic increase; the intended energy range is underspecified in the paper. |
+| R022 | T006 | `paper_supported` | The saddle-point expansion near the separatrix is reproduced directly in the derivation bundle. |
+| R023 | T006 | `paper_supported` | The logarithmic finite-N separatrix spacing law is reproduced analytically and remains consistent with the exact-gap campaign. |
+| R025 | T013 | `paper_supported` | The deformed-phase tunneling splitting is supported by exact parity-doublet calculations that shrink rapidly with N. |
+| R026 | T007 | `inconclusive` | The asymptotic logarithmic law survives, but the finite-N Main Fig. 1 coefficient is not uniquely reproducible over 500<N<1500 because parity, selector, and exact sampling choices are omitted in the paper. |
+| R027 | T016 | `paper_supported` | The threshold excitation offset at K=-1 is reproduced by the clean-room derivation and remains consistent with the threshold checks. |
+| R028 | T008 | `paper_supported` | The critical spacing law follows from the reproduced quartic critical normal form. |
+| R029 | T008, T010 | `paper_supported` | The critical spectrum law E_k∼k^{4/3}/N^{1/3} is supported by both derivation and exact finite-N spectra. |
+| R030 | T009 | `paper_supported` | Main Fig. 2 is quantitatively reproduced by the clean-room critical-spectrum campaign. |
+| R031 | T017 | `inconclusive` | The bundle does not justify the specific O(N^-2) ordering-error rate, because explicit self-adjoint orderings show different finite-N behavior and the paper does not identify the ordering it used. |
+| R033 | T011 | `inconclusive` | The bundle supports shrinking localized cores for explicit mass thresholds, but not the stronger whole-wavefunction concentration statement as written. |
+| R034 | T011 | `inconclusive` | The bundle shows >50% weight in the tested cases, but the paper-exact finite-N campaign behind the “irrespective of N” wording is not specified well enough for a decisive fresh-review verdict. |
+| R035 | T012 | `inconclusive` | The bundle supports the quoted scaling trend, but the paper-exact finite-N campaign behind the approximate transition-index rules is not specified tightly enough for a decisive verdict. |
+| R036 | T015 | `paper_supported` | The alternate Hamiltonian for the wavefunction WKB construction is reproduced directly in the clean-room derivation. |
+| R038 | T018 | `inconclusive` | Finite-N certified exceptional points move closer to lambda = 1 as N increases in the frozen campaign, but the bundle boundary does not justify a decisive N→infinity accumulation verdict. |
+| R039 | T019 | `inconclusive` | The searched finite domain supports a separatrix-localized trend for certified near-real exceptional points, but the bundle does not specify a paper-exact parameter campaign for this claim, so the decisive verdict must be downgraded. |
+| R040 | T020 | `inconclusive` | The searched finite domain found no certified near-real exceptional points below transition or away from the separatrix, but the bundle explicitly does not prove a global exclusion statement. |
 
 ## Target adjudication
 
@@ -93,10 +60,10 @@ This report is a human-readable projection of the validated structured independe
 | --- | --- | --- |
 | T001 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T002 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T003 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T003 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T004 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T005 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T006 | `mixed` | Derived from linked atomic claim assessments. |
+| T006 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T007 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T008 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T009 | `paper_supported` | Derived from linked atomic claim assessments. |
@@ -104,9 +71,9 @@ This report is a human-readable projection of the validated structured independe
 | T011 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T012 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T013 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T014 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T014 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T015 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T016 | `mixed` | Derived from linked atomic claim assessments. |
+| T016 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T017 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T018 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T019 | `inconclusive` | Derived from linked atomic claim assessments. |
@@ -114,29 +81,7 @@ This report is a human-readable projection of the validated structured independe
 
 ## Paper-error candidates
 
-### R026
-
-- Linked targets: T014
-- Paper source: Paragraph immediately after Eq. (11)
-- Paper claim: For lambda<1 the average level spacing is not constant across the whole spectrum but varies smoothly and increases with energy.
-- Independent result: At N=2000 and lambda=0.5, both parity sectors rise from roughly 1.784 at the low edge to roughly 2.116 near the center, then return to roughly 1.784 at the high edge; full-band fitted slopes are essentially zero.
-- Observed gap: The upper-edge mean spacing is about 15.7% below the mid-band maximum and nearly equal to the lower-edge value, opposite to a continued increase.
-- Tolerance basis: The Hamiltonian is deterministic; the return branch follows an exact unitary symmetry and exceeds the recorded within-bin standard deviations by orders of magnitude.
-- Assessment reason: A literal full-band monotonic increase is incompatible with an exact spectral symmetry and is explicitly falsified by both parity sectors at N=2000, lambda=0.5.
-- Convergence evidence: `generated_data/outputs/data/normal_spacing_profile.csv`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `paper/paper-source/lipsemi_0531.tex`, `formula/DERIVATION_TRACE.md`, `implementation/src/lmg_scaling/model.py`
-
-### R030
-
-- Linked targets: T006, T016
-- Paper source: Paragraph between Eqs. (12) and (13)
-- Paper claim: Near the separatrix T(E) is asymptotically ln|2E/N+1| divided by sqrt(lambda^2-1).
-- Independent result: The hyperbolic dwell time diverges positively as -ln|2E/N+1|/sqrt(lambda^2-1), up to an additive constant and orbit-count convention.
-- Observed gap: The printed leading term differs by an exact sign and is negative throughout the stated asymptotic domain.
-- Tolerance basis: This is a sign/positivity contradiction, so no numerical tolerance is applicable.
-- Assessment reason: The printed leading expression gives a negative period for the separatrix regime |2E/N+1|<1; positivity and a direct saddle integral both require a leading minus sign or an absolute logarithm.
-- Convergence evidence: `generated_data/outputs/data/fig1_asymptotic_convergence.csv`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `paper/paper-source/lipsemi_0531.tex`, `formula/DERIVATION_TRACE.md`, `formula/EQUATION_CARDS.json`
+No authoritative paper-error candidate is present in the current validated review.
 
 ## Interpretation boundary
 

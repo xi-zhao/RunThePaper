@@ -1,14 +1,14 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "paper_id": "physics-0206018",
-  "score_model": "scientific_foreground_pixel_v1",
+  "score_model": "scientific_region_pixel_v1",
   "primary_metric": {
-    "name": "foreground_pixel_similarity_0_100",
-    "definition": "100 * (1 - foreground-union grayscale MAE / 255) after canvas registration",
+    "name": "predeclared_scientific_region_pixel_similarity_0_100",
+    "definition": "The render_acceptance metric frozen for each complete numerical panel before scoring; foreground-union MAE for sparse curves and full-region MAE for the dense field map.",
     "comparison_role": "post_run_evidence_only_after_science_gate",
     "source_pixels_used_as_numerical_inputs": false,
-    "raw_comparable_target_mean": 58.15689850122357,
-    "source": "outputs/checks/render_similarity.json"
+    "raw_comparable_target_mean": 73.3528,
+    "source": "outputs/checks/pixel_evidence.json"
   },
   "targets": [
     {
@@ -20,19 +20,19 @@
       "weight": 1.0,
       "components": {
         "feature_match": {
-          "score": 19.18,
-          "reason": "50% allocation of the declared foreground-pixel score after the scattering and optical-theorem checks.",
-          "max_score": 50.0
+          "score": 34.51,
+          "max_score": 50.0,
+          "reason": "50% allocation of the predeclared complete-panel foreground score after the optical-theorem and residual gates passed."
         },
         "numeric_closeness": {
-          "score": 13.42,
-          "reason": "35% allocation; resonance locations and peak heights retain reduced-mesh drift.",
-          "max_score": 35.0
+          "score": 24.16,
+          "max_score": 35.0,
+          "reason": "35% allocation of the same score; the complete independently solved resonance curve is compared without digitized source data."
         },
         "paper_scope_coverage": {
-          "score": 5.75,
-          "reason": "15% allocation; the full plotted kR interval is generated, at 73 independently solved points.",
-          "max_score": 15.0
+          "score": 10.35,
+          "max_score": 15.0,
+          "reason": "15% allocation of the same score; all 153 independent kR samples cover the full published interval."
         }
       },
       "panel_coverage": {
@@ -48,11 +48,12 @@
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
-        "parameter_match": "reduced_scale",
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_subset",
         "artifact_stage": "exploratory",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
@@ -60,10 +61,106 @@
           "BEM001",
           "BEM002",
           "BEM003",
-          "BEM004"
+          "BEM004",
+          "BEM006"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region scores 69.0193, below the 80 render threshold; full-canvas similarity is 99.0456 but is only diagnostic.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_FIG5_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The publication gives two incompatible vertical displacement signs, so one publication-wide paper-exact parameter contract cannot be asserted even though the Figure 4-defined numerical branch passes all checks.",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "outputs/data/paper_scale_bem/checks/acceptance.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The prose states (1.8R,+0.5R), while Figure 4's axes place the second cavity at (1.8R,-0.5R); the latter reproduces the numerical figures and the conflict belongs to the publication record, pending fresh review.",
+            "confidence": "probable",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after independent formula implementation, parameter audit, mesh convergence, physics invariants and isolated execution.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All material, scale, geometry and observable parameters are traced; the conflicting sign remains explicit instead of silently fitted.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "config/paper_scale.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The smallest singular value decreases monotonically from N=400 to N=1600 and all paper-scale acceptance criteria pass.",
+                "evidence": [
+                  "outputs/data/paper_scale_bem/checks/acceptance.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The BEM, optical theorem and field reconstruction were implemented from the paper equations without author code or numerical arrays.",
+                "evidence": [
+                  "src/bem.py",
+                  "src/paper_scale.py",
+                  "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover kernels, matrix assembly, analytic limits, observables and shared-state reconstruction.",
+                "evidence": [
+                  "tests/test_bem.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A sign, observable or solver defect would contradict the passing parameter audit, convergence suite, formula-derived implementation and unit tests.",
+              "evidence": [
+                "tests/test_bem.py",
+                "outputs/data/paper_scale_bem/checks/acceptance.json",
+                "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Publication-wide parameter identity for the coupled-cavity geometry.",
+            "items": [
+              "T001",
+              "Fig. 4 vertical displacement sign"
+            ],
+            "completion": "The full Fig. 5 numerical target and discretization-class contract are complete; only the contradictory source sign and render threshold remain unresolved."
+          },
+          "next_discriminating_test": {
+            "action": "A fresh-context reviewer must independently read the prose and Figure 4 axes, then run a sign-controlled comparison without seeing the original reproduction discussion.",
+            "expected_resolution": "The review will either confirm a paper-error candidate, identify a convention that reconciles the signs, or expose a reproduction interpretation defect.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json",
+              "outputs/checks/geometry_sign_review.json"
+            ]
+          }
+        }
       },
       "physics_assertions": [
         {
@@ -71,25 +168,26 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig5_science.json#linear_residual_max",
-          "claim": "Every driven boundary solve has relative residual below 7.9e-15."
+          "evidence": "outputs/checks/fig5_science.json",
+          "claim": "All 153 N=1600 driven solves have maximum relative residual 3.14e-14."
         },
         {
           "assertion_id": "fig5_optical_theorem",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig5_science.json#optical_theorem_relative_error_median",
-          "claim": "Angular integration and the optical theorem agree to median relative error 0.0734 at feature scale."
+          "evidence": "outputs/checks/fig5_science.json",
+          "claim": "The plotted Eq. (22) observable agrees with the angular integral to median relative error 0.00134."
         }
       ],
       "evidence": [
-        "outputs/data/bem_reproduction.npz",
+        "outputs/data/paper_scale_bem/data/bem_paper_scale.npz",
+        "outputs/data/paper_scale_bem/checks/acceptance.json",
         "outputs/figures/fig5_render_contract.png",
         "outputs/checks/fig5_science.json",
-        "outputs/checks/render_similarity.json#fig5"
+        "outputs/checks/pixel_evidence.json"
       ],
-      "remaining_gap": "The publication's exact rounding and nonuniform 1600-element map are unavailable; foreground score is 38.35/100.",
+      "remaining_gap": "The complete-panel scientific pixel score is 69.0193/100 and the prose/Figure 4 sign conflict still needs independent adjudication.",
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
@@ -98,11 +196,15 @@
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
-      "parameter_score_cap": 70.0,
+      "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
-      "component_total": 38.35,
-      "score": 38.35,
-      "similarity_level": "feature_not_accepted"
+      "score_aggregation": "included",
+      "component_total": 69.02,
+      "score": 69.02,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
@@ -113,19 +215,19 @@
       "weight": 1.0,
       "components": {
         "feature_match": {
-          "score": 46.5,
-          "reason": "50% allocation of the foreground-pixel score after singular-value convergence and field-localization checks.",
-          "max_score": 50.0
+          "score": 48.69,
+          "max_score": 50.0,
+          "reason": "50% allocation of the complete-field pixel score after resonance convergence and field checks passed."
         },
         "numeric_closeness": {
-          "score": 32.55,
-          "reason": "35% allocation; the two-cavity intensity structure is close, with local texture drift.",
-          "max_score": 35.0
+          "score": 34.08,
+          "max_score": 35.0,
+          "reason": "35% allocation of the direct full-region pixel score."
         },
         "paper_scope_coverage": {
-          "score": 13.95,
-          "reason": "15% allocation; the complete near-field panel is reconstructed from one frozen boundary null vector.",
-          "max_score": 15.0
+          "score": 14.61,
+          "max_score": 15.0,
+          "reason": "15% allocation; the full 401x401 symmetric field region, boundaries and grayscale scale are included."
         }
       },
       "panel_coverage": {
@@ -141,11 +243,12 @@
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
-        "parameter_match": "reduced_scale",
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_subset",
         "artifact_stage": "exploratory",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
@@ -153,10 +256,106 @@
           "BEM001",
           "BEM002",
           "BEM003",
-          "BEM005"
+          "BEM005",
+          "BEM006"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared near-field region scores 97.372 and passes the high-fidelity render threshold.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_FIG6_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The publication gives two incompatible vertical displacement signs, so one publication-wide paper-exact parameter contract cannot be asserted even though the Figure 4-defined numerical branch passes all checks.",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "outputs/data/paper_scale_bem/checks/acceptance.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The prose states (1.8R,+0.5R), while Figure 4's axes place the second cavity at (1.8R,-0.5R); the latter reproduces the numerical figures and the conflict belongs to the publication record, pending fresh review.",
+            "confidence": "probable",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after independent formula implementation, parameter audit, mesh convergence, physics invariants and isolated execution.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All material, scale, geometry and observable parameters are traced; the conflicting sign remains explicit instead of silently fitted.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "config/paper_scale.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The resonance residual decreases monotonically across four meshes through N=1600.",
+                "evidence": [
+                  "outputs/data/paper_scale_bem/checks/acceptance.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The near field is reconstructed from the independently generated BEM null vector without author code or arrays.",
+                "evidence": [
+                  "src/bem.py",
+                  "src/paper_scale.py",
+                  "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover kernels, matrix assembly, analytic limits, observables and shared-state reconstruction.",
+                "evidence": [
+                  "tests/test_bem.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A geometry, null-vector or field-reconstruction defect would contradict the passing audit, convergence suite, independent implementation and tests.",
+              "evidence": [
+                "tests/test_bem.py",
+                "outputs/data/paper_scale_bem/checks/acceptance.json",
+                "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Publication-wide parameter identity for the coupled-cavity geometry.",
+            "items": [
+              "T002",
+              "Fig. 4 vertical displacement sign"
+            ],
+            "completion": "The full Fig. 6 numerical target, discretization contract and pixel contract pass; only the contradictory source sign remains unresolved."
+          },
+          "next_discriminating_test": {
+            "action": "A fresh-context reviewer must independently read the prose and Figure 4 axes, then run a sign-controlled comparison without seeing the original reproduction discussion.",
+            "expected_resolution": "The review will either confirm a paper-error candidate, identify a convention that reconciles the signs, or expose a reproduction interpretation defect.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json",
+              "outputs/checks/geometry_sign_review.json"
+            ]
+          }
+        }
       },
       "physics_assertions": [
         {
@@ -164,25 +363,26 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig6_science.json#smallest_singular_by_mesh",
-          "claim": "The smallest singular value at the published complex resonance decreases monotonically across four meshes."
+          "evidence": "outputs/checks/fig6_science.json",
+          "claim": "The smallest singular value falls monotonically to 4.52e-5 at N=1600."
         },
         {
-          "assertion_id": "fig6_localization",
+          "assertion_id": "fig6_field_domain",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig6_science.json#inside_to_outside_mean_intensity_ratio",
-          "claim": "Mean field intensity inside the two cavities is 2.80 times the exterior mean."
+          "evidence": "outputs/checks/fig6_science.json",
+          "claim": "A finite nonzero 401x401 field is reconstructed on the symmetric [-3R,3R]^2 domain."
         }
       ],
       "evidence": [
-        "outputs/data/bem_reproduction.npz",
+        "outputs/data/paper_scale_bem/data/bem_paper_scale.npz",
+        "outputs/data/paper_scale_bem/checks/acceptance.json",
         "outputs/figures/fig6_render_contract.png",
         "outputs/checks/fig6_science.json",
-        "outputs/checks/render_similarity.json#fig6"
+        "outputs/checks/pixel_evidence.json"
       ],
-      "remaining_gap": "The 93.00 raw foreground score is capped at 70 because the mesh and rounding are not paper-exact.",
+      "remaining_gap": "The scientific pixel contract passes at 97.372/100; only the prose/Figure 4 sign conflict still blocks publication-wide paper-exact status.",
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
@@ -191,11 +391,15 @@
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
-      "parameter_score_cap": 70.0,
+      "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
-      "component_total": 93.0,
+      "score_aggregation": "included",
+      "component_total": 97.38,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -206,19 +410,19 @@
       "weight": 1.0,
       "components": {
         "feature_match": {
-          "score": 21.56,
-          "reason": "50% allocation of the foreground-pixel score after inversion-symmetry and lobe-direction checks.",
-          "max_score": 50.0
+          "score": 26.83,
+          "max_score": 50.0,
+          "reason": "50% allocation of the complete-panel foreground score after shared-state and symmetry checks passed."
         },
         "numeric_closeness": {
-          "score": 15.09,
-          "reason": "35% allocation; the narrow-peak sequence is present but small angular shifts are strongly penalized.",
-          "max_score": 35.0
+          "score": 18.78,
+          "max_score": 35.0,
+          "reason": "35% allocation; sparse narrow peaks make subpixel placement differences severe under foreground MAE."
         },
         "paper_scope_coverage": {
-          "score": 6.47,
-          "reason": "15% allocation; the full 0-360 degree far-field curve is generated from the Fig. 6 boundary state.",
-          "max_score": 15.0
+          "score": 8.05,
+          "max_score": 15.0,
+          "reason": "15% allocation; all 1440 angular samples cover the complete 0-360 degree curve."
         }
       },
       "panel_coverage": {
@@ -234,11 +438,12 @@
       "evaluation": {
         "critical": false,
         "paper_level_role": "supporting",
+        "assessment_subject": "paper",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
-        "parameter_match": "reduced_scale",
+        "failure_type": "source_discrepancy",
+        "parameter_match": "paper_subset",
         "artifact_stage": "exploratory",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
@@ -247,10 +452,108 @@
           "BEM002",
           "BEM003",
           "BEM004",
-          "BEM005"
+          "BEM005",
+          "BEM006"
         ],
         "formula_gate": "verified",
-        "pixel_status": "scored"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "The complete predeclared scientific region scores 53.6671, below the 80 render threshold; full-canvas similarity is 97.1944 but is only diagnostic.",
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_FIG7_SCIENCE"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "The publication gives two incompatible vertical displacement signs, so one publication-wide paper-exact parameter contract cannot be asserted even though the Figure 4-defined numerical branch passes all checks.",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "outputs/data/paper_scale_bem/checks/acceptance.json"
+            ]
+          },
+          "root_cause": {
+            "category": "paper_claim_discrepancy",
+            "statement": "The prose states (1.8R,+0.5R), while Figure 4's axes place the second cavity at (1.8R,-0.5R); the latter reproduces the numerical figures and the conflict belongs to the publication record, pending fresh review.",
+            "confidence": "probable",
+            "evidence": [
+              "../paper-source/obem.tex",
+              "../paper-source/para.eps",
+              "parameter_provenance.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code fault was found after independent formula implementation, parameter audit, mesh convergence, physics invariants and isolated execution.",
+            "checks": [
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All material, scale, geometry and observable parameters are traced; the conflicting sign remains explicit instead of silently fitted.",
+                "evidence": [
+                  "parameter_provenance.json",
+                  "config/paper_scale.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The shared resonance state converges monotonically across four meshes through N=1600.",
+                "evidence": [
+                  "outputs/data/paper_scale_bem/checks/acceptance.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The far field is computed from the independently generated shared boundary state without author code or arrays.",
+                "evidence": [
+                  "src/bem.py",
+                  "src/paper_scale.py",
+                  "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The far field satisfies pi-rotation symmetry to 4.43e-14 and shares the exact frozen state used by Fig. 6.",
+                "evidence": [
+                  "outputs/checks/fig7_science.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "A far-field or shared-state defect would contradict the passing parameter audit, convergence suite, independent implementation and symmetry invariant.",
+              "evidence": [
+                "outputs/checks/fig7_science.json",
+                "outputs/data/paper_scale_bem/checks/acceptance.json",
+                "outputs/runs/paper-scale-figure-geometry-bem-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Publication-wide parameter identity for the coupled-cavity geometry plus residual render mismatch.",
+            "items": [
+              "T003",
+              "Fig. 4 vertical displacement sign",
+              "Fig. 7 typography and subpixel line placement"
+            ],
+            "completion": "The full Fig. 7 numerical target and discretization-class contract are complete; source-sign adjudication and render fidelity remain unresolved."
+          },
+          "next_discriminating_test": {
+            "action": "A fresh-context reviewer must independently inspect the sign conflict and separately audit whether the remaining foreground mismatch is purely rendering or signals a branch difference.",
+            "expected_resolution": "The review will distinguish a publication error, a reproduction interpretation defect, and a presentation-only mismatch without changing the frozen array.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json",
+              "outputs/checks/geometry_sign_review.json",
+              "outputs/checks/render_review_fig7.json"
+            ]
+          }
+        }
       },
       "physics_assertions": [
         {
@@ -258,25 +561,26 @@
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig7_science.json#same_frozen_boundary_state_as_T002",
-          "claim": "The far field is derived from the same independently frozen boundary state as Fig. 6."
+          "evidence": "outputs/checks/fig7_science.json",
+          "claim": "The far field is derived from the same frozen N=1600 boundary state as Fig. 6."
         },
         {
           "assertion_id": "fig7_inversion",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/fig7_science.json#pi_rotation_max_absolute_error",
-          "claim": "The computed far field has pi-rotation maximum error below 1.8e-9."
+          "evidence": "outputs/checks/fig7_science.json",
+          "claim": "The computed far field has pi-rotation maximum error 4.43e-14."
         }
       ],
       "evidence": [
-        "outputs/data/bem_reproduction.npz",
+        "outputs/data/paper_scale_bem/data/bem_paper_scale.npz",
+        "outputs/data/paper_scale_bem/checks/acceptance.json",
         "outputs/figures/fig7_render_contract.png",
         "outputs/checks/fig7_science.json",
-        "outputs/checks/render_similarity.json#fig7"
+        "outputs/checks/pixel_evidence.json"
       ],
-      "remaining_gap": "Narrow angular peak shifts leave the foreground score at 43.11/100.",
+      "remaining_gap": "The complete-panel scientific pixel score is 53.6671/100 and the prose/Figure 4 sign conflict still needs independent adjudication.",
       "critical": false,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
@@ -285,15 +589,19 @@
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
-      "parameter_score_cap": 70.0,
+      "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
-      "component_total": 43.12,
-      "score": 43.12,
-      "similarity_level": "feature_not_accepted"
+      "score_aggregation": "included",
+      "component_total": 53.66,
+      "score": 53.66,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "overall_score": 50.49,
-  "similarity_level": "feature_not_accepted",
+  "overall_score": 64.23,
+  "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
     "scored_items": 3,
     "critical_items": 2,
@@ -302,10 +610,10 @@
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "not_paper_parameters": 3
+      "source_discrepancy": 3
     },
     "parameter_match_counts": {
-      "reduced_scale": 3
+      "paper_subset": 3
     },
     "reference_comparison_counts": {
       "source_figure_only": 3
@@ -333,11 +641,45 @@
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
       "T003"
-    ]
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 3
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 3
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 3
+    },
+    "root_cause_counts": {
+      "paper_claim_discrepancy": 3
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3
+    }
   },
   "status": "passed"
 }

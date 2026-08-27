@@ -1,57 +1,21 @@
-# Quantum error correction in scrambling dynamics: numerical reproduction
+# Quantum Error Correction in Scrambling Dynamics and Measurement-Induced Phase Transition: scientific reproduction note
 
-This package reproduces the theory-numerical content of Choi, Bao, Qi, and
-Altman, *Quantum Error Correction in Scrambling Dynamics and
-Measurement-Induced Phase Transition*, Phys. Rev. Lett. **125**, 030505
-(2020). It is a scientific reproduction, not image tracing: the derivations,
-Clifford/stabilizer dynamics, frame-potential estimator, and finite-size fits
-produce all numerical arrays independently. Paper pixels are used only in the
-final comparison boards.
+## Result
 
-## Scope and result
+Full twenty-page arXiv PDF and both TeX manuscripts read before target selection.
 
-All 44 visible theory-numerical panels and insets are covered across Main
-Fig. 2(b–e) and Supplement Figs. S2–S6. Circuit, channel, and tensor-network
-schematics are not treated as numerical targets. Twenty items are reproduced
-at paper scale: all four S2 frame-potential panels at `n=22`, 22 depths, and
-50,000 samples per depth, plus all sixteen S3 subpanels at `L=32`, `m=11`, and
-240 trajectories per setting. The remaining 24 items have independent
-feature-scale evidence with reduced sizes or statistics and are labeled as
-such.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-The scientific audit score is **78.41/100**. T001, T002, T003, T004, and T006
-score 80; T005 scores 70 because its transition locations pass while the
-depth-independence of the fitted critical exponent remains only partially
-supported at `L<=24`. The downstream presentation score is **68.30/100**; it
-does not contribute scientific credit.
+## What is reproduced
 
-Key numerical evidence includes paper-scale approach to the Haar moments for
-`k=1,2,3`, a late-depth `F4=29.00±0.85` whose 95% lower bound remains above 24,
-the strong-scrambling measurement-protection signature, and independently
-fitted transition probabilities with mean absolute errors of `0.00409` (Main
-Fig. 2) and `0.00484` (S5) against the published summary table. The S6 campaign
-uses all six paper block sizes and exact `d/m=3`, while retaining the explicit
-`L<=24` precision boundary.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Run and inspect
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=passed, execution=attested, pixel=needs_repair, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
-From the repository root:
+## Run
 
-```bash
-python -m unittest discover -s cases/1903.05124/code/tests -v
-python cases/1903.05124/code/scripts/run_supp_fig_s2.py --render-only
-python cases/1903.05124/code/scripts/run_supp_fig_s3.py --render-only
-python cases/1903.05124/code/scripts/run_supp_fig_s4.py \
-  --refinement-input cases/1903.05124/outputs/data/supp_fig_s5_refinement_numerical_data.csv
-python cases/1903.05124/code/scripts/run_supp_fig_s5.py \
-  --refinement-input cases/1903.05124/outputs/data/supp_fig_s5_refinement_numerical_data.csv
-```
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-The simulation runners also expose `--scale smoke` for a fresh fast run and
-larger feature/paper modes where implemented. A fresh run writes structured
-CSV/NPZ data and JSON checks before rendering PNG figures.
+## Paper-review boundary
 
-The public package contains no paper PDF, standalone original figure, or
-digitized source curve. See the [equation derivation](../docs/DERIVATION.md),
-[method trace](../docs/METHOD_TRACE.md), and
-[score interpretation](../docs/SIMILARITY_SCORECARD.md).
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: All 44 visible theory-numerical panels and insets are frozen in the reproduction scope. Nine schematic panels and one numerical summary table are inventoried but excluded from figure generation. Source figures are comparison-only; every generated value must come from formulas or an independent Clifford/stabilizer computation. T001 now has a feature-scale reproduction of all four Main Fig. 2 numerical panels; paper geometry is preserved while sampling and finite-size grids remain reduced and explicitly labeled. T004 now has all ten Supplement Fig. S4 numerical items from a fresh EQC007 half-chain fit over independent generated observations; every scientific check passes at feature scale. T005 now has all seven Supplement Fig. S5 panels from 4,352 independent periodic-chain trajectories; critical points pass, while exponent-depth stability remains partial at L<=24 and eight realizations per cell. T006 now has all three Supplement Fig. S6 panels from 2,880 independent trajectories over every paper block size at exact d/m=3; all frozen scientific checks pass at feature scale, with sizes limited to L<=24. All 44 theory-numerical items now have independent formula-based evidence; 20 are paper scale and 24 are explicitly feature scale.

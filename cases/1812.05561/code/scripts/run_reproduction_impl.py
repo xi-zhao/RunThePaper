@@ -43,6 +43,12 @@ from src.scar_reproduction import (
     su2_constraint,
     toy_diagnostics,
 )
+from src.atomic_closure import (
+    entropy_fit_evidence,
+    perfect_revival_overlap_bound,
+    revival_fit_evidence,
+    turning_point_power_law,
+)
 
 
 ROOT = Path.cwd()
@@ -158,16 +164,20 @@ def run_main_figure_1(parameters: dict[str, Any], h0: float, tau: float) -> dict
     fidelity_pxp = np.abs(states_pxp[:, initial_index]) ** 2
     fidelity_deformed = np.abs(states_deformed[:, initial_index]) ** 2
     inset_times = np.linspace(4.0, 6.0, 401)
-    inset_states = expm_multiply(
-        -1j * deformed,
-        initial,
-        start=float(inset_times[0]),
-        stop=float(inset_times[-1]),
-        num=len(inset_times),
-        endpoint=True,
-        traceA=0.0,
-    )
-    inset_infidelity = 1.0 - np.clip(np.abs(inset_states[:, initial_index]) ** 2, 0.0, 1.0)
+    inset_infidelities: dict[str, np.ndarray] = {}
+    for name, matrix in (("pxp", unperturbed), ("deformed", deformed)):
+        inset_states = expm_multiply(
+            -1j * matrix,
+            initial,
+            start=float(inset_times[0]),
+            stop=float(inset_times[-1]),
+            num=len(inset_times),
+            endpoint=True,
+            traceA=0.0,
+        )
+        inset_infidelities[name] = 1.0 - np.clip(
+            np.abs(inset_states[:, initial_index]) ** 2, 0.0, 1.0
+        )
     partition = Bipartition.from_basis(family.basis, n_sites)
     entropy_pxp = np.asarray([partition.entropy(state) for state in states_pxp])
     entropy_deformed = np.asarray([partition.entropy(state) for state in states_deformed])
@@ -184,7 +194,9 @@ def run_main_figure_1(parameters: dict[str, Any], h0: float, tau: float) -> dict
         fidelity_pxp=fidelity_pxp,
         fidelity_deformed=fidelity_deformed,
         inset_times=inset_times,
-        inset_infidelity=inset_infidelity,
+        inset_infidelity=inset_infidelities["deformed"],
+        inset_infidelity_pxp=inset_infidelities["pxp"],
+        inset_infidelity_deformed=inset_infidelities["deformed"],
         entropy_pxp=entropy_pxp,
         entropy_deformed=entropy_deformed,
         entanglement_spectrum=entanglement_spectrum,
@@ -240,14 +252,19 @@ def run_main_figure_2(parameters: dict[str, Any], h0: float) -> dict[str, Any]:
         r_k0_even.append(mean_even)
         r_pi_odd.append(mean_odd)
         if n_sites == sizes[-1]:
-            combined_unfolded = np.concatenate((unfolded_even, unfolded_odd))
             bins = np.linspace(0.0, 3.5, int(config["histogram_bins"]) + 1)
-            density, edges = np.histogram(combined_unfolded, bins=bins, density=True)
+            density_even, edges = np.histogram(unfolded_even, bins=bins, density=True)
+            density_odd, _ = np.histogram(unfolded_odd, bins=bins, density=True)
+            density_pooled, _ = np.histogram(
+                np.concatenate((unfolded_even, unfolded_odd)), bins=bins, density=True
+            )
             largest_payload = {
                 "energies": energies_even,
                 "overlaps": overlaps,
                 "spacing_centers": 0.5 * (edges[:-1] + edges[1:]),
-                "spacing_density": density,
+                "spacing_density_k0_even": density_even,
+                "spacing_density_kpi_odd": density_odd,
+                "spacing_density_pooled": density_pooled,
                 "sector_dimension": sector_even.shape[0],
             }
     assert largest_payload is not None
@@ -259,7 +276,10 @@ def run_main_figure_2(parameters: dict[str, Any], h0: float) -> dict[str, Any]:
         energies=largest_payload["energies"],
         overlaps=largest_payload["overlaps"],
         spacing_centers=largest_payload["spacing_centers"],
-        spacing_density=largest_payload["spacing_density"],
+        spacing_density=largest_payload["spacing_density_pooled"],
+        spacing_density_k0_even=largest_payload["spacing_density_k0_even"],
+        spacing_density_kpi_odd=largest_payload["spacing_density_kpi_odd"],
+        spacing_density_pooled=largest_payload["spacing_density_pooled"],
         goe_density=(math.pi / 2.0)
         * largest_payload["spacing_centers"]
         * np.exp(-math.pi * largest_payload["spacing_centers"] ** 2 / 4.0),
@@ -440,6 +460,14 @@ def run_supp_figure_s3(parameters: dict[str, Any], h0: float, tau: float) -> dic
     normalized_infidelity = np.zeros((len(sizes), m_max + 1))
     gamma = np.full((len(sizes), m_max + 1), np.nan)
     turning_points = np.full(len(sizes), np.nan)
+    short_grid = np.arange(int(config["short_fit"][0]), int(config["short_fit"][1]) + 1)
+    long_grid = np.arange(int(config["long_fit"][0]), int(config["long_fit"][1]) + 1)
+    short_coefficients = np.full((len(sizes), 2), np.nan)
+    long_coefficients = np.full((len(sizes), 2), np.nan)
+    short_curves = np.full((len(sizes), len(short_grid)), np.nan)
+    long_curves = np.full((len(sizes), len(long_grid)), np.nan)
+    short_log_rms = np.full(len(sizes), np.nan)
+    long_log_rms = np.full(len(sizes), np.nan)
     for row, n_sites in enumerate(sizes):
         family = HamiltonianFamily.build(n_sites, periodic=True, max_range=n_sites // 2)
         matrix = family.matrix(ansatz_couplings(h0, n_sites // 2))
@@ -459,14 +487,23 @@ def run_supp_figure_s3(parameters: dict[str, Any], h0: float, tau: float) -> dic
         g_tilde = np.power(np.maximum(fidelity, 1e-300), 1.0 / n_sites)
         normalized_infidelity[row] = 1.0 - g_tilde
         gamma[row, 1:] = (1.0 - g_tilde[1:]) / revival[1:]
-        short = np.arange(int(config["short_fit"][0]), int(config["short_fit"][1]) + 1)
-        long = np.arange(int(config["long_fit"][0]), int(config["long_fit"][1]) + 1)
-        if np.all(gamma[row, np.concatenate((short, long))] > 0):
-            slope_short, intercept_short = np.polyfit(np.log(short), np.log(gamma[row, short]), 1)
-            slope_long, intercept_long = np.polyfit(np.log(long), np.log(gamma[row, long]), 1)
-            denominator = slope_short - slope_long
-            if abs(denominator) > 1e-12:
-                turning_points[row] = math.exp((intercept_long - intercept_short) / denominator)
+        try:
+            fits = revival_fit_evidence(
+                revival,
+                gamma[row],
+                config["short_fit"],
+                config["long_fit"],
+            )
+        except ValueError:
+            continue
+        short_coefficients[row] = fits["short"]["coefficients"]
+        long_coefficients[row] = fits["long"]["coefficients"]
+        short_curves[row] = fits["short"]["curve"]
+        long_curves[row] = fits["long"]["curve"]
+        short_log_rms[row] = fits["short"]["log_rms_residual"]
+        long_log_rms[row] = fits["long"]["log_rms_residual"]
+        turning_points[row] = fits["turning_point"]
+    scaling = turning_point_power_law(np.asarray(sizes), turning_points)
     save_npz(
         "T006_supp_figure_s3.npz",
         sizes=np.asarray(sizes),
@@ -474,6 +511,17 @@ def run_supp_figure_s3(parameters: dict[str, Any], h0: float, tau: float) -> dic
         normalized_infidelity=normalized_infidelity,
         gamma=gamma,
         turning_points=turning_points,
+        short_fit_grid=short_grid,
+        long_fit_grid=long_grid,
+        short_fit_coefficients=short_coefficients,
+        long_fit_coefficients=long_coefficients,
+        short_fit_curves=short_curves,
+        long_fit_curves=long_curves,
+        short_fit_log_rms=short_log_rms,
+        long_fit_log_rms=long_log_rms,
+        turning_point_power_law_coefficients=scaling["coefficients"],
+        turning_point_power_law_curve=scaling["curve"],
+        turning_point_power_law_log_rms=scaling["log_rms_residual"],
         analytic_tau=tau,
         paper_sizes=np.asarray([22, 24, 26, 28, 30, 32]),
         paper_m_max=1000,
@@ -488,6 +536,7 @@ def run_supp_figure_s3(parameters: dict[str, Any], h0: float, tau: float) -> dic
         "early_gamma_relative_spread": float(relative_spread),
         "turning_points": turning_points.tolist(),
         "finite_turning_points": int(np.isfinite(turning_points).sum()),
+        "turning_point_power_law_exponent": float(scaling["coefficients"][0]),
     }
 
 
@@ -565,9 +614,10 @@ def run_supp_figure_s5(parameters: dict[str, Any], h0: float) -> dict[str, Any]:
         entropy_second.append(float(cloud["entropies"][central[1]]))
         energies_first.append(float(cloud["energies"][central[0]]))
         energies_second.append(float(cloud["energies"][central[1]]))
-    log_n = np.log(np.asarray(sizes, dtype=np.float64))
+    size_array = np.asarray(sizes, dtype=np.float64)
+    log_n = np.log(size_array)
     fit_first = np.polyfit(log_n, entropy_first, 1)
-    fit_second = np.polyfit(log_n, entropy_second, 1)
+    fits_second = entropy_fit_evidence(size_array, np.asarray(entropy_second))
     save_npz(
         "T008_supp_figure_s5.npz",
         sizes=np.asarray(sizes),
@@ -576,12 +626,16 @@ def run_supp_figure_s5(parameters: dict[str, Any], h0: float) -> dict[str, Any]:
         energy_first=np.asarray(energies_first),
         energy_second=np.asarray(energies_second),
         log_fit_first=fit_first,
-        log_fit_second=fit_second,
+        log_fit_second=fits_second["log_coefficients"],
+        log_fit_second_curve=fits_second["log_curve"],
+        linear_fit_second=fits_second["linear_coefficients"],
+        linear_fit_second_curve=fits_second["linear_curve"],
     )
     return {
         "sizes": sizes,
         "first_log_slope": float(fit_first[0]),
-        "second_log_slope": float(fit_second[0]),
+        "second_log_slope": float(fits_second["log_coefficients"][0]),
+        "second_linear_slope": float(fits_second["linear_coefficients"][0]),
         "first_monotonic_fraction": float(np.mean(np.diff(entropy_first) >= -1e-8)),
         "second_monotonic_fraction": float(np.mean(np.diff(entropy_second) >= -1e-8)),
     }
@@ -622,6 +676,8 @@ def assertion(
     passed: bool,
     observed: Any,
     criterion: str,
+    *,
+    tier: str = "numeric",
 ) -> dict[str, Any]:
     return {
         "assertion_id": assertion_id,
@@ -629,7 +685,7 @@ def assertion(
         "status": "passed" if passed else "failed",
         "observed": observed,
         "criterion": criterion,
-        "tier": "numeric",
+        "tier": tier,
         "essential": True,
     }
 
@@ -654,6 +710,16 @@ def main() -> int:
     h0 = solve_h0()
     delta, tau = harmonic_gap_and_period(h0)
     predicted_gap = 2.0 * math.pi / tau
+
+    lemma_config = parameters["analytic_claims"]["perfect_revival_overlap_bound"]
+    lemma_witnesses = [
+        perfect_revival_overlap_bound(
+            int(n_sites),
+            float(lemma_config["local_norm_bound"]),
+            float(lemma_config["tau"]),
+        )
+        for n_sites in lemma_config["sample_sizes"]
+    ]
 
     results = {
         "T001": timed("T001_main_figure_1", lambda: run_main_figure_1(parameters, h0, tau), timings),
@@ -690,6 +756,76 @@ def main() -> int:
             timings,
         ),
     }
+
+    with np.load(DATA_DIR / "T001_main_figure_1.npz", allow_pickle=False) as payload:
+        t001_data = {key: np.asarray(payload[key]) for key in payload.files}
+    with np.load(DATA_DIR / "T002_main_figure_2.npz", allow_pickle=False) as payload:
+        t002_data = {key: np.asarray(payload[key]) for key in payload.files}
+    with np.load(DATA_DIR / "T006_supp_figure_s3.npz", allow_pickle=False) as payload:
+        t006_data = {key: np.asarray(payload[key]) for key in payload.files}
+    with np.load(DATA_DIR / "T008_supp_figure_s5.npz", allow_pickle=False) as payload:
+        t008_data = {key: np.asarray(payload[key]) for key in payload.files}
+
+    lemma_count_linear = all(
+        row["max_distinct_energies"] <= 1.0 + row["spectral_width_bound"] / row["revival_energy_spacing"]
+        for row in lemma_witnesses
+    )
+    lemma_phase_aligned = all(row["phase_alignment_error"] < 1e-12 for row in lemma_witnesses)
+    lemma_pigeonhole = all(
+        row["uniform_witness_max_probability"] + 1e-15
+        >= row["overlap_probability_lower_bound"]
+        and row["probability_normalization_error"] < 1e-14
+        for row in lemma_witnesses
+    )
+
+    spacing_width = float(t002_data["spacing_centers"][1] - t002_data["spacing_centers"][0])
+    sector_integrals = [
+        float(np.sum(t002_data[key]) * spacing_width)
+        for key in ("spacing_density_k0_even", "spacing_density_kpi_odd")
+    ]
+    short_reconstruction_error = float(
+        np.max(
+            np.abs(
+                t006_data["short_fit_curves"]
+                - np.exp(t006_data["short_fit_coefficients"][:, 1, None])
+                * np.power(
+                    t006_data["short_fit_grid"][None, :],
+                    t006_data["short_fit_coefficients"][:, 0, None],
+                )
+            )
+        )
+    )
+    long_reconstruction_error = float(
+        np.max(
+            np.abs(
+                t006_data["long_fit_curves"]
+                - np.exp(t006_data["long_fit_coefficients"][:, 1, None])
+                * np.power(
+                    t006_data["long_fit_grid"][None, :],
+                    t006_data["long_fit_coefficients"][:, 0, None],
+                )
+            )
+        )
+    )
+    scaling_coefficients = t006_data["turning_point_power_law_coefficients"]
+    scaling_reconstruction_error = float(
+        np.max(
+            np.abs(
+                t006_data["turning_point_power_law_curve"]
+                - np.exp(scaling_coefficients[1])
+                * np.power(t006_data["sizes"], scaling_coefficients[0])
+            )
+        )
+    )
+    linear_coefficients = t008_data["linear_fit_second"]
+    linear_reconstruction_error = float(
+        np.max(
+            np.abs(
+                t008_data["linear_fit_second_curve"]
+                - np.polyval(linear_coefficients, t008_data["sizes"])
+            )
+        )
+    )
 
     checks = {
         "schema_version": 1,
@@ -766,6 +902,47 @@ def main() -> int:
                     assertion("T009-N", "Exactly N+1 eigenstates carry polarized-state weight.", results["T009"]["nonzero_overlap_states"] == results["T009"]["expected_special_states"], results["T009"]["nonzero_overlap_states"], f"equals {results['T009']['expected_special_states']}"),
                 ],
             },
+            "T010": {
+                "metrics": {"witnesses": lemma_witnesses},
+                "assertions": [
+                    assertion("T010-C", "The number of revival-compatible distinct energies is O(N).", lemma_count_linear, [row["max_distinct_energies"] for row in lemma_witnesses], "count <= floor(2*N*h/(2*pi/tau))+1", tier="analytic"),
+                    assertion("T010-P", "Every occupied energy in the constructed witness has the same revival phase.", lemma_phase_aligned, max(row["phase_alignment_error"] for row in lemma_witnesses), "maximum phase error < 1e-12", tier="analytic"),
+                    assertion("T010-O", "Normalization forces one squared overlap to be at least the reciprocal count.", lemma_pigeonhole, [row["overlap_probability_lower_bound"] for row in lemma_witnesses], "max probability >= 1/K and probabilities sum to one", tier="analytic"),
+                ],
+            },
+            "T011": {
+                "metrics": {
+                    "branch_points": int(len(t001_data["inset_times"])),
+                    "maximum_branch_difference": float(np.max(np.abs(t001_data["inset_infidelity_pxp"] - t001_data["inset_infidelity_deformed"]))),
+                },
+                "assertions": [
+                    assertion("T011-B", "Both H0 and optimized inset branches are frozen independently.", bool(t001_data["inset_infidelity_pxp"].shape == t001_data["inset_times"].shape == t001_data["inset_infidelity_deformed"].shape and np.all(np.isfinite(t001_data["inset_infidelity_pxp"])) and np.all(np.isfinite(t001_data["inset_infidelity_deformed"]))), [t001_data["inset_infidelity_pxp"].shape, t001_data["inset_infidelity_deformed"].shape], "both finite branches match the inset grid"),
+                    assertion("T011-I", "Each branch is a valid infidelity in [0,1].", bool(np.all((t001_data["inset_infidelity_pxp"] >= 0) & (t001_data["inset_infidelity_pxp"] <= 1)) and np.all((t001_data["inset_infidelity_deformed"] >= 0) & (t001_data["inset_infidelity_deformed"] <= 1))), [float(np.min(t001_data["inset_infidelity_pxp"])), float(np.max(t001_data["inset_infidelity_pxp"])), float(np.min(t001_data["inset_infidelity_deformed"])), float(np.max(t001_data["inset_infidelity_deformed"]))], "all values lie in [0,1]"),
+                ],
+            },
+            "T012": {
+                "metrics": {"sector_integrals": sector_integrals},
+                "assertions": [
+                    assertion("T012-S", "The two printed symmetry sectors retain distinct histogram arrays.", bool(t002_data["spacing_density_k0_even"].shape == t002_data["spacing_centers"].shape == t002_data["spacing_density_kpi_odd"].shape), [t002_data["spacing_density_k0_even"].shape, t002_data["spacing_density_kpi_odd"].shape], "both sector arrays match the declared bin centers"),
+                    assertion("T012-N", "Each sector-resolved spacing density is normalized on the declared histogram range.", bool(np.allclose(sector_integrals, 1.0, atol=1e-10)), sector_integrals, "sum(P(s)*delta_s)=1 in each sector"),
+                ],
+            },
+            "T013": {
+                "metrics": {"maximum_short_curve_reconstruction_error": short_reconstruction_error},
+                "assertions": [assertion("T013-F", "Every executed-size short-window fit is frozen with its coefficients, grid and curve.", bool(t006_data["short_fit_curves"].shape[0] == len(t006_data["sizes"]) and np.all(np.isfinite(t006_data["short_fit_coefficients"])) and short_reconstruction_error < 1e-14), short_reconstruction_error, "all branches finite and curve reconstruction error < 1e-14")],
+            },
+            "T014": {
+                "metrics": {"maximum_long_curve_reconstruction_error": long_reconstruction_error},
+                "assertions": [assertion("T014-F", "Every executed-size long-window fit is frozen with its coefficients, grid and curve.", bool(t006_data["long_fit_curves"].shape[0] == len(t006_data["sizes"]) and np.all(np.isfinite(t006_data["long_fit_coefficients"])) and long_reconstruction_error < 1e-14), long_reconstruction_error, "all branches finite and curve reconstruction error < 1e-14")],
+            },
+            "T015": {
+                "metrics": {"power_law_exponent": float(scaling_coefficients[0]), "maximum_curve_reconstruction_error": scaling_reconstruction_error},
+                "assertions": [assertion("T015-F", "The turning-point power-law guide is produced and frozen by the scientific runner.", bool(np.all(np.isfinite(scaling_coefficients)) and scaling_reconstruction_error < 1e-14), [scaling_coefficients.tolist(), scaling_reconstruction_error], "finite coefficients and reconstruction error < 1e-14")],
+            },
+            "T016": {
+                "metrics": {"linear_slope": float(linear_coefficients[0]), "maximum_curve_reconstruction_error": linear_reconstruction_error},
+                "assertions": [assertion("T016-F", "The linear guide is fit to and frozen for the second scar-entropy series.", bool(np.all(np.isfinite(linear_coefficients)) and linear_reconstruction_error < 1e-14), [linear_coefficients.tolist(), linear_reconstruction_error], "finite second-series linear coefficients and reconstruction error < 1e-14")],
+            },
         },
     }
     all_assertions = [
@@ -780,6 +957,33 @@ def main() -> int:
     }
     checks["status"] = checks["summary"]["status"]
     write_json(CHECK_DIR / "target_checks.json", checks)
+    closure_files = {
+        "T010": "T010_perfect_revival_lemma.json",
+        "T011": "T011_inset_branches.json",
+        "T012": "T012_sector_spacing.json",
+        "T013": "T013_short_fit_checks.json",
+        "T014": "T014_long_fit_checks.json",
+        "T015": "T015_power_law_fit.json",
+        "T016": "T016_fit_identity.json",
+    }
+    for target_id, filename in closure_files.items():
+        target = checks["targets"][target_id]
+        write_json(
+            CHECK_DIR / filename,
+            {
+                "schema_version": 1,
+                "paper_id": "1812.05561",
+                "target_id": target_id,
+                "status": "passed" if all(row["status"] == "passed" for row in target["assertions"]) else "failed",
+                "metrics": target["metrics"],
+                "assertions": target["assertions"],
+                "scientific_input_boundary": {
+                    "source_pixels_used": False,
+                    "author_code_used": False,
+                    "author_numeric_arrays_used": False,
+                },
+            },
+        )
     write_json(
         CHECK_DIR / "runtime_profile.json",
         {

@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "paper_id": "2604.08669",
+  "case_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669",
+  "status": "dry_run",
+  "mode": "dry_run",
+  "handler": "refresh-evidence",
+  "selected_work_item": {
+    "work_item_id": "WORK_T001_INSUFFICIENT_COMPUTE_001",
+    "source": "planned_repair",
+    "source_ref": "PLAN_T001_INSUFFICIENT_COMPUTE_001",
+    "target_id": "T001",
+    "failure_or_frontier_class": "insufficient_compute",
+    "priority": "critical",
+    "metric": {
+      "name": "paper_scale_evidence",
+      "observed": "missing_or_reduced_scale",
+      "threshold": "paper_scale_run_completed_or_boundary_recorded",
+      "direction": "equals"
+    },
+    "hypothesis": "The reduced pilot validates the GNN path-planning loop, but the paper-scale 127 x 127 to 101 x 101 benchmark needs a larger dataset and A100 calibration.",
+    "proposed_actions": [
+      "Run an A100 calibration with larger lattices and record throughput before scaling toward the paper benchmark.",
+      "Refresh the derived checks before attempting pixel or style tuning.",
+      "If the paper-scale run is not feasible in the current environment, record the compute boundary with measured or estimated resource requirements."
+    ],
+    "allowed_file_scopes": [
+      "config/",
+      "scripts/",
+      "outputs/data/",
+      "outputs/figures/",
+      "outputs/checks/",
+      "COMPUTE_BUDGET.md",
+      "TIME_BUDGET_REQUEST.md",
+      "PLANNED_LARGE_SCALE_RUNS.md",
+      "physics_reproduction_project.json",
+      "REPRODUCTION_REPORT.md",
+      "CONSISTENCY_REPORT.md"
+    ],
+    "evidence_to_refresh": [
+      "paper_exact_campaign_result.json",
+      "similarity_scorecard.json",
+      "reproduction-report.md",
+      "CASE_LEARNING_DIGEST.md",
+      "physics_reproduction_project_check.json",
+      "repair_plan.json",
+      "repair_work_items.json",
+      "harness_case_audit.json"
+    ],
+    "stop_conditions": [
+      "paper_scale_run_completed_or_boundary_recorded",
+      "paper_exact_campaign_result.status in {completed, applied, boundary_recorded}",
+      "similarity_scorecard.json refreshed",
+      "physics_reproduction_project_check.status == passed"
+    ],
+    "one_repair_per_iteration": true,
+    "hypothesis_template": "The reduced pilot validates the GNN path-planning loop, but the paper-scale 127 x 127 to 101 x 101 benchmark needs a larger dataset and A100 calibration.",
+    "forbidden_changes": [
+      "Do not raise similarity scores without a new large-scale run or an explicit compute-boundary artifact.",
+      "Do not replace the paper-scale target with a smaller proxy while keeping a complete-reproduction claim.",
+      "Do not tune plot styling or pixel thresholds as a substitute for missing disorder samples, system sizes, or scaling-collapse evidence."
+    ],
+    "acceptance_conditions": [
+      "paper_scale_evidence == paper_scale_run_completed_or_boundary_recorded",
+      "paper_scale_run_completed_or_boundary_recorded",
+      "paper_exact_campaign_result.status in {completed, applied, boundary_recorded}",
+      "similarity_scorecard.json refreshed",
+      "physics_reproduction_project_check.status == passed"
+    ]
+  },
+  "planned_actions": [
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "paper_exact_campaign_result.json",
+      "command": "# no deterministic refresh command for paper_exact_campaign_result.json",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "similarity_scorecard.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/score_similarity.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_report",
+      "evidence_name": "reproduction-report.md",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/build_reproduction_report.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_report",
+      "evidence_name": "CASE_LEARNING_DIGEST.md",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/build_case_learning_digest.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "physics_reproduction_project_check.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/check_physics_project.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "repair_plan.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/plan_repairs.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "repair_work_items.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/build_repair_work_items.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "harness_case_audit.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/audit_case.py local-system/xizhao/my_projects/RRAgent/case/2604.08669 --write",
+      "status": "planned"
+    }
+  ],
+  "executed_actions": [],
+  "findings": [],
+  "allowed_file_scopes": [
+    "config/",
+    "scripts/",
+    "outputs/data/",
+    "outputs/figures/",
+    "outputs/checks/",
+    "COMPUTE_BUDGET.md",
+    "TIME_BUDGET_REQUEST.md",
+    "PLANNED_LARGE_SCALE_RUNS.md",
+    "physics_reproduction_project.json",
+    "REPRODUCTION_REPORT.md",
+    "CONSISTENCY_REPORT.md"
+  ],
+  "forbidden_changes": [
+    "Do not raise similarity scores without a new large-scale run or an explicit compute-boundary artifact.",
+    "Do not replace the paper-scale target with a smaller proxy while keeping a complete-reproduction claim.",
+    "Do not tune plot styling or pixel thresholds as a substitute for missing disorder samples, system sizes, or scaling-collapse evidence."
+  ],
+  "acceptance_conditions": [
+    "paper_scale_evidence == paper_scale_run_completed_or_boundary_recorded",
+    "paper_scale_run_completed_or_boundary_recorded",
+    "paper_exact_campaign_result.status in {completed, applied, boundary_recorded}",
+    "similarity_scorecard.json refreshed",
+    "physics_reproduction_project_check.status == passed"
+  ],
+  "session_id": "20260625T134226898419Z",
+  "session_artifact_path": "local-system/xizhao/my_projects/RRAgent/case/2604.08669/outputs/kernel/sessions/20260625T134226898419Z/repair_loop_step.json"
+}

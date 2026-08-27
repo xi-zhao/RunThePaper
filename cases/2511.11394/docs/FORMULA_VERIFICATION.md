@@ -11,7 +11,7 @@ outputs/checks/formula_verification.json
 Run:
 
 ```bash
-python private validation harness/scripts/check_formula_gate.py case/<paper-id> --write
+python PRAgent-workflow/scripts/check_formula_gate.py case/<paper-id> --write
 ```
 
 ## Gate Summary

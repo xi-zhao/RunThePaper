@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.15597-implementation-probe-v5-20260824",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T007",
+    "T012",
+    "T015",
+    "T016",
+    "T017",
+    "T019",
+    "T025",
+    "T026",
+    "T028",
+    "T029",
+    "T030"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_probe.py",
+    "--config",
+    "config/implementation_probe.json"
+  ],
+  "inputs": [
+    "config/implementation_probe.json",
+    "scripts/run_implementation_probe.py",
+    "src/gate_model.py",
+    "src/ion_chain.py",
+    "src/supplement_claims.py"
+  ],
+  "parameter_file": "config/implementation_probe.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "implementation_probe",
+    "target_ids": [
+      "T001",
+      "T002",
+      "T007",
+      "T012",
+      "T015",
+      "T016",
+      "T017",
+      "T019",
+      "T025",
+      "T026",
+      "T028",
+      "T029",
+      "T030"
+    ],
+    "gate_parameters": {
+      "coupling_ratio": 0.3535533905932738,
+      "trap_frequency_hz": 200000.0,
+      "gate_time_us": 5.0,
+      "ion_mass_amu": 171.0
+    },
+    "target_parameter_match": {
+      "T001": "paper_exact",
+      "T002": "paper_subset",
+      "T007": "paper_subset",
+      "T012": "proxy_model",
+      "T015": "paper_subset",
+      "T016": "paper_subset",
+      "T017": "paper_subset_with_source_conflict",
+      "T019": "paper_exact_reimplemented_method",
+      "T025": "paper_subset",
+      "T026": "paper_exact_linear_model",
+      "T028": "paper_subset_with_formula_risk",
+      "T029": "paper_subset",
+      "T030": "paper_subset_with_numeric_crosscheck"
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_probe/summary.json",
+    "outputs/data/implementation_probe/T001_gate_invariants.csv",
+    "outputs/data/implementation_probe/T002_chain_scaling.csv",
+    "outputs/data/implementation_probe/T007_mode_closure.csv",
+    "outputs/data/implementation_probe/T012_circular_proxy.csv",
+    "outputs/data/implementation_probe/T015_multimode_spin_dynamics.csv",
+    "outputs/data/implementation_probe/T016_table_s3_error_budget.csv",
+    "outputs/data/implementation_probe/T017_table_s4_toggle_scaling.csv",
+    "outputs/data/implementation_probe/T019_table_s6_fidelity.csv",
+    "outputs/data/implementation_probe/T019_taylor_thermal_fidelity.csv",
+    "outputs/data/implementation_probe/T025_magnus_resource_budget.csv",
+    "outputs/data/implementation_probe/T026_linear_thermal_invariance.csv",
+    "outputs/data/implementation_probe/T028_rf_dressing_sweep.csv",
+    "outputs/data/implementation_probe/T030_large_n_scaling.csv",
+    "outputs/checks/implementation_probe/T017_source_conflict.json",
+    "outputs/checks/implementation_probe/T019_taylor_validation.json",
+    "outputs/checks/implementation_probe/T028_formula_review.json",
+    "outputs/checks/implementation_probe/T029_field_budget.json",
+    "outputs/checks/implementation_probe/T030_scaling_fit.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

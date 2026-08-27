@@ -1,30 +1,19 @@
 # Formula Verification
 
-This case uses `EQUATION_CARDS.json` as the machine-readable formula map.
+`EQUATION_CARDS.json` is the machine-readable formula map. All seven numeric
+cards are open and source/derivation verified:
 
-Machine-readable result:
+| Card | Scientific role |
+| --- | --- |
+| MSC001 | magic states as PSC eigenstates |
+| MSC002 | controlled-H Pauli propagation |
+| MSC003 | Pauli-rank fidelity expansion |
+| MSC004 | benchmark acceptance estimator |
+| MSC005 | logical-state infidelity estimator |
+| MSC006 | inverse-square-root sampling precision |
+| MSC007 | runtime claim and environment boundary |
 
-```text
-outputs/checks/formula_verification.json
-```
-
-Run:
-
-```bash
-cat cases/2512.23799/outputs/checks/formula_verification.json
-```
-
-## Gate Summary
-
-| Formula | Role | Gate | Reason |
-| --- | --- | --- | --- |
-| MSC001 | Magic states as PSC eigenstates | verified | Defines PSC checks for magic-state structure. |
-| MSC002 | Controlled-H Pauli propagation | verified | Checks simplest controlled-H Clifford-error propagation identity. |
-| MSC003 | Pauli-rank fidelity expansion | verified | Defines Pauli expectation route for magic-state fidelity. |
-| MSC004 | Toy benchmark acceptance model | reconstructed | Defines proxy acceptance model for local benchmark checks. |
-| MSC005 | Toy benchmark infidelity model | reconstructed | Defines proxy conditional logical infidelity model. |
-| MSC006 | Runtime and sampling proxy | reconstructed | Defines local proxy for average time per shot and sampling scaling. |
-
-## Closed Or Unclear Formulas
-
-None in the current local feature-level reproduction.
+The authoritative result is `outputs/checks/formula_verification.json`. Formula
+verification validates the observable definitions and implementation links; it
+does not override the T001/T002 numerical mismatch or the T003 external
+benchmark boundary.

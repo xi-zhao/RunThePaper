@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "2608.03987-large-circuit-resource-probe-v1-20260825",
+  "target_ids": [
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_multiseed_campaign.py",
+    "--config",
+    "config/resource_probe.json",
+    "--output-dir",
+    "outputs/checks/resource_probe",
+    "--smoke"
+  ],
+  "inputs": [
+    "src/benchmark_release.py",
+    "src/independent_tn.py",
+    "src/implementation_closure.py",
+    "scripts/run_independent_reimplementation.py",
+    "scripts/run_multiseed_campaign.py",
+    "config/resource_probe.json",
+    "inputs/clean_circuit_inputs.zip"
+  ],
+  "parameter_file": "config/resource_probe.json",
+  "parameter_selector": "smoke",
+  "expected_parameters": {
+    "circuits": [
+      "rectangular_8x8_1-24-1_0"
+    ],
+    "seeds": [
+      260803987
+    ],
+    "greedy_trials": 2,
+    "anneal_steps": 2000,
+    "polish_steps": 500
+  },
+  "outputs": [
+    "outputs/checks/resource_probe/aggregate.json"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

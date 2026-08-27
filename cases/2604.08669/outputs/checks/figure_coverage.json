@@ -1,0 +1,899 @@
+{
+  "schema_version": 2,
+  "paper_id": "2604.08669",
+  "inventory_boundary": {
+    "status": "complete",
+    "unknown_remainder": false,
+    "source_ref": "raw/paper.pdf and paper-source/AI-rearrange.tex were read in full; the frozen source bundle has no supplement.",
+    "reason": "All five figures were split into independently judgeable displayed series. No-display statements are either supporting evidence or source-parameter context. The private Zhuifeng implementation is absent and was not accessed.",
+    "next_action": "Keep the W1 denominator fixed; W2 should discriminate the Fig. 4 intensity mismatch and execute Fig. 5(a) on paper-matched hardware."
+  },
+  "inventory_summary": {
+    "items_total": 39,
+    "display_items_total": 23,
+    "quantitative_claims_total": 16,
+    "eligible_total": 19,
+    "covered_total": 15,
+    "uncovered_total": 4,
+    "excluded_schematic_total": 4,
+    "supporting_not_double_counted": 10,
+    "source_parameter_groups_excluded": 6,
+    "primary_no_display_claims_total": 0
+  },
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/atom_path_planner.py",
+        "src/p2wgs_potential.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/checks/implementation_closure/p2wgs/metrics.json"
+      ],
+      "acceptance_criteria": [
+        "A clean-room reduced run executes GNN training, score-Hungarian decoding, and modified-auction decoding and returns finite maximum- and average-distance observables.",
+        "One P2WGS campaign emits separate finite phase- and intensity-continuity observables for iterations 3, 5, 8, and 10.",
+        "The attestation declares that paper scale was not executed and does not change scientific coverage or hide the unpublished trajectory-protocol gap."
+      ],
+      "execution_evidence": "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json"
+    },
+    "paper_gnn_training": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale_gnn_training.py",
+        "--config",
+        "config/paper_gnn_target.json",
+        "--profile",
+        "paper_target",
+        "--dry-run"
+      ],
+      "code_refs": [
+        "scripts/run_paper_scale_gnn_training.py",
+        "src/atom_path_planner.py"
+      ],
+      "config_ref": "config/paper_gnn_target.json",
+      "expected_outputs": [
+        "outputs/checks/paper_gnn_target/run_request.json",
+        "outputs/checks/paper_gnn_target/metrics.json",
+        "outputs/checks/paper_gnn_target/model_state.pt"
+      ],
+      "acceptance_criteria": [
+        "Resolve the published 127x127 to 101x101 geometry without shape drift.",
+        "Freeze device, sample counts, graph backend, decoder, and loss settings before execution.",
+        "Judge paper-facing Euclidean maximum and average movement distances rather than internal ranking proxies."
+      ]
+    },
+    "paper_p2wgs_continuity": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reduced_p2wgs_pilot.py",
+        "--config",
+        "config/p2wgs_paper_scale.json",
+        "--dry-run"
+      ],
+      "code_refs": [
+        "scripts/run_reduced_p2wgs_pilot.py",
+        "src/p2wgs_potential.py"
+      ],
+      "config_ref": "config/p2wgs_paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/p2wgs_paper_scale_impl/metrics.json"
+      ],
+      "acceptance_criteria": [
+        "Preserve N=10201, T=101, and iteration counts 3, 5, 8, and 10.",
+        "Evaluate phase and intensity continuity separately for every iteration count.",
+        "Test the published intensity scale and 3-to-5 improvement without source-pixel fitting."
+      ]
+    },
+    "paper_timing_model": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_timing_model_paper_scale.py",
+        "--config",
+        "config/timing_model_paper_scale.json",
+        "--output-root",
+        "outputs/timing_model_paper_scale"
+      ],
+      "code_refs": [
+        "scripts/run_timing_model_paper_scale.py",
+        "src/p2wgs_potential.py"
+      ],
+      "config_ref": "config/timing_model_paper_scale.json",
+      "expected_outputs": [
+        "outputs/timing_model_paper_scale/data/timing_model_rows.csv",
+        "outputs/timing_model_paper_scale/checks/timing_model.json",
+        "outputs/timing_model_paper_scale/figures/timing_model.png"
+      ],
+      "acceptance_criteria": [
+        "Separate compute-bound plateaus from hardware-bound linear branches.",
+        "Generate every Fig. 5(b) curve from declared timing parameters.",
+        "Keep Fig. 5(a) uncovered until its four wall-clock series are measured independently on the paper's RTX 5090 hardware class."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "F1-A",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 1(a), PDF p. 2",
+      "scientific_object": "Path-planning task decomposition schematic.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Conceptual workflow without an independently calculable displayed observable."
+    },
+    {
+      "item_id": "F1-B",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 1(b), PDF p. 2",
+      "scientific_object": "Potential-generation Fourier-plane schematic.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Conceptual optical layout without an independently calculable displayed observable."
+    },
+    {
+      "item_id": "F2-A",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 2(a), PDF p. 3",
+      "scientific_object": "GNN path-planning module diagram.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Algorithm schematic; numerical outcomes are represented by Fig. 3."
+    },
+    {
+      "item_id": "F2-B",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 2(b), PDF p. 3",
+      "scientific_object": "P2WGS potential-generation module diagram.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Algorithm schematic; numerical outcomes are represented by Fig. 4 and Fig. 5."
+    },
+    {
+      "item_id": "F3-A-HUNGARIAN-MAX",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 3(a), PDF p. 4",
+      "scientific_object": "Hungarian-baseline distribution of maximum movement distance.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/retrained_gnn_model/metrics.json",
+        "outputs/figures/fig3_reduced_gnn_metrics.png"
+      ],
+      "reason": "Independent reduced-scale benchmark data cover the scientific series; score caps preserve that it is not paper-exact.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "F3-A-GNN-MAX",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 3(a), PDF p. 4",
+      "scientific_object": "GNN-plus-auction distribution of maximum movement distance.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/retrained_gnn_model/metrics.json",
+        "outputs/figures/fig3_reduced_gnn_metrics.png"
+      ],
+      "reason": "Independent retraining covers the benchmark feature at reduced scale; no author array or source curve is a scientific input.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "F3-B-HUNGARIAN-AVERAGE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 3(b), PDF p. 4",
+      "scientific_object": "Hungarian-baseline distribution of average movement distance.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/retrained_gnn_model/metrics.json",
+        "outputs/figures/fig3_reduced_gnn_metrics.png"
+      ],
+      "reason": "Independent reduced-scale benchmark data cover the scientific series; the scorecard discloses scale and decoder mismatch.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "F3-B-GNN-AVERAGE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 3(b), PDF p. 4",
+      "scientific_object": "GNN-plus-auction distribution of average movement distance.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/retrained_gnn_model/metrics.json",
+        "outputs/figures/fig3_reduced_gnn_metrics.png"
+      ],
+      "reason": "Independent retraining covers the feature at reduced scale; paper-scale equality is not claimed.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "F4-PHASE-ITER3",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 top panel, iter=3, PDF p. 5",
+      "scientific_object": "Phase continuity across frames for three P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter3/metrics.json"
+      ],
+      "reason": "An independently generated paper-dimension continuity series exists.",
+      "claim_refs": [
+        "CLM_FIG4_PHASE_CONTINUITY"
+      ]
+    },
+    {
+      "item_id": "F4-PHASE-ITER5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 top panel, iter=5, PDF p. 5",
+      "scientific_object": "Phase continuity across frames for five P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter5/metrics.json"
+      ],
+      "reason": "An independently generated paper-dimension continuity series exists.",
+      "claim_refs": [
+        "CLM_FIG4_PHASE_CONTINUITY"
+      ]
+    },
+    {
+      "item_id": "F4-PHASE-ITER8",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 top panel, iter=8, PDF p. 5",
+      "scientific_object": "Phase continuity across frames for eight P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter8/metrics.json"
+      ],
+      "reason": "An independently generated paper-dimension continuity series exists.",
+      "claim_refs": [
+        "CLM_FIG4_PHASE_CONTINUITY"
+      ]
+    },
+    {
+      "item_id": "F4-PHASE-ITER10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 top panel, iter=10, PDF p. 5",
+      "scientific_object": "Phase continuity across frames for ten P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter10/metrics.json"
+      ],
+      "reason": "An independently generated paper-dimension continuity series exists.",
+      "claim_refs": [
+        "CLM_FIG4_PHASE_CONTINUITY"
+      ]
+    },
+    {
+      "item_id": "F4-INTENSITY-ITER3",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 bottom panel, iter=3, PDF p. 5",
+      "scientific_object": "Intensity continuity across frames for three P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter3/metrics.json"
+      ],
+      "reason": "Independent data exist, while the value-scale mismatch remains visible through T002's fidelity cap.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "F4-INTENSITY-ITER5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 bottom panel, iter=5, PDF p. 5",
+      "scientific_object": "Intensity continuity across frames for five P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter5/metrics.json"
+      ],
+      "reason": "Independent data exist, but the published approximately two-percent scale is not reproduced; this is fidelity debt, not hidden non-coverage.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "F4-INTENSITY-ITER8",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 bottom panel, iter=8, PDF p. 5",
+      "scientific_object": "Intensity continuity across frames for eight P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter8/metrics.json"
+      ],
+      "reason": "Independent data exist, but the value scale and convergence trend remain scientifically mismatched.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "F4-INTENSITY-ITER10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 4 bottom panel, iter=10, PDF p. 5",
+      "scientific_object": "Intensity continuity across frames for ten P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/p2wgs_paper_scale.json",
+        "outputs/checks/p2wgs_paper_scale_iter10/metrics.json"
+      ],
+      "reason": "Independent data exist, but the value scale and convergence trend remain scientifically mismatched.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "F5-A-PATH-PLANNING",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(a), blue bars, PDF p. 6",
+      "scientific_object": "RTX 5090 path-planning wall-clock time versus target-array size.",
+      "decision": "deferred_blocked",
+      "blocker": "requires_external_hardware",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "uncovered",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "reason": "No independent paper-matched RTX 5090 hardware run measures this series; the analytic model does not cover measured wall-clock bars.",
+      "claim_refs": [
+        "CLM_FIG5_PATH_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "F5-A-P2WGS-ITER5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(a), potential-generation iter=5 bars, PDF p. 6",
+      "scientific_object": "RTX 5090 P2WGS five-iteration wall-clock time versus target-array size.",
+      "decision": "deferred_blocked",
+      "blocker": "requires_external_hardware",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "uncovered",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "reason": "No independent paper-matched RTX 5090 hardware run measures this series.",
+      "claim_refs": [
+        "CLM_FIG5_P2WGS_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "F5-A-P2WGS-ITER8",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(a), potential-generation iter=8 bars, PDF p. 6",
+      "scientific_object": "RTX 5090 P2WGS eight-iteration wall-clock time versus target-array size.",
+      "decision": "deferred_blocked",
+      "blocker": "requires_external_hardware",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "uncovered",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "reason": "No independent paper-matched RTX 5090 hardware run measures this series.",
+      "claim_refs": [
+        "CLM_FIG5_P2WGS_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "F5-A-P2WGS-ITER10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(a), potential-generation iter=10 bars, PDF p. 6",
+      "scientific_object": "RTX 5090 P2WGS ten-iteration wall-clock time versus target-array size.",
+      "decision": "deferred_blocked",
+      "blocker": "requires_external_hardware",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "uncovered",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "reason": "No independent paper-matched RTX 5090 hardware run measures this series.",
+      "claim_refs": [
+        "CLM_FIG5_P2WGS_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "F5-B-TOTAL-ITER5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_model",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(b), iter=5, PDF p. 6",
+      "scientific_object": "Total assembly time versus SLM refresh time for five P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/timing_model/metrics.json",
+        "outputs/figures/fig5_reduced_timing_model.png"
+      ],
+      "reason": "Independently regenerated from the printed timing formula; hardware-specific fidelity remains capped.",
+      "claim_refs": [
+        "CLM_FIG5_PIPELINE_BOTTLENECK"
+      ]
+    },
+    {
+      "item_id": "F5-B-TOTAL-ITER8",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_model",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(b), iter=8, PDF p. 6",
+      "scientific_object": "Total assembly time versus SLM refresh time for eight P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/timing_model/metrics.json",
+        "outputs/figures/fig5_reduced_timing_model.png"
+      ],
+      "reason": "Independently regenerated from printed parameters; source pixels do not enter the model.",
+      "claim_refs": [
+        "CLM_FIG5_PIPELINE_BOTTLENECK"
+      ]
+    },
+    {
+      "item_id": "F5-B-TOTAL-ITER10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "analytic_model",
+      "denominator_role": "primary",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Fig. 5(b), iter=10, PDF p. 6",
+      "scientific_object": "Total assembly time versus SLM refresh time for ten P2WGS iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/timing_model/metrics.json",
+        "outputs/figures/fig5_reduced_timing_model.png"
+      ],
+      "reason": "Independently regenerated from printed parameters; hardware measurements are not substituted into it.",
+      "claim_refs": [
+        "CLM_FIG5_PIPELINE_BOTTLENECK"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "Q-F3-MAX-MEANS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 3(a) caption, PDF p. 4",
+      "scientific_object": "Maximum-distance means are 1.93 for GNN plus auction and 1.82 for Hungarian.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_gnn_training",
+      "reason": "Supporting statement represented by the two Fig. 3(a) series; retained without double counting.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "Q-F3-MAX-GAP",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Main text after Fig. 3, PDF p. 4",
+      "scientific_object": "The GNN mean maximum move distance is approximately six percent above optimum.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_gnn_training",
+      "reason": "Derived comparison of Fig. 3(a), not a separate denominator unit.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "Q-F3-AVERAGE-MEANS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 3(b) caption, PDF p. 4",
+      "scientific_object": "Average-distance means are 0.5120 for GNN plus auction and 0.5112 for Hungarian.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_gnn_training",
+      "reason": "Supporting statement represented by the two Fig. 3(b) series.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "Q-F3-AVERAGE-NEAR-OPTIMAL",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Main text after Fig. 3, PDF p. 4",
+      "scientific_object": "The GNN mean average movement distance is nearly identical to the global optimum.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_gnn_training",
+      "reason": "Interpretation of Fig. 3(b), retained without double counting.",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ]
+    },
+    {
+      "item_id": "Q-F4-PHASE-CONSTRAINED",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Potential Generation Task paragraph before Fig. 4, PDF p. 5",
+      "scientific_object": "Phase fluctuations remain tightly constrained for all four tested iteration counts.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Aggregate interpretation represented by the four phase-continuity series.",
+      "claim_refs": [
+        "CLM_FIG4_PHASE_CONTINUITY"
+      ]
+    },
+    {
+      "item_id": "Q-F4-INTENSITY-3-TO-5",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Potential Generation Task paragraph before Fig. 4, PDF p. 5",
+      "scientific_object": "Intensity continuity improves significantly from three to five iterations.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Cross-series interpretation represented by the intensity curves; the mismatch remains in T002 fidelity.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "Q-F4-INTENSITY-CONVERGED",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Potential Generation Task paragraph before Fig. 4, PDF p. 5",
+      "scientific_object": "Intensity fluctuations change little at eight and ten iterations, indicating rapid convergence.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Cross-series interpretation already represented by Fig. 4.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "Q-F4-INTENSITY-SCALE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "model_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Potential Generation Task paragraph before Fig. 4, PDF p. 5",
+      "scientific_object": "At five iterations, intensity variations are below four percent for most frames and typically around two percent.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Scalar summary of the five-iteration intensity series.",
+      "claim_refs": [
+        "CLM_FIG4_INTENSITY_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "Q-F5-PATH-PLANNING-5MS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Inference Time paragraph and Fig. 5(a) caption, PDF p. 6",
+      "scientific_object": "Path planning has an approximately size-independent five-millisecond overhead.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "reason": "Supporting summary of a Fig. 5(a) series, not another coverage unit.",
+      "claim_refs": [
+        "CLM_FIG5_PATH_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "Q-F5-P2WGS-0P5MS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "hardware_benchmark",
+      "denominator_role": "supporting",
+      "source_ref": "Inference Time paragraph and Fig. 5(a) caption, PDF p. 6",
+      "scientific_object": "Five-iteration P2WGS takes about 0.5 ms per frame for roughly ten thousand atoms.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_timing_model",
+      "reason": "Supporting summary of a Fig. 5(a) series, retained without double counting.",
+      "claim_refs": [
+        "CLM_FIG5_P2WGS_RUNTIME"
+      ]
+    },
+    {
+      "item_id": "P-F3-BENCHMARK-GEOMETRY",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 3 caption, PDF p. 4",
+      "scientific_object": "Benchmark inputs: 1024 instances, 127x127 initial lattice, 101x101 target lattice, normalized spacing 1.0.",
+      "decision": "excluded",
+      "reason": "Audited source inputs consumed by T001, not independently generated outputs."
+    },
+    {
+      "item_id": "P-F3-GNN-TRAINING",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Path Planning Task text, PDF pp. 3-4",
+      "scientific_object": "GNN context: K=128, six layers, million-scale training, 288 GPU hours on four A40 GPUs.",
+      "decision": "excluded",
+      "reason": "Audited method parameters consumed by T001; copying them is not reproduction."
+    },
+    {
+      "item_id": "P-F4-SCALE-AND-ITERATIONS",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 4 caption, PDF p. 5",
+      "scientific_object": "Fig. 4 inputs: N=10201, T=101, and iteration counts 3, 5, 8, and 10.",
+      "decision": "excluded",
+      "reason": "Audited source parameters consumed by T002."
+    },
+    {
+      "item_id": "P-F4-CONTINUITY-DEFINITIONS",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Continuity definitions before Fig. 4, PDF p. 5",
+      "scientific_object": "Continuity inputs include a 5x5 intensity neighborhood, phase wrapping, and stochastic-loading averages.",
+      "decision": "excluded",
+      "reason": "Audited observable definition and source parameters consumed by T002."
+    },
+    {
+      "item_id": "P-F5A-HARDWARE",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 5(a) caption, PDF p. 6",
+      "scientific_object": "Fig. 5(a) wall-clock measurements use one NVIDIA RTX 5090 GPU across target-array sizes.",
+      "decision": "excluded",
+      "reason": "Hardware setting consumed by T003; it is not an independently generated result."
+    },
+    {
+      "item_id": "P-F5B-TIMING-MODEL",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_parameter_context",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 5(b) caption and Inference Time paragraph, PDF p. 6",
+      "scientific_object": "Timing-model inputs: N=10201, 20 frames, and a constant three-millisecond transfer delay.",
+      "decision": "excluded",
+      "reason": "Audited analytic-model inputs consumed by T003."
+    }
+  ]
+}

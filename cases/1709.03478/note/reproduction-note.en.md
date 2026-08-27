@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, science=failed, execution=attested, pixel=not_applicable, independent_review=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=pending, execution=attested, pixel=missing, independent_review=stale, review_scope=stale, paper_assessment=stale`.
 
 ## Run
 

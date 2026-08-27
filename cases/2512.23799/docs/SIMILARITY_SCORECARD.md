@@ -2,26 +2,20 @@
 
 ## Overall
 
-- Overall score: `73.00/100`
-- Level: `numerical_feature_reproduction`
-- Public status: `exact_circuit_partial_reproduction`
-- Check status: `passed`
+- Normalized score: `59.11/100`
+- Scientific final dispositions: `1 reproduced / 1 externally_blocked / 2 attempted_not_reproduced`
+- Pending eligible items: `0`
+- Independent review: not yet complete; a fresh-context review package is prepared separately
 
-T001/T002 are now backed by the reconstructed exact Steane circuit rather than the earlier proxy model. The score remains limited by the declared mid-range infidelity residual and by proxy-only runtime evidence.
+## Target summary
 
-## Figure-Level Scores
+| Target | Score | Scientific verdict |
+| --- | ---: | --- |
+| T001 Fig. 10(a) infidelity | 55 | literal-circuit attempt completed; numerical mismatch |
+| T002 Fig. 10(b) acceptance | 55 | correct direction, but numerical mismatch |
+| T003 Fig. 11 absolute runtime | 46 | externally blocked by missing benchmark manifest |
+| T004 sampling exponent | 90 | reproduced (`-0.49814326365138706` versus `-0.5`) |
 
-| Target | Score | Level | Main reason |
-| --- | ---: | --- | --- |
-| T001 Infidelity benchmark | 75 | numerical feature reproduction | Exact protocol matches the trend and edge regimes; the mid-range remains `0.42-0.68x` of the paper curve. |
-| T002 Acceptance benchmark | 80 | numerical feature reproduction | All 12 internally digitized validation points pass. |
-| T003 Runtime benchmark | 55 | feature not accepted | Local proxy timing cannot reproduce author wall-clock values. |
-| T004 Formula and sampling gate | 84 | numerical feature reproduction | Formula, stabilizer, decoding, and sampling checks pass. |
-
-## Remaining Boundary
-
-- The paper does not publish the exact panel-(c) gate/idle schedule or simulation code needed to resolve the second-order infidelity coefficient.
-- Author wall-clock timing depends on unavailable hardware and software metadata.
-- Digitized source point sets are not redistributed.
-
-See `outputs/checks/similarity_scorecard.json` and `outputs/checks/completion_assessment.json`.
+The machine-readable authority is
+`outputs/checks/similarity_scorecard.json`. Pixel/raster evidence is diagnostic
+only and never supplied numerical values to the scientific runner.

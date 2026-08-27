@@ -6,7 +6,7 @@ Published as: [On-Chip Quantum Interference between Independent Lithium Niobate-
 
 Formal citation: Phys. Rev. Lett. 134, 223602 (2025) · DOI `10.1103/n2y3-2bmz` · Locator `volume 134, article 223602`
 
-Public status: **Partial scientific reproduction** · Audit score: **65.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **67.50/100**
 
 Eighteen formula-based targets are independently generated; exactness is capped for vector-mode, spectral-array, measurement-array, and convention gaps.
 
@@ -117,7 +117,7 @@ cd cases/2404.08378/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
@@ -128,3 +128,39 @@ Remaining limitation: Author raw data and evaluation code are available only upo
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
+
+![T001 mode profiles](outputs/figures/feature/T001_mode_profiles.png)
+
+![T002 mzi transfer](outputs/figures/feature/T002_mzi_transfer.png)
+
+![T003 probability surface 11](outputs/figures/feature/T003_probability_surface_11.png)
+
+![T004 phase cuts 11](outputs/figures/feature/T004_phase_cuts_11.png)
+
+![T005 probability surface 20](outputs/figures/feature/T005_probability_surface_20.png)
+
+![T006 phase cuts 20](outputs/figures/feature/T006_phase_cuts_20.png)
+
+![T007 probability surface 02](outputs/figures/feature/T007_probability_surface_02.png)
+
+![T008 phase cuts 02](outputs/figures/feature/T008_phase_cuts_02.png)
+
+![T009 hom delay model](outputs/figures/feature/T009_hom_delay_model.png)
+
+![T010 balance bunched probability](outputs/figures/feature/T010_balance_bunched_probability.png)
+
+![T011 balance split probability](outputs/figures/feature/T011_balance_split_probability.png)
+
+![T012 purity bunched probability](outputs/figures/feature/T012_purity_bunched_probability.png)
+
+![T013 purity split probability](outputs/figures/feature/T013_purity_split_probability.png)
+
+![T014 spectral hom visibility](outputs/figures/feature/T014_spectral_hom_visibility.png)
+
+![T015 coupler loss](outputs/figures/feature/T015_coupler_loss.png)
+
+![T016 electrode overlap loss](outputs/figures/feature/T016_electrode_overlap_loss.png)
+
+![T017 brightness arithmetic](outputs/figures/feature/T017_brightness_arithmetic.png)
+
+![T018 bandwidth conventions](outputs/figures/feature/T018_bandwidth_conventions.png)

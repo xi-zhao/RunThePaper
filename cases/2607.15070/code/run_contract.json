@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.15070-paper-exact-v4-20260824",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_isolated_reproduction.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "config/paper_exact.json",
+    "scripts/run_isolated_reproduction.py",
+    "scripts/reproduce.py",
+    "src/casimir_effective_mass.py"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "model": {
+      "m0_values": [
+        0.0,
+        0.5,
+        1.0,
+        1.5
+      ],
+      "units": "dimensionless m0 = mL"
+    },
+    "T001": {
+      "alpha0_left_axis": [
+        0.0,
+        30.0,
+        301
+      ],
+      "alpha0_right_axis": [
+        0.1,
+        12.0,
+        240
+      ],
+      "observables": [
+        "8*pi^2*L^3*E_L^ren/A",
+        "8*pi^2*L^3*E_c^ren/A"
+      ]
+    },
+    "T002": {
+      "alpha0_axis": [
+        0.1,
+        25.0,
+        250
+      ],
+      "observable": "E_0^ren / E_L^ren"
+    },
+    "numerics": {
+      "integration_variable": "u = log(tau)",
+      "quadrature": "adaptive Gauss-Kronrod",
+      "relative_tolerance": 2e-09,
+      "plate_sum": "direct small-tau, Poisson-resummed large-tau"
+    },
+    "render": {
+      "dpi": 200,
+      "font_family": "DejaVu Sans"
+    }
+  },
+  "outputs": [
+    "outputs/data/fig2_energy_contributions.csv",
+    "outputs/data/fig3_energy_ratio.csv",
+    "outputs/checks/T001_data_generation.json",
+    "outputs/checks/T001_scientific_checks.json",
+    "outputs/checks/T002_data_generation.json",
+    "outputs/checks/T002_scientific_checks.json"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

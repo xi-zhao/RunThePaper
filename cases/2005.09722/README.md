@@ -6,9 +6,9 @@ Published as: [Entanglement transition in a monitored free fermion chain -- from
 
 Formal citation: Phys. Rev. Lett. 126, 170602 (2021) · DOI `10.1103/PhysRevLett.126.170602` · Locator `126, 170602`
 
-Public status: **Partial scientific reproduction** · Audit score: **67.02/100**
+Public status: **Partial scientific reproduction** · Audit score: **69.53/100**
 
-All 31 numerical axes are independently generated and physically checked at L<=96; paper-scale finite-size and trajectory statistics remain outstanding.
+All 31 displayed numerical axes have attested reduced-scale feature evidence; four no-display analytic claims are independently checked. The atomic denominator resolves to 120 reproduced and one publication-underspecified external blocker, while paper-scale lifecycle evidence remains outstanding.
 
 ## Start Here / 从这里开始
 
@@ -68,7 +68,7 @@ cd cases/2005.09722/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

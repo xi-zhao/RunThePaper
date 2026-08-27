@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "paper_id": "2608.03987",
+  "source": "arXiv:2608.03987v2",
+  "implementations": {
+    "paper_scale_multiseed": {
+      "status": "ready",
+      "target_ids": [
+        "T008",
+        "T009"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_multiseed_campaign.py",
+        "--config",
+        "config/paper_scale.json",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/independent_tn.py",
+        "scripts/run_independent_reimplementation.py",
+        "scripts/run_multiseed_campaign.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale/aggregate.json"
+      ],
+      "acceptance_criteria": [
+        "All 1072 seed-circuit units complete with matching configuration and topology hashes.",
+        "Every tree satisfies the Figure-8 cost identity within 1e-12.",
+        "Figure-9 threshold counts are reported independently for all 16 seeds without tuning against author results.",
+        "The numerical runner reads only the frozen clean circuit archive and no author code, plans, result arrays, digitized curves, or source pixels."
+      ],
+      "acceptance_ref": "config/paper_scale.json",
+      "compute_status": "not_run_code_ready_cpu_campaign"
+    },
+    "table1_complexity_audit": {
+      "status": "partial_code_ready",
+      "target_ids": [
+        "T010",
+        "T011"
+      ],
+      "working_directory": "workspace",
+      "code_refs": [
+        "src/independent_tn.py",
+        "scripts/run_independent_reimplementation.py"
+      ],
+      "expected_outputs": [
+        "outputs/data/table1_random_complexity_audit.csv"
+      ],
+      "acceptance_criteria": [
+        "Emit the nine core and three extension rows independently from raw circuit inputs.",
+        "Report qubits, complex/total leaves, log2 real cost, m, r, overhead, and 1+2m+r for every row.",
+        "Verify the exact law residual and preserve the core/extension boundary from the paper.",
+        "Do not read author trees, table values, result arrays, digitized curves, or source pixels."
+      ],
+      "compute_status": "table_emitter_and_acceptance_check_missing"
+    },
+    "table5_independent_complexity_audit": {
+      "status": "not_ready",
+      "target_ids": [
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "method_ref": "METHOD004",
+      "expected_outputs": [
+        "outputs/data/table5_independent_complexity_audit.csv"
+      ],
+      "acceptance_criteria": [
+        "Compute tc_R, sc_R, rwc_R, Delta tc, Delta tc excess, and rwc_R-rwc_C for all twelve random circuits.",
+        "Implement the optimizer loop-volume convention and Eq. kappa from the appendix independently.",
+        "Check every row against an independent recomputation before any post-hoc paper-table comparison.",
+        "Do not read author code, author optimized trees, author table arrays, digitized curves, or source pixels."
+      ],
+      "compute_status": "independent_complexity_accumulator_missing"
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T010",
+        "T011",
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/benchmark_release.py",
+        "src/independent_tn.py",
+        "src/implementation_closure.py",
+        "scripts/run_independent_reimplementation.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/checks/implementation_closure/table1_random_complexity_audit.csv",
+        "outputs/checks/implementation_closure/table5_independent_complexity_audit.csv"
+      ],
+      "acceptance_criteria": [
+        "Emit the complete nine-row core and three-row extension partitions from the frozen clean circuit archive.",
+        "Verify every Table 1 tree against the exact 1+2m+r identity.",
+        "Evaluate all twelve Table 5 rows with the printed kappa formula and an algebraically independent per-step oracle.",
+        "Never consume author trees, code, result arrays, source pixels, PDFs, or historical outputs as numerical inputs.",
+        "Keep the reduced greedy attestation separate from scientific paper-table acceptance."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Fig. 1(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 1(a), lines 76-79",
+      "scientific_object": "quantum-circuit and amplitude target overview",
+      "reason": "Conceptual circuit schematic with no independently adjudicable numerical output."
+    },
+    {
+      "item_id": "Fig. 1(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 1(b), lines 79-81",
+      "scientific_object": "complex tensor-network representation",
+      "reason": "Conceptual tensor-network schematic with no numerical axes or table values."
+    },
+    {
+      "item_id": "Fig. 1(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 1(c), lines 81-85",
+      "scientific_object": "local realification graph rewrite",
+      "reason": "Conceptual graph rewrite; the quantitative cost law is covered separately by T008 and the numerical tables."
+    },
+    {
+      "item_id": "Definition 1 illustration",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Definition 1, lines 213-223, fig-mech-repr",
+      "scientific_object": "stacking real and imaginary parts into one dimension-2 index",
+      "reason": "Definition illustration rather than a numerical result."
+    },
+    {
+      "item_id": "Definition 2 illustration",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Definition 2 follow-up, lines 230-263, fig-mech-mult",
+      "scientific_object": "multiplication through the real algebra tensor M",
+      "reason": "Definition illustration rather than a numerical result."
+    },
+    {
+      "item_id": "Fig. 2(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 2(a), lines 285-290",
+      "scientific_object": "oriented multiplication tensor M",
+      "reason": "Algebraic wiring diagram; its tensor identity belongs to the derivation, not the numerical-output denominator."
+    },
+    {
+      "item_id": "Fig. 2(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 2(b), lines 285-290",
+      "scientific_object": "permutation-symmetric structure tensor C",
+      "reason": "Algebraic wiring diagram; its identity is checked through the derivation rather than reproduced as a numerical figure."
+    },
+    {
+      "item_id": "Fig. 3",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 3, lines 304-310",
+      "scientific_object": "realified matrix product C=AB",
+      "reason": "Single algebraic wiring schematic with no plotted or tabulated numerical output."
+    },
+    {
+      "item_id": "Fig. 4(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 4(a), lines 327-334",
+      "scientific_object": "complex conjugation as a Z sign flip",
+      "reason": "Local algebraic operation schematic."
+    },
+    {
+      "item_id": "Fig. 4(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 4(b), lines 327-334",
+      "scientific_object": "global phase as a real-plane rotation",
+      "reason": "Local algebraic operation schematic."
+    },
+    {
+      "item_id": "Fig. 5(left)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 5 left, lines 354-363",
+      "scientific_object": "realification along contraction tree (AB)C",
+      "reason": "Contraction-tree wiring illustration; no numerical result."
+    },
+    {
+      "item_id": "Fig. 5(right)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 5 right, lines 354-363",
+      "scientific_object": "realification along contraction tree A(BC)",
+      "reason": "Contraction-tree wiring illustration; no numerical result."
+    },
+    {
+      "item_id": "Fig. 6(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(a), lines 399-411",
+      "scientific_object": "matrix product rule",
+      "reason": "Diagrammatic algebra identity, retained in the full inventory but excluded from numerical-item scoring."
+    },
+    {
+      "item_id": "Fig. 6(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(b), lines 399-411",
+      "scientific_object": "permutation invariance of C",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 6(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(c), lines 399-411",
+      "scientific_object": "conjugate covariance",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 6(d)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(d), lines 399-411",
+      "scientific_object": "cascade and associativity rule",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 6(e)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(e), lines 399-411",
+      "scientific_object": "unit rule",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 6(f)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(f), lines 399-411",
+      "scientific_object": "norm-square contraction",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 6(g)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 6(g), lines 399-411",
+      "scientific_object": "reverse-mode pullback rule",
+      "reason": "Diagrammatic algebra identity."
+    },
+    {
+      "item_id": "Fig. 7(pass)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 7 pass case, lines 433-441",
+      "scientific_object": "no-green pass contraction with unit relative cost",
+      "reason": "Mechanism illustration; its numerical consequence is evaluated by EQ001, T008, T010, and T011."
+    },
+    {
+      "item_id": "Fig. 7(ride)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 7 ride case, lines 433-441",
+      "scientific_object": "one-green-leg ride contraction with 2x relative cost",
+      "reason": "Mechanism illustration; its numerical consequence is evaluated by EQ001, T008, T010, and T011."
+    },
+    {
+      "item_id": "Fig. 7(merge)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Main text Fig. 7 merge case, lines 433-441",
+      "scientific_object": "green-green merge contraction with 3x relative cost",
+      "reason": "Mechanism illustration; its numerical consequence is evaluated by EQ001, T008, T010, and T011."
+    },
+    {
+      "item_id": "Fig. 8",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text Fig. 8, lines 590-601",
+      "scientific_object": "67-circuit overhead versus merge-fraction scatter and analytic law band",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale_multiseed",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "All 67 points are generated from the clean-room circuit-to-tree implementation and checked against EQ001.",
+      "claim_refs": [
+        "CLM_COST_LAW"
+      ]
+    },
+    {
+      "item_id": "Fig. 9(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text Fig. 9(a), lines 622-632",
+      "scientific_object": "three optimizer-pipeline overheads for twelve random circuits",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_multiseed",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Convert-only, polish, and full-anneal values are independently generated from raw circuit inputs.",
+      "claim_refs": [
+        "CLM_ORDER_TRANSFER"
+      ]
+    },
+    {
+      "item_id": "Fig. 9(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text Fig. 9(b), lines 633-642",
+      "scientific_object": "relative convert-only/full-anneal pipeline gaps for all 67 circuits",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_multiseed",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "All 67 gaps are independently generated; the 57/67 versus 66/67 threshold discrepancy remains visible.",
+      "claim_refs": [
+        "CLM_ORDER_TRANSFER"
+      ]
+    },
+    {
+      "item_id": "Table 1 core",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text Table 1, rows 715-723",
+      "scientific_object": "nine-row core random-circuit complexity audit",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "The nine-row emitter and cost-law oracle are now runnable on the clean archive; paper optimizer parity and table acceptance remain open.",
+      "claim_refs": [
+        "CLM_COST_LAW"
+      ]
+    },
+    {
+      "item_id": "Table 1 extension",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text Table 1, rows 725-727",
+      "scientific_object": "three-row extension random-circuit complexity audit",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "The same campaign preserves and emits the separate three-row extension partition without using paper table values as inputs.",
+      "claim_refs": [
+        "CLM_COST_LAW"
+      ]
+    },
+    {
+      "item_id": "Table 2",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main text Table 2, lines 779-812",
+      "scientific_object": "Ascend 910 wall-clock medians for three executor implementations",
+      "reason": "These are measured hardware timings from an Ascend 910/CANN 8.5 experiment, not outputs of a formula-only numerical runner."
+    },
+    {
+      "item_id": "Table 3",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main text Table 3, lines 867-906",
+      "scientific_object": "structured-circuit Ascend 910 timing excerpt",
+      "reason": "These are measured hardware timings requiring the paper's accelerator and executor stack."
+    },
+    {
+      "item_id": "Table 4",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "source_ref": "Main text Table 4, lines 916-947",
+      "scientific_object": "Ascend f32 versus A800 ComplexF64 amplitude differences",
+      "reason": "This cross-hardware precision table depends on two accelerator executions and archived amplitudes; it is reference evidence, not an independently derivable theory table."
+    },
+    {
+      "item_id": "Table 5",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Appendix Table 5, lines 1241-1280",
+      "scientific_object": "twelve-row independent optimizer time, space, and read-write complexity audit",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "The appendix loop-volume accumulator and second-path kappa oracle are now executable for all twelve circuits; paper-table comparison remains pending.",
+      "claim_refs": [
+        "CLM_COMPLEXITY_AUDIT"
+      ]
+    },
+    {
+      "item_id": "Fig. 10(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Appendix Fig. 10(a), lines 1417-1431",
+      "scientific_object": "forward realified product contraction",
+      "reason": "Derivation wiring diagram with no plotted numerical output."
+    },
+    {
+      "item_id": "Fig. 10(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "decision": "excluded",
+      "source_ref": "Appendix Fig. 10(b), lines 1417-1431",
+      "scientific_object": "reverse-mode pullback contraction",
+      "reason": "Derivation wiring diagram with no plotted numerical output."
+    }
+  ]
+}

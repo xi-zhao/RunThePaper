@@ -1,0 +1,1776 @@
+{
+  "schema_version": 2,
+  "paper_id": "cond-mat-0509490",
+  "implementations": {
+    "all_quantitative_claims": {
+      "status": "ready",
+      "code_refs": [
+        "src/dziarmaga_ising/model.py",
+        "scripts/run_reproduction.py",
+        "run_contract.json"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/dispersion.csv",
+        "outputs/data/excitation_probability.csv",
+        "outputs/data/defect_density.csv",
+        "outputs/data/ground_state_probability.csv",
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The direct BdG integration preserves norm and agrees with the printed Landau-Zener probability.",
+        "The defect-density exponent is -1/2 with the printed 1/(2 pi sqrt(2)) prefactor.",
+        "The finite-chain ground-state probability collapses versus tau_Q/N^2 and the reverse quench gives the same density.",
+        "The numerical runner reads no paper PDF, source figure, author code, or author numerical array."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "R008",
+      "item_type": "schematic",
+      "source_ref": "Eq. (3)",
+      "scientific_object": "A qualitative classification of basis configurations by domain walls; Eq. (3) itself is illustrative rather than a numerical result.",
+      "paper_assertion": "A nonadiabatic final ferromagnetic state can be a superposition of spin configurations containing finite up/down domains separated by kinks.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Qualitative domain-wall illustration; it is inventoried but is not an independently reproducible numerical result."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "R002",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, first paragraph",
+      "scientific_object": "A log-log scaling exponent of the post-transition domain length versus tau_Q under the stated Kibble-Zurek assumptions.",
+      "paper_assertion": "The characteristic ordered-domain size scales with transition time as tau_Q^w, where w is a combination of critical exponents.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R003",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, paragraph before Eq. (1)",
+      "scientific_object": "The value of g at which the thermodynamic quasiparticle gap closes.",
+      "paper_assertion": "The quantum critical point of the model is at g = 1.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R004",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, paragraph after Eq. (2)",
+      "scientific_object": "Ground-state polarization, degeneracy, and order parameter in the two asymptotic field limits.",
+      "paper_assertion": "For g much greater than 1 the ground state is x-polarized and paramagnetic, whereas for g much less than 1 it has two z-polarized ferromagnetic ground states.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R005",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, paragraph after Eq. (3)",
+      "scientific_object": "The minimum excitation gap as a function of N at g = 1 and its thermodynamic-limit extrapolation.",
+      "paper_assertion": "At g = 1 the energy gap tends to zero as N tends to infinity, preventing an exactly adiabatic thermodynamic-limit crossing.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R006",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (1)",
+      "scientific_object": "The N-spin Hamiltonian matrix or operator assembled from the stated on-site field and nearest-neighbor coupling.",
+      "paper_assertion": "H = -J sum_n [g sigma_n^x + sigma_n^z sigma_{n+1}^z].",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Model, boundary, quench, or observable definition used by reproduced claims; it is an input/supporting definition rather than a distinct result."
+    },
+    {
+      "item_id": "R007",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (2)",
+      "scientific_object": "Equality of the boundary bond and operator indexing under an N-site periodic ring.",
+      "paper_assertion": "The spin chain obeys periodic boundary conditions sigma_{N+1} = sigma_1.",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Model, boundary, quench, or observable definition used by reproduced claims; it is an input/supporting definition rather than a distinct result."
+    },
+    {
+      "item_id": "R009",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (4)",
+      "scientific_object": "The time-dependent field used in a paramagnet-to-ferromagnet evolution.",
+      "paper_assertion": "For t < 0 the field is ramped as g(t) = -t/tau_Q and reaches g = 0 at t = 0.",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Model, boundary, quench, or observable definition used by reproduced claims; it is an input/supporting definition rather than a distinct result."
+    },
+    {
+      "item_id": "R010",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (5)",
+      "scientific_object": "The predicted tau_Q dependence and normalization convention of the prior Kibble-Zurek estimate.",
+      "paper_assertion": "The prior estimate for kink density is n approximately [hbar/(2 J tau_Q)]^(1/2), with an unknown order-one prefactor.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R011",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, paragraph after Eq. (5)",
+      "scientific_object": "A re-fit of the cited simulation data at N = 100 to n proportional to tau_Q^(-w).",
+      "paper_assertion": "The fitted exponent in Ref. [11] decreases with N and reaches w = 0.58 for N = 100.",
+      "kind": "non_numeric",
+      "scientific_role": "external_source_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "A result reported from Ref. [11]; the cited data and fit protocol are not results generated by this paper."
+    },
+    {
+      "item_id": "R012",
+      "item_type": "quantitative_claim",
+      "source_ref": "Introduction, paragraph after Eq. (5)",
+      "scientific_object": "The quantitative difference 0.58 - 0.5 assessed against the uncertainty and finite-size trend of the cited fit.",
+      "paper_assertion": "The reported w = 0.58 is described as roughly consistent with the predicted w = 1/2.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R013",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (6)",
+      "scientific_object": "Operator equality on the fermionic Fock basis under the chosen Jordan-Wigner convention.",
+      "paper_assertion": "sigma_n^x = 1 - 2 c_n^dagger c_n.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R014",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (7)",
+      "scientific_object": "Operator equality including the Jordan-Wigner parity string and its sign convention.",
+      "paper_assertion": "sigma_n^z = -(c_n + c_n^dagger) product_{m<n}(1 - 2 c_m^dagger c_m).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R015",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eqs. (6)-(7)",
+      "scientific_object": "The complete canonical anticommutator table for the transformed operators.",
+      "paper_assertion": "The c_n operators obey {c_m,c_n^dagger} = delta_mn and vanishing c-c and c^dagger-c^dagger anticommutators.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R016",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (8)",
+      "scientific_object": "Block decomposition of the spin Hamiltonian into even- and odd-fermion parity sectors.",
+      "paper_assertion": "H = P^+ H^+ P^+ + P^- H^- P^-.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R017",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (9)",
+      "scientific_object": "Idempotence, orthogonality, completeness, and parity eigenvalues of the two projectors.",
+      "paper_assertion": "P^plus/minus = [1 plus/minus product_n sigma_n^x]/2 = [1 plus/minus product_n(1 - 2 c_n^dagger c_n)]/2.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R018",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (10)",
+      "scientific_object": "The sector Hamiltonian obtained by explicitly substituting Eqs. (6)-(7) into Eq. (1).",
+      "paper_assertion": "H^plus/minus is the stated quadratic sum of number, hopping, pairing, constant, and Hermitian-conjugate terms.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R019",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (10)",
+      "scientific_object": "The boundary sign in each parity block obtained from the Jordan-Wigner string across the ring boundary.",
+      "paper_assertion": "The odd sector has c_{N+1} = c_1, while the even sector has c_{N+1} = -c_1.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R020",
+      "item_type": "quantitative_claim",
+      "source_ref": "Energy spectrum section, paragraph before Eq. (11)",
+      "scientific_object": "The lowest eigenvalue in each parity sector as a function of g for representative even N.",
+      "paper_assertion": "For even N the ground state has even c-fermion parity for any g, so a ground-state quench remains in H^+.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R021",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (11)",
+      "scientific_object": "A unitary Fourier transform whose inverse reproduces the antiperiodic real-space fermions.",
+      "paper_assertion": "c_n = exp(-i pi/4)/sqrt(N) sum_k c_k exp[i k n a].",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R022",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (12)",
+      "scientific_object": "The discrete pseudomomentum set and the identity exp(i k N a) = -1.",
+      "paper_assertion": "Allowed k values are the half-integer grid plus/minus (1/2, ..., N/2 - 1/2) times 2 pi/(N a).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R023",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (13)",
+      "scientific_object": "Direct Fourier transformation of Eq. (10), including all factors, signs, and double-counting conventions.",
+      "paper_assertion": "H^+ is the stated sum over k of 2J[g-cos(ka)] c_k^dagger c_k, sin(ka) pairing terms, and -Jg.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R024",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (14)",
+      "scientific_object": "A canonical particle-hole transformation preserving fermionic anticommutators.",
+      "paper_assertion": "c_k = u_k gamma_k + v_{-k}^* gamma_{-k}^dagger.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R025",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (15)",
+      "scientific_object": "Eigenpairs of the displayed Hermitian 2 by 2 BdG matrix.",
+      "paper_assertion": "The mode (u_k,v_k) obeys the stated 2 by 2 BdG equations with diagonal plus/minus 2J[g-cos(ka)] and off-diagonal 2J sin(ka).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R026",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (16)",
+      "scientific_object": "The characteristic polynomial and positive spectral branch of Eq. (15).",
+      "paper_assertion": "epsilon_k = 2J sqrt([g-cos(ka)]^2 + sin^2(ka)), with BdG eigenenergies plus/minus epsilon_k.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R027",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (17)",
+      "scientific_object": "Substitution of the stated vector into Eq. (15) with eigenvalue +epsilon_k.",
+      "paper_assertion": "A positive-energy eigenvector is proportional to ([g-cos(ka)] + sqrt(g^2-2g cos(ka)+1), sin(ka)).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R028",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (17)",
+      "scientific_object": "The normalized inverse of Eq. (14) and its canonical anticommutator.",
+      "paper_assertion": "After |u_k|^2+|v_k|^2=1, gamma_k = u_k^* c_k + v_{-k} c_{-k}^dagger.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R029",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (17)",
+      "scientific_object": "Particle-hole transformation of Eq. (15) and the resulting operator identity, including the momentum subscript.",
+      "paper_assertion": "The negative-energy mode is (u_k^-,v_k^-) = (-v_k,u_k) and defines gamma_k^- = -gamma_{-k}^dagger.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R030",
+      "item_type": "quantitative_claim",
+      "source_ref": "Unnumbered equation immediately before Eq. (18)",
+      "scientific_object": "Substitution of the two BdG eigensectors into Eq. (13) with the stated half factor.",
+      "paper_assertion": "H^+ = (1/2) sum_k epsilon_k (gamma_k^dagger gamma_k - gamma_k^{-dagger} gamma_k^-).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R031",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (18)",
+      "scientific_object": "Equivalence of the diagonal form to Eq. (13), including the vacuum-energy convention.",
+      "paper_assertion": "H^+ = sum_k epsilon_k (gamma_k^dagger gamma_k - 1/2).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R032",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (18)",
+      "scientific_object": "Parity eigenvalue of Fock states generated by gamma_k^dagger and its compatibility with P^+.",
+      "paper_assertion": "Only states with an even number of gamma quasiparticles belong to the physical spectrum in the H^+ sector.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/dispersion.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "R033",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (19)",
+      "scientific_object": "Operator equality between domain-wall count and final Bogoliubov quasiparticle occupation.",
+      "paper_assertion": "The kink-number operator Ncal = (1/2) sum_n(1-sigma_n^z sigma_{n+1}^z) equals sum_k gamma_k^dagger gamma_k at g = 0.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R034",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (20)",
+      "scientific_object": "Expectation value of the final positive-energy mode occupation after the quench.",
+      "paper_assertion": "p_k = <psi(0)|gamma_k^dagger gamma_k|psi(0)>.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R035",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph before Eq. (21)",
+      "scientific_object": "Asymptotic positive-energy eigenvector and vacuum occupation at the chosen initial field.",
+      "paper_assertion": "At g much greater than 1 the initial ground-state mode approaches (u_k,v_k) = (1,0) and the state is the gamma vacuum.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R036",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (21)",
+      "scientific_object": "Canonical time-dependent mode expansion and its forward-quench initial condition.",
+      "paper_assertion": "c_k = u_k(t) gamma_tilde_k + v_{-k}^*(t) gamma_tilde_{-k}^dagger, with [u_k(-infinity),v_k(-infinity)] = (1,0).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R037",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (21)",
+      "scientific_object": "Direct differentiation of Eq. (21), preservation of canonical anticommutation, and annihilation of the evolved Gaussian state.",
+      "paper_assertion": "Taking d gamma_tilde_k/dt = 0 is equivalent to gamma_tilde_k |psi(t)> = 0 and converts the Heisenberg equation for c_k into mode evolution.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R038",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (22)",
+      "scientific_object": "Unitary numerical integration of the displayed complex ODEs from the stated initial state.",
+      "paper_assertion": "i hbar d_t u_k = 2J[g(t)-cos(ka)]u_k + 2J sin(ka)v_k and i hbar d_t v_k = -2J[g(t)-cos(ka)]v_k + 2J sin(ka)u_k.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R039",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (23)",
+      "scientific_object": "Complex overlaps alpha_k and beta_k obtained by projecting a directly evolved normalized mode onto an orthonormal final BdG basis.",
+      "paper_assertion": "At t = 0, [u_k(0),v_k(0)] = alpha_k(u_k,v_k) + beta_k(u_k^-,v_k^-).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R040",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence immediately after Eq. (23), in both arXiv v3 and PRL 95, 245701",
+      "scientific_object": "An independent symbolic inversion of the Bogoliubov transformation that determines whether the creation operator must carry momentum k or -k, plus canonical-anticommutator and final-state-annihilation tests.",
+      "paper_assertion": "The printed paper states: consequently gamma_tilde_k = alpha_k gamma_k - beta_k gamma_k^dagger.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R041",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (24)",
+      "scientific_object": "Normalized two-mode pair states and explicit action of both correctly transformed annihilation operators.",
+      "paper_assertion": "|psi(0)> = product_{k>0}(alpha_k + beta_k gamma_k^dagger gamma_{-k}^dagger)|0>, annihilated by gamma_tilde_k and gamma_tilde_{-k}.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R042",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (25)",
+      "scientific_object": "Mode occupation computed both from Eq. (24) and from the final-basis projection of Eq. (23).",
+      "paper_assertion": "Opposite-momentum quasiparticle pairs are excited with p_k = |beta_k|^2.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R043",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph after Eq. (25)",
+      "scientific_object": "Block-diagonal momentum-pair evolution and an algebraic transformation of each block into standard Landau-Zener form.",
+      "paper_assertion": "Each (k,-k) pair evolves independently and Eq. (22) maps to a two-level Landau-Zener problem.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R044",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (26)",
+      "scientific_object": "Substitution of this time variable and its derivative into Eq. (22).",
+      "paper_assertion": "tau = 4 J tau_Q sin(ka)[t/tau_Q + cos(ka)].",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R045",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (27)",
+      "scientific_object": "Coefficient-by-coefficient equality between transformed Eq. (22) and the displayed Landau-Zener system.",
+      "paper_assertion": "The transformed equations are i hbar d_tau u_k = -(tau Delta_k)u_k/2 + v_k/2 and i hbar d_tau v_k = +(tau Delta_k)v_k/2 + u_k/2.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R046",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (27)",
+      "scientific_object": "The parameter multiplying the linearly varying diagonal term after the Eq. (26) substitution.",
+      "paper_assertion": "Delta_k^(-1) = 4 J tau_Q sin^2(ka).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R047",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (27)",
+      "scientific_object": "The endpoints obtained by evaluating Eq. (26) at t -> -infinity and t = 0.",
+      "paper_assertion": "The rescaled time runs from minus infinity to tau_final = 2 J tau_Q sin(2ka) at t = 0.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R048",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (27)",
+      "scientific_object": "The interval in which the diabatic level separation is no larger than the coupling under the paper's rescaling.",
+      "paper_assertion": "Tunnelling occurs for tau between -Delta_k^(-1) and +Delta_k^(-1).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R049",
+      "item_type": "quantitative_claim",
+      "source_ref": "Text following Eq. (27)",
+      "scientific_object": "The ratio tau_final/Delta_k^(-1) as a function of k and the error in replacing t = 0 by the asymptotic endpoint.",
+      "paper_assertion": "For |ka| much less than pi/4, tau_final is much greater than Delta_k^(-1), so the evolution can be extended to plus infinity.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R050",
+      "item_type": "quantitative_claim",
+      "source_ref": "First expression in Eq. (28)",
+      "scientific_object": "Final excitation probability from an independent integration of Eq. (27) from minus to plus infinity.",
+      "paper_assertion": "For slow quenches and long wavelengths, p_k is approximately exp[-pi/(2 hbar Delta_k)].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R051",
+      "item_type": "quantitative_claim",
+      "source_ref": "Second expression in Eq. (28)",
+      "scientific_object": "The Gaussian approximation compared pointwise with both the full sin^2(ka) Landau-Zener expression and direct BdG evolution.",
+      "paper_assertion": "p_k is approximately exp[-2 pi (J tau_Q/hbar)(ka)^2] at long wavelength.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R052",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (28)",
+      "scientific_object": "The standard-deviation convention obtained by rewriting Eq. (28) as exp[-(ka)^2/(2 sigma^2)].",
+      "paper_assertion": "The Gaussian in ka has width (4 pi J tau_Q/hbar)^(-1/2).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R053",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (28)",
+      "scientific_object": "Algebraic equivalence of the width inequality and the stated lower bound on tau_Q.",
+      "paper_assertion": "The Gaussian width is much less than pi/4 when tau_Q is much greater than 4 hbar/(pi^3 J).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/excitation_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "R054",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (29)",
+      "scientific_object": "Sum of the mode occupations from Eq. (20) and equality to the expectation of Eq. (19).",
+      "paper_assertion": "The expected number of kinks is Ncal = sum_k p_k.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R055",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (30)",
+      "scientific_object": "Continuum momentum integral of the asymptotic excitation probability and finite-grid convergence toward it.",
+      "paper_assertion": "n = lim_{N->infinity} Ncal/N = (1/2pi) integral_{-pi}^{pi} d(ka) p_k = [1/(2pi)]/[sqrt(2 J tau_Q/hbar)].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R056",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (30)",
+      "scientific_object": "A fitted log-log slope of independently evolved thermodynamic-limit or converged finite-grid densities.",
+      "paper_assertion": "The kink density scales as tau_Q^(-1/2).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R057",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (30)",
+      "scientific_object": "The analytic ratio of the two displayed prefactors and its decimal evaluation.",
+      "paper_assertion": "The Eq. (30) density is smaller than the simple Eq. (5) estimate by a factor 1/(2pi), approximately 0.159.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/defect_density.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "R058",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (30)",
+      "scientific_object": "A re-fit of the cited simulation data using the Eq. (30) scaling convention and uncertainty.",
+      "paper_assertion": "Numerical simulations in Ref. [11] are reported to have a best-fit prefactor 0.16, consistent with Eq. (30).",
+      "kind": "non_numeric",
+      "scientific_role": "external_source_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "A result reported from Ref. [11]; the cited data and fit protocol are not results generated by this paper."
+    },
+    {
+      "item_id": "R059",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (31)",
+      "scientific_object": "Ground-state overlap of the product state Eq. (24) and direct finite-chain evolution.",
+      "paper_assertion": "The finite-chain ground-state survival probability is P_GS = product_{k>0}(1-p_k).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/ground_state_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "R060",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (32)",
+      "scientific_object": "Comparison of the full product Eq. (31), the lowest-mode truncation, and direct finite-chain evolution at large tau_Q/N^2.",
+      "paper_assertion": "P_GS is approximately 1-p_{pi/N}, approximately 1-exp[-2 pi^3 J tau_Q/(hbar N^2)].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/ground_state_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "R061",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (32)",
+      "scientific_object": "A re-fit of the cited finite-chain ground-state probability data and comparison with 2 pi^3.",
+      "paper_assertion": "Ref. [11] is reported to fit 59 in place of 2 pi^3, approximately 62.",
+      "kind": "non_numeric",
+      "scientific_role": "external_source_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "A result reported from Ref. [11]; the cited data and fit protocol are not results generated by this paper."
+    },
+    {
+      "item_id": "R062",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph after Eq. (32)",
+      "scientific_object": "The tau_Q at which the exponent for the k = pi/N mode is order one under the paper's stated criterion.",
+      "paper_assertion": "The adiabatic crossover time is tau_Q^ad = hbar N^2/(2 pi^3 J).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/ground_state_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "R063",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph after Eq. (32)",
+      "scientific_object": "A fitted power-law dependence of the finite-chain adiabatic crossover time on N.",
+      "paper_assertion": "tau_Q^ad grows as N^2.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/ground_state_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "R064",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph after Eq. (32)",
+      "scientific_object": "The largest N satisfying the chosen ground-state survival criterion as a function of tau_Q.",
+      "paper_assertion": "The maximum size of a defect-free chain grows as tau_Q^(1/2).",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/ground_state_probability.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "R065",
+      "item_type": "quantitative_claim",
+      "source_ref": "Transition from ferromagnet to paramagnet, opening paragraph",
+      "scientific_object": "The time-dependent field and initial/final regimes used in a ferromagnet-to-paramagnet evolution.",
+      "paper_assertion": "For t > 0 the field is ramped as g(t) = t/tau_Q from the even-parity ground state at g = 0 toward g much greater than 1.",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Model, boundary, quench, or observable definition used by reproduced claims; it is an input/supporting definition rather than a distinct result."
+    },
+    {
+      "item_id": "R066",
+      "item_type": "quantitative_claim",
+      "source_ref": "Transition from ferromagnet to paramagnet, definition before Eq. (33)",
+      "scientific_object": "The count of spins antiparallel to the +x polarized state in the computational x basis.",
+      "paper_assertion": "Fcal = [N - sum_n sigma_n^x]/2.",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Model, boundary, quench, or observable definition used by reproduced claims; it is an input/supporting definition rather than a distinct result."
+    },
+    {
+      "item_id": "R067",
+      "item_type": "quantitative_claim",
+      "source_ref": "Transition from ferromagnet to paramagnet, text before Eq. (33)",
+      "scientific_object": "Leading-order large-g expansion of both Hamiltonian forms and coefficient matching of the excitation count.",
+      "paper_assertion": "For g much greater than 1, H is approximately -Jg(N-2Fcal), while H^+ is approximately 2Jg sum_k gamma_hat_k^dagger gamma_hat_k - JgN.",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": false,
+      "reason": "Retained as supporting derivation for the mapped target and not counted as a second denominator item.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "R068",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (33)",
+      "scientific_object": "Operator equality in the asymptotic final Bogoliubov basis.",
+      "paper_assertion": "Fcal = sum_k gamma_hat_k^dagger gamma_hat_k at large g.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "R069",
+      "item_type": "quantitative_claim",
+      "source_ref": "Paragraph after Eq. (33)",
+      "scientific_object": "Direct variable substitution for g(t)=t/tau_Q and comparison with a numerical reverse-time BdG trajectory.",
+      "paper_assertion": "The reverse quench reaches Eq. (27) with tau replaced by -tau on the right-hand side.",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "R070",
+      "item_type": "quantitative_claim",
+      "source_ref": "Eq. (34)",
+      "scientific_object": "Momentum-integrated excitation density from direct reverse BdG evolution and its asymptotic tau_Q dependence.",
+      "paper_assertion": "The final flipped-spin density is f = [1/(2pi)]/[sqrt(2 J tau_Q/hbar)].",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "R071",
+      "item_type": "quantitative_claim",
+      "source_ref": "Sentence after Eq. (34)",
+      "scientific_object": "Direct reverse-quench finite-chain ground-state overlap compared with product_{k>0}(1-p_k).",
+      "paper_assertion": "The finite-chain ground-state survival probability for the reverse quench is again Eq. (31).",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "covered",
+      "implementation_ref": "all_quantitative_claims",
+      "evidence_refs": [
+        "outputs/data/reverse_quench_density.csv",
+        "outputs/data/reverse_quench_modes.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "critical": true,
+      "reason": "Existing frozen independent numerical or analytic evidence directly adjudicates this atomic result.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    }
+  ],
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf; raw/arxiv.pdf; raw/paper.txt; paper-source/ising_final.tex; raw/arxiv-source.tar",
+    "known_items": [
+      "No numbered figures or tables",
+      "70 atomic paper items R002-R071",
+      "28 primary reproducible results",
+      "33 supporting derivation items",
+      "9 excluded source definitions, external reported results, or schematic context"
+    ],
+    "unknown_remainder": false,
+    "boundary_sentinel_id": "R001",
+    "reason": "Both complete four-page versions and the manuscript source were read end to end; R001 records this boundary only and is not a paper result."
+  }
+}

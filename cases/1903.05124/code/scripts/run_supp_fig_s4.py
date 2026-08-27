@@ -21,9 +21,8 @@ from time import perf_counter
 from typing import Iterable
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / "outputs" / "cache" / "matplotlib"))
 
 import matplotlib
 
@@ -32,7 +31,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from finite_size_scaling import (  # noqa: E402
     ScalingCurve,
@@ -75,12 +74,19 @@ class FitRecord:
     leave_one_size_out_probability_span: float
 
 
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input",
         type=Path,
-        default=CASE / "outputs" / "data" / "main_fig2_numerical_data.csv",
+        default=WORKSPACE / "outputs" / "data" / "main_fig2_numerical_data.csv",
     )
     parser.add_argument(
         "--refinement-input",
@@ -504,11 +510,12 @@ def build_checks(
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
     started = perf_counter()
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
 

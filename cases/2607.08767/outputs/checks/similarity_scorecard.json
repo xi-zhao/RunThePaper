@@ -1,36 +1,1560 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
+  "score_model": "rra_similarity_v1",
   "paper_id": "2607.08767",
-  "overall_score": 45.0,
-  "source_score_model": "rra_similarity_v1",
-  "source_status": "passed",
-  "similarity_level": "feature_not_accepted",
-  "scientific_scope": {
-    "declared_numeric_targets": 1,
-    "target_status_counts": {
-      "failed": 1
-    },
-    "published_generated_datasets": 1,
-    "published_generated_figures": 1
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
   "targets": [
     {
       "target_id": "F5A_PROXY",
-      "figure_id": "Fig. 5(a) coherent over-rotation",
-      "meaning": "The exact Plaquette repetition-memory circuit locations, frame convention, and decoder graph are unpublished; the coherent result is 0.9052 instead of 0.387.",
-      "status": "failed",
-      "formula_gate": "verified",
-      "parameter_match": "not_recorded"
+      "label": "Fig. 5(a) coherent over-rotation",
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 30.0,
+          "max_score": 50.0,
+          "reason": "The proxy recovers the Pauli-underestimation direction and the paper Clifford value, but not the full-state value."
+        },
+        "numeric_closeness": {
+          "score": 10.0,
+          "max_score": 35.0,
+          "reason": "Clifford differs by 0.00121, while the coherent proxy differs from the paper by 0.5182."
+        },
+        "paper_scope_coverage": {
+          "score": 5.0,
+          "max_score": 15.0,
+          "reason": "One Fig. 5 panel is probed with an explicit reconstructed circuit; leakage and threshold targets remain closed."
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "method_validation",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "proxy_model",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "PLAQ009",
+          "PLAQ010"
+        ],
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The generated circuit is an explicitly different proxy model, so source-raster pixel scoring would compare different physics and is not a valid scientific metric.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The public paper fixes theta, distance, rounds, and shot counts, but not the exact circuit-location, frame, sampler-compilation, and decoder conventions needed to turn the existing proxy into the paper Fig. 5(a) calculation.",
+            "evidence": [
+              "config/fig5a_proxy.json",
+              "config/implementation_closure.json",
+              "outputs/checks/fig5a_proxy_result.json",
+              "outputs/checks/F5A_publication_input_audit.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The article describes the experiment at method level while the commercial Plaquette-generated circuit and decoder objects required for numerical parity are not printed or released as independent scientific inputs.",
+            "confidence": "confirmed",
+            "evidence": [
+              "METHOD_TRACE.md",
+              "config/implementation_closure.json",
+              "outputs/checks/F5A_publication_input_audit.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The clean-room proxy implementation executes, Equation (9) is unitary, Equation (10) is normalized, and both simulation branches return valid probabilities; its paper-level mismatch is explicitly scoped to the missing experiment contract.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The coherent unitary and Pauli-twirl probability pass their analytic invariants.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "Both deterministic proxy channel branches execute in the isolated clean-room bundle.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "A line-anchored audit of the article separates the printed experiment settings from the unpublished circuit, compilation, detector-model, decoder-graph, and frame inputs needed to define the reported logical-error value uniquely.",
+                "evidence": [
+                  "outputs/checks/F5A_publication_input_audit.json",
+                  "raw/paper.pdf"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No invariant or execution failure supports a code-defect diagnosis within the declared proxy model.",
+              "evidence": [
+                "outputs/checks/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The publication-input boundary applies to the paper-exact interpretation of Fig. 5(a), not to execution of the declared proxy.",
+            "items": [
+              "F5A_PROXY"
+            ],
+            "completion": "1/1 target-level causal attribution resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Independently reconstruct and hash the exact repetition-code circuit, error-location map, sampler compiler, and decoder graph before attempting paper-level parity.",
+            "expected_resolution": "A dedicated paper-scale contract can replace the proxy boundary without consulting commercial author code or arrays.",
+            "evidence_to_produce": [
+              "outputs/checks/fig5a_qec_input_manifest.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "outputs/data/fig5a_proxy_results.csv",
+        "outputs/checks/fig5a_proxy_result.json",
+        "outputs/figures/fig5a_proxy_comparison.png",
+        "tests/test_fig5a_proxy.py"
+      ],
+      "remaining_gap": "The exact Plaquette repetition-memory circuit locations, frame convention, and decoder graph are unpublished; the coherent result is 0.9052 instead of 0.387.",
+      "figure_refs": [
+        "Fig. 5(a)"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "eq10_probability",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig5a_proxy_result.json#checks.eq10_probability_matches_0_0243",
+          "claim": "Equation (10) yields p=0.024270800923 at theta=0.05."
+        },
+        {
+          "assertion_id": "twirl_underestimates_direction",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig5a_proxy_result.json#checks.proxy_reproduces_twirl_underestimate_direction",
+          "claim": "The explicit coherent circuit has a larger logical error than its Pauli twirl."
+        },
+        {
+          "assertion_id": "paper_full_state_value",
+          "tier": "alignment",
+          "essential": false,
+          "status": "failed",
+          "evidence": "outputs/checks/fig5a_proxy_result.json#checks.full_state_reference_within_0_05",
+          "claim": "The proxy full-state logical error should agree with the paper's 38.7% value."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "partial",
+            "note": "Clifford branch matches; coherent branch exposes a circuit-model mismatch.",
+            "evidence": "outputs/checks/fig5a_proxy_result.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "critical": true,
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 100.0,
+      "component_total": 45.0,
+      "score": 45.0,
+      "similarity_level": "feature_not_accepted",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_TABLE3",
+      "label": "Table III generalized-Pauli twirl",
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "All four sector transitions and all printed nonidentity Pauli weights are independently derived.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "The independently derived values reproduce every printed four-decimal transition and error weight.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "Every numeric row in Table III is represented, including normalized conditional probabilities omitted by the paper.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "method_validation",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "PLAQ012"
+        ],
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a numeric table; exact cell-value comparison is stronger and less ambiguous than raster comparison.",
+        "pixel_alternative_evidence": [
+          "outputs/data/table3_generalized_twirl.csv",
+          "outputs/checks/public_exact_targets.json#targets.T_TABLE3",
+          "outputs/checks/public_exact_targets.json#targets.T_TABLE3.source_discrepancy"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "This is a numeric table; exact cell-value comparison is stronger and less ambiguous than raster comparison.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "not_comparable_with_evidence",
+          "reason_code": "numeric_table"
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "outputs/data/table3_generalized_twirl.csv",
+        "outputs/figures/table3_generalized_twirl.png",
+        "outputs/checks/public_exact_targets.json#targets.T_TABLE3"
+      ],
+      "remaining_gap": "Fresh-context review must adjudicate the table-header semantics discrepancy.",
+      "figure_refs": [
+        "Table III"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "table3_weights",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/public_exact_targets.json#targets.T_TABLE3",
+          "claim": "The blockwise generalized-Pauli twirl reproduces all printed transitions and nonidentity weights."
+        },
+        {
+          "assertion_id": "table3_header_semantics",
+          "tier": "alignment",
+          "essential": true,
+          "status": "source_figure_artifact",
+          "evidence": "outputs/checks/public_exact_targets.json#targets.T_TABLE3.source_discrepancy",
+          "claim": "The printed p_err|tr values are joint weights; the actual conditional probabilities require division by p_tr."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "full-table",
+            "status": "reproduced",
+            "evidence": "outputs/data/table3_generalized_twirl.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 100.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T_FIG10",
+      "label": "Figure 10 five-sector heating transition matrix",
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The independent Lindblad channel reproduces the upward thermal drift and full matrix structure.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Maximum absolute difference from the 25 printed values is 5.29e-5.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All 25 transition probabilities and all five initial/final sectors are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "final_reproduction",
+        "reference_comparison": "table_exact",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "PLAQ020"
+        ],
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "The figure prints every matrix cell; direct 25-value comparison is the primary scientific metric, while raster styling is diagnostic only.",
+        "pixel_alternative_evidence": [
+          "outputs/data/fig10_heating_matrix.csv",
+          "outputs/checks/public_exact_targets.json#targets.T_FIG10",
+          "outputs/checks/public_exact_targets.json#targets.T_FIG10.max_absolute_error_vs_printed_5dp"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "The figure prints every matrix cell; direct 25-value comparison is the primary scientific metric, while raster styling is diagnostic only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "not_comparable_with_evidence",
+          "reason_code": "numeric_table"
+        },
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "outputs/data/fig10_heating_matrix.csv",
+        "outputs/figures/fig10_heating_matrix.png",
+        "outputs/checks/public_exact_targets.json#targets.T_FIG10"
+      ],
+      "remaining_gap": "Fresh-context independent review remains pending.",
+      "figure_refs": [
+        "Figure 10"
+      ],
+      "physics_assertions": [
+        {
+          "assertion_id": "fig10_stochastic_channel",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/public_exact_targets.json#targets.T_FIG10",
+          "claim": "Each transition column is normalized within 4.44e-16 and all entries are nonnegative."
+        },
+        {
+          "assertion_id": "fig10_printed_matrix",
+          "tier": "alignment",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/public_exact_targets.json#targets.T_FIG10.max_absolute_error_vs_printed_5dp",
+          "claim": "All 25 independent entries match the paper matrix within 1e-4."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "full-matrix",
+            "status": "reproduced",
+            "evidence": "outputs/figures/fig10_heating_matrix.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 100.0,
+      "score_aggregation": "included",
+      "component_total": 100.0,
+      "score": 100.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T_FIG5B",
+      "label": "Figure 5(b) leakage-aware sampler comparison",
+      "figure_refs": [
+        "Fig. 5(b)"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent leakage-aware QEC artifact is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "The three printed logical-error values have not been independently evaluated."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 5(b) is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG5B"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "method_validation",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ012"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated numerical figure exists to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig5b_sampler_comparison",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG5B",
+          "claim": "The generalized leakage channel produces the three logical-error values reported in Fig. 5(b)."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "Independent circuit-level leakage simulation and decoder evidence are missing.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_FIG6A",
+      "label": "Figure 6(a) distance-three transmon scan",
+      "figure_refs": [
+        "Fig. 6(a)"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent transmon-channel QEC scan is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No paper-parameter curve has been independently evaluated."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 6(a) is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "a",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG6A"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ015_016"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated numerical curve exists to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig6a_transmon_scan",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG6A",
+          "claim": "The three samplers produce the distance-three transmon logical-error curves in Fig. 6(a)."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "An independent transmon-channel QEC scan is missing.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_FIG6B",
+      "label": "Figure 6(b) distance-nine transmon scan",
+      "figure_refs": [
+        "Fig. 6(b)"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent distance-nine scan is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "No paper-parameter curve has been independently evaluated."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 6(b) is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "b",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG6B"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ015_016"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated numerical curve exists to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig6b_transmon_scan",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG6B",
+          "claim": "Stim and XPauli produce the distance-nine curves in Fig. 6(b)."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "A converged independent distance-nine calculation is missing.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_FIG7",
+      "label": "Figure 7 transmon threshold scaling",
+      "figure_refs": [
+        "Fig. 7"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent finite-size-scaling artifact is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "The 0.0148 and 0.0177 thresholds have not been independently fitted."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 7 is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "threshold",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG7"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ015_016"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated threshold curves exist to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig7_threshold_shift",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG7",
+          "claim": "The XPauli model shifts the transmon threshold from 0.0177 to 0.0148."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "Independent paper-scale simulation, convergence, and finite-size-scaling evidence are missing.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_FIG8",
+      "label": "Figure 8 neutral-atom threshold surfaces",
+      "figure_refs": [
+        "Fig. 8"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent neutral-atom threshold surface is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "Neither the surface separation nor marker values have been evaluated."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 8 is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "surface",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG8"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ018_019"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated threshold surface exists to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig8_surface_separation",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG8",
+          "claim": "The leakage-aware threshold surface shows the reported scattering-axis separation from the Clifford model."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "Independent physical-channel and threshold-surface evidence are missing; exact ray metadata is not printed.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T_FIG11",
+      "label": "Figure 11 non-stationary ion-trap threshold",
+      "figure_refs": [
+        "Fig. 11"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the item contributes zero to reproduction degree and is excluded from covered-item fidelity.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "No independent sector-history QEC threshold artifact is registered."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "The 0.01087 threshold has not been independently fitted."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Fig. 11 is declared but uncovered."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "threshold",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T_FIG11"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "not_applicable",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "PLAQ020",
+          "PLAQ022"
+        ],
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No independently generated threshold curves exist to render or compare.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "indispensable_input_unavailable",
+            "statement": "The printed physical channels do not uniquely determine the six logical-error targets: each additionally requires exact QEC circuits, channel-location maps, sampler-compilation semantics, decoder graphs/weights, and target-specific scan or fit contracts that are not available as independently frozen inputs.",
+            "evidence": [
+              "config/implementation_closure.json",
+              "TARGET_LEDGER.md",
+              "METHOD_TRACE.md"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The paper publishes the channel equations and high-level experiment settings, but the numerical logical-error pipeline is implemented by commercial Plaquette and does not publish enough low-level circuit, sampler, and decoder objects for paper-exact clean-room regeneration.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "FIGURE_CLASSIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "These targets are blocked before a paper-exact QEC run can be defined; no failed scientific run exists from which to infer a defect in reproduction code.",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The isolated campaign reads only declared case-local code and frozen configuration, with no author arrays, commercial code, raw paper files, or reference pixels.",
+                "evidence": [
+                  "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Every target has a target-specific clean-room input schema requiring a path, SHA-256 hash, and explicit scientific fields.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The public leakage transition table and trapped-ion heating/rate-history stages execute independently where the printed equations are sufficient.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_method_gap",
+              "status": "ruled_out",
+              "statement": "The remaining boundary is not an unnamed missing method: every unavailable object and the upstream public-equation stage are explicitly represented in the executable contract.",
+              "evidence": [
+                "src/implementation_closure.py",
+                "config/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The same external input class blocks six distinct QEC logical-error targets, while their target-specific required fields remain separately enumerated.",
+            "items": [
+              "T_FIG5B",
+              "T_FIG6A",
+              "T_FIG6B",
+              "T_FIG7",
+              "T_FIG8",
+              "T_FIG11"
+            ],
+            "completion": "6/6 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "For each target, independently reconstruct the declared clean_room_qec_input_bundle_v1 fields, freeze hashes, and execute a dedicated scientific run contract.",
+            "expected_resolution": "Each target leaves input_blocked only when its exact circuit, sampler, decoder, and scan/fit inputs are complete; scientific coverage then depends on the new numerical and review evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/qec_input_bundle_validation.json"
+            ]
+          }
+        }
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "fig11_nonstationary_threshold",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T_FIG11",
+          "claim": "The sector-dependent non-stationary noise model yields the fitted logical threshold 0.01087."
+        }
+      ],
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json"
+      ],
+      "remaining_gap": "Independent sector-history QEC simulation, convergence, and threshold-fit evidence are missing.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "source_scorecard_sha256": "1d5569a8d9b72c9f96d8006ca2e8f4a6341937171871d1cf01e2fe9ee17c3e46"
+  "overall_score": 81.67,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 9,
+    "critical_items": 8,
+    "artifact_pass_rate": 0.33,
+    "data_backed_rate": 0.33,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "missing_parameters": 1,
+      "none": 2,
+      "missing_benchmark_metadata": 6
+    },
+    "parameter_match_counts": {
+      "proxy_model": 1,
+      "paper_exact": 2,
+      "not_applicable": 6
+    },
+    "reference_comparison_counts": {
+      "table_exact": 3,
+      "not_available": 6
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 3,
+      "unknown": 6
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 3,
+      "unknown": 6
+    },
+    "formula_gate_counts": {
+      "verified": 3,
+      "source_only": 6
+    },
+    "paper_level_role_counts": {
+      "method_validation": 3,
+      "supporting": 2,
+      "main_claim": 4
+    },
+    "physics_status_counts": {
+      "passed": 3,
+      "pending": 6
+    },
+    "physics_assertion_status_counts": {
+      "passed": 5,
+      "failed": 1,
+      "source_figure_artifact": 1,
+      "blocked": 6
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T_TABLE3",
+      "T_FIG10"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "F5A_PROXY",
+      "T_FIG5B",
+      "T_FIG6A",
+      "T_FIG6B",
+      "T_FIG7",
+      "T_FIG8",
+      "T_FIG11"
+    ],
+    "aggregate_included_target_ids": [
+      "F5A_PROXY",
+      "T_TABLE3",
+      "T_FIG10"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T_FIG5B",
+      "T_FIG6A",
+      "T_FIG6B",
+      "T_FIG7",
+      "T_FIG8",
+      "T_FIG11"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 7,
+      "not_required": 2
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 7,
+      "not_required": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "F5A_PROXY",
+      "T_FIG5B",
+      "T_FIG6A",
+      "T_FIG6B",
+      "T_FIG7",
+      "T_FIG8",
+      "T_FIG11"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "F5A_PROXY",
+      "T_FIG5B",
+      "T_FIG6A",
+      "T_FIG6B",
+      "T_FIG7",
+      "T_FIG8",
+      "T_FIG11"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 1,
+      "indispensable_input_unavailable": 6
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 7
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 1,
+      "not_applicable": 6
+    }
+  },
+  "status": "passed"
 }

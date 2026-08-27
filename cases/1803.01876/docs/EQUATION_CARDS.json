@@ -1,0 +1,500 @@
+{
+  "schema_version": 1,
+  "paper_id": "1803.01876",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Bloch Hamiltonian",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "nHSSH"
+        }
+      ],
+      "latex": "H(k)=d_x sigma_x + (d_y+i gamma/2) sigma_y",
+      "role": "Defines the non-Hermitian SSH Bloch model and the hopping convention used by real-space numerics.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:nHSSH"
+        },
+        {
+          "id": "EQC001_matrix_form",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC001_matrix_form"
+        },
+        {
+          "id": "EQC001_chiral_symmetry",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC001_chiral_symmetry"
+        }
+      ],
+      "numerical_form": "Defines the non-Hermitian SSH Bloch model and the hopping convention used by real-space numerics.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::open_chain_hamiltonian",
+        "src/nonhermitian_ssh.py::non_bloch_ab",
+        "src/nonhermitian_ssh.py::non_bloch_ab_t3"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Bloch eigenvalues and exceptional points",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "nHSSH"
+        },
+        {
+          "type": "tex_contains",
+          "value": "E_\\pm(k)=\\pm\\sqrt{d_x^2+(d_y+i\\gamma/2)^2}"
+        },
+        {
+          "type": "tex_contains",
+          "value": "The energy gap closes at the exceptional points"
+        }
+      ],
+      "latex": "E_±(k)=±sqrt(d_x^2+(d_y+i gamma/2)^2)",
+      "role": "Gives the periodic Bloch spectrum and exceptional-point markers used as references.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:nHSSH"
+        },
+        {
+          "id": "EQC002_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "tex_contains:E_\\pm(k)=\\pm\\sqrt{d_x^2+(d_y+i\\gamma/2)^2}"
+        },
+        {
+          "id": "EQC002_source_3",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "tex_contains:The energy gap closes at the exceptional points"
+        },
+        {
+          "id": "EQC002_eigenvalue_square",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC002_eigenvalue_square"
+        }
+      ],
+      "numerical_form": "Gives the periodic Bloch spectrum and exceptional-point markers used as references.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::open_chain_eigenvalues"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Open-chain real-space equations",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "t_2\\psi_{n-1,B}+(t_1+\\frac{\\gamma}{2})\\psi_{n,B}=E\\psi_{n,A}"
+        },
+        {
+          "type": "tex_contains",
+          "value": "(t_1-\\frac{\\gamma}{2})\\psi_{n,A}+t_2\\psi_{n+1,A}=E\\psi_{n,B}"
+        }
+      ],
+      "latex": "t2 psi_{n-1,B}+(t1+gamma/2) psi_{n,B}=E psi_{n,A}",
+      "role": "Defines the open-chain real-space equations used by finite-size Hamiltonians.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "tex_contains:t_2\\psi_{n-1,B}+(t_1+\\frac{\\gamma}{2})\\psi_{n,B}=E\\psi_{n,A}"
+        },
+        {
+          "id": "EQC003_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "tex_contains:(t_1-\\frac{\\gamma}{2})\\psi_{n,A}+t_2\\psi_{n+1,A}=E\\psi_{n,B}"
+        },
+        {
+          "id": "EQC003_open_chain_matrix_entries",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "open_chain_hamiltonian matrix entries match the open-chain real-space equations"
+        }
+      ],
+      "numerical_form": "Defines the open-chain real-space equations used by finite-size Hamiltonians.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::open_chain_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Similarity transform shortcut",
+      "source_refs": [
+        {
+          "type": "eq_id",
+          "value": "EQ002"
+        },
+        {
+          "type": "eq_id",
+          "value": "EQ003"
+        },
+        {
+          "type": "eq_id",
+          "value": "EQ004"
+        }
+      ],
+      "latex": "S^{-1} H S maps asymmetric intracell hopping to an effective Hermitian SSH hopping.",
+      "role": "Explains the similarity-transform shortcut behind the open-boundary transition.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC004_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ002"
+        },
+        {
+          "id": "EQC004_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ003"
+        },
+        {
+          "id": "EQC004_source_3",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ004"
+        }
+      ],
+      "numerical_form": "Explains the similarity-transform shortcut behind the open-boundary transition.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::chiral_block_eigenvalues"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Open-boundary transition",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "shortcut"
+        },
+        {
+          "type": "label",
+          "value": "tp"
+        }
+      ],
+      "latex": "t1=±sqrt(t2^2+(gamma/2)^2)",
+      "role": "Gives the open-boundary topological transition used by Fig. 2 and winding checks.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:shortcut"
+        },
+        {
+          "id": "EQC005_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:tp"
+        },
+        {
+          "id": "EQC005_transition_roots",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC005_transition_roots"
+        }
+      ],
+      "numerical_form": "Gives the open-boundary topological transition used by Fig. 2 and winding checks.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::analytic_transition"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Beta ansatz and bulk equation",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "ansatz"
+        },
+        {
+          "type": "label",
+          "value": "bulkeigen"
+        },
+        {
+          "type": "label",
+          "value": "betazero"
+        }
+      ],
+      "latex": "(phi_{n,A},phi_{n,B})=beta^n(phi_A,phi_B)",
+      "role": "Introduces the beta ansatz and bulk equation used for GBZ calculations.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:ansatz"
+        },
+        {
+          "id": "EQC006_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:bulkeigen"
+        },
+        {
+          "id": "EQC006_source_3",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:betazero"
+        },
+        {
+          "id": "EQC006_beta_quadratic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC006_beta_quadratic"
+        },
+        {
+          "id": "EQC006_beta_root_sum",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC006_beta_root_sum"
+        },
+        {
+          "id": "EQC006_beta_root_product",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC006_beta_root_product"
+        }
+      ],
+      "numerical_form": "Introduces the beta ansatz and bulk equation used for GBZ calculations.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::beta_roots_from_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Generalized Brillouin zone for t3=0",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "bulkbeta"
+        }
+      ],
+      "latex": "|beta_1|=|beta_2|",
+      "role": "Defines the generalized Brillouin zone for the t3=0 model.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:bulkbeta"
+        },
+        {
+          "id": "EQC006_beta_root_product",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC006_beta_root_product"
+        }
+      ],
+      "numerical_form": "Defines the generalized Brillouin zone for the t3=0 model.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::generalized_brillouin_radius"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Open-boundary bulk spectrum",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "spectra"
+        }
+      ],
+      "latex": "E^2=[t1+gamma/2+t2 beta^{-1}][t1-gamma/2+t2 beta]",
+      "role": "Gives the open-boundary bulk spectrum on the non-Bloch contour.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:spectra"
+        },
+        {
+          "id": "EQC008_open_boundary_spectrum_formula",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "non_bloch_ab on beta=r exp(ik) matches the paper's open-boundary spectrum formula"
+        }
+      ],
+      "numerical_form": "Gives the open-boundary bulk spectrum on the non-Bloch contour.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::non_bloch_ab"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Non-Bloch Hamiltonian and winding number",
+      "source_refs": [
+        {
+          "type": "eq_id",
+          "value": "EQ017"
+        },
+        {
+          "type": "eq_id",
+          "value": "EQ018"
+        },
+        {
+          "type": "label",
+          "value": "Q"
+        },
+        {
+          "type": "label",
+          "value": "winding"
+        }
+      ],
+      "latex": "W=(i/2pi) integral_Cbeta q^{-1} dq",
+      "role": "Defines the non-Bloch Hamiltonian, Q matrix, q(beta), and winding number.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ017"
+        },
+        {
+          "id": "EQC009_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ018"
+        },
+        {
+          "id": "EQC009_source_3",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:Q"
+        },
+        {
+          "id": "EQC009_source_4",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:winding"
+        },
+        {
+          "id": "EQC009_Q_flattening",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC009_Q_flattening"
+        },
+        {
+          "id": "EQC009_q_inverse",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC009_q_inverse"
+        },
+        {
+          "id": "EQC009_Q_squared",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC009_Q_squared"
+        },
+        {
+          "id": "EQC009_winding_sanity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC009_winding_sanity"
+        }
+      ],
+      "numerical_form": "Defines the non-Bloch Hamiltonian, Q matrix, q(beta), and winding number.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::non_bloch_winding_t3_zero",
+        "src/nonhermitian_ssh.py::phase_winding"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Nonzero t3 beta equation",
+      "source_refs": [
+        {
+          "type": "eq_id",
+          "value": "EQ021"
+        },
+        {
+          "type": "label",
+          "value": "t3E"
+        }
+      ],
+      "latex": "Nonzero-t3 beta equation from E(beta)=0.",
+      "role": "Defines the nonzero-t3 beta equation used for Fig. 5.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source_1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "eq_id:EQ021"
+        },
+        {
+          "id": "EQC010_source_2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "label:t3E"
+        },
+        {
+          "id": "EQC010_t3_quartic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC010_t3_quartic"
+        }
+      ],
+      "numerical_form": "Defines the nonzero-t3 beta equation used for Fig. 5.",
+      "code_refs": [
+        "src/nonhermitian_ssh.py::beta_roots_t3_from_energy",
+        "src/nonhermitian_ssh.py::non_bloch_ab_t3"
+      ],
+      "open_questions": []
+    }
+  ]
+}

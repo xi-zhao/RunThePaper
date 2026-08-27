@@ -46,10 +46,12 @@ trion radius back to its radial grid.  This reduces a two-dimensional angular
 problem to three coupled one-dimensional radial fields without sampling a
 source curve.
 
-The source additionally retains selected `O(g^4)` feedback terms.  The first
-implementation solves the complete printed `O(g^2)` collision equations and
-uses a separately declared iterative feedback channel for the higher-order
-comparison.  This distinction is retained in T009.
+The source rewrites the same three linear equations after eliminating the
+trion field.  The formally `O(g^4)` terms are the resulting Schur complement
+`B D^-1 C`; they can be effectively `O(g^2)` near resonance.  The production
+code now evaluates both the direct three-species system and this explicit
+eliminated system and requires pointwise parity.  This proves that the `Q`
+feedback is retained without copying author code or arrays.
 
 ## EQ005 -- resonance and self-energy
 
@@ -69,10 +71,11 @@ the same normalization, exactly as in the figures.
 ## EQ007 -- independent Kubo lane
 
 The retarded self-energy in Supplement Eq. (39) is evaluated with the printed
-finite lifetime.  Supplement Eq. (40) then reduces the dc conductivity to a
-one-dimensional energy quadrature.  It is coded independently of the
-Boltzmann matrix assembly so that disagreement can expose a reproduction
-defect rather than being hidden by shared code.
+finite lifetime. Supplement Eq. (40) then reduces the dc conductivity to a
+one-dimensional energy quadrature. A separate analytic-delta relaxation-time
+lane evaluates the same leading-order rate. Their convergence diagnoses delta
+regularization only; neither is substituted for the full coupled Boltzmann
+solution used in T009.
 
 ## EQ008 -- three-fluid ac response
 

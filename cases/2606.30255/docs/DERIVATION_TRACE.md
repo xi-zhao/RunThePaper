@@ -1,172 +1,191 @@
 # Derivation Trace
 
-## Scope and convention
+## Scope And Basis Convention
 
-This trace was written after reading the complete ten-page paper. It derives
-the four frozen theory targets without using the released coincidence counts,
-measured markers, source-figure paths, or digitized source pixels as numerical
-inputs.
-
-The paper uses
+Only the theory curves in Figures 3-5 are generated. The two-qubit basis is
+ordered as
 
 \[
-|m(x)\rangle=\sin x|H\rangle+\cos x|V\rangle ,
+(|HH\rangle,|HV\rangle,|VH\rangle,|VV\rangle).
 \]
 
-where \(x\) is a polarization angle. Define Alice's directions as
+Following Eq. (7), a transmitted polarization state is
 
 \[
-a=A,\qquad b=A+\phi,\qquad c=A+2\phi
+|\theta\rangle=\sin\theta|H\rangle+\cos\theta|V\rangle .
 \]
 
-and Bob's as
+This convention makes \(0^\circ\) the vertical state. Since
+\(\sin^2\theta+\cos^2\theta=1\), the plus-outcome projector
+\(\Pi_\theta=|\theta\rangle\langle\theta|\) is normalized and rank one.
+
+## 1. Source State And Density Matrix
+
+The fitted pure component is Eq. (18):
 
 \[
-a'=B,\qquad b'=B+\phi,\qquad c'=B+2\phi .
+|\Psi(w,\xi)\rangle
+=\sqrt w|HV\rangle+e^{i\xi}\sqrt{1-w}|VH\rangle .
 \]
 
-This convention immediately produces the paper's relative-angle statements:
-when \(A=B\), the \(ab'\), \(bc'\), and \(ac'\) separations are
-\(\phi,\phi,2\phi\); when \(B-A=-15^\circ\) and
-\(\phi=30^\circ\), they are \(15^\circ,15^\circ,45^\circ\).
-
-## 1. Classical Wigner bound
-
-From the eight anti-correlated hidden-variable rows in Table I,
+The two basis states are orthogonal, so the norm is \(w+(1-w)=1\).
+The paper fixes \(\xi=\pi\), giving
 
 \[
-P_{++}^{ab'}=p_3+p_4,\quad
-P_{++}^{bc'}=p_2+p_6,\quad
-P_{++}^{ac'}=p_2+p_4.
+|\Psi(w,\pi)\rangle
+=\sqrt w|HV\rangle-\sqrt{1-w}|VH\rangle .
 \]
 
-Therefore
+At \(w=1/2\), this is the singlet. Equation (20) adds white noise:
 
 \[
-W=P_{++}^{ab'}+P_{++}^{bc'}-P_{++}^{ac'}=p_3+p_6\geq0.
+\rho=v|\Psi\rangle\langle\Psi|+\frac{1-v}{4}I_4.
 \]
 
-The frozen figures test the quantum prediction for this same observable; they
-do not attempt to close the perfect-anticorrelation loophole discussed by the
-paper.
+The eigenvalue along \(|\Psi\rangle\) is \((1+3v)/4\), and the other
+three eigenvalues are \((1-v)/4\). Thus \(0\leq v\leq1\) guarantees
+Hermiticity, positive semidefiniteness, and unit trace.
 
-## 2. State and density matrix
+## 2. General Born Probability
 
-With \(a_w=\sqrt w\), \(b_w=\sqrt{1-w}\), and the paper-fixed phase
-\(\xi=\pi\), Eq. (18) becomes
+For Alice angle \(\alpha\) and Bob angle \(\beta\), the joint ket is
+\(|\alpha,\beta\rangle=|\alpha\rangle\otimes|\beta\rangle\). Born's rule is
 
 \[
-|\Psi(w)\rangle=a_w|HV\rangle-b_w|VH\rangle.
+P_{++}(\alpha,\beta)
+=\langle\alpha,\beta|\rho|\alpha,\beta\rangle.
 \]
 
-Eq. (20) adds isotropic noise,
+For \(\xi=\pi\), the pure-state amplitude is
 
 \[
-\rho(w,v)=v|\Psi(w)\rangle\langle\Psi(w)|
-          +\frac{1-v}{4}I_4.
+\langle\alpha,\beta|\Psi\rangle
+=\sqrt w\sin\alpha\cos\beta
+-\sqrt{1-w}\cos\alpha\sin\beta .
 \]
 
-Independent checks:
-
-- \(\langle\Psi|\Psi\rangle=w+(1-w)=1\);
-- \(\operatorname{Tr}\rho=v+(1-v)=1\);
-- the eigenvalues are \((1+3v)/4\) once and \((1-v)/4\) three
-  times, so the four paper values \(0\leq v\leq1\) produce a positive
-  semidefinite density matrix.
-
-## 3. Born probability
-
-For Alice angle \(x\) and Bob angle \(y\), the joint transmission projector is
-\(|m(x)m(y)\rangle\langle m(x)m(y)|\). The pure-state amplitude is
+The isotropic term contributes \(1/4\), because the joint ket is normalized.
+Therefore the numerical scalar form is
 
 \[
-\begin{aligned}
-\langle m(x)m(y)|\Psi(w)\rangle
- &=\sqrt w\,\sin x\cos y
-   -\sqrt{1-w}\,\cos x\sin y .
-\end{aligned}
+P_{++}(\alpha,\beta)
+=v\left(\sqrt w\sin\alpha\cos\beta
+-\sqrt{1-w}\cos\alpha\sin\beta\right)^2
++\frac{1-v}{4}.
 \]
 
-The independently derived scalar probability is consequently
+For \(w=1/2\), the sine subtraction identity reduces this to
 
 \[
-p_{++}(x,y;w,v)=v\left(
-\sqrt w\,\sin x\cos y-\sqrt{1-w}\,\cos x\sin y
-\right)^2+\frac{1-v}{4}.
+P_{++}(\alpha,\beta)
+=\frac v2\sin^2(\alpha-\beta)+\frac{1-v}{4},
 \]
 
-The implementation evaluates the full \(4\times4\) matrix trace
-\(\operatorname{Tr}[\rho(\Pi_x\otimes\Pi_y)]\). The scalar expression above is
-implemented separately as an analytic reference. Agreement between those two
-paths is a scientific check, not circular reuse of one code path.
+and the ideal \(v=1\) limit is exactly paper Eq. (9).
 
-For \(w=1/2,v=1\), the expression reduces to
+## 3. Wigner Value
+
+Equation (5) defines
 
 \[
-p_{++}(x,y)=\frac12\sin^2(x-y),
+\mathcal W=P_{++}^{ab'}+P_{++}^{bc'}-P_{++}^{ac'}.
 \]
 
-which is Eq. (9).
+Substituting the LHV identities in Eqs. (1)-(3) gives
+\(\mathcal W=p_3+p_6\geq0\). The generated theory lane evaluates the same
+linear combination using the mixed-state Born probabilities above.
 
-## 4. Wigner observable for the three-setting geometry
+## 4. Analytic Extremal Checks
 
-For arbitrary basis origins \(A,B\) and spacing \(\phi\),
+For an ideal singlet with symmetric setting separations
+\((\phi,\phi,2\phi)\),
 
 \[
-\begin{aligned}
-P_{++}^{ab'} &= p_{++}(A,B+\phi),\\
-P_{++}^{bc'} &= p_{++}(A+\phi,B+2\phi),\\
-P_{++}^{ac'} &= p_{++}(A,B+2\phi),\\
-W &=P_{++}^{ab'}+P_{++}^{bc'}-P_{++}^{ac'}.
-\end{aligned}
+\mathcal W(\phi)=\sin^2\phi-\frac12\sin^2(2\phi).
 \]
 
-At the pure singlet and \(A=B\),
+At \(\phi=\pi/6\),
 
 \[
-W(\phi)=\sin^2\phi-\frac12\sin^2(2\phi).
+\mathcal W=\frac14-\frac12\frac34=-\frac18=-0.125.
 \]
 
-Thus \(W(30^\circ)=-1/8=-0.125\), the symmetric theoretical
-violation limit used in Figures 3 and 4.
-
-For \(B-A=-15^\circ\) with \(\phi=30^\circ\),
+For the paper's asymmetric extremal separations
+\((\pi/12,\pi/12,\pi/4)\),
 
 \[
-W=\frac12\left[2\sin^2(15^\circ)-\sin^2(45^\circ)\right]
-  =\frac{1-\sqrt3}{4}\approx-0.1830127,
+\mathcal W
+=\frac12\left[2\sin^2\left(\frac{\pi}{12}\right)
+-\sin^2\left(\frac{\pi}{4}\right)\right]
+=\frac{1-\sqrt3}{4}\approx-0.1830127.
 \]
 
-which is the asymmetric limit used in Figure 5.
+These two exact values provide target-independent checks and define the
+visible limit lines.
 
-## 5. Target-specific paper parameters
+## 5. Scan Geometry
 
-| Target | Scan | Fixed geometry | \(w\) | \(v\) | \(\xi\) | Ideal reference |
-| --- | --- | --- | ---: | ---: | ---: | ---: |
-| T-FIG003 | \(\phi:0^\circ\ldots360^\circ\) | \(A=B=0^\circ\) | 0.50 | 0.98 | \(\pi\) | \(-0.125\) |
-| T-FIG004 | \(\Theta:0^\circ\ldots360^\circ\) | \(A=B=\Theta,\phi=30^\circ\) | 0.36 | 0.99 | \(\pi\) | \(-0.125\) |
-| T-FIG005A | \(B:0^\circ\ldots360^\circ\) | \(A=0^\circ,\phi=30^\circ\) | 0.35 | 0.89 | \(\pi\) | \((1-\sqrt3)/4\) |
-| T-FIG005B | \(A:0^\circ\ldots360^\circ\) | \(B=0^\circ,\phi=30^\circ\) | 0.41 | 0.90 | \(\pi\) | \((1-\sqrt3)/4\) |
+Figure 1 and Sections V.A-V.C define each local three-setting basis as
 
-The \(0.25^\circ\) numerical grid used for rendering samples these analytic
-curves densely. It changes neither the model nor any paper parameter.
+\[
+(a,b,c)=(\theta_A,\theta_A+\phi,\theta_A+2\phi),
+\]
 
-## 6. Required independent checks
+\[
+(a',b',c')=(\theta_B,\theta_B+\phi,\theta_B+2\phi).
+\]
 
-Each guarded target run must verify:
+Only three cross-party pairs enter the Wigner value:
 
-1. trace one, Hermiticity, and non-negative eigenvalues of \(\rho\);
-2. projector normalization and \(0\leq p_{++}\leq1\);
-3. matrix-trace Born probabilities against the separately evaluated scalar
-   formula at every grid point;
-4. \(W=P_{++}^{ab'}+P_{++}^{bc'}-P_{++}^{ac'}\);
-5. \(180^\circ\) polarization periodicity;
-6. target-specific extrema/limit identities and full visible theory-series
-   coverage;
-7. output provenance is `independent_numerics`.
+\[
+(a,b')=(\theta_A,\theta_B+\phi),\quad
+(b,c')=(\theta_A+\phi,\theta_B+2\phi),\quad
+(a,c')=(\theta_A,\theta_B+2\phi).
+\]
 
-## Formula status
+- Figure 3: \(\theta_A=\theta_B=0^\circ\), scan \(\phi\).
+- Figure 4: \(\phi=30^\circ\), scan the plotted central setting
+  \(\Theta\), with basis starts
+  \(\theta_A=\theta_B=\Theta-\phi\). The official
+  `starting_angle=0` probability row distinguishes this coordinate convention
+  from a start-setting interpretation without supplying any generated points.
+- Figure 5 top: \(\phi=30^\circ\), fix \(\theta_A=0^\circ\), scan
+  \(\theta_B\).
+- Figure 5 bottom: \(\phi=30^\circ\), fix \(\theta_B=0^\circ\), scan
+  \(\theta_A\).
 
-All six dependencies in `EQUATION_CARDS.json` are `verified`. Numerical
-execution remains closed until `check_formula_gate.py` passes and the generated
-`DERIVATION.md` matches the current cards.
+A \(180^\circ\) shift changes a measurement ket's sign but leaves its
+projector unchanged. All probability and Wigner curves must therefore be
+\(180^\circ\)-periodic.
+
+## 6. Fidelity Check
+
+The results text compares the fitted density matrix with the singlet. At
+\(\xi=\pi\),
+
+\[
+|\langle\psi^-|\Psi(w,\pi)\rangle|^2
+=\frac12+\sqrt{w(1-w)}.
+\]
+
+Thus
+
+\[
+F_{\psi^-}
+=v\left(\frac12+\sqrt{w(1-w)}\right)+\frac{1-v}{4}.
+\]
+
+The rounded Figure 3 parameters give \(F=0.985\), exactly as reported.
+The other two-decimal fit parameters lead to small differences from the
+reported fidelities; those are retained as an explicit rounding/evidence
+boundary rather than removed by refitting.
+
+## Verification Evidence
+
+- Source trace: frozen PDF and TeX, Eqs. (5), (7)-(10), (18), (20), (21).
+- Independent symbolic checks:
+  `outputs/checks/formula_symbolic_checks.json`.
+- Machine formula gate:
+  `outputs/checks/formula_verification.json`.
+- Generated equation view: `DERIVATION.md` (created from
+  `EQUATION_CARDS.json`; never edited by hand).

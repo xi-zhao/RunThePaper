@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Any
 
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from atom_path_planner import run_model_training_reproduction  # noqa: E402
 
@@ -97,6 +97,7 @@ def training_profiles() -> dict[str, dict[str, Any]]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Train the 2604.08669 GNN path-planner model.")
+    parser.add_argument("--config", type=Path, help="Workspace-relative JSON config under config/.")
     parser.add_argument("--profile", choices=sorted(training_profiles()), default="canary")
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--device")
@@ -123,7 +124,19 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    config = dict(training_profiles()[args.profile])
+    config_payload: dict[str, Any] = {}
+    if args.config is not None:
+        config_path = args.config
+        if config_path.is_absolute() or ".." in config_path.parts or config_path.parts[:1] != ("config",):
+            raise ValueError("--config must be workspace-relative under config/")
+        config_payload = json.loads((ROOT / config_path).read_text(encoding="utf-8"))
+
+    profile = str(config_payload.get("profile", args.profile))
+    config = dict(training_profiles()[profile])
+    if config_payload:
+        for key, value in config_payload.items():
+            if key not in {"schema_version", "paper_id", "target_ids", "execution_status", "method_note"}:
+                config[key] = value
     for key in [
         "output_dir",
         "device",
@@ -151,7 +164,7 @@ def main() -> int:
         if value is not None:
             config[key] = value
     config["seed"] = args.seed
-    config["profile"] = args.profile
+    config["profile"] = profile
     config["platform"] = platform_payload()
 
     output_dir = Path(config.pop("output_dir"))

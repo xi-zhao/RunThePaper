@@ -1,0 +1,1070 @@
+{
+  "schema_version": 2,
+  "paper_id": "2510.26761",
+  "scope_mode": "whole_paper_atomic_w1",
+  "formula_numericalization_required": true,
+  "inventory_boundary": {
+    "status": "complete",
+    "unknown_remainder": false,
+    "source_ref": "raw/paper.pdf (16 pages, including End Matter and Supplemental Material) and paper-source/WignerNegativityImpliesGME.tex",
+    "reason": "The full paper, End Matter, Supplemental proof sections, captions, and complete TeX/PDF bundle were enumerated. There are no tables or separate supplementary files; no author numerical code or arrays were used.",
+    "next_action": "Keep the 46-item W1 denominator stable; W2 may add independent proof checks without changing item identity."
+  },
+  "source_boundary": {
+    "author_code_accessed": false,
+    "author_numeric_arrays_accessed": false,
+    "source_pixels_used_as_scientific_input": false,
+    "render_reference_only": true
+  },
+  "implementations": {
+    "existing_numeric_examples": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_target.py",
+        "--config",
+        "config/paper_exact.json"
+      ],
+      "code_refs": [
+        "src/wigner_gme.py",
+        "scripts/run_paper_target.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "expected_outputs": [
+        "outputs/data/overview_fields.npz",
+        "outputs/data/w_state_fields.npz",
+        "outputs/checks/t001_paper_target_run.json",
+        "outputs/checks/t002_paper_target_run.json"
+      ],
+      "acceptance_criteria": [
+        "Fields come from paper formulas and Fock amplitudes, never source pixels.",
+        "Disk and finite-point witnesses pass independent checks.",
+        "The Fig. 1 printed-threshold discrepancy is preserved rather than tuned away."
+      ]
+    },
+    "t001_scientific_closure_v1": {
+      "status": "attested",
+      "target_ids": [
+        "T001"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_overview_campaign.py",
+        "--config",
+        "config/t001_scientific_closure.json"
+      ],
+      "code_refs": [
+        "src/wigner_gme.py",
+        "src/overview_campaign.py",
+        "scripts/run_overview_campaign.py"
+      ],
+      "config_ref": "config/t001_scientific_closure.json",
+      "run_contract_ref": "run_contract.t001_scientific_closure.json",
+      "run_attestation_ref": "outputs/runs/2510.26761-t001-scientific-closure-v1-20260825/run_attestation.json",
+      "expected_outputs": [
+        "outputs/data/t001_scientific_fields.npz",
+        "outputs/data/t001_scientific_metrics.json",
+        "outputs/checks/t001_scientific_closure.json"
+      ],
+      "acceptance_criteria": [
+        "The four Fig. 1 scientific fields are regenerated from the paper state and equations in a raw/reference-free isolated run.",
+        "State normalization, parity integral, numerical convergence, and the exact smoothed origin all pass.",
+        "The source threshold inconsistency is exposed rather than tuned away."
+      ]
+    },
+    "analytic_claim_campaign_v1": {
+      "status": "ready",
+      "target_ids": [
+        "T003",
+        "T004",
+        "T005"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_analytic_claim_campaign.py",
+        "--config",
+        "config/analytic_claim_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/analytic_claim_campaign.py",
+        "src/wigner_gme.py",
+        "scripts/run_analytic_claim_campaign.py"
+      ],
+      "config_ref": "config/analytic_claim_campaign.json",
+      "run_contract_ref": "run_contract.analytic_claim_campaign.json",
+      "expected_outputs": [
+        "outputs/data/analytic_claim_campaign/t003.json",
+        "outputs/data/analytic_claim_campaign/t004.json",
+        "outputs/data/analytic_claim_campaign/t005.json",
+        "outputs/checks/analytic_claim_campaign/summary.json"
+      ],
+      "acceptance_criteria": [
+        "All 19 primary no-display claims have an executable clean-room formula, finite falsification, or strict parameterized input path.",
+        "Finite numerical checks are labelled as such and never promoted to general mathematical proofs.",
+        "Missing companion-study sampling and all-M family definitions remain blocked inputs rather than guessed data.",
+        "No source pixels, author arrays, author code, raw/, or reference figures enter the runner."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "F1-3D-CUT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 central 3D cut and End Matter",
+      "scientific_object": "Signed 3D Wigner field on the printed cut.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "t001_scientific_closure_v1",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/t001_scientific_fields.npz"
+      ],
+      "critical": true,
+      "reason": "Independent Fock-basis field covers the scientific series; undisclosed isosurface/camera choices are rendering-only.",
+      "claim_refs": [
+        "CLM_F1_3D_CUT"
+      ]
+    },
+    {
+      "item_id": "F1-EQUAL-SLICE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 equal-coordinate slice",
+      "scientific_object": "Signed 2D Wigner field, integral, and negative volume.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "t001_scientific_closure_v1",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/t001_scientific_fields.npz",
+        "outputs/data/t001_scientific_metrics.json"
+      ],
+      "critical": true,
+      "reason": "Independent field, parity identity, and convergence checks cover this series.",
+      "claim_refs": [
+        "CLM_F1_EQUAL_SLICE"
+      ]
+    },
+    {
+      "item_id": "F1-COM-WIGNER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 center-of-mass branch",
+      "scientific_object": "Reduced center-of-mass Wigner field.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "t001_scientific_closure_v1",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/t001_scientific_fields.npz"
+      ],
+      "critical": true,
+      "reason": "The reduced density matrix and field are independently generated and normalized.",
+      "claim_refs": [
+        "CLM_F1_COM_WIGNER"
+      ]
+    },
+    {
+      "item_id": "F1-SMOOTHED-COM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 smoothed center-of-mass branch",
+      "scientific_object": "Gaussian-convolved field including its negative origin.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "t001_scientific_closure_v1",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/t001_scientific_fields.npz",
+        "outputs/checks/t001_scientific_closure.json"
+      ],
+      "critical": true,
+      "reason": "Grid convolution and an independent analytic origin value cover the series.",
+      "claim_refs": [
+        "CLM_F1_SMOOTHED_COM"
+      ]
+    },
+    {
+      "item_id": "F2A-WIGNER-FIELD",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 2(a) and End Matter",
+      "scientific_object": "Tripartite W-state Wigner field and finite disk.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "existing_numeric_examples",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/w_state_fields.npz",
+        "outputs/data/w_state_metrics.json"
+      ],
+      "critical": true,
+      "reason": "Exact field and disk witness are independently evaluated.",
+      "claim_refs": [
+        "CLM_F2A_WIGNER_FIELD"
+      ]
+    },
+    {
+      "item_id": "F2B-CHARACTERISTIC-FIELD",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 2(b) and End Matter",
+      "scientific_object": "W-state characteristic field with 19 difference points.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "existing_numeric_examples",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/w_state_fields.npz",
+        "outputs/data/w_state_metrics.json"
+      ],
+      "critical": true,
+      "reason": "Exact field, point set, and independent eigensolve cover this series.",
+      "claim_refs": [
+        "CLM_F2B_CHARACTERISTIC_FIELD"
+      ]
+    },
+    {
+      "item_id": "F1-SCHEMATIC-CALLOUTS",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Main Fig. 1 arrows and theorem callouts",
+      "scientific_object": "Explanatory layout around numeric fields.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Schematic context is not an independent scientific observable."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C01-THEOREM1-GME",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 1, Eqs. (2)-(3); Supplement S1",
+      "scientific_object": "N_2D above the state-dependent bound implies GME for every allowed slice.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "Examples are checked, but no independent proof-level artifact covers the general theorem.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C01_THEOREM1_GME"
+      ]
+    },
+    {
+      "item_id": "C02-LEMMA1-SIGNED-INTEGRAL",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Supplement Lemma 1, Eq. (S1) first inequality",
+      "scientific_object": "Absolute signed slice integral bound M^{-1}(2/pi)^{M-1}.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "Only one M=3 state is checked; no all-state proof check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C02_LEMMA1_SIGNED_INTEGRAL"
+      ]
+    },
+    {
+      "item_id": "C03-LEMMA1-L2-BOUND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Supplement Lemma 1, Eq. (S1) second inequality",
+      "scientific_object": "Squared-L2 slice bound (2M)^{-1}(2/pi)^{2M-1}.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No general norm proof check or counterexample search exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C03_LEMMA1_L2_BOUND"
+      ]
+    },
+    {
+      "item_id": "C04-THEOREM1-BOUND-RANGE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Theorem 1; Supplement Eqs. (S15)-(S16)",
+      "scientific_object": "The bound lies in [0,1/(4sqrt(M-1))+1/(2M)].",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "The M=3 example does not establish the all-M extremal range.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C04_THEOREM1_BOUND_RANGE"
+      ]
+    },
+    {
+      "item_id": "C05-THEOREM1-M2-REDUCTION",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "literature_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Paragraph after Theorem 1",
+      "scientific_object": "M=2 reduces to a witness from Ref. 33.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Cross-paper equivalence context is not a new numeric result here."
+    },
+    {
+      "item_id": "C06-THEOREM2-TRACE-BOUND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 2, Eq. (8); Supplement S2",
+      "scientific_object": "Negative smoothed values lower-bound trace distance to non-GME states by 2/pi.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "One origin value does not independently prove the general trace bound.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C06_THEOREM2_TRACE_BOUND"
+      ]
+    },
+    {
+      "item_id": "C07-THEOREM2-NEGATIVITY-IMPLIES-GME",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Final sentence of Theorem 2",
+      "scientific_object": "Any negative smoothed value certifies GME.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "uncovered",
+      "reason": "Direct corollary of C06, retained without double-counting.",
+      "claim_refs": [
+        "CLM_C07_THEOREM2_NEGATIVITY_IMPLIES_GME"
+      ]
+    },
+    {
+      "item_id": "C08-LEMMA2-BIPARTITE-POSITIVITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Supplement Lemma 2",
+      "scientific_object": "Two-mode separability implies nonnegative reduced collective Wigner function.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "uncovered",
+      "reason": "Imported supporting lemma, retained without denominator duplication.",
+      "claim_refs": [
+        "CLM_C08_LEMMA2_BIPARTITE_POSITIVITY"
+      ]
+    },
+    {
+      "item_id": "C09-LEMMA3-MULTIPARTITE-POSITIVITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Supplement Lemma 3, Eq. (S18)",
+      "scientific_object": "M-2 auxiliaries map every non-GME state to a nonnegative collective Wigner function.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No independent partition construction or falsification check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C09_LEMMA3_MULTIPARTITE_POSITIVITY"
+      ]
+    },
+    {
+      "item_id": "C10-THEOREM2-CONVOLUTION-IDENTITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Supplement S2, final identity in Theorem 2 proof",
+      "scientific_object": "Smoothed Wigner equals the rescaled extended-state reduced Wigner function.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "Only one Gaussian M=3 specialization is checked.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C10_THEOREM2_CONVOLUTION_IDENTITY"
+      ]
+    },
+    {
+      "item_id": "C11-KERNEL-REDUCED-WIGNER",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Supplement S2, equation after Theorem 2 proof",
+      "scientific_object": "Kernel equals a scaled reduced Wigner function of the auxiliary product state.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No independent general auxiliary-mode check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C11_KERNEL_REDUCED_WIGNER"
+      ]
+    },
+    {
+      "item_id": "C12-GAUSSIAN-KERNEL-CONSTRAINT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (9) and Supplement S2 final equation",
+      "scientific_object": "Gaussian auxiliaries yield the kernel with sqrt(det Sigma)>=(M-2)/(4M).",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "The existing M=3 check does not establish the all-M covariance constraint.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T003",
+      "claim_refs": [
+        "CLM_C12_GAUSSIAN_KERNEL_CONSTRAINT"
+      ]
+    },
+    {
+      "item_id": "C13-COROLLARY1-NONCLASSICAL-DEPTH",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Corollary 1; Supplement S3",
+      "scientific_object": "tau_c(tr_-rho)>1-1/M implies GME.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No independent general Gaussian-convolution proof check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C13_COROLLARY1_NONCLASSICAL_DEPTH"
+      ]
+    },
+    {
+      "item_id": "C14-INTERFEROMETER-SUFFICIENT-GME",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Equation after Corollary 1",
+      "scientific_object": "A maximally mixing M-port fed above depth 1-1/M produces GME.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No independent interferometer-output entanglement check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C14_INTERFEROMETER_SUFFICIENT_GME"
+      ]
+    },
+    {
+      "item_id": "C15-ZERO-DEPTH-NECESSITY",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "literature_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Paragraph after Corollary 1",
+      "scientific_object": "Prior result: tau_c=0 cannot generate entanglement with vacuum.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Explicitly attributed to prior literature."
+    },
+    {
+      "item_id": "C16-COROLLARY2-FINITE-REGION",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Corollary 2, Eq. (11); Supplement S4",
+      "scientific_object": "Finite-region absolute volume above 1/(2sqrt(M-1)) certifies GME.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "The W-state example is checked, not the general corollary proof.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C16_COROLLARY2_FINITE_REGION"
+      ]
+    },
+    {
+      "item_id": "C17-COROLLARY2-MONOTONICITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Supplement S4",
+      "scientific_object": "Finite-region absolute volume is no larger than full-plane volume.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "uncovered",
+      "reason": "Supporting proof step retained without second credit.",
+      "claim_refs": [
+        "CLM_C17_COROLLARY2_MONOTONICITY"
+      ]
+    },
+    {
+      "item_id": "C18-W-STATE-RIGOROUS-POINT-COUNT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Paragraph after Eq. (12)",
+      "scientific_object": "Rigorous discrete Wigner integration requires about 76000 measurements.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "reason": "Imported from the companion paper; derivation and tolerance are absent here.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C18_W_STATE_RIGOROUS_POINT_COUNT"
+      ]
+    },
+    {
+      "item_id": "C19-W-STATE-HEURISTIC-POINT-COUNT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Paragraph after Eq. (12)",
+      "scientific_object": "Heuristic integration requires about 78 measurements.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "reason": "The companion sampling rule and tolerance are absent here.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C19_W_STATE_HEURISTIC_POINT_COUNT"
+      ]
+    },
+    {
+      "item_id": "C20-COROLLARY3-PSD-WITNESS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Corollary 3, Eqs. (14)-(16); Supplement S5",
+      "scientific_object": "A non-PSD C(rho;Xi) circle K(R;Xi) matrix certifies GME.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "The W-state example is checked, not the all-state Bochner implication.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C20_COROLLARY3_PSD_WITNESS"
+      ]
+    },
+    {
+      "item_id": "C21-COROLLARY3-TRACE-BOUND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Corollary 3 trace-distance inequality; Supplement S5",
+      "scientific_object": "Most-negative witness eigenvalue lower-bounds trace distance to non-GME states.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No independent operator-norm/trace-norm proof check exists.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C21_COROLLARY3_TRACE_BOUND"
+      ]
+    },
+    {
+      "item_id": "C22-COROLLARY3-MEASUREMENT-COST",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Paragraph after Corollary 3",
+      "scientific_object": "The N-point construction needs fewer than N squared measurements.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "reason": "The seven-point example is checked, not the general count bound.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T004",
+      "claim_refs": [
+        "CLM_C22_COROLLARY3_MEASUREMENT_COST"
+      ]
+    },
+    {
+      "item_id": "C23-LOCAL-OR-COM-READOUT",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "literature_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Paragraph after Corollary 3",
+      "scientific_object": "Criterion can use local or center-of-mass readout.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Experimental context has no standalone numerical result here."
+    },
+    {
+      "item_id": "C24-W-STATE-DISK-THRESHOLD",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Eq. (12), Fig. 2(a), End Matter",
+      "scientific_object": "r_crit=0.699195... and r=0.7 passes the threshold.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/t002_paper_target_run.json",
+        "outputs/checks/v001_paper_target_run.json"
+      ],
+      "reason": "Independent quadrature/root finding supports Fig. 2(a).",
+      "claim_refs": [
+        "CLM_C24_W_STATE_DISK_THRESHOLD"
+      ]
+    },
+    {
+      "item_id": "C25-W-STATE-WIGNER-FORMULA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "End Matter W-state Wigner formula",
+      "scientific_object": "Exact W-state Wigner slice formula.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "DERIVATION_TRACE.md",
+        "outputs/checks/t002_paper_target_run.json"
+      ],
+      "reason": "Collective-mode and Fock derivations support Fig. 2(a).",
+      "claim_refs": [
+        "CLM_C25_W_STATE_WIGNER_FORMULA"
+      ]
+    },
+    {
+      "item_id": "C26-W-STATE-CHARACTERISTIC-FORMULA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "End Matter characteristic formula",
+      "scientific_object": "Exact W-state characteristic slice formula.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "DERIVATION_TRACE.md",
+        "outputs/checks/t002_paper_target_run.json"
+      ],
+      "reason": "Collective-mode derivation supports Fig. 2(b).",
+      "claim_refs": [
+        "CLM_C26_W_STATE_CHARACTERISTIC_FORMULA"
+      ]
+    },
+    {
+      "item_id": "C27-W-STATE-POINT-COUNT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 2(b) caption and End Matter",
+      "scientific_object": "Seven Xi points give 19 differences and ten independent measurements.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/t002_paper_target_run.json",
+        "outputs/checks/v002_paper_target_run.json"
+      ],
+      "reason": "Independent enumeration supports the displayed markers.",
+      "claim_refs": [
+        "CLM_C27_W_STATE_POINT_COUNT"
+      ]
+    },
+    {
+      "item_id": "C28-W-STATE-NC",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "W-state example after Corollary 3",
+      "scientific_object": "The seven-by-seven witness gives N_C=0.0176.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/t002_paper_target_run.json",
+        "outputs/checks/v002_paper_target_run.json"
+      ],
+      "reason": "Independent eigensolve supports Fig. 2(b).",
+      "claim_refs": [
+        "CLM_C28_W_STATE_NC"
+      ]
+    },
+    {
+      "item_id": "C29-FIG1-STATE-NORMALIZATION",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "End Matter Fig. 1 state",
+      "scientific_object": "Printed collective-Fock amplitudes are normalized and coordinates canonical.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "DERIVATION_TRACE.md",
+        "outputs/checks/t001_paper_target_run.json"
+      ],
+      "reason": "Independent amplitude and coordinate checks support Fig. 1.",
+      "claim_refs": [
+        "CLM_C29_FIG1_STATE_NORMALIZATION"
+      ]
+    },
+    {
+      "item_id": "C30-FIG1-NEGATIVITY-WITNESS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "End Matter theorem-1 evaluation",
+      "scientific_object": "N_2D about 0.26370; printed +56 conflicts with state-derived +52.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/t001_paper_target_run.json",
+        "outputs/checks/v003_paper_target_run.json"
+      ],
+      "reason": "Independent parity and convergence calculations preserve the discrepancy.",
+      "claim_refs": [
+        "CLM_C30_FIG1_NEGATIVITY_WITNESS"
+      ]
+    },
+    {
+      "item_id": "C31-FIG1-SMOOTHED-ORIGIN",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_derivation",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "End Matter theorem-2 evaluation",
+      "scientific_object": "Gaussian convolution gives -7/(16pi) at the origin.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/checks/t001_paper_target_run.json",
+        "outputs/checks/v003_paper_target_run.json"
+      ],
+      "reason": "Grid convolution and Laguerre integral support Fig. 1.",
+      "claim_refs": [
+        "CLM_C31_FIG1_SMOOTHED_ORIGIN"
+      ]
+    },
+    {
+      "item_id": "C32-ALL-M-DETECTED-FAMILIES",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Final paragraph of Construction of GME criteria",
+      "scientific_object": "Both theorems detect families for every finite M>=3.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "reason": "The construction is deferred to the companion paper and absent here.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C32_ALL_M_DETECTED_FAMILIES"
+      ]
+    },
+    {
+      "item_id": "C33-ROBUSTNESS-DECREASES-WITH-M",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Final paragraph of Construction of GME criteria",
+      "scientific_object": "Detection robustness decreases with mode count.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "analytic_claim_campaign_v1",
+      "coverage_status": "uncovered",
+      "critical": false,
+      "reason": "No robustness definition, curve, or data is included here.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T005",
+      "claim_refs": [
+        "CLM_C33_ROBUSTNESS_DECREASES_WITH_M"
+      ]
+    },
+    {
+      "item_id": "C34-COMPANION-LOSS-CASE-STUDIES",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "literature_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Final paragraph of Construction of GME criteria",
+      "scientific_object": "Companion paper contains state families and loss studies.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Pointer to external work, not a specific result here."
+    },
+    {
+      "item_id": "X01-GME-DEFINITION",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Background Eq. (1)",
+      "scientific_object": "Convex-mixture definition of non-GME states.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Source definition, not an independently credited result."
+    },
+    {
+      "item_id": "X02-COM-DEFINITIONS",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Eqs. (4)-(5)",
+      "scientific_object": "Center-of-mass mode and reduced-state definitions.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Input definitions represented through downstream claims."
+    },
+    {
+      "item_id": "X03-NONCLASSICALITY-DEPTH-DEFINITION",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Corollary 1 definition",
+      "scientific_object": "Nonclassicality depth definition.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Input to C13, not separate credit."
+    },
+    {
+      "item_id": "X04-CHARACTERISTIC-DEFINITION",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Eq. (13)",
+      "scientific_object": "Characteristic-function Fourier definition.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Implemented downstream, not separate credit."
+    },
+    {
+      "item_id": "X05-OPEN-RESEARCH-DIRECTIONS",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Final discussion",
+      "scientific_object": "Proposed extensions to other entanglement structures and slice dimensions.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Open questions are not reproducible claims."
+    }
+  ],
+  "inventory_summary": {
+    "items_total": 46,
+    "eligible_items": 25,
+    "covered_items": 6,
+    "uncovered_items": 19,
+    "supporting_items": 11,
+    "excluded_items": 10,
+    "display_series": 6,
+    "tables": 0,
+    "primary_no_display_claims": 19
+  }
+}

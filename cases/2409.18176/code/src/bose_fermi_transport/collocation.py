@@ -192,6 +192,80 @@ def solve_collocation_sweep(
     grid: GridSpec,
     relaxation_times_ps: tuple[float, float, float] | None = None,
 ) -> list[TransportResult]:
+    return _solve_collocation_sweep(
+        params,
+        equilibrium,
+        tunnel_mev,
+        frequencies_mev,
+        grid,
+        relaxation_times_ps,
+        solve_strategy="direct",
+    )
+
+
+def solve_collocation_eliminated_sweep(
+    params: ModelParameters,
+    equilibrium: EquilibriumState,
+    tunnel_mev: float,
+    frequencies_mev: np.ndarray,
+    grid: GridSpec,
+    relaxation_times_ps: tuple[float, float, float] | None = None,
+) -> list[TransportResult]:
+    """Solve after eliminating the trion block with a Schur complement.
+
+    Supplement Eqs. (21)-(32) eliminate ``phi_t`` before solving for the hole
+    and exciton distributions.  The terms described there as formally
+    :math:`g^4 Q` are exactly the ``B D^-1 C`` part of this Schur complement.
+    Keeping this lane separate from the direct three-species solve lets the
+    paper-scale campaign prove that those terms were not accidentally dropped.
+    """
+
+    return _solve_collocation_sweep(
+        params,
+        equilibrium,
+        tunnel_mev,
+        frequencies_mev,
+        grid,
+        relaxation_times_ps,
+        solve_strategy="eliminate_trion",
+    )
+
+
+def _solve_linear_system(
+    operator: np.ndarray,
+    source: np.ndarray,
+    hole_exciton_size: int,
+    solve_strategy: str,
+) -> np.ndarray:
+    if solve_strategy == "direct":
+        return np.linalg.solve(operator, source.astype(complex))
+    if solve_strategy != "eliminate_trion":
+        raise ValueError(f"unknown collocation solve strategy: {solve_strategy}")
+
+    a = operator[:hole_exciton_size, :hole_exciton_size]
+    b = operator[:hole_exciton_size, hole_exciton_size:]
+    c = operator[hole_exciton_size:, :hole_exciton_size]
+    d = operator[hole_exciton_size:, hole_exciton_size:]
+    source_hx = source[:hole_exciton_size].astype(complex)
+    source_t = source[hole_exciton_size:].astype(complex)
+
+    d_inv_c = np.linalg.solve(d, c)
+    d_inv_source = np.linalg.solve(d, source_t)
+    schur = a - b @ d_inv_c
+    solution_hx = np.linalg.solve(schur, source_hx - b @ d_inv_source)
+    solution_t = np.linalg.solve(d, source_t - c @ solution_hx)
+    return np.concatenate((solution_hx, solution_t))
+
+
+def _solve_collocation_sweep(
+    params: ModelParameters,
+    equilibrium: EquilibriumState,
+    tunnel_mev: float,
+    frequencies_mev: np.ndarray,
+    grid: GridSpec,
+    relaxation_times_ps: tuple[float, float, float] | None,
+    solve_strategy: str,
+) -> list[TransportResult]:
     collision, source, diagnostics = assemble_collocation_operator(
         params, equilibrium, tunnel_mev, grid
     )
@@ -232,7 +306,7 @@ def solve_collocation_sweep(
         operator = collision.astype(complex) + np.diag(
             rates + 1j * frequency / HBAR_MEV_PS
         )
-        solution = np.linalg.solve(operator, source.astype(complex))
+        solution = _solve_linear_system(operator, source, nh + nx, solve_strategy)
         raw = np.array(
             [
                 np.dot(current_weights[:nh], solution[:nh]),
@@ -266,6 +340,26 @@ def solve_collocation(
     relaxation_times_ps: tuple[float, float, float] | None = None,
 ) -> TransportResult:
     return solve_collocation_sweep(
+        params,
+        equilibrium,
+        tunnel_mev,
+        np.array([frequency_mev]),
+        grid,
+        relaxation_times_ps,
+    )[0]
+
+
+def solve_collocation_eliminated(
+    params: ModelParameters,
+    equilibrium: EquilibriumState,
+    tunnel_mev: float,
+    frequency_mev: float,
+    grid: GridSpec,
+    relaxation_times_ps: tuple[float, float, float] | None = None,
+) -> TransportResult:
+    """Single-frequency form of :func:`solve_collocation_eliminated_sweep`."""
+
+    return solve_collocation_eliminated_sweep(
         params,
         equilibrium,
         tunnel_mev,

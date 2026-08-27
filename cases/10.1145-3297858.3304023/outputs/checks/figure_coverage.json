@@ -1,0 +1,212 @@
+{
+  "schema_version": 2,
+  "paper_id": "10.1145-3297858.3304023",
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/sabre.py",
+        "src/benchmarks.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The paper-text Fig. 3 example routes with one SWAP, three added CNOT equivalents, depth eight, and hardware compliance.",
+        "One reduced campaign executes DAG/front-layer routing, reverse traversal, candidate search, and the decay gate-depth trade-off without reading reference figures or arrays.",
+        "Table II produces a valid blocked artifact until all six indispensable benchmark and stochastic-policy inputs are independently frozen with hashes; no values are guessed."
+      ],
+      "execution_evidence": "outputs/runs/10.1145-3297858.3304023-implementation-closure-v1/run_attestation.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_toffoli_circuit",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 1",
+      "reason": "Background circuit schematic used to introduce notation; it is not an evaluated SABRE output."
+    },
+    {
+      "item_id": "fig2_tokyo_coupling_graph",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 2 coupling graph",
+      "reason": "The graph is a declared hardware-model input consumed by the routing runs, not an independently generated result."
+    },
+    {
+      "item_id": "fig2_tokyo_calibration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 2 calibration values",
+      "reason": "IBM Q20 calibration values are time-dependent hardware measurements and are reference context rather than SABRE outputs."
+    },
+    {
+      "item_id": "fig3a_swap_decomposition",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 3(a)",
+      "reason": "Standard SWAP-to-CNOT circuit identity used as method context."
+    },
+    {
+      "item_id": "fig3b_square_coupling_graph",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 3(b)",
+      "reason": "Four-node coupling graph is the paper-exact input to the executable routing example."
+    },
+    {
+      "item_id": "fig3c_original_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 3(c)",
+      "reason": "Six-CNOT input circuit is an input fixture; its generated routed result is assessed in panel (d)."
+    },
+    {
+      "item_id": "fig3d_routed_circuit",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(d)",
+      "reason": "Independent paper-text implementation reproduces the exact one-SWAP routing, three added CNOTs and compliant output circuit.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "table1_notation",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Table I",
+      "reason": "Symbolic notation dictionary; it defines inputs and state but contains no numerical result."
+    },
+    {
+      "item_id": "fig4_dag_front_layer",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4",
+      "reason": "DAG construction and front-layer evolution are executed by the reconstructed algorithm and checked on representative circuits.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig5_reverse_traversal",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 5",
+      "reason": "Forward-backward-forward routing independently demonstrates the reverse-traversal initial-mapping mechanism and measured gate/depth improvement.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig6_swap_heuristic_search",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 6",
+      "reason": "Candidate-SWAP generation, front-layer restriction and look-ahead cost are exercised in the independent core benchmark runner.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "fig7_optimization_objectives",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 7",
+      "reason": "The decay heuristic produces distinct legal routes exhibiting the paper's gate-count versus depth mechanism on a seeded independent circuit.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "table2_benchmark_results",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Table II",
+      "reason": "All 26 benchmark inputs are independently routed; 20/26 paper rows are exact or inside the seed-marginalized best-of-five band, with the remaining metadata gap explicitly scored.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "fig8_gate_depth_tradeoff",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 8",
+      "reason": "A delta sweep produces the same gate/depth trade-off feature using independently generated numerical data; the proxy-circuit limitation is carried by T003's fidelity cap.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    }
+  ]
+}

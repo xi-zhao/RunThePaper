@@ -6,9 +6,9 @@ Published as: [Discontinuous Shear Thickening in Biological Tissue Rheology](htt
 
 Formal citation: Phys. Rev. X 14, 011027 (2024) · DOI `10.1103/PhysRevX.14.011027` · Locator `011027`
 
-Public status: **Partial scientific reproduction** · Audit score: **26.91/100**
+Public status: **Partial scientific reproduction** · Audit score: **0.00/100**
 
-All 17 numerical targets have independent code and exploratory artifacts, but none has completed the long-time N=100 paper-scale campaign.
+The complete paper contains 135 eligible atomic items. Two analytic force claims are reproduced, 131 items are objectively compute-blocked, and two convergence claims reached an evidenced system capability limit; no item remains pending.
 
 ## Start Here / 从这里开始
 
@@ -109,7 +109,7 @@ cd cases/2211.15015/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
@@ -120,3 +120,55 @@ Remaining limitation: All 17 numerical panels in Main Figures 2--7 are independe
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
+
+![T029 green kubo vs rheology](outputs/figures/claim_feature/T029_green_kubo_vs_rheology.png)
+
+![T030 p0 double star scan](outputs/figures/claim_feature/T030_p0_double_star_scan.png)
+
+![T001 main fig2a flow solid](outputs/figures/feature/T001_main_fig2a_flow_solid.png)
+
+![T002 main fig2b flow liquid](outputs/figures/feature/T002_main_fig2b_flow_liquid.png)
+
+![T003 main fig3a viscosity activity](outputs/figures/feature/T003_main_fig3a_viscosity_activity.png)
+
+![T004 main fig3b viscosity map](outputs/figures/feature/T004_main_fig3b_viscosity_map.png)
+
+![T005 main fig4a dst curve](outputs/figures/feature/T005_main_fig4a_dst_curve.png)
+
+![T006 main fig4b stress strain](outputs/figures/feature/T006_main_fig4b_stress_strain.png)
+
+![T007 main fig4c stress distribution](outputs/figures/feature/T007_main_fig4c_stress_distribution.png)
+
+![T008 main fig4d low tension network](outputs/figures/feature/T008_main_fig4d_low_tension_network.png)
+
+![T009 main fig4e high tension network](outputs/figures/feature/T009_main_fig4e_high_tension_network.png)
+
+![T010 main fig5 onset scaling](outputs/figures/feature/T010_main_fig5_onset_scaling.png)
+
+![T011 main fig6 phase map](outputs/figures/feature/T011_main_fig6_phase_map.png)
+
+![T012 main fig6i yield](outputs/figures/feature/T012_main_fig6i_yield.png)
+
+![T013 main fig6ii cst](outputs/figures/feature/T013_main_fig6ii_cst.png)
+
+![T014 main fig6iii dst](outputs/figures/feature/T014_main_fig6iii_dst.png)
+
+![T015 main fig6iv newtonian](outputs/figures/feature/T015_main_fig6iv_newtonian.png)
+
+![T016 main fig7a scaled curves](outputs/figures/feature/T016_main_fig7a_scaled_curves.png)
+
+![T017 main fig7b peclet relation](outputs/figures/feature/T017_main_fig7b_peclet_relation.png)
+
+![T018 fig2a newtonian fits](outputs/figures/feature/T018_fig2a_newtonian_fits.png)
+
+![T019 fig2b newtonian fits](outputs/figures/feature/T019_fig2b_newtonian_fits.png)
+
+![T020 fig3a fit families](outputs/figures/feature/T020_fig3a_fit_families.png)
+
+![T021 fig3b vc boundary](outputs/figures/feature/T021_fig3b_vc_boundary.png)
+
+![T022 fig5 power law fits](outputs/figures/feature/T022_fig5_power_law_fits.png)
+
+![T023 fig6 top thickening loss](outputs/figures/feature/T023_fig6_top_thickening_loss.png)
+
+![T024 fig7b linear guide](outputs/figures/feature/T024_fig7b_linear_guide.png)

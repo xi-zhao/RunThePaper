@@ -2,7 +2,7 @@
 
 ## 结论
 
-Twelve formula/table targets have independent data; exactness is capped where higher-order terms, branch coefficients, or measurement arrays are unavailable.
+The known source lower bound contains 9 eligible theory-numerical items: 5 partial/data-backed and 4 explicitly uncovered; the unavailable formal Supplement leaves an unknown remainder.
 
 公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
@@ -10,7 +10,7 @@ Twelve formula/table targets have independent data; exactness is capped where hi
 
 本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, science=failed, execution=attested, pixel=not_applicable, independent_review=missing, paper_assessment=missing`。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=failed, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 
@@ -18,4 +18,4 @@ Twelve formula/table targets have independent data; exactness is capped where hi
 
 ## 论文审查边界
 
-如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, science=failed, pixel=not_applicable, independent_review=missing, paper_assessment=missing.
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, parameter_provenance=failed, causal_resolution=repair_required, science=pending, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing.

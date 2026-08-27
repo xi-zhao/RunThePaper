@@ -1,62 +1,21 @@
-# Pixel-registered reproduction of localization-driven superradiance
+# Localization Driven Superradiant Instability: scientific reproduction note
 
-## Paper and question
+## Result
 
-This public package reproduces the localization-driven superradiant
-instability studied by Yin et al., *Physical Review Letters* **124**, 113601
-(2020).  The central question is why quasiperiodic localization enhances the
-cavity scattering response and can drive the superradiant threshold to zero.
+Case scaffolded from framework/templates/paper_case.
 
-## Independent calculation
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-The code independently implements finite Aubry–André and generalized
-Aubry–André Hamiltonians, state-resolved IPR, cavity scattering susceptibility,
-the linear critical pump, and the self-consistent atomic-orbital/cavity-field
-iteration.  Public curves are rendered from the generated CSV files.  Paper
-pixels appear only in limited attributed comparison boards and never enter the
-calculation or generated images.
+## What is reproduced
 
-## Main results
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-- Fig. 2 places the mobility edge at `alpha=233` and `epsilon_c/J=0.4396`.
-  All 377 visible IPR vector samples agree with correlation
-  `0.99999999997`.  The excited-state threshold normalization is not published,
-  so this target remains exploratory.
-- All five panels of Fig. 3 are regenerated.  The clean threshold is
-  `eta_c/J=0.27681`, and the Fig. 3(a) threshold curve has vector-path
-  correlation `0.99999695`.  Fig. 3 reaches `complete_reproduction`.
-- Fig. 4 reproduces the nonlinear photon onset and cavity-wave-vector
-  threshold landscape.  A published/arXiv detuning-convention split keeps the
-  target at paper-subset level.
-- Fig. S1 regenerates five normal/superradiant density pairs.  All ten visible
-  PDF vector paths pass their pointwise contract, but the pump samples and
-  iteration metadata are omitted by the supplement.
-
-Full-canvas SSIM is `0.8602` for Fig. 3, `0.7921` for Fig. 4, and `0.7856` for
-Fig. S1.  These values compare independently generated data after registration
-to the paper geometry; they are not obtained by copying the reference image.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
 ## Run
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/10.1103-PhysRevLett.124.113601/code
-python scripts/run_linear_targets.py
-python scripts/run_nonlinear_targets.py
-python scripts/render_pixel_registered.py
-```
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-The two numerical scripts took about 22.65 seconds in the latest complete Apple
-M4 rerun.  Data, figures, and JSON checks are written to `../outputs/data`,
-`../outputs/figures`, and `../outputs/checks`.  Set
-`LDSI_OUTPUT_ROOT=/tmp/ldsi-run` to isolate validation outputs.
+## Paper-review boundary
 
-## Boundary
-
-The Harness score is `88.56/100`, with case-level status
-`numerical_feature_reproduction`.  Missing Fig. 2 threshold normalization, the
-Fig. 4 version-dependent convention, and missing S1 pump/solver metadata are
-not overridden by visual agreement.  The public package excludes the paper
-PDF, standalone source figures, vector samples, and internal process logs.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: User selected local Apple M4 execution; no remote accelerator is used. Published PDF and supplement are primary; arXiv v1 source is retained for traceability and source figures.

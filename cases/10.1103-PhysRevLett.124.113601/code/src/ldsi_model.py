@@ -245,9 +245,9 @@ def effective_detuning(
     atom_number: float,
     dispersive_coupling: float,
     h0: float = 0.5,
-    shift_factor: float = 2.0,
+    shift_factor: float = 1.0,
 ) -> float:
-    """Return the curve-producing detuning convention recorded in EQ005."""
+    """Return the literal published detuning convention from Eq. (3)."""
 
     return delta_c - shift_factor * dispersive_coupling * atom_number * h0
 
@@ -260,7 +260,7 @@ def critical_pump(
     kappa: float = 1.0,
     dispersive_coupling: float = 0.1,
     h0: float = 0.5,
-    shift_factor: float = 2.0,
+    shift_factor: float = 1.0,
 ) -> FloatArray | float:
     """Evaluate the linear critical pump from EQ005."""
 
@@ -307,7 +307,7 @@ def state_resolved_thresholds(
     delta_c: float = -1.0,
     kappa: float = 1.0,
     dispersive_coupling: float = 0.1,
-    shift_factor: float = 2.0,
+    shift_factor: float = 1.0,
 ) -> dict[str, FloatArray]:
     """Calculate finite-L state thresholds for Fig. 2.
 
@@ -368,7 +368,7 @@ def steady_cavity_field(
     delta_c: float = -1.0,
     kappa: float = 1.0,
     dispersive_coupling: float = 0.1,
-    shift_factor: float = 2.0,
+    shift_factor: float = 1.0,
 ) -> complex:
     """Evaluate the steady cavity field for one normalized orbital."""
 
@@ -415,7 +415,7 @@ def solve_self_consistent_state(
     delta_c: float = -1.0,
     kappa: float = 1.0,
     dispersive_coupling: float = 0.1,
-    shift_factor: float = 2.0,
+    shift_factor: float = 1.0,
     phase: float = 0.0,
     initial_state: ArrayLike | None = None,
     initial_field: complex | None = None,

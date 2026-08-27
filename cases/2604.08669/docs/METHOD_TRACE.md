@@ -10,7 +10,7 @@ Metric contract after the Stage 13 label audit:
   Euclidean maximum movement distance.
 - The training label cost is frozen to squared-distance Hungarian labels. A
   32-sample paper-geometry oracle audit at
-  an internal metric-contract probe (not redistributed)
+  `outputs/checks/paper_gnn_target_stage13_metric_contract_probe/paper_hungarian_metric_contract.json`
   selects `squared_distance` because it better matches the paper's Fig. 3
   Hungarian baseline, especially the maximum-distance baseline.
 - The paper-geometry target lattice must span the `127 x 127` initial field:
@@ -19,8 +19,8 @@ Metric contract after the Stage 13 label audit:
 
 Current implementation:
 
-- `../code/src/atom_path_planner.py`
-- `../code/scripts/run_reduced_pilot.py`
+- `src/atom_path_planner.py`
+- `scripts/run_reduced_pilot.py`
 
 Model artifact contract:
 
@@ -41,8 +41,8 @@ Paper object: an FFT/iFFT hologram-generation loop with target-plane amplitude a
 
 Current implementation:
 
-- `../code/src/p2wgs_potential.py`
-- `../code/scripts/run_reduced_p2wgs_pilot.py`
+- `src/p2wgs_potential.py`
+- `scripts/run_reduced_p2wgs_pilot.py`
 
 Reduced implementation choices:
 
@@ -56,8 +56,8 @@ Paper object: total assembly time is controlled by path-planning overhead, per-f
 
 Current implementation:
 
-- `../code/src/p2wgs_potential.py`
-- `../code/scripts/plot_reduced_outputs.py`
+- `src/p2wgs_potential.py`
+- `scripts/plot_reduced_outputs.py`
 
 The encoded model is:
 

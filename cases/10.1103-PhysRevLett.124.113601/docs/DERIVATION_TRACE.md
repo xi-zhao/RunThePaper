@@ -77,13 +77,13 @@ state into a false zero threshold.
 
 ## Source-convention discrepancy
 
-The arXiv v1 formula uses `barDelta_c=Delta_c-2 U N h0`, whereas the literal
-published text extraction appears to use one factor of `U N h0`. The original
-Fig. 3 clean-limit intercept selects the arXiv convention: with the independently
-computed `f1=0.361863...`, `U/J=0.1`, `N=100`, `h0=1/2`, `Delta_c/J=-1`, and
-`kappa/J=1`, it gives `eta_c/J=0.276`; the one-factor convention gives `0.206`.
-Both values are retained in checks, and the plotted-curve convention is explicit
-in configuration rather than hidden in code.
+The published Eq. (7) uses the literal one-factor shift
+`barDelta_c=Delta_c-U N h0`, so that is the only convention used to generate
+scientific arrays.  At the independently calculated clean response
+`f1=0.361863...`, it gives `eta_c/J=0.206406`, while Fig. 3(a) gives `0.2768`.
+An undeclared factor-two shift gives `0.276810` and likewise explains the
+Fig. 4(b) midpoint.  That branch is retained solely in the post-freeze
+falsification record; it is never tuned into the numerical runner.
 
 ## Nonlinear fixed point
 

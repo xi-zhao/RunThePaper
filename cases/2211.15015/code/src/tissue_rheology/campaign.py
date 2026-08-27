@@ -20,6 +20,7 @@ from .analysis import (
     transition_rates,
 )
 from .model import VertexTissue
+from .target_selection import validate_target_selectors
 
 
 @dataclass(frozen=True)
@@ -105,6 +106,8 @@ def load_config(path: Path) -> dict[str, Any]:
         or not payload["condition_groups"]
     ):
         raise ValueError("at least one condition group is required")
+    if payload.get("profile") in {"feature", "paper_scale", "paper_scale_smoke"}:
+        validate_target_selectors(payload)
     return payload
 
 

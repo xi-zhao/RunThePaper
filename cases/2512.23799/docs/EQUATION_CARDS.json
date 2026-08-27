@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "paper_id": "2512.23799",
+  "cards": [
+    {
+      "id": "MSC001",
+      "title": "Magic states as PSC eigenstates",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Magic states as PSC eigenstates"
+        }
+      ],
+      "latex": "|H>=cos(pi/8)|0>+sin(pi/8)|1>; U^2 is Pauli",
+      "role": "Defines PSC checks for magic-state structure.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "MSC001_psc",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "PSC examples square to Paulis with tiny unitarity error."
+        }
+      ],
+      "numerical_form": "Defines PSC checks for magic-state structure.",
+      "code_refs": [
+        "src/magic_state_simulation.py::psc_formula_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC002",
+      "title": "Controlled-H Pauli propagation",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Controlled-H Pauli propagation"
+        }
+      ],
+      "latex": "C(H)(X tensor I)=(X tensor H)C(H)",
+      "role": "Checks simplest controlled-H Clifford-error propagation identity.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "MSC002_controlled_h",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Controlled-H identity error is roundoff."
+        }
+      ],
+      "numerical_form": "Checks simplest controlled-H Clifford-error propagation identity.",
+      "code_refs": [
+        "src/magic_state_simulation.py::psc_formula_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC003",
+      "title": "Pauli-rank fidelity expansion",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Pauli-rank fidelity expansion"
+        }
+      ],
+      "latex": "rho=I/2^n+(1/2^n) sum_i beta_i P_i",
+      "role": "Defines Pauli expectation route for magic-state fidelity.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "MSC003_reconstruction",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Single |H><H| is reconstructed from Pauli expectations."
+        }
+      ],
+      "numerical_form": "Defines Pauli expectation route for magic-state fidelity.",
+      "code_refs": [
+        "src/magic_state_simulation.py::pauli_basis",
+        "src/magic_state_simulation.py::psc_formula_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC004",
+      "title": "Benchmark acceptance estimator",
+      "source_refs": [
+        {
+          "type": "paper_text",
+          "value": "raw/paper.txt:1006-1008"
+        }
+      ],
+      "latex": "p_{acc}=N_{acc}/N_{tot}",
+      "role": "Defines the acceptance observable used for Fig. 10(b).",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The estimator is printed in the simulation summary immediately before Sec. VII B."
+        },
+        {
+          "id": "MSC004_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The attested clean-room run verifies 0 <= N_acc/N_tot <= 1 and the noiseless limit p_acc=1."
+        }
+      ],
+      "numerical_form": "Count accepted postselected trajectories and divide by all trajectories.",
+      "code_refs": [
+        "src/steane_h_prep.py::run_point"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC005",
+      "title": "Logical-state infidelity estimator",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "raw/paper.txt:979-1006 (Eqs. 42-43 and simulation output)"
+        }
+      ],
+      "latex": "I(p)=1-F(p),\\quad F=\\langle\\bar{H}|\\rho_N|\\bar{H}\\rangle",
+      "role": "Defines the logical infidelity observable used for Fig. 10(a).",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The fidelity estimator and normalization by accepted shots are printed in Secs. VI-VII."
+        },
+        {
+          "id": "MSC005_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The noiseless encoded state has F=1 and every single-qubit Pauli is corrected by the independently implemented ideal decoder."
+        }
+      ],
+      "numerical_form": "Average decoded logical-state fidelity over accepted trajectories, then report one minus that value.",
+      "code_refs": [
+        "src/steane_h_prep.py::ideal_decode",
+        "src/steane_h_prep.py::run_point"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC006",
+      "title": "Magic-state sampling precision",
+      "source_refs": [
+        {
+          "type": "paper_text",
+          "value": "raw/paper.txt:1053-1067"
+        }
+      ],
+      "latex": "\\sigma_F=O(N_{tot}^{-1/2})",
+      "role": "Defines the quantitative sampling-precision claim counted as T004.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The inverse-square-root finite-sampling law is stated explicitly in Sec. VII B."
+        },
+        {
+          "id": "MSC006_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent Bernoulli Monte Carlo estimates give a log-log standard-deviation slope near -1/2."
+        }
+      ],
+      "numerical_form": "Repeat independent fidelity estimates at several shot counts and fit log standard deviation versus log N_tot.",
+      "code_refs": [
+        "src/magic_state_simulation.py::sampling_scaling"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "MSC007",
+      "title": "Runtime benchmark claim and complexity boundary",
+      "source_refs": [
+        {
+          "type": "paper_caption",
+          "value": "raw/paper.txt:1171-1176"
+        },
+        {
+          "type": "paper_text",
+          "value": "raw/paper.txt:1187-1223"
+        }
+      ],
+      "latex": "t_{prop}(p=10^{-3})\\approx t_{sv}(p=10^{-3})/10",
+      "role": "Separates the published qualitative tenfold speedup from unrecoverable absolute wall-clock values.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MSC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 11 states an approximately tenfold speedup at p=10^-3 but provides no benchmark host or software-version metadata."
+        },
+        {
+          "id": "MSC007_proxy",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated local proxy confirms the algorithmic low-p speedup direction but is explicitly excluded from absolute timing reproduction."
+        }
+      ],
+      "numerical_form": "Benchmark both methods on one declared environment for a qualitative speedup check; do not compare absolute seconds without the authors' environment.",
+      "code_refs": [
+        "src/magic_state_simulation.py::runtime_proxy"
+      ],
+      "open_questions": [
+        "The paper does not identify the processor, operating system, Stim/Cirq versions, compilation settings, or timing protocol used for Fig. 11."
+      ]
+    }
+  ]
+}

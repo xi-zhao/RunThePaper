@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "paper_id": "physics-0206018",
+  "cards": [
+    {
+      "id": "BEM001",
+      "title": "Outgoing Helmholtz Green representation",
+      "latex": "G=-iH_0^{(1)}(n k |r-r'|)/4; psi(r')=oint[psi partial_nu G-G partial_nu psi]ds",
+      "role": "reduce the 2D wave equation to boundary data",
+      "source_refs": [
+        "Eqs. (8)-(12)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::green_kernel",
+        "src/bem.py::normal_green_kernel"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The Green function and boundary representation are explicit in the manuscript."
+        },
+        {
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "dH0(z)/dz=-H1(z) gives the stated source-normal derivative."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BEM002",
+      "title": "Boundary integral matrix and TM matching",
+      "latex": "B=-2G; C=2 partial_nu G-delta; M(phi,psi)^T=0",
+      "role": "couple interior and exterior boundary equations",
+      "source_refs": [
+        "Eqs. (17)-(18)",
+        "TM discussion in Sec. 2.4"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::assemble_matrix"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "B, C, unknown ordering, and continuity are explicit."
+        },
+        {
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "The fixed-normal sign convention is required to pass an analytic circular-cavity resonance check."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BEM003",
+      "title": "Constant-element quadrature and diagonal limits",
+      "latex": "C_ll=-1+kappa_l Delta s_l/(2pi); B_ll=Delta s_l/pi[1-ln(nkDelta s_l/4)+i pi/2-gamma]",
+      "role": "stable numerical discretization of singular kernels",
+      "source_refs": [
+        "Eqs. (27)-(30)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::medium_blocks"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The two diagonal expressions and Gaussian quadrature recommendation are explicit."
+        },
+        {
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "For a straight element kappa=0 and C_ll=-1."
+        }
+      ],
+      "open_questions": [
+        "The author-private rounded-corner curve and element map are intentionally unclaimed; paper-scale acceptance instead verifies the publication's explicit equivalence class and printed constraints."
+      ]
+    },
+    {
+      "id": "BEM004",
+      "title": "Plane-wave scattering and optical theorem",
+      "latex": "M u=M_0u_in; sigma=2sqrt(pi/k) Im[(1-i)f(phi,k)]",
+      "role": "Fig. 5 cross-section scan and resonance seed",
+      "source_refs": [
+        "Eqs. (19)-(22)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::solve_scattering",
+        "src/bem.py::far_field",
+        "src/bem.py::cross_section"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Incident boundary values, scattering amplitude, and optical theorem are explicit."
+        },
+        {
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Angular integration of |f|^2 is compared with the optical-theorem value."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BEM005",
+      "title": "Trace-Newton resonance and SVD null vector",
+      "latex": "k_next=k-q/tr[M^{-1}M']; M(k_res)u=0",
+      "role": "resonance refinement and shared boundary state for Figs. 6-7",
+      "source_refs": [
+        "Eqs. (34)-(38)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::trace_newton",
+        "src/bem.py::resonance_boundary_state",
+        "src/bem.py::reconstruct_field"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The Newton update, SVD null vector, and field reconstruction are explicit."
+        },
+        {
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The minimum singular value must fall and the reconstructed boundary residual must agree with it."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BEM006",
+      "title": "Boundary resolution criterion",
+      "latex": "b=2pi/(n Re(k) Delta s)>=4",
+      "role": "declare whether a run is smoke, feature, or paper-scale",
+      "source_refs": [
+        "discussion after Eq. (38)",
+        "Sec. 5 parameters"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/bem.py::resolution_metric"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The paper states b>=4 and uses b=16 for validation."
+        },
+        {
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "Both wavelength and element length are measured in units of R."
+        }
+      ],
+      "open_questions": []
+    }
+  ]
+}

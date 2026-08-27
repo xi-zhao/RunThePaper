@@ -1,64 +1,21 @@
-# arXiv:2507.09447 中文复现讲义
+# Lyapunov formulation of band theory for disordered non-Hermitian systems：科学复现讲义
 
-## 论文身份
+## 结论
 
-- 预印本：[*Lyapunov formulation of band theory for disordered non-Hermitian systems*](https://arxiv.org/abs/2507.09447)，arXiv:2507.09447。
-- 正式发表：[*Universal Thouless relations for disordered non–Hermitian systems in one dimension*](https://doi.org/10.1016/j.scib.2026.05.055)，*Science Bulletin*，2026 年 online ahead of print。
-- DOI：`10.1016/j.scib.2026.05.055`；PII：`S2095-9273(26)00583-9`。
+Figs. 3-5 remain paper-scale scientific reproductions.  Corrected S1/S2 targets pass isolated scientific checks; the one-way density identity is exact; Fig. S3 is code-ready but compute-blocked at paper scale; and Fig. S4 preserves a robust 18-protocol non-match for fresh-context scientific adjudication.
 
-本 case 的逐图目标仍然是 arXiv v1 的 Fig. 3–5；正式版补充材料只用于核对数值方法。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-## 核心问题
+## 我们复现的是什么
 
-无序破坏平移对称性后，通常的 Bloch 能带不再适用。论文用实空间转移矩阵的四个
-Lyapunov 指数替代动量空间能带。两个中心指数 `gamma_2` 和 `gamma_3` 的符号决定
-态是 Anderson 局域态、单向临界态还是趋肤态；正 Lyapunov 指数的数量还给出谱绕数。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-我们的复现对象不是作者图片，而是这套可执行数值关系：有限尺寸 OBC/PBC 谱、
-热力学极限 Lyapunov 密度、态分类、绕数，以及随无序增强发生的趋肤–Anderson 相变。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=passed_with_not_comparable, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`。
 
-## 做到了什么
+## 运行
 
-- Fig. 3/4 使用 `L=1000` 和 3200 个确定性无序实现，完成 OBC/PBC 谱直方图。
-- 用周期 QR 稳定化计算高分辨率 Lyapunov 网格。
-- 独立计算十个 ALM、一个近临界态和一个趋肤态的右本征矢轮廓。
-- 扫描 `W=0.4,0.8,1.2,1.6,2.0` 的 mobility contour，并在 `W∈[0,3]` 上恢复
-  Anderson 局域比例 `alpha`。
-- 九项科学验收全部通过，并恢复论文相变点 `W_c=2.1`。
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-![Fig. 3 independent reproduction](../outputs/figures/fig3_paper_exact.png)
+## 论文审查边界
 
-**差距原因：** 作者未公开无序种子和本征态筛选窗口；复现使用独立确定性系综，因此谱微结构与态轮廓不可能逐像素相同。
-
-![Fig. 4 independent reproduction](../outputs/figures/fig4_paper_exact.png)
-
-**差距原因：** 作者未公开转移长度、QR 间隔和最终画图工程；绕数扇区与谱支撑一致，但局部密度纹理和排版有差异。
-
-![Fig. 5 independent reproduction](../outputs/figures/fig5_paper_exact.png)
-
-**差距原因：** 作者未公开 Fig. 5 的积分网格细节和 Illustrator 工程；相变点 `W_c=2.1` 一致，差距主要来自网格插值与制图后处理。
-
-## 如何运行
-
-从仓库根目录运行：
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/2507.09447/code
-python scripts/plot_paper_exact.py
-python scripts/qa_paper_exact.py
-```
-
-这两个快速命令使用仓库中公开的独立生成数据重画图片并重算科学验收。完整的
-`L=1000 × 3200` 计算可运行 `python scripts/run_paper_exact.py`，但耗时显著，且会在
-本地生成不纳入 Git 的 checkpoint。
-
-## 复现边界
-
-作者没有公开随机种子、态筛选窗口、转移长度、QR 间隔、Fig. 5 积分细节和最终
-Illustrator 工程。因此我们能够复现论文尺度、物理结构、画布几何和相变点，但不声称
-逐像素同一。导出审计的 full-image SSIM 为 Fig. 3 `0.7721`、Fig. 4 `0.7735`、
-Fig. 5 `0.8521`。这些数值说明视觉差距，不替代科学验收。完整 paper-scale 数据已经
-生成，剩余差距属于作者协议和制图源文件不可得，不属于算力不足，因此不再追加大规模计算。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Paper-scale L=1000 x 3200-realization OBC/PBC diagonalization completed locally. All nine scientific gates pass; strict source-pixel SSIM >=0.95 does not pass. Formal Science Bulletin supplementary material is method evidence only; reproduction targets remain arXiv v1.

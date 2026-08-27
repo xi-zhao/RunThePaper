@@ -1,42 +1,42 @@
-# Numerical methods and evidence boundary
+# Numerical Methods
 
-## Independent numerical channel
+## NUM001 — analytic/cumulant branches
 
-The numerical implementation was written from the paper's equations and
-reported parameters. It did not use author code, author-generated numerical
-arrays, digitized curves, or figure pixels as numerical inputs. Paper images
-were consulted only after generated arrays had been frozen, to diagnose canvas,
-axes, typography, line styles, palette, and interpolation.
+- Targets: T001, T002, T004, T005
+- Equations: DPT003-DPT006
+- Method: closed-form one-photon branches; continuation of cumulant fixed
+  points; Jacobian eigenvalues at every branch point.
+- Checks: threshold identity, conjugation constraints, spin-length residual,
+  ODE residual, and sign of largest real stability eigenvalue.
 
-## Analytic calculation
+## NUM002 — finite-size Lindblad exact diagonalization
 
-`run_analytic.py` evaluates the one-photon branches, solves the nonlinear
-second-order cumulant fixed points, constructs real-variable Jacobians, and
-records physicality and stability checks. The fixed-point search is checked by
-residual norms, spin length, covariance positivity, and finite-difference-step
-stability.
+- Targets: T001, T002, T003, T008
+- Equations: DPT001-DPT002, DPT009
+- Basis: photon Fock basis times the permutation-symmetric spin `j=N/2`
+  representation, consistent with `[Jx,Jy]=2iJz`.
+- Solver: QuTiP 5 sparse Liouvillian/steady-state tools; QuTiP is the same
+  independent library named in the paper, not author code.
+- Checks: trace one, Hermiticity, positivity tolerance, residual
+  `||L rho||`, cutoff-edge occupation, and photon parity.
 
-## Quantum calculation
+## NUM003 — quantum trajectories and Wigner transform
 
-The three quantum runners use QuTiP to construct the Hamiltonian and collapse
-operators, generate seeded Monte-Carlo trajectories, average reduced photonic
-density matrices, and compute observables from those matrices. Cutoff tails,
-trace errors, density-matrix eigenvalues, Wigner normalization, trajectory-count
-drift, and parity leakage are recorded as machine-readable checks.
+- Targets: T002, T003, T007
+- Initial state: one independently and reproducibly seeded random normalized
+  vector for every trajectory, matching the finite-temperature sampling rule
+  printed in the supplement. Initial-state and jump-process seeds are disjoint.
+- Solver: Monte-Carlo trajectories with stable integer indices, 60-way
+  job-local sharding, atomic checkpoints, and exact-once merge validation.
+- Wigner: computed only from the generated reduced photon density matrix.
+- Checks: complete/nonoverlapping trajectory indices, trace/positivity,
+  500-to-3000 sample-count convergence, cutoff tail, Wigner normalization, and
+  `Z4` rotation residual.
 
-The shipped arrays are deterministic frozen evidence for the declared seeds and
-configuration. The main finite-size jobs use 6–16 trajectories per job rather
-than the paper's much larger ensembles, so their role is mechanism and feature
-reproduction, not author-data-level equivalence.
+## Isolation and efficiency
 
-## Rendering and scoring
-
-Rendering reads only generated arrays. Pixel comparison is a subsequent audit:
-the primary visual metric is foreground-pixel similarity over the declared
-numerical figures. Full-canvas similarity is retained as a layout diagnostic
-because white background can inflate it. Neither metric can override failed
-physics checks or upgrade a reduced computation to paper-exact status.
-
-Machine-readable evidence is available under `outputs/checks/`, including the
-formula verification, per-figure science checks, frozen-data hashes, and final
-scorecard.
+The runner receives only `src/`, `scripts/`, and JSON configuration in an
+isolated directory. `raw/` and original figures are inaccessible. Exact
+finite-size cost scales with the squared Hilbert dimension in Liouville space;
+large-N panels therefore begin with a measured trajectory pilot before any
+paper-scale request.

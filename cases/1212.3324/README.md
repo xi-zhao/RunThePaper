@@ -20,6 +20,7 @@ Clean-room scientific reproduction; author code and author numerical arrays are 
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Paper review protocol](docs/PAPER_REVIEW_PROTOCOL_V2.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -37,13 +38,13 @@ cd cases/1212.3324/code
 python scripts/run_reproduction.py --config config/paper_reconstructed.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=terminal_blocker, science=pending, pixel=needs_repair, review_scope=incomplete, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=terminal_blocker, science=failed, pixel=needs_repair, independent_review=stale, review_scope=stale, paper_assessment=stale.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

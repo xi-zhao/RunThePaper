@@ -1,0 +1,567 @@
+{
+  "schema_version": 1,
+  "paper_id": "2407.01296",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Eq. (11) geometry-dependence model",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Eq. (11), paper.pdf p.3"
+        }
+      ],
+      "latex": "H(\\beta_x,\\beta_y)=2\\beta_x^{-1}+\\frac12\\beta_x\\beta_y^{-1}+\\frac32\\beta_y+\\frac9{10}\\beta_x^{-1}\\beta_y",
+      "role": "Defines the same directed hopping model used for both square and rhombus Fig. 2 geometries.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four coefficients and Laurent powers are transcribed directly from formal Eq. (11)."
+        },
+        {
+          "id": "EQC001_plane_wave",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting psi_(x,y)=beta_x^x beta_y^y into H[r,r+d]=t returns the four Laurent monomials exactly."
+        }
+      ],
+      "numerical_form": "hoppings = {(-1,0): 2.0, (1,-1): 0.5, (0,1): 1.5, (-1,1): 0.9}; keep H[r,r+d]=t only when r and r+d are both in the selected site set.",
+      "code_refs": [
+        "src/geometry_adaptive.py::model_eq11",
+        "src/geometry_adaptive.py::build_obc_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Finite-size OBC spectral potential",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Eq. (2), paper.pdf p.2"
+        }
+      ],
+      "latex": "\\phi(E)=\\frac1N\\sum_{i=1}^{N}\\log|E_i-E|",
+      "role": "Turns independently diagonalized OBC eigenvalues into the finite-size potential used by convergence checks.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed directly from formal Eq. (2)."
+        },
+        {
+          "id": "EQC002_shift",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Replacing E_i by E_i+c and E by E+c leaves every absolute difference, and therefore phi, unchanged."
+        }
+      ],
+      "numerical_form": "phi = mean(log(max(abs(eigenvalues - probe_E), eps)))",
+      "code_refs": [
+        "src/geometry_adaptive.py::spectral_potential"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Square-rhombus basis transformation",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Methods Eq. (16), paper.pdf p.6"
+        },
+        {
+          "type": "formal_figure",
+          "value": "Fig. 5"
+        }
+      ],
+      "latex": "k'_1=(k_x+k_y)/2,\\quad k'_2=(-k_x+k_y)/2;\\qquad k_x=k'_1-k'_2,\\ k_y=k'_1+k'_2",
+      "role": "Encodes lattice-cut geometry independently of the hopping model.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Forward transform is stated in Methods and Fig. 5; inverse follows from a 2x2 linear solve."
+        },
+        {
+          "id": "EQC003_diamond_count",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The equal-cut integer diamond |x|+|y|<=R has 1+2R(R+1) sites; R=30 gives the paper value N=1861."
+        }
+      ],
+      "numerical_form": "square_sites(Lx,Ly); diamond_sites(R) = {(x,y): |x|+|y|<=R}; cut_coordinate_interval_sites bounds u=x+y and v=-x+y, including off-centered integer intervals when required by parity/site count.",
+      "code_refs": [
+        "src/geometry_adaptive.py::square_sites",
+        "src/geometry_adaptive.py::diamond_sites",
+        "src/geometry_adaptive.py::cut_coordinate_sites",
+        "src/geometry_adaptive.py::cut_coordinate_interval_sites"
+      ],
+      "open_questions": [
+        "The exact integer vertices for formal Fig. 4(d) 2:1 geometry are not stated."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "Eq. (15) reciprocal critical model",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Eq. (15), paper.pdf p.5"
+        }
+      ],
+      "latex": "H(k_x,k_y)=2\\cos k_x+i\\cos k_y=e^{ik_x}+e^{-ik_x}+\\frac{i}{2}(e^{ik_y}+e^{-ik_y})",
+      "role": "Defines the reciprocal model used to expose critical boundary modes and spectral instability.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Expanding the two cosines in formal Eq. (15) gives x amplitudes 1 and y amplitudes 0.5i in both directions."
+        },
+        {
+          "id": "EQC004_reciprocal",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Opposite displacements have equal amplitudes, so every OBC matrix satisfies H^T=H."
+        }
+      ],
+      "numerical_form": "hoppings = {(-1,0): 1.0, (1,0): 1.0, (0,-1): 0.5j, (0,1): 0.5j}",
+      "code_refs": [
+        "src/geometry_adaptive.py::model_eq15"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Scale-free boundary localization criterion",
+      "source_refs": [
+        {
+          "type": "formal_figure",
+          "value": "Fig. 4(b) caption and Critical skin modes section"
+        }
+      ],
+      "latex": "\\kappa(L)\\propto L^{-1}\\quad\\Longrightarrow\\quad\\lim_{L\\to\\infty}\\kappa(L)=0",
+      "role": "Feature contract distinguishing critical boundary modes from fixed-length exponential skin modes.",
+      "derived_from": [
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The linear kappa versus 1/L behavior and zero TDL intercept are stated in the formal Fig. 4(b) caption."
+        },
+        {
+          "id": "EQC005_gaussian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For |psi(u)|^2=A exp[-kappa(u-u0)^2], the probability standard deviation is (2 kappa)^(-1/2); scale-free width proportional to sqrt(L) is therefore equivalent to kappa proportional to 1/L."
+        },
+        {
+          "id": "EQC005_scaling",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Across 15 radii, the fixed-target track gives R^2=0.99440 and a 95% thermodynamic-intercept interval [-8.33e-4, 2.08e-4]; neighboring target-energy tracks retain positive inverse-length slopes."
+        }
+      ],
+      "numerical_form": "Select the right eigenstate closest to a fixed target energy by deterministic shift-invert; fit |psi(u)|^2=A exp[-kappa(u-u0)^2] on one edge, then regress kappa against 1/L and require a positive slope plus a zero-compatible intercept.",
+      "code_refs": [
+        "src/geometry_adaptive.py::target_eigenstate",
+        "src/geometry_adaptive.py::fit_gaussian_profile",
+        "scripts/run_fig4b_scale_free.py"
+      ],
+      "open_questions": [
+        "Selected eigenstate sequence and exact Gaussian fit window are not uniquely specified."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "Hierarchical geometry-adaptive spectral potential",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Eqs. (8)-(10), paper.pdf pp.2-3"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplementary Notes 1-3"
+        }
+      ],
+      "latex": "\\Phi(E)=\\min\\{\\widetilde\\Phi_1(E),\\widetilde\\Phi_2(E)\\},\\qquad \\widetilde\\Phi_1(E)=\\min_{\\mu_1}\\int_0^{2\\pi}\\frac{dk_1}{2\\pi}\\Phi_{k_1-i\\mu_1}(E)",
+      "role": "Predicts the geometry-specific thermodynamic spectral density and GBZ.",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main-text equations and Supplementary Notes 1-3 provide the formula and proof path."
+        },
+        {
+          "id": "EQC006_basis",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The square-to-rhombus Laurent-exponent transform preserves Eq. (11) for arbitrary nonzero beta_1 and beta_2."
+        },
+        {
+          "id": "EQC006_finite_obc",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At the paper grid, mean absolute potential errors against independently generated finite-OBC spectra are 0.00667 (square) and 0.00623 (rhombus)."
+        }
+      ],
+      "numerical_form": "geometry_adaptive_potential takes the minimum of two minimized cylindrical root potentials; spectral_density_from_potential applies Eq. (3) with the notebook's direct three-point centered Laplacian on the 99 x 99 interior grid.",
+      "code_refs": [
+        "src/geometry_adaptive.py::cylindrical_root_potential",
+        "src/geometry_adaptive.py::minimize_cylindrical_potential",
+        "src/geometry_adaptive.py::geometry_adaptive_potential",
+        "src/geometry_adaptive.py::spectral_density_from_potential"
+      ],
+      "open_questions": [
+        "The paper does not state a minimizer tolerance; this run records 1e-5 and keeps finite-OBC potential-level validation evidence."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Supplement Eq. (S17) separable benchmark and exact potential",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Eqs. (S17)-(S22), supplementary_information.pdf pp.4-5"
+        }
+      ],
+      "latex": "H(beta_x,beta_y)=beta_x+(3/2)beta_x^{-1}+(1/2)beta_x^2+2beta_x^{-2}+(3/2)beta_y+beta_y^{-1}; Phi(E)=integral dE_y rho_y(E_y) Phi_x(E-E_y)",
+      "role": "Defines the analytically tractable square-geometry benchmark used in Supplement Fig. S2.",
+      "derived_from": [
+        "EQC002",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The six Laurent coefficients, arcsine y-spectrum, and quartic-root potential are transcribed from Supplement Eqs. (S17)-(S22)."
+        },
+        {
+          "id": "EQC007_kronecker",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For square OBC the Hamiltonian is Hx tensor I plus I tensor Hy, so its L^2 eigenvalues are every pairwise sum of the two one-dimensional spectra."
+        },
+        {
+          "id": "EQC007_smoke",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated smoke run produced all-finite arrays and exact-vs-Amoeba density correlation 0.9731 without reading source pixels or author arrays."
+        }
+      ],
+      "numerical_form": "Diagonalize the two one-dimensional OBC matrices, form pairwise eigenvalue sums, evaluate the exact quartic-root potential with arcsine quadrature, and independently minimize the Amoeba potential.",
+      "code_refs": [
+        "src/supplemental_campaign.py::s17_separable_spectrum",
+        "src/supplemental_campaign.py::s17_exact_potential_grid",
+        "src/supplemental_campaign.py::s17_amoeba_residual_surface"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Supplement Eqs. (S24)-(S26) double-chain critical NHSE",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Eqs. (S24)-(S26), supplementary_information.pdf pp.6-8"
+        }
+      ],
+      "latex": "H(beta)=[[t_1L beta^{-1}+t_1R beta+V, delta],[delta,t_2L beta^{-1}+t_2R beta-V]]; w(E)=(2 pi i)^{-1} integral dk partial_k log det[H(k)-E]",
+      "role": "Defines the coupled Hatano-Nelson spectrum, profiles, and winding classification in Supplement Fig. S4.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All hopping, onsite, and coupling values are stated immediately below Supplement Eq. (S24)."
+        },
+        {
+          "id": "EQC008_winding",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated smoke run finds zero net winding in the central region and nonzero winding in a representative wing, while both selected densities remain normalized."
+        }
+      ],
+      "numerical_form": "Build a 2L by 2L block-tridiagonal OBC matrix, diagonalize it for each declared L, compute selected right-state densities, and unwrap the phase of det[H(k)-E] along a closed momentum grid.",
+      "code_refs": [
+        "src/supplemental_campaign.py::s24_hamiltonian",
+        "src/supplemental_campaign.py::s24_state_profiles",
+        "src/supplemental_campaign.py::s24_winding"
+      ],
+      "open_questions": [
+        "The supplement does not uniquely identify every representative eigenstate used for the profile panel."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Supplement Eq. (S27) nonreciprocal two-dimensional model",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Eq. (S27), supplementary_information.pdf p.8"
+        }
+      ],
+      "latex": "H=6 beta_x-4 beta_x^{-1}+6 beta_y-4 beta_y^{-1}+(1/2)(beta_x beta_y+beta_x beta_y^{-1}+beta_x^{-1} beta_y+beta_x^{-1} beta_y^{-1})",
+      "role": "Defines all six numerical panels of Supplement Fig. S5.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The eight directed hopping amplitudes follow term-by-term from Supplement Eq. (S27)."
+        },
+        {
+          "id": "EQC009_residual",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All four independently selected smoke eigenstates have normalized residual below 7e-15 and unit probability."
+        }
+      ],
+      "numerical_form": "Use the common site-set OBC builder for square and rhombus cuts; diagonalize the full spectrum and use sparse shift-invert only to select declared representative states.",
+      "code_refs": [
+        "src/supplemental_campaign.py::model_s27",
+        "src/supplemental_campaign.py::s5_geometry_result"
+      ],
+      "open_questions": [
+        "Supplement Fig. S5 does not print the complex energies used to select its representative eigenstates; declared targets are reconstructed and cannot be paper-exact."
+      ]
+    },
+    {
+      "id": "EQC010",
+      "title": "Supplement Eq. (S28) directional winding criterion",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Eq. (S28) and Fig. S6, supplementary_information.pdf p.9"
+        }
+      ],
+      "latex": "w(E;k_perp)=(2 pi i)^{-1} integral_0^{2 pi} dk_parallel partial_{k_parallel} log[H(k_parallel,k_perp)-E]",
+      "role": "Tests the sign-consistent normal-skin winding and sign-changing critical winding in Supplement Fig. S6.",
+      "derived_from": [
+        "EQC001",
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The one-parameter winding integral and basis directions are stated in Supplement Note 6."
+        },
+        {
+          "id": "EQC010_sign",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated smoke run gives only 0/+1 for the normal square cut and both -1/+1 for the critical diagonal cut."
+        }
+      ],
+      "numerical_form": "Sample a closed k_parallel path at each transverse momentum and sum unwrapped phase increments of H-E; never infer the integer winding from a plotted color region.",
+      "code_refs": [
+        "src/supplemental_campaign.py::directional_winding_rows"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "Supplement Eq. (S29) biorthogonal first-order disorder shift",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Eq. (S29) and Fig. S7, supplementary_information.pdf pp.9-10"
+        }
+      ],
+      "latex": "<Delta E>=N^{-1} sum_i <psi_i,L|sum_j delta_j n_j|psi_i,R>/<psi_i,L|psi_i,R>",
+      "role": "Defines the perturbative disorder response plotted in Supplement Fig. S7.",
+      "derived_from": [
+        "EQC001",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The biorthogonal matrix element, uniform disorder interval, and averaging over all states are stated in Supplement Eq. (S29) and adjacent prose."
+        },
+        {
+          "id": "EQC011_zero",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated smoke run returns exactly zero at delta=0 and a nonzero response for positive disorder for both model families."
+        }
+      ],
+      "numerical_form": "Compute paired left/right eigensystems of the clean matrix, evaluate the diagonal-disorder matrix element divided by the biorthogonal overlap, and emit both |mean Delta E| and mean |Delta E|.",
+      "code_refs": [
+        "src/supplemental_campaign.py::biorthogonal_first_order_disorder"
+      ],
+      "open_questions": [
+        "Eq. (S29) is generally complex while Fig. S7 shows a positive scalar; the paper does not state whether it plots |mean Delta E| or mean |Delta E|.",
+        "The exact N=935 rhombus integer geometry is not specified."
+      ]
+    },
+    {
+      "id": "EQC012",
+      "title": "Eq. (5) one-dimensional minimization identity",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Main Eq. (5), paper.pdf p. 2"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S1)-(S7), pp. 1-2"
+        }
+      ],
+      "latex": "phi(E)=min_mu integral_0^{2pi} dk/(2pi) log|H(e^{ik+mu})-E|",
+      "role": "Checks the exact one-dimensional Ronkin/Jensen minimization identity.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (5) and Supplement Eqs. (S1)-(S7) were transcribed from the complete publication bundle."
+        },
+        {
+          "id": "EQC012_exact",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Jensen root counting and direct minimization agree for four complex energies."
+        }
+      ],
+      "numerical_form": "Compare the analytic Laurent-root/Jensen value with bounded scalar minimization of the printed integral.",
+      "code_refs": [
+        "src/final_resolution.py::run_t012"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC013",
+      "title": "Methods Eqs. (17)-(20) arbitrary-dimensional hierarchy",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Methods Eqs. (17)-(20), paper.pdf pp. 6-7"
+        }
+      ],
+      "latex": "phi_j(E;k_{j+1},...,k_d)=min_{mu_j} integral dk_j/(2pi) phi_{j-1}(E;k_j-i mu_j,...)",
+      "role": "Verifies that one recursive implementation is dimension-parameterized rather than hard-coded to d=2.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Methods Eqs. (17)-(20) were transcribed from the complete main-paper Methods."
+        },
+        {
+          "id": "EQC013_d1_d4",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The same evaluator returns finite, permutation-invariant results for d=1,2,3,4."
+        }
+      ],
+      "numerical_form": "Apply the same nested quadrature/minimization evaluator for dimension d in {1,2,3,4}.",
+      "code_refs": [
+        "src/final_resolution.py::run_t013"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC014",
+      "title": "Eq. (13)/Supplement Eq. (S16) subset theorem",
+      "source_refs": [
+        {
+          "type": "formal_equation",
+          "value": "Main Eq. (13), paper.pdf p. 3"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (S16), Note 4, pp. 4-5"
+        }
+      ],
+      "latex": "sigma_G subset sigma_Amoeba",
+      "role": "Checks the min-integral inequality underlying the regular-geometry subset theorem and finite Eq. (11) probes.",
+      "derived_from": [
+        "EQC001",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (13) and Supplement Eq. (S16)/Note 4 were traced in the complete publication bundle."
+        },
+        {
+          "id": "EQC014_inequality",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "mean(min f) <= min(mean f) holds analytically and all Eq. (11) probes satisfy the declared quadrature gate."
+        }
+      ],
+      "numerical_form": "Evaluate synthetic inequality trials and compare geometry-adaptive and Amoeba potentials on declared Eq. (11) probes.",
+      "code_refs": [
+        "src/final_resolution.py::run_t014"
+      ],
+      "open_questions": []
+    }
+  ]
+}

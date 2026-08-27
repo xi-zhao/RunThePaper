@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "run_id": "1709.03478-paper-scale-smoke-v1-20260825",
+  "target_ids": [
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale_rerun.json",
+    "--action",
+    "smoke",
+    "--no-resume"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/reproduce_spme.py",
+    "src/paper_scale_campaign.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale_rerun.json",
+    "mplconfig"
+  ],
+  "parameter_file": "config/paper_scale_rerun.json",
+  "parameter_selector": "parameters.paper_times_tau",
+  "expected_parameters": {
+    "experimental_imbalance": 200,
+    "numerical_imbalance": 3000,
+    "edge_density": 3000
+  },
+  "outputs": [
+    "outputs/checks/paper_scale_smoke/campaign_manifest.json",
+    "outputs/checks/paper_scale_smoke/checks/acceptance.json",
+    "outputs/checks/paper_scale_smoke/checks/convergence.json",
+    "outputs/checks/paper_scale_smoke/checks/crosschecks.json",
+    "outputs/checks/paper_scale_smoke/checks/data_freeze.json",
+    "outputs/checks/paper_scale_smoke/checks/protocol_v2_assessment.json",
+    "outputs/data/paper_scale_smoke/t002_fig2b_edge_density.csv",
+    "outputs/data/paper_scale_smoke/t003_fig3_theory_sweeps.csv",
+    "outputs/data/paper_scale_smoke/t004_fig4_phase_boundaries.csv",
+    "outputs/data/paper_scale_smoke/t005_supp_s1_observables.csv",
+    "outputs/data/paper_scale_smoke/t006_supp_s2_finite_time.csv"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "MPLCONFIGDIR": "mplconfig",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

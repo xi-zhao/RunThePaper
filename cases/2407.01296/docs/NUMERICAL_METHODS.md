@@ -1,104 +1,34 @@
-# Numerical methods
+# Numerical Methods
 
-## Core model
+## Shared numerical core
 
-The reproduction separates the hopping model from the finite geometry. A
-geometry is an explicit set of integer lattice sites; open boundaries retain a
-hopping only when both endpoints belong to that set. This makes square,
-rhombic, and ratio-controlled cuts different boundary conditions on the same
-Hamiltonian rather than separate ad-hoc models.
+Geometries are explicit integer site sets. Laurent monomials are expanded to displacement/amplitude pairs, and OBC matrices retain a hopping only when both endpoints are inside the site set. This separates physical coefficients from square, diamond, cut-interval, and chain geometries.
 
-For Fig. 2, Eq. (11) is evaluated on a 40-by-40 square (`N=1600`) and a radius-30
-rhombus (`N=1861`). Complete right eigensystems provide the complex spectra and
-aggregate right-eigenvector density. The geometry-adaptive potential uses the
-minimum of two cylindrical root potentials on the paper's `101 x 101` energy
-grid with 200 momentum samples. Fig. 2(d) independently computes all 317 printed
-probe locations as sparse finite-OBC `log|det(H_L-E)|/N` values and independent
-Eq. (10) targets. Three LU orderings provide an objective floating-stability
-audit; unreliable large-size tail points remain visible and are not silently
-discarded.
+The case uses dense or sparse eigensolvers according to the required observable, formula-derived spectral potentials, finite differences for spectral density, integer phase windings, and paired left/right eigenvectors for biorthogonal perturbation theory. Every state density is normalized and every selected eigenpair carries a residual.
 
-For Fig. 3, the generalized Brillouin-zone characteristic equations are solved
-for a deterministic cover of 256 independently computed OBC energies per
-geometry. Regular momentum grids are used for the beta-plane projections, and
-periodic interpolation is used for the two three-dimensional surfaces.
+## Unified T004–T009 campaign
 
-For Fig. 4, the reciprocal critical model is evaluated through six distinct
-checks: complete boundary density, scale-free Gaussian localization, spectral
-density from the geometry-adaptive potential, boundary-ratio spectra, a
-paper-size disordered spectrum, and finite-size spectral-potential scaling.
+`scripts/run_supplemental_campaign.py` reads one immutable JSON profile and writes one data artifact per target, a science record, per-target hash-bound checkpoints, and a final manifest. `--resume` accepts a checkpoint only if configuration SHA, implementation SHA, output existence and output SHA all match.
 
-For Supplementary Fig. S2, Eq. (S18) separability turns the nominal `N=5625`
-diagonalization into pairwise sums of two 75-state OBC spectra. Eqs. (S19)-(S22)
-are evaluated from batched quartic roots and a 192-point arcsine quadrature.
-The Amoeba potential uses a Jensen reduction of the inner momentum integral;
-the two caption energies are classified from formula-generated zero loci and
-integer torus winding, not source-image segmentation.
+The smoke profile is an executable correctness proof. The paper profile expands the same kernels to:
 
-For Supplementary Fig. S4, Eq. (S24) is built directly under PBC and OBC. The
-caption lengths `L=20,40,60,80` are diagonalized, both extremal-energy states
-are inspected at `L=80`, and the central-state inverse localization length is
-regressed against `1/L` over nine sizes. The exact TDL continuum is obtained by
-expanding `beta^2 det[H(beta)-E]` as a quartic, modulus-sorting its roots, and
-tracing `|beta_2|=|beta_3|` at 801×161 resolution with a 401×101 convergence
-audit. No large finite chain or source curve supplies the grey TDL series.
+- Fig. 2(d): four declared colored regions plus a 101×101 global plane over size sequences;
+- S2: N=5625 separable spectrum and formula/Amoeba density grids;
+- S4: printed chain sizes and dense momentum sampling;
+- S5: N≈6400 square/rhombus spectra, states, scaling and Eq. (10) densities;
+- S6: 361 transverse slices and 4096 points per loop;
+- S7: six sizes, disorder sweep and multiple realizations.
 
-For Supplementary Fig. S5, the printed Eq. (S27) is expanded into eight
-directed hoppings. Exact OBC spectra are computed for the caption geometries
-`N=6400/6385`. Normal A and scale-free B states are selected as the narrowest
-and widest states in declared local shift-invert windows over 11 sizes, so the
-choice is algorithmic and independent of source pixels. The two `101 x 161`
-densities are obtained by evaluating Eq. (10) separately in the square and
-rhombus cut bases. The differently parameterized legacy model in the author
-release is not used as generated input.
+## Isolation and rendering
 
-For Supplementary Fig. S6, Eq. (S28) is evaluated as an unwrapped phase winding
-on 240 midpoint slices with 4096 samples per loop. Midpoints avoid slices where
-the point gap closes and the winding is undefined. Fermi points are solved from
-the real and imaginary parts of the Bloch Hamiltonian, and their charges are
-computed from the local Jacobian determinant.
-
-For Supplementary Fig. S7, the clean OBC Hamiltonian is diagonalized with
-paired left/right eigenvectors. The site-resolved kernel
-`<L_i|n_j|R_i>/<L_i|R_i>` evaluates Eq. (S29) for 100 fresh `U[0,1]` onsite
-samples at each of six paper sizes. Released curves and paper pixels are absent
-from the generation path; author slopes are a separate post-generation
-validation. The exact `r=43` diamond has 925 sites, exposing the caption's
-printed `N=935` as a source discrepancy.
-
-## Reproducibility layers
-
-The public quick runner uses reduced matrices so it can execute on an ordinary
-laptop. It exercises the same site-set, Hamiltonian, spectrum, density, and
-symmetry logic as the paper-scale calculations. The published paper-scale CSV,
-NPZ, PNG, and JSON artifacts are the durable record of the expensive runs.
-
-Pixel registration is an audit layer after numerical computation. It fixes the
-canvas dimensions and layout but does not alter the generated numerical arrays.
-The public package omits source-publication assets required to rerun that audit;
-only limited attributed comparison boards and the resulting metrics are kept.
+The run contract blocks raw sources, references, original figures, author arrays, network and subprocesses. The v5 run had 0 forbidden accesses. Rendering is a second process that hashes every input before and after drawing and may change only layout properties; it cannot modify arrays, physics parameters or curve coordinates.
 
 ## Commands
 
 ```bash
-cd cases/2407.01296/code
-python scripts/run_reproduction_smoke.py
+PYTHONPATH=case/2407.01296/workspace python -m pytest -q case/2407.01296/tests
+PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/run_isolated_numerics.py case/2407.01296 --contract case/2407.01296/run_contract.supplemental_smoke.json
+cd case/2407.01296/workspace
+python scripts/run_supplemental_campaign.py --config config/supplemental_paper_scale.json --profile paper --output-root outputs/data/supplemental_paper_v1 --resume
+python scripts/render_supplemental_campaign.py --input-root outputs/data/supplemental_paper_v1 --output-root outputs/figures/supplemental_paper_v1
 ```
-
-The component runners are also available:
-
-```bash
-python scripts/run_fig2_geometry.py --scale smoke
-python scripts/run_fig2_potential.py --scale smoke --output-root ../outputs
-python scripts/run_fig2d_finite_size.py --scale smoke
-python scripts/run_fig4_boundary_ratio.py --scale smoke
-python scripts/run_supplementary_fig2.py --scale smoke
-python scripts/run_supplementary_fig4.py
-python scripts/run_supplementary_fig5.py --scale smoke --workers 4
-python scripts/run_supplementary_fig6.py
-python scripts/run_supplementary_fig7.py --scale paper
-```
-
-The first and third component scripts write relative to the code package when
-called directly; the public quick runner redirects them to the case-level
-output directories used by the catalog.

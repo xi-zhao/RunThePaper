@@ -1,100 +1,21 @@
-# Independent reproduction of arXiv:2608.05312
+# Unidirectional Dark-to-Bright Rescue in Cavity-Coupled Quantum Transport: scientific reproduction note
 
-## Paper and scope
+## Result
 
-This case reproduces the open-system numerical results of
-[Unidirectional Dark-to-Bright Rescue in Cavity-Coupled Quantum
-Transport](https://arxiv.org/abs/2608.05312). The paper studies transport
-through a disordered emitter chain coupled to one cavity mode. Disorder traps
-population in nearly photonic-free dark states. Ordinary dephasing mixes the
-bright and dark manifolds in both directions, whereas the non-Condon relaxation
-channel transfers dark population to bright states without the reverse dark
-inflow, after which cavity loss drains the excitation into a sink.
+Eleven independent numerical targets reproduce the paper's central features; only the four T011 QCLE benchmark series remain uncovered because indispensable operating parameters are not published.
 
-The public implementation independently solves the Lindblad model and does not
-read author numerical data. It covers every executable target supported by the
-published information: main-text Fig. 1(c), Figs. 2–3, supplementary Figs.
-S1–S4, and Tables S1–S2.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Model and method
+## What is reproduced
 
-The single-excitation basis is `[cavity, site 1, ..., site N, sink]`. The code
-builds the Tavis–Cummings–Hubbard Hamiltonian, rescue and thermal-absorption
-jumps, local pure dephasing, cavity or site-N drainage, and projectors onto the
-bright, dark, cavity, and sink sectors.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-The density matrix is column-vectorized and propagated with a sparse
-Liouvillian through `scipy.sparse.linalg.expm_multiply`. A small-system dense
-matrix exponential provides an independent oracle; the largest observed
-matrix-element difference is `3.40e-16`. Trace, Hermiticity, and positivity
-checks also pass. See [DERIVATION.md](../docs/DERIVATION.md) for the complete
-equation path.
+Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
-## Results
+## Run
 
-All ten executable targets pass. The evidence score is **83.4/100**, with a
-**99.7%** physics-feature match. This is a numerical-feature reproduction, not
-a point-for-point copy of author data.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-- The generated size-law slope is `0.2871`, compared with the paper's `0.29`;
-  the fitted power exponent is `0.799`, compared with `0.77`.
-- With cavity drainage, optimized rescue efficiency remains above `0.998` for
-  `N=3..96`, while optimized dephasing degrades with system size.
-- For the `N=6` dynamics, rescue reaches a bright-state peak of `0.586`;
-  dephasing ends at dark population `0.159` and sink efficiency `0.796`.
-- The finite-temperature boundary moves from `0.0845` to `0.1629` at `N=6`,
-  versus approximately `0.08 -> 0.16` in the paper. At `N=64`, the generated
-  boundary is `0.00756 -> 0.01497`, versus `0.008 -> 0.015`.
-- All seven Table S1 mechanism verdicts agree, with MAE `0.00615`; Table S2
-  detuning values have MAE `0.00182`.
-- Moving the drain to site N reverses the mechanism ranking: dephasing becomes
-  more effective than rescue, as in the supplement.
+## Paper-review boundary
 
-Generated figures, CSV data, and machine-readable checks live under
-`outputs/figures/`, `outputs/data/`, and `outputs/checks/`. Limited paper-excerpt
-comparison panels are available under [docs/comparisons](../docs/comparisons/).
-They audit physical structure and printed features; they do not establish
-author-data-level equivalence.
-
-## Quick run
-
-From this case's `code/` directory:
-
-```bash
-python scripts/run_checks.py
-python scripts/run_reproduction.py \
-  --profile quick \
-  --targets all \
-  --output-root ../outputs/quick
-```
-
-Run the declared paper-parameter subset with:
-
-```bash
-python scripts/run_reproduction.py \
-  --profile paper_subset \
-  --targets all \
-  --output-root ../outputs/paper_subset
-```
-
-The quick profile exercises the full workflow. The committed results use the
-`paper_subset` profile, which takes roughly ten minutes on a 16 GiB Apple M4;
-the `N=96` scaling scan and `N=64` temperature map dominate runtime.
-
-## Reproduction boundary
-
-The paper does not publish the mean hopping `t`, exact source-state notation,
-author random seeds, or complete scan grids. This case triangulates `t=1 meV`
-from Table S2, thermal boundaries, scaling laws, and the reported peak
-position, but keeps every target labeled `paper_subset / exploratory`.
-
-The supplementary `N=64` temperature map uses five disorder realizations on a
-`9x9` grid. Its physical boundary is reproduced, but its uncertainty is below
-the paper's stated 15-realization scale. The supplementary QCLE figure is not
-recomputed because the paper does not supply the lead/bath matrices, chemical
-potentials, initial state, or runnable implementation; more compute cannot
-recover those inputs.
-
-The public repository excludes the paper PDF, arXiv source archive, standalone
-original figures, and extracted curves. All published numerical data and
-reproduction figures are generated by this implementation.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Mean hopping t=1 meV and source state |1> are reconstructed from cross-figure constraints and validated numerically. Exact author random seeds and optimization grids are unavailable, so generated artifacts are exploratory paper-subset evidence. Ten scored numerical targets pass with an overall similarity score of 83.4; the QCLE benchmark remains blocked by missing source inputs.

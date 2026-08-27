@@ -45,7 +45,7 @@
 
 | Candidate | Why reusable | Destination |
 | --- | --- | --- |
-| full-paper resource preflight | prevents late discovery of an oversized supplement or solver | `private validation harness/HARNESS_BACKLOG.md` |
+| full-paper resource preflight | prevents late discovery of an oversized supplement or solver | `PRAgent-workflow/HARNESS_BACKLOG.md` |
 | source/generation import-boundary assertion | makes the no-pixel-input claim mechanically auditable | future Harness provenance checker |
 | existing pixel-layout + comparison board | exposed presentation differences without contaminating numerics | already in `rr_harness` |
 

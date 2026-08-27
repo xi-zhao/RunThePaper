@@ -86,6 +86,7 @@ def main() -> int:
         figures_root=layout.figures_root,
         checks_root=layout.checks_root,
         profile=config["profile"],
+        target_selectors=config["target_selectors"],
     )
     summary = campaign_summary(config, conditions, results)
     summary["wall_time_seconds"] = time.perf_counter() - started

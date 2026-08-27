@@ -1,0 +1,543 @@
+{
+  "schema_version": 1,
+  "paper_id": "2103.03074",
+  "cards": [
+    {
+      "id": "BBTN001",
+      "title": "Output probability",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Output probability"
+        }
+      ],
+      "latex": "P_U(s)=|<s|U|0...0>|^2",
+      "role": "Defines circuit output probability.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "BBTN001_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines circuit output probability.",
+      "code_refs": [
+        "src/big_batch_feature_sim.py::direct_amplitude"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN002",
+      "title": "Bitstring split",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Bitstring split"
+        }
+      ],
+      "latex": "s=(s_1,s_2); P_U(s)=P_U(s_1,s_2)",
+      "role": "Defines closed/open bitstring partition for batching.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "BBTN002_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines closed/open bitstring partition for batching.",
+      "code_refs": [
+        "src/big_batch_feature_sim.py::choose_representative_closed_bits"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN003",
+      "title": "Head-tail amplitude factorization",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Head-tail amplitude factorization"
+        }
+      ],
+      "latex": "psi(s_1,s_2)=v_head(s_1) dot v_tail(s_2)",
+      "role": "Defines reusable big-batch tensor-network contraction object.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The head-tail factorization is printed in the canonical arXiv v1 method text."
+        },
+        {
+          "id": "BBTN003_implementation",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "implementation_campaign independently constructs a cut-state v_head and the output row v_tail for a clean-room fSim circuit, then matches their contraction to the direct amplitude at machine precision."
+        }
+      ],
+      "numerical_form": "For a complete basis at the time cut, evaluate v_head[z]=<z|U_head|0> and v_tail[z]=<s|U_tail|z>, then sum_z v_tail[z] v_head[z].",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::head_tail_factorization_check"
+      ],
+      "open_questions": [
+        "The exact public 53-qubit circuit is now frozen and independently simplifies to 381 nodes, but the publication does not give the tensor-to-345/36 partition assignment, pairwise order, or slice-index list."
+      ]
+    },
+    {
+      "id": "BBTN004",
+      "title": "XEB fidelity",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "XEB fidelity"
+        }
+      ],
+      "latex": "F_XEB=mean(N p_i)-1",
+      "role": "Defines XEB fidelity estimator used by benchmark curves.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "BBTN004_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines XEB fidelity estimator used by benchmark curves.",
+      "code_refs": [
+        "src/big_batch_feature_sim.py::postselection_curve"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN005",
+      "title": "Porter-Thomas distribution",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Porter-Thomas distribution"
+        }
+      ],
+      "latex": "Prob(p)=N exp(-N p), x=Np -> exp(-x)",
+      "role": "Defines scaled output-probability reference distribution.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "BBTN005_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines scaled output-probability reference distribution.",
+      "code_refs": [
+        "src/big_batch_feature_sim.py::porter_thomas_pdf"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN006",
+      "title": "Conditional probability",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Conditional probability"
+        }
+      ],
+      "latex": "P(s_2|s_1)=P(s_1,s_2)/P(s_1)",
+      "role": "Defines normalized conditional batch distribution.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "BBTN006_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Conditional probabilities normalize to one."
+        }
+      ],
+      "numerical_form": "Defines normalized conditional batch distribution.",
+      "code_refs": [
+        "src/big_batch_feature_sim.py::extract_big_batch"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN007",
+      "title": "Shared-head batch reuse cost",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "paper-source/extracted/main.tex:126-128, 162-184"
+        }
+      ],
+      "latex": "T_{reuse}(L)=T_{head}+T_{tail,total}; T_{no-reuse}(L)=L T_{head}+T_{tail,total}",
+      "role": "Separates the one-time head contraction from the complete batch of tail contractions.",
+      "derived_from": [
+        "BBTN003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The canonical method text explicitly states that one head vector is reused for every suffix and Table I reports the head/tail costs."
+        },
+        {
+          "id": "BBTN007_symbolic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The head vector is explicitly reused for every suffix in the canonical method text."
+        },
+        {
+          "id": "BBTN007_numeric",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated run constructs one reduced public-circuit head and checks four independent output amplitudes; printed Table I costs give a reused total/head ratio near one."
+        }
+      ],
+      "numerical_form": "For L complete suffixes, construct v_head once, contract L tail rows, and compare all factorized amplitudes with direct evolution.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::head_tail_batch_reuse_check",
+        "src/scientific_closure.py::_target_payloads"
+      ],
+      "open_questions": [
+        "The exact m20 tensor-to-345/36 membership, first-cut edges, partition seed, and tie-breaking rule are not printed."
+      ]
+    },
+    {
+      "id": "BBTN008",
+      "title": "Complete-subspace marginal/XEB identity",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "paper-source/extracted/main.tex:197-215, 393-399"
+        }
+      ],
+      "latex": "F_{XEB}+1=(2^{n_1+n_2}/2^{n_2}) sum_{s_2}P(s_1,s_2)=2^{n_1}P(s_1)",
+      "role": "Fixes the normalization relating Eq. (1) to a full fixed-prefix batch.",
+      "derived_from": [
+        "BBTN004",
+        "BBTN006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN008_exact",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting n=n1+n2, L=2^n2, and the marginal sum into Eq. (1) gives the scaled identity exactly."
+        },
+        {
+          "id": "BBTN008_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "A deterministic normalized joint distribution independently reproduces the scaled identity and normalized conditional distribution."
+        },
+        {
+          "id": "BBTN008_source_consistency",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The isolated evidence records that the unscaled prose sentence conflicts with Eq. (1), while the following 0.999*2^-n1 value is consistent with the scaled identity; disposition remains for fresh review."
+        }
+      ],
+      "numerical_form": "Evaluate the complete suffix batch, sum to P(s1), and verify both F_XEB+1-2^n1 P(s1)=0 and conditional normalization.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::marginal_xeb_relation",
+        "src/sycamore_cleanroom.py::marginal_xeb_toy_check"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN009",
+      "title": "Complex64 versus complex128 error diagnostics",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "paper-source/extracted/main.tex:345"
+        }
+      ],
+      "latex": "Delta_infinity=max_i|psi_i^(64)-psi_i^(128)|; Delta_2=||psi^(64)-psi^(128)||_2",
+      "role": "Defines explicit independent diagnostics for the paper's qualitative precision comparison.",
+      "derived_from": [
+        "BBTN001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN009_backend",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The clean-room simulator executes identical reduced public-circuit gates in complex64 and complex128 and records amplitude, probability, norm, and fidelity diagnostics."
+        },
+        {
+          "id": "BBTN009_source_audit",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "A complete canonical-source search confirms that the production subtask, error metric, numerical result, and acceptance threshold were not printed."
+        }
+      ],
+      "numerical_form": "Run identical gate sequences at both dtypes and record max-amplitude, L2-state, max-probability, L1-probability, norm-drift, and normalized-fidelity differences.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_precision_check"
+      ],
+      "open_questions": [
+        "No published acceptance threshold or production subtask identity makes the paper-scale sufficient-precision claim non-unique."
+      ]
+    },
+    {
+      "id": "BBTN010",
+      "title": "Complex64 tensor memory",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "paper-source/extracted/main.tex:311-315, 345"
+        }
+      ],
+      "latex": "M_{bytes}=2^r sizeOf(complex64)=2^r*8",
+      "role": "Converts a rank-r binary tensor with complex64 entries into decimal TB and binary TiB.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The canonical appendix explicitly supplies tensor size 2^53, complex64 storage, and the printed 13,421 TB comparison value."
+        },
+        {
+          "id": "BBTN010_dtype",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The isolated runtime independently reports an 8-byte complex64 itemsize."
+        },
+        {
+          "id": "BBTN010_units",
+          "type": "unit_consistency",
+          "status": "passed",
+          "reason": "The implementation reports both decimal TB and binary TiB and records the residual to the printed value without assigning the paper verdict."
+        }
+      ],
+      "numerical_form": "For r=53, compute 2^53 elements, 2^56 bytes, 72057.594 decimal TB, and 65536 TiB.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::memory_arithmetic"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "BBTN011",
+      "title": "Projected-state fidelity",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "raw/prl-final-paper.pdf p. 5, noisy-state cost sentence"
+        },
+        {
+          "type": "independent_derivation",
+          "value": "Normalized projection onto a retained basis subset"
+        }
+      ],
+      "latex": "F(psi,psi_S)=|<psi|psi_S>|^2=sum_{i in S}|psi_i|^2",
+      "role": "Defines one explicit fidelity estimator for testing whether target fidelity alone determines retained work.",
+      "derived_from": [
+        "BBTN001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN011_projection",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reduced official-circuit state verifies that normalized projection fidelity equals retained probability mass."
+        },
+        {
+          "id": "BBTN011_source_boundary",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formal main article does not identify this projection as the paper algorithm; the Supplemental Material is not locally accessible."
+        }
+      ],
+      "numerical_form": "Sort independently generated probabilities, retain the smallest prefix reaching each requested mass, and report fidelity and retained-work fraction without promoting it to the paper method.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::noisy_fidelity_projection_smoke"
+      ],
+      "open_questions": [
+        "The paper's noisy algorithm, fidelity observable, work measure, and 1/f phrasing remain externally unresolved."
+      ]
+    },
+    {
+      "id": "BBTN012",
+      "title": "Full-state batch cardinality",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "raw/prl-final-paper.pdf p. 4, Full-amplitude simulations"
+        }
+      ],
+      "latex": "2^n=2^{n_1}2^{n_2}; B=2^{n_1}; A_batch=2^{n_2}",
+      "role": "Defines a complete one-row-per-closed-configuration streaming ledger.",
+      "derived_from": [
+        "BBTN002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The frozen formal main article prints the 43-qubit 14/29 and 50-qubit 22/28 full-amplitude splits; unavailable EFGH member identities remain a parameter boundary, not a formula omission."
+        },
+        {
+          "id": "BBTN012_cardinality",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The formal 14/29 and 22/28 splits exactly cover 43 and 50 qubits."
+        },
+        {
+          "id": "BBTN012_ledger",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reduced official-circuit smoke hashes every amplitude exactly once across the declared batch ledger."
+        }
+      ],
+      "numerical_form": "For every closed configuration, generate one complete open-qubit batch, update normalization/histogram accumulators, store its hash, and update a rolling full-stream hash.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke",
+        "src/sycamore_cleanroom.py::full_state_resource_contract"
+      ],
+      "open_questions": [
+        "Exact formal-PRL EFGH circuit members and closed/open qubit-id lists are not frozen locally."
+      ]
+    },
+    {
+      "id": "BBTN013",
+      "title": "Streaming Porter-Thomas goodness of fit",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "raw/prl-final-paper.pdf Fig. 2 right and p. 4"
+        }
+      ],
+      "latex": "D_KS=sup_x|F_emp(x)-(1-exp(-x))|, x=2^n P(s)",
+      "role": "Turns the qualitative perfectly follows statement into a predeclared quantitative online statistic.",
+      "derived_from": [
+        "BBTN005",
+        "BBTN012"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The frozen formal main article states the 50-qubit full-state histogram follows Porter-Thomas; the reconstructed KS statistic is explicitly an independent falsification metric."
+        },
+        {
+          "id": "BBTN013_smoke",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The reduced stream populates fixed bins and computes an empirical-vs-exponential KS distance without source pixels."
+        }
+      ],
+      "numerical_form": "Accumulate fixed-bin counts and scaled probabilities from generated batches, then compare the empirical CDF to 1-exp(-x).",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke"
+      ],
+      "open_questions": [
+        "The paper does not print a numerical goodness-of-fit threshold."
+      ]
+    },
+    {
+      "id": "BBTN014",
+      "title": "Lag-one sample independence diagnostic",
+      "source_refs": [
+        {
+          "type": "paper_source",
+          "value": "raw/prl-final-paper.pdf p. 5 discussion citing Ref. [28]"
+        }
+      ],
+      "latex": "rho_1=corr(s_i,s_{i+1}); |rho_1|<=4/sqrt(N-1)",
+      "role": "Provides one explicit falsifiable correlation check for the cited uncorrelated-sample claim.",
+      "derived_from": [
+        "BBTN004"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "BBTN014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The frozen formal main article explicitly cites one million uncorrelated samples; lag-one correlation is a declared independent diagnostic, not a claim that the cited method was reconstructed."
+        },
+        {
+          "id": "BBTN014_reduced",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A seeded independent reduced sampler passes the predeclared lag-one bound and reports XEB."
+        }
+      ],
+      "numerical_form": "Generate samples from independently computed probabilities and report lag-one index correlation and XEB under a fixed seed.",
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke"
+      ],
+      "open_questions": [
+        "The cited follow-on method, paper-scale backend, and complete independence test suite are external to this case."
+      ]
+    }
+  ]
+}

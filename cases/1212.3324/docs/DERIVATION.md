@@ -28,8 +28,11 @@ The primitive cell vectors are $(1,1)$ and $(1,-1)$.  Therefore
 $k_x=(q_1+q_2)/2$, $k_y=(q_1-q_2)/2$.  This coordinate map reverses
 orientation, and crossing either primitive reciprocal seam changes the
 sublattice Bloch gauge by $\sigma_z$.  Both effects are included in the Chern
-and winding calculations; omitting either gives an incorrect topological
-sequence.
+and winding calculations. In particular, every central-difference neighbor
+that wraps across either $q_1$ or $q_2$ seam is conjugated by $\sigma_z$ before
+the derivative is formed. A gauge-periodic analytic matrix field exercises
+both boundary stencils in the regression suite; raw array wrapping would mix
+different Bloch bases and slow or corrupt finite-grid winding convergence.
 
 At $JT/5=\pi/2$ and $\delta=0$, each active bond transfers a particle exactly
 once.  The four transfers close a bulk orbit, hence $U(\mathbf{k},T)=I$, while
@@ -43,8 +46,13 @@ difference, but the displayed two-level Hamiltonian writes
 $\delta_{AB}\sigma_z$.  With the standard $\sigma_z=\mathrm{diag}(1,-1)$,
 the latter has energy difference $2\delta_{AB}$.  For Figs. 3(a-c), the
 reconstruction follows the displayed Hamiltonian literally because the captions
-explicitly quote $\delta_{AB}=0.5\pi/T$ for those spectra.  The phase scan keeps
-both interpretations as falsification branches.  The onsite-difference branch gives gap closings near
+explicitly quote $\delta_{AB}=0.5\pi/T$ for those spectra. The phase diagram is
+not inferred from the source raster or from a one-dimensional cut: both
+interpretations are evaluated on the same two-dimensional $(J,\delta_{AB})$
+grid. At every open-gap point the implementation independently calculates
+$W_0$, $W_\pi$ and the upper-band Chern number; exact closings and adaptively
+identified closing neighborhoods are recorded as such rather than assigned an
+integer label. The onsite-difference branch gives gap closings near
 $J/\pi=1.21$ and $2.06$; the literal branch gives approximately $1.08$ and
 $1.99$.  The visible phase-boundary labels are about $1.3$ and $2.1$.
 

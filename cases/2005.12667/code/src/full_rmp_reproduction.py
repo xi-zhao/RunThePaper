@@ -330,8 +330,10 @@ def drag_pi_pulse(
 ) -> DragResult:
     """Propagate a resonant Gaussian pi pulse with optional first-order DRAG."""
 
-    if gate_time <= 0 or anharmonicity <= 0 or dimension < 3:
+    if gate_time <= 0 or anharmonicity <= 0 or dimension < 2:
         raise ValueError("gate_time, anharmonicity, and dimension are invalid")
+    if use_drag and dimension < 3:
+        raise ValueError("DRAG requires at least three levels")
     b = annihilation(dimension)
     number = b.conj().T @ b
     quartic = b.conj().T @ b.conj().T @ b @ b

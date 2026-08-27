@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "run_id": "1905.09460-implementation-closure-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output",
+    "outputs/checks/implementation_closure.json"
+  ],
+  "inputs": [
+    "src/nonhermitian_quasicrystal.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "lattice": {
+      "length": 34,
+      "hopping": 1.0,
+      "potential_strength": 1.0,
+      "alpha": 0.6176470588235294,
+      "spectral_phases": [
+        0.0,
+        0.66,
+        0.74,
+        1.0
+      ]
+    },
+    "laser_transient": {
+      "potential_strength": 0.14,
+      "alpha": 0.6180339887498949,
+      "theta": 1.5707963267948966,
+      "cavity_loss": 0.19,
+      "small_signal_gain": 0.57,
+      "modulation_frequency_ghz": 1.384,
+      "gain_width_ghz": 126.0,
+      "gamma_parallel_attestation_value": 0.1,
+      "mode_limit": 8,
+      "modulation_depths": [
+        0.1,
+        0.2,
+        0.3,
+        0.35
+      ],
+      "time_step": 0.025,
+      "final_time": 20.0,
+      "noise_scale": 0.01,
+      "seed": 190509460,
+      "blocked_input_schema": {
+        "status": "missing_from_publication",
+        "required_for_unique_paper_curve": [
+          "dimensionless_gamma_parallel",
+          "noise_distribution_and_seed",
+          "integration_duration_and_steady_window",
+          "mode_cutoff",
+          "etalon_phase",
+          "bandwidth_estimator",
+          "unambiguous_alpha_value"
+        ]
+      }
+    },
+    "etalon": {
+      "frequency_min": -2.0,
+      "frequency_max": 2.0,
+      "points": 101,
+      "refractive_index": 2.2321,
+      "phase": 0.0
+    },
+    "winding": {
+      "length": 34,
+      "hopping": 1.0,
+      "potential_strength": 1.0,
+      "alpha": 0.6176470588235294,
+      "base_energy": 0.0,
+      "theta_points": 65,
+      "complex_phases": [
+        0.4,
+        1.0
+      ],
+      "route_tolerance": 1e-08
+    },
+    "edge_classifier": {
+      "length": 34,
+      "hopping": 1.0,
+      "potential_strength": 1.0,
+      "alpha": 0.6176470588235294,
+      "complex_phases": [
+        0.0,
+        0.66,
+        0.74,
+        1.0
+      ],
+      "edge_widths": [
+        3,
+        5
+      ],
+      "edge_weight_thresholds": [
+        0.4,
+        0.55
+      ],
+      "center_ipr_minimum": 0.08,
+      "blocked_input_schema": {
+        "status": "missing_from_publication",
+        "required_for_paper_exact_counts": [
+          "edge_state_definition",
+          "left_right_assignment_rule",
+          "localization_threshold",
+          "finite_size_tie_breaking_rule"
+        ]
+      }
+    },
+    "base_energy_sweep": {
+      "length": 34,
+      "hopping": 1.0,
+      "potential_strength": 1.0,
+      "alpha": 0.6176470588235294,
+      "complex_phase": 1.0,
+      "theta_points": 65,
+      "central_energy_fraction": 0.55,
+      "base_energy_count": 3,
+      "winding_tolerance": 1e-08
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

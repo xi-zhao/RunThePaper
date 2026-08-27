@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.28795",
+  "campaign_scale": "paper_subset_reduced_validation_and_input_boundary",
+  "attestation_parameters": {
+    "campaign_revision": 1,
+    "target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016",
+      "T017",
+      "T018",
+      "T019",
+      "T020",
+      "T021",
+      "T022",
+      "T023",
+      "T024"
+    ],
+    "scientific_coverage_promoted": false
+  },
+  "clean_room_boundary": {
+    "paper_pdf_read_by_runner": false,
+    "paper_source_read_by_runner": false,
+    "source_pixels_used": false,
+    "author_numeric_arrays_used": false,
+    "author_code_used": false,
+    "paper_parameters_allowed_only_from_frozen_config": true
+  },
+  "targets": {
+    "T001": {
+      "mode": "paper_code_subset",
+      "code_id": "mitten-150",
+      "paper_inputs_path": "config/paper_inputs.json",
+      "group_tables_path": "config/group_tables.json"
+    },
+    "T002": {
+      "mode": "magic_counts",
+      "group_order": 30,
+      "repetition_distance": 5
+    },
+    "T003": {
+      "mode": "sqetch_reduced",
+      "sketch_rows": 4,
+      "trials": 500,
+      "seed": 260703
+    },
+    "T004": {
+      "mode": "realtime_arithmetic",
+      "paper_inputs_path": "config/paper_inputs.json",
+      "experiment_id": "mitten-200-memory",
+      "cycle_seconds": 0.001
+    },
+    "T005": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "paper_exact_memory_circuits": "JSON circuit instructions for every plotted code and physical-error point",
+        "detector_error_models": "versioned detector models derived independently from those circuits",
+        "decoder_contract": "algorithm, hyperparameters, stopping rule, and software/runtime versions",
+        "sampling_plan": "shots per point, seeds, confidence intervals, and fit protocol"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Generate every memory-curve point independently and validate uncertainty before comparing with the paper; printed curves are comparison-only."
+    },
+    "T006": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "paper_exact_surgery_circuits": "operation schedule for each XX, X, and ZZ family",
+        "detector_error_models": "independently derived detector models",
+        "decoder_contract": "algorithm, parameters, convergence rule, and runtime versions",
+        "sampling_plan": "shots, seeds, confidence intervals, and curve-fit protocol"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Regenerate all surgery observables from independently constructed circuits and frozen Monte Carlo inputs."
+    },
+    "T007": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "qdistrnd_algorithm_specification": "complete source-independent algorithm and stopping contract",
+        "benchmark_matrices": "exact clean-room matrices used for every Fig. 8 point",
+        "cpu_runtime_manifest": "CPU model, thread count, dependencies, and compiler/runtime versions",
+        "sampling_plan": "seeds, repetitions, warm-up, and timing aggregation"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Implement the actual QDistRnd baseline and benchmark it on the same independently generated matrices; full-nullspace RREF is forbidden as a substitute."
+    },
+    "T008": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "paper_exact_detector_models": "versioned detector models for all Fig. 9 and Table IX workloads",
+        "error_model": "complete stochastic fault channel and physical-error grid",
+        "decoder_schedule": "telescoping stages, convergence and fallback rules",
+        "sampling_plan": "shots, seeds, uncertainty and throughput accounting",
+        "runtime_manifest": "hardware, parallelism, dependency and timing contract"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Run the independently implemented telescoping decoder and baselines on identical frozen detector models and sampling plans."
+    },
+    "T009": {
+      "mode": "exact_css_distance",
+      "matrix_source": "steane_validation",
+      "max_enumerated_vectors": 127,
+      "expected_distance": 3
+    },
+    "T010": {
+      "mode": "stochastic_distance",
+      "sketch_rows": 4,
+      "trials": 500,
+      "seed": 260710
+    },
+    "T011": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "gadget_graphs": "typed vertices, edges, boundaries, and logical-port labels for all five families",
+        "surgery_transformations": "source-traced clean-room graph transformations",
+        "resource_accounting": "common qubit, check, round, and distance conventions",
+        "validation_instances": "small exact instances with expected invariant checks"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Construct each gadget family from typed graph inputs and derive every resource row; schematic pixels and printed output cells are forbidden inputs."
+    },
+    "T012": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "parallel_surgery_schedule": "complete operation and synchronization schedule",
+        "detector_error_model": "independently generated detector model",
+        "decoder_contract": "algorithm, settings, convergence and fallback rules",
+        "sampling_and_runtime_plan": "shots, seeds, hardware, parallelism, and timing aggregation"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Regenerate the parallel-surgery benchmark under one frozen circuit, decoder, sampling, and runtime contract."
+    },
+    "T013": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "extractor_definitions": "complete source-independent algorithm for every compared extractor",
+        "common_input_instances": "identical clean-room code and syndrome instances",
+        "resource_accounting": "shared cost and error conventions",
+        "evaluation_plan": "seeds, repetitions, uncertainty and acceptance thresholds"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Execute all extractors on the same frozen inputs and derive the comparison rather than transcribing Table IV."
+    },
+    "T014": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "ablp_construction_inputs": "complete group-ring or binary check-matrix definitions",
+        "structured_code_inputs": "complete structured-code check-matrix definitions",
+        "basis_conventions": "indexing, block order, and logical-pairing convention",
+        "expected_invariants": "dimension, rank, commutation, and canonical-weight acceptance rules"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Build both non-mitten code families from disclosed definitions and independently derive dimensions and logical weights."
+    },
+    "T015": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "fault_tolerant_circuit": "complete gate, measurement, reset, and timing schedule",
+        "fault_model": "typed locations and fault channel",
+        "detector_construction": "detector and logical-observable definitions",
+        "distance_search_contract": "exact search algorithm, bounds, and termination certificate"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Derive the circuit detector model and produce a machine-checkable minimum-fault certificate."
+    },
+    "T016": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "paper_exact_layout_instances": "initial and target atom coordinates for each plotted family",
+        "routing_instances": "typed moves, collision constraints, and precedence graph",
+        "scheduler_contract": "AOD/SLM resource limits and aggregation rules",
+        "hardware_timing_parameters": "move, transfer, acceleration, and cycle-time constants"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Run independent routing and scheduling for every layout and derive curves, transfers, and maximum speed from generated trajectories."
+    },
+    "T017": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "mitten_placement": "paper-exact logical-to-physical placement",
+        "routing_and_timing_contract": "move graph, hardware limits, and clock model",
+        "resource_accounting": "qubit, transfer, operation, and latency conventions",
+        "validation_workloads": "frozen operations used to aggregate Table XII"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Compute the HAL metrics from independently executed placement and routing, never from printed Table XII cells."
+    },
+    "T018": {
+      "mode": "general_css_identity",
+      "cyclic_group_orders": [
+        3,
+        5,
+        7
+      ]
+    },
+    "T019": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "magic_port_chain_complex": "typed clean-room chain-complex matrices and boundary maps",
+        "injection_gadget_maps": "logical and stabilizer maps before and after injection",
+        "distance_hypotheses": "all theorem preconditions in machine-readable form",
+        "exhaustive_small_instance_plan": "enumeration bounds and counterexample certificate schema"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Exhaustively compare logical distances on the smallest valid constructions before treating either distance theorem as supported."
+    },
+    "T020": {
+      "mode": "input_boundary",
+      "required_input_schema": {
+        "claim_hypotheses": "machine-readable hypotheses for each of the five distance statements",
+        "finite_group_instances": "independently generated group tables and ring supports",
+        "exact_distance_certificates": "logical witnesses and lower-bound certificates",
+        "counterexample_search_bounds": "enumeration domains and deterministic stop rules"
+      },
+      "supplied_inputs": [],
+      "acceptance_boundary": "Test each bound and counterexample claim separately and emit either a verified finite-instance certificate or a minimal counterexample."
+    },
+    "T021": {
+      "mode": "generic_pivot_hit",
+      "columns": 20,
+      "pivots": 8,
+      "required_pivots": 3,
+      "nullity": 20,
+      "sketch_rows": 12,
+      "trials": 100,
+      "seed": 260721,
+      "monte_carlo_samples": 20000,
+      "tolerance": 0.02
+    },
+    "T022": {
+      "mode": "relative_group_permutation",
+      "order": 7,
+      "g_i": 5,
+      "g_j": 2
+    },
+    "T023": {
+      "mode": "tanner_thickness_bound",
+      "graph": "K3,3 analytic check",
+      "vertices": 6,
+      "edges": 9,
+      "expected_lower_bound": 2
+    },
+    "T024": {
+      "mode": "spectral_placement",
+      "adjacency": [
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1,
+          0
+        ]
+      ],
+      "grid": [
+        [
+          -0.5,
+          -0.5
+        ],
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          0.5,
+          -0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "expected_assignments": 24
+    }
+  }
+}

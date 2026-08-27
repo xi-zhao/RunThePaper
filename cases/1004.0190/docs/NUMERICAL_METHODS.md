@@ -29,6 +29,22 @@ All matrices are generated independently with NumPy/SciPy. The closed two-qubit 
 - Validation: rotated classical states give zero; GHZ gives `1/2`; maximally entangled qudits give `1-1/d`
 - Scientific boundary: reconstructed simultaneous-dephasing convention because the publication does not print one unique multipartite objective
 
+### NUM008 — zero-discord hardness boundary
+
+- Target: T009
+- Exact calculation: `Tr(e^{i phi}A)/d=e^{i phi}(N_+-N_-)/d` for `A^2=I`
+- Validation: direct diagonal-matrix traces through eight register qubits
+- Boundary: the runner records that the paper omits a succinct instance family, approximation tolerance, classical model, and hardness reduction; it does not turn the algebraic identity into a fake complexity proof
+
+### NUM009 — regrouped DQC1 bipartition negativity
+
+- Target: T010
+- Observable: `N=(||rho^{T_A}||_1-1)/2`
+- Enumeration: all `2^n-1` unique bipartitions with the control fixed on side A
+- Smoke grid: three independent Haar unitaries for each `n=2,...,6`, `alpha=0.7`
+- Validation: exact partition count, Hermitian partial transpose, Bell-state `N=1/2`, and zero negativity for the analytically separable control-versus-register split
+- Boundary: negativity, the finite-size grid, Haar ensemble, and diagnostic threshold are independent proxy choices because the publication specifies none of them
+
 ## Efficiency And Reuse Plan
 
 - Baseline implementation:

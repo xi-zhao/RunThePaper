@@ -1,0 +1,205 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.22976",
+  "cards": [
+    {
+      "id": "DW001",
+      "title": "Laurent bulk Hamiltonians, winding, and finite domain-wall ring",
+      "source_refs": [
+        "main Eqs. (1)-(5)",
+        "SI Eqs. (S1)-(S5)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/domain_wall.py::bulk_energy",
+        "src/domain_wall.py::build_domain_wall_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "DW001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "All coefficients and N1:N2:N3=58:41:87 are stated in Fig. 2 and Eqs. (3)-(5)."
+        },
+        {
+          "id": "DW001-bloch",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Applying the homogeneous row stencil to psi_x=beta^x returns h_alpha(beta) psi_x exactly."
+        },
+        {
+          "id": "DW001-gauge",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "The domain-weighted decay rates satisfy the closed-ring zero-growth constraint."
+        }
+      ],
+      "open_questions": [
+        "The finite cross-interface stencil is not specified; the local row/domain stencil is disclosed and tested."
+      ]
+    },
+    {
+      "id": "DW002",
+      "title": "Constrained Ronkin function in root/Jensen form",
+      "source_refs": [
+        "main Eqs. (8)-(11)",
+        "SIV Eqs. (S106)-(S119)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/domain_wall.py::ronkin",
+        "src/domain_wall.py::constrained_ronkin_minimum"
+      ],
+      "checks": [
+        {
+          "id": "DW002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Definition, global constraint, and Jensen form are explicit in SIV."
+        },
+        {
+          "id": "DW002-slope",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Between adjacent log-root moduli, dR/dmu=-s+l equals the point-gap winding."
+        },
+        {
+          "id": "DW002-convex",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The minimum is evaluated over all pairwise breakpoint intersections of the convex piecewise-linear objective."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DW003",
+      "title": "Case-I standing and Case-II traveling GBZ conditions",
+      "source_refs": [
+        "main Case I/II",
+        "SIII Eqs. (S89)-(S105)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/domain_wall.py::gbz_diagnostics",
+        "src/domain_wall.py::classify_energy"
+      ],
+      "checks": [
+        {
+          "id": "DW003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "All ordered-root indices and lambda_0/lambda_1 equations are explicit for the 2/3/4-root example."
+        },
+        {
+          "id": "DW003-order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "lambda_1-lambda_0 is a positive weighted sum of adjacent ordered-root gaps."
+        },
+        {
+          "id": "DW003-limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "Opening the ring removes adjacent-sector degeneracy and leaves only individual-domain equal-modulus conditions."
+        }
+      ],
+      "open_questions": [
+        "The exact E1-E3 samples used for Fig. 3(b-d) are not reported."
+      ]
+    },
+    {
+      "id": "DW004",
+      "title": "Flux spectral winding",
+      "source_refs": [
+        "main Eq. (12)",
+        "SVI Eqs. (S142)-(S146)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/domain_wall.py::flux_spectral_winding"
+      ],
+      "checks": [
+        {
+          "id": "DW004-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The flux-modified hopping and log-determinant winding are explicit."
+        },
+        {
+          "id": "DW004-integer",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Unwrapped determinant phase divided by 2pi is rounded only after a closed 0-to-2pi loop and residual checking."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DW005",
+      "title": "Spectral-potential density of states",
+      "source_refs": [
+        "SIV Eqs. (S129)-(S134)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/domain_wall.py::spectral_density"
+      ],
+      "checks": [
+        {
+          "id": "DW005-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Both spectral potentials and rho=(1/2pi) Delta_E Phi are explicit."
+        },
+        {
+          "id": "DW005-normalization",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "The diagonalization potential uses the stated 1/N eigenvalue normalization."
+        },
+        {
+          "id": "DW005-laplacian",
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "The same Cartesian grid and central-difference Laplacian are used for both panels."
+        }
+      ],
+      "open_questions": [
+        "The source does not report the energy-grid extent or spacing; a converged grid is declared in config."
+      ]
+    },
+    {
+      "id": "DW006",
+      "title": "Open domain-wall chain GBZ",
+      "source_refs": [
+        "SV Eqs. (S135)-(S141)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/domain_wall.py::build_domain_wall_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "DW006-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The opened 3|1 interface and union of constituent OBC spectra are explicit."
+        },
+        {
+          "id": "DW006-union",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "In the thermodynamic root condition only the w=0 equal-modulus sector survives."
+        }
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,693 @@
+{
+  "schema_version": 2,
+  "paper_id": "2607.08212",
+  "implementations": {
+    "missing_paper_input_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "FIG3A_ZAP",
+        "FIG3C_NATIVE",
+        "ZX_EXTRACTOR_INPUT_GAP"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_missing_input_campaign.py",
+        "--config",
+        "config/missing_paper_input_contracts.json",
+        "--output-root",
+        "outputs/checks/missing_paper_input_campaign"
+      ],
+      "code_refs": [
+        "src/mobius_compiler.py",
+        "src/paper_input_models.py",
+        "src/missing_input_campaign.py",
+        "scripts/run_paper_input_target.py",
+        "scripts/run_missing_input_campaign.py"
+      ],
+      "config_ref": "config/missing_paper_input_contracts.json",
+      "run_contract_ref": "run_contract_missing_paper_inputs.json",
+      "expected_outputs": [
+        "outputs/checks/missing_paper_input_campaign/FIG3A_ZAP.json",
+        "outputs/checks/missing_paper_input_campaign/FIG3C_NATIVE.json",
+        "outputs/checks/missing_paper_input_campaign/ZX_EXTRACTOR_INPUT_GAP.json",
+        "outputs/checks/missing_paper_input_campaign/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Each of the four deferred panels maps exactly once to a strict scientific-input schema and executable case-local handler.",
+        "A complete six-clause package compiles through the independent Möbius and ZAP implementation; no clause or gate order is inferred from a paper image.",
+        "The ZX path validates a declared backend request but never treats that request as a scientific result.",
+        "Implementation attestation cannot increase scientific coverage, paper-exact status, pixel acceptance, or independent-review status."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1a_interaction_energies",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1(a)",
+      "reason": "Conceptual hardware-energy schematic, not a case-local numerical target."
+    },
+    {
+      "item_id": "fig1b_storage_layout",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1(b)",
+      "reason": "Neutral-atom layout schematic used as architectural context only."
+    },
+    {
+      "item_id": "fig1c_mobius_matrix_structure",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1(c)",
+      "reason": "The block-triangular illustration is explanatory rather than an independent numeric output."
+    },
+    {
+      "item_id": "fig2_compiler_pipeline",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 2",
+      "reason": "Pipeline diagram only; the executable algebraic method is audited through quantitative claims instead."
+    },
+    {
+      "item_id": "fig3a_zap_accounting",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "FIG3A_ZAP"
+      ],
+      "implementation_ref": "missing_paper_input_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 3(a)",
+      "reason": "The six-clause 3-SAT input is unpublished. The current accounting path transcribes the target circuit support stream from Fig. 3 and can verify its decomposition counts, but it cannot independently regenerate the panel from the paper's scientific input.",
+      "claim_refs": [
+        "CLM_FIG3A"
+      ]
+    },
+    {
+      "item_id": "fig3b_zx_no_insert",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "ZX_EXTRACTOR_INPUT_GAP"
+      ],
+      "claim_refs": [
+        "CLM_ZX_EXTRACTOR_PANELS"
+      ],
+      "implementation_ref": "missing_paper_input_campaign",
+      "source_ref": "Fig. 3(b)",
+      "reason": "The paper does not publish the exact source circuit plus ZX no-insert extractor version/options needed to regenerate this panel from first principles."
+    },
+    {
+      "item_id": "fig3c_mobius_native",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "FIG3C_NATIVE"
+      ],
+      "implementation_ref": "missing_paper_input_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 3(c)",
+      "reason": "The Möbius identities are independently verified, but this panel's concrete circuit cannot be regenerated without the unpublished six clauses. Transcribing the target panel's support stream is comparison evidence, not scientific coverage.",
+      "claim_refs": [
+        "CLM_FIG3C"
+      ]
+    },
+    {
+      "item_id": "fig4a_3sat_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(a)",
+      "reason": "The paper defines the 3-SAT routed-fidelity observable and the case-local proxy generator computes the same native-versus-ZAP quantity for that benchmark family. Missing author seeds, layout, and route traces cap fidelity at proxy_model but do not block a scientific target.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4b_qaoa_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(b)",
+      "reason": "The QAOA routed-fidelity observable is independently recomputed for the same benchmark family by the approved proxy router. Unpublished paper-scale routes prevent paper-exact replay, not scientific targeting.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4c_pspin_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(c)",
+      "reason": "The p-spin routed-fidelity family is computed independently with the same observable and hardware table inputs. The missing paper routes only cap the target at proxy_model.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4d_hypergraph_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(d)",
+      "reason": "The 4-local hypergraph routed-fidelity observable is implemented and executed independently for the same family. What is missing is only the author benchmark realization, so the target remains scientific but fidelity-capped.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4e_qram_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(e)",
+      "reason": "The QRAM routed-fidelity family is independently generated with the disclosed proxy router and published hardware parameters. Missing author geometry and traces lower fidelity to proxy_model but do not erase the target.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4f_multiplier_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(f)",
+      "reason": "The multiplier-oracle routed-fidelity observable is reproduced by independent proxy numerics for the same family. Only the paper-exact routed instance is missing.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4g_qft_control_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(g)",
+      "reason": "The pairwise-QFT control observable is independently recomputed and correctly shows no native advantage, matching the paper's control logic. Missing paper routes cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig4h_ghz_control_fidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 4(h)",
+      "reason": "The GHZ control observable is independently recomputed and preserves the paper's no-advantage control conclusion. Missing exact routes are a fidelity cap, not a target blocker.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5a_3sat_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(a)",
+      "reason": "The 3-SAT movement-count observable is independently produced by the proxy router for the same benchmark family. The absent author ensemble limits exactness, not scientific reproducibility.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5b_qaoa_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(b)",
+      "reason": "The QAOA movement observable is computed independently for the same family. Missing author routes reduce fidelity to proxy_model but do not prevent targeting.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5c_pspin_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(c)",
+      "reason": "The p-spin movement-count observable is generated independently by the proxy router for the same family, with missing author routes treated as a fidelity cap.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5d_hypergraph_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(d)",
+      "reason": "The 4-local hypergraph movement observable is already computed independently for the same family. The publication gap is paper-exact route metadata, not the scientific model.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5e_qram_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(e)",
+      "reason": "The QRAM movement-count observable is independently generated by the proxy runner. Missing author traces and geometry cap exactness only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5f_multiplier_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(f)",
+      "reason": "The multiplier movement observable is independently computed for the same family. Unpublished paper routes lower fidelity to proxy_model but do not block the target.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5g_qft_control_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(g)",
+      "reason": "The pairwise-QFT control movement observable is independently recomputed and preserves the expected no-advantage control behavior. Missing author seeds only cap fidelity.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig5h_ghz_control_moves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 5(h)",
+      "reason": "The GHZ control movement observable is independently recomputed and matches the paper's control logic. Missing exact benchmark traces cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig6a_3sat_duration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(a)",
+      "reason": "The 3-SAT routed-duration scaling observable is independently recomputed for the same family and qubit sweep. Missing author routes cap fidelity; the duration observable itself is defined and reproduced.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig6b_pspin_duration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(b)",
+      "reason": "The p-spin routed-duration scaling observable is independently recomputed across the declared size sweep. Missing paper routes lower fidelity to proxy_model only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig6c_qram_duration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(c)",
+      "reason": "The QRAM routed-duration scaling observable is independently recomputed for the same family and size range. The author routing metadata is an exactness cap, not a blocker.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig6d_3sat_compile_time",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(d)",
+      "reason": "The 3-SAT compile-plus-route timing observable is independently measured on the disclosed proxy workflow. Because timings come from a local Apple-M4 host rather than the author environment, fidelity is capped but the scientific trend target remains valid.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig6e_pspin_compile_time",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(e)",
+      "reason": "The p-spin compile-plus-route timing observable is independently measured on the proxy workflow. The missing author machine environment caps fidelity rather than preventing targeting.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig6f_qram_compile_time",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SCALING"
+      ],
+      "source_ref": "Fig. 6(f)",
+      "reason": "The QRAM compile-plus-route timing observable is independently measured on the disclosed proxy workflow. Missing author environment data caps exactness only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SCALING"
+      ]
+    },
+    {
+      "item_id": "fig7a_3sat_vs_zx_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 7(a)",
+      "reason": "Direct cause: the paper does not publish the ZX routed baseline stream needed for the left-column sensitivity observable. Root cause: without that comparator circuit family, this specific scientific surface is not fully defined from publication-only inputs.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig7b_pspin_vs_zx_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 7(b)",
+      "reason": "Direct cause: the paper omits the ZX routed baseline stream for the p-spin left-column comparison. Root cause: the publication alone does not define the required comparator surface.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig7c_qram_vs_zx_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 7(c)",
+      "reason": "Direct cause: the ZX routed baseline stream is unpublished for the QRAM left-column sensitivity comparison. Root cause: the paper does not provide enough scientific input to define this surface independently.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig7d_3sat_vs_zap_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "source_ref": "Fig. 7(d)",
+      "reason": "The native-versus-ZAP sensitivity surface for 3-SAT is independently generated from a fixed proxy route and the published Table I hardware error parameters. Missing author fixed routes cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig7e_pspin_vs_zap_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "source_ref": "Fig. 7(e)",
+      "reason": "The native-versus-ZAP sensitivity surface for p-spin is independently generated for the same benchmark family. Missing author routes and the absent break-even crossing lower fidelity but do not erase the target.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig7f_qram_vs_zap_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "source_ref": "Fig. 7(f)",
+      "reason": "The native-versus-ZAP sensitivity surface for QRAM is independently generated for the same family. Missing author fixed routes cap exactness, while the lack of an in-grid break-even crossing remains an explicit fidelity limit.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY_SENSITIVITY"
+      ]
+    },
+    {
+      "item_id": "fig8a_3sat_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(a)",
+      "reason": "The 3-SAT scheduled-stage observable is independently computed by the proxy router for the same benchmark family. Missing paper-exact routes cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8b_qaoa_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(b)",
+      "reason": "The QAOA scheduled-stage observable is independently computed for the same family. Missing author routes reduce fidelity to proxy_model but do not block targeting.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8c_pspin_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(c)",
+      "reason": "The p-spin scheduled-stage observable is independently computed for the same family and hardware table inputs. Unpublished author routes cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8d_hypergraph_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(d)",
+      "reason": "The 4-local hypergraph scheduled-stage observable is independently computed by the proxy router for the same family. Missing author routes are an exactness cap, not a blocker.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8e_qram_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(e)",
+      "reason": "The QRAM scheduled-stage observable is independently computed for the same family. Missing author geometry and seeds cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8f_multiplier_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(f)",
+      "reason": "The multiplier scheduled-stage observable is independently computed for the same family by the proxy router. Only the paper-exact routed realization is missing.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8g_qft_control_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(g)",
+      "reason": "The pairwise-QFT control scheduled-stage observable is independently recomputed and preserves the paper's no-advantage control logic. Missing author seeds cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig8h_ghz_control_stages",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ROUTING_PROXY"
+      ],
+      "source_ref": "Fig. 8(h)",
+      "reason": "The GHZ control scheduled-stage observable is independently recomputed and preserves the expected no-advantage control behavior. Missing exact author routes cap fidelity only.",
+      "claim_refs": [
+        "CLM_ROUTING_PROXY"
+      ]
+    },
+    {
+      "item_id": "fig9_zx_insert_diagnostic",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "ZX_EXTRACTOR_INPUT_GAP"
+      ],
+      "claim_refs": [
+        "CLM_ZX_EXTRACTOR_PANELS"
+      ],
+      "implementation_ref": "missing_paper_input_campaign",
+      "source_ref": "Fig. 9",
+      "reason": "The ZX insert diagnostic depends on the unpublished source circuit and exact ZX insert configuration, so it cannot be regenerated independently yet."
+    },
+    {
+      "item_id": "table1_architecture_parameters",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "source_parameter",
+      "decision": "excluded",
+      "consumed_by_target_ids": [
+        "ROUTING_PROXY",
+        "ROUTING_PROXY_SCALING",
+        "ROUTING_PROXY_SENSITIVITY"
+      ],
+      "source_ref": "Table I",
+      "reason": "Table I is an audited paper-parameter input to the routing proxy, not a reproduced numerical result."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_mobius_roundtrip",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ALGEBRA_CORE"
+      ],
+      "source_ref": "Eqs. (4)-(9), Appendix A",
+      "reason": "All bounded phase tables roundtrip exactly under the subset-zeta and Möbius transforms.",
+      "claim_refs": [
+        "CLM_ALGEBRA"
+      ]
+    },
+    {
+      "item_id": "claim_clause_polarity_exactness",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "ALGEBRA_CORE"
+      ],
+      "source_ref": "Eqs. (21)-(22)",
+      "reason": "Every three-literal polarity pattern marks exactly one violating assignment and exposes the expected degree-three support.",
+      "claim_refs": [
+        "CLM_ALGEBRA"
+      ]
+    }
+  ]
+}

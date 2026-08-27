@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.02157",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Discrete thermalizing collisional map",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (19) / SI Eq. (S7)"
+        }
+      ],
+      "latex": "\\rho_{t_{n+1}} = \\mathcal{E}_{t_n}(\\rho_{t_n}) = (1-P_{\\mathrm{th}})\\,U_{t_n}\\rho_{t_n}U_{t_n}^{\\dagger} + P_{\\mathrm{th}}\\,\\rho^{\\mathrm{eq}}_{s_n},\\quad P_{\\mathrm{th}} = 1-e^{-\\gamma_0\\delta t},\\ U_{t_n}=e^{-iH_{t_n}\\delta t},\\ \\rho^{\\mathrm{eq}}_{s_n}=\\frac{e^{-\\beta H_{t_n}}}{\\mathrm{Tr}\\,e^{-\\beta H_{t_n}}}",
+      "role": "Simulation engine: CPTP evolution of the driven reservoir between injections; thermodynamically consistent (Gibbs state invariant since [U, rho_eq] = 0).",
+      "derived_from": [
+        "Davies-Lindblad global master equation (SI I), repeated-interaction collision model"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (19), SI Eq. (S7)"
+        },
+        {
+          "id": "EQC001_cptp",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "trace preservation and positivity on random states (verify_formulas.py::check_map_cptp)"
+        },
+        {
+          "id": "EQC001_gibbs_invariant",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "E(rho_eq) = rho_eq for constant drive (verify_formulas.py::check_map_cptp)"
+        }
+      ],
+      "numerical_form": "Per step: eigendecompose H (2^L x 2^L Hermitian), build U and rho_eq from the same eigenbasis, apply convex combination.",
+      "code_refs": [
+        "scripts/qrc_engine.py::collisional_step"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Mackey-Glass drive generation and preprocessing",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (18) + Methods 'Chaotic time-series generation'"
+        }
+      ],
+      "latex": "\\frac{dx}{dt} = \\frac{\\beta_{\\mathrm{MG}}\\,x(t-\\tau_{\\mathrm{MG}})}{1+x^{10}(t-\\tau_{\\mathrm{MG}})} - \\gamma_{\\mathrm{MG}}\\,x(t),\\quad (\\beta_{\\mathrm{MG}},\\gamma_{\\mathrm{MG}},\\tau_{\\mathrm{MG}}) = (0.2, 0.1, 18)",
+      "role": "Chaotic classical input; RK4 integration, transient discarded, sampled every 3 time units, linearly rescaled to [-1,1]; approx zero mean, sigma_s^2 ~= 0.11, spectral peak omega_s ~= 0.36.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (18) and Methods parameters"
+        },
+        {
+          "id": "EQC002_stats",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "generated ensemble is near zero-mean with stationary variance and low-frequency spectral peak (verify_formulas.py::check_mg_stats)"
+        }
+      ],
+      "numerical_form": "RK4 with dt_int = 0.1 and delay buffer; sequences centered and linearly scaled to the paper's stated ensemble variance sigma_s^2 = 0.11 (support within [-1,1]).",
+      "code_refs": [
+        "scripts/mackey_glass.py::generate_mg_sequences"
+      ],
+      "open_questions": [
+        "The verbal preprocessing ('linearly rescaled to [-1,1]') is inconsistent with the stated statistics: a min-max rescale gives mean 0.14 and variance 0.24, not ~0 and ~0.11. We calibrate the affine map to the published statistics (center; scale to sigma_s^2 = 0.11; max|s| ~ 0.77 < 1). Initial conditions and integration step are also unpublished; random constant initial histories in [0.8, 1.6] are used."
+      ]
+    },
+    {
+      "id": "EQC003",
+      "title": "Holevo memory capacity and relative-entropy recast",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (8) / SI Eq. (S13)"
+        }
+      ],
+      "latex": "\\chi^{\\mathrm{m}}_{t_{n+1}} = S(\\bar\\rho_{t_{n+1}}) - \\sum_{s_n} P(s_n) S(\\rho^{\\mathrm{m}}_{s_n}) = \\sum_{s_n} P(s_n)\\, S(\\rho^{\\mathrm{m}}_{s_n} \\| \\bar\\rho_{t_{n+1}})",
+      "role": "Historical information dynamically retained about the current drive s_n; estimated by binning states by s_n (Methods Eqs. 20-21, B=50).",
+      "derived_from": [
+        "Holevo quantity; linearity of trace (S13)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (8), S13"
+        },
+        {
+          "id": "EQC003_recast",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "S(rho_bar) - sum P S(rho) equals expected relative entropy on random ensembles (verify_formulas.py::check_holevo_recast)"
+        }
+      ],
+      "numerical_form": "chi_m = S(rho_bar) - sum_b P_b S(rho_b) with eigenvalue truncation 1e-12; rho_b = bin-averaged density matrix keyed by s_n.",
+      "code_refs": [
+        "scripts/qrc_engine.py::holevo_capacity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Holevo predictive capacity",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (9) / SI Eq. (S21)"
+        }
+      ],
+      "latex": "\\chi^{\\mathrm{p}}_{t_{n+1}} = S(\\bar\\rho_{t_{n+1}}) - \\sum_{s_{n+1}} P(s_{n+1}) S(\\rho^{\\mathrm{p}}_{s_{n+1}})",
+      "role": "Statistical correlation between the reservoir state and the upcoming target s_{n+1}; same estimator with bins keyed by s_{n+1}. Marginalization consistency (Eq. 7/S8-S9) guarantees the same unconditional average.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (9), S21"
+        },
+        {
+          "id": "EQC004_marginalization",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "memory-binned and predictive-binned averages reconstruct the same unconditional state in simulation (verify_formulas.py::check_marginalization)"
+        }
+      ],
+      "numerical_form": "Identical to EQC003 with bin key s_{n+1}.",
+      "code_refs": [
+        "scripts/qrc_engine.py::holevo_capacity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Quantum informational dissipation (QID)",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (10)"
+        }
+      ],
+      "latex": "\\chi^{\\mathrm{d}}_{t_{n+1}} = \\chi^{\\mathrm{m}}_{t_{n+1}} - \\chi^{\\mathrm{p}}_{t_{n+1}}",
+      "role": "Non-predictive historical information structurally retained by the reservoir; definition.",
+      "derived_from": [
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (10)"
+        }
+      ],
+      "numerical_form": "Difference of the two estimated capacities per step; accumulated over N_eval steps for chi_d_tot.",
+      "code_refs": [
+        "scripts/qrc_engine.py::step_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Coherence decomposition of the Holevo quantity",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (11) / SI Eqs. (S53-S55)"
+        }
+      ],
+      "latex": "\\chi = \\mathcal{I} + \\mathcal{C},\\quad \\mathcal{I} = S[\\Delta(\\bar\\rho)] - \\sum_x P(x) S[\\Delta(\\rho_x)],\\quad \\mathcal{C} = \\sum_x P(x) C(\\rho_x) - C(\\bar\\rho),\\quad C(\\rho) = S[\\Delta(\\rho)] - S(\\rho)",
+      "role": "Splits capacities into classical mutual information (diagonal populations) and ensemble coherence (off-diagonal interference); dephasing basis = sigma^z product basis in which H1 is diagonal.",
+      "derived_from": [
+        "relative entropy of coherence; linearity of the dephasing map (S54-S55)"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (11), S55"
+        },
+        {
+          "id": "EQC006_split",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "chi = I + C and C >= 0, chi >= I on random ensembles (verify_formulas.py::check_coherence_split)"
+        }
+      ],
+      "numerical_form": "Delta(rho) = diagonal part in computational basis; I and C from binned ensembles.",
+      "code_refs": [
+        "scripts/qrc_engine.py::coherence_decomposition"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "QID split into classical and coherent dissipation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (12) / SI Eq. (S56)"
+        }
+      ],
+      "latex": "\\chi^{\\mathrm{d}} = \\mathcal{D}^{\\mathrm{c}} + \\mathcal{D}^{\\mathrm{q}},\\quad \\mathcal{D}^{\\mathrm{c}} = \\mathcal{I}^{\\mathrm{m}} - \\mathcal{I}^{\\mathrm{p}},\\quad \\mathcal{D}^{\\mathrm{q}} = \\sum_{s_n} P(s_n) C(\\rho^{\\mathrm{m}}_{s_n}) - \\sum_{s_{n+1}} P(s_{n+1}) C(\\rho^{\\mathrm{p}}_{s_{n+1}})",
+      "role": "Splits QID into population dissipation and coherent dissipation; the shared baseline C(rho_bar) cancels because both ensembles average to the same state.",
+      "derived_from": [
+        "EQC005",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (12), S56"
+        },
+        {
+          "id": "EQC007_split",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "chi_d = D_c + D_q on paired random ensembles sharing one average state (verify_formulas.py::check_qid_split)"
+        }
+      ],
+      "numerical_form": "Assembled from the same binned conditional states as EQC006.",
+      "code_refs": [
+        "scripts/qrc_engine.py::coherence_decomposition"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Macroscopic injection work from conditional ensembles",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SI Eq. (S62)"
+        }
+      ],
+      "latex": "W_{n+1} = \\sum_{s_{n+1}} P(s_{n+1})\\,\\mathrm{Tr}(\\rho^{\\mathrm{p}}_{s_{n+1}} H_{t_{n+1}}) - \\sum_{s_n} P(s_n)\\,\\mathrm{Tr}(\\rho^{\\mathrm{m}}_{s_n} H_{t_n})",
+      "role": "Average quench work of the signal injection, expressed through the same conditional states used for the capacities; enables macroscopic evaluation without trajectory unraveling.",
+      "derived_from": [
+        "microscopic quench work averaged over trajectories, conditioned via the probability product rule"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "S62"
+        }
+      ],
+      "numerical_form": "Energy expectations of binned states against the instantaneous Hamiltonians; H_{t_{n+1}} uses the bin's own s_{n+1} value.",
+      "code_refs": [
+        "scripts/qrc_engine.py::injection_work"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Per-step identity: irreversible injection work equals QID",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (13) / SI Eqs. (S63-S64)"
+        }
+      ],
+      "latex": "\\beta W^{\\mathrm{irr}}_{n+1} = \\beta(W_{n+1} - \\Delta\\mathcal{F}_{n+1}) = \\sum_{s_{n+1}} P S(\\rho^{\\mathrm{p}}) - \\sum_{s_n} P S(\\rho^{\\mathrm{m}}) = \\chi^{\\mathrm{m}}_{t_{n+1}} - \\chi^{\\mathrm{p}}_{t_{n+1}} = \\chi^{\\mathrm{d}}_{t_{n+1}}",
+      "role": "Central identity: energetic terms cancel exactly between W and Delta F, leaving a purely entropic penalty equal to the QID. Machine-checkable in simulation because both sides are algebra on the same binned states.",
+      "derived_from": [
+        "EQC003",
+        "EQC004",
+        "EQC008",
+        "non-equilibrium free energy F(rho) = Tr(rho H) - S(rho)/beta"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (13), S64"
+        },
+        {
+          "id": "EQC009_identity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "beta*W_irr == chi_d to machine precision on random ensemble pairs sharing an average (verify_formulas.py::check_work_identity); re-derived independently in DERIVATION_TRACE.md"
+        }
+      ],
+      "numerical_form": "Checked each simulation step as a consistency invariant.",
+      "code_refs": [
+        "scripts/qrc_engine.py::step_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Generalized Landauer bound and non-negative relaxation dissipation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (14)-(15) / SI Eqs. (S67-S71)"
+        }
+      ],
+      "latex": "\\beta W^{\\mathrm{relax}}_{n+1} = \\sum_{s_{n+1}} P\\left[S(\\rho^{\\mathrm{p}}\\|\\rho^{\\mathrm{eq}}) - S(\\rho^{\\mathrm{m}}_{s_{n+1}}\\|\\rho^{\\mathrm{eq}})\\right] \\ge 0 \\;\\Rightarrow\\; \\beta W^{\\mathrm{irr}}_{\\mathrm{tot}} \\ge \\chi^{\\mathrm{d}}_{\\mathrm{tot}},\\quad \\beta Q_{\\mathrm{diss}} \\ge \\Delta S_{\\mathrm{sys}} + \\chi^{\\mathrm{d}}_{\\mathrm{tot}}",
+      "role": "Fig. 2b content: cumulative irreversible work upper-bounds accumulated QID; relaxation term non-negative by monotonicity of relative entropy under the CPTP map with invariant Gibbs state.",
+      "derived_from": [
+        "EQC001 (Gibbs invariance)",
+        "EQC009",
+        "data-processing inequality for quantum relative entropy"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (14)-(15), S68-S71"
+        },
+        {
+          "id": "EQC010_monotonicity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "S(E(rho)||rho_eq) <= S(rho||rho_eq) for the collisional map on random states (verify_formulas.py::check_relax_nonneg)"
+        }
+      ],
+      "numerical_form": "W_relax accumulated from relative entropies of binned states vs instantaneous Gibbs states; W_irr_tot = sum(chi_d + beta*W_relax).",
+      "code_refs": [
+        "scripts/qrc_engine.py::relaxation_work"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "BKM geometric expansion and analytic capacities",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (17) / SI Eqs. (S10-S12, S38-S42)"
+        }
+      ],
+      "latex": "S(\\bar\\rho + \\lambda\\delta\\rho\\,\\|\\,\\bar\\rho) \\approx \\frac{\\lambda^2}{2} g^{\\bar\\rho}_{\\mathrm{BKM}}(\\delta\\rho,\\delta\\rho),\\quad g_{\\mathrm{BKM}} = \\sum_{j,k} |(\\delta\\rho)_{jk}|^2 \\frac{\\ln p_j - \\ln p_k}{p_j - p_k};\\quad \\chi^{\\mathrm{m}} \\approx \\frac{\\lambda^2}{2}\\Big[\\beta\\sum_{j\\ne k} G(\\Delta E_{jk}) \\frac{p_k - p_j}{E_j - E_k} F_{jk} |\\langle j|H_1|k\\rangle|^2 + \\beta^2 P_{\\mathrm{th}}^2 \\sum_j G(0)\\, p_j |\\langle j|H_1 - \\langle H_1\\rangle_0|j\\rangle|^2\\Big]",
+      "role": "Analytical linear-response capacity used to explain the critical peak (Eq. 17); g_jk = (1-P_th)exp(-i Delta E_jk dt), F_jk = |1-g_jk|^2.",
+      "derived_from": [
+        "second-order relative-entropy expansion (S10-S12)",
+        "partial-fraction integral S39",
+        "history unrolling S30-S34"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (17), S41-S42"
+        },
+        {
+          "id": "EQC011_partial_fraction",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "integral of 1/((p_j+x)(p_k+x)) equals ln(p_j/p_k)/(p_j-p_k) (verify_formulas.py::check_bkm_integral)"
+        },
+        {
+          "id": "EQC011_quadratic",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "S(rho_bar + lambda*drho || rho_bar) matches (lambda^2/2) g_BKM to O(lambda^3) on random states (verify_formulas.py::check_bkm_quadratic)"
+        }
+      ],
+      "numerical_form": "Evaluated in the H0 eigenbasis with thermal populations; G estimated from the drive statistics.",
+      "code_refs": [
+        "scripts/verify_formulas.py::bkm_metric"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC012",
+      "title": "Dynamic accumulation factor and spectral resonance peak",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SI Eqs. (S43, S49, S52)"
+        }
+      ],
+      "latex": "G(\\Delta E_{jk}) \\approx \\frac{1}{\\sigma_s^2}\\Big|\\sum_{\\tau=0}^{\\infty} C_a(\\tau) g_{jk}^{\\tau}\\Big|^2,\\quad C_a(\\tau) \\approx \\sigma_s^2 \\cos(\\omega_s\\tau\\delta t) e^{-\\gamma_s\\tau\\delta t},\\quad G(\\omega_s) \\approx \\frac{\\sigma_s^2}{4(P_{\\mathrm{th}} + \\gamma_s\\delta t)^2}",
+      "role": "Frequency-selective filter of the input sequence; resonance Delta E_jk = omega_s explains the critical computational peak (Fig. S1a). With paper values (P_th ~= 0.095, gamma_s dt ~= 0.015, sigma_s^2 ~= 0.11): G(omega_s) ~= 2.3.",
+      "derived_from": [
+        "EQC011",
+        "linear projection estimator S45-S47",
+        "Wiener-Khinchin Lorentzian model S50"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "S43, S49, S52"
+        },
+        {
+          "id": "EQC012_peak_value",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "geometric-series resonance sum reproduces sigma_s^2/(4(P_th+gamma_s dt)^2) ~= 2.3 with paper constants (verify_formulas.py::check_g_peak)"
+        }
+      ],
+      "numerical_form": "G(omega) evaluated from the Lorentzian C_a and directly from binned sequence statistics (S43) for Fig. S1a.",
+      "code_refs": [
+        "scripts/run_figS1.py::g_factor_binned"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC013",
+      "title": "Reservoir architectures: disordered TFIM and augmented cluster model",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Main text, 'Quantum critical thermodynamics' (p. 7)"
+        }
+      ],
+      "latex": "H_0^{\\mathrm{TFIM}} = \\sum_{i>j} J_{ij}\\sigma^z_i\\sigma^z_j + h\\sum_i \\sigma^x_i,\\ h=1,\\ J_{ij}\\sim U[-J/2,J/2];\\quad H_0^{\\mathrm{cluster}} = -J_{zz}\\sum_i \\sigma^z_i\\sigma^z_{i+1} - h_x\\sum_i \\sigma^x_i + J_{zxz}\\sum_i \\sigma^z_{i-1}\\sigma^x_i\\sigma^z_{i+1},\\ J_{zz}=0.1,\\ J_{zxz}=(1-J_{zz})\\alpha,\\ h_x=(1-J_{zz})(1-\\alpha)",
+      "role": "The two reservoir Hamiltonians; TFIM has an ergodic-to-MBL crossover in J, the cluster model a symmetry-protected topological transition at alpha ~= 0.5. Boundary condition: open chain, fixed by the PBC duality symmetry argument and the Fig. S1c spectral fingerprint.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "main text p. 7 and Fig. 2 caption"
+        },
+        {
+          "id": "EQC013_gap_closing",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "cluster-model spectral gap minimizes near alpha = 0.5 at L = 6 (verify_formulas.py::check_cluster_gap)"
+        },
+        {
+          "id": "EQC013_boundary_condition",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Boundary condition resolved to OBC: under PBC the CZ-duality H(alpha)->H(1-alpha) makes all capacity curves exactly symmetric about alpha=0.5 (confirmed numerically, fig2_cluster_scan_pbc_symmetric.csv), contradicting the paper's asymmetric Fig. 2; OBC spectral widths 10.83/7.24 at alpha=0/1 and alpha=1 edge zero modes match Fig. S1c (verify_formulas.py::check_cluster_gap)"
+        }
+      ],
+      "numerical_form": "Dense 2^L x 2^L Pauli-string construction; cluster chain OPEN (paper convention, resolved empirically); TFIM fully connected.",
+      "code_refs": [
+        "scripts/qrc_engine.py::tfim_hamiltonian",
+        "scripts/qrc_engine.py::cluster_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC014",
+      "title": "Ridge readout and NMSE",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (2)-(3)"
+        }
+      ],
+      "latex": "\\mathbf{w}_{\\mathrm{opt}} = (\\mathbf{X}^T\\mathbf{X} + \\eta I)^{-1}\\mathbf{X}^T\\hat{\\mathbf{y}},\\quad \\mathrm{NMSE} = \\frac{\\|\\mathbf{y} - \\hat{\\mathbf{y}}\\|^2}{\\|\\hat{\\mathbf{y}}\\|^2}",
+      "role": "Macroscopic task benchmark (green dashed curves in Fig. 2a and Fig. S2c); eta = 1e-5; features = full Pauli-basis expectation values.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eqs. (2)-(3) and Fig. 2 caption"
+        }
+      ],
+      "numerical_form": "Standard ridge regression on training-window features; prediction target s_{n+h}.",
+      "code_refs": [
+        "scripts/qrc_engine.py::nmse_readout"
+      ],
+      "open_questions": [
+        "Whether a constant bias feature is included is not stated; assumed included."
+      ]
+    },
+    {
+      "id": "EQC015",
+      "title": "Markovian bound on coherent dissipation",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SI Eqs. (S57-S61)"
+        }
+      ],
+      "latex": "\\text{first-order Markov drive} \\Rightarrow \\rho^{\\mathrm{p}}_{s_{n+1}} = \\sum_{s_n} P(s_n|s_{n+1})\\rho^{\\mathrm{m}}_{s_n} \\Rightarrow \\mathcal{D}^{\\mathrm{q}} \\ge 0",
+      "role": "Negative coherent dissipation is only possible for non-Markovian drives (like Mackey-Glass); underlies the quantum-advantage claim of Fig. 2c.",
+      "derived_from": [
+        "convexity of the relative entropy of coherence applied to the causal mixture S57"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC015_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "S57-S61"
+        },
+        {
+          "id": "EQC015_convexity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "C(sum q_i rho_i) <= sum q_i C(rho_i) on random mixtures (verify_formulas.py::check_coherence_convexity)"
+        }
+      ],
+      "numerical_form": "Not used directly in code; interpretive bound for the sign of D_q.",
+      "code_refs": [],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.15070",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Radial oscillator eigenvalue and factor-two diagnostic",
+      "role": "Checks whether the spectrum used upstream of the plotted vacuum-energy formulas follows from the stated Klein-Gordon operator.",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "Eqs. (4)-(11), TeX labels KGCompleta, KDE, integer_energy"
+        }
+      ],
+      "latex": "\\left[-\\rho^{-1}\\partial_\\rho(\\rho\\partial_\\rho)+\\frac{l^2}{\\rho^2}+\\alpha^2\\rho^2\\right]R=\\lambda R,\\qquad \\lambda=2\\alpha(2n+|l|+1)",
+      "derived_from": [],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC001-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The radial operator follows directly from paper Eqs. (4)-(6)."
+        },
+        {
+          "id": "EQC001-GROUND",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For l=n=0, direct substitution of R=exp(-alpha*rho^2/2) gives lambda=2 alpha, not alpha."
+        },
+        {
+          "id": "EQC001-DIM",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Both lambda and alpha have mass dimension two."
+        }
+      ],
+      "numerical_form": "radial_ground_eigenvalue(alpha) = 2*alpha; the paper value alpha is retained only as a documented source discrepancy.",
+      "code_refs": [
+        "src/casimir_effective_mass.py::radial_ground_eigenvalue"
+      ],
+      "open_questions": [
+        "Paper Eq. (11) is inconsistent with the operator in Eqs. (4)-(6) by a factor of two."
+      ]
+    },
+    {
+      "id": "EQC002",
+      "title": "Dimensionless Landau-like boundary energy",
+      "role": "Defines the independently evaluated numerical object in paper Fig. 2(a), conditional on the paper's stated subtraction prescription.",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (25), TeX label LLS_ren"
+        }
+      ],
+      "latex": "\\mathcal E_L(m_0,\\alpha_0)\\equiv\\frac{8\\pi^2L^3E_L^{\\rm ren}}{A}=-\\alpha_0\\sum_{j=1}^{\\infty}\\int_0^{\\infty}\\frac{\\tau^{-3}e^{-m_0^2\\tau^2-j^2/\\tau^2}}{\\sinh(\\alpha_0\\tau^2)}\\,d\\tau",
+      "derived_from": [],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC002-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed from paper Eq. (25), including its dimensionless normalization."
+        },
+        {
+          "id": "EQC002-LIMIT",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "alpha0/sinh(alpha0*tau^2) tends to tau^-2 and recovers the standard massive Dirichlet result."
+        }
+      ],
+      "numerical_form": "Evaluate on u=log(tau), sum j with the Jacobi/Poisson identity, and integrate the smooth vector integrand with adaptive Gauss-Kronrod quadrature.",
+      "code_refs": [
+        "src/casimir_effective_mass.py::dimensionless_landau_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Dimensionless additional boundary energy",
+      "role": "Defines the independently evaluated numerical object in paper Fig. 2(b), conditional on the paper's stated subtraction prescription.",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (27), TeX label AC_ren"
+        }
+      ],
+      "latex": "\\mathcal E_c(m_0,\\alpha_0)\\equiv\\frac{8\\pi^2L^3E_c^{\\rm ren}}{A}=-2\\alpha_0\\sum_{j=1}^{\\infty}\\int_0^{\\infty}\\frac{\\tau^{-3}e^{-m_0^2\\tau^2-j^2/\\tau^2}}{\\sinh(\\alpha_0\\tau^2)(e^{\\alpha_0\\tau^2}-1)}\\,d\\tau",
+      "derived_from": [],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC003-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed from paper Eq. (27); alpha0 is used after tau is rescaled by L."
+        },
+        {
+          "id": "EQC003-DIM",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Only alpha0*tau^2 is dimensionless after the rescaling; the printed alpha*tau^2 in the first line is a notation typo."
+        }
+      ],
+      "numerical_form": "Use a stable reciprocal 4*alpha0*exp(-2*x)/[(1-exp(-2*x))*(1-exp(-x))], x=alpha0*tau^2, inside the log-tau quadrature.",
+      "code_refs": [
+        "src/casimir_effective_mass.py::dimensionless_correction_energy"
+      ],
+      "open_questions": [
+        "Paper Eqs. (18)-(19) print n starting at 1 in the second sum, whereas Eq. (26)'s closed-form denominator corresponds to n starting at 0."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "Independent positive Bessel-series representation",
+      "role": "Provides a numerically independent cross-check of both proper-time quadratures.",
+      "source_refs": [
+        {
+          "type": "derived_from_paper",
+          "value": "Independent expansion of paper Eqs. (25) and (27)"
+        }
+      ],
+      "latex": "\\mathcal E_L=-2\\alpha_0\\sum_{n\\ge0}\\sum_{j\\ge1}\\frac{\\sqrt{m_0^2+(2n+1)\\alpha_0}}{j}K_1\\!\\left(2j\\sqrt{m_0^2+(2n+1)\\alpha_0}\\right),\\quad \\mathcal E_c=-4\\alpha_0\\sum_{r\\ge2}\\left\\lfloor\\frac r2\\right\\rfloor\\sum_{j\\ge1}\\frac{\\sqrt{m_0^2+r\\alpha_0}}{j}K_1\\!\\left(2j\\sqrt{m_0^2+r\\alpha_0}\\right)",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC004-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Starts from the two displayed paper integrals."
+        },
+        {
+          "id": "EQC004-SERIES",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Uses 1/sinh(x)=2 sum exp(-(2n+1)x), the product-series multiplicity floor(r/2), and the standard K1 integral."
+        }
+      ],
+      "numerical_form": "Directly sum positive K1 terms at selected alpha0,m0 points and compare against the Poisson-resummed quadrature.",
+      "code_refs": [
+        "src/casimir_effective_mass.py::landau_energy_bessel",
+        "src/casimir_effective_mass.py::correction_energy_bessel"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Correct small-coupling limits",
+      "role": "Checks the standard Casimir limit of the Landau sector and the singular power of the additional sector.",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "Eqs. (32)-(36), TeX labels alphaS through alphaS_C"
+        }
+      ],
+      "latex": "\\mathcal E_L\\xrightarrow[\\alpha_0\\to0]{}-\\sum_{j\\ge1}\\frac{m_0^2}{j^2}K_2(2jm_0),\\qquad \\mathcal E_c\\sim-\\frac{2}{\\alpha_0}\\sum_{j\\ge1}\\frac{m_0^3}{j^3}K_3(2jm_0)",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC005-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper gives the correct K2 expression for the Landau term but prints K2 rather than K3 for the additional term."
+        },
+        {
+          "id": "EQC005-POWER",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The additional denominator is order (alpha0*tau^2)^2, leaving a tau^-7 integral and therefore K3."
+        },
+        {
+          "id": "EQC005-MASSLESS",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For m0=0, E_L dimensionless tends to -pi^4/180 and E_c tends to -2*zeta(6)/alpha0."
+        }
+      ],
+      "numerical_form": "standard_landau_limit(m0) and correction_small_alpha_leading(alpha0,m0)",
+      "code_refs": [
+        "src/casimir_effective_mass.py::standard_landau_limit",
+        "src/casimir_effective_mass.py::correction_small_alpha_leading"
+      ],
+      "open_questions": [
+        "Paper Eq. (36) has the wrong Bessel order and power of m0/j."
+      ]
+    },
+    {
+      "id": "EQC006",
+      "title": "Correct strong-coupling asymptotic",
+      "role": "Verifies exponential suppression and the correct square-root exponent for both energy sectors.",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (31), TeX label alphaB"
+        }
+      ],
+      "latex": "\\mathcal I_f(j)\\sim \\frac{\\sqrt\\pi\\,f\\alpha_0\\,[m_0^2+f\\alpha_0]^{1/4}}{j^{3/2}}\\exp\\!\\left[-2j\\sqrt{m_0^2+f\\alpha_0}\\right],\\quad f=1,2",
+      "derived_from": [
+        "EQC004"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC006-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Paper Eq. (31) correctly reaches a K1 expression before printing an inconsistent final asymptotic."
+        },
+        {
+          "id": "EQC006-K1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Applying K1(z)~sqrt(pi/(2z))*exp(-z) gives a square-root alpha0 exponent and alpha0^(5/4) leading power."
+        }
+      ],
+      "numerical_form": "strong_coupling_leading(alpha0,m0,f,j=1)",
+      "code_refs": [
+        "src/casimir_effective_mass.py::strong_coupling_leading"
+      ],
+      "open_questions": [
+        "Paper Eq. (31)'s final line incorrectly changes exp(-2*j*sqrt(f*alpha0)) into exp(-2*j*f*alpha0)."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Total-to-Landau energy ratio",
+      "role": "Defines paper Fig. 3 and makes the additional sector's relative contribution explicit.",
+      "source_refs": [
+        {
+          "type": "paper_equation_and_figure",
+          "value": "Eq. (28) and paper Fig. 3"
+        }
+      ],
+      "latex": "\\frac{E_0^{\\rm ren}}{E_L^{\\rm ren}}=1+\\frac{\\mathcal E_c}{\\mathcal E_L}",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "EQC007-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The ratio follows from E0=EL+Ec and is the observable named in the Fig. 3 caption."
+        },
+        {
+          "id": "EQC007-LIMIT",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The f=2 sector is more strongly suppressed, so the ratio tends to one at large alpha0."
+        }
+      ],
+      "numerical_form": "ratio = 1 + correction_energy / landau_energy, evaluated from two independently generated arrays.",
+      "code_refs": [
+        "src/casimir_effective_mass.py::energy_ratio"
+      ],
+      "open_questions": []
+    }
+  ]
+}

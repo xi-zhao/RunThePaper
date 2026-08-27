@@ -11,8 +11,8 @@ from pathlib import Path
 from typing import Any
 
 
-WORKSPACE = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(WORKSPACE / "code/src"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from dtc_feature_sim import endpoint_mutual_information, normalize_compute_backend  # noqa: E402
 

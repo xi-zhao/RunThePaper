@@ -1,44 +1,21 @@
-# 受激霍金辐射反作用：论文复现说明
+# Backreaction of stimulated Hawking radiation in an optical analogue：科学复现讲义
 
-## 结果
+## 结论
 
-本案例没有使用作者公开代码，复现了 Nature 论文正文中可数值复现的
-Fig. 2、Fig. 4 和 Fig. 5。Fig. 2 重建共动色散以及七个相位匹配标记；
-Fig. 4 在只拟合红色实验点之后，独立计算六条 Eq. (D.1) 理论谱；Fig. 5
-重新得到热斜率比 `1.0211`，与论文报告的 `1.02` 一致。
+The 28-item audit identifies 13 theoretical targets, 13 experimental reference items, and two schematics; theoretical coverage is 13/13 and lifecycle is partial.
 
-## 关键物理修正
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-Fig. 2 中画出的泵浦态不是入射的 800 nm 载频，而是拉曼红移后、位于共动
-色散局部极小值处的载频。区分这两个物理状态后，NRR、霍金伙伴和反作用三个
-紫外根分别为 `233.383`、`233.011` 和 `232.643 nm`。
+## 我们复现的是什么
 
-## 数值与像素验证
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-Fig. 4 的六条曲线拟合过程中没有读取论文黑色理论曲线；参数冻结后再做盲测，
-平均 NRMSE 为 `0.0653`，相关系数为 `0.9810`。Fig. 2、4、5 的像素注册
-SSIM 分别是 `0.8238`、`0.7348`、`0.8201`。像素指标只用于验证排版和结构，
-不能替代物理与数据来源检查。
-
-## 公开边界
-
-公开包只包含物理模型、冻结后的拟合参数、方程生成曲线、机器检查和有限对照板；
-不包含论文 PDF、独立原图、原始矢量坐标、数字化点集或内部试错记录。因此公开版
-Fig. 4 只画生成的理论曲线，公开版 Fig. 5 只画拟合直线，不重新分发论文点集。
-
-Fig. 1 是概念示意图；Fig. 3 是实验采集图，由于作者没有公开原始光子计数，
-不能独立再生成。本案例的结论是“数值特征复现”，不是作者原始数据级精确复现。
+当前权威维度：`artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=failed, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-pip install torch
-cd cases/10.1038-s41586-026-10720-3/code
-python scripts/run_main_figures.py
-```
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-物理推导见 [`../docs/DERIVATION.md`](../docs/DERIVATION.md)，证据边界见
-[`../docs/SIMILARITY_SCORECARD.md`](../docs/SIMILARITY_SCORECARD.md)。
+## 论文审查边界
+
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：The measured fibre dispersion coefficients, fitted frame corrections, six Fig. 4 parameter tables, raw spectra, raw fluxes, and measured pulse states are unavailable. The 47-unit paper profile is code-ready; a 17-unit CPU smoke profile completed with isolated file-access attestation. The formula-only PCF surrogate does not recover the printed 1551 nm horizon, so it is recorded as a missing-parameter/model-mismatch boundary rather than a paper error. Historical vector-trace fits, marker regressions, pixel scores, and UPPE outputs based on the traced dispersion are retained only as comparison history and are ineligible as scientific evidence. No author scientific code, author numerical arrays, digitized curves, or source pixels enter the formula-only numerical runner. The public projection and publish manifest have not yet been refreshed from this calibration state.

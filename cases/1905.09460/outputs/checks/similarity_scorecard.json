@@ -1,61 +1,1265 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "1905.09460",
-  "overall_score": 84.29,
-  "source_score_model": "rra_similarity_v1_with_terminal_pixel_closeness",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 4,
-    "target_status_counts": {
-      "evidence_compared": 2,
-      "partially_reproduced": 2
-    },
-    "published_generated_datasets": 8,
-    "published_generated_figures": 4
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "score_model": "rra_similarity_v1_with_terminal_pixel_closeness",
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "FIG001",
-      "meaning": "Coincident PT, localization, and topological winding transition of the periodic AAH chain.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Figure 1 spectra, PT breaking, and localization",
+      "weight": 7.0,
+      "figure_refs": [
+        "Main Fig. 1"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The four spectra, PT-breaking onset, and min/max IPR transition are independently generated; direct winding and E_B invariance are separately audited by T005 and T007.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 28.21,
+          "reason": "The final terminal full-canvas SSIM is 0.805955, mapped directly to the 35-point pixel-closeness component; h_c equals log(2) exactly.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All seven atomic spectrum/PT/IPR items in this target are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/main_figure_1_scan.csv",
+        "outputs/data/main_figure_1_spectra.csv",
+        "outputs/figures/main_figure_1_topological_transition.png",
+        "outputs/checks/scientific_validation.json",
+        "outputs/checks/pixel_ssim.json",
+        "docs/comparisons/main_figure_1_pixel_difference.png"
+      ],
+      "remaining_gap": "The direct winding series and E_B-invariance claim are intentionally separated into uncovered T005 and T007.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ002",
+          "EQ003",
+          "EQ005"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T001_FULL"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_FULL"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T001_threshold",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T001_pt_breaking",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T001_localization",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "FIG001_A_H0",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_A_H0"
+          },
+          {
+            "panel_id": "FIG001_A_H066",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_A_H066"
+          },
+          {
+            "panel_id": "FIG001_A_H074",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_A_H074"
+          },
+          {
+            "panel_id": "FIG001_A_H100",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_A_H100"
+          },
+          {
+            "panel_id": "FIG001_B_MAX_ABS_IM_E",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_B_MAX_ABS_IM_E"
+          },
+          {
+            "panel_id": "FIG001_C_MAX_IPR",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_C_MAX_IPR"
+          },
+          {
+            "panel_id": "FIG001_C_MIN_IPR",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#FIG001_C_MIN_IPR"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "score_cap": 90.0,
+      "cap_reason": "The source provides a figure rather than tabulated author data; the analytic-reference evidence tier caps the score at 90.",
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 93.21,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG003",
-      "meaning": "Laser spectrum broadens across the non-Hermitian transition near Delta_FM=2V0.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_subset"
+      "label": "Main Figure 3 mode-locked-laser transition",
+      "weight": 5.0,
+      "figure_refs": [
+        "Main Fig. 3"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 44.0,
+          "reason": "The localized low-modulation spectra, abrupt broadening near Delta_FM=2V0, post-transition broad profiles, and bandwidth spike are reproduced by the printed equations.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 29.49,
+          "reason": "The final terminal full-canvas SSIM is 0.842656, mapped directly to the 35-point pixel-closeness component; neutral-growth residual stays below 2.8e-11.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "All five items have only stationary-proxy evidence, not the printed transient method.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure.json",
+        "outputs/runs/1905.09460-implementation-closure-v2/run_attestation.json",
+        "raw/paper.pdf"
+      ],
+      "remaining_gap": "Obtain the missing transient protocol from the authors or pre-register a sensitivity ensemble and report only the invariant feature envelope.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "formula_or_method_error",
+        "parameter_match": "paper_subset",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ006",
+          "EQ007"
+        ],
+        "artifact_stage": "exploratory",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T002_FULL"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_FULL"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_definition_unavailable",
+            "statement": "The coupled transient equations are now implemented, but the publication does not define enough of the transient protocol to identify one paper-exact bandwidth curve.",
+            "evidence": [
+              "raw/paper.pdf",
+              "config/implementation_closure.json",
+              "src/implementation_closure.py"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The dimensionless gamma_parallel convention, random-noise law and seed, integration duration, steady window, mode cutoff, etalon phase, bandwidth estimator, and an unambiguous alpha value are not jointly published.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "NUMERICAL_METHODS.md",
+              "config/implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The replacement campaign integrates both field and gain deterministically and completes a reduced four-depth transient sweep; no remaining code defect was found in this route.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The focused test proves deterministic joint evolution of field and gain with normalized nonzero output.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The runner implements -i H(g) psi and gamma_parallel[g0-g(1+I)] directly from Eqs. (8)-(9), rather than the former stationary proxy.",
+                "evidence": [
+                  "src/implementation_closure.py::transient_laser_spectrum"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The frozen reduced transient campaign completed and emitted all five T002 item results.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "A full main-paper and embedded-supplement audit enumerated every transient control that is absent from the publication.",
+                "evidence": [
+                  "raw/paper.pdf",
+                  "NUMERICAL_METHODS.md",
+                  "config/implementation_closure.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The reduced transient protocol runs locally; more compute cannot supply unpublished protocol choices.",
+              "evidence": [
+                "outputs/checks/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Five transient laser items have runnable code but no unique paper-exact input contract.",
+            "items": [
+              "T002",
+              "FIG003_A_BANDWIDTH",
+              "FIG003_B_D010",
+              "FIG003_B_D020",
+              "FIG003_B_D030",
+              "FIG003_B_D035"
+            ],
+            "completion": "0/5 items scientifically covered; 5/5 implementation-attested"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the missing transient protocol from the authors or pre-register a sensitivity ensemble and report only the invariant feature envelope.",
+            "expected_resolution": "A unique protocol would permit paper-scale execution; otherwise the terminal publication boundary remains explicit.",
+            "evidence_to_produce": [
+              "outputs/checks/transient_protocol_resolution.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T002_transient_equations_implemented",
+          "tier": "numeric",
+          "essential": false,
+          "status": "passed",
+          "evidence": "outputs/checks/implementation_closure.json",
+          "claim": "The closure runner directly integrates the coupled field and gain equations."
+        },
+        {
+          "assertion_id": "T002_unique_publication_protocol",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "NUMERICAL_METHODS.md",
+          "claim": "The publication uniquely specifies every control needed to regenerate one transient bandwidth curve."
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "FIG003_A_BANDWIDTH",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG003_A_BANDWIDTH"
+          },
+          {
+            "panel_id": "FIG003_B_D010",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG003_B_D010"
+          },
+          {
+            "panel_id": "FIG003_B_D020",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG003_B_D020"
+          },
+          {
+            "panel_id": "FIG003_B_D030",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG003_B_D030"
+          },
+          {
+            "panel_id": "FIG003_B_D035",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#FIG003_B_D035"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_cap": 0.0,
+      "cap_reason": "The stationary proxy is not a valid artifact for the paper's transient Eqs. (8)-(9).",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 80.0,
+      "component_total": 73.49,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
-      "figure_id": "SUPP001",
-      "meaning": "Open-boundary spectra, IPR transition, and edge-localized state counts.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Supplement Figure S1 open-chain spectra and localization",
+      "weight": 7.0,
+      "figure_refs": [
+        "Supplement Fig. S1"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "reason": "The four open-chain spectra, max |Im(E)|, and min/max IPR series are independently generated; edge counts are separately audited by T006.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 28.46,
+          "reason": "The final terminal full-canvas SSIM is 0.813283, mapped directly to the 35-point pixel-closeness component; late-h edge counts remain classifier-dependent.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All seven atomic spectrum/PT/IPR items in this target are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/supp_figure_1_scan.csv",
+        "outputs/data/supp_figure_1_spectra.csv",
+        "outputs/figures/supp_figure_1_edge_effects.png",
+        "outputs/checks/scientific_validation.json",
+        "outputs/checks/pixel_ssim.json",
+        "docs/comparisons/supp_figure_1_pixel_difference.png"
+      ],
+      "remaining_gap": "The N_L/N_R classifier-dependent curves are intentionally separated into uncovered T006.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "visual_feature_contract",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ003",
+          "EQ005"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T003_FULL"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_FULL"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T003_open_boundary_pt_breaking",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T003_bulk_localization",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "SUPP001_A_H0",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_A_H0"
+          },
+          {
+            "panel_id": "SUPP001_A_H066",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_A_H066"
+          },
+          {
+            "panel_id": "SUPP001_A_H074",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_A_H074"
+          },
+          {
+            "panel_id": "SUPP001_A_H100",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_A_H100"
+          },
+          {
+            "panel_id": "SUPP001_B_MAX_ABS_IM_E",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_B_MAX_ABS_IM_E"
+          },
+          {
+            "panel_id": "SUPP001_C_MAX_IPR",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_C_MAX_IPR"
+          },
+          {
+            "panel_id": "SUPP001_C_MIN_IPR",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP001_C_MIN_IPR"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "score_cap": 80.0,
+      "cap_reason": "The missing source classifier limits the edge-count panel to a visual feature contract.",
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 80.0,
+      "component_total": 88.46,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T004",
-      "figure_id": "SUPP002",
-      "meaning": "Exact and low-reflectance etalon transmission amplitude.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Supplement Figure S2 etalon transmission",
+      "weight": 4.0,
+      "figure_refs": [
+        "Supplement Fig. S2"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "Exact and first-order real and imaginary transmission curves have the correct period, amplitude, phase, and four displayed free-spectral ranges.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 28.21,
+          "reason": "The final terminal full-canvas SSIM is 0.806125, mapped directly to the 35-point pixel-closeness component; the independent reflectance is 0.145319.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "All four exact/first-order real/imaginary series are covered.",
+          "max_score": 15.0
+        }
+      },
+      "evidence": [
+        "outputs/data/supp_figure_2_etalon.csv",
+        "outputs/figures/supp_figure_2_etalon_transmission.png",
+        "outputs/checks/scientific_validation.json",
+        "outputs/checks/pixel_ssim.json",
+        "docs/comparisons/supp_figure_2_pixel_difference.png"
+      ],
+      "remaining_gap": "Only renderer font, margins, and anti-aliasing differ; the exact and approximate curves use the printed formulas and parameters.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "method_validation",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ008"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T004_FULL"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T004_FULL"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T004_fresnel_reflectance",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T004_first_order_accuracy",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "SUPP002_REAL_EXACT",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP002_REAL_EXACT"
+          },
+          {
+            "panel_id": "SUPP002_REAL_APPROX",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP002_REAL_APPROX"
+          },
+          {
+            "panel_id": "SUPP002_IMAG_EXACT",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP002_IMAG_EXACT"
+          },
+          {
+            "panel_id": "SUPP002_IMAG_APPROX",
+            "status": "reproduced",
+            "evidence": "figure_coverage.json#SUPP002_IMAG_APPROX"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "score_cap": 90.0,
+      "cap_reason": "The source provides a figure rather than tabulated author data; the analytic-reference evidence tier caps the score at 90.",
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 93.21,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T005",
+      "label": "Main Figure 1(d) direct winding methods",
+      "figure_refs": [
+        "Main Fig. 1(d)"
+      ],
+      "weight": 2.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "max_score": 50.0,
+          "reason": "Direct Eq. (5) and independently constructed Supplement Eq. (S-12) produce the same integer winding away from the transition."
+        },
+        "numeric_closeness": {
+          "score": 34.0,
+          "max_score": 35.0,
+          "reason": "Two independently constructed formula routes agree within the frozen numerical tolerance."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "Both atomic winding routes are independently executed and agree at both declared phases."
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure.json",
+        "outputs/runs/1905.09460-implementation-closure-v2/run_attestation.json"
+      ],
+      "remaining_gap": "The scientific feature is reproduced at reduced Fibonacci size; an L=610 rerun would improve paper-scale fidelity but is not needed to establish this formula result.",
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQ004",
+          "EQ005"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "paper_subset",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This target is an equation-level numerical check without a separately registered render.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "pixel_alternative_evidence": [
+          "outputs/checks/implementation_closure.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "Direct finite-size Eq. (5) and independently constructed Eq. (S-12) agree in the attested reduced run; only paper-scale fidelity remains open.",
+            "evidence": [
+              "src/implementation_closure.py",
+              "outputs/checks/implementation_closure.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The former method substitution is repaired; the remaining gap is an optional L=610 fidelity upgrade, not missing scientific code.",
+            "confidence": "confirmed",
+            "evidence": [
+              "tests/test_implementation_closure.py",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Two separately constructed matrices produce matching determinant windings away from the transition.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The Eq. (5) route evaluates H(theta/L,h)-E_B determinants directly.",
+                "evidence": [
+                  "src/implementation_closure.py::direct_winding_eq5"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The independently constructed Eq. (S-12) route agrees with Eq. (5).",
+                "evidence": [
+                  "src/implementation_closure.py::direct_winding_s12"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated closure campaign completed both T005 paths.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "More CPU/GPU cannot by itself repair a method substitution, missing target, or unpublished observable definition.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "NUMERICAL_METHODS.md"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Both winding items are scientifically reproduced at reduced Fibonacci size.",
+            "items": [
+              "FIG001_D_W_EQ5",
+              "FIG001_D_W_EQS12"
+            ],
+            "completion": "2/2 items scientifically covered; paper-scale fidelity upgrade remains optional"
+          },
+          "next_discriminating_test": {
+            "action": "Implement direct Eq. (5) using slogdet/phase unwrapping of H(theta/L,h)-E_B and direct Eq. (S-12) using H2; freeze two independent columns at the printed L=610 and E_B=0, then test convergence in theta resolution and L.",
+            "expected_resolution": "Direct Eq. (5) and Eq. (S-12) agree away from h_c and converge with theta resolution and L without selecting numerical inputs from source pixels.",
+            "evidence_to_produce": [
+              "outputs/runs/1905.09460-focused-repair/run_attestation.json"
+            ]
+          }
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "FIG001_D_W_EQ5",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure.json"
+          },
+          {
+            "panel_id": "FIG001_D_W_EQS12",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T005_direct_winding_route_agreement",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/implementation_closure.json",
+          "claim": "Direct Eq. (5) and independently constructed Supplement Eq. (S-12) produce the same integer winding away from the transition."
+        }
+      ],
+      "score_cap": 80.0,
+      "cap_reason": "Reduced-scale formula evidence is accepted with a disclosed fidelity cap.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "component_total": 97.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0
+    },
+    {
+      "target_id": "T006",
+      "label": "Supplement Figure S1(d) left/right edge-state counts",
+      "figure_refs": [
+        "Supplement Fig. S1(d)"
+      ],
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered partition contributes zero through the reproduction-item measure.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "max_score": 50.0,
+          "reason": "The paper publishes N_L/N_R curves without defining an edge-state classifier; the current 12-site/55%-weight rule matches (0,3) at h=0 but substantially undercounts the source trend near h_c."
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "max_score": 35.0,
+          "reason": "The paper publishes N_L/N_R curves without defining an edge-state classifier; the current 12-site/55%-weight rule matches (0,3) at h=0 but substantially undercounts the source trend near h_c."
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "max_score": 15.0,
+          "reason": "Enumerated but not backed by a valid paper-exact artifact."
+        }
+      },
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "Without pixel-tuning, compare localization-center/IPR, boundary overlap, spectral-branch continuity, and biorthogonal versus right-state classifiers; test window/threshold stability and retain paper-exact status only if the paper uniquely determines the count.",
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": false,
+        "data_backed": false,
+        "failure_type": "formula_or_method_error",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ003",
+          "EQ005"
+        ],
+        "formula_gate": "reconstructed",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "paper_subset",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No valid paper-exact artifact exists for this atomic partition.",
+        "reference_comparison": "not_available",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_definition_unavailable",
+            "statement": "Multiple edge-count classifiers are now executable, but the publication does not define which classifier yields N_L and N_R.",
+            "evidence": [
+              "raw/paper.pdf",
+              "config/implementation_closure.json",
+              "outputs/checks/implementation_closure.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "No edge-state definition, left/right assignment rule, localization threshold, or finite-size tie-breaking rule is published.",
+            "confidence": "confirmed",
+            "evidence": [
+              "raw/paper.pdf",
+              "NUMERICAL_METHODS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The candidate matrix exposes the ambiguity instead of silently selecting one reproduction-authored rule.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The closure campaign emits both boundary-overlap and center/IPR candidates across predeclared windows and thresholds.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "All candidate rules and the missing-input schema are frozen in JSON rather than selected from source pixels.",
+                "evidence": [
+                  "config/implementation_closure.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The reduced classifier matrix completed for both N_L and N_R items.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "All candidate definitions run locally; more compute cannot determine the unpublished observable semantics.",
+              "evidence": [
+                "outputs/checks/implementation_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Two edge-count items have parameterized runnable code and a terminal input boundary.",
+            "items": [
+              "T006",
+              "SUPP001_D_NL",
+              "SUPP001_D_NR"
+            ],
+            "completion": "0/2 items scientifically covered; 2/2 implementation-attested"
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the authors' edge-state classifier or publish the full predeclared classifier sensitivity matrix without claiming one paper-exact curve.",
+            "expected_resolution": "A published semantic definition would select one path; otherwise the item remains transparently input-blocked.",
+            "evidence_to_produce": [
+              "outputs/checks/edge_classifier_resolution.json"
+            ]
+          }
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "SUPP001_D_NL",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#SUPP001_D_NL"
+          },
+          {
+            "panel_id": "SUPP001_D_NR",
+            "status": "not_reproduced",
+            "evidence": "figure_coverage.json#SUPP001_D_NR"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t006_paper_exact_method",
+          "tier": "numeric",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "figure_coverage.json",
+          "claim": "The atomic scientific object is generated by the method attributed in the paper."
+        }
+      ],
+      "score_cap": 0.0,
+      "cap_reason": "No valid paper-exact artifact exists.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 60.0
+    },
+    {
+      "target_id": "T007",
+      "label": "Winding invariance under allowed base-energy choices",
+      "figure_refs": [
+        "Main Fig. 1 caption and Supplement S.2"
+      ],
+      "weight": 1.0,
+      "score_aggregation": "included",
+      "components": {
+        "feature_match": {
+          "score": 47.0,
+          "max_score": 50.0,
+          "reason": "The direct winding remains invariant over the predeclared set of independently generated central-gap base energies."
+        },
+        "numeric_closeness": {
+          "score": 33.0,
+          "max_score": 35.0,
+          "reason": "Two independently constructed formula routes agree within the frozen numerical tolerance."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "The complete no-display claim is tested over three independently gap-derived base energies."
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure.json",
+        "outputs/runs/1905.09460-implementation-closure-v2/run_attestation.json"
+      ],
+      "remaining_gap": "The scientific feature is reproduced at reduced Fibonacci size; an L=610 rerun would improve paper-scale fidelity but is not needed to establish this formula result.",
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQ004",
+          "EQ005"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "main_claim",
+        "parameter_match": "paper_subset",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This target is an equation-level numerical check without a separately registered render.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "pixel_alternative_evidence": [
+          "outputs/checks/implementation_closure.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The E_B-parameterized direct winding is invariant over three independently gap-derived base energies in the attested reduced run; only paper-scale fidelity remains open.",
+            "evidence": [
+              "src/implementation_closure.py",
+              "outputs/checks/implementation_closure.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The missing executable path is repaired; the remaining gap is an optional paper-scale convergence upgrade.",
+            "confidence": "confirmed",
+            "evidence": [
+              "tests/test_implementation_closure.py",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Base energies are selected from independently generated spectral gaps and passed explicitly into direct Eq. (5).",
+            "checks": [
+              {
+                "kind": "provenance_audit",
+                "result": "passed",
+                "statement": "The E_B set comes only from generated spectra, never source pixels or author arrays.",
+                "evidence": [
+                  "src/implementation_closure.py::_central_gap_midpoints"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated sweep emitted invariant windings for every declared E_B.",
+                "evidence": [
+                  "outputs/checks/implementation_closure.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "More CPU/GPU cannot by itself repair a method substitution, missing target, or unpublished observable definition.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "NUMERICAL_METHODS.md"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The no-display invariance claim is scientifically reproduced at reduced Fibonacci size.",
+            "items": [
+              "CLM_WINDING_EB_INVARIANCE"
+            ],
+            "completion": "1/1 item scientifically covered; paper-scale fidelity upgrade remains optional"
+          },
+          "next_discriminating_test": {
+            "action": "Generate the h=0 spectrum independently, predeclare several E_B values lying in allowed spectral gaps, evaluate direct Eq. (5) for each value, and verify whether the integer winding remains unchanged across the declared set.",
+            "expected_resolution": "The dedicated sweep either confirms E_B invariance over the predeclared admissible set or records a reproducible counterexample to the paper claim.",
+            "evidence_to_produce": [
+              "outputs/runs/1905.09460-focused-repair/run_attestation.json"
+            ]
+          }
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "CLM_WINDING_EB_INVARIANCE",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T007_base_energy_invariance",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/implementation_closure.json",
+          "claim": "The direct winding remains invariant over the predeclared set of independently generated central-gap base energies."
+        }
+      ],
+      "score_cap": 80.0,
+      "cap_reason": "Reduced-scale formula evidence is accepted with a disclosed fidelity cap.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "component_total": 95.0,
+      "score": 80.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0
     }
   ],
-  "source_scorecard_sha256": "e0aa0d9df06f228d00e57d6d05e49e1f08649eb6250b2e6320cdd5333af80e73"
+  "overall_score": 68.85,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 7,
+    "critical_items": 4,
+    "artifact_pass_rate": 0.71,
+    "data_backed_rate": 0.86,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "none": 5,
+      "formula_or_method_error": 2
+    },
+    "parameter_match_counts": {
+      "paper_exact": 3,
+      "paper_subset": 4
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 4,
+      "visual_feature_contract": 2,
+      "not_available": 1
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 6,
+      "unknown": 1
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 6,
+      "unknown": 1
+    },
+    "formula_gate_counts": {
+      "verified": 6,
+      "reconstructed": 1
+    },
+    "paper_level_role_counts": {
+      "main_claim": 4,
+      "supporting": 2,
+      "method_validation": 1
+    },
+    "physics_status_counts": {
+      "passed": 5,
+      "pending": 2
+    },
+    "physics_assertion_status_counts": {
+      "passed": 10,
+      "blocked": 2
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T001",
+      "T003",
+      "T004"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T002",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T007"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T006"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 3,
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 3,
+      "terminal_blocker": 2,
+      "react_loop_required": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T002",
+      "T005",
+      "T006",
+      "T007"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T002",
+      "T006"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T005",
+      "T007"
+    ],
+    "direct_cause_counts": {
+      "scientific_definition_unavailable": 2,
+      "evidence_chain_incomplete": 2
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 2,
+      "review_or_evidence_process_gap": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 4
+    }
+  },
+  "status": "passed",
+  "summary": "Whole-paper atomic audit: 28 eligible items, 21 scientifically reproduced and 7 objectively blocked by publication underspecification."
 }

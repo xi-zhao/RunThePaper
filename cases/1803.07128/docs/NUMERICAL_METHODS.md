@@ -6,6 +6,7 @@
 | T002 | six SVC decisions | 121×121 render grid; 50/150 and 500/100 splits | accuracy and capacity checks | benchmark metadata reconstructed |
 | T003 | real two-mode Fock features | 14 even terms/mode; 1/500/5000 epochs | final train=1, held-out <1 | benchmark/cutoff reconstructed |
 | T004 | four-block CV circuit; sector-factorized paper-scale variant | accepted cutoff 8 plus code-ready cutoffs through 32; 32 params; 5000×5 Adam; three seeds | dense-vs-sector parity, retained mass, cutoff-map convergence, accuracy and loss reduction | reduced result; paper-scale code ready; missing training metadata |
+| T005 | Appendix theorem and counterexamples | 6 single/multi-mode phases; cutoffs through 120; 64 binary labels | Vandermonde rank, Fock-vs-analytic Gram parity, exact periodic/affine counterexamples | analytic target; no paper fit parameters |
 
 ## Efficiency
 
@@ -15,3 +16,5 @@
 - The accepted cutoff-8 feature run remains a local CPU task. The cutoff-32 convergence
   campaign uses fixed-photon sectors and tensor-factorized local gates, and is routed to
   the user's A100 one condition at a time.
+- T005 is a no-render sub-second analytic run; its cutoffs and tolerances are
+  independent convergence controls rather than values inferred from a figure.

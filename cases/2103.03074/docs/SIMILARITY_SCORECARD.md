@@ -27,3 +27,15 @@ big-batch 方法的统计特征已经清楚出现，但本地复现规模是 18 
 | Fig. 2 depth-20 XEB | true | main_claim | reduced_scale | true | true | insufficient_compute |
 | Fig. 5 depth-14 XEB | true | main_claim | reduced_scale | true | true | insufficient_compute |
 | Conditional probability method | false | method_validation | reduced_scale | true | true | insufficient_compute |
+
+## Author closure v6 (fresh review requested)
+
+The table above is the historical 18-qubit feature score and is not the final
+scientific disposition.  The current author baseline covers all 17 targets
+with exact Dryad circuit ingestion, analytic rederivations, a bounded
+paper-scale tensor-network attempt, one generic streaming full-state/sampling
+runner, a local complex64 benchmark, and an attested minimal-input run.  It
+deliberately does not promote reduced smoke evidence to paper-scale coverage or
+assign paper-error verdicts.  The machine-readable current evidence is
+`outputs/checks/similarity_scorecard.json` plus
+`outputs/data/scientific_closure/T001.json` through `T017.json`.

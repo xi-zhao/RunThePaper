@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "paper_id": "1711.03528",
+  "cards": [
+    {
+      "id": "PXP001",
+      "title": "PXP Hamiltonian",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "PXP Hamiltonian"
+        }
+      ],
+      "latex": "H=sum_i P_i X_{i+1} P_{i+2}",
+      "role": "Defines constrained Rydberg blockade Hamiltonian.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP001_dimension",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "PBC/OBC constrained-basis dimensions match Fibonacci counts."
+        }
+      ],
+      "numerical_form": "Defines constrained Rydberg blockade Hamiltonian.",
+      "code_refs": [
+        "src/pxp_scars.py::build_basis",
+        "src/pxp_scars.py::build_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PXP002",
+      "title": "Z2 product state",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Z2 product state"
+        }
+      ],
+      "latex": "|Z2>=|bullet circle bullet circle ...>",
+      "role": "Defines the special initial density-wave state.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP002_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines the special initial density-wave state.",
+      "code_refs": [
+        "src/pxp_scars.py::pattern_state",
+        "src/pxp_scars.py::periodic_density_wave_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PXP003",
+      "title": "Particle-hole symmetry",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Particle-hole symmetry"
+        }
+      ],
+      "latex": "P H + H P = 0",
+      "role": "Checks chiral particle-hole symmetry of the constrained Hamiltonian.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP003_anticommutator",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Measured anticommutator max absolute value is zero."
+        }
+      ],
+      "numerical_form": "Checks chiral particle-hole symmetry of the constrained Hamiltonian.",
+      "code_refs": [
+        "src/pxp_scars.py::parity_values",
+        "src/pxp_scars.py::make_formula_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PXP004",
+      "title": "Forward scattering approximation",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Forward scattering approximation"
+        }
+      ],
+      "latex": "H=H_+ + H_-; H_FSA=sum_n beta_n(|n><n+1|+h.c.)",
+      "role": "Defines the FSA basis and tridiagonal effective Hamiltonian.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP004_tridiagonal",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Projected-minus-tridiagonal norm is near machine precision."
+        }
+      ],
+      "numerical_form": "Defines the FSA basis and tridiagonal effective Hamiltonian.",
+      "code_refs": [
+        "src/pxp_scars.py::build_hplus",
+        "src/pxp_scars.py::fsa_basis_and_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PXP005",
+      "title": "Entanglement and revival diagnostics",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Entanglement and revival diagnostics"
+        }
+      ],
+      "latex": "S_A=-Tr rho_A log rho_A; F(t)=|<Z2|psi(t)>|^2",
+      "role": "Defines dynamics diagnostics used by the reproduction.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP005_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines dynamics diagnostics used by the reproduction.",
+      "code_refs": [
+        "src/pxp_scars.py::entanglement_entropy",
+        "src/pxp_scars.py::make_dynamics_data"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "PXP006",
+      "title": "Level statistics",
+      "source_refs": [
+        {
+          "type": "derivation_trace",
+          "value": "Level statistics"
+        }
+      ],
+      "latex": "Adjacent gap ratio from spectrum spacings",
+      "role": "Defines level-statistics target.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "PXP006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Recorded in DERIVATION_TRACE.md and prior formula_verification.json."
+        },
+        {
+          "id": "PXP006_sanity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Existing case formula gate passed."
+        }
+      ],
+      "numerical_form": "Defines level-statistics target.",
+      "code_refs": [
+        "src/pxp_scars.py::make_level_statistics_data"
+      ],
+      "open_questions": []
+    }
+  ]
+}

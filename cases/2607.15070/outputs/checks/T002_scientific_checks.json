@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "target_id": "T002",
+  "status": "passed",
+  "generated_data_provenance": "independent_numerics",
+  "data_path": "outputs/data/fig3_energy_ratio.csv",
+  "data_sha256": "15990aa901c705fb179e2d542838a378b50e06362dd0d48649c4f97229db5883",
+  "paper_parameters": {
+    "m0_values": [
+      0.0,
+      0.5,
+      1.0,
+      1.5
+    ],
+    "alpha0_axis": [
+      0.0,
+      25.0
+    ]
+  },
+  "assertions": [
+    {
+      "assertion_id": "T002_RATIO_DOMAIN",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "The total-to-Landau ratio is finite and strictly above one for positive alpha0.",
+      "evidence": "fig3_energy_ratio.csv"
+    },
+    {
+      "assertion_id": "T002_MONOTONIC_DOMINANCE",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "For every paper mass, the ratio decreases monotonically toward unity.",
+      "evidence": "fig3_energy_ratio.csv"
+    },
+    {
+      "assertion_id": "T002_RATIO_IDENTITY",
+      "tier": "analytic",
+      "essential": true,
+      "status": "passed",
+      "claim": "Every row satisfies E0/EL = 1 + Ec/EL.",
+      "evidence": {
+        "max_absolute_error": 0.0
+      }
+    },
+    {
+      "assertion_id": "T002_LARGE_ALPHA_LIMIT",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "At alpha0=25 all four ratios are close to the analytic limit one.",
+      "evidence": {
+        "m0_0": 1.039374087557077,
+        "m0_0.5": 1.039919357658814,
+        "m0_1": 1.0415658415713553,
+        "m0_1.5": 1.0443440695922264
+      }
+    },
+    {
+      "assertion_id": "T002_INDEPENDENT_RATIO",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "The ratio from proper-time quadrature agrees with the independently summed Bessel representation.",
+      "evidence": {
+        "alpha0": 5.0,
+        "m0": 1.0,
+        "quadrature": 1.6117860346195303,
+        "bessel": 1.6117860346161113,
+        "relative_error": 2.121275872354058e-12
+      }
+    }
+  ],
+  "summary": {
+    "assertions_total": 5,
+    "assertions_passed": 5,
+    "series": 4
+  },
+  "execution": {
+    "schema_version": 1,
+    "target_id": "T002",
+    "phase": "check",
+    "guarded_stage": "final_reproduction",
+    "elapsed_seconds": 0.011619,
+    "environment": {
+      "python": "3.13.2"
+    }
+  }
+}

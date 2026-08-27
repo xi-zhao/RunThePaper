@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-WORKSPACE = Path(__file__).resolve().parents[2]
-SRC = WORKSPACE / "code" / "src"
+WORKSPACE = Path(__file__).resolve().parents[1]
+SRC = WORKSPACE / "src"
 sys.path.insert(0, str(SRC))
 
 from nonhermitian_chern import (  # noqa: E402
@@ -24,6 +24,8 @@ SPECTRUM_PATH = WORKSPACE / "outputs" / "data" / "fig2_square_spectrum.csv"
 WAVEPACKET_PATH = WORKSPACE / "outputs" / "data" / "fig2_wavepacket.csv"
 FIGURE_PATH = WORKSPACE / "outputs" / "figures" / "fig2_square_dynamics.png"
 CHECK_PATH = WORKSPACE / "outputs" / "checks" / "fig2_square_dynamics.json"
+COMPARISON_PATH = WORKSPACE / "outputs" / "figures" / "fig2_reference_comparison.png"
+SOURCE_PANEL_PATH = WORKSPACE / "references" / "original_figures" / "fig2_pdf_reference.png"
 SCORECARD_PATH = WORKSPACE / "outputs" / "checks" / "similarity_scorecard.json"
 
 SPECTRUM_FIELDS = [
@@ -60,6 +62,8 @@ def run_square_dynamics(
     wavepacket_path: Path = WAVEPACKET_PATH,
     figure_path: Path = FIGURE_PATH,
     check_path: Path = CHECK_PATH,
+    comparison_path: Path = COMPARISON_PATH,
+    source_panel_path: Path = SOURCE_PANEL_PATH,
     scorecard_path: Path = SCORECARD_PATH,
     L: int = 30,
     eigen_count: int = 22,
@@ -80,6 +84,11 @@ def run_square_dynamics(
         L=L,
         times=[float(value) for value in times],
     )
+    comparison_result = write_reference_comparison_comparison(
+        source_path=source_panel_path,
+        generated_path=figure_path,
+        output_path=comparison_path,
+    )
     result = {
         "status": "passed" if spectrum_path.exists() and wavepacket_path.exists() and figure_path.exists() else "failed",
         "target_id": "T004",
@@ -90,11 +99,14 @@ def run_square_dynamics(
         "spectrum_path": relative_to_workspace(spectrum_path),
         "wavepacket_path": relative_to_workspace(wavepacket_path),
         "figure_path": relative_to_workspace(figure_path),
-        "source_reference": "official paper figure, not redistributed in this public repository",
+        "comparison_path": relative_to_workspace(comparison_path),
+        "source_reference": relative_to_workspace(source_panel_path),
+        "reference_comparison_comparison": comparison_result,
         "grid": {"L": L, "eigen_count": eigen_count, "times": list(times)},
     }
     check_path.parent.mkdir(parents=True, exist_ok=True)
     check_path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n")
+    update_similarity_scorecard(result, scorecard_path)
     return result
 
 
@@ -205,6 +217,127 @@ def render_wavepacket_panel(
     axis.text(0.06, 0.92, f"t={time:g}", transform=axis.transAxes, fontsize=8)
     if abs(time) < 1e-12:
         axis.text(0.57, 0.92, f"m={mass}", transform=axis.transAxes, fontsize=8)
+
+
+def write_reference_comparison_comparison(
+    *,
+    source_path: Path,
+    generated_path: Path,
+    output_path: Path,
+) -> dict[str, object]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if not source_path.exists() or not generated_path.exists():
+        return {
+            "status": "blocked",
+            "source_path": relative_to_workspace(source_path),
+            "generated_path": relative_to_workspace(generated_path),
+            "comparison_path": relative_to_workspace(output_path),
+        }
+    source_image = plt.imread(source_path)
+    generated_image = plt.imread(generated_path)
+    fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.2), dpi=150)
+    for axis, image, title in [
+        (axes[0], source_image, "Fig. 2 source panel from paper PDF"),
+        (axes[1], generated_image, "Generated: square spectra and dynamics"),
+    ]:
+        axis.imshow(image)
+        axis.set_title(title, fontsize=8)
+        axis.set_axis_off()
+    fig.tight_layout(pad=0.6)
+    fig.savefig(output_path)
+    plt.close(fig)
+    return {
+        "status": "passed",
+        "source_path": relative_to_workspace(source_path),
+        "generated_path": relative_to_workspace(generated_path),
+        "comparison_path": relative_to_workspace(output_path),
+    }
+
+
+def update_similarity_scorecard(
+    result: dict[str, object], scorecard_path: Path
+) -> None:
+    if scorecard_path.exists():
+        payload = json.loads(scorecard_path.read_text(encoding="utf-8"))
+    else:
+        payload = {
+            "schema_version": 1,
+            "paper_id": "1804.04672",
+            "score_model": "rra_similarity_v1",
+            "targets": [],
+        }
+    targets = [
+        target
+        for target in payload.get("targets", [])
+        if target.get("target_id") != "T004"
+    ]
+    targets.append(build_t004_scorecard_target(result))
+    payload["targets"] = targets
+    scorecard_path.parent.mkdir(parents=True, exist_ok=True)
+    scorecard_path.write_text(
+        json.dumps(payload, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+
+def build_t004_scorecard_target(result: dict[str, object]) -> dict[str, object]:
+    return {
+        "target_id": "T004",
+        "label": "Fig. 2 square spectra and wave-packet dynamics",
+        "weight": 1.0,
+        "components": {
+            "feature_match": {
+                "score": 38.0,
+                "reason": (
+                    "The generated panel includes both square-geometry low-energy spectra "
+                    "and normalized wave-packet intensity snapshots at the Fig. 2 times."
+                ),
+            },
+            "numeric_closeness": {
+                "score": 18.0,
+                "reason": (
+                    "The computation uses the paper Hamiltonian and caption parameters, "
+                    "but source-point or pixel-level dynamics matching is not yet a gate."
+                ),
+            },
+            "paper_scope_coverage": {
+                "score": 14.0,
+                "reason": (
+                    "Both Fig. 2 rows and the three displayed time snapshots are covered."
+                ),
+            },
+        },
+        "score_cap": 70.0,
+        "cap_reason": "Reference comparison is source-figure visual only and dynamics pixel matching is not implemented.",
+        "evidence": [
+            str(result["spectrum_path"]),
+            str(result["wavepacket_path"]),
+            str(result["figure_path"]),
+            str(result["comparison_path"]),
+            str(result["source_reference"]),
+            "outputs/checks/fig2_square_dynamics.json",
+        ],
+        "remaining_gap": (
+            "pixel_dynamics_validation: source wave-packet intensity maps and low-energy "
+            "spectra have not yet been digitized into quantitative comparison gates."
+        ),
+        "evaluation": {
+            "critical": True,
+            "paper_level_role": "main_claim",
+            "artifact_pass": result.get("status") == "passed",
+            "data_backed": True,
+            "manual_interventions": 0,
+            "failure_type": "partial_target_coverage",
+            "parameter_match": "paper_exact",
+            "reference_comparison": "source_figure_only",
+            "generated_data_provenance": "independent_numerics",
+            "formula_gate": "source_only",
+            "formula_dependencies": [
+                "EQC001",
+                "EQC006",
+            ],
+        },
+    }
 
 
 def relative_to_workspace(path: Path) -> str:

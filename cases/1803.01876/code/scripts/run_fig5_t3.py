@@ -13,9 +13,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
-sys.path.insert(0, str(ROOT / "code/scripts"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 from nonhermitian_ssh import (  # noqa: E402
     abs_ordered_squared_spectrum_rows,
@@ -166,7 +166,7 @@ def main() -> int:
         "spectrum_line_identity": "open_chain_abs_energy_level",
         "spectrum_connect_rule": "connect_within_branch_id_in_t1_order",
         "spectrum_render_source": "independent_open_chain_numerics",
-        "spectrum_reference_source": "official paper figure, not redistributed in this public repository",
+        "spectrum_reference_source": "paper-source/t3spectrum.eps",
         "left_panel_render": str(left_panel_path.relative_to(ROOT)),
         "spectrum_branch_count": len({row["branch_id"] for row in spectrum_rows}),
         "spectrum_t1_points": len({row["t1"] for row in spectrum_rows}),

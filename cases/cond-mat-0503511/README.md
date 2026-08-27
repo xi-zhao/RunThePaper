@@ -53,13 +53,13 @@ cd cases/cond-mat-0503511/code
 python scripts/run_reproduction.py --config config/smoke.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 3 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=terminal_blocker, pixel=needs_repair, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: parameters=mixed, causal_resolution=repair_required, science=pending, pixel=needs_repair, paper_assessment=inconclusive.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

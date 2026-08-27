@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.03311",
+  "target_id": "D001",
+  "panel": "Supplement Fig. 5(a)",
+  "displacement": "d_0,0",
+  "status": "input_blocked",
+  "required_input_schema": {
+    "qe_version": {
+      "type": "string",
+      "provenance_required": true
+    },
+    "exchange_correlation_functional": {
+      "type": "string",
+      "provenance_required": true
+    },
+    "fully_relativistic_pseudopotentials": {
+      "type": "file_manifest",
+      "hash_required": true
+    },
+    "relaxed_structure": {
+      "type": "file",
+      "hash_required": true
+    },
+    "kinetic_energy_cutoff_ry": {
+      "type": "positive_number",
+      "provenance_required": true
+    },
+    "charge_density_cutoff_ry": {
+      "type": "positive_number",
+      "provenance_required": true
+    },
+    "k_point_mesh": {
+      "type": "integer_triplet",
+      "provenance_required": true
+    },
+    "occupations_and_smearing": {
+      "type": "object",
+      "provenance_required": true
+    },
+    "scf_convergence_threshold_ry": {
+      "type": "positive_number",
+      "provenance_required": true
+    },
+    "spin_orbit_enabled": {
+      "type": "boolean",
+      "required_value": true
+    },
+    "wannier_projection_windows_ev": {
+      "type": "object",
+      "provenance_required": true
+    },
+    "wannier_initial_projections": {
+      "type": "array",
+      "provenance_required": true
+    },
+    "high_symmetry_path": {
+      "type": "array",
+      "provenance_required": true
+    }
+  },
+  "supplied_inputs": [],
+  "missing_inputs": [
+    "qe_version",
+    "exchange_correlation_functional",
+    "fully_relativistic_pseudopotentials",
+    "relaxed_structure",
+    "kinetic_energy_cutoff_ry",
+    "charge_density_cutoff_ry",
+    "k_point_mesh",
+    "occupations_and_smearing",
+    "scf_convergence_threshold_ry",
+    "spin_orbit_enabled",
+    "wannier_projection_windows_ev",
+    "wannier_initial_projections",
+    "high_symmetry_path"
+  ],
+  "parameterized_execution_plan": {
+    "target_id": "D001",
+    "displacement": "d_0,0",
+    "stages": [
+      "validate_hash_bound_inputs",
+      "run_fully_relativistic_scf",
+      "run_nscf_on_frozen_k_mesh",
+      "run_wannier_projection",
+      "interpolate_high_symmetry_bands",
+      "compute_layer_and_spin_characters",
+      "run_cutoff_kmesh_and_window_convergence"
+    ],
+    "required_checks": [
+      "all input hashes match",
+      "SCF energy and charge converge",
+      "Wannier interpolation matches ab-initio bands in the frozen window",
+      "band energies and spin/layer weights are finite on the full path",
+      "cutoff, k-mesh, and Wannier-window changes stay below tolerance"
+    ]
+  },
+  "acceptance_criteria": [
+    "Every publication-critical QE, pseudopotential, structure, convergence, and Wannier input is source-traced and hash-bound before execution.",
+    "The two displacements run through the same independently implemented QE/Wannier plan with only the frozen structure changed.",
+    "Band energies and layer/spin characters pass SCF, basis, k-mesh, and Wannier-window convergence checks.",
+    "No paper PDF, source image, author code, author numerical array, or digitized curve enters the numerical runner."
+  ],
+  "scientific_coverage_promoted": false
+}

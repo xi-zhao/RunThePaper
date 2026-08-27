@@ -2,13 +2,14 @@
   "schema_version": 1,
   "status": "passed",
   "summary": {
-    "claims_total": 2,
-    "numeric_claims_total": 2,
+    "claims_total": 5,
+    "numeric_claims_total": 5,
     "numeric_claims_without_targets": 0,
-    "targets_total": 3,
+    "targets_total": 6,
     "targets_without_claim_refs": 0,
     "claims_by_coverage_status": {
-      "evidence_compared": 2
+      "evidence_compared": 2,
+      "target_declared": 3
     },
     "findings_total": 0,
     "finding_counts": {
@@ -20,7 +21,7 @@
   "claims": [
     {
       "claim_id": "CLM_DIFFUSIVE_WALL",
-      "status": "supported_reduced_scale",
+      "status": "supported_reduced_scale_full_code_ready",
       "statement": "Two-body scattering adds diffusive broadening to the Euler XXZ domain-wall profile.",
       "source_refs": [
         "paper-source/hydroviscosity_Final_v4.tex#eq:melting",
@@ -34,7 +35,8 @@
         "EQ004",
         "EQ005",
         "EQ006",
-        "EQ007"
+        "EQ007",
+        "EQ009"
       ],
       "target_refs": [
         "T001",
@@ -72,6 +74,70 @@
       ],
       "evidence_comparison_count": 1,
       "coverage_status": "evidence_compared"
+    },
+    {
+      "claim_id": "CLM_HARD_ROD_LIMIT",
+      "status": "target_declared_uncovered",
+      "statement": "The general diffusion kernel reduces to the known hard-rod diffusion operator in the hard-rod limit.",
+      "source_refs": [
+        "paper-source/hydroviscosity_Final_v4.tex#discussion-after-eq-9"
+      ],
+      "numeric_source_refs": [],
+      "formula_refs": [
+        "EQ010"
+      ],
+      "target_refs": [
+        "T004"
+      ],
+      "target_count": 1,
+      "target_statuses": [
+        "targets_declared"
+      ],
+      "evidence_comparison_count": 0,
+      "coverage_status": "target_declared"
+    },
+    {
+      "claim_id": "CLM_FREE_MODEL_LIMIT",
+      "status": "target_declared_uncovered",
+      "statement": "The diffusion matrix vanishes when the scattering kernel is zero in a free model.",
+      "source_refs": [
+        "paper-source/hydroviscosity_Final_v4.tex#discussion-after-eq-9"
+      ],
+      "numeric_source_refs": [],
+      "formula_refs": [
+        "EQ011"
+      ],
+      "target_refs": [
+        "T005"
+      ],
+      "target_count": 1,
+      "target_statuses": [
+        "targets_declared"
+      ],
+      "evidence_comparison_count": 0,
+      "coverage_status": "target_declared"
+    },
+    {
+      "claim_id": "CLM_ENTROPY_PRODUCTION",
+      "status": "target_declared_uncovered",
+      "statement": "The Navier-Stokes entropy-production quadratic form is non-negative.",
+      "source_refs": [
+        "paper-source/hydroviscosity_Final_v4.tex#entropy-production",
+        "paper-source/hydroviscosity_Final_v4.tex#Supplemental-Material"
+      ],
+      "numeric_source_refs": [],
+      "formula_refs": [
+        "EQ012"
+      ],
+      "target_refs": [
+        "T006"
+      ],
+      "target_count": 1,
+      "target_statuses": [
+        "targets_declared"
+      ],
+      "evidence_comparison_count": 0,
+      "coverage_status": "target_declared"
     }
   ],
   "targets": [
@@ -90,12 +156,14 @@
         "EQ004",
         "EQ005",
         "EQ006",
-        "EQ007"
+        "EQ007",
+        "EQ009"
       ],
       "method_refs": [
         "MTH_TBA",
         "MTH_ONSAGER",
         "MTH_PROFILE",
+        "MTH_FULL_GHD",
         "MTH_RENDER"
       ],
       "parameter_match": "reduced_scale",
@@ -142,11 +210,79 @@
       "claim_refs": [
         "CLM_DIFFUSIVE_WALL"
       ],
-      "formula_refs": [],
+      "formula_refs": [
+        "EQ008"
+      ],
       "method_refs": [
         "MTH_TDMRG"
       ],
       "parameter_match": "unknown",
+      "evidence_fields": [],
+      "acceptance_metrics": {},
+      "required_artifacts": [],
+      "dataset_count": 0,
+      "rendered_figure_count": 0,
+      "evidence_comparison_count": 0
+    },
+    {
+      "target_id": "T004",
+      "figure_id": "Text hard-rod limiting claim",
+      "target_kind": "other_numeric",
+      "status": "targets_declared",
+      "claim_refs": [
+        "CLM_HARD_ROD_LIMIT"
+      ],
+      "formula_refs": [
+        "EQ010"
+      ],
+      "method_refs": [
+        "MTH_ANALYTIC_LIMITS"
+      ],
+      "parameter_match": "not_applicable",
+      "evidence_fields": [],
+      "acceptance_metrics": {},
+      "required_artifacts": [],
+      "dataset_count": 0,
+      "rendered_figure_count": 0,
+      "evidence_comparison_count": 0
+    },
+    {
+      "target_id": "T005",
+      "figure_id": "Text free-model limiting claim",
+      "target_kind": "other_numeric",
+      "status": "targets_declared",
+      "claim_refs": [
+        "CLM_FREE_MODEL_LIMIT"
+      ],
+      "formula_refs": [
+        "EQ011"
+      ],
+      "method_refs": [
+        "MTH_ANALYTIC_LIMITS"
+      ],
+      "parameter_match": "not_applicable",
+      "evidence_fields": [],
+      "acceptance_metrics": {},
+      "required_artifacts": [],
+      "dataset_count": 0,
+      "rendered_figure_count": 0,
+      "evidence_comparison_count": 0
+    },
+    {
+      "target_id": "T006",
+      "figure_id": "Text and supplement entropy-production claim",
+      "target_kind": "other_numeric",
+      "status": "targets_declared",
+      "claim_refs": [
+        "CLM_ENTROPY_PRODUCTION"
+      ],
+      "formula_refs": [
+        "EQ012"
+      ],
+      "method_refs": [
+        "MTH_ANALYTIC_LIMITS"
+      ],
+      "parameter_match": "not_applicable",
       "evidence_fields": [],
       "acceptance_metrics": {},
       "required_artifacts": [],

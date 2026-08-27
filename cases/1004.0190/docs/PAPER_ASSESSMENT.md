@@ -8,75 +8,78 @@ This report is a human-readable projection of the validated structured independe
 
 | Dimension | Value |
 | --- | --- |
-| Protocol status | `passed` |
-| Protocol valid | `true` |
-| Whole-paper scope | `complete` |
+| Protocol status | `stale` |
+| Protocol valid | `false` |
+| Whole-paper scope | `stale` |
 | Paper assessment | `mixed` |
-| Reviewed atomic claims | `57` |
-| Candidate atomic claims | `3` |
-| Candidate targets | `3` |
+| Reviewed atomic claims | `58` |
+| Candidate atomic claims | `0` |
+| Candidate targets | `0` |
+
+The review protocol is not currently valid, so no paper-error candidate in the submission is promoted by this report.
 
 ## Atomic claim adjudication
 
 | Claim | Targets | Assessment | Independent-review reason |
 | --- | --- | --- | --- |
-| R001 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R002 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R003 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R004 | T001, T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R005 | — | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R006 | — | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R007 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R008 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R009 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R010 | T001 | `paper_supported` | Direct SVD correctly avoids the condition-number squaring of a Gram eigensolve and retains the declared delta=1e-8 Schmidt components; the 1e-12 cutoff remains an explicit numerical resolution boundary, not an exact-zero proof. |
-| R011 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R012 | T001 | `paper_supported` | The exact simultaneous-diagonalization theorem is correct and the declared direct-SVD regression survives; numerical zero-discord booleans remain tolerance-qualified at the configured 1e-12 singular cutoff. |
-| R013 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R014 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R015 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R016 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R017 | T001 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R018 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R019 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R020 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R021 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R022 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R023 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R024 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R025 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R026 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R027 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R028 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R029 | T002 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R030 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R031 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R032 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R033 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R034 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R035 | T003, T004 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R036 | T003, T004 | `paper_error_candidate` | The printed separable maximum 1/6 at facet centers is incompatible with the paper's own Eq. (16): the centers give 1/18, while exact octahedral optimization gives the larger true maximum 1/16 on edge midpoints. |
-| R037 | T003, T004 | `paper_error_candidate` | With the printed domain i_k=plus/minus1, both exponents give (-1)^{i_k}=-1, so all eight labels collapse to one matrix; i_k in {0,1} is the evident repair. |
-| R038 | T003 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R039 | T005 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R040 | T005 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R041 | T005 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R042 | T005 | `paper_supported` | Direct block tracing gives <sigma_1>=alpha Re(tau) and <sigma_2>=alpha Im(tau); because alpha is known, division by alpha retrieves tau and explains the stated 1/alpha^2 overhead. |
-| R043 | T005 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R045 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R046 | T006 | `inconclusive` | The bundle verifies only control-versus-register separability; it does not define or compute an entanglement measure over every split that groups the control with some register qubits, nor its n-scaling. |
-| R047 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R048 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R049 | T006 | `paper_supported` | An SVD-independent Hermitian/anti-Hermitian operator derivation proves the condition, and both Haar and phase-involution campaigns pass; near-global-phase delta=1e-8 remains nonzero under direct SVD, with the declared cutoff limiting smaller perturbations. |
-| R050 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R051 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R052 | T006 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R053 | — | `inconclusive` | No input encoding, approximation tolerance, complexity class, or reduction is specified; moreover normalized trace depends on eigenvalue multiplicities rather than eigenvector complexity, so the stated rationale does not establish classical hardness. |
-| R054 | — | `inconclusive` | The exact zero-discord unitary family is supported, but the conclusion that discord is not the speedup resource additionally requires the unresolved classical-hardness premise for that family. |
-| R055 | T008 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R056 | T008 | `paper_error_candidate` | The written sum of two orthogonal rank-one projectors has trace 2, not trace 1, so it is not a density state until multiplied by 1/2. |
-| R057 | T008 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
-| R058 | T007 | `paper_supported` | Fresh analytic rederivation agrees with the paper, the bundled independent numerical channel passes, and the active counterexample/limit search did not overturn the claim. |
+| R001 | T001, T002 | `paper_supported` | Independent entropy bookkeeping reproduces Eq. (1) and its product-state and pure-state limits. |
+| R002 | T001, T002 | `paper_supported` | The conditional states are normalized POVM branches and the minimization is the standard measurement-based correlation functional. |
+| R003 | T001, T002 | `paper_supported` | Eq. (3) is the paper's consistent definition of left discord from the two mutual-information expressions. |
+| R004 | T001 | `paper_supported` | Entropy inequalities give nonnegativity and classical-quantum block states attain zero; the bundle's independently generated CQ states also give geometric zero within 3.9e-16. |
+| R005 | T001 | `paper_supported` | Directional measurement makes discord asymmetric; explicit one-way classical states separate D_A from D_B, while joint zero requires bases on both sides. |
+| R006 | T001 | `paper_supported` | Eq. (4) is explicitly a convex average of four unit-trace product projectors; direct matrix construction gives trace 1 and nonnegative density/PPT spectra up to 1.2e-17 roundoff. |
+| R007 | T001 | `paper_supported` | Independent projective-dephasing minimization gives D_A^(2)=1/16 for Eq. (4), and its left operator span is noncommutative. |
+| R008 | T001 | `paper_supported` | A complete rank-one dephasing fixes exactly matrices block diagonal in its basis, which is equivalent to a classical-quantum decomposition. |
+| R009 | T001 | `paper_supported` | The CQ decomposition and fixed-point condition are two forms of the same block-diagonal operator. |
+| R010 | T001 | `paper_supported` | The claimed decomposition is the ordinary SVD/operator-Schmidt decomposition of the coefficient matrix in orthonormal Hermitian bases. |
+| R011 | T001 | `paper_supported` | Linear independence of nonzero F_n makes full-state dephasing invariance equivalent to factorwise invariance, and Hermitian S_n are fixed exactly when they commute with all Pi_k. |
+| R012 | T001 | `paper_supported` | Finite-dimensional Hermitian operators have a common eigenbasis exactly when they commute pairwise; this closes the zero-discord equivalence. |
+| R013 | T001 | `paper_supported` | There are exactly L(L-1)/2 unordered pairs and a d_A^2 by d_B^2 matrix has the stated rank ceiling. |
+| R014 | T001 | `paper_supported` | A CQ state is a sum of at most d_A product operators, so its operator-Schmidt rank cannot exceed d_A; the contrapositive is a valid one-way witness. |
+| R015 | T001 | `paper_supported` | Finding d_A+1 independent rows or columns forces rank R>d_A and therefore activates the valid rank witness; no unmeasured entry can reduce an already certified lower bound. |
+| R016 | T002 | `paper_supported` | Eq. (8) is a well-defined nonnegative squared Hilbert-Schmidt distance to the CQ set and vanishes exactly on that set. |
+| R017 | T002 | `paper_supported` | Pauli orthogonality gives the coefficient formulas and exact reconstruction of every two-qubit Hermitian trace-one operator. |
+| R018 | T002 | `paper_supported` | The e and s_+/- definitions reproduce the local Bloch vectors and conditional weighted sums of a two-branch CQ state. |
+| R019 | T002 | `paper_supported` | Expanding the two basis projectors gives x=t e, y=s_+, and T=e s_-^T with the necessary norm bounds. |
+| R020 | T002 | `paper_supported` | Term-by-term Pauli trace orthogonality reproduces every coefficient and the one-quarter normalization in Eq. (12). |
+| R021 | T002 | `paper_supported` | At fixed unit e, the quadratic block in t,s_+,s_- has a positive diagonal Hessian, so the stationary point is unique. |
+| R022 | T002 | `paper_supported` | Direct differentiation of Eq. (12) gives exactly Eqs. (13)-(15) and their stationary solution. |
+| R023 | T002 | `paper_supported` | For physical rho, \|x dot e\| and \|\|y\|\| are Bloch expectations and \|\|T^T e\|\| is the supremum of bounded two-Pauli expectations; the stationary point is also the Bloch data of the physical dephased state. |
+| R024 | T002 | `paper_supported` | Eliminating the quadratic variables leaves a Rayleigh quotient of K, whose maximum over unit e is k_max. |
+| R025 | T002 | `paper_supported` | A fresh implementation minimized the 4x4 projective-dephasing distance for 12 independently seeded random states and matched Eq. (16) within 7.1e-14; the attested run's 64 states agree within 1.57e-16. |
+| R026 | T003 | `paper_supported` | A real 3x3 correlation tensor admits an SVD; determinant signs can be absorbed into diagonal t so both orthogonal rotations are realized by local SU(2) unitaries. |
+| R027 | T003 | `paper_supported` | The four Bell-basis eigenvalues define exactly the four positivity half-spaces whose vertices are the printed tetrahedron vertices. |
+| R028 | T003 | `paper_supported` | Partial transposition flips the sigma_2 term; simultaneous positivity of rho and rho^PT reduces exactly to \|t_1\|+\|t_2\|+\|t_3\|<=1, the stated octahedron. |
+| R029 | T003 | `paper_supported` | Setting x=0 and T=diag(t_1,t_2,t_3) in Eq. (16) gives the printed formula exactly; independent dephasing reproduces it. |
+| R030 | T003 | `paper_supported` | The sum of the two nonmaximal squared components vanishes exactly when at most one t_i is nonzero; positivity restricts each axis to [-1,1]. |
+| R031 | T003, T004 | `reproduction_defect` | The paper panel visibly contains eight facet-center black dots, but the frozen implementation constructs only four centers by negating the four tetrahedron vertices. Thus the bundle cannot provide a complete point-for-point reproduction of Main Fig. 1; the separate scientific extrema claims are adjudicated in R034-R035. |
+| R032 | T004 | `paper_supported` | Over the physical tetrahedron, direct convex-piece analysis and dephasing evaluation place the global value 1/2 only at the four Bell vertices. |
+| R033 | T004 | `paper_supported` | Substitution at each Bell vertex and three independent direct-dephasing optimizations give D_A^(2)=1/2 to 1.7e-16. |
+| R034 | T003, T004 | `paper_error_candidate` | The location statement is false under the paper's own exact formula and exact separable domain. Sorting absolute coordinates a>=b>=c>=0 gives D=(b^2+c^2)/4 with 2b+c<=1; the maximum is 1/16 at b=1/2,c=0, yielding 12 signed permutations of (1/2,1/2,0). Every one of the 8 facet centers has only 1/18 and is not a maximizer. |
+| R035 | T003, T004 | `paper_error_candidate` | The printed maximum 1/6 is incompatible with the paper's own formula. Exact constrained optimization gives 1/16; exact substitution at the claimed facet centers gives 1/18. Direct projective-dephasing minimization independently gives the same values. |
+| R036 | T004 | `paper_error_candidate` | Eq. (17) is internally wrong as printed: with i_k=+/-1, both (-1)^(+1) and (-1)^(-1) equal -1, so all 2^3 index tuples collapse to the single vector (-1/3,-1/3,-1/3) rather than enumerating the 8 facet centers. The likely repair is i_k in {0,1}, but the review does not silently substitute it. |
+| R037 | T004 | `paper_supported` | Interpreting the intended independent sign family geometrically, all 8 points have trace one, nonnegative density and partial-transpose spectra, L1 norm one, and hence are separable octahedron facet centers. This does not repair the literal index typo in R036. |
+| R038 | T004 | `inconclusive` | The phrase 'maximally non-orthogonal states' is not defined and no explicit product-state ensemble is provided, so the asserted equal-mixture interpretation has no unique reproducible object. |
+| R039 | T004 | `paper_supported` | Each intended state is invariant under subsystem swap because every sigma_k tensor sigma_k term is swap symmetric; exchanging measured sides therefore leaves the optimization unchanged and D_A=D_B. |
+| R040 | T005 | `paper_supported` | Direct evolution of the polarized control and maximally mixed register through H and controlled-U produces the stated off-diagonal block matrix; trace and positivity are correct for \|alpha\|<=1. |
+| R041 | T005 | `paper_supported` | Substituting alpha=0 gives exactly I_{2^(n+1)}/2^(n+1); both control Pauli expectations vanish, removing the normalized-trace signal. |
+| R042 | T005 | `paper_supported` | Block traces give <sigma_1>=alpha Re Tr(U)/2^n and <sigma_2>=alpha Im Tr(U)/2^n; dividing a bounded-outcome estimator by alpha gives variance overhead proportional to 1/alpha^2. A fresh 16-unitary campaign matched both expectations within 6.94e-18. |
+| R044 | T006 | `paper_supported` | Diagonalizing U gives an explicit convex decomposition over register eigenvectors, each paired with a valid single-control-qubit state, proving separability across control\|register for every U and \|alpha\|<=1. |
+| R045 | T006 | `inconclusive` | The paper does not specify an entanglement measure, an asymptotic rate, a tolerance for 'vanishingly small', or the exact quantified family of grouped bipartitions; the cited evidence is not bundled. |
+| R046 | T006 | `paper_supported` | The zero-discord criterion restricts U to phase-times-involution spectra, a lower-dimensional Haar-measure-zero subset of U(d); 64 attested Haar samples and 32 fresh samples all lay outside it. |
+| R047 | T006 | `paper_supported` | Substituting \|1><0\|=(sigma_1-i sigma_2)/2 and its adjoint gives Eq. (19) entrywise, including the sign of the anti-Hermitian term. |
+| R048 | T006 | `paper_supported` | With alpha nonzero, two independent register operators retain a two-dimensional left span containing noncommuting sigma_1 and sigma_2; the span collapses to one dimension exactly under U^dagger=kU. Fresh Gram determinants separate 32 generic unitaries from 32 phase-involutions by over 14 orders of magnitude. |
+| R049 | T006 | `paper_supported` | If U^dagger=kU, unitarity forces \|k\|=1; choosing k=e^{-2i phi} makes A=e^{-i phi}U Hermitian unitary and hence A^2=I. The converse is immediate. |
+| R050 | T006 | `paper_supported` | For U=e^{i phi}A, Eq. (19) reduces to I plus one control Pauli direction tensor A. It is diagonal in product eigenbases, giving a classical-classical state and both one-sided discords zero. |
+| R051 | T006 | `inconclusive` | The complexity conclusion has no formal input/oracle model or hardness assumption. Moreover Tr(e^{i phi}A)=e^{i phi}(n_+-n_-) depends only on eigenvalue multiplicities, not on eigenvector complexity, so the paper's stated rationale does not establish classical hardness even though the overall hardness claim may still hold under a particular access model. |
+| R052 | T002 | `paper_supported` | Hilbert-Schmidt geometric discord scales by the purity of an appended unmeasured-side ancilla, so append/discard local channels can lower/raise it; a measure-and-prepare channel on the measured side also gives an explicit discord increase. |
+| R053 | T001 | `paper_supported` | After restoring the omitted normalization and interpreting the intended subsystem map, a valid measure-and-prepare channel sends orthogonal A labels to nonorthogonal pure states. Their projectors do not commute, and fresh direct dephasing gives nonzero left geometric discord (1/8 for overlap 1/sqrt(2)). |
+| R054 | — | `inconclusive` | The paper does not define which multipartite discord, which measured partition(s), or the claimed scaling of evaluation difficulty, so 'extends to any number' cannot receive a single scientific verdict. |
+| R055 | T001, T003, T004 | `paper_supported` | For fixed A basis, CQ states have fewer real parameters than the full density-state space; the union over bases remains lower dimensional, so zero-discord states have measure zero and almost all states have nonzero discord. |
+| R056 | — | `inconclusive` | The universal 'necessary and sufficient for completely positive reduced dynamics' statement depends on the assignment-map domain, allowed joint unitaries, and quantification over initial states; those definitions and the cited proofs are not included in the allowed bundle. |
+| R057 | — | `inconclusive` | The implication is a cited local-broadcasting theorem, but the broadcasting definition and proof are not supplied in the bundle; a fresh full theorem rederivation was not completed from the one-sentence reference alone. |
+| R058 | — | `inconclusive` | The introduction calls the DQC1 advantage 'believed' but does not define the promise problem, precision, input access, classical comparison class, or quantitative meaning of 'little entanglement'; the relevant cited evidence is absent. |
+| R059 | — | `inconclusive` | The paper reports 'strong evidence' for classical inefficiency but provides no reduction, complexity assumption, or quantitative classical baseline in the allowed text; the cited source is not bundled. |
 
 ## Target adjudication
 
@@ -84,50 +87,16 @@ This report is a human-readable projection of the validated structured independe
 | --- | --- | --- |
 | T001 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T002 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T003 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
-| T004 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T003 | `mixed` | Derived from linked atomic claim assessments. |
+| T004 | `mixed` | Derived from linked atomic claim assessments. |
 | T005 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T006 | `inconclusive` | Derived from linked atomic claim assessments. |
-| T007 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T008 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T007 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T008 | `inconclusive` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### R036
-
-- Linked targets: T003, T004
-- Paper source: Fig. 1 caption and paragraph before Eq. (17), p. 3
-- Paper claim: The separable maximum is 1/6 at (plus/minus1,plus/minus1,plus/minus1)/3.
-- Independent result: Each facet center gives 1/18; the global separable maximum is 1/16 at permutations of (plus/minus1/2,plus/minus1/2,0).
-- Observed gap: Printed 1/6 differs from the facet value by 1/9 and from the true maximum by 5/48.
-- Tolerance basis: Exact rational arithmetic; frozen floating-point errors are below 1.4e-17.
-- Assessment reason: The printed separable maximum 1/6 at facet centers is incompatible with the paper's own Eq. (16): the centers give 1/18, while exact octahedral optimization gives the larger true maximum 1/16 on edge midpoints.
-- Convergence evidence: `generated_data/outputs/data/discord_geometry.csv`, `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `formula/DERIVATION_TRACE.md`, `implementation/tests/test_model.py`
-
-### R037
-
-- Linked targets: T003, T004
-- Paper source: Eq. (17) and following sentence, p. 3
-- Paper claim: Eq. (17) with i_k=plus/minus1 represents the family of facet-center states.
-- Independent result: The literal domain generates only t=(-1/3,-1/3,-1/3); using i_k in {0,1} generates the intended eight states.
-- Observed gap: 1 distinct literal matrix instead of 8.
-- Tolerance basis: Exact integer exponent enumeration; no numerical tolerance.
-- Assessment reason: With the printed domain i_k=plus/minus1, both exponents give (-1)^{i_k}=-1, so all eight labels collapse to one matrix; i_k in {0,1} is the evident repair.
-- Convergence evidence: `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `generated_data/outputs/data/discord_geometry.csv`, `formula/DERIVATION_TRACE.md`
-
-### R056
-
-- Linked targets: T008
-- Paper source: Final local-operation paragraph, p. 4
-- Paper claim: |00><00|+|11><11| is a zero-discord state.
-- Independent result: It is a positive trace-2 operator; (|00><00|+|11><11|)/2 is the normalized zero-discord state.
-- Observed gap: Trace 2 instead of 1; missing factor 1/2.
-- Tolerance basis: Exact projector trace; no numerical tolerance.
-- Assessment reason: The written sum of two orthogonal rank-one projectors has trace 2, not trace 1, so it is not a density state until multiplied by 1/2.
-- Convergence evidence: `machine_evidence/outputs/checks/science_checks.json`
-- Independent cross-check evidence: `generated_data/outputs/data/local_operation_checks.csv`, `implementation/tests/test_model.py`
+No authoritative paper-error candidate is present in the current validated review.
 
 ## Interpretation boundary
 

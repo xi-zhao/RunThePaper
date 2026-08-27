@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "run_id": "cond-mat-0411737-implementation-closure-v2-20260824",
+  "target_ids": [
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T021",
+    "T022",
+    "T023"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/data/implementation_closure"
+  ],
+  "inputs": [
+    "src/kane_mele/model.py",
+    "src/kane_mele/response.py",
+    "src/kane_mele/symmetry.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "continuum": {
+      "q_over_reference": [
+        0.0,
+        0.125,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "hbar_vf": 1.0
+    },
+    "ribbon": {
+      "hopping_t": 1.0,
+      "spin_orbit_t2": 0.03,
+      "width_chains": 12,
+      "k_points": 65
+    },
+    "parallel_field": {
+      "gap_scale": 1.0,
+      "momentum_points": 31,
+      "path_points": 31
+    },
+    "intrinsic_gap": {
+      "graphene_lattice_constant_angstrom": 2.46,
+      "paper_rounded_full_gap_kelvin": 2.4
+    },
+    "rashba": {
+      "fermi_velocity_m_per_s": 1000000.0,
+      "electric_field_volts": 50.0,
+      "electric_field_distance_nm": 300.0,
+      "paper_rounded_millikelvin": 0.5
+    }
+  },
+  "outputs": [
+    "outputs/data/implementation_closure/T014.json",
+    "outputs/data/implementation_closure/T015.json",
+    "outputs/data/implementation_closure/T016.json",
+    "outputs/data/implementation_closure/T017.json",
+    "outputs/data/implementation_closure/T018.json",
+    "outputs/data/implementation_closure/T019.json",
+    "outputs/data/implementation_closure/T020.json",
+    "outputs/data/implementation_closure/T021.json",
+    "outputs/data/implementation_closure/T022.json",
+    "outputs/data/implementation_closure/T023.json",
+    "outputs/data/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

@@ -39,4 +39,4 @@
 ## copied_to_backlog
 
 - Added backlog item H021 for symmetry-sector and boundary-condition requirements.
-- Recorded the generalized lesson in the internal reproduction workflow.
+- Added the generalized lessons to `PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`.

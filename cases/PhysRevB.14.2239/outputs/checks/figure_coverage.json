@@ -1,0 +1,298 @@
+{
+  "schema_version": 2,
+  "paper_id": "PhysRevB.14.2239",
+  "implementations": {
+    "limit_claims_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T008",
+        "T009"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_limit_claims.py",
+        "--config",
+        "config/limit_claims.json",
+        "--profile",
+        "attestation",
+        "--output-root",
+        "outputs/data/limit_claims"
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py",
+        "src/hofstadter_reproduction/limit_claims.py",
+        "scripts/run_limit_claims.py"
+      ],
+      "config_ref": "config/limit_claims.json",
+      "run_contract_ref": "run_contract.limit_claims.json",
+      "expected_outputs": [
+        "outputs/data/limit_claims/T008.json",
+        "outputs/data/limit_claims/T009.json",
+        "outputs/data/limit_claims/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Both fixed-denominator limit claims map exactly once to a finite rational-approximant diagnostic.",
+        "The clean-room runner reads only frozen config and independent Harper-equation code.",
+        "Finite convergence diagnostics cannot promote the uncountability, Cantor topology, zero-measure, or continuity theorems to accepted scientific coverage."
+      ]
+    },
+    "paper_scale_all_targets": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-dir",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/hofstadter_reproduction/model.py",
+        "src/hofstadter_reproduction/campaign.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/fig1_spectrum.npz",
+        "outputs/data/fig2_skeleton.npz",
+        "outputs/data/fig3_l2_rectangularized.npz",
+        "outputs/data/fig4_c2_rectangularized.npz",
+        "outputs/data/fig5_blurred_quadrant.npz",
+        "outputs/data/fig6_wavefunctions.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The six displayed figures and their supporting executable checks are generated from the printed equations without author code, author arrays, digitized curves, or source pixels.",
+        "Every reduced rational flux p/q produces exactly q bands, all band edges satisfy the independent transfer-trace condition, and the flux/energy symmetries and [-4,4] bound pass.",
+        "The three Fig. 6 eigenvalues agree with the printed values within their printed precision and every generated eigenvector passes a direct residual check.",
+        "Scientific arrays are hash-frozen before any source figure is exposed to the renderer; reconstructed sampling choices remain explicitly distinct from paper-exact parameters."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Fig. 1 rational-flux spectrum",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 1 and caption, PDF p. 3",
+      "scientific_object": "complete rational-flux Harper spectrum for reduced fractions with denominator q<50",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "All Harper bands for the paper's rational-flux cutoff.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2 numerical spectral skeleton",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 2 and caption, PDF p. 4",
+      "scientific_object": "computed pure-case and central special-case spectral skeleton through N=37",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The geometry is constructed from computed bands and is not a freehand schematic.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3 rectangularized L2 spectrum",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 3 and caption, PDF p. 5",
+      "scientific_object": "L2 subcell spectrum under the paper's recursive local-coordinate transformation",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Computed rectangularization of the L2 subcell.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4 rectangularized C2 spectrum",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 4 and caption, PDF p. 5",
+      "scientific_object": "C2 subcell spectrum under the paper's recursive center-chain transformation",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Computed rectangularization of the C2 subcell.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 5 field-smeared spectrum",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 5 and caption, PDF p. 8",
+      "scientific_object": "union of spectra within the printed delta-alpha=1/100 field window",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Formula-derived field smearing removes arbitrarily fine spectral gaps.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 6 wavefunction series alpha=1/5",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 6 triangles and caption, PDF p. 10",
+      "scientific_object": "reordered top-edge eigenfunction for alpha=1/5 and printed eigenvalue 2.9664",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The series has its own rational flux, eigenvalue, period, and independently testable residual.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 6 wavefunction series alpha=2/11",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 6 circles and caption, PDF p. 10",
+      "scientific_object": "reordered top-edge eigenfunction for alpha=2/11 and printed eigenvalue 3.02850",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The series has its own rational flux, eigenvalue, period, and independently testable residual.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 6 wavefunction series alpha=17/93",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Fig. 6 dots and caption, PDF p. 10",
+      "scientific_object": "reordered top-edge eigenfunction for alpha=17/93 and printed eigenvalue 3.023983268",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "The series has its own rational flux, eigenvalue, period, and independently testable residual.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "Supporting checks: band count, symmetries, trace edges, bounds, printed eigenvalues, and magnetic-period ordering",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Sections III-VIII and the captions of Main Figs. 1-6",
+      "scientific_object": "cross-checks of the six displayed numerical objects",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "blocker": "covered_by_target",
+      "reason": "These assertions validate already counted display items and are not counted again in the reproduction denominator."
+    },
+    {
+      "item_id": "Claim: irrational-field spectrum is a Cantor set",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Section VI, PDF p. 7 (published p. 2245)",
+      "scientific_object": "for irrational alpha, the spectrum is uncountable, measure zero, and homeomorphic to the Cantor set",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "limit_claims_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "This central theorem has no displayed numerical item that can carry its independent verdict; no accepted proof/check artifact is currently registered.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "Claim: spectral continuity and measure discontinuity",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Section VII, PDF p. 7 (published p. 2245)",
+      "scientific_object": "the spectrum varies continuously with alpha, while its Lebesgue measure is continuous at irrational alpha and discontinuous at rational alpha",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "limit_claims_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "This theorem family is not established by a finite rational-spectrum plot; no accepted independent continuity artifact is currently registered.",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    }
+  ]
+}

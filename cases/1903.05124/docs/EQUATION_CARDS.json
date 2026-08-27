@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "paper_id": "1903.05124",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Naive loss-style decoupling bound",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "paper-source/manuscript_arxiv_03.tex:238-264; main Eqs. (1)-(2)"
+        }
+      ],
+      "latex": "\\mathbb{E}_U\\|\\rho_{A_2\\tilde B}-\\rho_{A_2}^{max}\\otimes\\rho_{\\tilde B}\\|_1\\le 2^{-(1-2p-\\gamma)N/2},\\quad \\gamma<1-2p",
+      "role": "Provides the sufficient qubit-loss comparison and exposes why accessible measurement outcomes can improve the threshold.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The trace-distance exponent and algebraically equivalent criterion are explicit in the main text."
+        },
+        {
+          "id": "EQC001_exponent",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "An exponentially vanishing upper bound requires 1-2p-gamma>0, exactly gamma<1-2p."
+        }
+      ],
+      "numerical_form": "Evaluate the base-two exponent over finite N,gamma,p grids; used as a threshold oracle rather than source data.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Tight decoupling bound with accessible outcomes",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "paper-source/manuscript_arxiv_03.tex:257-264; main Eq. (3)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:571-706; Cauchy-Schwarz, Haar contractions, and final bound"
+        }
+      ],
+      "latex": "\\mathbb{E}_U\\|\\rho_{RE}-\\rho_R\\otimes\\rho_E\\|_1\\lesssim 2^{-(1-\\gamma-p)N/2},\\quad \\gamma<1-p",
+      "role": "Quantifies QEC protection under projective measurements and predicts p_c tending to one in the deep-scrambling large-block limit.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the Cauchy-Schwarz inequality, both Haar contractions, and the final exponential bound."
+        },
+        {
+          "id": "EQC002_cancellation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Subtraction cancels the common leading 2^[-(gamma+p)N] and yields the exponent 1-gamma-p after multiplying the Hilbert dimensions."
+        },
+        {
+          "id": "EQC002_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At gamma=0 the condition permits every p<1; discarding the classical register recovers the weaker loss-style criterion."
+        }
+      ],
+      "numerical_form": "Finite-N decoupling exponent and threshold line gamma=1-p, independently evaluated before comparison to entropy trajectories.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Unitary frame potential and Haar lower bound",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:118-165; Eqs. (S1)-(S3)"
+        }
+      ],
+      "latex": "F_\\nu^{(k)}=|\\nu|^{-2}\\sum_{U,V\\in\\nu}|\\mathrm{Tr}(U^\\dagger V)|^{2k}\\ge k!",
+      "role": "Tests when finite-depth random Clifford circuits approximate unitary designs.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Definition, Haar values, and U-dagger-V to depth-(2d-1) reduction are explicit in Supplement S1."
+        },
+        {
+          "id": "EQC003_identity",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A singleton identity ensemble yields 2^(2nk), demonstrating the expected large non-design value."
+        },
+        {
+          "id": "EQC003_haar",
+          "type": "analytic_reference",
+          "status": "passed",
+          "reason": "For dimension at least k the Haar moments are 1,2,6,24 for k=1..4."
+        }
+      ],
+      "numerical_form": "Monte Carlo mean of Q_U^k with Q_U=|Tr U|^2 for depth-(2d-1) composite circuits.",
+      "code_refs": [
+        "src/frame_potential.py",
+        "scripts/run_supp_fig_s2.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Clifford trace from the fixed-Pauli kernel",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:167-220; Eqs. (S4)-(S10)"
+        }
+      ],
+      "latex": "Q_U=2^{-n}\\sum_{P\\in\\mathcal P^+}\\mathrm{Tr}(U^\\dagger PUP^\\dagger)\\in\\{0,2^{\\dim\\ker(S-I)}\\}",
+      "role": "Makes the n=22 frame-potential calculation polynomial instead of constructing an exponential unitary matrix.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Pauli twirl, kernel construction, sign cases, and phase-aware row reduction are explicit in the supplement."
+        },
+        {
+          "id": "EQC004_pairing",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "One negative fixed generator pairs every positive fixed Pauli with a negative one, forcing Q_U=0."
+        },
+        {
+          "id": "EQC004_dense_plan",
+          "type": "independent_check",
+          "status": "passed",
+          "reason": "The exact dense-trace identity is fully specified as the independent small-system gate before n=22 sampling."
+        }
+      ],
+      "numerical_form": "GF(2) nullity plus conjugation-phase consistency, returning an exact integer Q_U for each circuit.",
+      "code_refs": [
+        "src/frame_potential.py",
+        "tests/test_frame_potential.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Subsystem entropy from supported stabilizers",
+      "source_refs": [
+        {
+          "type": "paper_method",
+          "value": "paper-source/manuscript_arxiv_03.tex:318-324; stabilizer simulation references and flat entanglement spectrum"
+        }
+      ],
+      "latex": "S(A)=|A|-\\dim \\mathcal S_A=|A|-n+\\operatorname{rank}_{\\mathbb F_2}(G|_{\\bar A})",
+      "role": "Turns a stabilizer tableau into every half-chain and multipartition entropy in the numerical figures.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly selects Clifford stabilizer simulation and states the flat entanglement spectrum; the rank formula is the independently derived numerical form."
+        },
+        {
+          "id": "EQC005_derivation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Tracing the stabilizer projector expansion retains exactly the subgroup supported in A, whose rank fixes the flat reduced-state spectrum."
+        },
+        {
+          "id": "EQC005_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Product states give zero entropy and a Bell pair cut gives one bit; purity gives S(A)=S(Abar)."
+        }
+      ],
+      "numerical_form": "Exact GF(2) rank of stabilizer generators restricted to the subsystem complement.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Entanglement-density and measurement-change observables",
+      "source_refs": [
+        {
+          "type": "paper_figure",
+          "value": "paper-source/manuscript_arxiv_03.tex:267-282; Main Fig. 2 caption"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "paper-source/manuscript_supp.tex:244-274; Supp. Fig. S3 caption and discussion"
+        }
+      ],
+      "latex": "s(t)=S_A(t)/(Lm/2),\\qquad \\Delta S_{meas}(t)=S_{after}(t)-S_{before}(t)",
+      "role": "Fixes timing, sign, and normalization for the dynamic numerical evidence.",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The captions define half-chain normalization and entropy change before/after each measurement layer."
+        },
+        {
+          "id": "EQC006_bounds",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For a pure state 0<=s<=1, while average projective measurements cannot increase the entanglement across a fixed cut under the stated trajectory average."
+        }
+      ],
+      "numerical_form": "Two entropy evaluations per time step plus realization mean, standard deviation, and standard error.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Half-chain finite-size scaling",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:286-350; scaling ansatz, subtracted form, and cost"
+        }
+      ],
+      "latex": "S(p,L)=\\alpha\\ln L+\\mathcal F((p-p_c)L^{1/\\nu}),\\quad S(p,L)-S(p_c,L)=\\mathcal F((p-p_c)L^{1/\\nu})",
+      "role": "Generates Supp. Fig. S4 collapses and its depth-dependent exponent estimate.",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement states the ansatz, asymptotic branches, variance-weighted cost, two-step optimization, and bootstrap protocol."
+        },
+        {
+          "id": "EQC007_asymptotics",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The printed asymptotes yield extensive entropy below p_c and size-independent entropy above p_c."
+        }
+      ],
+      "numerical_form": "Bounded p_c,nu optimization with overlap-only interpolation, cost surface, and bootstrap samples.",
+      "code_refs": [],
+      "open_questions": [
+        "The precise interpolation convention in the cited collapse implementation is not repeated; sensitivity must be reported."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Tripartite mutual information and scaling",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:354-395; I3 definition, ansatz, and fitted table"
+        }
+      ],
+      "latex": "I_3=S_A+S_B+S_C-S_{AB}-S_{BC}-S_{AC}+S_{ABC}=\\mathcal G((p-p_c)L^{1/\\nu})",
+      "role": "Provides the cleaner transition crossing and critical exponent used in Supp. Fig. S5 and Table SI.",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement defines four periodic partitions, I3, the scaling variable, and the expected O(1) critical behavior."
+        },
+        {
+          "id": "EQC008_product",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A product stabilizer state gives zero for every entropy and hence I3=0."
+        }
+      ],
+      "numerical_form": "Seven exact subsystem entropies per trajectory, followed by the same bounded collapse machinery.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Capacity of a degradable measurement channel",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "paper-source/manuscript_arxiv_03.tex:361-374; main Eq. (4)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "paper-source/manuscript_supp.tex:440-567; channel dilation through capacity relation"
+        }
+      ],
+      "latex": "\\mathcal Q=\\max_{\\rho_{in}}\\mathcal I_c(\\mathcal M,\\rho_{in})=\\max_{\\rho_{in}}\\sum_i p_i S(\\rho_S[i])",
+      "role": "Connects the entanglement transition to recoverable coherent quantum information.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The degradable-channel argument, block-diagonal output, coherent information, and final capacity identity are explicit in the main paper and supplement."
+        },
+        {
+          "id": "EQC009_degradable",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The environment has the same diagonal record as M, so tracing S from SM degrades the output to the complementary channel."
+        },
+        {
+          "id": "EQC009_block_entropy",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For block-diagonal rho_SM, S(SM)=H(p)+sum p_i S(rho_S[i]) and S(M)=H(p), yielding the conditional entropy."
+        }
+      ],
+      "numerical_form": "Analytic scientific claim; small channel examples may check the entropy identity but no schematic is rendered as numerical evidence.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Logarithmic entropy at criticality",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "paper-source/manuscript_supp.tex:428-438; critical entropy and alpha extraction"
+        }
+      ],
+      "latex": "S(p_c,L)=\\alpha\\log L+c",
+      "role": "Defines the alpha values in Supp. Fig. S6(c).",
+      "derived_from": [
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement states the critical logarithmic entropy and extracts alpha from sizes through L=64."
+        },
+        {
+          "id": "EQC010_critical_limit",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Setting p=p_c makes the scaling function a size-independent constant, leaving alpha ln L plus an intercept."
+        }
+      ],
+      "numerical_form": "Weighted linear regression of independently simulated S(p_c,L) against ln L.",
+      "code_refs": [],
+      "open_questions": []
+    }
+  ]
+}

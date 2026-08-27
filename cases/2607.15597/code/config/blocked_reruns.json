@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.15597",
+  "runs": [
+    {
+      "id": "mqdt_stark_map",
+      "targets": [
+        "Table S5",
+        "Fig. S2"
+      ],
+      "status": "blocked_missing_source_input",
+      "engine": [
+        "PairInteraction",
+        "rydcalc"
+      ],
+      "parameters": {
+        "principal_window": [
+          -6,
+          6
+        ],
+        "max_orbital_l": 3,
+        "electric_field_V_cm": [
+          0.0,
+          0.2
+        ],
+        "distance_um": [
+          5.0,
+          50.0
+        ]
+      },
+      "required_metadata": [
+        "species",
+        "quantum_defects",
+        "basis_cutoff",
+        "field_grid",
+        "overlap_tracking"
+      ],
+      "stages": [
+        "10_point_smoke",
+        "coarse_branch_scan",
+        "refined_avoided_crossings"
+      ],
+      "acceptance": "tracked branches and C4 agree without pixel fitting"
+    },
+    {
+      "id": "qldpc_monte_carlo",
+      "targets": [
+        "Tables S8-S12",
+        "Fig. S5 markers"
+      ],
+      "status": "blocked_missing_benchmark_metadata",
+      "codes": [
+        "BB [[72,12,6]]",
+        "BB [[144,12,12]]"
+      ],
+      "engine": {
+        "circuit": "Stim",
+        "decoder": "BP+OSD",
+        "osd_order": 7
+      },
+      "required_metadata": [
+        "parity_check_matrices",
+        "syndrome_schedule",
+        "noise_placement",
+        "herald_policy",
+        "seeds",
+        "stopping_rule"
+      ],
+      "shots": {
+        "pilot": 100,
+        "medium": 5000,
+        "final_minimum_per_point": 35000
+      },
+      "acceptance": "confidence-bounded logical errors reproduce paper anchors"
+    },
+    {
+      "id": "full_thermal_open_system",
+      "targets": [
+        "Figs. S3",
+        "Fig. S6",
+        "Fig. S7"
+      ],
+      "status": "blocked_missing_source_input_then_time_tradeoff",
+      "engine": [
+        "QuTiP",
+        "sparse Liouvillian"
+      ],
+      "parameters": {
+        "fock_cutoffs": [
+          30,
+          60,
+          90,
+          120
+        ],
+        "taylor_orders": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "mean_phonon_grid": [
+          0.1,
+          50.0
+        ]
+      },
+      "required_metadata": [
+        "hamiltonian_coefficients",
+        "collapse_operators",
+        "thermal_state_convention"
+      ],
+      "acceptance": "less than 1% relative or 1e-5 absolute change under cutoff refinement"
+    }
+  ]
+}

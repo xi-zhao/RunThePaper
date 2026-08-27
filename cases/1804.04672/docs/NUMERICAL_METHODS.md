@@ -83,7 +83,7 @@
   for the spectrum panels, and `scipy.sparse.linalg.expm_multiply` is used for
   `psi(t)=exp(-iHt)psi(0)`.
 - Initial state: normalized Gaussian
-  `exp[-(x-15)^2/40-(y-1)^2/10](1,1)^T`.
+  `exp-(x-15)^2/40-(y-1)^2/10^T`.
 - Rendered objects: two low-energy spectrum marker plots and six normalized
   intensity maps at `t=0,5,20`.
 - Validation checks: generated spectrum CSV, wave-packet CSV, check JSON,

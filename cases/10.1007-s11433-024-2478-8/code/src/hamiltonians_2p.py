@@ -66,11 +66,17 @@ def _local_energy(delta_0, delta):
     return delta_0 * _ket_bra(E, E) + delta * _ket_bra(R, R) + delta * _ket_bra(Q, Q)
 
 
-def build_sector(n_atoms, roles, adjacency, params):
+def build_sector(n_atoms, roles, adjacency, params, pair_energy_shifts=None):
     """Assemble a two-photon sector Hamiltonian.
 
     roles[i] = "buffer" or "qubit" -> which (Omega_p, Omega_S, delta) it uses.
     adjacency = list of (i, j) Foerster-coupled atom pairs.
+    pair_energy_shifts = optional mapping ``(i, j) -> delta_ij`` in rad/us.
+                         Each entry adds the diagonal term
+                         ``delta_ij |r_i r_j><r_i r_j|``.  This is distinct
+                         from the off-diagonal Foerster exchange on adjacency
+                         edges and represents Appendix Fig. a8's B/64 remote
+                         end-qubit energy shift.
     params: dict with omega1p, omega1s, delta1 (buffer) and omega2p, omega2s,
             delta2 (qubit), plus delta_0, B, delta_q  (all scalars, rad/us).
     Returns an (D**n, D**n) complex matrix.
@@ -96,6 +102,9 @@ def build_sector(n_atoms, roles, adjacency, params):
         h += B * (_embed2(rq, i, rq, j, n) + _embed2(qr, i, qr, j, n))
         # pair penalty delta_q on |q_i q_j>
         h += dq * _embed2(qq, i, qq, j, n)
+    rr = _ket_bra(R, R)
+    for (i, j), shift in (pair_energy_shifts or {}).items():
+        h += shift * _embed2(rr, i, rr, j, n)
     return h
 
 

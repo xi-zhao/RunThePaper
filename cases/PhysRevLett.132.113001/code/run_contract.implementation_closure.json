@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "PhysRevLett.132.113001-implementation-closure-v1-20260824",
+  "target_ids": [
+    "T003",
+    "T005",
+    "T006",
+    "T013"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--profile",
+    "attestation",
+    "--output-root",
+    "outputs/data/implementation_closure"
+  ],
+  "inputs": [
+    "src/hydrogen_metrology/metrology.py",
+    "src/hydrogen_metrology/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "profiles.attestation",
+  "expected_parameters": {
+    "scientific_scale": "method_and_domain_implementation_attestation",
+    "frequency_min_mhz": -12.0,
+    "frequency_max_mhz": 12.0,
+    "frequency_points": 241,
+    "field_max_v_per_cm": 1.6,
+    "field_points": 65,
+    "doppler_max_mhz": 9.0,
+    "doppler_points": 91
+  },
+  "outputs": [
+    "outputs/data/implementation_closure/T003.json",
+    "outputs/data/implementation_closure/T005.json",
+    "outputs/data/implementation_closure/T006.json",
+    "outputs/data/implementation_closure/T013.json",
+    "outputs/data/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

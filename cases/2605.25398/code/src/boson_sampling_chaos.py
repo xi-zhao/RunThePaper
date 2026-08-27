@@ -83,6 +83,69 @@ def conditional_two_photon_distribution(
     return probabilities / total, pairs
 
 
+def conditional_two_photon_trajectories(
+    eigenvalues: np.ndarray,
+    eigenvectors: np.ndarray,
+    times: np.ndarray,
+    input_pair: tuple[int, int] = DEFAULT_INPUT,
+) -> tuple[np.ndarray, list[tuple[int, int]]]:
+    """Return every conditional collision-free probability versus time.
+
+    The returned array has shape ``(number_of_pairs, number_of_times)``.  The
+    normalization is applied independently for every Hamiltonian realization
+    and time before any ensemble average, matching Eqs. (S4)-(S7).
+    """
+
+    time_values = np.asarray(times, dtype=float)
+    if time_values.ndim != 1 or time_values.size == 0:
+        raise ValueError("times must be a non-empty one-dimensional array")
+    modes = eigenvectors.shape[0]
+    pairs = collision_free_pairs(modes)
+    i, j = input_pair
+    if not (0 <= i < modes and 0 <= j < modes and i != j):
+        raise ValueError("input_pair must contain two distinct in-range modes")
+
+    phases = np.exp(-1j * np.outer(eigenvalues, time_values))
+    column_i = (eigenvectors * eigenvectors[i, :]) @ phases
+    column_j = (eigenvectors * eigenvectors[j, :]) @ phases
+    first = np.fromiter((pair[0] for pair in pairs), dtype=int)
+    second = np.fromiter((pair[1] for pair in pairs), dtype=int)
+    amplitudes = (
+        column_i[first] * column_j[second]
+        + column_j[first] * column_i[second]
+    )
+    probabilities = np.abs(amplitudes) ** 2
+    retained_mass = probabilities.sum(axis=0)
+    if np.any(retained_mass <= 0.0):
+        raise ValueError("collision-free probability mass is zero")
+    return probabilities / retained_mass[np.newaxis, :], pairs
+
+
+def averaged_conditional_probability_curves(
+    samples: list[tuple[np.ndarray, np.ndarray]],
+    times: np.ndarray,
+    input_pair: tuple[int, int] = DEFAULT_INPUT,
+) -> tuple[np.ndarray, list[tuple[int, int]]]:
+    """Average paper-normalized collision-free trajectories over an ensemble."""
+
+    if not samples:
+        raise ValueError("samples must be non-empty")
+    accumulated: np.ndarray | None = None
+    pairs: list[tuple[int, int]] = []
+    for eigenvalues, eigenvectors in samples:
+        trajectories, pairs = conditional_two_photon_trajectories(
+            eigenvalues,
+            eigenvectors,
+            times,
+            input_pair=input_pair,
+        )
+        if accumulated is None:
+            accumulated = np.zeros_like(trajectories)
+        accumulated += trajectories
+    assert accumulated is not None
+    return accumulated / len(samples), pairs
+
+
 def shannon_entropy(probabilities: np.ndarray) -> float:
     values = probabilities[probabilities > 0]
     return float(-np.sum(values * np.log(values)))
@@ -114,6 +177,9 @@ def ensemble_metrics(
     times: np.ndarray,
     input_pair: tuple[int, int] = DEFAULT_INPUT,
     target_pair: tuple[int, int] = (2, 5),
+    *,
+    retain_probabilities: bool = True,
+    retain_distribution_rows: bool = True,
 ) -> dict:
     dimension = samples[0][0].shape[0]
     output_pairs = collision_free_pairs(dimension)
@@ -140,7 +206,11 @@ def ensemble_metrics(
             target_values.append(float(probabilities[target_index]))
             sff_values.append(spectral_form_factor_4(eigenvalues, float(time)))
 
-            if sample_index < 5 and float(time) in set(PAPER_TIMES.tolist()):
+            if (
+                retain_distribution_rows
+                and sample_index < 5
+                and float(time) in set(PAPER_TIMES.tolist())
+            ):
                 for pair, probability in zip(output_pairs, probabilities):
                     distribution_rows.append(
                         {
@@ -155,7 +225,8 @@ def ensemble_metrics(
             for pair, probability in zip(output_pairs, probabilities):
                 sector_values[overlap_count(pair, input_pair)].append(float(probability))
 
-        all_probabilities_by_time[float(time)] = all_probabilities
+        if retain_probabilities:
+            all_probabilities_by_time[float(time)] = all_probabilities
         rows.append(
             {
                 "time": float(time),
@@ -294,26 +365,18 @@ def averaged_otoc_series(
     output_pair: tuple[int, int],
     input_pair: tuple[int, int] = DEFAULT_INPUT,
 ) -> np.ndarray:
-    i, j = input_pair
-    r, s = output_pair
-    values = np.zeros_like(times, dtype=float)
-    for eigenvalues, eigenvectors in samples:
-        phases = np.exp(-1j * np.outer(eigenvalues, times))
-
-        def element(a: int, b: int) -> np.ndarray:
-            weights = eigenvectors[a, :] * eigenvectors[b, :]
-            return weights @ phases
-
-        amplitude = element(r, i) * element(s, j) + element(r, j) * element(s, i)
-        values += np.abs(amplitude) ** 2
-    return values / len(samples)
+    curves, pairs = averaged_conditional_probability_curves(
+        samples,
+        times,
+        input_pair=input_pair,
+    )
+    return curves[pairs.index(output_pair)]
 
 
 def run_otoc_appendix(count: int = 260) -> dict:
     time_short = np.geomspace(1e-3, 0.18, 80)
     time_full = np.unique(np.concatenate([np.linspace(0.05, 4.0, 86), np.geomspace(4.2, 1000.0, 92)]))
     time_long = np.linspace(300.0, 1000.0, 700)
-    all_pairs = collision_free_pairs(8)
     rows_short = []
     rows_full = []
     rows_long = []
@@ -321,13 +384,12 @@ def run_otoc_appendix(count: int = 260) -> dict:
 
     for spec in [INTEGRABLE, CHAOTIC]:
         samples = diagonalize_ensemble(spec, dimension=8, count=count)
-        for pair in all_pairs:
-            if pair == DEFAULT_INPUT:
-                continue
+        full_curves, full_pairs = averaged_conditional_probability_curves(samples, time_full)
+        short_curves, short_pairs = averaged_conditional_probability_curves(samples, time_short)
+        long_curves, long_pairs = averaged_conditional_probability_curves(samples, time_long)
+        for pair_index, pair in enumerate(full_pairs):
             overlap = overlap_count(pair, DEFAULT_INPUT)
-            if overlap == 2:
-                continue
-            full_series = averaged_otoc_series(samples, time_full, pair)
+            full_series = full_curves[pair_index]
             for time, value in zip(time_full, full_series):
                 rows_full.append(
                     {
@@ -338,7 +400,13 @@ def run_otoc_appendix(count: int = 260) -> dict:
                         "otoc": float(value),
                     }
                 )
-            short_series = averaged_otoc_series(samples, time_short, pair)
+
+            # Fig. S5 says all collision-free configurations, so the initial
+            # configuration belongs to the full curves above.  Fig. S6
+            # explicitly excludes it from the power-law and FFT analyses.
+            if pair == DEFAULT_INPUT:
+                continue
+            short_series = short_curves[short_pairs.index(pair)]
             for time, value in zip(time_short, short_series):
                 rows_short.append(
                     {
@@ -350,7 +418,7 @@ def run_otoc_appendix(count: int = 260) -> dict:
                     }
                 )
 
-            long_series = averaged_otoc_series(samples, time_long, pair)
+            long_series = long_curves[long_pairs.index(pair)]
             normalized = long_series / max(float(np.mean(long_series)), 1e-15) - 1.0
             spectrum = np.abs(np.fft.rfft(normalized)) ** 2
             freqs = np.fft.rfftfreq(len(normalized), d=float(time_long[1] - time_long[0]))
@@ -442,7 +510,6 @@ def build_checks(sparse: dict, ideal: dict, otoc: dict) -> dict:
     chaotic_ideal = ideal[CHAOTIC.label]["metrics"]
     min_pt_row = min(chaotic_ideal, key=lambda row: row["pt_wasserstein"])
     max_entropy_row = max(chaotic_ideal, key=lambda row: row["entropy_mean"])
-    max_pr_row = max(chaotic_ideal, key=lambda row: row["participation_ratio_mean"])
     min_sff_row = min(chaotic_ideal, key=lambda row: row["sff4_mean"])
 
     short_rows = otoc["short"]

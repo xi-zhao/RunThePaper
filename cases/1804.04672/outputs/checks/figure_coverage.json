@@ -1,0 +1,1480 @@
+{
+  "schema_version": 2,
+  "paper_id": "1804.04672",
+  "implementations": {
+    "supplemental_paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_supplemental_campaign.py",
+        "--config",
+        "config/supplemental_paper_scale.json",
+        "--profile",
+        "paper",
+        "--output-root",
+        "outputs/data/supplemental_paper_v1",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/nonhermitian_chern.py",
+        "src/supplemental_campaign.py",
+        "scripts/run_supplemental_campaign.py",
+        "scripts/render_supplemental_campaign.py"
+      ],
+      "config_ref": "config/supplemental_paper_scale.json",
+      "run_contract_ref": "run_contract.supplemental.json",
+      "expected_outputs": [
+        "outputs/data/supplemental_paper_v1/data/phase_diagrams.json",
+        "outputs/data/supplemental_paper_v1/data/skin_profiles.npz",
+        "outputs/data/supplemental_paper_v1/data/skin_profiles_summary.json",
+        "outputs/data/supplemental_paper_v1/data/exact_cylinder_spectrum.npz",
+        "outputs/data/supplemental_paper_v1/checks/science.json",
+        "outputs/data/supplemental_paper_v1/manifest.json"
+      ],
+      "acceptance_criteria": [
+        "Every S4 finite-size point is generated from the declared open-boundary Hamiltonian and fitted against 1/L^2; aggregation never substitutes the printed theory curve for the numerical scan.",
+        "All eight S5/S6 density panels are normalized right-eigenstate densities from independently selected, explicitly declared complex-energy shifts; the missing author size and state selection remain marked reconstructed.",
+        "S8 retains the gamma-independent non-Bloch boundary m=2t and separately emits both Bloch exceptional-point curves.",
+        "S9 uses the printed asymmetric real-space hopping matrix at gamma=0.2, m=1.7554, Ly=40 and 180 kx points, and its similarity-transform residual is below 1e-12.",
+        "The numerical process reads no raw figure, PDF pixel, digitized curve, author code, author numerical array, or network resource."
+      ]
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T011",
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output",
+        "outputs/checks/implementation_closure.json"
+      ],
+      "code_refs": [
+        "src/nonhermitian_chern.py",
+        "src/supplemental_campaign.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure.json"
+      ],
+      "acceptance_criteria": [
+        "All 35 frozen implementation-closure items are emitted with explicit target mappings and passing implementation status.",
+        "Cylinder spectra, open-boundary phase scans, square dynamics, disk gap scaling, S4 scans, and exact-cylinder checks execute from the declared Hamiltonians.",
+        "The triangle path accepts an explicit site geometry and records the unpublished paper geometry as an input boundary instead of guessing it.",
+        "Reduced execution, reconstructed finite-size protocols, and missing publication inputs never change scientific coverage; no raw figure, source pixel, author array, or author code is read."
+      ]
+    },
+    "scientific_closure": {
+      "status": "ready",
+      "execution_status": "attested",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T004",
+        "T007",
+        "T010",
+        "T011",
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_scientific_closure.py",
+        "--config",
+        "config/scientific_closure.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/nonhermitian_chern.py",
+        "src/supplemental_campaign.py",
+        "src/scientific_closure.py",
+        "scripts/run_scientific_closure.py"
+      ],
+      "config_ref": "config/scientific_closure.json",
+      "run_contract_ref": "run_contract.json",
+      "run_attestation_ref": "outputs/runs/1804.04672-scientific-closure-v3-20260825/run_attestation.json",
+      "expected_outputs": [
+        "outputs/data/scientific_closure/T001.json",
+        "outputs/data/scientific_closure/T002.json",
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/data/scientific_closure/T010.json",
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/data/scientific_closure/T012.json"
+      ],
+      "acceptance_criteria": [
+        "Main Fig. 2 and Fig. 3(b) execute at caption scale with quantitative gap, normalization, motion, branch and resolution checks.",
+        "Fig. 3(a), S4, S8 and S9 use independent analytic, invariant and convergence checks without source-figure numeric input.",
+        "T012 executes a representative triangle kernel but preserves the missing publication geometry as an explicit source-audited input boundary.",
+        "The isolated runner reads every declared code/config input and no paper, reference pixel, author code, or author array."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "PFIG-001-OBC-NUMERICAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Numerically extrapolated square open-boundary transition",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-NONBLOCH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Non-Bloch low-energy boundary m=2+gamma^2",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Lower Bloch boundary m_-=2-sqrt(2) gamma",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "PFIG-001-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Upper Bloch boundary m_+=2+sqrt(2) gamma",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-SPECTRUM",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, left panel",
+      "scientific_object": "L=30 square low-energy spectrum at m=2.2121 (upper marker)",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "scientific_closure",
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-DENSITY-T000",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, wave-packet panel t=0",
+      "scientific_object": "Normalized wave-packet intensity at m=2.2121, t=0",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-DENSITY-T005",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, wave-packet panel t=5",
+      "scientific_object": "Normalized wave-packet intensity at m=2.2121, t=5",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-A-DENSITY-T020",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(a), PDF p. 3, wave-packet panel t=20",
+      "scientific_object": "Normalized wave-packet intensity at m=2.2121, t=20",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-SPECTRUM",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, left panel",
+      "scientific_object": "L=30 square low-energy spectrum at m=1.7879 (lower marker)",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-DENSITY-T000",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, wave-packet panel t=0",
+      "scientific_object": "Normalized wave-packet intensity at m=1.7879, t=0",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "The t=0 initial wave packet is numerically identical to Main Fig. 2(a), so this repeated display is retained but not counted twice.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-DENSITY-T005",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, wave-packet panel t=5",
+      "scientific_object": "Normalized wave-packet intensity at m=1.7879, t=5",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-002-B-DENSITY-T020",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 2(b), PDF p. 3, wave-packet panel t=20",
+      "scientific_object": "Normalized wave-packet intensity at m=1.7879, t=20",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T004.json",
+        "outputs/checks/scientific_closure/T004.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-CYLINDER-LOWER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Lower non-Bloch cylinder phase boundary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T002.json",
+        "outputs/checks/scientific_closure/T002.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-CYLINDER-UPPER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Upper non-Bloch cylinder phase boundary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T002.json",
+        "outputs/checks/scientific_closure/T002.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Lower Bloch cylinder reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T002.json",
+        "outputs/checks/scientific_closure/T002.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-A-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Upper Bloch cylinder reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T002.json",
+        "outputs/checks/scientific_closure/T002.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-B-BULK-SPECTRUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 3(b), PDF p. 4, blue points",
+      "scientific_object": "Ly=40 finite-cylinder complex-energy spectrum over 180 kx values",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "scientific_closure",
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T001.json",
+        "outputs/checks/scientific_closure/T001.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-003-B-CHIRAL-EDGE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 3(b), PDF p. 4, red points",
+      "scientific_object": "Chiral edge-state spectral branches at (m,gamma)=(1.717,0.2)",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T001.json",
+        "outputs/checks/scientific_closure/T001.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "PFIG-S01-HAMILTONIAN",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplement Fig. S1 / printed Fig. 4, PDF p. 7",
+      "scientific_object": "Real-space hopping Hamiltonian schematic",
+      "decision": "excluded",
+      "reason": "Hamiltonian schematic without an independently generated numerical observable."
+    },
+    {
+      "item_id": "PFIG-S02-A-GAP-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(a) / printed Fig. 5, PDF p. 7, finite-size points",
+      "scientific_object": "Disk finite-size |Delta|^2 samples versus 1/L^2 at m=2.2000",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S02-A-GAP-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(a) / printed Fig. 5, PDF p. 7, linear fit",
+      "scientific_object": "Linear 1/L^2 extrapolation and infinite-size intercept at m=2.2000",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S02-B-GAP-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(b) / printed Fig. 5, PDF p. 7, finite-size points",
+      "scientific_object": "Disk finite-size |Delta|^2 samples versus 1/L^2 at m=2.0800",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S02-B-GAP-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(b) / printed Fig. 5, PDF p. 7, linear fit",
+      "scientific_object": "Linear 1/L^2 extrapolation and infinite-size intercept at m=2.0800",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S02-C-GAP-DATA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(c) / printed Fig. 5, PDF p. 7, finite-size points",
+      "scientific_object": "Disk finite-size |Delta|^2 samples versus 1/L^2 at m=2.0400",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S02-C-GAP-FIT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2(c) / printed Fig. 5, PDF p. 7, linear fit",
+      "scientific_object": "Linear 1/L^2 extrapolation and infinite-size intercept at m=2.0400",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "PFIG-S03-DISK-NUMERICAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 / printed Fig. 6, PDF p. 8",
+      "scientific_object": "Numerical disk-geometry transition boundary",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PFIG-S03-NONBLOCH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 / printed Fig. 6, PDF p. 8",
+      "scientific_object": "Disk non-Bloch boundary m=2+gamma^2",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "This analytic reference is the same formula series already counted in Main Fig. 1; only the independent disk numerical boundary is new scientific content.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PFIG-S03-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 / printed Fig. 6, PDF p. 8",
+      "scientific_object": "Disk lower Bloch reference boundary",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "This analytic reference is the same formula series already counted in Main Fig. 1; only the independent disk numerical boundary is new scientific content.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PFIG-S03-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 / printed Fig. 6, PDF p. 8",
+      "scientific_object": "Disk upper Bloch reference boundary",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "This analytic reference is the same formula series already counted in Main Fig. 1; only the independent disk numerical boundary is new scientific content.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-005",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.05 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0025, theory=2.0025",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-010",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.10 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0100, theory=2.0100",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-015",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.15 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0225, theory=2.0225",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-020",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.20 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0400, theory=2.0400",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-025",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.25 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0625, theory=2.0625",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-030",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.30 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.0885, theory=2.0900",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-035",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.35 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.1200, theory=2.1225",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-040",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.40 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.1540, theory=2.1600",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-045",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.45 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.1940, theory=2.2025",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PTBL-S01-GAMMA-050",
+      "item_type": "table_row",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Table I, PDF p. 7, gamma=0.50 row",
+      "scientific_object": "Disk boundary row: m_c numerical=2.2360, theory=2.2500",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "The row is the tabulated source of the Supplement Fig. S3 phase-boundary series already counted under T006; retained for audit without double counting.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-UPPER-NUMERICAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 upper / printed Fig. 7, PDF p. 8",
+      "scientific_object": "GAMMA-X finite-size numerical transition",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-UPPER-NONBLOCH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 upper / printed Fig. 7, PDF p. 8",
+      "scientific_object": "GAMMA-X non-Bloch prediction m=2+gamma_x^2/2",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-UPPER-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 upper / printed Fig. 7, PDF p. 8",
+      "scientific_object": "GAMMA-X lower Bloch reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-UPPER-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 upper / printed Fig. 7, PDF p. 8",
+      "scientific_object": "GAMMA-X upper Bloch reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-LOWER-NUMERICAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 lower / printed Fig. 7, PDF p. 8",
+      "scientific_object": "VX-ANISOTROPIC finite-size numerical transition",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-LOWER-NONBLOCH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 lower / printed Fig. 7, PDF p. 8",
+      "scientific_object": "VX-ANISOTROPIC non-Bloch prediction m=2+1.28125 gamma^2",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-LOWER-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 lower / printed Fig. 7, PDF p. 8",
+      "scientific_object": "VX-ANISOTROPIC lower Bloch reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S04-LOWER-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4 lower / printed Fig. 7, PDF p. 8",
+      "scientific_object": "VX-ANISOTROPIC upper Bloch reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T007.json",
+        "outputs/checks/scientific_closure/T007.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "PFIG-S05-A-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 05(a) / printed Fig. 8, PDF p. 9",
+      "scientific_object": "first selected square bulk-eigenstate density at gamma_x=gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S05-B-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 05(b) / printed Fig. 8, PDF p. 9",
+      "scientific_object": "second selected square bulk-eigenstate density at gamma_x=gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S05-C-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 05(c) / printed Fig. 8, PDF p. 9",
+      "scientific_object": "first selected disk bulk-eigenstate density at gamma_x=gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S05-D-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 05(d) / printed Fig. 8, PDF p. 9",
+      "scientific_object": "second selected disk bulk-eigenstate density at gamma_x=gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S06-A-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 06(a) / printed Fig. 9, PDF p. 9",
+      "scientific_object": "first selected square bulk-eigenstate density at gamma_x=0, gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S06-B-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 06(b) / printed Fig. 9, PDF p. 9",
+      "scientific_object": "second selected square bulk-eigenstate density at gamma_x=0, gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S06-C-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 06(c) / printed Fig. 9, PDF p. 9",
+      "scientific_object": "first selected disk bulk-eigenstate density at gamma_x=0, gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S06-D-DENSITY",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. 06(d) / printed Fig. 9, PDF p. 9",
+      "scientific_object": "second selected disk bulk-eigenstate density at gamma_x=0, gamma_y=0.15, m=2.2121",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "supplemental_paper_scale",
+      "claim_refs": [
+        "CLM007"
+      ]
+    },
+    {
+      "item_id": "PFIG-S07-HAMILTONIAN",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplement Fig. S7 / printed Fig. 10, PDF p. 9",
+      "scientific_object": "Exactly solvable asymmetric-hopping Hamiltonian schematic",
+      "decision": "excluded",
+      "reason": "Hamiltonian schematic without an independently generated numerical observable."
+    },
+    {
+      "item_id": "PFIG-S08-NONBLOCH",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S8 / printed Fig. 11, PDF p. 10",
+      "scientific_object": "Exactly solvable open-boundary transition m=2t",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T010.json",
+        "outputs/checks/scientific_closure/T010.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM008"
+      ]
+    },
+    {
+      "item_id": "PFIG-S08-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S8 / printed Fig. 11, PDF p. 10",
+      "scientific_object": "Exactly solvable lower Bloch boundary",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T010.json",
+        "outputs/checks/scientific_closure/T010.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM008"
+      ]
+    },
+    {
+      "item_id": "PFIG-S08-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S8 / printed Fig. 11, PDF p. 10",
+      "scientific_object": "Exactly solvable upper Bloch boundary",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T010.json",
+        "outputs/checks/scientific_closure/T010.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM008"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-A-CYLINDER-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(a) / printed Fig. 12(a), PDF p. 10",
+      "scientific_object": "Exactly solvable lower non-Bloch cylinder boundary m=1+exp(-gamma_x)",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-A-CYLINDER-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(a) / printed Fig. 12(a), PDF p. 10",
+      "scientific_object": "Exactly solvable upper non-Bloch cylinder boundary m=1+exp(gamma_x)",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-A-BLOCH-MINUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(a) / printed Fig. 12(a), PDF p. 10",
+      "scientific_object": "Exactly solvable lower Bloch cylinder reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-A-BLOCH-PLUS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(a) / printed Fig. 12(a), PDF p. 10",
+      "scientific_object": "Exactly solvable upper Bloch cylinder reference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-B-BULK-SPECTRUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(b) / printed Fig. 12(b), PDF p. 10, blue points",
+      "scientific_object": "Exactly solvable Ly=40 cylinder bulk spectrum over 180 kx values",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    },
+    {
+      "item_id": "PFIG-S09-B-CHIRAL-EDGE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S9(b) / printed Fig. 12(b), PDF p. 10, red points",
+      "scientific_object": "Exactly solvable cylinder chiral edge-state branches",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula- or Hamiltonian-driven scientific output, assessed independently of source-figure pixels.",
+      "implementation_ref": "scientific_closure",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T011.json",
+        "outputs/checks/scientific_closure/T011.json"
+      ],
+      "author_closure_status": "author_evidence_ready_for_fresh_review",
+      "claim_refs": [
+        "CLM009"
+      ]
+    }
+  ],
+  "scope_mode": "whole_paper_scientific_items",
+  "formula_numericalization_required": true,
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf, 11 pages including the embedded Supplemental Material",
+    "known_items": [
+      "Main Figs. 1-3",
+      "Supplement Figs. S1-S9",
+      "Supplement Table I",
+      "triangle-geometry prose claim"
+    ],
+    "unknown_remainder": false,
+    "reason": "The complete archived PDF and TeX were read end to end. Author code and numerical arrays were absent; source figures were used only to enumerate displays and read printed labels or axis extents, never for pixel-coordinate curve extraction or untabulated parameter fitting."
+  },
+  "quantitative_claims": [
+    {
+      "item_id": "PCLM-TRIANGLE-GEOMETRY-INDEPENDENCE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Sec. II, geometry-independence paragraph, PDF p. 7",
+      "scientific_object": "A triangular open-boundary geometry yields the same phase diagram as the square and disk geometries",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "scientific_closure",
+      "reason": "The claim is independently testable but has no figure, target artifact, triangle definition, size, or numerical data in the publication.",
+      "author_closure_evidence_refs": [
+        "outputs/data/scientific_closure/T012.json",
+        "outputs/checks/scientific_closure/T012.json"
+      ],
+      "author_closure_status": "publication_input_missing_candidate_for_fresh_review",
+      "claim_refs": [
+        "CLM010"
+      ]
+    }
+  ],
+  "scientific_input_boundary": {
+    "author_code": "forbidden_and_not_used",
+    "author_numeric_arrays": "forbidden_and_not_used",
+    "source_pixels": "render_reference_only_never_scientific_input",
+    "paper_source": "read_only_by_author_to_freeze_equations_parameters_and_input_audits_not_read_by_runner",
+    "isolated_runtime_attestation": "outputs/runs/1804.04672-scientific-closure-v3-20260825/run_attestation.json"
+  }
+}

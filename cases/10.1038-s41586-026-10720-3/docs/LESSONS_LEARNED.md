@@ -1,14 +1,29 @@
 # Lessons learned
 
-1. A vector figure may be the only quantitative public representation when the
-   fitted coefficient table is absent. Its provenance must remain explicit.
-2. The physical state drawn in a figure may differ from the incident laboratory
-   state. Here, using 800 nm for the Fig. 2 pump marker gives the wrong roots;
-   the correct state is the Raman-shifted carrier at the dispersion minimum.
-3. Experimental raw data being unavailable does not make a fitted theoretical
-   curve non-numerical. Fit inputs, generated theory, and withheld validation
-   references should be separated into different objects.
-4. Pixel registration is useful for diagnosing geometry and typography, but it
-   cannot upgrade source-derived inputs into independent author-data evidence.
-5. Paper prose and plotted regression policy can disagree. Both should be
-   reconstructed and reported rather than silently choosing one.
+This case demonstrates why coverage, execution, scientific fidelity, and
+rendering must be separate dimensions.
+
+| Lesson | General rule |
+| --- | --- |
+| Mixed panels hide the denominator | split theoretical curves from experimental markers before scoring |
+| A formula can be exact while its parameters are missing | track formula gate and parameter match separately |
+| A successful run can still use the wrong scientific normalization | require limiting tests and explicit code-fault exclusion |
+| Source-derived fits inflate visual scores | keep all source curves/markers out of the scientific runner |
+| A100 cannot manufacture missing inputs | schedule compute only when it can discriminate a scientific hypothesis |
+| Internal convergence is not a paper result | exclude auxiliary checks from paper coverage |
+| Pixel comparison is useful after data freeze | RenderContract may alter presentation, never physics or arrays |
+
+## New Failure Modes
+
+- A surrogate can preserve qualitative root ordering while its ultraviolet
+  continuation remains insufficiently tested.
+- A numerically stable UPPE can still use an underived field normalization.
+- Mixed experimental/theory panels can silently inflate the reproducible-item
+  denominator unless each series is classified separately.
+
+## Reusable Checks Or Tools
+
+The reusable core is small: atomic item inventory, target contract, isolated
+run attestation, causal diagnosis, post-freeze render evidence, and
+fresh-context review. `project inspect` derives lifecycle state from these
+artifacts.

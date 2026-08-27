@@ -104,7 +104,7 @@ For `D=28`, this is about `2.927`. The reproduced chaotic curve peaks at `2.787`
 
 Formula card: `F007`.
 
-The paper uses a mapping between two-photon boson-sampling probabilities and four-point OTOC-equivalent observables. In this case, the same conditional two-photon probability kernel is used for those observables.
+The paper uses a mapping between two-photon boson-sampling probabilities and four-point OTOC-equivalent observables. Every OTOC path now uses the same conditional two-photon probability kernel as PT distance, entropy, and PR. Conditioning happens independently for each Hamiltonian and time before the ensemble average, so the 28 collision-free curves sum to one at every time.
 
 For output configurations sharing one mode with the input, the short-time amplitude has one off-diagonal transition, so the probability scales as
 
@@ -119,6 +119,8 @@ C(t) ~ t^4
 ```
 
 The generated checks measure slopes `1.999` and `3.999`, matching the derivation.
+
+Fig. S5 is treated separately from Fig. S6: the former says all collision-free configurations and therefore includes the source-traced initial pair `(3,4)`, while the latter explicitly excludes the initial configuration from its FFT participation-ratio analysis.
 
 ## D006: Participation Ratio
 
@@ -140,11 +142,25 @@ At `t=1.79`, the local reproduction gives:
 - chaotic PR: `12.51`;
 - integrable PR: `1.05`.
 
+## D007: Eq. S8 Source-Consistency Record
+
+Formula card: `F010`.
+
+Appendix A first defines
+
+```text
+Y = 1 - sum_{x in C} p_x
+```
+
+as excluded probability mass, and then prints Eq. S8 using powers and an exponential in `1-y`. The following prose describes the conditional probability as a ratio involving the Gamma distribution of `Y`. These three publication statements are transcribed together in `F010` so the next fresh reviewer can distinguish a reflected-variable convention, a missing prose definition, or a paper-formula discrepancy.
+
+The author-side repair does not adjudicate among those possibilities and does not feed Eq. S8 into the generator. T004 samples and normalizes the conditional distribution directly.
+
 ## Formula Gate Result
 
 The formula chain is accepted for numerical reproduction because:
 
-- all nine cards in `EQUATION_CARDS.json` have open numeric gates;
+- all ten cards in `EQUATION_CARDS.json` have open numeric gates; `F010` is a source-only audit card rather than a numerical dependency;
 - the Hamiltonian normalization and `Lambda -> lambda` conversion are explicit;
 - collision-free probabilities normalize to one;
 - entropy and PT diagnostics use the same `D=28` space as the paper;

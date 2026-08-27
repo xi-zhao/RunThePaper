@@ -8,7 +8,7 @@ Formal citation: Physical Review Letters 125, 260505 (2020) · DOI `10.1103/Phys
 
 Public status: **Partial scientific reproduction** · Audit score: **89.00/100**
 
-Case scaffolded from framework/templates/paper_case.
+Whole-paper W1 audit: 20 eligible atomic items, 4 covered and 16 explicitly uncovered; five supporting duplicates are not double-counted.
 
 ## Start Here / 从这里开始
 
@@ -19,6 +19,7 @@ Case scaffolded from framework/templates/paper_case.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -48,7 +49,7 @@ cd cases/1910.08980/code
 python scripts/run_reproduction.py --config config/paper_protocol.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

@@ -21,7 +21,7 @@ Numerical form:
 Evaluate a stable logistic function on epsilon/T in [-6,6].
 ```
 
-Code: `code/src/fermionic_phase_space.py::fermi_dirac_occupation`
+Code: `src/fermionic_phase_space.py::fermi_dirac_occupation`
 
 
 ### EQ002 — Glauber P, Wigner W, and Husimi Q supernumbers
@@ -40,7 +40,7 @@ Numerical form:
 Represent only the ordinary bodies as arrays; retain the common nilpotent soul symbolically.
 ```
 
-Code: `code/src/fermionic_phase_space.py::phase_space_bodies`
+Code: `src/fermionic_phase_space.py::phase_space_bodies`
 
 
 ### EQ003 — Fermionic phase-space majorization
@@ -59,7 +59,7 @@ Numerical form:
 Check body interval endpoints and the constant P-W-Q spacing on n in [0,1].
 ```
 
-Code: `code/src/fermionic_phase_space.py::phase_space_bodies`, `code/tests/test_fermionic_phase_space.py`
+Code: `src/fermionic_phase_space.py::phase_space_bodies`, `tests/test_fermionic_phase_space.py`
 
 
 ### EQ004 — Covariance determinants and second-moment uncertainty
@@ -78,7 +78,7 @@ Numerical form:
 Square the three bodies and apply the common minus sign.
 ```
 
-Code: `code/src/fermionic_phase_space.py::covariance_determinants`
+Code: `src/fermionic_phase_space.py::covariance_determinants`
 
 
 ### EQ005 — Rényi and Shannon phase-space entropies
@@ -97,7 +97,7 @@ Numerical form:
 Evaluate the order-dependent constant and subtract log absolute body; retain true +infinity at zero body.
 ```
 
-Code: `code/src/fermionic_phase_space.py::renyi_offset`, `code/src/fermionic_phase_space.py::renyi_entropy`
+Code: `src/fermionic_phase_space.py::renyi_offset`, `src/fermionic_phase_space.py::renyi_entropy`
 
 
 ### EQ006 — Entropy bounds and curve intersections
@@ -116,7 +116,7 @@ Numerical form:
 Evaluate exact bounds and analytic crossing coordinates; no fitted marker positions are used.
 ```
 
-Code: `code/src/fermionic_phase_space.py::entropy_lower_bound`, `code/src/fermionic_phase_space.py::crossing_points`
+Code: `src/fermionic_phase_space.py::entropy_lower_bound`, `src/fermionic_phase_space.py::crossing_points`
 
 
 ### EQ007 — Single-mode thermal loss channel
@@ -135,4 +135,4 @@ Numerical form:
 Evaluate one convex combination, then reuse EQ005.
 ```
 
-Code: `code/src/fermionic_phase_space.py::thermal_loss_output_occupation`, `code/tests/test_fermionic_phase_space.py::FermionicPhaseSpaceTests.test_thermal_loss_benchmark`
+Code: `src/fermionic_phase_space.py::thermal_loss_output_occupation`, `tests/test_fermionic_phase_space.py::FermionicPhaseSpaceTests.test_thermal_loss_benchmark`

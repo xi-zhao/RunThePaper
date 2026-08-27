@@ -15,6 +15,7 @@ from scipy.spatial import cKDTree
 import torch
 
 
+ROOT = Path(__file__).resolve().parents[1]
 EDGE_TYPE_NAMES = ("atom_to_target", "atom_to_atom", "target_to_target")
 EDGE_ATOM_TO_TARGET = 0
 EDGE_ATOM_TO_ATOM = 1
@@ -191,6 +192,23 @@ def generate_ground_truth_dataset_shard(
     missing_rows = [index for index, row in enumerate(samples) if row is None]
     if missing_rows:
         raise ValueError(f"dataset sample rows missing after generation: {missing_rows[:5]}")
+    if not missing_jobs and manifest_path.exists():
+        existing_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if existing_manifest_matches_request(
+            existing_manifest,
+            shard_id=shard_id,
+            sample_count=sample_count,
+            initial_side=initial_side,
+            target_side=target_side,
+            loading_probability=loading_probability,
+            k_neighbors=k_neighbors,
+            seed_start=seed_start,
+            graph_backend=graph_backend,
+            workers=worker_count,
+            target_lattice_spacing=target_lattice_spacing,
+        ):
+            return existing_manifest
+
     generated_samples = len(missing_jobs)
     sample_rows = [row for row in samples if row is not None]
 
@@ -202,7 +220,7 @@ def generate_ground_truth_dataset_shard(
         "initial_side": initial_side,
         "k_neighbors": k_neighbors,
         "loading_probability": loading_probability,
-        "manifest_path": str(manifest_path),
+        "manifest_path": manifest_path_value(manifest_path),
         "sample_count": sample_count,
         "samples": sample_rows,
         "seed_start": seed_start,
@@ -221,6 +239,43 @@ def generate_ground_truth_dataset_shard(
     }
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return manifest
+
+
+def existing_manifest_matches_request(
+    manifest: dict[str, object],
+    *,
+    shard_id: str,
+    sample_count: int,
+    initial_side: int,
+    target_side: int,
+    loading_probability: float,
+    k_neighbors: int,
+    seed_start: int,
+    graph_backend: str,
+    workers: int,
+    target_lattice_spacing: float | None,
+) -> bool:
+    return (
+        manifest.get("shard_id") == shard_id
+        and int(manifest.get("sample_count", -1)) == sample_count
+        and int(manifest.get("initial_side", -1)) == initial_side
+        and int(manifest.get("target_side", -1)) == target_side
+        and float(manifest.get("loading_probability", -1.0)) == float(loading_probability)
+        and int(manifest.get("k_neighbors", -1)) == k_neighbors
+        and int(manifest.get("seed_start", -1)) == seed_start
+        and manifest.get("graph_backend") == graph_backend
+        and int(manifest.get("workers", -1)) == workers
+        and manifest.get("target_lattice_spacing") == target_lattice_spacing
+        and len(manifest.get("samples", [])) == sample_count
+    )
+
+
+def manifest_path_value(manifest_path: Path) -> str:
+    manifest_path = Path(manifest_path)
+    try:
+        return str(manifest_path.relative_to(ROOT))
+    except ValueError:
+        return str(manifest_path)
 
 
 def dataset_sample_manifest_row(
@@ -839,9 +894,9 @@ def run_model_training_reproduction(
         "prefetch_buffer": prefetch_buffer,
         "progress_every_updates": progress_every_updates,
         "batch_size": batch_size,
-        "dataset_manifest_path": dataset_manifest_path.name if dataset_manifest_path else None,
-        "eval_dataset_manifest_path": eval_dataset_manifest_path.name if eval_dataset_manifest_path else None,
-        "resume_checkpoint_path": resume_checkpoint_path.name if resume_checkpoint_path else None,
+        "dataset_manifest_path": str(dataset_manifest_path) if dataset_manifest_path else None,
+        "eval_dataset_manifest_path": str(eval_dataset_manifest_path) if eval_dataset_manifest_path else None,
+        "resume_checkpoint_path": str(resume_checkpoint_path) if resume_checkpoint_path else None,
         "resume_optimizer_state": bool(resume_optimizer_state),
         "loss_mode": loss_mode,
         "source_ce_weight": source_ce_weight,
@@ -1077,9 +1132,9 @@ def run_model_training_reproduction(
         "summary": summary,
         "eval_rows": eval_rows,
         "artifacts": {
-            "checkpoint_path": checkpoint_path.name,
-            "training_history_path": history_path.name,
-            "progress_path": progress_path.name,
+            "checkpoint_path": str(checkpoint_path),
+            "training_history_path": str(history_path),
+            "progress_path": str(progress_path),
         },
     }
     (output_dir / "metrics.json").write_text(json.dumps(metrics, indent=2, sort_keys=True) + "\n", encoding="utf-8")

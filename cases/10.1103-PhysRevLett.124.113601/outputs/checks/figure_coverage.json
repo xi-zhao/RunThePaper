@@ -1,0 +1,263 @@
+{
+  "schema_version": 2,
+  "paper_id": "10.1103-PhysRevLett.124.113601",
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "scripts/run_implementation_campaign.py",
+        "src/implementation_campaign.py",
+        "src/ldsi_model.py"
+      ],
+      "config_ref": "config/implementation_campaign.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json",
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/implementation_closure/T003.json",
+        "outputs/data/implementation_closure/T004.json"
+      ],
+      "acceptance_criteria": [
+        "T002/T003 execute reduced formula-derived linear and nonlinear checks with normalization, orthogonality, convergence, and finiteness gates.",
+        "T001/T004 fail closed with explicit finite-chain and nonlinear-input schemas; no source-calibrated values are substituted.",
+        "Implementation attestation remains separate from the open source discrepancy, scientific coverage, paper-exact status, pixels, and independent review."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_apparatus_schematic",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1",
+      "reason": "Optical and model schematic only; it does not contain an independently reproduced numerical observable."
+    },
+    {
+      "item_id": "fig2_main_state_thresholds",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 2 main panel",
+      "reason": "Direct cause: the paper does not print the finite-chain boundary/phase convention needed to define this threshold panel uniquely. Root cause: the current case selected those hidden inputs by matching the source figure, which is not allowed under the scientific-only standard.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig2_inset_ipr_mobility_edge",
+      "item_type": "figure_inset",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. 2 inset",
+      "reason": "Direct cause: the paper omits the finite-chain phase/origin convention needed for the exact IPR-versus-state inset. Root cause: the present implementation fixed that hidden input by fitting the source-vector path, so this inset cannot count as an independent scientific target.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig3a_aa_susceptibility_threshold",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(a)",
+      "reason": "The AA susceptibility threshold curve is generated from literal published Eq. (3) and explicit paper parameters; source/vector data are used only after generation and reveal an open normalization discrepancy (0.2064J versus 0.2768J).",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig3b_momentum_distribution_chi0",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(b)",
+      "reason": "The chi/J=0 momentum response is independently computed from the eigensystem and Fourier observable defined in the paper.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig3c_momentum_distribution_chi1",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(c)",
+      "reason": "The chi/J=1 momentum response is independently computed from the same paper-defined model and observable.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig3d_channel_susceptibility_chi0",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(d)",
+      "reason": "The chi/J=0 state-resolved susceptibility channels are generated numerically from the paper's overlap formulas and do not use source curves as input.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig3e_channel_susceptibility_chi1",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 3(e)",
+      "reason": "The chi/J=1 state-resolved susceptibility channels are generated from the same independent numerical pipeline as Fig. 3(d).",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig4a_photon_number_onset",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(a)",
+      "reason": "The nonlinear cavity photon number is generated from the self-consistent mean-field equations. Missing continuation details lower fidelity to paper_subset but do not block the scientific target.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig4b_threshold_landscape",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Fig. 4(b)",
+      "reason": "The threshold landscape is independently computed from literal published Eq. (3) and the declared grid. Its harmonic minima agree, while the absolute midpoint normalization differs from the plotted curve and is recorded as a source discrepancy.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "figs1a_density_profile_chi0",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. S1(a)",
+      "reason": "Direct cause: the supplement does not publish the pump sample and hidden finite-chain convention needed for this density-profile panel. Root cause: the current case calibrated those missing inputs against the source panel, which is disallowed for scientific target generation.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1b_density_profile_chi0p5",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. S1(b)",
+      "reason": "Direct cause: the supplement omits the pump sample and finite-chain phase convention for this panel. Root cause: the existing reproduction fixed those hidden inputs by source-panel calibration.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1c_density_profile_chi1",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. S1(c)",
+      "reason": "Direct cause: the required pump sample and exact finite-chain convention are not printed. Root cause: the current target depends on source-panel calibration of those missing scientific inputs.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1d_density_profile_chi1p9",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. S1(d)",
+      "reason": "Direct cause: this panel's above-threshold sample and hidden finite-chain convention are unpublished. Root cause: the existing case used source-panel peak scales to fill those gaps.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "figs1e_density_profile_chi2p03",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Fig. S1(e)",
+      "reason": "Direct cause: the supplement does not disclose the pump sample and exact finite-chain convention for the localized density panel. Root cause: the current implementation selected those missing inputs by matching source-panel peak heights.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    }
+  ]
+}

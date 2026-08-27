@@ -1,0 +1,704 @@
+{
+  "schema_version": 2,
+  "paper_id": "1910.08980",
+  "scope_mode": "whole_paper_atomic_w1",
+  "formula_numericalization_required": true,
+  "inventory_boundary": {
+    "status": "complete",
+    "unknown_remainder": false,
+    "source_ref": "raw/paper.pdf (16 pages; Appendices A-D are embedded and there is no separate supplement) and paper-source/main.tex",
+    "known_items": [
+      "Main Fig. 1 four independent numerical series",
+      "sixteen independent no-display analytic claims",
+      "five supporting duplicates",
+      "two pseudocode displays",
+      "no tables"
+    ],
+    "reason": "The full canonical PDF, captions, theorem statements, proof appendices, and embedded source were read end to end. Author numerical code/arrays were absent and source pixels were not scientific inputs.",
+    "next_action": "Keep this W1 denominator stable; W2 may add independent symbolic and small-n evidence without changing item identity."
+  },
+  "implementations": {
+    "paper_protocol": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_protocol.json"
+      ],
+      "code_refs": [
+        "src/rqaoa.py",
+        "src/reproduction.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_protocol.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/main_fig1_n32.csv",
+        "outputs/data/main_fig1_n32_instances.npz",
+        "outputs/data/main_fig1_n32_traces.json",
+        "outputs/data/main_fig1_n100.csv",
+        "outputs/data/main_fig1_n100_instances.npz",
+        "outputs/data/main_fig1_n100_traces.json",
+        "outputs/checks/target_checks.json"
+      ],
+      "acceptance_criteria": [
+        "All disclosed paper sizes, instance counts, cutoffs, signed-cubic graph rules, and approximation-ratio definitions are executed by the isolated runner.",
+        "Exact Ising denominators have zero reported MILP gap, and every RQAOA energy satisfies the recursive energy identity and the independently proved optimum bound.",
+        "The Appendix C correlation formula agrees with an independent statevector calculation and the exact MILP agrees with brute force on a small signed-cubic graph.",
+        "Because the paper omits the exact random graph and coupling samples, agreement is judged on the frozen ensemble distribution; an unmatched bar cannot by itself become a paper-error candidate."
+      ]
+    },
+    "analytic_claim_audit_v1": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_claim_audit.py",
+        "src/claim_audit.py",
+        "src/rqaoa.py"
+      ],
+      "config_ref": "config/claim_audit.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_claim_audit.py",
+        "--config",
+        "config/claim_audit.json"
+      ],
+      "expected_outputs": [
+        "outputs/checks/claim_implementation_audit.json"
+      ],
+      "acceptance_criteria": [
+        "All 16 analytic items receive a claim-addressed executable result.",
+        "Finite enumeration, formula checks, and statevector cross-checks never count as proofs or promote scientific coverage.",
+        "The isolated run reads no paper PDF, source image, author array, or author reproduction code."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "F1-L-QAOA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 left, PDF p. 5",
+      "scientific_object": "Sixteen level-1 QAOA approximation ratios for n=32 random signed 3-regular Ising instances.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_protocol",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/main_fig1_n32.csv"
+      ],
+      "critical": true,
+      "reason": "The independently generated, hash-bound paper-protocol artifact covers this series.  Exact displayed bar identity remains unavailable because the paper does not publish its random graph/coupling samples.",
+      "claim_refs": [
+        "CLM_RQAOA_ADVANTAGE"
+      ]
+    },
+    {
+      "item_id": "F1-L-RQAOA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 left, PDF p. 5",
+      "scientific_object": "Sixteen level-1 RQAOA approximation ratios for n=32 with cutoff n_c=8.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_protocol",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/main_fig1_n32.csv"
+      ],
+      "critical": true,
+      "reason": "The independently generated, hash-bound paper-protocol artifact covers this series.  Exact displayed bar identity remains unavailable because the paper does not publish its random graph/coupling samples.",
+      "claim_refs": [
+        "CLM_RQAOA_ADVANTAGE"
+      ]
+    },
+    {
+      "item_id": "F1-R-QAOA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 right, PDF p. 5",
+      "scientific_object": "Sixteen level-1 QAOA approximation ratios for n=100 random signed 3-regular Ising instances.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_protocol",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/main_fig1_n100.csv"
+      ],
+      "critical": true,
+      "reason": "The independently generated, hash-bound paper-protocol artifact covers this series.  Exact displayed bar identity remains unavailable because the paper does not publish its random graph/coupling samples.",
+      "claim_refs": [
+        "CLM_RQAOA_ADVANTAGE"
+      ]
+    },
+    {
+      "item_id": "F1-R-RQAOA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Main Fig. 1 right, PDF p. 5",
+      "scientific_object": "Sixteen level-1 RQAOA approximation ratios for n=100 with cutoff n_c=30.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_protocol",
+      "coverage_status": "covered",
+      "data_refs": [
+        "outputs/data/main_fig1_n100.csv"
+      ],
+      "critical": true,
+      "reason": "The independently generated, hash-bound paper-protocol artifact covers this series.  Exact displayed bar identity remains unavailable because the paper does not publish its random graph/coupling samples.",
+      "claim_refs": [
+        "CLM_RQAOA_ADVANTAGE"
+      ]
+    },
+    {
+      "item_id": "APP-C-ELIMINATEVARIABLE-PSEUDOCODE",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "algorithm_listing",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Appendix C.2 eliminateVARIABLE listing, PDF p. 10",
+      "scientific_object": "Variable-elimination pseudocode for a general hypergraph cost function.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Algorithm pseudocode has no independently plotted numerical observable; its scientific consequences are inventoried as claims."
+    },
+    {
+      "item_id": "APP-C-FIG2-RQAOA-PSEUDOCODE",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "algorithm_listing",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Appendix Fig. 2, PDF p. 11",
+      "scientific_object": "Top-level recursive QAOA pseudocode.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "Algorithm pseudocode has no independently plotted numerical observable; its scientific consequences are inventoried as claims."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C-MAIN-T1-NLTS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 1 and Eqs. (1)-(6), PDF p. 2",
+      "scientific_object": "Degree-3 expander ferromagnetic Ising Hamiltonians obey the symmetry-protected NLTS energy/depth bound, with the proof giving epsilon=h/6 and n>48^2 8^d.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T003",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T1-NLTS"
+      ]
+    },
+    {
+      "item_id": "C-MAIN-C1-QAOA-BOUND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Corollary 1, Eq. (8), PDF p. 3",
+      "scientific_object": "For an infinite bipartite D-regular family, level-p QAOA has ratio at most 5/6+sqrt(D-1)/(3D) in the stated p-versus-n range.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T004",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-C1-QAOA-BOUND"
+      ]
+    },
+    {
+      "item_id": "C-APP-A-L1-DEPTH",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma A.1, PDF p. 6",
+      "scientific_object": "A level-p graph-Ising QAOA unitary has two-qubit-gate depth at most p(D+1), tightened to pD for D-regular bipartite graphs.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T004",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-A-L1-DEPTH"
+      ]
+    },
+    {
+      "item_id": "C-APP-A-L2-GAUGE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma A.2, PDF p. 6",
+      "scientific_object": "QAOA approximation ratios are invariant under the stated boundary-edge sign-flip gauge transformation.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T004",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-A-L2-GAUGE"
+      ]
+    },
+    {
+      "item_id": "C-MAIN-T2-RANGE-BOUND",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 2, Eq. (9), PDF p. 3",
+      "scientific_object": "Every Z2-symmetric range-R circuit on the even ring of disagrees obeys the normalized-energy upper bound (2R+1/2)/(2R+1) for R<n/4.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T005",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T2-RANGE-BOUND"
+      ]
+    },
+    {
+      "item_id": "C-MAIN-T2-TIGHTNESS",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 2 and discussion, PDF pp. 3-4",
+      "scientific_object": "The range-R upper bound is exactly tight when n is a multiple of 2R+1 and asymptotically tight up to O(1/n) for fixed R.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T005",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T2-TIGHTNESS"
+      ]
+    },
+    {
+      "item_id": "C-APP-B-L1-GHZ",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma B.1, PDF pp. 7-8",
+      "scientific_object": "A Z2-symmetric range-p circuit prepares the (2p+1)-qubit GHZ state from |+>.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T005",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-B-L1-GHZ"
+      ]
+    },
+    {
+      "item_id": "C-APP-B-L2-PRINTED-ENERGY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma B.2 statement and proof, PDF p. 8",
+      "scientific_object": "The printed lemma states <H_n>=(2p+1/2)/(2p+1), while its proof evaluates n times that ratio for the unnormalised H_n.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T005",
+      "paper_error_hypothesis": {
+        "status": "paper_error_candidate_pending",
+        "verdict": "not_adjudicated",
+        "rule": "A dimensional or algebraic inconsistency is only a hypothesis until an independent symbolic/small-n check and fresh review survive falsification."
+      },
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-B-L2-PRINTED-ENERGY"
+      ]
+    },
+    {
+      "item_id": "C-APP-C-L1-CORRELATION",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma C.1, Eq. (C9), PDF p. 11",
+      "scientific_object": "The closed-form level-1 QAOA two-spin correlation for a general real symmetric Ising coupling matrix.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T006",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-C-L1-CORRELATION"
+      ]
+    },
+    {
+      "item_id": "C-APP-C-RUNTIME-O-N4",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Appendix C.4 complexity paragraph, PDF p. 11",
+      "scientific_object": "For n_c=O(1), one correlation costs O(n), one dense RQAOA step O(n^3), and the full level-1 classical simulation O(n^4), independently of variational-circuit depth.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T006",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-C-RUNTIME-O-N4"
+      ]
+    },
+    {
+      "item_id": "X-APP-C-HISTORICAL-ALGORITHM-ABSENCE",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "literature_context",
+      "paper_level_role": "context",
+      "source_ref": "Appendix C.4 complexity paragraph, PDF p. 11",
+      "scientific_object": "Historical state-of-literature statement that no polynomial algorithm was known for broader classes at publication time.",
+      "decision": "excluded",
+      "reason": "This is a dated literature-coverage assertion, not a formula-derived or model-generated scientific object. It is audited separately and does not enter the reproduction denominator."
+    },
+    {
+      "item_id": "C-MAIN-T3-LOCAL",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 3(i), PDF p. 4",
+      "scientific_object": "For the stated 2^(n/3) signed-ring family, a uniform 1-local classical algorithm achieves approximation ratio one.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T3-LOCAL"
+      ]
+    },
+    {
+      "item_id": "C-MAIN-T3-QAOA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 3(ii), PDF p. 4",
+      "scientific_object": "For the same signed-ring family, level-p QAOA has approximation ratio at most p/(p+1).",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T3-QAOA"
+      ]
+    },
+    {
+      "item_id": "C-MAIN-T3-RQAOA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Theorem 3(iii), PDF p. 4",
+      "scientific_object": "For the same signed-ring family, level-1 RQAOA achieves approximation ratio one.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-MAIN-T3-RQAOA"
+      ]
+    },
+    {
+      "item_id": "C-APP-D-L1-PRINTED-ENERGY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma D.1(ii), PDF p. 14",
+      "scientific_object": "The printed appendix statement gives <x|H(J)|x>=1 for an unnormalised n-edge Ising Hamiltonian, while the main theorem claims ratio one.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "paper_error_hypothesis": {
+        "status": "paper_error_candidate_pending",
+        "verdict": "not_adjudicated",
+        "rule": "A dimensional or algebraic inconsistency is only a hypothesis until an independent symbolic/small-n check and fresh review survive falsification."
+      },
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-D-L1-PRINTED-ENERGY"
+      ]
+    },
+    {
+      "item_id": "C-APP-D-L2-RQAOA-1D",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma D.2, PDF pp. 14-16",
+      "scientific_object": "Level-1 RQAOA returns an exact optimum for every one-dimensional Ising ring with J_k in {+1,-1}.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-D-L2-RQAOA-1D"
+      ]
+    },
+    {
+      "item_id": "C-APP-D-L2-ENDPOINT-ENERGY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Lemma D.2 proof endpoint, PDF p. 16",
+      "scientific_object": "The printed proof gives unfrustrated residual/final maxima n_c+1 and n+1 although the Hamiltonians contain n_c and n unit-magnitude terms.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "uncovered",
+      "critical": true,
+      "reason": "No claim-specific independent artifact and fresh falsification result currently close this analytic item.",
+      "causal_diagnosis_ref": "causal_diagnoses.json#T007",
+      "paper_error_hypothesis": {
+        "status": "paper_error_candidate_pending",
+        "verdict": "not_adjudicated",
+        "rule": "A dimensional or algebraic inconsistency is only a hypothesis until an independent symbolic/small-n check and fresh review survive falsification."
+      },
+      "implementation_ref": "analytic_claim_audit_v1",
+      "claim_refs": [
+        "C-APP-D-L2-ENDPOINT-ENERGY"
+      ]
+    },
+    {
+      "item_id": "S-FIG1-ADVANTAGE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Main numerical-comparison paragraph, PDF p. 4",
+      "scientific_object": "Narrative RQAOA-over-QAOA advantage already carried by the four Main Fig. 1 series.",
+      "decision": "target",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "coverage_status": "supporting",
+      "critical": false,
+      "reason": "The statement repeats an already counted scientific item and is retained as auditable support without double counting.",
+      "claim_refs": [
+        "CLM_RQAOA_ADVANTAGE"
+      ]
+    },
+    {
+      "item_id": "S-APP-A-T1-RESTATE",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Appendix A restatement of Theorem 1, PDF pp. 6-7",
+      "scientific_object": "Appendix notation restates the already counted symmetry-protected NLTS bound.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "coverage_status": "supporting",
+      "critical": false,
+      "reason": "The statement repeats an already counted scientific item and is retained as auditable support without double counting.",
+      "claim_refs": [
+        "C-MAIN-T1-NLTS"
+      ]
+    },
+    {
+      "item_id": "S-APP-B-L2-TIGHTNESS-PROOF",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Lemma B.2 proof, PDF p. 8",
+      "scientific_object": "The constructed block-GHZ circuit supplies the proof of the already counted Theorem 2 tightness claim.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "coverage_status": "supporting",
+      "critical": false,
+      "reason": "The statement repeats an already counted scientific item and is retained as auditable support without double counting.",
+      "claim_refs": [
+        "C-MAIN-T2-TIGHTNESS"
+      ]
+    },
+    {
+      "item_id": "S-APP-D-L1-QAOA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Lemma D.1(i), PDF p. 14",
+      "scientific_object": "Appendix restatement of the already counted Theorem 3 QAOA bound.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "supporting",
+      "critical": false,
+      "reason": "The statement repeats an already counted scientific item and is retained as auditable support without double counting.",
+      "claim_refs": [
+        "C-MAIN-T3-QAOA"
+      ]
+    },
+    {
+      "item_id": "S-APP-D-L1-RQAOA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Lemma D.1(iii), PDF p. 14",
+      "scientific_object": "Appendix restatement of the already counted Theorem 3 RQAOA-optimality clause.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "coverage_status": "supporting",
+      "critical": false,
+      "reason": "The statement repeats an already counted scientific item and is retained as auditable support without double counting.",
+      "claim_refs": [
+        "C-MAIN-T3-RQAOA"
+      ]
+    }
+  ],
+  "inventory_summary": {
+    "items_total": 28,
+    "display_items_total": 6,
+    "quantitative_claims_total": 22,
+    "eligible_total": 20,
+    "covered_total": 4,
+    "uncovered_total": 16,
+    "excluded_total": 3,
+    "supporting_not_double_counted": 5
+  },
+  "source_boundary": {
+    "author_code_used": false,
+    "author_arrays_used": false,
+    "source_pixels_used_as_scientific_input": false,
+    "scientific_runner": "The attested T001/T002 staging bundle contains only case-authored code/config and a Matplotlib cache; sandbox policy denies raw/ and references/.",
+    "render_contract": "Source images are read only by the post-freeze comparison script; it cannot modify frozen instances, energies, ratios, or solver outputs."
+  }
+}

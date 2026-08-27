@@ -1,77 +1,763 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "2511.11394",
-  "overall_score": 67.1,
-  "source_score_model": "rra_similarity_v3_figure_evaluation",
-  "source_status": "passed",
-  "similarity_level": "numerical_feature_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 6,
-    "target_status_counts": {
-      "partially_reproduced": 1,
-      "evidence_compared": 5
-    },
-    "published_generated_datasets": 14,
-    "published_generated_figures": 11
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "score_model": "rra_similarity_v3_figure_evaluation",
+  "summary": "The exact extended-Hubbard flow, near-ideal time, local geometry, topological transition, and interaction trends are reproduced. The standalone small-q figure remains partial because the paper's plotted normalization and t=15 rate conflict with its own formulas and exact-comparison curve.",
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "FIG001",
-      "meaning": "Small-q dissipative approach toward the Dirichlet/Chern bound.",
-      "status": "partially_reproduced",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
-    },
-    {
-      "target_id": "V001",
-      "figure_id": "VALIDATION001",
-      "meaning": "Go/no-go validation of the calibrated geometric jump sum rule.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "not_applicable"
-    },
-    {
-      "target_id": "V002",
-      "figure_id": "VALIDATION002",
-      "meaning": "Detector-level go/pivot/stop decision for the Chern-band click idea.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "detector_extension"
+      "label": "Main Fig. 1 and Supplemental Figs. 1-2: small-q LLG flow",
+      "figure_refs": [
+        "Main Fig. 1",
+        "Supplemental Fig. 1",
+        "Supplemental Fig. 2"
+      ],
+      "weight": 1.0,
+      "components": {
+        "feature_match": {
+          "score": 38.0,
+          "max_score": 50.0,
+          "reason": "Energy and trace deviation decrease while C=1 and the unit-vector constraint are preserved."
+        },
+        "numeric_closeness": {
+          "score": 10.0,
+          "max_score": 35.0,
+          "reason": "The generated E_D/pi is 1.4167 at t=15 and the maximum trace deviation is 0.0526, whereas the source is nearly saturated and plots an unexplained factor-four energy scale."
+        },
+        "paper_scope_coverage": {
+          "score": 7.5,
+          "max_score": 15.0,
+          "reason": "The full time interval and all three linked figures are covered, but the paper omits the numerical convention needed to reconcile their values."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "energy_and_geometry",
+            "status": "partial",
+            "note": "mechanism reproduced; quantitative t=15 saturation not reproduced",
+            "evidence": "outputs/checks/fig1_small_q_energy.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_parameters",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC004",
+          "EQC005",
+          "EQC006",
+          "EQC007"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T001 (Main Fig. 1 and Supplemental Figs. 1-2: small-q LLG flow) records legacy failure label=missing_parameters; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T001 (Main Fig. 1 and Supplemental Figs. 1-2: small-q LLG flow).",
+            "items": [
+              "T001"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T001 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "small_q_energy_decreases",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig1_small_q_energy.json#checks.dirichlet_energy_nonincreasing",
+          "claim": "The small-q flow lowers the Dirichlet energy."
+        },
+        {
+          "assertion_id": "small_q_chern_preserved",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig1_small_q_energy.json#checks.chern_sector_preserved",
+          "claim": "The small-q flow remains in the C=1 sector."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig1_small_q_energy.csv",
+        "outputs/data/sm_fig1_2_small_q_geometry.csv",
+        "outputs/checks/fig1_small_q_energy.json",
+        "comparison-artifacts/fig1_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The paper's factor-four energy display and faster small-q timescale cannot be derived from the printed equations or reconciled with its own Fig. 2 small-q curve.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 70.0,
+      "component_total": 55.5,
+      "score": 55.5,
+      "similarity_level": "feature_not_accepted",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG002",
-      "meaning": "Exact versus small-q extended-Hubbard Dirichlet energy.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Fig. 2 and Supplemental Figs. 3 and 5: exact versus small-q flow",
+      "figure_refs": [
+        "Main Fig. 2",
+        "Supplemental Fig. 3",
+        "Supplemental Fig. 5"
+      ],
+      "weight": 2.0,
+      "components": {
+        "feature_match": {
+          "score": 49.0,
+          "max_score": 50.0,
+          "reason": "The exact curve reaches the near-ideal plateau, then undergoes the reported finite-mesh topological transition, while the small-q curve stays topological."
+        },
+        "numeric_closeness": {
+          "score": 33.0,
+          "max_score": 35.0,
+          "reason": "At t=4.32 the reproduction gives E_D=3.1452 and C_num=0.9965; the source reports E_D approximately pi and C=1, and the full transition curves align closely."
+        },
+        "paper_scope_coverage": {
+          "score": 14.0,
+          "max_score": 15.0,
+          "reason": "The full t=0..10 trajectory, Chern transition, and t=8 geometry are covered; author mesh metadata are unavailable."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "energy_chern_long_time",
+            "status": "reproduced",
+            "note": "all published physical series and the t=8 endpoint are reproduced",
+            "evidence": "outputs/checks/fig2_exact_vs_small_q.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC004",
+          "EQC005",
+          "EQC006",
+          "EQC015",
+          "EQC016"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T002 (Main Fig. 2 and Supplemental Figs. 3 and 5: exact versus small-q flow) records legacy failure label=missing_benchmark_metadata; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T002 (Main Fig. 2 and Supplemental Figs. 3 and 5: exact versus small-q flow).",
+            "items": [
+              "T002"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T002 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "near_ideal_at_tshort",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2_exact_vs_small_q.json#checks.exact_near_bound_at_tshort",
+          "claim": "The exact flow reaches E_D approximately pi at T_short=4.32."
+        },
+        {
+          "assertion_id": "topological_at_tshort",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2_exact_vs_small_q.json#checks.exact_topological_at_tshort_on_mesh",
+          "claim": "The exact band remains numerically C=1 at T_short."
+        },
+        {
+          "assertion_id": "late_exact_transition",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2_exact_vs_small_q.json#checks.exact_trivial_by_t8",
+          "claim": "The exact flow becomes trivial by t=8 while the small-q flow remains topological."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig2_exact_vs_small_q.csv",
+        "outputs/data/sm_fig5_long_time_geometry.csv",
+        "outputs/checks/fig2_exact_vs_small_q.json",
+        "comparison-artifacts/fig2_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "The inferred N=141 half-cell mesh and spectral differentiation match the figure but are not disclosed author settings.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 70.0,
+      "component_total": 96.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T003",
-      "figure_id": "FIG003",
-      "meaning": "Momentum-resolved trace-condition deviation.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Fig. 3 and Supplemental Fig. 4: local near-ideal geometry",
+      "figure_refs": [
+        "Main Fig. 3",
+        "Supplemental Fig. 4"
+      ],
+      "weight": 1.5,
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "max_score": 50.0,
+          "reason": "The initial and small-q structures, localized exact bubble, and near-equality of metric and curvature are all recovered."
+        },
+        "numeric_closeness": {
+          "score": 31.0,
+          "max_score": 35.0,
+          "reason": "The exact mean trace deviation falls from 0.03646 to 0.000318 and the source-positioned maps reproduce the same geometry; no author field data exist for pointwise residuals."
+        },
+        "paper_scope_coverage": {
+          "score": 14.0,
+          "max_score": 15.0,
+          "reason": "All three main panels and all metric/curvature profile panels are data-backed."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "initial_exact_small_q",
+            "status": "reproduced",
+            "note": "three deviation maps plus metric and curvature fields are present",
+            "evidence": "outputs/checks/fig3_trace_deviation_maps.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC004",
+          "EQC005",
+          "EQC006",
+          "EQC015",
+          "EQC016",
+          "EQC017"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T003 (Main Fig. 3 and Supplemental Fig. 4: local near-ideal geometry) records legacy failure label=missing_benchmark_metadata; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T003 (Main Fig. 3 and Supplemental Fig. 4: local near-ideal geometry).",
+            "items": [
+              "T003"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T003 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "exact_trace_deviation_reduced",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3_trace_deviation_maps.json#checks.exact_reduces_mean_trace_deviation",
+          "claim": "The exact flow strongly reduces the mean trace-condition deviation."
+        },
+        {
+          "assertion_id": "exact_closer_than_small_q",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3_trace_deviation_maps.json#checks.exact_is_closer_than_small_q",
+          "claim": "At T_short the exact flow is closer to the ideal condition than the small-q flow."
+        }
+      ],
+      "evidence": [
+        "outputs/data/fig3_trace_deviation_maps.csv",
+        "outputs/checks/fig3_trace_deviation_maps.json",
+        "comparison-artifacts/fig3_source_vs_reproduction.png"
+      ],
+      "remaining_gap": "Pointwise author arrays and the exact derivative convention were not released.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 70.0,
+      "component_total": 93.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T004",
-      "figure_id": "SMFIG006",
-      "meaning": "Robustness of near-ideal relaxation and the finite-mesh topological transition under U and V sweeps.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Supplemental Fig. 6: U and V robustness sweeps",
+      "figure_refs": [
+        "Supplemental Fig. 6"
+      ],
+      "weight": 0.5,
+      "components": {
+        "feature_match": {
+          "score": 45.0,
+          "max_score": 50.0,
+          "reason": "Every published interaction setting has the reported ordering: larger V delays the transition and larger U accelerates it."
+        },
+        "numeric_closeness": {
+          "score": 25.0,
+          "max_score": 35.0,
+          "reason": "Transition-time ordering and qualitative curve shapes match, but the N=61 sweep intentionally prioritizes the robustness feature over paper-curve pixel fidelity."
+        },
+        "paper_scope_coverage": {
+          "score": 13.0,
+          "max_score": 15.0,
+          "reason": "All four panels and all legend parameter values are included."
+        }
+      },
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "four_sweep_panels",
+            "status": "reproduced",
+            "note": "fixed-U and fixed-V energy and Chern panels are generated",
+            "evidence": "outputs/checks/sm_fig6_parameter_sweeps.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 0,
+        "failure_type": "missing_benchmark_metadata",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "reference_comparison": "source_figure_only",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQC005",
+          "EQC015"
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T004 (Supplemental Fig. 6: U and V robustness sweeps) records legacy failure label=missing_benchmark_metadata; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T004 (Supplemental Fig. 6: U and V robustness sweeps).",
+            "items": [
+              "T004"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T004 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "v_delays_transition",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/sm_fig6_parameter_sweeps.json#checks.larger_v_delays_or_suppresses_transition",
+          "claim": "Increasing V at fixed U=8 delays the numerical topological transition."
+        },
+        {
+          "assertion_id": "u_accelerates_transition",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/sm_fig6_parameter_sweeps.json#checks.larger_u_accelerates_transition",
+          "claim": "Increasing U at fixed V=0.75 accelerates the numerical topological transition."
+        }
+      ],
+      "evidence": [
+        "outputs/data/sm_fig6_parameter_sweeps.csv",
+        "outputs/checks/sm_fig6_parameter_sweeps.json",
+        "outputs/figures/sm_fig6_parameter_sweeps.png"
+      ],
+      "remaining_gap": "The paper does not disclose the sweep mesh and integrator, so transition times are compared as ordered finite-resolution features.",
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 70.0,
+      "component_total": 83.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
-  "source_scorecard_sha256": "a036f591b6740ca70462bbb7ed4d0f5c691804a489a2017e33402621f9eb9d3f"
+  "overall_score": 67.1,
+  "similarity_level": "numerical_feature_reproduction",
+  "evaluation_summary": {
+    "scored_items": 4,
+    "critical_items": 3,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 0,
+    "manual_interventions_per_item": 0.0,
+    "failure_type_counts": {
+      "missing_parameters": 1,
+      "missing_benchmark_metadata": 3
+    },
+    "parameter_match_counts": {
+      "paper_exact": 4
+    },
+    "reference_comparison_counts": {
+      "source_figure_only": 4
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 4
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 4
+    },
+    "formula_gate_counts": {
+      "verified": 4
+    },
+    "paper_level_role_counts": {
+      "main_claim": 3,
+      "supporting": 1
+    },
+    "physics_status_counts": {
+      "passed": 4
+    },
+    "physics_assertion_status_counts": {
+      "passed": 9
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "react_loop_required": 4
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "direct_cause_counts": {
+      "unresolved": 4
+    },
+    "root_cause_counts": {
+      "unresolved": 4
+    },
+    "code_fault_status_counts": {
+      "not_excluded": 4
+    }
+  },
+  "status": "passed"
 }

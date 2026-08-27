@@ -50,26 +50,28 @@
         "Main-text three-fluid velocity equations immediately after Fig. 4",
         "Supplement Eqs. (41)-(43), definitions of A_i and B_i"
       ],
-      "observation": "The nested denominators printed in the closed solution add alpha*n terms to frequency terms without the mass divisions present in the velocity equations. A dimensionally corrected closed form is algebraically identical to the direct 3x3 solve; the literal printed form is not.",
+      "observation": "The nested denominators printed in the closed solution add alpha*n terms to frequency terms without the mass divisions present in the velocity equations. The direct 3x3 solve and a dimensionally corrected independent elimination agree to roundoff under both source-compatible density closures; the literal printed form does not.",
       "independent_checks": [
         {
-          "method": "direct complex 3x3 solve of the main-text velocity equations",
+          "method": "direct complex 3x3 solve versus independent dimensionally corrected elimination",
           "status": "passed",
           "metric": {
-            "direct_vs_corrected_closed_max_abs": 1.6653345369377348e-16
+            "fixed_free_max_abs": 1.6653345369377348e-16,
+            "conserved_max_abs": 1.1443916996305594e-16
           },
-          "evidence": "outputs/checks/target_checks.json"
+          "evidence": "outputs/checks/causal_resolution/ac_closure_audit.json"
         },
         {
           "method": "literal independent evaluation of the supplemental closed form",
           "status": "passed",
           "metric": {
-            "direct_vs_literal_printed_max_abs": 0.0019522290557994725
+            "fixed_free_max_abs": 0.0019522290557994725,
+            "conserved_max_abs": 6.618205958956172e-05
           },
-          "evidence": "outputs/checks/target_checks.json"
+          "evidence": "outputs/checks/causal_resolution/ac_closure_audit.json"
         },
         {
-          "method": "dimensional analysis in the paper's printed alpha units m0/(n0 tau0)",
+          "method": "dimensional analysis in the printed alpha units m0/(n0 tau0)",
           "status": "passed",
           "evidence": "FORMULA_VERIFICATION.md"
         }
@@ -79,16 +81,69 @@
         "Compare the literal and corrected forms over the entire published frequency domain, not only at omega=0.",
         "Keep the discrepancy below paper-error-candidate status because a fresh reviewer has not yet checked alternate notation conventions."
       ],
-      "impact": "The corrected formula is used only as an analytic cross-check. The blind kinetic mismatch in T006/T008 remains a reproduction failure and is not blamed on this source discrepancy.",
+      "impact": "The corrected formula is an independent analytic check. The density-closure audit supports T007 but does not make T006 or T008 robust; fresh review must adjudicate the paper-side formula discrepancy.",
       "remaining_gates": [
         "fresh-context symbolic review",
-        "second independent derivation",
         "author clarification or erratum search"
       ]
     },
     {
+      "finding_id": "DISC_AC_FIT_INPUTS",
+      "classification": "closure_adjudicated_mixed",
+      "targets": [
+        "T006",
+        "T007",
+        "T008"
+      ],
+      "source_pinpoints": [
+        "Main Fig. 4 caption and three-fluid velocity equations",
+        "Supplement fitted-parameter paragraph after Eqs. (41)-(43)"
+      ],
+      "observation": "The source audit disproves the earlier missing-input attribution: the publication fixes the global densities, equilibrium condition, masses, operating point, equations, and all six fitted coefficients. Both source-compatible density closures have now been evaluated without selecting parameters from the plotted curves.",
+      "independent_checks": [
+        {
+          "method": "target-specific complete source and parameter audit",
+          "status": "passed",
+          "evidence": "outputs/checks/external_blocker_proof.json"
+        },
+        {
+          "method": "fixed-free and conserved-constituent closure adjudication",
+          "status": "passed",
+          "metric": {
+            "fixed_free": {
+              "hole": 0.40461326674517406,
+              "exciton": 0.02110239549457959,
+              "trion": 0.19001185919172447
+            },
+            "conserved": {
+              "hole": 0.2522726401519958,
+              "exciton": 0.02196440928821066,
+              "trion": 0.09021084390319552
+            }
+          },
+          "evidence": "outputs/checks/causal_resolution/ac_closure_audit.json"
+        },
+        {
+          "method": "isolated raw/reference-free execution",
+          "status": "passed",
+          "evidence": "outputs/runs/2409.18176-ac-closure-audit-v1-20260825/run_attestation.json"
+        }
+      ],
+      "falsification_attempts": [
+        "Audit the complete source text for every indispensable density, mass, operating-point, and fit input.",
+        "Evaluate both source-compatible equilibrium closures symmetrically.",
+        "Require agreement under both closures instead of choosing the closure that best resembles the source plot.",
+        "Keep source pixels and author numerical arrays outside the scientific runner."
+      ],
+      "impact": "T007 is reproduced under both closures. T006 and T008 were fully attempted but remain outside the declared 0.1 tolerance in at least one source-compatible closure, so they are capability-limited rather than externally blocked.",
+      "remaining_gates": [
+        "fresh-context review of the formula discrepancy",
+        "higher-order independent kinetic implementation or citable clarification"
+      ]
+    },
+    {
       "finding_id": "DISC_KUBO_BOLTZMANN_SCALE",
-      "classification": "reproduction_discrepancy",
+      "classification": "pending_method_convergence",
       "targets": [
         "T009"
       ],
@@ -111,22 +166,34 @@
             "momentum_residual_max": 1.3887947995300147e-18
           },
           "evidence": "outputs/checks/target_checks.json"
+        },
+        {
+          "method": "direct three-species versus explicit trion Schur-complement solve",
+          "status": "unit_test_passed_production_pending",
+          "evidence": "tests/test_model.py::test_trion_elimination_retains_the_effective_g4_terms"
+        },
+        {
+          "method": "broadened versus analytic-delta leading-order relaxation-time lane",
+          "status": "unit_test_passed_production_pending",
+          "evidence": "tests/test_model.py::test_kubo_broadening_converges_toward_analytic_leading_order_lane"
         }
       ],
       "falsification_attempts": [
         "Check the zero-coupling Drude limit independently in both lanes.",
         "Compare Galerkin against a separate direct collocation implementation at anchor points.",
+        "Prove that direct and trion-eliminated collocation agree so the effective g^4 Q feedback was not omitted.",
+        "Keep leading-order delta-regularization parity separate from the full coupled-Boltzmann comparison.",
         "Do not infer the paper's unprinted cutoff, grid, delta treatment, or closure from source pixels."
       ],
-      "impact": "T009 fails scientific acceptance and the full case remains feature_not_accepted.",
+      "impact": "T009 remains pending. The feature-run gap is retained as falsification evidence but is not a paper-error verdict.",
       "remaining_gates": [
         "execute the frozen paper-scale cutoff/grid campaign",
-        "second Kubo regularization",
-        "resolve Galerkin-collocation anchor gaps",
+        "complete broadened/analytic-delta leading-order convergence",
+        "complete direct/Schur and Galerkin/collocation full-method convergence",
         "fresh-context independent review"
       ]
     }
   ],
-  "conclusion": "mixed_inconclusive",
+  "conclusion": "mixed_supported_attempted_and_inconclusive",
   "review_status": "fresh_context_missing"
 }

@@ -2,83 +2,87 @@
 
 ## Case Summary
 
-- PaperID: `2607.15070`
-- Final status: complete scientific and pixel reproduction
-- Targets: T001 (Figure 2a,b), T002 (Figure 3)
-- Blockers: none
+- Paper: spatially varying effective-mass Casimir energy
+- Paper ID: `2607.15070`
+- Final status: complete numerical and pixel reproduction
+- Main targets: paper Figs. 2(a,b) and 3
+- Main blockers: none
+- Scientific caveat: three independently confirmed printed formula errors
 
 ## What Worked
 
-- Closing formula and method gates before execution exposed four inconsistent
-  printed substeps without contaminating the numerical path.
-- Positive Bessel series made paper-scale execution fast and stable.
-- Original proper-time quadrature gave a structurally independent numeric
-  check.
-- Data-first target runners prevented failed assertions from producing
-  apparently final figures.
+- Starting from the radial operator exposed a factor-two issue before plotting.
+- A log-proper-time variable and Poisson-resummed plate sum made the full paper
+  grids cheap and stable.
+- An independently derived Bessel representation gave a strong numerical oracle
+  without reading values from paper images.
+- Separating data, checks, rendering, and comparison prevented style tuning
+  from changing numerical evidence.
 
 ## What Was Difficult
 
-- A first convergence threshold compared cutoffs that were too close to the
-  production truncation error; tightening both cutoffs resolved the false
-  negative without changing the model.
-- Matplotlib's direct PNG rasterizer produced a different ink density from the
-  source's PDF rasterization. Rendering generated PDFs through Poppler aligned
-  the pixel-evidence measurement path.
+- The paper's plotted integrals are internally computable even though the
+  upstream spectrum is inconsistent; the report must preserve that distinction.
+- The correction term is singular as \(\alpha_0\to0^+\), so the visible axis
+  begins at zero while numerical sampling begins at 0.1.
+- Pixel matching was driven mainly by canvas margins, label placement, and ink
+  density after scientific curves had already passed.
 
 ## Generalized Experience
 
 | Lesson | Why it matters beyond this case | Future recommendation |
 | --- | --- | --- |
-| Re-derive from the earliest trustworthy formula | Later paper asymptotics may contain transcription errors | Quarantine inconsistent substeps and verify against the original integral |
-| Use independent representations | A transformed series cannot validate itself | Pair fast production formulas with sparse direct integration |
-| Match rasterization paths for pixel QA | Renderer differences can mimic style mismatch | Compare source and generated vector figures through one rasterizer |
+| Check the lowest eigenstate directly | catches normalization factors hidden by special-function notation | substitute a simple analytic state before authorizing numerics |
+| Derive a second representation | separates quadrature bugs from paper-formula bugs | seek Poisson/Bessel/spectral alternatives for improper sums |
+| Treat displayed integrals as conditional objects when necessary | enables honest reproduction without endorsing flawed derivations | state the conditional boundary in claims and reports |
+| Tune pixels only after frozen data checks | prevents visual optimization from corrupting science | make style-only repairs explicit and re-run pixel contracts |
 
 ## Common Pitfalls And Pain Points
 
-| Pitfall | How it appeared | Prevention |
+| Pitfall | How it appeared | How future runs should avoid it |
 | --- | --- | --- |
-| Treating the printed small-coupling formula as trusted | Eq. (42) repeats `K_2` where direct expansion yields `K_3` | Track powers of proper time before applying the Bessel identity |
-| Overly strict tail test at an insufficient reference cutoff | Initial T001 scientific check failed | Compare production and a meaningfully tighter cutoff |
-| Comparing PDF-derived source ink with Agg PNG ink | Three density contracts initially failed | Rasterize both sides through Poppler |
+| Trusting printed asymptotics | Eqs. (31) and (36) had wrong functional forms | derive limiting powers and exponents independently |
+| Inferring values from source curves | vector figures were available but had no tables | use images only for layout and registered comparison |
+| Overflow in hyperbolic denominators | large \(\alpha_0\tau^2\) | use scaled exponential algebra |
 
 ## Recommended Practices
 
-| Practice | When to use it | Evidence |
+| Practice | When to use it | Evidence from this case |
 | --- | --- | --- |
-| Target-scoped environment guard | Every numerical runner and test | T001 and T002 reject the wrong target/stage |
-| Analytic endpoint checks | Singular or limiting plots | Zero coupling, correction divergence, and ratio-to-one all pass |
-| Separate scientific and pixel scores | Any figure reproduction | Scientific 90.0 and pixel 82.56 remain independently interpretable |
+| Guard every numerical phase by target and stage | multi-target cases | T001/T002 have isolated output sets |
+| Preserve row-level data provenance | every final figure | 3,164 CSV rows marked `independent_numerics` |
+| Record formula discrepancies as accepted assertions | plots can pass despite paper errors | T001 scientific check contains three diagnostics |
 
 ## New Failure Modes
 
-| Failure mode | Detection | Repair |
+| Failure mode | Where it appeared | How future runs should detect it |
 | --- | --- | --- |
-| Scientific false negative from weak reference cutoff | Production/reference delta exceeds tolerance while direct quadrature agrees | Tighten the reference cutoff and keep the physics threshold explicit |
-| Cross-rasterizer pixel-density bias | Bounding boxes align but ink-density ratios fail together | Standardize the vector-to-raster path |
+| Upstream spectrum and downstream plotted formula disagree | paper Eqs. (11), (25), (27) | carry a formula dependency graph and conditional-verification label |
+| Correct qualitative asymptotic claim with wrong printed exponent | paper Eq. (31) | compare actual values with both printed and derived leading terms |
 
 ## Reusable Checks Or Tools
 
-| Candidate | Value | Destination |
+| Candidate | Why it is reusable | Suggested destination |
 | --- | --- | --- |
-| Same-rasterizer pixel preflight | Separates renderer bias from layout/style defects | Future harness backlog after the frozen Trial |
-| Formula-power audit before Bessel conversion | Detects wrong Bessel order | Reproduction-method checklist |
+| log-\(\tau\) quadrature with Poisson-resummed Gaussian sum | stable for many proper-time Casimir integrals | keep case-local until a second paper confirms the interface |
+| analytic-state eigenvalue check | inexpensive symbolic/numeric consistency test | formula-card checklist |
 
 ## Efficient Reproduction Implementations
 
-| Implementation | Evidence | Scope |
+| Implementation | Efficiency evidence | Keep case-local or promote generic helper |
 | --- | --- | --- |
-| Positive Bessel-argument truncation | Full targets finish in 0.815 s and 0.528 s | Keep case-local |
-| Log-proper-time quadrature checkpoints | Agreement below `4e-13` | Keep case-local |
+| vector-valued adaptive quadrature over all \(\alpha_0\) values | complete data generation took about 0.05 s per target | integration kernel may generalize; physics weights remain case-local |
+| positive Bessel sums used only at diagnostic points | relative errors \(2.1\times10^{-11}\) or better | keep case-local oracle |
 
 ## Harness Backlog Items
 
-No harness file was modified because this controlled Trial freezes the Harness.
-The two reusable candidates above are recorded here for later triage;
-`copied_to_backlog: no (frozen-harness boundary)`.
+| Priority | Improvement | Evidence from this case | Status |
+| --- | --- | --- | --- |
+| low | allow generated phase records to require a top-level status | audit warned on otherwise valid data/render records | resolved case-locally |
+| low | add conditional-formula wording to report template | reproduced integrals can coexist with an upstream derivation error | recorded here; frozen Harness intentionally unchanged |
 
 ## Prompt Or Workflow Changes
 
-Keep the current order: paper map, formula gate, method gate, target
-authorization, independent data, scientific assertions, rendering, then pixel
-evidence.
+No Harness or prompt file was changed because this Trial freezes those
+boundaries. The case demonstrates that “derive, generate, check, render,
+compare” is a sufficient deterministic loop for this problem class.

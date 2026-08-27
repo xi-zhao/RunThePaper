@@ -11,55 +11,84 @@ This report is a human-readable projection of the validated structured independe
 | Protocol status | `passed` |
 | Protocol valid | `true` |
 | Whole-paper scope | `complete` |
-| Paper assessment | `paper_error_candidate` |
-| Candidate targets | `1` |
+| Paper assessment | `inconclusive` |
+| Reviewed atomic claims | `31` |
+| Candidate atomic claims | `0` |
+| Candidate targets | `0` |
+
+## Atomic claim adjudication
+
+| Claim | Targets | Assessment | Independent-review reason |
+| --- | --- | --- | --- |
+| R001 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R003 | T002, T003 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R004 | T004 | `inconclusive` | The packaged rerun preserves a mismatch, but this bundle alone does not yet isolate paper fault from remaining reproduction uncertainty strongly enough for a decisive ruling. |
+| R005 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R006 | T006 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R007 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R008 | T011 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R009 | T012 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R010 | T013 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R011 | T014 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R012 | T015 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R013 | T016 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R014 | T017 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R015 | T018 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R016 | T019 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R017 | T019 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R018 | T019 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R019 | T020 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R020 | T021 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R021 | T022 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R022 | T023 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R023 | T008 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R024 | T024 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R025 | T009 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R026 | T025 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R027 | T010 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R028 | T026 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R029 | T027 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R030 | T028 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R031 | T028 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R032 | T029 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
 
 ## Target adjudication
 
 | Target | Assessment | Independent-review reason |
 | --- | --- | --- |
-| T001 | `paper_supported` | Direct check: the frozen Fig. 1 data recover the N=2 oscillator anchor, the independently bracketed N=1.42207 exceptional point, the broken-region conjugate pairs, and the near-N=1 divergence across the published axes. Root-cause search found no scientific discrepancy: fresh real-axis finite differences at N=1.421, 1.423 and 2 agree with the bundled contour/Riccati results, while the v6 access trace excludes source-pixel inputs. The remaining reconstructed N sampling is a declared discretization choice, not a changed Hamiltonian parameter. |
-| T002 | `paper_supported` | Direct check: independent shooting along the printed N=3 anti-Stokes ray gives 1.1562671, 4.1092288, 7.5622739, 11.3144218 and 15.2915538, consistent with Table I and the frozen finite-difference column. Root-cause search found only four-digit rounding and discretization errors below 3.4e-4; no formula, parameter or code defect was found. |
-| T003 | `paper_supported` | Direct check: independent shooting along the N=4 anti-Stokes ray gives 1.4771498, 6.0033861, 11.8024336 and 18.4588187, consistent with Table I and the frozen contour finite differences. The maximum printed-value gap is compatible with four-digit presentation plus discretization; no parameter or implementation error was found. |
-| T004 | `paper_error_candidate` | Direct cause: the printed Table II exact values at epsilon=1e-5, 1e-6 and 1e-7 exceed converged paper-exact eigenvalues by 0.0002211, 0.0031361 and 0.0384448, far beyond four-decimal rounding. Root cause: an author-side near-N=1 numerical-conditioning/precision limitation is probable, while transcription remains an open alternative because the paper supplies no computation log. Reproduction-code fault is excluded by three distinct formulations: bundled Riccati shooting, an 8000-point finite-difference eigenproblem, and fresh direct second-order ODE shooting; boundary 30/40/50 and tolerance sweeps are stable at about 1e-8. Parameter error is excluded because epsilon=N-1, m=0, the principal branch and PT patch condition match Eqs. (1)-(2), (6)-(11). |
-| T005 | `paper_supported` | Direct check: for m^2=3/16, the frozen branch family is real at N=1 and agrees with the independently completed-square ground anchor 1.7663460; paired complex branches appear on both sides in the sampled phase diagram. Fresh finite differences at N=0,1,2 reproduce the analytic anchors. No sign, mass-label, branch or code defect was found. |
-| T006 | `paper_supported` | Direct check: for m^2=5/16, the frozen branch family is real at N=1 and agrees with the independently completed-square ground anchor 1.3590170; paired complex branches appear on both sides in the sampled phase diagram. Fresh finite differences at N=0,1,2 reproduce the analytic anchors. No sign, mass-label, branch or code defect was found. |
-| T007 | `paper_supported` | Direct check: for m^2=7/16, the frozen branch family is real at N=1 and agrees with the independently completed-square ground anchor 1.2328664; paired complex branches appear on both sides in the sampled phase diagram. Fresh finite differences at N=0,1,2 reproduce the analytic anchors. No sign, mass-label, branch or code defect was found. |
-| T008 | `paper_supported` | Direct check: independent evaluation of Eq. (5) reproduces every printed WKB entry in Table I to the displayed precision, reduces exactly to E_n=2n+1 at N=2, and grows with N on the massless branch. The formula, exponent and sin(pi/N) denominator match the source; no code or parameter anomaly was found. |
-| T009 | `paper_supported` | Direct check: removing sin(pi/N) from the real-axis WKB integral is analytically correct, the N=2 finite-difference spectrum recovers 2n+1, and independent p^2+\|x\|^N spectra move monotonically toward the width-two square-well values through N=512. The residual 4.3% at finite N is convergence-to-limit evidence, not a changed paper claim or code fault. |
-| T010 | `paper_supported` | Direct check: taking logs of Eq. (11) gives the dominant balance 4E^(3/2)/3 approximately -ln(epsilon), hence exponent 2/3. Independent log-domain roots from 1e-40 to 1e-200 give slope 0.65249 and approach the claimed value with the expected subleading logarithm. The printed Eq. (11) column is also recovered; no formula or parameter defect was found. |
-| T011 | `paper_supported` | Direct check: a fresh real-axis finite-difference Hamiltonian independently gives the first six Bessis energies 1.2917463, 4.3689050, 7.8952162, 11.7045747, 15.7296972 and 19.9315175 with negligible imaginary parts, matching the bundled complex-contour solve. No contour, sign or implementation discrepancy was found for the tested spectrum. |
-| T012 | `paper_supported` | Direct check: fresh real-axis finite differences recover six real positive levels for p^2+i x^3+i x and imaginary parts of magnitude 0.60 to 1.65 for p^2+i x^3+x, matching the frozen clean-contour results. The contrast survives a contour/method change; no coefficient or PT-sign error was found. |
-| T013 | `paper_supported` | Direct check: completing the square in H=p^2+x^2+b x gives E_n=2n+1-b^2/4; for b=0 this is E_n=2n+1, exactly matching the paper and all four frozen levels. This is an algebraic identity, so numerical parameters and implementation choices cannot explain it; no anomaly was found. |
-| T014 | `paper_supported` | Direct check: completing the square in H=p^2+x^2+b x gives E_n=2n+1-b^2/4; for b=i this is E_n=2n+5/4, exactly matching the paper and all four frozen levels. This is an algebraic identity, so numerical parameters and implementation choices cannot explain it; no anomaly was found. |
-| T015 | `paper_supported` | Direct check: completing the square in H=p^2+x^2+b x gives E_n=2n+1-b^2/4; for b=-1 this is E_n=2n+3/4, exactly matching the paper and all four frozen levels. This is an algebraic identity, so numerical parameters and implementation choices cannot explain it; no anomaly was found. |
-| T016 | `paper_supported` | Direct check: completing the square in H=p^2+x^2+b x gives E_n=2n+1-b^2/4; for b=-1+i this is E_n=2n+1+i/2, exactly matching the paper and all four frozen levels. This is an algebraic identity, so numerical parameters and implementation choices cannot explain it; no anomaly was found. |
-| T017 | `paper_supported` | Direct check: all 312 frozen eigenvalues inside the published Fig. 1 window for N>=2 are real and positive; N=2 agrees with six oscillator levels, Table I supplies independent N=3/4 anchors, and WKB energies diverge monotonically through N=128. Finite sampling cannot prove an infinite spectrum, but the combined low- and high-level checks support the printed regime and reveal no code or parameter fault. |
-| T018 | `paper_supported` | Direct check: fresh real-axis spectra have one real level at N=1.421 but three at N=1.423, and four independent resolutions converge to N=1.42207077, only 7.7e-7 from the printed 1.42207. The threshold was used only after a broad bracket was frozen. No branch-order, parameter-injection or implementation error was found. |
-| T019 | `paper_supported` | Direct check: the Airy Wronskian gives a nonzero matching derivative -1/(2 pi) for every real E at N=1, while independently shot ground energies increase from 1.68369 to 5.85586 as epsilon decreases from 1e-1 to 1e-7 and Eq. (11) gives the two-thirds logarithmic divergence. The N=1 boundary and divergence survive analytic and numerical attacks; no parameter or code defect was found. |
-| T020 | `paper_supported` | Direct check: large-\|x\| WKB decay gives the two Eq. (3) centers and opening 2pi/(N+2); substituting N=1 yields 5pi/6, pi/6 and 2pi/3 exactly, N=2 restores the real-axis oscillator wedges, and N=4.2 matches the schematic parameters. No sign or angular-branch defect was found. |
-| T021 | `paper_supported` | Direct check: for N=3 and N=4, three smooth contours with bend scales 1.8, 2.0 and 2.2 agree within 4.64e-4, and fresh direct ODE shooting on anti-Stokes rays agrees with the smooth-contour Table I values. This changes the contour interpolation while holding endpoints and Hamiltonian fixed, so the invariance is not a pixel or same-matrix self-test; no code fault was found. |
-| T022 | `paper_supported` | Direct check: substituting the printed x_+ and x_- into E+(i x)^N gives residual below 1.6e-15 at N=1.5,2,3,4; their radii equal E^(1/N) and their imaginary signs switch exactly at N=2. The analytic branch continuation and implementation agree, with no parameter or sign anomaly. |
-| T023 | `paper_supported` | Direct check: at the same N=1.01,1.02,1.04,1.1 parameters, Riccati shooting and a sparse matrix eigenproblem agree within 7.22e-6; fresh second-order ODE shooting also agrees on the Table II branch. Because identical exponents are used, paper-table error is not mixed into solver agreement. No solver-parameter or code defect was found. |
-| T024 | `paper_supported` | Direct check: the straight segment between the printed turning points intersects the imaginary axis at +0.9210 for N=1.5, on the real axis at N=2, and below the cut for N=3,4. Thus the principal-branch path is discontinuous only below N=2 exactly as claimed. The test uses geometry, not a hard-coded N comparison; no branch-convention defect was found. |
-| T025 | `paper_supported` | Direct check: the Airy Wronskian rederivation fixes d\|psi\|^2/dx at the origin to -1/(2pi), independent of real E; direct complex-Airy evaluations at E=0,0.5,1,2,3 agree within 2.6e-14. Since the required matching value is zero, the paper's absence-of-real-eigenvalue conclusion survives; no formula or code anomaly was found. |
-| T026 | `paper_supported` | Direct check: expanding -(i x)^(2-epsilon) gives x^2-epsilon x^2[ln\|x\|+i pi sgn(x)/2], so the odd imaginary matrix element enters a complex-symmetric two-level discriminant with negative square and permits coalescence. Independent 192/256-node quadratures agree within 6.1e-6 and the merger epsilon decreases through level 20. This supports the printed first-order mechanism; the unpublished higher-order thresholds are not claimed. No sign or quadrature defect was found. |
-| T027 | `paper_supported` | Direct check: independent beta/Gamma evaluation of the classical action gives Eq. (12), exactly reduces to period pi at N=2 in the paper's normalization, and yields finite real periods 2.42865 and 1.85407 at N=3,4. Energy dimensions scale as E^((2-N)/(2N)). No normalization, branch or implementation error was found. |
-| T028 | `paper_supported` | Direct check: below N=2 the analytic escape angle N*pi/(2-N) and total rotation diverge as N approaches 2 from below, while an unwrapped Riemann-sheet integration at N=1.98 conserves energy to 3.7e-13 and crosses four successive turning-point angles. Independently converged adjacent-level merger thresholds move toward N=2 with excitation and the number of classical turning points before escape increases monotonically. This is bounded support for the printed asymptotic correspondence; it does not claim the unpublished higher-order thresholds. No principal-branch reset or event-order code defect was found. |
-| T029 | `paper_supported` | Direct check: completing the three exactly soluble massive limits gives E_n(0)=(2n+1)sqrt(m^2)-1, E_n(1)=(2n+1)sqrt(m^2)+1/(4m^2), and E_n(2)=(2n+1)sqrt(m^2+1). Fresh and bundled finite differences recover six levels for all three printed masses, while the Fig. 3 data show pairwise loss/reemergence around N=1. The m^2 labels, signs and real-axis asymptotics are correct; no code or parameter defect was found. |
+| T001 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T002 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T003 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T004 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T005 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T006 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T007 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T008 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T009 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T010 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T011 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T012 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T013 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T014 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T015 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T016 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T017 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T018 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T019 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T020 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T021 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T022 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T023 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T024 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T025 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T026 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T027 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T028 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T029 | `paper_supported` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### T004
-
-- Paper source: paper/paper-source/ptsym.tex, Table II (lines 397-412)
-- Paper claim: Table II labels 4.7798, 5.3383 and 5.8943 as exact ground-state energies for epsilon=1e-5, 1e-6 and 1e-7.
-- Independent result: Converged values are approximately 4.7795789, 5.3351640 and 5.8558551 from Riccati shooting; fresh direct second-order ODE roots are 4.7795789, 5.3351639 and 5.8558552, and independent finite differences give 4.7795658, 5.3351477 and 5.8558369.
-- Observed gap: Independent minus paper values are -0.0002211, -0.0031361 and -0.0384448; the discrepancy grows by roughly two orders of magnitude as epsilon decreases.
-- Tolerance basis: Four displayed decimals imply at most 5e-5 rounding uncertainty. Boundary variation is <=1.6e-8 in the frozen data, fresh boundary-30/40/50 ODE variation is about 5e-8, and shooting-vs-finite-difference disagreement is <=1.9e-5, all much smaller than the last three paper gaps.
-- Assessment reason: Direct cause: the printed Table II exact values at epsilon=1e-5, 1e-6 and 1e-7 exceed converged paper-exact eigenvalues by 0.0002211, 0.0031361 and 0.0384448, far beyond four-decimal rounding. Root cause: an author-side near-N=1 numerical-conditioning/precision limitation is probable, while transcription remains an open alternative because the paper supplies no computation log. Reproduction-code fault is excluded by three distinct formulations: bundled Riccati shooting, an 8000-point finite-difference eigenproblem, and fresh direct second-order ODE shooting; boundary 30/40/50 and tolerance sweeps are stable at about 1e-8. Parameter error is excluded because epsilon=N-1, m=0, the principal branch and PT patch condition match Eqs. (1)-(2), (6)-(11).
-- Convergence evidence: `generated_data/outputs/data/table_ii_near_one.csv`, `machine_evidence/outputs/checks/science_checks.json`, `attestations/outputs/runs/physics-9712001-paper-exact-v6/run_attestation.json`
-- Independent cross-check evidence: `implementation/src/pt_spectrum/model.py`, `implementation/scripts/run_reproduction.py`, `formula/DERIVATION_TRACE.md`, `generated_data/outputs/data/table_ii_near_one.csv`
+No authoritative paper-error candidate is present in the current validated review.
 
 ## Interpretation boundary
 

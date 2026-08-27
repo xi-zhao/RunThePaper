@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1038-s41586-024-08262-7",
+  "cards": [
+    {
+      "id": "single_mode_partition_z_R",
+      "title": "Single-mode partition function / Hilbert series z_R(x) = sum_n d_n x^n (Eq. single_mode_Z)",
+      "statement": "For a single mode with H = eps*n, z_R(e^{-beta eps}) = Tr[e^{-beta eps n}] = sum_{n>=0} d_n e^{-n beta eps}, with x=e^{-beta eps}. d_n is the dimension of the n-particle single-mode space (generalized exclusion statistics). Table 1 R-matrix examples: Ex.1 (decoupled, -delta_ad delta_bc) and Ex.2 (Green, delta_ad delta_bc (-1)^{delta_ab}) both give z=(1+x)^m; Ex.3 (-delta_ac delta_bd) gives z=1+m x; Ex.4 (lambda_ab xi_cd - delta_ac delta_bd, with lambda xi lambda^T xi^T = 1, Tr(lambda xi^T)=2) gives z=1+m x+x^2. Ordinary limits: fermion z=1+x, boson z=1/(1-x).",
+      "role": "definition_and_observable_source",
+      "source_refs": [
+        "main text Eq. single_mode_Z",
+        "Table 1 (tab:Hilbert_series)",
+        "SI Sec. 'Calculation of exclusion statistics and single mode partition functions'"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_table1",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "z_R for Ex.1-4 read directly from Table 1; fermion/boson from standard single-mode traces."
+        },
+        {
+          "id": "dn_from_SI",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "SI derives d_0=1, d_1=m for all four; Ex.1/2 d_n=C(m,n); Ex.3 d_{n>=2}=0; Ex.4 d_2=1,d_{n>=3}=0. These are exactly the Taylor coefficients of z_R(x); check in outputs/checks/fig2.json (degeneracies_all_match=true)."
+        },
+        {
+          "id": "ed_confirms_z_ex3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Independent ED of the 1D solvable spin model (Ex.3) reproduces the full many-body spectrum sum_{k in S} eps_k with multiplicity m^{|S|}, i.e. single-mode factor (1+m x) = z_{Ex.3}. outputs/checks/ed_validation.json, max deviation ~1e-14."
+        }
+      ],
+      "code_refs": [
+        "src/paraparticles.py::Species.degeneracies",
+        "src/paraparticles.py::species_table"
+      ],
+      "open_questions": [
+        "Main-text prose (source line 603) says the right panel uses m=5 for Ex.3/Ex.4, but the published Fig. 2 legend uses Ex.3 (m=2) and Ex.4 (m=3). We reproduce the FIGURE (m=2, m=3); the m=5 prose is an internal text/figure inconsistency, flagged in FIGURE_CLASSIFICATION.md."
+      ]
+    },
+    {
+      "id": "thermal_occupation_n_beta",
+      "title": "Free-paraparticle thermal occupation <n_k>_beta = x z'_R(x)/z_R(x) (Eq. n_k_expectation)",
+      "statement": "For the free (bilinear) Hamiltonian H = sum_{ij} h_{ij} e_{ij} = sum_k eps_k n_k with eps_k = eig(h), the whole partition function factorizes into single-mode ones, giving <n_k>_beta = z'_R(e^{-beta eps_k}) e^{-beta eps_k} / z_R(e^{-beta eps_k}) = x z'_R(x)/z_R(x) with x=e^{-beta eps_k}. Equivalently <n> = sum_n n d_n x^n / sum_n d_n x^n. Fermion: x/(1+x)=1/(e^{beta eps}+1). Boson: x/(1-x)=1/(e^{beta eps}-1).",
+      "role": "main_observable",
+      "source_refs": [
+        "main text Eq. n_k_expectation",
+        "main text 'Exact solution of free paraparticles'"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq_nk",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Eq. n_k_expectation in main text; Fig. 2 right panel plots <n>_beta vs beta*eps."
+        },
+        {
+          "id": "xzp_over_z_identity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "<n> = sum_n n d_n x^n / sum_n d_n x^n = x (d/dx) ln z_R(x) = x z'_R(x)/z_R(x). Independent derivation of the paper's formula from the definition of z_R; identical to Eq. n_k_expectation."
+        },
+        {
+          "id": "limit_values",
+          "type": "limiting_case",
+          "status": "passed",
+          "note": "beta*eps=0 (x=1): fermion 1/2, Ex.2 1, Ex.3 2/3, Ex.4 1. T->inf (x->inf): <n> -> largest n with d_n>0 (fermion 1, Ex.3 1, Ex.2 2, Ex.4 2). All verified in outputs/checks/fig2.json (limit_checks_all_pass=true)."
+        }
+      ],
+      "code_refs": [
+        "src/paraparticles.py::Species.occupation",
+        "scripts/gen_fig2.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "solvable_1d_spin_model_free_paraparticles",
+      "title": "1D solvable spin model maps to free paraparticles (Eq. Hamil1Dspin)",
+      "statement": "For the Ex.3 R-matrix, the (m+1)-level spin chain H = sum_{i,a} J_i (x^+_{i,a} y^-_{i+1,a} + x^-_{i,a} y^+_{i+1,a}) - sum_{i,a} mu_i y^+_{i,a} y^-_{i,a} with x^pm=y^pm, y^+_a|0>=|1,a>, is mapped by a generalized Jordan-Wigner transformation onto free paraparticles H=sum_{ij} h_{ij} e_{ij}, h tridiagonal with h_{i,i+1}=h_{i+1,i}=J_i, h_{ii}=-mu_i. Consequently the many-body spectrum equals sum_{k in S} eps_k (eps_k=eig(h)) with multiplicity m^{|S|}, S subseteq modes.",
+      "role": "physical_realization_validation",
+      "source_refs": [
+        "main text Eq. Hamil1Dspin and 'Emergent paraparticles in condensed matter systems'",
+        "SI 'Details on the 1D spin model and the MPO JWT'"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq_hamil1d",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Eq. Hamil1Dspin and the explicit Ex.3 on-site operator definitions in the main text."
+        },
+        {
+          "id": "commutes_with_number",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "[H, n_hat]=0 to machine precision (max|.|=0) in ED, confirming the conserved paraparticle number. outputs/checks/ed_validation.json."
+        },
+        {
+          "id": "spectrum_matches_free_paraparticles",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Brute-force ED spectrum equals free-paraparticle prediction with multiplicity m^{|S|} for N=4,5 (m=2) and N=4 (m=3); max deviation ~1e-14; Hilbert dim (m+1)^N matches."
+        }
+      ],
+      "code_refs": [
+        "src/spin_model_1d.py",
+        "scripts/run_ed_validation.py"
+      ],
+      "open_questions": []
+    }
+  ]
+}

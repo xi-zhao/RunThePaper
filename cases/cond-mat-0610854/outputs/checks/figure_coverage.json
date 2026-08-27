@@ -1,0 +1,112 @@
+{
+  "schema_version": 2,
+  "paper_id": "cond-mat-0610854",
+  "implementations": {
+    "paper_scale_all_targets": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--shard-index",
+        "${SHARD_INDEX}",
+        "--shard-count",
+        "64",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/mbl_level_stats/hamiltonian.py",
+        "src/mbl_level_stats/statistics.py",
+        "src/mbl_level_stats/campaign.py",
+        "scripts/run_reproduction.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/level_ratio_curves.csv",
+        "outputs/data/level_ratio_histograms.csv",
+        "outputs/data/crossing_drift.csv",
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json"
+      ],
+      "acceptance_criteria": [
+        "Every declared (L,W,sample_id) is covered exactly once across shards.",
+        "All spectra use the complete half-filled Hilbert space and every interior adjacent gap.",
+        "The GOE reference uses 1000 matrices of size 3432 as printed.",
+        "All scientific checks pass and generated data hashes are frozen.",
+        "Unprinted L=10,12 sample counts and exact W grid remain explicitly reconstructed."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_distribution_panel",
+      "item_type": "figure_panel",
+      "source_ref": "Fig. 1",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Single scientific panel containing five independently generated adjacent-gap-ratio distributions.",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_LEVEL_DISTRIBUTIONS"
+      ]
+    },
+    {
+      "item_id": "main_fig2_top_panel",
+      "item_type": "figure_panel",
+      "source_ref": "Fig. 2 (top panel)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Full-disorder finite-size curves and error bars.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_FINITE_SIZE_FLOW"
+      ]
+    },
+    {
+      "item_id": "main_fig2_bottom_panel",
+      "item_type": "figure_panel",
+      "source_ref": "Fig. 2 (bottom panel)",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Distinct crossing-region numerical subpanel using the same generated spectra.",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_FINITE_SIZE_FLOW"
+      ]
+    },
+    {
+      "item_id": "crossing_drift_text_claim",
+      "item_type": "quantitative_claim",
+      "source_ref": "Results text crossing discussion",
+      "kind": "numeric",
+      "decision": "target",
+      "reason": "Executable text claim that crossing W increases and crossing r decreases with L.",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_CROSSING_DRIFT"
+      ]
+    }
+  ]
+}

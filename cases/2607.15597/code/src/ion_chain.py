@@ -34,9 +34,25 @@ def equilibrium_positions(number_of_ions: int) -> np.ndarray:
     extent = 0.8 * number_of_ions ** 0.65
     initial = np.linspace(-extent, extent, number_of_ions)
     solution = root(_equilibrium_gradient, initial, method="lm")
-    if not solution.success or np.max(np.abs(_equilibrium_gradient(solution.x))) > 1e-8:
-        raise RuntimeError(f"ion equilibrium did not converge: {solution.message}")
-    positions = np.sort(solution.x)
+    residual = float(np.max(np.abs(_equilibrium_gradient(solution.x))))
+    if not solution.success or residual > 1e-10:
+        refinement = least_squares(
+            _equilibrium_gradient,
+            solution.x,
+            xtol=1e-14,
+            ftol=1e-14,
+            gtol=1e-14,
+            max_nfev=10_000,
+        )
+        residual = float(np.max(np.abs(_equilibrium_gradient(refinement.x))))
+        if not refinement.success or residual > 1e-8:
+            raise RuntimeError(
+                f"ion equilibrium did not converge: {refinement.message}; "
+                f"max residual={residual:.3e}"
+            )
+        positions = np.sort(refinement.x)
+    else:
+        positions = np.sort(solution.x)
     positions -= np.mean(positions)
     return positions
 

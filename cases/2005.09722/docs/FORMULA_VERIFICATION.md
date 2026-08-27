@@ -16,3 +16,15 @@ Machine-readable gate: `outputs/checks/formula_verification.json`。10/10 张公
 | EQ010 | BKT transforms | source_only | gamma_c、alpha、g(L) 和两组坐标逐项实现 |
 
 `source_only` 表示论文明确给出、且所有检查通过，但没有另一条独立解析推导把它升级为 `verified`；它仍允许数值化，不代表公式不可信。
+
+## Target-level independent closure
+
+公式卡保留上述来源等级，不把论文给出的式子伪装成独立推导。另一个更窄的 target-level evaluator 用不同实现检查已接受的生成结果：
+
+- EQ002/EQ003：在 `L=200,400,800` 上做 NumPy backend cross-check，相关矩阵和半链熵差均为 0，最大正交残差 `1.11e-15`。
+- EQ005：用解析生成的 CFT 数据回收 `c=1.75` 和截距 `0.37`，`R^2=1`。
+- EQ009：随机跃迁传播子的最大 unitarity residual 为 `1.78e-15`。
+- EQ010：对 attested CSV 独立重算 BKT 两组变换，172 个有限值全部通过。
+- T033–T036：分别用零变化率、投影恒等式、Gauss-Hermite 短时导数和 Legendre 积分检查解析主张。
+
+因此 `source_only` 仍是公式卡 provenance，目标的 `formula_gate=verified` 则表示其当前缩尺度/解析 artifact 已通过独立机器检查；两者服务不同问题。完整记录见 `outputs/checks/final_disposition_evidence.json`。

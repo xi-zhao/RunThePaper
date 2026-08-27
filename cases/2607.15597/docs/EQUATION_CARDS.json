@@ -1,0 +1,542 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.15597",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Matched C4 and Magnus branch forces",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1); SM Eqs. (S1)-(S3)"
+        }
+      ],
+      "latex": "H=\\hbar\\omega_g(a_i^\\dagger+a_i)(P_r-\\sigma_z)-\\hbar\\omega_g(a_a^\\dagger+a_a)P_r",
+      "role": "Defines the branch-conditioned ion and atom forces.",
+      "derived_from": [
+        "First-order Taylor expansion of -C4/(d+x_i-x_a)^4"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "TeX lines 48-55 and 132-145."
+        },
+        {
+          "id": "EQC001_expand",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating -C4(d+x)^-4 gives +4C4 x/d^5."
+        }
+      ],
+      "numerical_form": "Branch force pairs: (q,0), (-q,0), (2q,-q), (0,-q).",
+      "code_refs": [
+        "src/gate_model.py::branch_forces"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Forced-oscillator displacement and phase",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM Eq. (S5) and surrounding phase-space derivation"
+        }
+      ],
+      "latex": "\\alpha_f=f(1-e^{i\\theta}),\\quad\\phi_f=f^2(\\theta-\\sin\\theta)",
+      "role": "Generates closed trajectories and geometric phases.",
+      "derived_from": [
+        "Magnus expansion of a linearly forced harmonic oscillator"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "SM S1 states circular closure and phi=2 pi f^2."
+        },
+        {
+          "id": "EQC002_closure",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "alpha(2 pi m)=0 and phi(2 pi)=2 pi f^2."
+        }
+      ],
+      "numerical_form": "Vectorized complex displacement on t/T in [0,2].",
+      "code_refs": [
+        "src/gate_model.py::displacement",
+        "src/gate_model.py::geometric_phase"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Controlled-Z phase condition",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main text below Eq. (1); SM S1"
+        }
+      ],
+      "latex": "\\Phi_{CZ}=-8\\pi(\\omega_g/\\omega)^2=-\\pi\\quad\\Rightarrow\\quad\\omega_g/\\omega=1/(2\\sqrt2)",
+      "role": "Sets the paper operating point.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The condition is explicit in the main text and SM."
+        },
+        {
+          "id": "EQC003_pi",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Substitution gives absolute conditional phase pi."
+        }
+      ],
+      "numerical_form": "q=1/(2*sqrt(2)).",
+      "code_refs": [
+        "src/gate_model.py::GateParameters"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Motion-traced spin state and concurrence",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Fig. 2(b,c)"
+        }
+      ],
+      "latex": "\\rho_{jk}=\\tfrac14 e^{i(\\phi_j-\\phi_k)}\\exp[-\\tfrac12\\sum_m|\\alpha_{jm}-\\alpha_{km}|^2]",
+      "role": "Converts branch trajectories into observable populations and entanglement.",
+      "derived_from": [
+        "EQC001",
+        "EQC002",
+        "coherent-state overlap",
+        "Wootters concurrence"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Fig. 2 defines the requested observables."
+        },
+        {
+          "id": "EQC004_density",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Gram-matrix construction has trace one; regression tests check positivity."
+        }
+      ],
+      "numerical_form": "4x4 complex density matrix followed by Wootters eigenvalue formula.",
+      "code_refs": [
+        "src/gate_model.py::reduced_spin_state",
+        "src/gate_model.py::concurrence"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Process-averaged Rydberg decay",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM Tables S2-S3 captions"
+        }
+      ],
+      "latex": "\\epsilon_{decay}=\\tfrac12(1-e^{-T/\\tau_r})",
+      "role": "Dominant low-l gate error and chain-length dependence.",
+      "derived_from": [
+        "Exponential survival; half-basis Rydberg occupation"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Formula repeated in the main and supplemental text."
+        },
+        {
+          "id": "EQC005_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Zero at T=0; approaches 1/2 for T much greater than tau."
+        }
+      ],
+      "numerical_form": "0.5*(-expm1(-T/tau)).",
+      "code_refs": [
+        "src/gate_model.py::decay_infidelity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Anharmonic thermal feature model",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM Eqs. (S14)-(S15), Fig. S3 checkpoints"
+        }
+      ],
+      "latex": "\\epsilon_{anh}=\\epsilon_0+\\tfrac12 x^2/(1+x^2),\\quad x=10\\pi\\eta q(\\bar n+1/2)",
+      "role": "Feature-level substitute for the unavailable five-order QuTiP sweep.",
+      "derived_from": [
+        "Thermal characteristic function",
+        "half-amplitude Rydberg branch",
+        "reported zero-point baseline"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The frequency shift and paper checkpoints are explicit."
+        },
+        {
+          "id": "EQC006_scaling",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Low-occupation excess scales as eta^2 and the n=80 curve is about fourfold lower."
+        }
+      ],
+      "numerical_form": "Stable rational function on nbar in [0.1,50].",
+      "code_refs": [
+        "src/gate_model.py::anharmonic_infidelity"
+      ],
+      "open_questions": [
+        "Not a replacement for the paper's full Taylor-Hamiltonian QuTiP simulation."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Ion-chain gate-duration surrogate",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Fig. 3 caption and main-text scaling paragraph"
+        }
+      ],
+      "latex": "T_g(N)=5\\,\\mu s\\;(N\\le25);\\quad T_g(N)=5+10(N-25)/75\\,\\mu s\\;(N>25)",
+      "role": "Reconstructs the disclosed plateau, crossover, and N=100 endpoint.",
+      "derived_from": [
+        "EQC005",
+        "N*=25",
+        "about 7% low-l decay at N=100"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three contract values occur in the main text/Fig. 3 caption."
+        },
+        {
+          "id": "EQC007_monotone",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Continuous, non-decreasing, and T(100)=15 us."
+        }
+      ],
+      "numerical_form": "Piecewise linear in N.",
+      "code_refs": [
+        "src/gate_model.py::chain_gate_duration_us"
+      ],
+      "open_questions": [
+        "Author optimized durations are not supplied."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Interconnect timing curves",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Fig. 4(a) and architecture prose"
+        }
+      ],
+      "latex": "t_{hyb}=2T+L/v;\\quad t_{ph}=1/R_{ph};\\quad t_{ion}=600+5L\\;[\\mu s]",
+      "role": "Compares deterministic short-range links.",
+      "derived_from": [
+        "v=0.5 um/us",
+        "T=5 us",
+        "R_ph=250 Hz"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Speed, gap example, gate time, and photonic rate are explicit."
+        },
+        {
+          "id": "EQC008_cross",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Hybrid crosses 4 ms at about 2 mm as claimed."
+        }
+      ],
+      "numerical_form": "Log-spaced L from 10 to 1e6 um.",
+      "code_refs": [
+        "src/gate_model.py::interconnect_times_us"
+      ],
+      "open_questions": [
+        "The QCCD affine law is inferred from the source panel because no equation is given."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Hybrid storage-error amortization",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "Fig. 4(b) caption and preceding prose"
+        }
+      ],
+      "latex": "p_{hybrid/op}=2p_T/N_{ops}",
+      "role": "Formalizes the one-write/one-read product claim.",
+      "derived_from": [
+        "One transfer at write and one at read"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula is stated in words and symbols in the Fig. 4 caption."
+        },
+        {
+          "id": "EQC009_monotone",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "d(2pT/N)/dN=-2pT/N^2<0; the source raster slopes the other way and is flagged."
+        }
+      ],
+      "numerical_form": "2*p_transfer/n_ops.",
+      "code_refs": [
+        "src/gate_model.py::hybrid_storage_error_per_operation"
+      ],
+      "open_questions": [
+        "Why source Fig. 4(b) plots rising curves despite the caption's decreasing law."
+      ]
+    },
+    {
+      "id": "EQC010",
+      "title": "Fowler qLDPC projection",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM S8 projection paragraphs and Table S11"
+        }
+      ],
+      "latex": "p_L=A_{BB}(p_{eff}/p_{th})^{(d+1)/2}",
+      "role": "Regenerates architecture projection lines and Table S11.",
+      "derived_from": [],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Formula and constants are explicit in SM S8."
+        },
+        {
+          "id": "EQC010_table_substitution",
+          "type": "numeric_sanity",
+          "status": "failed",
+          "reason": "Direct substitution of the displayed A_BB, thresholds, effective rates, and distances differs from Table S11 by factors of roughly 2-8; the missing empirical calibration/rounding convention is unresolved."
+        }
+      ],
+      "numerical_form": "Vectorized positive power law.",
+      "code_refs": [
+        "src/gate_model.py::fowler_logical_error"
+      ],
+      "open_questions": [
+        "The 66x herald boost is based on a single failure and is not independently re-estimated.",
+        "The displayed Fowler formula and constants do not uniquely reproduce the rounded Table S11 values."
+      ]
+    },
+    {
+      "id": "EQC011",
+      "title": "Piecewise multi-mode closure",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM Eqs. (S10)-(S11)"
+        }
+      ],
+      "latex": "\\sum_j s_j(e^{i\\omega_m t_{j+1}}-e^{i\\omega_m t_j})=0",
+      "role": "Defines the ion-crystal toggle optimizer.",
+      "derived_from": [
+        "Exact integral of a piecewise constant force"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Closure equation and cost are explicit."
+        },
+        {
+          "id": "EQC011_single",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A constant force closes the COM mode after one period."
+        }
+      ],
+      "numerical_form": "Softmax durations plus scipy least_squares on complex residuals.",
+      "code_refs": [
+        "src/ion_chain.py::optimize_toggle_schedule"
+      ],
+      "open_questions": [
+        "Source uses both 25 and 17 segments for N=10; this case follows 2N+5=25."
+      ]
+    },
+    {
+      "id": "EQC012",
+      "title": "CZ operating distance",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM S1 after conditional phase"
+        }
+      ],
+      "latex": "d_{CZ}=[8\\sqrt2 C_4\\ell_i/(\\hbar\\omega)]^{1/5}",
+      "role": "Checks Table S1 and circular operating distances.",
+      "derived_from": [
+        "EQC001",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Formula is explicit in SM S1."
+        },
+        {
+          "id": "EQC012_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "C4*l/(hbar*omega) has dimensions length^5."
+        }
+      ],
+      "numerical_form": "SI units followed by fifth root.",
+      "code_refs": [
+        "src/gate_model.py::cz_distance_m"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC013",
+      "title": "Circular-state decay and thermal floors",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM S9, Eq. (S23), Table S13, Fig. S7"
+        }
+      ],
+      "latex": "\\epsilon_{circ}=\\tfrac12(1-e^{-T/\\tau_{circ}})+\\epsilon_{anh}(\\eta_{circ},\\bar n)+\\epsilon_{tech}",
+      "role": "Generates circular thermal curves and table budgets.",
+      "derived_from": [
+        "EQC005",
+        "EQC006"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All lifetimes, eta values, and additive budget convention are stated in SM S9."
+        },
+        {
+          "id": "EQC013_small_error_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Expanding the product of independent channel fidelities gives the additive budget at first order and returns zero error when every channel vanishes."
+        },
+        {
+          "id": "EQC013_table_arithmetic",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Summing the disclosed decay, ten-mode anharmonic, and technical rows reproduces every Table S14 total within its presentation rounding."
+        }
+      ],
+      "numerical_form": "Evaluate exact Rydberg survival for epsilon_decay, use the explicitly reconstructed anharmonic feature term, then add the disclosed technical floor while retaining O(epsilon_i epsilon_j) as a stated neglected correction.",
+      "code_refs": [
+        "src/gate_model.py::total_gate_infidelity"
+      ],
+      "open_questions": [
+        "The text quotes C4=3-7e-47 but the adopted table/figures use 2.15e-46 J m^4."
+      ]
+    },
+    {
+      "id": "EQC014",
+      "title": "Formula-defined Fowler and timing projection curves",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM S8 Fowler paragraphs and Fig. S5 caption, excluding Table S11 calibration"
+        }
+      ],
+      "latex": "p_L=A(p_{eff}/p_{th})^{(d+1)/2}",
+      "role": "Regenerates the ten analytic logical-error, round-time, and space-time series in Supplement Fig. S5.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The power law, constants, and timing definitions are explicit in SM S8 and the Fig. S5 caption."
+        },
+        {
+          "id": "EQC014_invariant",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Independent evaluation preserves the disclosed distance monotonicity, architecture ordering, and time composition without Table S11 or Monte Carlo arrays."
+        }
+      ],
+      "numerical_form": "Vectorized positive power law and explicit architecture timing identities.",
+      "code_refs": [
+        "src/gate_model.py::fowler_logical_error",
+        "scripts/run_reproduction.py::reproduce_qldpc_projection"
+      ],
+      "open_questions": []
+    }
+  ]
+}

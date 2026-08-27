@@ -1,0 +1,350 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1038-s41467-025-67768-4",
+  "cards": [
+    {
+      "id": "ZNE001",
+      "title": "Polynomial expansion under uniform physical-noise amplification",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Results, polynomial form immediately before Fig. 1"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplementary Eqs. (11)--(18)"
+        }
+      ],
+      "latex": "\\langle O\\rangle(r)=\\langle O\\rangle_{\\mathrm{ideal}}+\\sum_{k=1}^{N}a_k r^k",
+      "role": "Shows that an FTQC observable remains a polynomial in a common physical-error scale even with measurements, feedback, post-selection, and decoding.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "ZNE001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplementary Eqs. (12)--(18) expand every operation into ideal and erroneous components and group terms by error count."
+        },
+        {
+          "id": "ZNE001-order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Uniform replacement p_j -> r p_j multiplies every k-error product by exactly r^k."
+        },
+        {
+          "id": "ZNE001-zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At r=0 only the ideal map remains."
+        }
+      ],
+      "numerical_form": "Evaluate the independently specified noise model at explicit scale factors r; do not fit or sample source-figure pixels.",
+      "code_refs": [
+        "src/qem_models.py::zne_weights"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "ZNE002",
+      "title": "Distance-aware polynomial extrapolation",
+      "source_refs": [
+        {
+          "type": "main_methods",
+          "value": "Methods Eqs. (3)--(4)"
+        },
+        {
+          "type": "main_results",
+          "value": "Fitting basis beginning at ceil(d/2)"
+        }
+      ],
+      "latex": "m=\\lceil d/2\\rceil,\\quad V_{i0}=1,\\quad V_{ij}=r_i^{m+j-1}\\ (j>0),\\quad b_k=(V^{-1})_{0k},\\quad \\langle O\\rangle_{\\mathrm{em}}=\\sum_{k=0}^{K}b_k\\langle O\\rangle(r_k)",
+      "role": "Cancels the first K surviving logical-error powers, beginning at the code-corrected order m.",
+      "derived_from": [
+        "ZNE001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "ZNE002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The basis and Vandermonde-like matrix are stated in the Methods."
+        },
+        {
+          "id": "ZNE002-moments",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The computed weights satisfy sum b_i=1 and sum b_i r_i^(m+j)=0 for j=0,...,K-1."
+        },
+        {
+          "id": "ZNE002-k1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For two points the result cancels a pure r^m correction exactly."
+        }
+      ],
+      "numerical_form": "Build V from the declared r values and solve V.T * b = e0; never use an image-derived fit.",
+      "code_refs": [
+        "src/qem_models.py::zne_weights",
+        "src/qem_models.py::zne_estimate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "ZNE003",
+      "title": "Bias and optimally allocated sampling overhead",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Main Eqs. (1)--(2)"
+        },
+        {
+          "type": "main_methods",
+          "value": "Methods variance and shot-allocation paragraph"
+        }
+      ],
+      "latex": "\\delta=|\\langle O\\rangle_{\\mathrm{em}}-\\langle O\\rangle_{\\mathrm{ideal}}|,\\quad N_k=\\frac{|b_k|}{B}N_{\\mathrm{tot}},\\quad \\eta=\\frac{B\\sum_k|b_k|[1-\\langle O\\rangle(r_k)^2]}{1-\\langle O\\rangle(r_0)^2},\\quad B=\\sum_k|b_k|",
+      "role": "Separates accuracy improvement from the sampling cost for a Pauli observable.",
+      "derived_from": [
+        "ZNE002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "ZNE003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Bias, variance ratio, Pauli shot variance, and importance allocation are stated in the main Methods."
+        },
+        {
+          "id": "ZNE003-variance",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of N_k=Ntot|b_k|/B into sum b_k^2(1-O_k^2)/N_k yields the displayed dimensionless ratio."
+        },
+        {
+          "id": "ZNE003-identity",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With K=0, b_0=1 and eta=1."
+        }
+      ],
+      "numerical_form": "Use analytic expectation values O(r_k), the same total-shot convention, and return infinity only when the raw Pauli variance is exactly zero.",
+      "code_refs": [
+        "src/qem_models.py::zne_metrics"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "FB001",
+      "title": "Exact feedback and post-selection response of Main Fig. 2",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Main Fig. 2 and the feedback parity-check experiment"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplementary Note 3, Pauli insertion probabilities"
+        }
+      ],
+      "latex": "q=2rp/3,\\quad \\langle Z_0\\rangle_{\\mathrm{raw}}=\\cos\\theta_0(1-2q),\\quad P_{\\mathrm{acc}}=(1-q)^2+q^2,\\quad \\langle Z_0\\rangle_{\\mathrm{corr}}=\\cos\\theta_0\\frac{1-2q}{1-2q+2q^2}",
+      "role": "Gives the injection-only numerical curves without reading the paper plot or author arrays.",
+      "derived_from": [
+        "ZNE001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "FB001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states independent I/X/Y/Z insertion, Q3 post-selection, and Q1-controlled feedback."
+        },
+        {
+          "id": "FB001-enumeration",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A 64-pattern Pauli enumeration agrees with the closed form for every tested r and theta."
+        },
+        {
+          "id": "FB001-zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At p=0 both raw and corrected values equal cos(theta_0), with unit acceptance."
+        }
+      ],
+      "numerical_form": "For each data qubit X/Y contributes a classical Z-basis flip with probability q. Q3 accepts e2=e4; Q1 feedback leaves residual flip e2.",
+      "code_refs": [
+        "src/qem_models.py::feedback_expectation",
+        "src/qem_models.py::feedback_expectation_enumerated"
+      ],
+      "open_questions": [
+        "The dashed paper simulation also includes a non-disclosed per-gate calibration map; the exact card covers the stated injection model."
+      ]
+    },
+    {
+      "id": "REP001",
+      "title": "Repetition-code logical failure and multi-round composition",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Main Fig. 3 repetition-code protocol"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplementary Table 3 and Note 4"
+        }
+      ],
+      "latex": "q=2rp/3,\\quad P_L(d,q)=\\sum_{j=\\lceil d/2\\rceil}^{d}{d\\choose j}q^j(1-q)^{d-j},\\quad \\langle Z_L\\rangle_{\\mathrm{corr}}=[1-2P_L(d,q)]^{M+1},\\quad \\langle Z_L\\rangle_{\\mathrm{raw}}=(1-2q)^{M+1}",
+      "role": "Provides a closed-form, independently checkable model of the distance and round scaling emphasized by the paper.",
+      "derived_from": [
+        "ZNE001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "REP001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper states d data qubits, correction of up to ceil(d/2)-1 flips, and M+1 injected-error layers."
+        },
+        {
+          "id": "REP001-binomial",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Correctable and failing binomial sectors sum to one."
+        },
+        {
+          "id": "REP001-distance",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The small-q leading logical term has order q^ceil(d/2), matching the paper's extrapolation basis."
+        },
+        {
+          "id": "REP001-rounds",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Independent logical flips across M+1 layers multiply the logical-Z attenuation factors."
+        }
+      ],
+      "numerical_form": "Evaluate the binomial tail with integer arithmetic/scipy-free summation; optionally compose disclosed median gate/readout flips as a separate, labelled calibration model.",
+      "code_refs": [
+        "src/qem_models.py::repetition_logical_failure",
+        "src/qem_models.py::repetition_expectation"
+      ],
+      "open_questions": [
+        "The exact gate-by-gate Processor-I calibration map used for the paper's dashed curves is not public in the article."
+      ]
+    },
+    {
+      "id": "SURF001",
+      "title": "Exact distance-3 rotated-surface-code Pauli channel",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Main Fig. 4 and logical operators XL=X_D1 X_D4 X_D7, ZL=Z_D3 Z_D4 Z_D5"
+        },
+        {
+          "type": "supplement",
+          "value": "Supplementary Fig. 6 and Note 4 numerical-simulation paragraph"
+        }
+      ],
+      "latex": "P_{\\ell}(p)=\\sum_{E\\in\\mathcal P_9}(1-p)^{9-w(E)}(p/3)^{w(E)}\\,\\mathbf 1\\{L[D(s(E))E]=\\ell\\},\\quad p_{\\mathrm{eff}}=\\frac34\\left[1-\\prod_j(1-4p_j/3)\\right]",
+      "role": "Enumerates all 4^9 physical Pauli errors, applies an independently reconstructed minimum-weight CSS decoder, and returns the logical I/X/Y/Z channel.",
+      "derived_from": [
+        "ZNE001"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "SURF001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper gives the 3x3 data layout, eight syndrome qubits, logical operators, depolarizing preparation model, and calibrated p_prep=0.075."
+        },
+        {
+          "id": "SURF001-commute",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "All reconstructed X/Z stabilizers commute; both logical operators commute with the stabilizer group and anticommute with each other."
+        },
+        {
+          "id": "SURF001-distance",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Exhaustive search finds no weight-1 logical operator and finds weight-3 logical representatives."
+        },
+        {
+          "id": "SURF001-normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The four logical-channel probabilities sum to one for every evaluated p."
+        }
+      ],
+      "numerical_form": "Pre-enumerate each Pauli pattern's weight and decoded logical class, then evaluate its probability polynomial for each effective depolarizing rate.",
+      "code_refs": [
+        "src/surface_code.py::logical_channel",
+        "src/surface_code.py::validate_code"
+      ],
+      "open_questions": [
+        "The surface-code unit injection rate is not stated; the generated plot discloses its cross-experiment assumption."
+      ]
+    },
+    {
+      "id": "MEM001",
+      "title": "Bravyi--Vargo logical-memory fit used by Supplementary Fig. 9",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplementary Fig. 9 and surrounding text"
+        },
+        {
+          "type": "primary_reference",
+          "value": "Bravyi and Vargo, Phys. Rev. A 88, 062308 (2013), Eqs. (2)--(3), Table I"
+        }
+      ],
+      "latex": "r_d=(d+1)/4,\\quad P_L(p,d)=\\exp[-\\alpha(p)(r_d-2)+4\\ln p+x(p)],\\quad -\\alpha(p)=c+2\\ln p+\\ln(1+y(p)),\\quad \\langle O\\rangle(r)=[1-2P_L(rp,d)]^N",
+      "role": "Reproduces the paper's large-scale surface-code memory estimate and its distance-aware ZNE calculation.",
+      "derived_from": [
+        "ZNE002",
+        "ZNE003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "MEM001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The target supplement specifies p, d, amplification factors, N, and O(r); the primary reference specifies the noisy-syndrome path coefficients."
+        },
+        {
+          "id": "MEM001-anchor",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At p=1e-3 and d=11 the path-like fit gives 2.03375e-10, reproducing the main-text approximately 2e-10 anchor."
+        },
+        {
+          "id": "MEM001-zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At N=0 or P_L=0 the observable is one and the raw bias vanishes."
+        }
+      ],
+      "numerical_form": "Use noisy-syndrome path coefficients x=(9.88,1170,-76400), c=7.52, y=(880,4690,6.04e6); use r_d=(d+1)/4 for d=7,11,15.",
+      "code_refs": [
+        "src/qem_models.py::bravyi_vargo_path_error",
+        "src/qem_models.py::logical_memory_expectation"
+      ],
+      "open_questions": []
+    }
+  ]
+}

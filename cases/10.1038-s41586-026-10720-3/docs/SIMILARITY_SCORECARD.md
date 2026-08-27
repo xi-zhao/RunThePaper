@@ -1,17 +1,24 @@
 # Similarity scorecard
 
-Public status: **numerical feature reproduction**.
+## Authoritative snapshot
 
-The complete internal case audit score is **78.47/100**. For the requested
-main-text numerical scope alone, Figs. 2, 4, and 5 have a weighted view of
-**80.05/100**.
+- Scientific score: **26.54/100** (`feature_not_accepted`).
+- Atomic theoretical coverage: **13/13**.
+- Execution: **attested smoke**, 17/17 units.
+- Paper-exact target: **1/13**, the Fig. 5 equal-slope analytic constraint.
+- Lifecycle: **partial**; pixel evidence and fresh-context review are missing.
 
-| Target | Numerical result | Presentation diagnostic | Boundary |
-| --- | --- | ---: | --- |
-| Fig. 2 | seven landmarks reproduced; maximum `omega` error `8.06e-4 rad/fs` | SSIM `0.8238` | dispersion is reconstructed from the printed vector curve |
-| Fig. 4 | mean blind NRMSE `0.0653`; correlation `0.9810` | SSIM `0.7348` | red fit inputs and black validation paths are not redistributed |
-| Fig. 5 | slope ratio `1.0211` versus `1.02` | SSIM `0.8201` | normalized points are source-derived and are not redistributed |
+| Target family | Count | Meaning |
+| --- | ---: | --- |
+| Fig. 2 | 3 | independent surrogate features; exact numerical alignment unavailable |
+| Fig. 4 theory | 6 | disclosed formula family implemented; panel fit tables unavailable |
+| Fig. 5 constraint | 1 | analytic equal-slope consequence independently verified |
+| Supplement Fig. 1 | 3 | runner and scan grids implemented; method normalization remains open |
 
-The result is not author-data-level exact reproduction. The fibre coefficients,
-raw spectra, fitted parameter tables, raw NRR fluxes, and measured pulse shapes
-are unavailable. No author code was used.
+The withdrawn 78.47/80.05-style scores used source-derived numerical traces or
+fits and are not scientific-reproduction evidence. Pixel comparison remains a
+separate post-freeze rendering diagnostic and cannot change physics parameters
+or numerical arrays.
+
+The machine-readable authority is
+`outputs/checks/similarity_scorecard.json`; this page is a concise projection.

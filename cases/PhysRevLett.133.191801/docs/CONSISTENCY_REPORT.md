@@ -28,8 +28,18 @@ finite cell geometry, and all supplemental numerical items cannot be audited
 exactly because their arrays or the authorized Supplemental Material are not
 available. Source-image pixels are not used to replace these inputs.
 
+Under the declared scientific scope, the four Fig. 3 calibration panels and
+the measured traces are explicit experimental exclusions, not uncovered
+theory items. Five known main-text theory/method items are covered, but four
+have fidelity below 60. The supplement is separately marked as an unknown
+inventory remainder, so the case cannot claim whole-paper 100% coverage.
+
 ## Current conclusion
 
 No stable contradiction has survived the present checks. There is therefore no
 paper-error candidate. Missing source/data evidence remains a blocker rather
 than evidence for or against the paper.
+
+Machine-readable completeness assertions therefore use `blocked`, not
+`failed`: the distinction preserves the paper-review boundary between a
+scientific contradiction and a claim that cannot yet be tested.

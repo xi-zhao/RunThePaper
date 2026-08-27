@@ -312,6 +312,14 @@ def plot_site_n_sweep(data_path: Path, output: Path) -> dict[str, str]:
             markersize=3,
             label=mechanism,
         )
+    baseline = [row for row in rows if row["record_kind"] == "baseline"]
+    if baseline:
+        axes[1].axhline(
+            float(baseline[0]["eta_mean"]),
+            color=GRAY,
+            linestyle=":",
+            label="no dissipation",
+        )
     axes[1].set_xscale("log")
     axes[1].set_ylim(0, 1.02)
     axes[1].set_xlabel("pure-channel rate (meV)")

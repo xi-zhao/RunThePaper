@@ -159,7 +159,7 @@ Code: `src/quantum_jumps/micromaser.py::tilted_birth_death`
 
 ### EQ009 — Quantum Doob transform
 
-*T011 rare-to-typical mapping*
+*T011 rare-to-typical mapping; T012 explicit three-level physical realization*
 
 $$
 tilde L_mu=[delta_mu1 e^{-s/2}+1-delta_mu1] l_s^{1/2}L_mu l_s^{-1/2}

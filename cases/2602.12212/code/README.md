@@ -7,9 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2602.12212/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --config config/paper_scale_closure.json
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Frozen non-final target states: T002=evidence_compared, T003=evidence_compared, T004=evidence_compared, T005=evidence_compared, T006=evidence_compared, T007=evidence_compared, T008A=evidence_compared, T008B=evidence_compared, T009=evidence_compared. No source-image comparison panel or digitized source curve is published in this projection.
+Boundary: All active v3 numerical figures were regenerated independently at the paper's published sizes. Boundary, shell-edge, and confidence-interval conventions omitted by the paper are disclosed reconstructions.

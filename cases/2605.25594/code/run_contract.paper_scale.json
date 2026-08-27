@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "run_id": "2605.25594-all-anderson-figures-paper-scale",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008",
+    "T010",
+    "T011",
+    "T012",
+    "T013",
+    "T014",
+    "T015",
+    "T016",
+    "T017",
+    "T018",
+    "T019",
+    "T020",
+    "T021",
+    "T022",
+    "T023",
+    "T024"
+  ],
+  "working_directory": "workspace",
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "run-all"
+  ],
+  "inputs": [
+    "src/anderson_sensitivity.py",
+    "src/paper_scale_campaign.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "families,mu_values,central_fraction,operator_seed",
+  "outputs": [
+    "outputs/data/paper_scale/target_index.json",
+    "outputs/checks/paper_scale_manifest.json"
+  ],
+  "resource_request": {
+    "accelerator": "A100 for L<=31, high-memory CPU/LAPACK fallback for larger L",
+    "gpu_memory_gb": 80,
+    "cpu_cores": 32,
+    "memory_gb": 256,
+    "checkpoint_storage_gb": 20
+  },
+  "timeout_seconds": 1209600,
+  "resume_policy": "One atomic JSON checkpoint per deterministic (family,L,W,sample) work unit; checkpoints bind config and implementation hashes.",
+  "acceptance_source": "config/paper_scale.json#acceptance",
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

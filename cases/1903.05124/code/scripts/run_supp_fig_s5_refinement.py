@@ -22,10 +22,9 @@ from time import perf_counter
 import numpy as np
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-sys.path.insert(0, str(CODE / "scripts"))
-sys.path.insert(0, str(CODE / "src"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE / "scripts"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from run_main_fig2 import (  # noqa: E402
     ObservableOutput,
@@ -46,12 +45,19 @@ DEFAULT_REALIZATIONS = 8
 DEFAULT_SEED = 1_903_051_255
 
 
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input",
         type=Path,
-        default=CASE / "outputs" / "data" / "main_fig2_numerical_data.csv",
+        default=WORKSPACE / "outputs" / "data" / "main_fig2_numerical_data.csv",
     )
     parser.add_argument("--realizations", type=int, default=DEFAULT_REALIZATIONS)
     parser.add_argument("--workers", type=int)
@@ -232,6 +238,7 @@ def build_checks(
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
     if args.realizations <= 0:
         raise ValueError("realizations must be positive")
@@ -254,8 +261,8 @@ def main() -> int:
             executor=executor,
         )
 
-    data_dir = CASE / "outputs" / "data"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    check_dir = WORKSPACE / "outputs" / "checks"
     data_dir.mkdir(parents=True, exist_ok=True)
     check_dir.mkdir(parents=True, exist_ok=True)
     output_path = data_dir / "supp_fig_s5_refinement_numerical_data.csv"

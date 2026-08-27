@@ -1,0 +1,3335 @@
+{
+  "schema_version": 2,
+  "paper_id": "1608.02589",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (9 pages, including embedded Supplemental Material); paper-source/extracted/*.tex used only to cross-check captions, formulas, and panel membership",
+    "known_items": [
+      "Main Figs. 1-4",
+      "Supplement Figs. S1-S3",
+      "80 unique eligible numerical display items",
+      "56 repeated or alternate-rendering display occurrences retained as supporting items",
+      "one excluded trapped-ion schematic",
+      "nine independent no-display quantitative or analytic claims",
+      "no tables",
+      "three contextual external/source quantitative statements excluded from the reproduction denominator"
+    ],
+    "unknown_remainder": false,
+    "reason": "The archived PDF, all figure captions, main text, references, and embedded supplement were read end to end. Source TeX was used only for content enumeration, never as numerical implementation input."
+  },
+  "inventory_summary": {
+    "physical_display_regions": 39,
+    "numerical_display_occurrences": 136,
+    "eligible_display_items": 80,
+    "supporting_display_occurrences": 56,
+    "excluded_schematic_items": 1,
+    "eligible_quantitative_claims": 9,
+    "eligible_items_total": 89,
+    "evidence_covered_items": 32,
+    "evidence_uncovered_items": 57,
+    "contextual_external_claims_excluded": 3
+  },
+  "implementations": {
+    "paper_scale_all_numeric": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T009",
+        "T010",
+        "T012",
+        "T013"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale_all.py",
+        "--config",
+        "config/paper_scale_all.json",
+        "run-all",
+        "--profile",
+        "paper",
+        "--workers",
+        "16",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/dtc_feature_sim.py",
+        "src/dtc_paper_scale.py",
+        "scripts/run_paper_scale_all.py"
+      ],
+      "config_ref": "config/paper_scale_all.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale/main_fig1_rigidity.json",
+        "outputs/data/paper_scale/main_fig2_level_statistics.json",
+        "outputs/data/paper_scale/main_fig2_variance.json",
+        "outputs/data/paper_scale/main_fig3_and_supp_s2.json",
+        "outputs/data/paper_scale/main_fig4_long_range.json",
+        "outputs/data/paper_scale/supp_fig_s1.json",
+        "outputs/data/paper_scale/supp_fig_s3.json",
+        "outputs/figures/paper_scale/main_fig1.png",
+        "outputs/figures/paper_scale/main_fig2.png",
+        "outputs/figures/paper_scale/main_fig3.png",
+        "outputs/figures/paper_scale/main_fig4.png",
+        "outputs/figures/paper_scale/supp_fig_s1.png",
+        "outputs/figures/paper_scale/supp_fig_s2.png",
+        "outputs/figures/paper_scale/supp_fig_s3.png",
+        "outputs/checks/paper_scale/paper_scale_acceptance.json",
+        "outputs/checks/paper_scale/manifest.json"
+      ],
+      "acceptance_criteria": [
+        "Every declared display item within this implementation's target ids is generated from independently computed Floquet data, never author code, author arrays, digitized curves, or source pixels.",
+        "Digest-bound shards cover each predeclared paper condition; aggregation fails closed on missing, stale, or configuration-omitted work.",
+        "Trace, level-ratio, endpoint mutual-information, variance, susceptibility, and long-time-spectrum invariants pass for each implemented family.",
+        "Unpublished grids, seeds, protocol choices, and the unavailable trapped-ion coupling matrix remain explicitly reconstructed rather than paper-exact.",
+        "Potential paper errors require protocol-v2 falsification and fresh-context review, not merely a failed comparison."
+      ],
+      "acceptance_ref": "config/paper_scale_all.json",
+      "compute_status": "code_ready_full_production_not_run"
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--profile",
+        "attestation",
+        "--output-root",
+        "outputs/data/implementation_closure"
+      ],
+      "code_refs": [
+        "src/dtc_feature_sim.py",
+        "src/implementation_campaign.py",
+        "scripts/run_implementation_campaign.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/data/implementation_closure/T005.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T007.json",
+        "outputs/data/implementation_closure/T008.json",
+        "outputs/data/implementation_closure/T009.json",
+        "outputs/data/implementation_closure/T010.json",
+        "outputs/data/implementation_closure/T011.json",
+        "outputs/data/implementation_closure/T012.json",
+        "outputs/data/implementation_closure/T013.json",
+        "outputs/data/implementation_closure/T014.json",
+        "outputs/data/implementation_closure/T015.json",
+        "outputs/data/implementation_closure/T016.json",
+        "outputs/data/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The campaign executes from the frozen JSON profile without reading raw/, author code or arrays, reference pixels, or legacy outputs.",
+        "Every fixed-denominator item is mapped exactly once to a declared target output or an explicit indispensable-input blocked artifact.",
+        "Reduced-scale attestation proves the code path only and does not change scientific coverage or claim paper-scale agreement."
+      ],
+      "acceptance_ref": "config/implementation_closure.json",
+      "compute_status": "reduced_scale_implementation_attested_scientific_review_pending",
+      "latest_attestation_ref": "outputs/runs/1608.02589-implementation-closure-v4-20260827/run_attestation.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "F1A-DTC-SR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(a), PDF p. 2, short-range DTC boundary",
+      "scientific_object": "Short-range discrete-time-crystal melting boundary inferred from the variance diagnostic",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig1_peak_locking_L14.csv",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "outputs/data/iteration2_fig1_phase_boundary_proxy.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "F1A-MBL-SR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(a), PDF p. 2, short-range thermal/MBL boundary",
+      "scientific_object": "Short-range thermal-to-many-body-localized phase boundary from Floquet level statistics",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F1A_MBL_SR"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F1A-MBL-LR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(a), PDF p. 2, long-range thermal/MBL boundary",
+      "scientific_object": "Long-range trapped-ion thermal-to-many-body-localized phase boundary",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F1A_MBL_LR"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F1B-PEAK-J000",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(b), PDF p. 2, Jz=0 peak-location series",
+      "scientific_object": "Noninteracting subharmonic Fourier-peak position versus pulse error",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig1_peak_locking_L14.csv",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "outputs/data/iteration2_fig1_phase_boundary_proxy.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "F1B-PEAK-J015",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(b), PDF p. 2, Jz=0.15 peak-location series",
+      "scientific_object": "Interaction-rigid subharmonic Fourier-peak position versus pulse error",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig1_peak_locking_L14.csv",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "outputs/data/iteration2_fig1_phase_boundary_proxy.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "F1B-FWHM-J015",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 1(b), PDF p. 2, Jz=0.15 FWHM band",
+      "scientific_object": "Full width at half maximum of the interacting subharmonic Fourier peak",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F1B_FWHM_J015"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F1C-FFT-J000-EPSFAMILY",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Noninteracting Fourier-response family across the printed pulse-error values",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig1_peak_locking_L14.csv",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "outputs/data/iteration2_fig1_phase_boundary_proxy.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "F1D-FFT-J015-EPSFAMILY",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1(d), PDF p. 2",
+      "scientific_object": "Interacting Fourier-response family across the printed pulse-error values",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig1_peak_locking_L14.csv",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "outputs/data/iteration2_fig1_phase_boundary_proxy.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "F2A-NARROW-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a), PDF p. 2, narrow-coupling ensemble, L=8",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the narrow coupling-disorder ensemble at L=8",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig2_level_statistics_L6_L8_L10.csv",
+        "outputs/data/iteration2_fig2_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "F2A-NARROW-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a), PDF p. 2, narrow-coupling ensemble, L=10",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the narrow coupling-disorder ensemble at L=10",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig2_level_statistics_L6_L8_L10.csv",
+        "outputs/data/iteration2_fig2_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "F2A-NARROW-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a), PDF p. 2, narrow-coupling ensemble, L=12",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the narrow coupling-disorder ensemble at L=12",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2A_NARROW_L12"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2A-BROAD-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a) inset, PDF p. 2, broad-coupling ensemble, L=8",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the broad coupling-disorder ensemble at L=8",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2A_BROAD_L08"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2A-BROAD-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a) inset, PDF p. 2, broad-coupling ensemble, L=10",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the broad coupling-disorder ensemble at L=10",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2A_BROAD_L10"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2A-BROAD-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(a) inset, PDF p. 2, broad-coupling ensemble, L=12",
+      "scientific_object": "Floquet adjacent-gap-ratio curve for the broad coupling-disorder ensemble at L=12",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2A_BROAD_L12"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2B-VAR-J003-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.03, L=10",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.03 at L=10",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig2_level_statistics_L6_L8_L10.csv",
+        "outputs/data/iteration2_fig2_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "F2B-VAR-J003-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.03, L=12",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.03 at L=12",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2B_VAR_J003_L12"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2B-VAR-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.05, L=10",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.05 at L=10",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig2_level_statistics_L6_L8_L10.csv",
+        "outputs/data/iteration2_fig2_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "F2B-VAR-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.05, L=12",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.05 at L=12",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2B_VAR_J005_L12"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F2B-VAR-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.1, L=10",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.1 at L=10",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig2_level_statistics_L6_L8_L10.csv",
+        "outputs/data/iteration2_fig2_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "F2B-VAR-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(b), PDF p. 2, Jz=0.1, L=12",
+      "scientific_object": "Sample-to-sample half-frequency peak variance versus pulse error for Jz=0.1 at L=12",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F2B_VAR_J010_L12"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=8",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=8",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=10",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=10",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=12",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=12",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=14",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J005_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=14",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J005-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=16",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J005_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J005-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=16",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J005-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, raw column, L=18",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.05, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J005_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J005-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, linear-collapse column, L=18",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.05, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J010-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=8",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J010-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=8",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=10",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=10",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=12",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=12",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J010-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=14",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J010_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J010-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=14",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J010-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=16",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J010_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J010-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=16",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J010-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, raw column, L=18",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.1, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J010_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J010-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, linear-collapse column, L=18",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.1, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=8",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=8",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=8",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=10",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=10",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=10",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=12",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-COLL-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=12",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=12",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig3_large_ed_campaign.csv",
+        "outputs/checks/fig3_scaling_collapse.json"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "S2-RAW-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=14",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=14",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=14",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L14"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=16",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=16",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=16",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L16"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-RAW-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, raw column, L=18",
+      "scientific_object": "Endpoint mutual information versus pulse error at Jz=0.15, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S2-COLL-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, linear-collapse column, L=18",
+      "scientific_object": "Finite-size-scaled endpoint mutual information at Jz=0.15, L=18",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L18"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "F4-VAR-J003",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4, PDF p. 3, Jz=0.03 variance curve",
+      "scientific_object": "Long-range alpha=1.5 half-frequency peak variance versus pulse error for Jz=0.03",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig4_long_range_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "F4-VAR-J005",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4, PDF p. 3, Jz=0.05 variance curve",
+      "scientific_object": "Long-range alpha=1.5 half-frequency peak variance versus pulse error for Jz=0.05",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig4_long_range_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "F4-VAR-J007",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4, PDF p. 3, Jz=0.07 variance curve",
+      "scientific_object": "Long-range alpha=1.5 half-frequency peak variance versus pulse error for Jz=0.07",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig4_long_range_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "F4-INSET-DTC-LR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4 inset, PDF p. 3, long-range DTC boundary",
+      "scientific_object": "Long-range discrete-time-crystal melting boundary inferred from the variance maximum",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independently generated data directly implement this atomic scientific series; the target quality limits remain separately recorded in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/iteration2_fig4_long_range_variance_L10.csv"
+      ],
+      "implementation_ref": "paper_scale_all_numeric",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "F4-INSET-MBL-LR",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 4 inset, PDF p. 3, long-range MBL boundary",
+      "scientific_object": "Long-range trapped-ion thermal-to-many-body-localized phase boundary",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_F4_INSET_MBL_LR"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "X-F4-ION-SCHEM",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 4, PDF p. 3, trapped-ion protocol illustration",
+      "scientific_object": "Conceptual trapped-ion pulse-sequence and interaction schematic",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "This panel is a conceptual experimental schematic and contains no independently computable numerical observable."
+    },
+    {
+      "item_id": "S1A-TRACE-IDEAL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 8, ideal pi-pulse trace",
+      "scientific_object": "ideal pi-pulse stroboscopic autocorrelation trace at the printed paper condition",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1A_TRACE_IDEAL"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1A-TRACE-NONINT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 8, imperfect noninteracting trace",
+      "scientific_object": "imperfect noninteracting stroboscopic autocorrelation trace at the printed paper condition",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1A_TRACE_NONINT"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1A-TRACE-INT",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 8, imperfect interacting trace",
+      "scientific_object": "imperfect interacting stroboscopic autocorrelation trace at the printed paper condition",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1A_TRACE_INT"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1B-FFT-EPS018",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 8, epsilon=0.18",
+      "scientific_object": "Fourier-peak washout spectrum at epsilon=0.18",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1B_FFT_EPS018"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1B-FFT-EPS024",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 8, epsilon=0.24",
+      "scientific_object": "Fourier-peak washout spectrum at epsilon=0.24",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1B_FFT_EPS024"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1B-FFT-EPS030",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 8, epsilon=0.3",
+      "scientific_object": "Fourier-peak washout spectrum at epsilon=0.3",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1B_FFT_EPS030"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1C-CHI-J003",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(c), PDF p. 8, Jz=0.03",
+      "scientific_object": "Discrete-time-symmetry-breaking susceptibility versus pulse error for Jz=0.03",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1C_CHI_J003"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1C-CHI-J005",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(c), PDF p. 8, Jz=0.05",
+      "scientific_object": "Discrete-time-symmetry-breaking susceptibility versus pulse error for Jz=0.05",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1C_CHI_J005"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S1C-CHI-J010",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S1(c), PDF p. 8, Jz=0.1",
+      "scientific_object": "Discrete-time-symmetry-breaking susceptibility versus pulse error for Jz=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S1C_CHI_J010"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-NN-HZ000",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, nearest-neighbor row, hz=0.0",
+      "scientific_object": "Nearest-neighbor L=10, 1000-period Fourier spectrum for hz=0.0",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_NN_HZ000"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-NN-HZ010",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, nearest-neighbor row, hz=0.1",
+      "scientific_object": "Nearest-neighbor L=10, 1000-period Fourier spectrum for hz=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_NN_HZ010"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-NN-HZ270",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, nearest-neighbor row, hz=2.7",
+      "scientific_object": "Nearest-neighbor L=10, 1000-period Fourier spectrum for hz=2.7",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_NN_HZ270"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-NN-HZ610",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, nearest-neighbor row, hz=6.1",
+      "scientific_object": "Nearest-neighbor L=10, 1000-period Fourier spectrum for hz=6.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_NN_HZ610"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-NN-DISORDER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, nearest-neighbor row, hz=maximal disorder",
+      "scientific_object": "Nearest-neighbor L=10, 1000-period Fourier spectrum for hz=maximal disorder",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_NN_DISORDER"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-LR-HZ000",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, power-law 1/r^1.5 row, hz=0.0",
+      "scientific_object": "Long-range L=10, 1000-period Fourier spectrum for hz=0.0",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_LR_HZ000"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-LR-HZ010",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, power-law 1/r^1.5 row, hz=0.1",
+      "scientific_object": "Long-range L=10, 1000-period Fourier spectrum for hz=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_LR_HZ010"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-LR-HZ290",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, power-law 1/r^1.5 row, hz=2.9",
+      "scientific_object": "Long-range L=10, 1000-period Fourier spectrum for hz=2.9",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_LR_HZ290"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-LR-HZ610",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, power-law 1/r^1.5 row, hz=6.1",
+      "scientific_object": "Long-range L=10, 1000-period Fourier spectrum for hz=6.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_LR_HZ610"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "S3-LR-DISORDER",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3, PDF p. 9, power-law 1/r^1.5 row, hz=maximal disorder",
+      "scientific_object": "Long-range L=10, 1000-period Fourier spectrum for hz=maximal disorder",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "implementation_defect_corrected_reduced_scale_review_pending",
+      "reason": "The earlier implementation treated h_z as a label and used 2.9 for both rows. The v4 isolated run now applies the actual uniform fields (nearest 2.7, long-range 2.9) or maximal [0,2pi] disorder in the Hamiltonian; the output remains reduced scale and awaits fresh scientific review.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_S3_LR_DISORDER"
+      ],
+      "scientific_assessment": "corrected_implementation_attested_review_pending"
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.05 raw display, L=8",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.05, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J005-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.05 raw display, L=10",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.05, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J005-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.05 raw display, L=12",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.05, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J005-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.05 raw display, L=14",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.05, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J005-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_RAW_J005_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=8",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=10",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=12",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=14",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=16",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3A-RAW-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(a), PDF p. 2, Jz=0.15 raw display, L=18",
+      "scientific_object": "Repeated display of endpoint mutual information at Jz=0.15, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-RAW-J015-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_RAW_J015_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3B-COLL-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b), PDF p. 2, linear collapse, Jz=0.05, L=8",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.05, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-COLL-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b), PDF p. 2, linear collapse, Jz=0.05, L=10",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.05, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-COLL-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b), PDF p. 2, linear collapse, Jz=0.05, L=12",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.05, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-COLL-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b), PDF p. 2, linear collapse, Jz=0.05, L=14",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.05, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3C-COLL-J010-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c), PDF p. 2, linear collapse, Jz=0.1, L=8",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.1, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-COLL-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c), PDF p. 2, linear collapse, Jz=0.1, L=10",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.1, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-COLL-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c), PDF p. 2, linear collapse, Jz=0.1, L=12",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.1, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-COLL-J010-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c), PDF p. 2, linear collapse, Jz=0.1, L=14",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.1, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=8",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=10",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=12",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=14",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=16",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-COLL-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d), PDF p. 2, linear collapse, Jz=0.15, L=18",
+      "scientific_object": "Repeated linear-collapse display at Jz=0.15, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3B-LOG-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b) inset, PDF p. 2, semi-log view, Jz=0.05, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-LOG-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b) inset, PDF p. 2, semi-log view, Jz=0.05, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-LOG-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b) inset, PDF p. 2, semi-log view, Jz=0.05, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3B-LOG-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(b) inset, PDF p. 2, semi-log view, Jz=0.05, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3C-LOG-J010-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c) inset, PDF p. 2, semi-log view, Jz=0.1, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-LOG-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c) inset, PDF p. 2, semi-log view, Jz=0.1, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-LOG-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c) inset, PDF p. 2, semi-log view, Jz=0.1, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3C-LOG-J010-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(c) inset, PDF p. 2, semi-log view, Jz=0.1, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=16",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-F3D-LOG-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 3(d) inset, PDF p. 2, semi-log view, Jz=0.15, L=18",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=16",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J005-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.05, semi-log column, L=18",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.05, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J005-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J005_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=16",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J010-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.1, semi-log column, L=18",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.1, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J010-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J010_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L08",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=8",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=8",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L08",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=10",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=10",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L10",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L12",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=12",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=12",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L12",
+      "coverage_status": "supporting_duplicate",
+      "reason": "This is a second display occurrence or alternate rendering of the named canonical scientific series, so it remains auditable without contributing a second denominator unit.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L14",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=14",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=14",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L14",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L14"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=16",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=16",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L16",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L16"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    },
+    {
+      "item_id": "SUP-S2-LOG-J015-L18",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2, PDF p. 8, row Jz=0.15, semi-log column, L=18",
+      "scientific_object": "Alternate semi-log rendering of the canonical collapse series at Jz=0.15, L=18",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "canonical_item_id": "S2-COLL-J015-L18",
+      "coverage_status": "supporting_view_mapped_to_primary_scientific_claim",
+      "reason": "This panel is a repeated or alternate rendering of an already enumerated endpoint-mutual-information series. It maps to the same atomic Claim and does not create a second scientific result.",
+      "claim_refs": [
+        "CLM_S2_COLL_J015_L18"
+      ],
+      "scientific_assessment": "same_scientific_data_repeated_or_restyled"
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "C-MAIN-PERSISTENCE-005",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF p. 3, DTC diagnostics paragraph",
+      "scientific_object": "The system-size dependence of the time until the subharmonic peak drops below 0.05 is exponential in the DTC phase",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "reduced_scale_implementation_attested_review_pending",
+      "reason": "A clean-room reduced-scale numerical artifact now exists with a frozen hash and isolated run attestation. It proves executable implementation, not paper-scale agreement or fresh scientific acceptance.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_PERSISTENCE_005"
+      ],
+      "scientific_assessment": "implementation_attested_review_pending"
+    },
+    {
+      "item_id": "C-MAIN-HIDDEN-ISING-MAP",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF pp. 3-4, two-period evolution and hidden-Ising mapping",
+      "scientific_object": "Two-period Floquet evolution maps to a random transverse-field Ising critical theory with hidden Ising symmetry",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_HIDDEN_ISING_MAP"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-MAIN-MEAN-CORR-BETA",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF p. 4, critical spatial-correlation paragraph",
+      "scientific_object": "Mean critical correlations scale as r^{-(2-phi)}, implying beta=2-phi",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_MEAN_CORR_BETA"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-MAIN-TYP-CORR",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF p. 4, critical spatial-correlation paragraph",
+      "scientific_object": "Typical critical correlations scale as exp(-sqrt(r))",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_TYP_CORR"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-MAIN-NU-TYP-AVG",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF p. 4, critical exponent paragraph",
+      "scientific_object": "The infinite-randomness transition has nu_typ=1 and nu_avg=2",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_NU_TYP_AVG"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-MAIN-WIGNER-DECAY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main text, PDF p. 4, temporal Wigner-response paragraph",
+      "scientific_object": "The half-frequency Wigner response decays with the stated logarithmic critical law",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_MAIN_WIGNER_DECAY"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-SI-HIDDEN-SYMM",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Sec. I, PDF p. 7, hidden Ising symmetry construction",
+      "scientific_object": "The constructed finite-depth hidden symmetry commutes with U(T) and squares to the identity",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_SI_HIDDEN_SYMM"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-SI-RANDOM-ROT",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Sec. II, PDF p. 7, Eq. S3",
+      "scientific_object": "The randomly rotated hidden symmetry is correct through second order in the perturbation",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_SI_RANDOM_ROT"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    },
+    {
+      "item_id": "C-SI-ZN-UNIVERSALITY",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Sec. III, PDF p. 7",
+      "scientific_object": "The Zn generalization has the same random-Ising critical exponents for any n",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "analytic_implementation_attested_review_pending",
+      "reason": "A clean-room analytic artifact with a frozen hash and isolated attestation now implements this statement. It is not promoted to an independently reviewed full derivation.",
+      "implementation_ref": "implementation_closure_campaign",
+      "claim_refs": [
+        "CLM_C_SI_ZN_UNIVERSALITY"
+      ],
+      "scientific_assessment": "analytic_implementation_review_pending"
+    }
+  ]
+}

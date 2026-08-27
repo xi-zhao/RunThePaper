@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "paper_id": "10.1103-PhysRevB.91.085420",
   "score_model": "rra_similarity_v1",
   "targets": [
@@ -29,12 +29,39 @@
       },
       "evidence": [
         "outputs/figures/fig1_reproduction.png",
-        "docs/comparisons/fig1_spectrum_populations_comparison.png",
+        "comparison-artifacts/fig1_comparison.png",
         "outputs/data/fig1b_populations.csv",
         "outputs/data/fig1_spectrum.npz",
-        "outputs/checks/fig1.json"
+        "outputs/checks/fig1.json",
+        "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json"
       ],
-      "remaining_gap": "Paper is raster-only (no author data / tables); comparison is structural + feature-level against the printed figure. Band-to-colour mapping differs between the paper's panels (a) and (b); we follow each panel's own mapping.",
+      "remaining_gap": "Fresh-context independent review and a score-independent scientific-region RenderContract remain outstanding; the paper provides no author numerical arrays.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t101_floquet_unitarity",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig1.json",
+          "claim": "The independently time-ordered Floquet propagator remains unitary on the paper-scale target grid."
+        },
+        {
+          "assertion_id": "t101_population_normalization",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig1.json",
+          "claim": "The three independently generated initial band populations sum to one across the Brillouin zone."
+        },
+        {
+          "assertion_id": "t101_three_gapped_bands",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig1.json",
+          "claim": "The J=K=3 Floquet eigensystem contains three finite-gap eigenphase bands over the full (k,beta) torus."
+        }
+      ],
       "evaluation": {
         "critical": false,
         "paper_level_role": "supporting",
@@ -51,12 +78,89 @@
           "floquet_eigenphases",
           "initial_populations"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "resolved_causal_history": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The Floquet spectrum and initial-population code existed, but the target had no isolated execution attestation linking the declared implementation to its generated data.",
+            "evidence": [
+              "src/cdhm.py",
+              "outputs/checks/fig1.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The historical case predated item-level implementation contracts and therefore could not prove that the current clean-room code path was runnable independently.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Reduced execution verifies Floquet unitarity and population normalization without exposing a code defect; this is an implementation attestation, not a new paper-scale science verdict.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "Floquet operators are unitary and band populations sum to one on the frozen reduced grid.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused campaign tests exercise the spectrum and population path.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The target-specific invariants pass in a clean-room reduced run.",
+              "evidence": [
+                "outputs/checks/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The evidence-process gap applies to both Fig. 1 numerical panels under T101.",
+            "items": [
+              "T101"
+            ],
+            "completion": "1/1 target-level causal attribution resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Complete fresh-context scientific review of the existing paper-scale Fig. 1 artifacts.",
+            "expected_resolution": "Independent review can retain or reject the existing scientific feature claim without relying on this reduced attestation.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": false,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -72,17 +176,21 @@
             "panel_id": "a",
             "status": "reproduced",
             "note": "Floquet spectrum omega(k,beta), 3 surfaces",
-            "evidence": "docs/comparisons/fig1_spectrum_populations_comparison.png"
+            "evidence": "comparison-artifacts/fig1_comparison.png"
           },
           {
             "panel_id": "b",
             "status": "reproduced",
             "note": "initial populations rho_{n,k}(0), 3 curves",
-            "evidence": "docs/comparisons/fig1_spectrum_populations_comparison.png"
+            "evidence": "comparison-artifacts/fig1_comparison.png"
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T201",
@@ -95,7 +203,7 @@
         "feature_match": {
           "score": 38.0,
           "max_score": 50.0,
-          "reason": "Both actual (exact dynamics) and theory (Eq. 8) reproduce the paper's rapid k-oscillation with a small-at-center, large-at-edge envelope reaching ~+-5e-3, symmetric in k, on all three bands (2x3 layout). Theory tracks actual: correlation 0.83/0.91/0.90 per band."
+          "reason": "Both actual dynamics and Eq. (8) reproduce the paper's rapid k-oscillation and band-dependent envelope on the complete 2x3 layout. The frozen paper-scale correlations are approximately 0.74/0.92/0.89; the independent first-order theory tracks all three exact-dynamics branches despite the accumulated-phase sensitivity."
         },
         "numeric_closeness": {
           "score": 26.0,
@@ -111,11 +219,38 @@
       "evidence": [
         "outputs/figures/fig2_reproduction.png",
         "outputs/figures/fig2_overlay.png",
-        "docs/comparisons/fig2_delta_rho_comparison.png",
+        "comparison-artifacts/fig2_comparison.png",
         "outputs/data/fig2_delta_rho.csv",
-        "outputs/checks/fig2.json"
+        "outputs/checks/fig2.json",
+        "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json"
       ],
-      "remaining_gap": "The W(1) phase term carries an accumulated dynamical phase of hundreds of radians at T=1024, making pointwise Delta rho extremely phase-sensitive; theory reproduces the structure at correlation ~0.9, not to pixel. This sensitivity is intrinsic to Eq. (8), not a modelling gap.",
+      "remaining_gap": "Fresh-context independent review and a score-independent scientific-region RenderContract remain outstanding. Pointwise Eq. (8) agreement is limited by the published first-order approximation's accumulated-phase sensitivity, while conservation and all three branch structures pass.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t201_actual_population_conservation",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2.json",
+          "claim": "The exact one-cycle dynamics conserves total band population at every sampled momentum."
+        },
+        {
+          "assertion_id": "t201_theory_population_conservation",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2.json",
+          "claim": "The independently evaluated Equation (8) correction sums to zero across the three Floquet bands."
+        },
+        {
+          "assertion_id": "t201_equation8_tracks_dynamics",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig2.json",
+          "claim": "At J=K=3 and T=1024, Equation (8) tracks the exact population-change structure in every band above the frozen correlation and scale thresholds."
+        }
+      ],
       "evaluation": {
         "critical": false,
         "paper_level_role": "supporting",
@@ -133,12 +268,90 @@
           "berry_curvature",
           "avg_quasienergy"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "resolved_causal_history": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The exact one-cycle propagation and Equation (8) code existed, but no isolated attestation bound both panel implementations to one reproducible run contract.",
+            "evidence": [
+              "src/observables.py",
+              "src/theory.py",
+              "outputs/checks/fig2.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The historical case predated item-level implementation closure, leaving execution provenance incomplete despite generated results.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Reduced dynamics and Equation (8) both execute with finite arrays and conserved probability; no target-specific code fault was found.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The evolved band populations remain normalized.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests execute both the actual and analytic population-change paths.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The conserved reduced run does not support a code-defect diagnosis.",
+              "evidence": [
+                "outputs/checks/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The evidence-process gap applies to both Fig. 2 numerical panels under T201.",
+            "items": [
+              "T201"
+            ],
+            "completion": "1/1 target-level causal attribution resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Complete fresh-context review of the paper-scale actual-versus-Equation-(8) comparison.",
+            "expected_resolution": "Independent review can close the scientific claim while preserving the present implementation evidence.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": false,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -154,17 +367,21 @@
             "panel_id": "a",
             "status": "reproduced",
             "note": "actual Delta rho_{n,k}, 3 bands",
-            "evidence": "docs/comparisons/fig2_delta_rho_comparison.png"
+            "evidence": "comparison-artifacts/fig2_comparison.png"
           },
           {
             "panel_id": "b",
             "status": "reproduced",
             "note": "theory Eq.(8) Delta rho_{n,k}, 3 bands",
-            "evidence": "docs/comparisons/fig2_delta_rho_comparison.png"
+            "evidence": "comparison-artifacts/fig2_comparison.png"
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T301",
@@ -192,12 +409,47 @@
       },
       "evidence": [
         "outputs/figures/fig3_reproduction.png",
-        "docs/comparisons/fig3_displacement_comparison.png",
+        "comparison-artifacts/fig3_comparison.png",
         "outputs/data/fig3_xt_T1024.csv",
         "outputs/data/fig3_xt_T6144.csv",
-        "outputs/checks/fig3.json"
+        "outputs/checks/fig3.json",
+        "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json"
       ],
-      "remaining_gap": "Compared visually and by readable feature values (endpoints, Berry-only line) against the raster figure; the paper reports no author data. Actual endpoint is the exact <x> = sum_l l|<l|Psi>|^2, stronger than the paper's leading-order Eq. (A19) approximation.",
+      "remaining_gap": "Fresh-context independent review and a score-independent scientific-region RenderContract remain outstanding; the paper reports no author numerical arrays.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t301_six_duration_stability",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3.json",
+          "claim": "All six published pumping durations give a stable one-cycle displacement within the frozen endpoint-spread tolerance."
+        },
+        {
+          "assertion_id": "t301_equation13_matches_dynamics",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3.json",
+          "claim": "The independently derived Equation (13) total agrees with the mean exact-dynamics endpoint within 0.15 lattice units."
+        },
+        {
+          "assertion_id": "t301_ibc_is_essential",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3.json",
+          "claim": "The full Berry-plus-IBC prediction is closer to exact dynamics than the Berry-only prediction."
+        },
+        {
+          "assertion_id": "t301_chern_quantization",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig3.json",
+          "claim": "The independently discretized Berry flux yields integer Chern numbers summing to zero."
+        }
+      ],
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
@@ -215,12 +467,90 @@
           "transition_amplitude_W",
           "avg_quasienergy"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "resolved_causal_history": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The displacement dynamics and Equation (13) implementation existed, but the six-duration target lacked an isolated implementation attestation.",
+            "evidence": [
+              "src/observables.py",
+              "src/theory.py",
+              "outputs/checks/fig3.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The previous evidence package did not separately record code readiness, reduced execution, and paper-scale scientific acceptance.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "A reduced multi-duration campaign executes both exact dynamics and Equation (13) with finite outputs; paper-scale accuracy remains a separate existing claim.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "Two reduced pumping durations and both Equation (13) branches execute in one campaign.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests require all declared reduced duration outputs.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The independently attested reduced paths are finite and complete.",
+              "evidence": [
+                "outputs/checks/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The evidence-process gap applies to the Fig. 3 displacement target.",
+            "items": [
+              "T301"
+            ],
+            "completion": "1/1 target-level causal attribution resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review all six existing paper-scale duration curves against Equation (13).",
+            "expected_resolution": "The review either accepts the scientific feature match or identifies a numerical discrepancy without changing code readiness.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -236,11 +566,15 @@
             "panel_id": "main",
             "status": "reproduced",
             "note": "<x>(t), six durations + theory total + Berry-only",
-            "evidence": "docs/comparisons/fig3_displacement_comparison.png"
+            "evidence": "comparison-artifacts/fig3_comparison.png"
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T401",
@@ -268,11 +602,46 @@
       },
       "evidence": [
         "outputs/figures/fig4_reproduction.png",
-        "docs/comparisons/fig4_transition_probe_comparison.png",
+        "comparison-artifacts/fig4_comparison.png",
         "outputs/data/fig4_scan.csv",
-        "outputs/checks/fig4.json"
+        "outputs/checks/fig4.json",
+        "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json"
       ],
-      "remaining_gap": "Actual peak ~17.4 vs paper ~19 near the transition, where the dynamics is genuinely T-sensitive (bands nearly touch, W(0)~1/(1-e^{i.dw}) grows); the paper notes the same erratic/T-sensitive behaviour there. Comparison is feature-level against the raster figure.",
+      "remaining_gap": "Fresh-context independent review and a score-independent scientific-region RenderContract remain outstanding. The finite-T dynamics remains nonadiabatic in the narrow band-touching window, as stated by the paper.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t401_transition_location",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig4.json",
+          "claim": "The independently generated Equation (13) scan locates the Floquet-Chern jump at J=5.14 within one frozen grid step."
+        },
+        {
+          "assertion_id": "t401_chern_jump",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig4.json",
+          "claim": "The Chern-number magnitudes change from (4,8,4) to (8,16,8), with the expected global-orientation sign freedom."
+        },
+        {
+          "assertion_id": "t401_full_theory_tracks_dynamics",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/fig4.json",
+          "claim": "Across the full 61-point J scan, the Berry-plus-IBC prediction is closer to exact finite-T dynamics than the Berry-only branch."
+        },
+        {
+          "assertion_id": "t401_isolated_paper_scale_scan",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json",
+          "claim": "The complete paper-scale transition scan was generated in the raw/reference-free isolated runner."
+        }
+      ],
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
@@ -290,12 +659,90 @@
           "transition_amplitude_W",
           "avg_quasienergy"
         ],
-        "artifact_stage": "final_reproduction"
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "resolved_causal_history": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The coupling scan, exact dynamics, and Equation (13) code existed, but the transition-scan target lacked isolated implementation provenance.",
+            "evidence": [
+              "src/observables.py",
+              "src/theory.py",
+              "outputs/checks/fig4.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The historical run evidence did not expose a standalone campaign contract for this target.",
+            "confidence": "confirmed",
+            "evidence": [
+              "figure_coverage.json",
+              "run_contract.implementation_closure.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "A reduced J scan executes exact displacement, Berry-only, and full Equation (13) paths with finite outputs.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The frozen two-point scan exercises every declared observable branch.",
+                "evidence": [
+                  "outputs/checks/implementation_closure/campaign_summary.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests require both scan points and all target branches.",
+                "evidence": [
+                  "tests/test_implementation_closure.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No execution or invariant failure occurs in the reduced scan.",
+              "evidence": [
+                "outputs/checks/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The evidence-process gap applies to the Fig. 4 coupling scan.",
+            "items": [
+              "T401"
+            ],
+            "completion": "1/1 target-level causal attribution resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Fresh-review the existing 61-point paper-scale transition scan.",
+            "expected_resolution": "Independent review can accept or reject the transition feature while the implementation remains attested.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": true,
       "final_reproduction_eligible": true,
       "final_reproduction_gate": "passed",
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
@@ -311,11 +758,15 @@
             "panel_id": "main",
             "status": "reproduced",
             "note": "Delta<x> vs J: actual, theory, Berry-only across transition",
-            "evidence": "docs/comparisons/fig4_transition_probe_comparison.png"
+            "evidence": "comparison-artifacts/fig4_comparison.png"
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
   "overall_score": 79.54,
@@ -350,9 +801,11 @@
       "main_claim": 2
     },
     "physics_status_counts": {
-      "undeclared": 4
+      "passed": 4
     },
-    "physics_assertion_status_counts": {},
+    "physics_assertion_status_counts": {
+      "passed": 14
+    },
     "essential_physics_failures": [],
     "final_reproduction_ready": true,
     "final_reproduction_target_ids": [
@@ -362,7 +815,29 @@
       "T401"
     ],
     "final_reproduction_blocked_target_ids": [],
-    "exploratory_target_ids": []
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [],
+    "aggregate_included_target_ids": [
+      "T101",
+      "T201",
+      "T301",
+      "T401"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "not_required": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 4
+    },
+    "causal_diagnosis_required_target_ids": [],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {},
+    "root_cause_counts": {},
+    "code_fault_status_counts": {}
   },
   "status": "passed"
 }

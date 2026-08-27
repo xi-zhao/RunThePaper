@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "paper_id": "1803.07128",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (12 pages; main text and Appendices A-D)",
+    "unknown_remainder": false,
+    "reason": "The complete PDF and embedded appendices were audited through the end of Appendix D."
+  },
+  "implementations": {
+    "fig8_paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "run-all",
+        "--config",
+        "config/paper_scale_variational.json"
+      ],
+      "code_refs": [
+        "src/qml_feature_space/variational_scale.py",
+        "src/qml_feature_space/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale_variational.json",
+      "run_contract_ref": "run_contract.paper_scale_variational.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale_variational/plan.json",
+        "outputs/data/paper_scale_variational/run_summary.json",
+        "outputs/data/paper_scale_variational/aggregate_manifest.json",
+        "outputs/data/paper_scale_variational/aggregates/T004_fig8_variational_convergence.npz",
+        "outputs/data/paper_scale_variational/checks/factorized_dense_crosscheck.json",
+        "outputs/data/paper_scale_variational/checks/scientific_assessment.json"
+      ],
+      "acceptance_criteria": [
+        "All 21 cutoff/seed conditions are hash-attested and resume from 50-step atomic checkpoints.",
+        "The photon-number-sector implementation agrees with an independent dense Kronecker implementation at small cutoff.",
+        "Cutoff 32 retains at least 97 percent of the two-mode input probability and adjacent high-cutoff probability maps converge within the declared tolerance.",
+        "Any mismatch remains inconclusive because the paper omits the exact training instance and optimization contract."
+      ]
+    },
+    "t005_theorem_probe": {
+      "status": "ready",
+      "target_ids": [
+        "T005"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t005_theorem_probe.py",
+        "--config",
+        "config/t005_separability.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/qml_feature_space/separability.py",
+        "scripts/run_t005_theorem_probe.py"
+      ],
+      "config_ref": "config/t005_separability.json",
+      "run_contract_ref": "run_contract_t005.json",
+      "expected_outputs": [
+        "outputs/checks/T005_separability_property_tests.json",
+        "outputs/checks/T005_independent_rank_crosscheck.json",
+        "outputs/data/T005_counterexample_search.json"
+      ],
+      "acceptance_criteria": [
+        "Single-mode ranks match the Vandermonde prediction for distinct physical phases.",
+        "Explicit tensor-Fock and analytic Gram matrices converge and remain full rank.",
+        "Every binary labeling on the declared finite set is interpolated within tolerance.",
+        "Periodic-domain and Proposition 1 counterexamples are recorded without author code, arrays or source pixels."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_left_input_space",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1, left panel, PDF p. 2",
+      "scientific_object": "Conceptual non-separable input-space classes",
+      "decision": "excluded",
+      "reason": "Conceptual illustration, not a generated numerical result."
+    },
+    {
+      "item_id": "main_fig1_right_feature_space",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1, right panel, PDF p. 2",
+      "scientific_object": "Conceptual feature-space separating hyperplane",
+      "decision": "excluded",
+      "reason": "Conceptual illustration, not a generated numerical result."
+    },
+    {
+      "item_id": "main_fig2_feature_kernel_rkhs",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 2, PDF p. 3",
+      "scientific_object": "Logical relationship between feature maps, kernels and RKHS",
+      "decision": "excluded",
+      "reason": "Conceptual relationship diagram."
+    },
+    {
+      "item_id": "main_fig3_implicit_workflow",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 3, implicit branch, PDF p. 5",
+      "scientific_object": "Implicit quantum-kernel workflow",
+      "decision": "excluded",
+      "reason": "Algorithm workflow schematic; its equations feed T001-T002."
+    },
+    {
+      "item_id": "main_fig3_explicit_workflow",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 3, explicit branch, PDF p. 5",
+      "scientific_object": "Explicit variational quantum-model workflow",
+      "decision": "excluded",
+      "reason": "Algorithm workflow schematic; its equations feed T004."
+    },
+    {
+      "item_id": "main_fig4_c1_kernel",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4, c=1.0 panel, PDF p. 5",
+      "scientific_object": "Formula-derived squeezing-kernel surface at c=1.0",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated from the printed kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig4_c15_kernel",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4, c=1.5 panel, PDF p. 5",
+      "scientific_object": "Formula-derived squeezing-kernel surface at c=1.5",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated from the printed kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig4_c2_kernel",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4, c=2.0 panel, PDF p. 5",
+      "scientific_object": "Formula-derived squeezing-kernel surface at c=2.0",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated from the printed kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_circles_svc",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, circles panel, PDF p. 6",
+      "scientific_object": "SVC decision map for the circles dataset",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent SVC using the derived real squeezing kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_moons_svc",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, moons panel, PDF p. 6",
+      "scientific_object": "SVC decision map for the moons dataset",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent SVC using the derived real squeezing kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_blobs_svc",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, blobs panel, PDF p. 6",
+      "scientific_object": "SVC decision map for the blobs dataset",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent SVC using the derived real squeezing kernel.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_c1_capacity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, c=1.0 capacity panel, PDF p. 6",
+      "scientific_object": "SVC capacity example at c=1.0",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Reconstructed benchmark because its generator is omitted by the paper.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_c15_capacity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, c=1.5 capacity panel, PDF p. 6",
+      "scientific_object": "SVC capacity example at c=1.5",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Reconstructed benchmark because its generator is omitted by the paper.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig5_c2_capacity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 5, c=2.0 capacity panel, PDF p. 6",
+      "scientific_object": "SVC capacity example at c=2.0",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Reconstructed benchmark because its generator is omitted by the paper.",
+      "claim_refs": [
+        "CLM_KERNEL"
+      ]
+    },
+    {
+      "item_id": "main_fig6_epoch1_perceptron",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 6, epoch 1 panel, PDF p. 6",
+      "scientific_object": "Real-Fock perceptron boundary after one epoch",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Finite reconstructed dataset generated independently.",
+      "claim_refs": [
+        "CLM_SEPARABILITY"
+      ]
+    },
+    {
+      "item_id": "main_fig6_epoch500_perceptron",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 6, epoch 500 panel, PDF p. 6",
+      "scientific_object": "Real-Fock perceptron boundary after 500 epochs",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Finite reconstructed dataset generated independently.",
+      "claim_refs": [
+        "CLM_SEPARABILITY"
+      ]
+    },
+    {
+      "item_id": "main_fig6_epoch5000_perceptron",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 6, epoch 5000 panel, PDF p. 6",
+      "scientific_object": "Real-Fock perceptron boundary after 5000 epochs",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Finite reconstructed dataset generated independently.",
+      "claim_refs": [
+        "CLM_SEPARABILITY"
+      ]
+    },
+    {
+      "item_id": "main_fig7a_feature_classifier",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 7(a), PDF p. 7",
+      "scientific_object": "Graphical Fock-space classifier architecture",
+      "decision": "excluded",
+      "reason": "Network schematic; equations feed T004."
+    },
+    {
+      "item_id": "main_fig7b_two_mode_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 7(b), PDF p. 7",
+      "scientific_object": "Two-mode model-circuit schematic",
+      "decision": "excluded",
+      "reason": "Quantum-circuit schematic; equations feed T004."
+    },
+    {
+      "item_id": "main_fig7c_gate_block",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 7(c), PDF p. 7",
+      "scientific_object": "Variational gate-block schematic",
+      "decision": "excluded",
+      "reason": "Gate schematic; equations feed T004."
+    },
+    {
+      "item_id": "main_fig8_probability_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 8, probability decision map, PDF p. 8",
+      "scientific_object": "Finite-Fock variational-classifier probability map",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "fig8_paper_scale",
+      "reason": "Independent finite-Fock simulation of all four printed gate blocks.",
+      "claim_refs": [
+        "CLM_VARIATIONAL"
+      ]
+    },
+    {
+      "item_id": "main_fig8_loss_series",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 8, loss curve and inset, PDF p. 8",
+      "scientific_object": "Variational training-loss series with first-250-step inset",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "fig8_paper_scale",
+      "reason": "The inset is a view of the same independently generated 5000-step series.",
+      "claim_refs": [
+        "CLM_VARIATIONAL"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_phase_squeezing_universal_separability",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Appendices B-D, Propositions 1-2 and Eqs. (C1)-(C2), PDF pp. 10-12",
+      "scientific_object": "Distinct phase-squeezed inputs are linearly independent and every binary labelling is linearly separable",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "t005_theorem_probe",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "A dedicated isolated theorem probe adjudicates the universal statement independently from the finite Fig. 6 training example.",
+      "claim_refs": [
+        "CLM_SEPARABILITY"
+      ]
+    }
+  ]
+}

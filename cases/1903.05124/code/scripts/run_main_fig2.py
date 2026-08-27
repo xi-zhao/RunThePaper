@@ -21,18 +21,17 @@ from time import perf_counter
 from typing import Iterable
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / "outputs" / "cache" / "matplotlib"))
 
-import matplotlib
+import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.colors import LogNorm  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from finite_size_scaling import (  # noqa: E402
     ScalingCurve,
@@ -160,6 +159,13 @@ class TransitionFit:
     bootstrap_exponents: tuple[float, ...]
 
 
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--scale", choices=("smoke", "feature", "paper"), default="smoke")
@@ -180,8 +186,12 @@ def scale_plan(scale: str) -> ScalePlan:
             steady_probabilities=(0.0, 0.5, 1.0),
             phase_depths=(1, 7, 31),
             phase_probabilities=(0.0, 0.25, 0.5, 0.75, 1.0),
-            transition_depths=(1, 7, 31),
-            transition_sizes=(4, 8, 12),
+            # Downstream S4/S5 fit the eight depth families printed in the
+            # paper.  A smoke attestation may reduce realizations and sizes,
+            # but it must preserve that semantic coordinate set so the whole
+            # clean-room chain is executable without importing legacy data.
+            transition_depths=PAPER_TRANSITION_DEPTHS,
+            transition_sizes=(4, 8, 12, 16),
             transition_probability_points=5,
             bootstrap_samples=2,
         )
@@ -288,7 +298,7 @@ def setting_seed(root_seed: int, campaign_code: int, index: int) -> int:
 
 
 def checkpoint_directory() -> Path:
-    path = CASE / ".checkpoints" / "t001"
+    path = WORKSPACE / "outputs" / "checkpoints" / "t001"
     path.mkdir(parents=True, exist_ok=True)
     return path
 
@@ -1224,6 +1234,7 @@ def metadata_payload(
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
     plan = scale_plan(args.scale)
     workers = args.workers if args.workers is not None else min(8, os.cpu_count() or 1)
@@ -1271,9 +1282,9 @@ def main() -> int:
         )
     fits = fit_transitions(plan, transition, root_seed=args.seed)
 
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
     data_path = data_dir / "main_fig2_numerical_data.csv"

@@ -1,11 +1,12 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_figure_evaluation",
   "paper_id": "1608.02589",
-  "summary": "离散时间晶体的核心数值特征已经出现；主要短板是 Fig. 3b-d 的 scaling collapse 和 critical exponents 还没有达到原论文的大规模统计精度。",
+  "summary": "Existing frozen evidence covers 32 of 89 eligible atomic reproduction items. Fifty-seven uncovered items are now explicit zero-credit targets with direct/root cause, code-fault status, and next discriminating tests.",
   "targets": [
     {
       "target_id": "T001",
+      "artifact_stage": "exploratory",
       "label": "Fig. 1 subharmonic rigidity",
       "weight": 1.0,
       "components": {
@@ -40,7 +41,7 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "missing_reference_curve",
+        "failure_type": "insufficient_compute",
         "parameter_match": "paper_subset",
         "formula_dependencies": [
           "DTC001",
@@ -50,7 +51,126 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "analytic_reference",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T001 maps 5 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T001",
+              "F1A-DTC-SR",
+              "F1B-PEAK-J000",
+              "F1B-PEAK-J015",
+              "F1C-FFT-J000-EPSFAMILY",
+              "F1D-FFT-J015-EPSFAMILY"
+            ],
+            "completion": "5/5 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t001_paper_scale_acceptance.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": true,
       "parameter_score_cap": 89.0,
@@ -88,10 +208,17 @@
         "panel_scope_cap": 13.12
       },
       "physics_status": "undeclared",
-      "physics_score_cap": 100.0
+      "physics_score_cap": 100.0,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
+      "artifact_stage": "exploratory",
       "label": "Fig. 2 level statistics / variance peak",
       "weight": 1.0,
       "components": {
@@ -137,7 +264,126 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T002 maps 5 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T002",
+              "F2A-NARROW-L08",
+              "F2A-NARROW-L10",
+              "F2B-VAR-J003-L10",
+              "F2B-VAR-J005-L10",
+              "F2B-VAR-J010-L10"
+            ],
+            "completion": "5/5 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t002_paper_scale_acceptance.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": true,
       "parameter_score_cap": 70.0,
@@ -166,10 +412,17 @@
         "panel_scope_cap": 15.0
       },
       "physics_status": "undeclared",
-      "physics_score_cap": 100.0
+      "physics_score_cap": 100.0,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
+      "artifact_stage": "exploratory",
       "label": "Fig. 3 endpoint mutual information / scaling",
       "weight": 1.5,
       "components": {
@@ -180,7 +433,7 @@
         },
         "numeric_closeness": {
           "score": 24.0,
-          "reason": "CuPy/NumPy L=8/10/12 medium campaign (55 paper points; target samples 1000/1000/300 per point, with some merged points carrying additional samples). 以论文自身 (eps_c,beta,nu) 塌缩:强耦合 3c/3d 三尺寸并到一条普适曲线 (relative spread 0.109/0.064);I_end(eps=0)=ln2 精确命中(误差 0);深尾→0。自数据反解临界指数复原 eps_c(3c/3d 差<0.03)与 nu 量级,beta 因 L<=12 系统低估;弱耦合 3b 峰区仍松(spread 0.45)。",
+          "reason": "GPU L=8/10/12 campaign (55 paper points, 1000 samples/point). 以论文自身 (eps_c,beta,nu) 塌缩:强耦合 3c/3d 三尺寸并到一条普适曲线 (relative spread 0.109/0.064);I_end(eps=0)=ln2 精确命中(误差 0);深尾→0。自数据反解临界指数复原 eps_c(3c/3d 差<0.03)与 nu 量级,beta 因 L<=12 系统低估;弱耦合 3b 峰区仍松(spread 0.45)。",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
@@ -190,13 +443,13 @@
         }
       },
       "score_cap": 80.0,
-      "cap_reason": "Scaling collapse 复现:强耦合 3c/3d 用论文自身指数并到普适曲线,I(eps=0)=ln2 精确;弱耦合 3b 边际、beta 在 L<=12 被低估。系统尺寸低于论文级拟合范围(未含 L=14 及可选 L=16/18),reduced_scale 参数上限 70 为诚实天花板。",
+      "cap_reason": "Scaling collapse 复现:强耦合 3c/3d 用论文自身指数并到普适曲线,I(eps=0)=ln2 精确;弱耦合 3b 边际、beta 在 L<=12 被低估。系统尺寸低于论文(未含 L=16/18),reduced_scale 参数上限 70 为诚实天花板。",
       "evidence": [
         "outputs/checks/iteration2_dtc_feature_checks.json",
         "outputs/checks/fig3_scaling_collapse.json",
         "outputs/checks/paper_exact_campaign_result.json"
       ],
-      "remaining_gap": "弱耦合 3b 峰区塌缩不紧、beta 低估，均受 L<=12 与 reduced disorder statistics 限制；需要补齐 L=14 和论文级统计，可选 L=16/18 还受稠密 Floquet 求解器内存限制。",
+      "remaining_gap": "弱耦合 3b 峰区塌缩不紧、beta 低估,均源于 L<=12;需 L>=16 才能收紧(受稠密 Floquet 求解器内存限制)。",
       "component_total": 77.0,
       "score": 70.0,
       "similarity_level": "numerical_feature_reproduction",
@@ -216,7 +469,139 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T003 maps 18 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T003",
+              "S2-COLL-J005-L08",
+              "S2-COLL-J005-L10",
+              "S2-COLL-J005-L12",
+              "S2-COLL-J010-L08",
+              "S2-COLL-J010-L10",
+              "S2-COLL-J010-L12",
+              "S2-COLL-J015-L08",
+              "S2-COLL-J015-L10",
+              "S2-COLL-J015-L12",
+              "S2-RAW-J005-L08",
+              "S2-RAW-J005-L10",
+              "S2-RAW-J005-L12",
+              "S2-RAW-J010-L08",
+              "S2-RAW-J010-L10",
+              "S2-RAW-J010-L12",
+              "S2-RAW-J015-L08",
+              "S2-RAW-J015-L10",
+              "S2-RAW-J015-L12"
+            ],
+            "completion": "18/18 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t003_paper_scale_acceptance.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": true,
       "parameter_score_cap": 70.0,
@@ -291,10 +676,17 @@
           "evidence": "outputs/checks/fig3_scaling_collapse.json#panels",
           "claim": "弱耦合 J_z=0.05 仅在深尾塌缩,近临界峰区在 L<=12 不紧(spread 0.45);诚实残差,需更大尺寸。"
         }
-      ]
+      ],
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
+      "artifact_stage": "exploratory",
       "label": "Fig. 4 long-range diagnostic",
       "weight": 1.0,
       "components": {
@@ -340,7 +732,125 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-all-family-smoke-v2/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T004 maps 4 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T004",
+              "F4-INSET-DTC-LR",
+              "F4-VAR-J003",
+              "F4-VAR-J005",
+              "F4-VAR-J007"
+            ],
+            "completion": "4/4 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t004_paper_scale_acceptance.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": false,
       "parameter_score_cap": 70.0,
@@ -363,52 +873,2407 @@
         "panel_scope_cap": 15.0
       },
       "physics_status": "undeclared",
-      "physics_score_cap": 100.0
+      "physics_score_cap": 100.0,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T005",
+      "artifact_stage": "exploratory",
+      "label": "Main Fig. 1(a) short-range MBL boundary",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main Fig. 1(a) short-range MBL boundary.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "No frozen short-range paper-profile level-statistics phase map establishes the plotted thermal/MBL boundary.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC005"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T005 maps 1 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T005",
+              "F1A-MBL-SR"
+            ],
+            "completion": "1/1 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t005_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Fig. 1(a)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "1 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T006",
+      "artifact_stage": "exploratory",
+      "label": "Main Fig. 1(a) long-range MBL boundary",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main Fig. 1(a) long-range MBL boundary.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "src/dtc_paper_scale.py",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+        "parameter_provenance.json"
+      ],
+      "remaining_gap": "The printed Eq. (3) model is executable, but only a reduced grid is attested; paper-scale boundary agreement and fresh review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC005"
+        ],
+        "formula_gate": "reconstructed",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T006 maps 1 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T006",
+              "F1A-MBL-LR"
+            ],
+            "completion": "1/1 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t006_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Fig. 1(a)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "1 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T007",
+      "artifact_stage": "exploratory",
+      "label": "Main Fig. 4 inset long-range MBL boundary",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main Fig. 4 inset long-range MBL boundary.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "src/dtc_paper_scale.py",
+        "outputs/data/implementation_closure/T007.json",
+        "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+        "parameter_provenance.json"
+      ],
+      "remaining_gap": "The printed Eq. (3) model is executable, but only a reduced grid is attested; paper-scale boundary agreement and fresh review remain open.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC005"
+        ],
+        "formula_gate": "reconstructed",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T007 maps 1 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T007",
+              "F4-INSET-MBL-LR"
+            ],
+            "completion": "1/1 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t007_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Fig. 4"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "1 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 80.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T008",
+      "artifact_stage": "exploratory",
+      "label": "Main Fig. 1(b) FWHM band",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main Fig. 1(b) FWHM band.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "outputs/data/iteration2_fig1_fourier_spectra_L14.csv",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "The existing spectrum is frozen, but no FWHM field or accepted width-extraction check backs the plotted band.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "unknown",
+        "formula_dependencies": [
+          "DTC004"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T008 maps 1 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T008",
+              "F1B-FWHM-J015"
+            ],
+            "completion": "1/1 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t008_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": false,
+      "figure_refs": [
+        "Fig. 1(b)"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "1 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T009",
+      "artifact_stage": "exploratory",
+      "label": "Main Fig. 2 missing paper-condition series",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main Fig. 2 missing paper-condition series.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "L=12 narrow and variance series plus every broad-coupling inset series lack frozen paper-condition data.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC005",
+          "DTC007"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T009 maps 7 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T009",
+              "F2A-BROAD-L08",
+              "F2A-BROAD-L10",
+              "F2A-BROAD-L12",
+              "F2A-NARROW-L12",
+              "F2B-VAR-J003-L12",
+              "F2B-VAR-J005-L12",
+              "F2B-VAR-J010-L12"
+            ],
+            "completion": "7/7 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t009_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": false,
+      "figure_refs": [
+        "Fig. 2"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "7 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T010",
+      "artifact_stage": "exploratory",
+      "label": "Supplement Fig. S2 configured large-size MI series",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Supplement Fig. S2 configured large-size MI series.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "All L=14 MI series and the Jz=0.15 L=16,18 raw/collapse series are configured but have no accepted frozen campaign data.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC006"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T010 maps 10 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T010",
+              "S2-COLL-J005-L14",
+              "S2-COLL-J010-L14",
+              "S2-COLL-J015-L14",
+              "S2-COLL-J015-L16",
+              "S2-COLL-J015-L18",
+              "S2-RAW-J005-L14",
+              "S2-RAW-J010-L14",
+              "S2-RAW-J015-L14",
+              "S2-RAW-J015-L16",
+              "S2-RAW-J015-L18"
+            ],
+            "completion": "10/10 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t010_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Supplement Fig. S2"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "10 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T011",
+      "artifact_stage": "exploratory",
+      "label": "Supplement Fig. S2 omitted large-size MI series",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Supplement Fig. S2 omitted large-size MI series.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json"
+      ],
+      "remaining_gap": "Jz=0.05 and 0.10 at L=16,18 are shown in Supplement Fig. S2 but omitted from the current large-size configuration.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "paper_subset",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC003",
+          "DTC006"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T011 maps 8 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T011",
+              "S2-COLL-J005-L16",
+              "S2-COLL-J005-L18",
+              "S2-COLL-J010-L16",
+              "S2-COLL-J010-L18",
+              "S2-RAW-J005-L16",
+              "S2-RAW-J005-L18",
+              "S2-RAW-J010-L16",
+              "S2-RAW-J010-L18"
+            ],
+            "completion": "8/8 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t011_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Supplement Fig. S2"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "8 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T012",
+      "artifact_stage": "exploratory",
+      "label": "Supplement Fig. S1 paper-condition traces and susceptibility",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Supplement Fig. S1 paper-condition traces and susceptibility.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "Only an L=4 smoke path exists; none of the nine paper-condition S1 traces, spectra, or susceptibility curves has accepted data.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC002",
+          "DTC003",
+          "DTC004",
+          "DTC007"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T012 maps 9 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T012",
+              "S1A-TRACE-IDEAL",
+              "S1A-TRACE-INT",
+              "S1A-TRACE-NONINT",
+              "S1B-FFT-EPS018",
+              "S1B-FFT-EPS024",
+              "S1B-FFT-EPS030",
+              "S1C-CHI-J003",
+              "S1C-CHI-J005",
+              "S1C-CHI-J010"
+            ],
+            "completion": "9/9 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t012_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": false,
+      "figure_refs": [
+        "Supplement Fig. S1"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "9 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T013",
+      "artifact_stage": "exploratory",
+      "label": "Supplement Fig. S3 long-time spectra",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Supplement Fig. S3 long-time spectra.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "config/paper_scale_all.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "The ten L=10, 1000-period spectra have only L=4, 20-period smoke substitutes.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "reduced_scale",
+        "formula_dependencies": [
+          "DTC001",
+          "DTC002",
+          "DTC003",
+          "DTC004"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T013 maps 10 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T013",
+              "S3-LR-DISORDER",
+              "S3-LR-HZ000",
+              "S3-LR-HZ010",
+              "S3-LR-HZ290",
+              "S3-LR-HZ610",
+              "S3-NN-DISORDER",
+              "S3-NN-HZ000",
+              "S3-NN-HZ010",
+              "S3-NN-HZ270",
+              "S3-NN-HZ610"
+            ],
+            "completion": "10/10 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t013_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": false,
+      "figure_refs": [
+        "Supplement Fig. S3"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "10 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 70.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T014",
+      "artifact_stage": "exploratory",
+      "label": "Subharmonic persistence-lifetime claim",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Subharmonic persistence-lifetime claim.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "src/dtc_paper_scale.py"
+      ],
+      "remaining_gap": "No threshold-lifetime-versus-L observable or exponential-growth test implements the stated 0.05 persistence diagnostic.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "insufficient_compute",
+        "parameter_match": "unknown",
+        "formula_dependencies": [
+          "DTC004"
+        ],
+        "formula_gate": "verified",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The complete paper-scale runner exists, but the frozen campaign was not completed after exact-unit timings established the current compute boundary.",
+            "evidence": [
+              "config/paper_scale_all.json",
+              "outputs/checks/resource_benchmark.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "Exact isolated probes measure about 95 seconds per L=10 level-statistics unit; that group alone contains 6,280 units and projects to about 165 serial CPU-hours before the more expensive L=12-18 work.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/resource_benchmark.json",
+              "config/paper_scale_all.json",
+              "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+              "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The full denominator is enumerated, reduced all-family execution passes, and exact paper-profile probes complete without forbidden input access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Campaign enumeration, resume, invariants, and clean-room boundaries pass focused tests.",
+                "evidence": [
+                  "tests/test_dtc_paper_scale.py",
+                  "tests/test_implementation_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The target family executes in the isolated runner with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "Two exact L=10 units and two additional exact units provide a measured campaign projection.",
+                "evidence": [
+                  "outputs/checks/resource_benchmark.json",
+                  "outputs/runs/1608.02589-paper-scale-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level8-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v1-20260825/run_attestation.json",
+                  "outputs/runs/1608.02589-level10-resource-probe-v2-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "Published and independently chosen execution parameters are distinguished explicitly.",
+                "evidence": [
+                  "parameter_provenance.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and isolated exact-unit execution found no defect that explains the unrun paper-scale campaign.",
+              "evidence": [
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                "tests/test_dtc_paper_scale.py"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "Unpublished seeds and shard choices are declared independent execution choices and are not indispensable to running the printed model.",
+              "evidence": [
+                "parameter_provenance.json",
+                "config/paper_scale_all.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T014 maps 1 fixed-denominator item(s) to executable but uncompleted paper-scale work.",
+            "items": [
+              "T014",
+              "C-MAIN-PERSISTENCE-005"
+            ],
+            "completion": "1/1 item(s) code-ready; paper-scale acceptance remains blocked by the measured compute boundary."
+          },
+          "next_discriminating_test": {
+            "action": "Allocate a durable CPU campaign or implement and parity-test a GPU backend, then resume the frozen paper profile.",
+            "expected_resolution": "A complete attested paper-scale dataset either reproduces the target or exposes a scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/t014_paper_scale_acceptance.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Main text p. 3"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "1 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T015",
+      "artifact_stage": "exploratory",
+      "label": "Main-text infinite-randomness analytic claims",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Main-text infinite-randomness analytic claims.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json",
+        "FORMULA_VERIFICATION.md"
+      ],
+      "remaining_gap": "The hidden-Ising mapping, mean/typical correlation laws, nu exponents, and temporal Wigner decay have no claim cards or independent derivation checks.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "capability_limit",
+        "parameter_match": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "implementation_not_ready",
+            "statement": "A clean-room analytic attempt ran and verified partial consequences, but it did not establish every mapped hidden-symmetry, mapping, or universality claim.",
+            "evidence": [
+              "outputs/data/implementation_closure/T015.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "system_capability_limit",
+            "statement": "After an isolated implementation attempt, the available derivation path could verify algebraic invariants but could not close the full claim-specific proof.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/data/implementation_closure/T015.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+              "FORMULA_VERIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The partial analytic implementation is runnable and internally consistent; the missing result is scientific proof coverage, not a crashing or silently wrong code path.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The claim-specific analytic implementation ran in isolation and froze its outputs.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                  "outputs/data/implementation_closure/T015.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The implementation was derived from the paper and did not use author code, arrays, or source pixels as numerical input.",
+                "evidence": [
+                  "run_contract.implementation_closure.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "Exact exponents, decay monotonicity, or Z_n algebraic residuals pass their declared limited-scope assertions.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T015.json",
+                  "tests/test_implementation_campaign.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The implemented partial checks pass focused tests and isolated execution.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The relevant analytic statements are printed; the failure is the reproducer's inability to complete their full derivation, not missing indispensable inputs.",
+              "evidence": [
+                "figure_coverage.json",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T015 contains 5 analytic claim item(s) attempted but not completely rederived.",
+            "items": [
+              "T015",
+              "C-MAIN-HIDDEN-ISING-MAP",
+              "C-MAIN-MEAN-CORR-BETA",
+              "C-MAIN-NU-TYP-AVG",
+              "C-MAIN-TYP-CORR",
+              "C-MAIN-WIGNER-DECAY"
+            ],
+            "completion": "5/5 item(s) attempted; limited invariants pass, but full claim proofs were not reproduced."
+          },
+          "next_discriminating_test": {
+            "action": "Use a stronger fresh symbolic/analytic derivation to prove each mapped claim independently from the paper.",
+            "expected_resolution": "Each claim becomes independently derived or remains an explicit system capability failure.",
+            "evidence_to_produce": [
+              "outputs/checks/t015_claim_derivation.json"
+            ]
+          }
+        }
+      },
+      "critical": true,
+      "figure_refs": [
+        "Main text pp. 3-4"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "5 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "attempted_not_reproduced"
+    },
+    {
+      "target_id": "T016",
+      "artifact_stage": "exploratory",
+      "label": "Supplement hidden-symmetry analytic claims",
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No accepted generated artifact currently demonstrates the scientific feature for Supplement hidden-symmetry analytic claims.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No item-specific generated numerical result is available for quantitative comparison.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "Every item assigned to this target is explicitly uncovered in the atomic inventory.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No accepted item-specific artifact exists; uncovered items must remain zero credit.",
+      "evidence": [
+        "raw/paper.pdf",
+        "figure_coverage.json",
+        "EQUATION_CARDS.json",
+        "FORMULA_VERIFICATION.md"
+      ],
+      "remaining_gap": "The hidden-symmetry algebra, second-order random rotation, and Zn universality statement have no independent analytic evidence.",
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "capability_limit",
+        "parameter_match": "unknown",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "reference_comparison": "not_available",
+        "generated_data_provenance": "unknown",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "There is no accepted generated scientific artifact to render or compare.",
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "implementation_not_ready",
+            "statement": "A clean-room analytic attempt ran and verified partial consequences, but it did not establish every mapped hidden-symmetry, mapping, or universality claim.",
+            "evidence": [
+              "outputs/data/implementation_closure/T016.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "system_capability_limit",
+            "statement": "After an isolated implementation attempt, the available derivation path could verify algebraic invariants but could not close the full claim-specific proof.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/data/implementation_closure/T016.json",
+              "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+              "FORMULA_VERIFICATION.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The partial analytic implementation is runnable and internally consistent; the missing result is scientific proof coverage, not a crashing or silently wrong code path.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The claim-specific analytic implementation ran in isolation and froze its outputs.",
+                "evidence": [
+                  "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json",
+                  "outputs/data/implementation_closure/T016.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The implementation was derived from the paper and did not use author code, arrays, or source pixels as numerical input.",
+                "evidence": [
+                  "run_contract.implementation_closure.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "analytic_limit",
+                "result": "passed",
+                "statement": "Exact exponents, decay monotonicity, or Z_n algebraic residuals pass their declared limited-scope assertions.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T016.json",
+                  "tests/test_implementation_campaign.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The implemented partial checks pass focused tests and isolated execution.",
+              "evidence": [
+                "tests/test_implementation_campaign.py",
+                "outputs/runs/1608.02589-implementation-closure-v3-20260824/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The relevant analytic statements are printed; the failure is the reproducer's inability to complete their full derivation, not missing indispensable inputs.",
+              "evidence": [
+                "figure_coverage.json",
+                "EQUATION_CARDS.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "T016 contains 3 analytic claim item(s) attempted but not completely rederived.",
+            "items": [
+              "T016",
+              "C-SI-HIDDEN-SYMM",
+              "C-SI-RANDOM-ROT",
+              "C-SI-ZN-UNIVERSALITY"
+            ],
+            "completion": "3/3 item(s) attempted; limited invariants pass, but full claim proofs were not reproduced."
+          },
+          "next_discriminating_test": {
+            "action": "Use a stronger fresh symbolic/analytic derivation to prove each mapped claim independently from the paper.",
+            "expected_resolution": "Each claim becomes independently derived or remains an explicit system capability failure.",
+            "evidence_to_produce": [
+              "outputs/checks/t016_claim_derivation.json"
+            ]
+          }
+        }
+      },
+      "critical": false,
+      "figure_refs": [
+        "Supplemental Material p. 7"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "uncovered_partition",
+            "status": "not_reproduced",
+            "note": "3 atomic item(s) remain without accepted target evidence."
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "This zero-credit accounting target exists to expose uncovered reproduction items. Its absence is counted in item-level coverage, not averaged into the legacy similarity score for generated artifacts.",
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "undeclared",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "attempted_not_reproduced"
     }
   ],
   "overall_score": 73.56,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 4,
-    "critical_items": 3,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "scored_items": 16,
+    "critical_items": 10,
+    "artifact_pass_rate": 0.25,
+    "data_backed_rate": 0.25,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "missing_reference_curve": 1,
-      "insufficient_compute": 3
+      "insufficient_compute": 14,
+      "capability_limit": 2
     },
     "parameter_match_counts": {
-      "paper_subset": 1,
-      "reduced_scale": 3
+      "paper_subset": 2,
+      "reduced_scale": 10,
+      "unknown": 4
     },
     "reference_comparison_counts": {
       "analytic_reference": 1,
-      "visual_feature_contract": 3
+      "visual_feature_contract": 3,
+      "not_available": 12
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 4
+      "independent_numerics": 4,
+      "unknown": 12
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 4
+      "physics_reproduction": 4,
+      "unknown": 12
     },
     "formula_gate_counts": {
-      "verified": 4
+      "verified": 12,
+      "reconstructed": 2,
+      "blocked": 2
     },
     "paper_level_role_counts": {
-      "main_claim": 2,
-      "supporting": 2
+      "main_claim": 9,
+      "supporting": 7
     },
     "physics_status_counts": {
-      "undeclared": 3,
+      "undeclared": 15,
       "passed": 1
     },
     "physics_assertion_status_counts": {
       "passed": 3,
       "failed": 1
     },
-    "essential_physics_failures": []
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 16
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 14,
+      "attempted_not_reproduced": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014",
+      "T015",
+      "T016"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012",
+      "T013",
+      "T014"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [
+      "T015",
+      "T016"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 14,
+      "implementation_not_ready": 2
+    },
+    "root_cause_counts": {
+      "compute_capacity_shortfall": 14,
+      "system_capability_limit": 2
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 16
+    }
   },
   "status": "passed"
 }

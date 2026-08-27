@@ -21,7 +21,7 @@ Numerical form:
 Use dimensionless hbar=1 oscillator matrices; verify the first spacings are constant and the canonical commutator holds away from the truncation edge.
 ```
 
-Code: `code/src/cqed_reproduction.py::annihilation`, `code/tests/test_cqed_reproduction.py::test_jc_block_matches_eq38`
+Code: `src/cqed_reproduction.py::annihilation`, `tests/test_cqed_reproduction.py::test_jc_block_matches_eq38`
 
 
 ### EQ007_019 — Distributed transmission-line and cavity normal modes
@@ -40,7 +40,7 @@ Numerical form:
 Generate the first CPW resonances at f_m=(m+1)f0 with kappa_m/2pi=f_m/Q and a passive Lorentzian transmission envelope; compute rectangular-mode frequencies only when geometry is supplied.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::cpw_transmission`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t005`
+Code: `src/full_rmp_reproduction.py::cpw_transmission`, `scripts/run_full_rmp_reproduction.py::reproduce_t005`
 
 
 ### EQ020_028 — Transmon Hamiltonian, Duffing limit, and SQUID tunability
@@ -59,7 +59,7 @@ Numerical form:
 Diagonalize the finite charge-basis tridiagonal Hamiltonian with a convergence check in charge cutoff; for Fig. 6 choose EC and EJ at fixed plasma frequency sqrt(8EC EJ)/h=5 GHz.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::transmon_charge_hamiltonian`, `code/src/full_rmp_reproduction.py::transmon_phase_wavefunctions`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t006`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t007`
+Code: `src/full_rmp_reproduction.py::transmon_charge_hamiltonian`, `src/full_rmp_reproduction.py::transmon_phase_wavefunctions`, `scripts/run_full_rmp_reproduction.py::reproduce_t006`, `scripts/run_full_rmp_reproduction.py::reproduce_t007`
 
 
 ### EQ029_034 — Transmon-resonator coupling and Jaynes-Cummings reduction
@@ -78,7 +78,7 @@ Numerical form:
 Use hbar=1. Build truncated a,b matrices. Eq. (32) is omega_r n_a + omega_q n_b - (EC/2)b†²b² + g(b†a+ba†); Eq. (34) replaces b by sigma_minus in the two-level sector.
 ```
 
-Code: `code/src/cqed_reproduction.py::transmon_coupling`, `code/src/cqed_reproduction.py::transmon_coupling_via_alpha`, `code/src/cqed_reproduction.py::duffing_jc_hamiltonian`
+Code: `src/cqed_reproduction.py::transmon_coupling`, `src/cqed_reproduction.py::transmon_coupling_via_alpha`, `src/cqed_reproduction.py::duffing_jc_hamiltonian`
 
 
 ### EQ035_039 — Exact Jaynes-Cummings diagonalization
@@ -97,7 +97,7 @@ Numerical form:
 For each n>=1 diagonalize [[n*omega_r-Delta/2, g*sqrt(n)],[g*sqrt(n), n*omega_r+Delta/2]] and compare with Eq. (38).
 ```
 
-Code: `code/src/cqed_reproduction.py::jc_block`, `code/src/cqed_reproduction.py::jc_analytic_energies`, `code/scripts/run_reproduction.py::reproduce_figure_8`
+Code: `src/cqed_reproduction.py::jc_block`, `src/cqed_reproduction.py::jc_analytic_energies`, `scripts/run_reproduction.py::reproduce_figure_8`
 
 
 ### EQ040_044 — Schrieffer-Wolff dispersive Hamiltonian and critical photon number
@@ -116,7 +116,7 @@ Numerical form:
 Compute each bare-state energy E(j,n)=n*omega_r+j*omega_q-EC*j(j-1)/2+Lambda_j+n*chi_j, then match it to exact eigenstates by maximum bare-basis overlap.
 ```
 
-Code: `code/src/cqed_reproduction.py::transmon_dispersive_shifts`, `code/src/cqed_reproduction.py::transmon_dispersive_energy`, `code/src/cqed_reproduction.py::critical_photon_number`, `code/scripts/run_reproduction.py::reproduce_figure_9`
+Code: `src/cqed_reproduction.py::transmon_dispersive_shifts`, `src/cqed_reproduction.py::transmon_dispersive_energy`, `src/cqed_reproduction.py::critical_photon_number`, `scripts/run_reproduction.py::reproduce_figure_9`
 
 
 ### EQ045_051 — Bogoliubov normal modes and inherited Kerr nonlinearities
@@ -135,7 +135,7 @@ Numerical form:
 Diagonalize the 2x2 linear frequency matrix exactly; evaluate the leading Kerr expressions only away from Delta=0 and Delta=EC/hbar.
 ```
 
-Code: `code/src/cqed_reproduction.py::linear_dressed_frequencies`, `code/src/cqed_reproduction.py::bogoliubov_kerrs`
+Code: `src/cqed_reproduction.py::linear_dressed_frequencies`, `src/cqed_reproduction.py::bogoliubov_kerrs`
 
 
 ### EQ052_058 — Black-box quantization of a multimode electromagnetic environment
@@ -154,7 +154,7 @@ Numerical form:
 For vectors omega and phi, form chi=-EJ/hbar * outer(phi^2,phi^2), K=diag(chi)/2, Delta=rowsum(chi)/2, and p=2(EJ/hbar)phi^2/omega.
 ```
 
-Code: `code/src/cqed_reproduction.py::black_box_kerr`
+Code: `src/cqed_reproduction.py::black_box_kerr`
 
 
 ### EQ059_062 — Arbitrary multilevel artificial atom in the dispersive regime
@@ -173,7 +173,7 @@ Numerical form:
 Given exact level frequencies and complex gij, sum |gij|^2 over all connected levels with the two printed denominators; reject resonant denominators rather than silently regularizing them.
 ```
 
-Code: `code/src/cqed_reproduction.py::generic_multilevel_shifts`
+Code: `src/cqed_reproduction.py::generic_multilevel_shifts`
 
 
 ### EQ063 — Longitudinal light-matter coupling
@@ -192,7 +192,7 @@ Numerical form:
 Diagonalize one displaced-oscillator block per sigma_z=+/-1 and compare its low spectrum with n*omega_r+sigma_z*omega_q/2-gz^2/omega_r.
 ```
 
-Code: `code/src/cqed_reproduction.py::longitudinal_block`, `code/src/cqed_reproduction.py::longitudinal_analytic_energy`
+Code: `src/cqed_reproduction.py::longitudinal_block`, `src/cqed_reproduction.py::longitudinal_analytic_energy`
 
 
 ### EQ064_065 — Continuum transmission-line bath and canonical fields
@@ -211,7 +211,7 @@ Numerical form:
 No finite bath grid is used for physical claims. A single discretized bath mode is used only for the Hermiticity sanity check of Eqs. (66)-(67).
 ```
 
-Code: `code/src/cqed_reproduction.py::discretized_bath_hamiltonians`
+Code: `src/cqed_reproduction.py::discretized_bath_hamiltonians`
 
 
 ### EQ066 — Microscopic oscillator-bath Hamiltonian
@@ -230,7 +230,7 @@ Numerical form:
 Tensor a and b operators for a finite-mode Hermiticity audit only; open-system dynamics starts from the Markovian generator after the bath is traced out.
 ```
 
-Code: `code/src/cqed_reproduction.py::discretized_bath_hamiltonians`
+Code: `src/cqed_reproduction.py::discretized_bath_hamiltonians`
 
 
 ### EQ067 — Narrow-band rotating-wave system-bath coupling and source correction
@@ -249,7 +249,7 @@ Numerical form:
 Use the formal-publication Hermitian coupling. Preserve the arXiv literal operator only as a negative regression test.
 ```
 
-Code: `code/src/cqed_reproduction.py::discretized_bath_hamiltonians`
+Code: `src/cqed_reproduction.py::discretized_bath_hamiltonians`
 
 
 ### EQ068_069 — Born-Markov thermal Lindblad master equation
@@ -268,7 +268,7 @@ Numerical form:
 Use collapse operators sqrt(kappa(nbar+1))*a and sqrt(kappa*nbar)*a† in a finite Fock basis; integrate the vectorized density matrix with tight tolerances.
 ```
 
-Code: `code/src/cqed_reproduction.py::dissipator`, `code/src/cqed_reproduction.py::lindblad_rhs`, `code/src/cqed_reproduction.py::thermal_oscillator_evolution`
+Code: `src/cqed_reproduction.py::dissipator`, `src/cqed_reproduction.py::lindblad_rhs`, `src/cqed_reproduction.py::thermal_oscillator_evolution`
 
 
 ### EQ070_071 — Traveling-wave voltage and Kirchhoff boundary condition
@@ -287,7 +287,7 @@ Numerical form:
 These boundary equations are derived analytically. The executable response begins after the narrow-band envelope definitions in Eqs. (73)-(74).
 ```
 
-Code: `code/src/cqed_reproduction.py::passive_one_port_response`
+Code: `src/cqed_reproduction.py::passive_one_port_response`
 
 
 ### EQ072 — Input-output boundary relation
@@ -306,7 +306,7 @@ Numerical form:
 The code uses the equivalent passive convention bout=bin-sqrt(kappa)*a. Changing the resonator or port phase flips the displayed sign but not observables; the relative sign with Eq. (75) is fixed by passivity.
 ```
 
-Code: `code/src/cqed_reproduction.py::passive_one_port_response`
+Code: `src/cqed_reproduction.py::passive_one_port_response`
 
 
 ### EQ073_074 — Narrow-band temporal input and output fields
@@ -325,7 +325,7 @@ Numerical form:
 The steady-state response is evaluated directly in detuning space; no artificial finite-time delta approximation is used for acceptance claims.
 ```
 
-Code: `code/src/cqed_reproduction.py::passive_one_port_response`
+Code: `src/cqed_reproduction.py::passive_one_port_response`
 
 
 ### EQ075 — Quantum Langevin equation and passive sign convention
@@ -344,7 +344,7 @@ Numerical form:
 For a coherent input beta in the rotating frame, alpha_ss=sqrt(kappa) beta/(i Delta+kappa/2) and r=bout/bin=(i Delta-kappa/2)/(i Delta+kappa/2), hence |r|=1.
 ```
 
-Code: `code/src/cqed_reproduction.py::passive_one_port_response`
+Code: `src/cqed_reproduction.py::passive_one_port_response`
 
 
 ### EQ076_086 — Traveling voltage, transmon decoherence, dispersive dissipation, and coherent drive
@@ -363,7 +363,7 @@ Numerical form:
 Integrate finite-dimensional Lindblad equations and compare population/coherence to exp(-t/T1) and exp(-t/T2); verify transformed collapse-channel rates and coherent-state normalization.
 ```
 
-Code: `code/src/cqed_reproduction.py::thermal_oscillator_evolution`, `code/src/full_rmp_reproduction.py::one_excitation_dynamics`, `code/tests/test_full_rmp_reproduction.py::test_pointer_trajectory_reaches_analytic_unit_population`
+Code: `src/cqed_reproduction.py::thermal_oscillator_evolution`, `src/full_rmp_reproduction.py::one_excitation_dynamics`, `tests/test_full_rmp_reproduction.py::test_pointer_trajectory_reaches_analytic_unit_population`
 
 
 ### EQ087_099 — Filtered microwave detection, quantum-limited amplification, and IQ quadratures
@@ -382,7 +382,7 @@ Numerical form:
 Propagate Gaussian signal and independent idler variances through a gain cascade; confirm commutator preservation, the half-quantum limit, and eta=1/(1+2Nsys).
 ```
 
-Code: `code/src/full_rmp_reproduction.py::phase_preserving_amplifier_metrics`, `code/tests/test_full_rmp_reproduction.py::test_phase_preserving_amplifier_preserves_commutator_and_adds_half_quantum`
+Code: `src/full_rmp_reproduction.py::phase_preserving_amplifier_metrics`, `tests/test_full_rmp_reproduction.py::test_phase_preserving_amplifier_preserves_commutator_and_adds_half_quantum`
 
 
 ### EQ100_106 — Wigner, characteristic, marginal, and Husimi-Q representations
@@ -401,7 +401,7 @@ Numerical form:
 Evaluate Wigner functions from analytic Fock-basis matrix elements or displaced parity on a converged grid; require realness, unit integral, and parity bounds.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::fock_state_wigner`, `code/tests/test_full_rmp_reproduction.py::test_fock_wigner_normalizes_and_has_odd_parity_at_origin`
+Code: `src/full_rmp_reproduction.py::fock_state_wigner`, `tests/test_full_rmp_reproduction.py::test_fock_wigner_normalizes_and_has_odd_parity_at_origin`
 
 
 ### EQ107_120 — Dispersive pointer states, measurement SNR, efficiency, and longitudinal readout
@@ -420,7 +420,7 @@ Numerical form:
 Integrate the two complex pointer ODEs for finite pulses, compute phase-space distance and SNR, and compare the long-time result to the analytic steady-state formula.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::dispersive_pointer_trajectory`, `code/src/full_rmp_reproduction.py::integrated_pointer_snr`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t008`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t009`
+Code: `src/full_rmp_reproduction.py::dispersive_pointer_trajectory`, `src/full_rmp_reproduction.py::integrated_pointer_snr`, `scripts/run_full_rmp_reproduction.py::reproduce_t008`, `scripts/run_full_rmp_reproduction.py::reproduce_t009`
 
 
 ### EQ121_125 — Resonant coupling regimes, Maxwell-Bloch response, and Purcell interpolation
@@ -439,7 +439,7 @@ Numerical form:
 Use both the analytic weak-drive susceptibility and a finite JC Lindblad steady state/time evolution; cross-check peak locations, linewidth limits, positivity, and trace preservation.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::linear_cqed_response`, `code/src/full_rmp_reproduction.py::one_excitation_dynamics`, `code/src/full_rmp_reproduction.py::thermal_jc_spectrum`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t010`
+Code: `src/full_rmp_reproduction.py::linear_cqed_response`, `src/full_rmp_reproduction.py::one_excitation_dynamics`, `src/full_rmp_reproduction.py::thermal_jc_spectrum`, `scripts/run_full_rmp_reproduction.py::reproduce_t010`
 
 
 ### EQ126_128 — Dispersive spectroscopy, ac-Stark response, and measurement-induced dephasing
@@ -458,7 +458,7 @@ Numerical form:
 Evaluate the Bloch formula and compare it to a two-level Lindblad steady state; for photon-number splitting sum number-conditioned responses with a normalized Poisson distribution.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::bloch_excited_population`, `code/src/full_rmp_reproduction.py::photon_number_split_spectrum`, `code/src/full_rmp_reproduction.py::duffing_cavity_pull`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t013`
+Code: `src/full_rmp_reproduction.py::bloch_excited_population`, `src/full_rmp_reproduction.py::photon_number_split_spectrum`, `src/full_rmp_reproduction.py::duffing_cavity_pull`, `scripts/run_full_rmp_reproduction.py::reproduce_t013`
 
 
 ### EQ129_153 — Single-qubit control and two-qubit gate Hamiltonians
@@ -477,7 +477,7 @@ Numerical form:
 Propagate a three-level driven transmon under Gaussian and derivative quadratures, then compare leakage and gate error; verify analytic exchange and parametric resonance against small matrix evolutions.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::drag_pi_pulse`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t016`
+Code: `src/full_rmp_reproduction.py::drag_pi_pulse`, `scripts/run_full_rmp_reproduction.py::reproduce_t016`
 
 
 ### EQ154_157 — Bosonic amplitude-damping codes and cat-code basis states
@@ -496,7 +496,7 @@ Numerical form:
 Construct normalized truncated-Fock codewords, compute Gram matrices of the I and a error spaces, photon-number moments, parity, and analytic Wigner functions.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::binomial_code_metrics`, `code/src/full_rmp_reproduction.py::cat_state_coefficients`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t017`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t018`
+Code: `src/full_rmp_reproduction.py::binomial_code_metrics`, `src/full_rmp_reproduction.py::cat_state_coefficients`, `scripts/run_full_rmp_reproduction.py::reproduce_t017`, `scripts/run_full_rmp_reproduction.py::reproduce_t018`
 
 
 ### EQ158_164 — Degenerate parametric amplification, squeezing, and remote parity interaction
@@ -515,7 +515,7 @@ Numerical form:
 Generate squeezed-vacuum covariance and Wigner grids; verify normalization, principal variances, minimum uncertainty, and the caption's dB curves. Generate Fock-superposition Wigner functions separately from experimental tomography.
 ```
 
-Code: `code/src/full_rmp_reproduction.py::squeezed_vacuum_wigner`, `code/src/full_rmp_reproduction.py::squeezed_quadrature_variance`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t019`, `code/scripts/run_full_rmp_reproduction.py::reproduce_t020`
+Code: `src/full_rmp_reproduction.py::squeezed_vacuum_wigner`, `src/full_rmp_reproduction.py::squeezed_quadrature_variance`, `scripts/run_full_rmp_reproduction.py::reproduce_t019`, `scripts/run_full_rmp_reproduction.py::reproduce_t020`
 
 
 ### APPA001_A010 — Appendix A: voltage-biased transmon and capacitive oscillator coupling
@@ -534,7 +534,7 @@ Numerical form:
 Compare the exact inverse-capacitance Hamiltonian with its small-Cg expansion over a dimensionless coupling sweep.
 ```
 
-Code: `code/src/cqed_reproduction.py::transmon_coupling`, `code/src/cqed_reproduction.py::duffing_jc_hamiltonian`
+Code: `src/cqed_reproduction.py::transmon_coupling`, `src/cqed_reproduction.py::duffing_jc_hamiltonian`
 
 
 ### APPB001_B032 — Appendix B: BCH, Schrieffer-Wolff, Bogoliubov, and off-resonant drive
@@ -553,7 +553,7 @@ Numerical form:
 Compare exact finite-matrix unitary transforms against second-order SW and exact 2x2 normal-mode eigenvalues across a controlled small parameter sweep.
 ```
 
-Code: `code/src/cqed_reproduction.py::transmon_dispersive_shifts`, `code/src/cqed_reproduction.py::linear_dressed_frequencies`, `code/tests/test_cqed_reproduction.py::test_bogoliubov_frequencies_match_matrix_diagonalization`
+Code: `src/cqed_reproduction.py::transmon_dispersive_shifts`, `src/cqed_reproduction.py::linear_dressed_frequencies`, `tests/test_cqed_reproduction.py::test_bogoliubov_frequencies_match_matrix_diagonalization`
 
 
 ### APPC001_C020 — Appendix C: transmission-line boundary derivation of input-output theory
@@ -572,4 +572,4 @@ Numerical form:
 Reuse the continuum-normalization, Hermiticity, passive-reflection, and energy-decay tests associated with Eqs. (64)-(75).
 ```
 
-Code: `code/src/cqed_reproduction.py::passive_one_port_response`
+Code: `src/cqed_reproduction.py::passive_one_port_response`

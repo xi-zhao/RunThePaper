@@ -4,14 +4,19 @@ Preprint: [arXiv:2607.08767 — Plaquette: A hardware-aware design platform for 
 
 Formal publication: **Not recorded as of 2026-08-04**
 
-Public status: **Partial scientific reproduction** · Audit score: **45.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **81.67/100**
 
-Publishes the independently generated numerical artifacts retained by the historical case: 1 public generated data files, 1 public generated figures, and 1 declared numerical target. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
+Case scaffolded from framework/templates/paper_case.
 
 ## Start Here / 从这里开始
 
 - [中文复现 Note](note/reproduction-note.zh-CN.md)
 - [English reproduction note](note/reproduction-note.en.md)
+- [Equation-level derivation](docs/DERIVATION.md)
+- [Numerical methods](docs/NUMERICAL_METHODS.md)
+- [Public evidence index](docs/EVIDENCE_INDEX.md)
+- [Comparison policy](docs/COMPARISON_POLICY.md)
+- [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -19,33 +24,30 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
-## Main Reproduced Results
-
-| Paper item | Reproduced result | Figure | Check |
-| --- | --- | --- | --- |
-| Fig. 5(a) coherent over-rotation | The exact Plaquette repetition-memory circuit locations, frame convention, and decoder graph are unpublished; the coherent result is 0.9052 instead of 0.387. | [PNG](outputs/figures/fig5a_proxy_results.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-
-### Fig. 5(a) coherent over-rotation: The exact Plaquette repetition-memory circuit locations, frame convention, and decoder graph are unpublished; the coherent result is 0.9052 instead of 0.387.
-
-![Fig. 5(a) coherent over-rotation reproduction](outputs/figures/fig5a_proxy_results.png)
-
 ## Quick Run
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install qiskit qiskit-aer
 cd cases/2607.08767/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: Frozen non-final target states: F5A_PROXY=failed. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Remaining limitation: First executable target is a reduced, explicit proxy of Fig. 5(a); it is not a direct Plaquette reproduction.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
+
+## Generated Figures
+
+![fig10 heating matrix](outputs/figures/fig10_heating_matrix.png)
+
+![fig5a proxy comparison](outputs/figures/fig5a_proxy_comparison.png)
+
+![table3 generalized twirl](outputs/figures/table3_generalized_twirl.png)

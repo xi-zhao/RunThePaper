@@ -7,9 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2511.11394/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --config config/exploratory_targets.json --target T001 --mode smoke --no-render --attested-stage exploratory
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Frozen non-final target states: T001=partially_reproduced, V001=evidence_compared, V002=evidence_compared, T002=evidence_compared, T003=evidence_compared, T004=evidence_compared. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Boundary: Exact extended-Hubbard targets reproduce the paper at numerical-feature level. Main Fig. 1 remains partial because its energy normalization and t=15 rate conflict with the printed model.

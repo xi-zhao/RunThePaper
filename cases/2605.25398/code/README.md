@@ -8,9 +8,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2605.25398/code
 python scripts/run_reproduction.py
-python scripts/plot_reproduction.py
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Several figures use paper-parameter subsets or local random-matrix instances rather than the full experimental setting.
+Boundary: Remaining lifecycle boundaries: parameters=paper_exact, causal_resolution=not_required, pixel=missing, independent_review=stale, review_scope=stale, paper_assessment=stale.

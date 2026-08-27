@@ -1,0 +1,741 @@
+{
+  "schema_version": 1,
+  "paper_id": "2512.08279",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "GKSL generator in the paper's vectorization convention",
+      "source_refs": [
+        {
+          "type": "tex_section",
+          "value": "appendix:lindblad_to_choi"
+        },
+        {
+          "type": "tex_contains",
+          "value": "\\bm{L} = -i(H \\ox I - I \\ox H^T)"
+        }
+      ],
+      "latex": "\\operatorname{vec}(|i\\rangle\\langle j|)=|i\\rangle|j\\rangle,\\qquad \\mathbf L=-i(H\\otimes I-I\\otimes H^T)+\\sum_k\\left[L_k\\otimes\\overline{L_k}-\\frac12 L_k^\\dagger L_k\\otimes I-\\frac12I\\otimes(L_k^\\dagger L_k)^T\\right],\\qquad \\operatorname{vec}[\\rho(t)]=e^{t\\mathbf L}\\operatorname{vec}[\\rho(0)]",
+      "role": "Fixes the basis ordering, transpose convention, and matrix exponential used independently for both numerical figures.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The vectorization identity and Liouville-space construction are printed in Supplemental Sec. A; applying that identity independently fixes the transpose placement shown here."
+        },
+        {
+          "id": "EQC001_trace",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Contracting the generator with vec(I) gives zero: each jump contribution has one gain term and two equal half-loss terms, while the commutator is traceless."
+        },
+        {
+          "id": "EQC001_amplitude_damping",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For H=0 and L=sqrt(Gamma)|0><1|, exponentiation gives rho_11(t)=exp(-Gamma t)rho_11(0) and rho_01(t)=exp(-Gamma t/2)rho_01(0), the standard amplitude-damping channel."
+        }
+      ],
+      "numerical_form": "Build the d^2-by-d^2 complex matrix with NumPy Kronecker products and evaluate scipy.linalg.expm(t*L).",
+      "code_refs": [
+        "src/programmable_lindbladian.py:liouvillian",
+        "src/programmable_lindbladian.py:channel_superoperator"
+      ],
+      "open_questions": [
+        "The supplemental displayed generator places the two loss-term transposes inconsistently with vec(ABC)=(A tensor C^T)vec(B). The independently derived formula above is used; both paper numerics have real diagonal L^dagger L, so the typo does not affect the reproduced targets."
+      ]
+    },
+    {
+      "id": "EQC002",
+      "title": "Liouville-to-Choi reshuffling",
+      "source_refs": [
+        {
+          "type": "tex_section",
+          "value": "appendix:lindblad_to_choi"
+        },
+        {
+          "type": "tex_contains",
+          "value": "J(\\cE_t) = \\sum_{i,j,a,b = 0}^{d-1} K_{ab,ij}(t)"
+        }
+      ],
+      "latex": "J(\\mathcal E_t)=\\sum_{i,j=0}^{d-1}|i\\rangle\\langle j|\\otimes\\mathcal E_t(|i\\rangle\\langle j|)=\\sum_{i,j,a,b=0}^{d-1}K_{ab,ij}(t)|i\\rangle\\langle j|\\otimes|a\\rangle\\langle b|,\\qquad K(t)=e^{t\\mathbf L}",
+      "role": "Converts each generated Lindblad channel into the unnormalized Choi matrix used as both target channel and program resource.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The index-level reshuffling is printed in Supplemental Sec. A."
+        },
+        {
+          "id": "EQC002_identity",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For K=I_(d^2), the formula gives |I>><<I|, whose trace is d and whose output partial trace is I_d."
+        },
+        {
+          "id": "EQC002_program_state",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Therefore pi_t=J(E_t)/d has unit trace, exactly matching the author scripts' division by d."
+        }
+      ],
+      "numerical_form": "Reshape K[out_row,out_col,in_row,in_col] and transpose to J[in_row,out_row,in_col,out_col], then flatten.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:superoperator_to_choi",
+        "src/programmable_lindbladian.py:channel_choi"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Exact factorization of the SWAP-dephasing semigroup",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "SWAP-dephasing paragraph before Fig. 2"
+        },
+        {
+          "type": "tex_section",
+          "value": "appendix:proofs_of_programming_dephasing_exchange"
+        }
+      ],
+      "latex": "\\mathcal L=i\\,\\operatorname{ad}_S+\\lambda(\\mathcal D_{\\mathbb B}-\\mathcal I),\\qquad e^{t\\mathcal L}=e^{-\\lambda t}e^{it\\operatorname{ad}_S}+(1-e^{-\\lambda t})\\mathcal D_{\\mathbb B},\\qquad e^{it\\operatorname{ad}_S}(\\rho)=e^{itS}\\rho e^{-itS}",
+      "role": "Separates Fig. 2 into an exactly programmable coherent branch and a physical Bell-dephasing branch.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The generator and factorized channel are stated in the main text and proved in the Supplemental Material."
+        },
+        {
+          "id": "EQC003_commutation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "S is diagonal in the Bell basis, so ad_S commutes with Bell dephasing and the two exponentials factor."
+        },
+        {
+          "id": "EQC003_idempotence",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "D_B^2=D_B implies exp[lambda t(D_B-I)]=exp(-lambda t)I+[1-exp(-lambda t)]D_B; D_B after the SWAP unitary is still D_B."
+        },
+        {
+          "id": "EQC003_endpoints",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At t=0 the channel is identity; at long times it approaches Bell-basis dephasing."
+        }
+      ],
+      "numerical_form": "Use the analytic convex mixture for the reference curve and construct the full 16-by-16 Liouvillian independently as a cross-check.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:swap_dephasing_channel",
+        "src/programmable_lindbladian.py:swap_dephasing_liouvillian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Closed-form overlap for Fig. 2",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "overlap sentence following the SWAP-dephasing factorization"
+        },
+        {
+          "type": "figure",
+          "value": "fig:time_evolution_Z"
+        }
+      ],
+      "latex": "|01\\rangle=\\frac{|\\Psi_+\\rangle+|\\Psi_-\\rangle}{\\sqrt2},\\qquad f(t)=\\langle01|e^{t\\mathcal L}(|01\\rangle\\langle01|)|01\\rangle=\\frac12\\left[1+e^{-\\lambda t}\\cos(2t)\\right]",
+      "role": "Defines the exact black curve against which the independently generated quasi-sampling points are tested.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula and initial state are printed directly in the main text."
+        },
+        {
+          "id": "EQC004_bell_basis",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The SWAP eigenvalues of Psi+ and Psi- are +1 and -1, so their coherence acquires exp(2it); Bell dephasing removes that coherence."
+        },
+        {
+          "id": "EQC004_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "f(0)=1 and f(t) approaches 1/2 as t tends to infinity, matching the source panel."
+        }
+      ],
+      "numerical_form": "f_exact(t)=0.5*(1+exp(-lambda*t)*cos(2*t)) with lambda=0.5 and t in [0,10].",
+      "code_refs": [
+        "src/programmable_lindbladian.py:swap_overlap_exact"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Fixed two-level HPTP processor for the coherent SWAP branch",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:programmable_swap"
+        },
+        {
+          "type": "tex_label",
+          "value": "prop:hptp_protocol_arbitrary_H_appendix"
+        }
+      ],
+      "latex": "\\mathcal M(X)=\\frac{I_2}{2}\\operatorname{tr}X+X-\\Delta(X),\\quad V=\\Pi_+\\otimes\\langle0|+\\Pi_-\\otimes\\langle1|,\\quad \\mathcal P(X)=2V(\\mathcal I\\otimes\\mathcal M)(X)V^\\dagger,\\quad |\\pi_t\\rangle=\\frac{e^{it}|0\\rangle+e^{-it}|1\\rangle}{\\sqrt2},\\quad \\mathcal P(\\rho\\otimes|\\pi_t\\rangle\\langle\\pi_t|)=e^{itS}\\rho e^{-itS}",
+      "role": "Provides an independent, fixed HPTP map for the nonphysical branch sampled in Fig. 2, without importing the authors' stored Choi matrices.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The map M, the two projectors, and the program state are given in the Supplemental proof."
+        },
+        {
+          "id": "EQC005_trace",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "M is Hermiticity preserving; the diagonal program blocks contribute one half of the trace each and the off-diagonal blocks are traceless under orthogonal projectors, so P is HPTP."
+        },
+        {
+          "id": "EQC005_action",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of the normalized program state yields sum_ab exp[i(s_a-s_b)t] Pi_a rho Pi_b=e^{itS}rho e^{-itS}."
+        }
+      ],
+      "numerical_form": "Construct P from its action on the 8-by-8 matrix-unit basis, then build its 32-by-32 unnormalized Choi matrix.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:swap_program_processor",
+        "src/programmable_lindbladian.py:map_to_choi"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Signed CPTP decomposition and unbiased quasi-sampling",
+      "source_refs": [
+        {
+          "type": "tex_section",
+          "value": "appendix:physical_implementability"
+        },
+        {
+          "type": "main_text",
+          "value": "quasi-quantum methods paragraph preceding Proposition 3"
+        }
+      ],
+      "latex": "\\mathcal P=p_+\\mathcal E_+-p_-\\mathcal E_-,\\qquad p_+-p_-=1,\\qquad \\kappa=p_++p_-=\\|\\mathcal P\\|_\\diamond,\\qquad q_\\pm=\\frac{p_\\pm}{\\kappa},\\qquad \\widehat o=\\kappa\\,s_\\alpha o_\\alpha,\\quad \\mathbb E[\\widehat o]=\\operatorname{tr}[O\\mathcal P(\\rho)]",
+      "role": "Turns the HPTP processor into physical channel samples and makes the estimator, normalization, and sampling overhead explicit.",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The signed-channel decomposition and its operational sampling interpretation are stated in the main text and Supplemental preliminaries."
+        },
+        {
+          "id": "EQC006_trace",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Trace preservation of P and both E branches forces p_+-p_-=1."
+        },
+        {
+          "id": "EQC006_unbiased",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Summing q_alpha*kappa*s_alpha*tr[O E_alpha(rho)] gives p_+o_+-p_-o_-, exactly the HPTP expectation."
+        }
+      ],
+      "numerical_form": "Solve the small Choi SDP for p_plus, p_minus, J_plus, J_minus; sample branches with probabilities p/kappa using a fixed recorded seed.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:decompose_hptp_processor",
+        "src/programmable_lindbladian.py:quasi_sample_swap_dephasing"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Programming cost versus plotted sampling overhead",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:primal_program_pga"
+        },
+        {
+          "type": "figure",
+          "value": "fig:error_threshold"
+        },
+        {
+          "type": "author_code",
+          "value": "error-threshold/error_threshold_ad.m"
+        }
+      ],
+      "latex": "\\gamma_\\epsilon(\\pi_t,\\mathcal L,T)=\\log_2\\min_{\\mathcal P\\in\\Omega}\\left\\{\\|\\mathcal P\\|_\\diamond:\\ \\frac12\\|\\mathcal P(\\cdot\\otimes\\pi_t)-e^{t\\mathcal L}\\|_\\diamond\\le\\epsilon\\ \\forall t\\in[0,T]\\right\\},\\qquad \\kappa_\\epsilon:=2^{\\gamma_\\epsilon}=\\min\\|\\mathcal P\\|_\\diamond",
+      "role": "Separates the logarithmic resource monotone from the linear sampling overhead actually shown on Fig. 3's vertical axis.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text explicitly specifies a binary logarithm; the source figure labels its ordinate 2^{gamma_epsilon(L)}."
+        },
+        {
+          "id": "EQC007_script",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The disclosed MATLAB scripts store cost_array=p1+p2 without applying a logarithm, confirming that the plotted quantity is kappa_epsilon."
+        },
+        {
+          "id": "EQC007_faithfulness",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A physical retrieval channel has diamond norm one, hence kappa=1 and gamma=0 as required by faithfulness."
+        }
+      ],
+      "numerical_form": "Optimize kappa=p_plus+p_minus directly; report both kappa and log2(kappa), but plot kappa to match Fig. 3.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:programming_cost_sdp"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Finite-grid SDP for epsilon-error programming overhead",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:sdp_virtual_cost"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:primal_program_pga"
+        },
+        {
+          "type": "author_code",
+          "value": "error-threshold/error_threshold_ad.m"
+        },
+        {
+          "type": "author_code",
+          "value": "error-threshold/error_threshold_ad_phase.m"
+        }
+      ],
+      "latex": "\\begin{aligned}\\kappa_\\epsilon^{(N)}=\\min\\;&p_++p_-\\\\ \\mathrm{s.t.}\\;&J^{\\mathcal P}=J_+-J_-,\\quad J_\\pm\\succeq0,\\quad \\operatorname{tr}_{S'}J_\\pm=p_\\pm I_{SP},\\quad \\operatorname{tr}_{S'}J^{\\mathcal P}=I_{SP},\\\\ &Z_k\\pm\\Delta J_k\\succeq0,\\quad Z_k\\succeq0,\\quad \\operatorname{tr}_{S'}Z_k\\preceq2\\epsilon I_S,\\quad k=1,\\ldots,N,\\\\ &\\Delta J_k=J[\\mathcal P(\\cdot\\otimes\\pi_{t_k})]-J(e^{t_k\\mathcal L}).\\end{aligned}",
+      "role": "Is the paper's convex program after making the time sampling and Hermiticity-preserving diamond-norm constraints explicit enough to implement independently.",
+      "derived_from": [
+        "EQC007",
+        "EQC009",
+        "EQC010",
+        "EQC011"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplemental Eq. B1 gives the exact HPTP Choi decomposition; the two disclosed scripts add the epsilon-error constraints at sampled times."
+        },
+        {
+          "id": "EQC008_trace",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The three partial-trace constraints imply p_+-p_-=1, while the objective is the signed-channel one-norm p_++p_-."
+        },
+        {
+          "id": "EQC008_epsilon",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC010 turns half the diamond norm <=epsilon into the displayed Z_k LMIs with output partial trace bounded by 2epsilon I."
+        }
+      ],
+      "numerical_form": "Use CVXPY complex Hermitian variables J_plus,J_minus (16-by-16) and one 4-by-4 Z_k per active time; certify omitted source-grid times with the feasible Watrous point Z=abs(J_delta), adding any uncertified point before accepting the optimum.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:programming_cost_sdp"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Retrieval-channel Choi contraction with a program state",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:sdp_virtual_cost"
+        },
+        {
+          "type": "author_code",
+          "value": "JUo = PartialTrace(J*Tensor(eye(d), JUn(:,:,j).', eye(d)), 2, [d, d^(2*n), d])"
+        }
+      ],
+      "latex": "J[\\mathcal P(\\cdot\\otimes\\pi)]_{SS'}=\\operatorname{tr}_P\\!\\left[J^{\\mathcal P}_{SPS'}\\left(I_S\\otimes\\pi_P^T\\otimes I_{S'}\\right)\\right]",
+      "role": "Connects the fixed 8-to-2 retrieval Choi matrix to the effective qubit channel constrained at each time in Fig. 3.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The contraction appears in Supplemental Eq. B1 and is implemented with the same subsystem order in the disclosed scripts."
+        },
+        {
+          "id": "EQC009_indices",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding J^P in program matrix units contracts pi_ba, which is exactly multiplication by pi^T followed by tracing P."
+        },
+        {
+          "id": "EQC009_trace",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "If Tr_S' J^P=I_SP and Tr pi=1, then Tr_S' J[P_pi]=I_S, so the retrieved map is trace preserving."
+        }
+      ],
+      "numerical_form": "Reshape J_P to (S,P,Sout,S,P,Sout), contract the two P indices with pi.T, and return a 4-by-4 Choi matrix.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:contract_program_choi",
+        "src/programmable_lindbladian.py:contract_program_choi_cvx"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Diamond norm SDP for Hermiticity-preserving maps",
+      "source_refs": [
+        {
+          "type": "primary_reference",
+          "value": "Watrous, Semidefinite Programs for Completely Bounded Norms (2009)"
+        },
+        {
+          "type": "primary_reference",
+          "value": "Watrous, Simpler semidefinite programs for completely bounded norms (2012)"
+        },
+        {
+          "type": "reference_implementation",
+          "value": "QETLAB DiamondNorm.m"
+        }
+      ],
+      "latex": "\\|\\Phi\\|_\\diamond=\\min_{Z,\\mu}\\left\\{\\mu:\\ Z\\succeq0,\\ Z+J(\\Phi)\\succeq0,\\ Z-J(\\Phi)\\succeq0,\\ \\operatorname{tr}_{\\mathrm{out}}Z\\preceq\\mu I_{\\mathrm{in}}\\right\\}\\quad(\\Phi\\ \\mathrm{Hermiticity\\ preserving})",
+      "role": "Replaces the authors' QETLAB call by a transparent small SDP and fixes the factor of two in the epsilon constraint.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The general block SDP is given by Watrous and used by QETLAB; for Hermitian Choi matrices its two positive variables can be symmetrized to one Z."
+        },
+        {
+          "id": "EQC010_symmetry",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For Hermitian J, averaging the two Watrous variables gives equal blocks Z; a block Hadamard transform converts positivity of [[Z,-J],[-J,Z]] into Z+J>=0 and Z-J>=0."
+        },
+        {
+          "id": "EQC010_identity",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For the identity channel, choosing Z=J(identity) gives Tr_out Z=I and diamond norm one."
+        }
+      ],
+      "numerical_form": "For each channel difference use a Hermitian Z with Z±J_delta positive semidefinite; half-diamond<=epsilon sets Tr_out(Z)<=2*epsilon*I.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:diamond_norm_hp",
+        "src/programmable_lindbladian.py:add_half_diamond_constraint"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "Fig. 3 Lindbladians, Choi programs, and disclosed finite grids",
+      "source_refs": [
+        {
+          "type": "figure",
+          "value": "fig:error_threshold"
+        },
+        {
+          "type": "author_code",
+          "value": "error-threshold/error_threshold_ad.m"
+        },
+        {
+          "type": "author_code",
+          "value": "error-threshold/error_threshold_ad_phase.m"
+        }
+      ],
+      "latex": "L_0=\\sqrt{0.1}\\,|0\\rangle\\langle1|,\\qquad H\\in\\{0,Z\\},\\qquad \\pi_t=J(e^{t\\mathcal L})/2,\\qquad \\epsilon_\\ell=0.005\\ell\\ (\\ell=0,\\ldots,40),\\qquad t_k=0.01k\\ (k=0,\\ldots,999)",
+      "role": "Pins every physical and discretization parameter needed to reproduce the blue and red Fig. 3 curves.",
+      "derived_from": [
+        "EQC001",
+        "EQC002",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The figure fixes epsilon and T; the public scripts fix Gamma=0.1, H=0 or Z, n=1, sample=1000, and the 41-point epsilon grid."
+        },
+        {
+          "id": "EQC011_time_grid",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "MATLAB forms 0:T/sample:T but loops j=1:sample, so the optimized grid contains 1000 points from 0 through 9.99 and omits the allocated endpoint 10."
+        },
+        {
+          "id": "EQC011_choi",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Each program resource is J(A_t)/2 and has trace one; the target passed to DiamondNorm is 2*pi_t=J(A_t)."
+        }
+      ],
+      "numerical_form": "Generate both branches from the Liouvillian, solve the author-exact 1000-point grid, and separately test inclusion of t=10 as a discretization sensitivity check.",
+      "code_refs": [
+        "src/programmable_lindbladian.py:fig3_model",
+        "scripts/run_programming_cost.py"
+      ],
+      "open_questions": [
+        "The caption describes [0,10], while the disclosed numerical loop enforces 0<=t<=9.99. The final evidence must report the author-exact curve and a separate endpoint-inclusion sensitivity result."
+      ]
+    },
+    {
+      "id": "EQC012",
+      "title": "Six-branch CNOT decomposition and amplitude-damping HPTP protocol",
+      "source_refs": [
+        {
+          "type": "tex_equation",
+          "value": "Supplemental amplitude-damping construction, arxiv.tex lines 1021-1087; Eq. eq:decomp_cry and the displayed six-map CNOT decomposition"
+        },
+        {
+          "type": "figure",
+          "value": "fig:amp and fig:decom"
+        }
+      ],
+      "latex": "\\mathcal{CX}=\\Pi_0\\otimes\\mathcal I+\\Pi_1\\otimes\\mathcal X+\\mathcal I\\otimes\\Pi_++\\mathcal Z\\otimes\\Pi_--\\frac12\\mathcal S\\otimes\\widehat{\\mathcal H}\\mathcal S^\\dagger\\widehat{\\mathcal H}-\\frac12\\mathcal S^\\dagger\\otimes\\widehat{\\mathcal H}\\mathcal S\\widehat{\\mathcal H},\\qquad (\\alpha_1,\\ldots,\\alpha_6)=(1,1,1,1,-\\tfrac12,-\\tfrac12),\\qquad \\kappa=\\sum_j|\\alpha_j|=5,\\quad \\theta=2\\arcsin\\sqrt\\gamma,\\quad d_P=6\\times2=12",
+      "role": "Fixes the reviewed fourth-coefficient sign and requires construction of all six product maps before accepting the exact CNOT and amplitude-damping protocol claims.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints four positive unit coefficients followed by two coefficients -1/2, then states kappa=5 and a six-by-two-dimensional program."
+        },
+        {
+          "id": "EQC012_cnot",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The implementation constructs each product superoperator and compares their signed sum with exact CNOT on all 16 four-dimensional matrix units and on the Choi matrix."
+        },
+        {
+          "id": "EQC012_amplitude_damping",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The six branches are inserted into the controlled-Ry dilation and compared with the exact Kraus channel at boundary and interior gamma values; the six printed program states are independently normalized and matched to the right-side branch maps."
+        }
+      ],
+      "numerical_form": "Construct the six maps with coefficients (1,1,1,1,-1/2,-1/2); require CNOT and amplitude-damping matrix-unit and Choi residuals, program-state preparation residuals, and trace-preservation residuals to be at most the frozen tolerance.",
+      "code_refs": [
+        "src/implementation_closure.py:_paper_cnot_branches",
+        "src/implementation_closure.py:_amplitude_damping_protocol_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC013",
+      "title": "Finite-interval quantum and quasiquantum programmability",
+      "source_refs": [
+        {
+          "type": "tex_equation",
+          "value": "Published Eq. (1) and the paragraph immediately following it"
+        }
+      ],
+      "latex": "\\frac12\\|\\mathcal P(\\,\\cdot\\otimes\\pi_t)-e^{t\\mathcal L}\\|_\\diamond\\le\\epsilon\\quad(0\\le t\\le T),\\qquad \\epsilon=0\\ \\text{for exact programming};\\quad \\mathcal P\\ \\mathrm{CPTP}:\\ \\text{quantum},\\ \\mathcal P\\ \\mathrm{HPTP}:\\ \\text{quasiquantum}",
+      "role": "Owns the base programmability definition and the retrieval-map distinction discovered by fresh inventory items R002-R003.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The fixed processor, continuous program family, interval-uniform half-diamond bound, epsilon-zero specialization, and CPTP/HPTP split are stated together in the published definition."
+        },
+        {
+          "id": "EQC013_measure_prepare",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "One fixed controlled two-channel processor retrieves two convex channel mixtures from diagonal program states on every qubit matrix unit."
+        },
+        {
+          "id": "EQC013_quasi",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A trace-preserving signed two-channel combination is executed separately, with unit signed trace weight and explicit sampling overhead."
+        }
+      ],
+      "numerical_form": "Build one fixed CPTP controlled-channel processor, retrieve several program-indexed convex maps, and separately execute a signed HPTP combination; report complete-basis residuals without claiming a general theorem proof.",
+      "code_refs": [
+        "src/implementation_closure.py:_programmability_definition_checks"
+      ],
+      "open_questions": [
+        "Finite examples instantiate the definition but do not prove universal programmability or a general diamond-norm bound."
+      ]
+    },
+    {
+      "id": "EQC014",
+      "title": "Normalized Choi states and compatible link products",
+      "source_refs": [
+        {
+          "type": "tex_section",
+          "value": "Supplement Notations and preliminaries: Choi and link-product definitions"
+        }
+      ],
+      "latex": "\\Phi_d=\\frac1d\\sum_{i,j}|ii\\rangle\\langle jj|,\\qquad J(\\mathcal N)=d(\\mathcal I\\otimes\\mathcal N)(\\Phi_d),\\qquad J(\\mathcal F\\circ\\mathcal E)_{ic,jd}=\\sum_{a,b}J(\\mathcal E)_{ia,jb}J(\\mathcal F)_{ac,bd}",
+      "role": "Fixes the normalized maximally entangled state, unnormalized Choi convention, and labelled contraction used by fresh inventory items R032-R035.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement defines the normalized maximally entangled state, unnormalized Choi operator, compatible link contraction, and its commutativity/associativity statements in one preliminaries section."
+        },
+        {
+          "id": "EQC014_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The qubit maximally entangled state has unit trace and the d(I tensor N) construction equals the independently assembled unnormalized Choi matrix."
+        },
+        {
+          "id": "EQC014_composition",
+          "type": "matrix_unit_identity",
+          "status": "passed",
+          "reason": "The explicit four-index contraction equals direct channel composition on a complete matrix-unit basis."
+        },
+        {
+          "id": "EQC014_compatibility",
+          "type": "finite_property_check",
+          "status": "passed",
+          "reason": "Compatible commuting Pauli channels satisfy both contraction-order commutativity and three-map associativity; this finite example does not replace a labelled-space proof."
+        }
+      ],
+      "numerical_form": "Assemble Choi matrices from matrix units, contract the shared indices explicitly, and compare against direct two- and three-channel composition.",
+      "code_refs": [
+        "src/implementation_closure.py:_choi_link_checks"
+      ],
+      "open_questions": [
+        "The supplement's commutativity statement depends on compatible labelled spaces; fresh review must verify its exact domain rather than infer it from same-dimension matrix notation."
+      ]
+    },
+    {
+      "id": "EQC015",
+      "title": "HPTP implementability cost and composition behavior",
+      "source_refs": [
+        {
+          "type": "tex_section",
+          "value": "Supplement physical implementability section, fresh items R048-R056"
+        }
+      ],
+      "latex": "\\nu(\\mathcal N)=\\log_2\\min\\{\\eta_++\\eta_-:\\mathcal N=\\eta_+\\mathcal E_+-\\eta_-\\mathcal E_-,\\ \\mathcal E_\\pm\\ \\mathrm{CPTP}\\},\\qquad \\nu(\\mathcal N)=\\log_2\\|\\mathcal N\\|_\\diamond\\ \\text{for TP maps}",
+      "role": "Owns the signed-channel implementability resource and preserves a finite counterexample to the supplement's printed composition equality.",
+      "derived_from": [
+        "EQC006",
+        "EQC010"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC015_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement states the signed two-channel cost, tensor and composition behavior, unitary invariance, mitigation overhead, and TP diamond-norm relation in one physical-implementability section."
+        },
+        {
+          "id": "EQC015_decomposition",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A non-CP trace-preserving Pauli map is reconstructed from exactly two CPTP channels; its Choi trace norm divided by d equals the signed one-norm."
+        },
+        {
+          "id": "EQC015_tensor_unitary",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The witness obeys tensor additivity and unitary pre/post invariance, and an invertible bit-flip noise channel is explicitly inverted."
+        },
+        {
+          "id": "EQC015_composition",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Composing the signed map with a 50/50 bit-flip CPTP channel strictly reduces overhead from the product bound 2 to 1, contradicting a universal equality while satisfying subadditivity."
+        }
+      ],
+      "numerical_form": "Use orthogonal Pauli-channel Choi sectors to evaluate signed one-norm costs, tensor products, compositions, unitary conjugations, and a noise inverse without author arrays or source pixels.",
+      "code_refs": [
+        "src/implementation_closure.py:_hptp_cost_checks"
+      ],
+      "open_questions": [
+        "Fresh review must decide whether the supplement intended a composition inequality instead of the printed equality; author-side evidence records the counterexample but cannot promote a paper-error verdict."
+      ]
+    }
+  ]
+}

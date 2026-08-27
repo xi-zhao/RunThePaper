@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "paper_id": "2404.08378",
   "status": "passed",
   "score_model": "rra_similarity_v3_scientific_evidence_first",
@@ -35,7 +35,7 @@
         "artifact_stage": "exploratory",
         "critical": false,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "formula_dependencies": [
           "EQC009"
         ],
@@ -44,9 +44,94 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "proxy_model",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T001 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks the vector-FEM mesh, sidewall profile, boundary conditions, and material-dispersion deck.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T001: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T001 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T001 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T001.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/prl-134-223602.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Main Fig. 1(c), optical modes is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T001"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T001_paper_exact.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/mode_profiles.npz",
@@ -55,7 +140,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -79,8 +165,8 @@
         {
           "assertion_id": "t001_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "The modal features are independently reconstructed, but vector FEM settings, exact sidewall angle, and material tables are unpublished."
         }
@@ -91,16 +177,19 @@
       "critical": false,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 55.0,
       "reference_score_cap": 70.0,
       "component_total": 69.0,
       "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T002",
@@ -142,9 +231,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/mzi_transfer.csv",
@@ -198,7 +297,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T003",
@@ -241,9 +343,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_surfaces.npz",
@@ -297,7 +409,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T004",
@@ -340,9 +455,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_cuts.csv",
@@ -396,7 +521,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T005",
@@ -439,9 +567,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_surfaces.npz",
@@ -495,7 +633,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T006",
@@ -538,9 +679,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_cuts.csv",
@@ -594,7 +745,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T007",
@@ -637,9 +791,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_surfaces.npz",
@@ -693,7 +857,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T008",
@@ -736,9 +903,19 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/quantum_cuts.csv",
@@ -792,7 +969,10 @@
       "reference_score_cap": 70.0,
       "component_total": 95.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T009",
@@ -824,7 +1004,7 @@
         "artifact_stage": "exploratory",
         "critical": true,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "formula_dependencies": [
           "EQC006",
           "EQC007"
@@ -834,9 +1014,94 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T009 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks the measured delay samples and an explicit HOM-width convention.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T009: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T009 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T009 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T009.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/prl-134-223602.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Main Fig. 4(b), HOM model is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T009"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T009_paper_exact.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/hom_curve.csv",
@@ -845,7 +1110,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -869,8 +1135,8 @@
         {
           "assertion_id": "t009_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "The printed HOM visibility and width are reproduced, but point data and the exact width convention are unavailable."
         }
@@ -881,16 +1147,19 @@
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
       "component_total": 78.0,
-      "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T010",
@@ -932,9 +1201,19 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/imperfection_scans.csv",
@@ -988,7 +1267,10 @@
       "reference_score_cap": 70.0,
       "component_total": 97.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T011",
@@ -1030,9 +1312,19 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/imperfection_scans.csv",
@@ -1086,7 +1378,10 @@
       "reference_score_cap": 70.0,
       "component_total": 97.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T012",
@@ -1128,9 +1423,19 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/imperfection_scans.csv",
@@ -1184,7 +1489,10 @@
       "reference_score_cap": 70.0,
       "component_total": 97.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T013",
@@ -1226,9 +1534,19 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/imperfection_scans.csv",
@@ -1282,7 +1600,10 @@
       "reference_score_cap": 70.0,
       "component_total": 97.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T014",
@@ -1314,7 +1635,7 @@
         "artifact_stage": "exploratory",
         "critical": false,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "formula_dependencies": [
           "EQC006"
         ],
@@ -1323,9 +1644,94 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "proxy_model",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T014 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks the wavelength-resolved grating and splitter arrays used in the spectral weighting.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/LNOI_Quantum_Interference_SM.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/LNOI_Quantum_Interference_SM.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T014: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T014 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T014 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T014.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/LNOI_Quantum_Interference_SM.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Supplement Fig. S5(b), spectral HOM visibility is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T014"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T014_paper_exact.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/spectral_visibility.csv",
@@ -1334,7 +1740,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -1358,8 +1765,8 @@
         {
           "assertion_id": "t014_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "The HOM functional is exact, while spectral weighting uses printed endpoints because reflectivity and grating arrays are unavailable."
         }
@@ -1370,16 +1777,19 @@
       "critical": false,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 55.0,
       "reference_score_cap": 70.0,
       "component_total": 73.0,
       "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T015",
@@ -1418,9 +1828,19 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_exact",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/coupler_loss.csv",
@@ -1474,7 +1894,10 @@
       "reference_score_cap": 70.0,
       "component_total": 94.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T016",
@@ -1506,7 +1929,7 @@
         "artifact_stage": "exploratory",
         "critical": false,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "formula_dependencies": [
           "EQC009"
         ],
@@ -1515,9 +1938,94 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "proxy_model",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T016 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks the vector-FEM electrode material and mesh deck.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/LNOI_Quantum_Interference_SM.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/LNOI_Quantum_Interference_SM.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T016: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T016 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T016 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T016.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/LNOI_Quantum_Interference_SM.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Supplement Fig. S7, electrode loss is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T016"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T016_paper_exact.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/electrode_loss.csv",
@@ -1526,7 +2034,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -1550,8 +2059,8 @@
         {
           "assertion_id": "t016_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "The monotonic loss trend is reproduced with a scalar overlap proxy, not the unpublished vector finite-element model."
         }
@@ -1562,16 +2071,19 @@
       "critical": false,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 55.0,
       "reference_score_cap": 70.0,
       "component_total": 65.0,
       "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T017",
@@ -1603,7 +2115,7 @@
         "artifact_stage": "exploratory",
         "critical": true,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "none",
         "formula_dependencies": [
           "EQC008"
         ],
@@ -1612,9 +2124,94 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "T017 reproduces the printed on-chip brightness, while the two separately printed brightness normalizations imply an approximately 30 nm bandwidth.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/data/feature/claim_arithmetic.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The arithmetic discrepancy is stable, but a fresh independent paper review has not yet adjudicated whether it is rounding, convention choice, or a paper error.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/data/feature/claim_arithmetic.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The brightness arithmetic passes an exact re-derivation and isolated execution.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "Loss inversion and pump-power normalization reproduce 2.309e8 pairs/s/mW.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "outputs/data/feature/claim_arithmetic.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The arithmetic was generated by the isolated feature campaign.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "statement": "The two printed brightness claims may use inconsistent bandwidth conventions.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/data/feature/claim_arithmetic.json"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The independent scalar re-derivation agrees with the implementation.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Only the normalized-brightness bandwidth inference remains scientifically ambiguous.",
+            "items": [
+              "T017"
+            ],
+            "completion": "1/1 brightness values reproduced; 0/1 convention discrepancies independently adjudicated"
+          },
+          "next_discriminating_test": {
+            "action": "Submit the frozen arithmetic to a fresh-context claim-level review.",
+            "expected_resolution": "The review distinguishes rounding or convention choice from a paper-error candidate.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/claim_arithmetic.json",
@@ -1623,7 +2220,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -1647,8 +2245,8 @@
         {
           "assertion_id": "t017_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "Rounded printed values reproduce 2.309e8 pairs/s/mW; the normalized value implies about 30 nm rather than the separately stated broad bandwidth."
         }
@@ -1659,16 +2257,19 @@
       "critical": true,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
       "component_total": 89.0,
-      "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T018",
@@ -1700,7 +2301,7 @@
         "artifact_stage": "exploratory",
         "critical": false,
         "data_backed": true,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "formula_dependencies": [
           "EQC007",
           "EQC008"
@@ -1710,9 +2311,94 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "No geometric registration is used; source panels are post-freeze visual diagnostics only.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T018 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks an explicit convention mapping the 71.9 fs HOM width to spectral bandwidth.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T018: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T018 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T018 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T018.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/prl-134-223602.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Main-text HOM bandwidth conventions is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T018"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T018_paper_exact.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
         "outputs/data/feature/claim_arithmetic.json",
@@ -1721,7 +2407,8 @@
         "outputs/runs/2404.08378-feature-v2/run_attestation.json",
         "outputs/checks/feature/target_checks.json",
         "outputs/checks/render/render_contract.json",
-        "outputs/checks/render/source_comparison_evidence.json"
+        "outputs/checks/render/source_comparison_evidence.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
       ],
       "panel_coverage": {
         "panels": [
@@ -1745,8 +2432,8 @@
         {
           "assertion_id": "t018_paper_exact_boundary",
           "tier": "numeric",
-          "essential": true,
-          "status": "failed",
+          "essential": false,
+          "status": "blocked",
           "evidence": "parameter_provenance.json",
           "claim": "The reported 71.9 fs maps to about 50 nm under the 0.441 convention and about 70.6 nm under an HOM autocorrelation convention; the paper does not identify the convention."
         }
@@ -1757,71 +2444,416 @@
       "critical": false,
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
-      "physics_status": "failed",
+      "physics_status": "passed",
       "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
-      "physics_score_cap": 55.0,
+      "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 70.0,
       "component_total": 82.0,
+      "score": 70.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T019",
+      "label": "Main text — type-0 quasi-phase-matching poling period",
+      "figure_refs": [
+        "QCLM-POLING-PERIOD"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 48.0,
+          "reason": "The clean-room implementation passes the declared independent checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 34.0,
+          "reason": "Agreement is evaluated from independently generated scalars, not source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 7.0,
+          "reason": "The complete atomic claim is evaluated.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": true,
+        "data_backed": true,
+        "failure_type": "missing_parameters",
+        "formula_dependencies": [
+          "EQC009"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "proxy_model",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display quantitative claim; pixels do not define the scientific result.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T019 independently reproduces the declared scientific feature, but paper-exact reconstruction still lacks the vector-FEM mesh, boundary conditions, material table, and exact etched cross section.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen article and supplement specify the reported observable but do not publish the complete numerical input deck needed to reconstruct the author calculation point-for-point.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/prl-134-223602.txt"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found for T019: a target-specific invariant and the isolated clean-room execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The independent scientific invariant for T019 passed.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The numerical path for T019 completed in isolation without forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was audited for the exact missing inputs of T019.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/prl-134-223602.txt"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent invariants and an isolated execution agree, so the remaining paper-exact gap is not explained by a detected code defect.",
+              "evidence": [
+                "outputs/checks/final_disposition/discriminating_checks.json",
+                "outputs/runs/2404.08378-feature-v2/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Main text — type-0 quasi-phase-matching poling period is feature-reproduced; only its paper-exact input deck remains unavailable.",
+            "items": [
+              "T019"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 author input decks published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author parameter deck becomes available, freeze it and rerun the existing clean-room implementation without changing the model.",
+            "expected_resolution": "The rerun either promotes parameter fidelity or exposes a genuine scientific mismatch.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T019_paper_exact.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/2404.08378-implementation-closure-v1/run_attestation.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "QCLM-POLING-PERIOD",
+            "status": "partial",
+            "evidence": "outputs/checks/implementation_closure/campaign_summary.json"
+          }
+        ],
+        "panel_scope_cap": 7.5
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t019_scientific_check",
+          "claim": "The scalar clean-room mode calculation gives 2.4713 um, within 0.3% of the printed 2.478 um period.",
+          "essential": true,
+          "evidence": "outputs/checks/implementation_closure/campaign_summary.json",
+          "status": "passed",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "The exact vector-FEM input deck is not published.",
+      "score_cap": 55.0,
+      "cap_reason": "The feature is reproduced, while unpublished inputs prevent paper-exact promotion.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered atomic item contributes zero through the reproduction-item measure.",
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 55.0,
+      "reference_score_cap": 90.0,
+      "component_total": 89.0,
       "score": 55.0,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "target_id": "T020",
+      "label": "Main text — external detection signal-ratio prediction",
+      "figure_refs": [
+        "QCLM-DETECTION-SIGNAL-RATIO"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The clean-room implementation passes the declared independent checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Agreement is evaluated from independently generated scalars, not source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The complete atomic claim is evaluated.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "final_reproduction",
+        "critical": false,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQC003"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "analytic_reference",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "paper_exact",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display quantitative claim; pixels do not define the scientific result.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/2404.08378-implementation-closure-v1/run_attestation.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "QCLM-DETECTION-SIGNAL-RATIO",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure/campaign_summary.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t020_scientific_check",
+          "claim": "Two 50:50 detector splitters reduce each bunched-state detection maximum by a factor of four relative to the split state.",
+          "essential": true,
+          "evidence": "outputs/checks/implementation_closure/campaign_summary.json",
+          "status": "passed",
+          "tier": "analytic"
+        }
+      ],
+      "remaining_gap": "No scientific gap remains for the stated ideal detection-network claim.",
+      "score_cap": 100.0,
+      "cap_reason": "No scientific cap beyond lifecycle evidence.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered atomic item contributes zero through the reproduction-item measure.",
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
+    },
+    {
+      "target_id": "T021",
+      "label": "Supplement Sec. II — ten-source geometry scaling",
+      "figure_refs": [
+        "QCLM-SOURCE-SCALING"
+      ],
+      "weight": 0.0,
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "reason": "The clean-room implementation passes the declared independent checks.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 35.0,
+          "reason": "Agreement is evaluated from independently generated scalars, not source pixels.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "reason": "The complete atomic claim is evaluated.",
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "final_reproduction",
+        "critical": false,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [],
+        "formula_gate": "not_applicable",
+        "generated_data_provenance": "analytic_reference",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "paper_exact",
+        "pixel_status": "not_applicable",
+        "pixel_status_reason": "No-display quantitative claim; pixels do not define the scientific result.",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper"
+      },
+      "evidence": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/runs/2404.08378-implementation-closure-v1/run_attestation.json",
+        "outputs/checks/final_disposition/discriminating_checks.json"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "QCLM-SOURCE-SCALING",
+            "status": "reproduced",
+            "evidence": "outputs/checks/implementation_closure/campaign_summary.json"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t021_scientific_check",
+          "claim": "Ten 1.2 um waveguides separated by nine 5 um gaps occupy 57 um, inside the printed 75 um electrode gap.",
+          "essential": true,
+          "evidence": "outputs/checks/implementation_closure/campaign_summary.json",
+          "status": "passed",
+          "tier": "analytic"
+        }
+      ],
+      "remaining_gap": "The geometric capacity claim is reproduced; a separate crosstalk threshold was not part of this scalar claim.",
+      "score_cap": 100.0,
+      "cap_reason": "No scientific cap beyond lifecycle evidence.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The uncovered atomic item contributes zero through the reproduction-item measure.",
+      "critical": false,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 100.0,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
-  "overall_score": 65.0,
+  "overall_score": 67.5,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 18,
-    "critical_items": 9,
+    "scored_items": 21,
+    "critical_items": 10,
     "artifact_pass_rate": 1.0,
     "data_backed_rate": 1.0,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "partial_target_coverage": 6,
-      "none": 12
+      "missing_parameters": 6,
+      "none": 15
     },
     "parameter_match_counts": {
-      "proxy_model": 3,
-      "paper_exact": 12,
+      "proxy_model": 4,
+      "paper_exact": 14,
       "paper_subset": 3
     },
     "reference_comparison_counts": {
-      "source_figure_only": 18
+      "source_figure_only": 18,
+      "analytic_reference": 3
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 18
+      "independent_numerics": 19,
+      "analytic_reference": 2
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 18
+      "physics_reproduction": 21
     },
     "formula_gate_counts": {
-      "verified": 18
+      "verified": 20,
+      "not_applicable": 1
     },
     "paper_level_role_counts": {
-      "supporting": 9,
+      "supporting": 12,
       "main_claim": 9
     },
     "physics_status_counts": {
-      "failed": 6,
-      "passed": 12
+      "passed": 21
     },
     "physics_assertion_status_counts": {
-      "passed": 30,
-      "failed": 6
+      "passed": 33,
+      "blocked": 6
     },
-    "essential_physics_failures": [
-      "T001",
-      "T009",
-      "T014",
-      "T016",
-      "T017",
-      "T018"
-    ],
+    "essential_physics_failures": [],
     "final_reproduction_ready": false,
-    "final_reproduction_target_ids": [],
+    "final_reproduction_target_ids": [
+      "T020",
+      "T021"
+    ],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
@@ -1840,7 +2872,8 @@
       "T015",
       "T016",
       "T017",
-      "T018"
+      "T018",
+      "T019"
     ],
     "aggregate_included_target_ids": [
       "T001",
@@ -1862,6 +2895,52 @@
       "T017",
       "T018"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [
+      "T019",
+      "T020",
+      "T021"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 7,
+      "not_required": 14
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 6,
+      "not_required": 14,
+      "react_loop_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T009",
+      "T014",
+      "T016",
+      "T017",
+      "T018",
+      "T019"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T009",
+      "T014",
+      "T016",
+      "T018",
+      "T019"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T017"
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 6,
+      "scientific_result_mismatch": 1
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 6,
+      "unresolved": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 7
+    }
   }
 }

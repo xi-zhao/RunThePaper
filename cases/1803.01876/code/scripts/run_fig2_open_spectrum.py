@@ -12,8 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from nonhermitian_ssh import (  # noqa: E402
     analytic_transition,

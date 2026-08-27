@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "run_id": "2605.02873-implementation-validation-v1-20260824",
+  "target_ids": [
+    "T-FIG001A",
+    "T-FIG001B",
+    "T-FIG001C",
+    "T-FIG001D",
+    "T-FIGS001"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_smoke.py",
+    "--config",
+    "config/implementation_smoke.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "scripts/run_implementation_smoke.py",
+    "src/__init__.py",
+    "src/implementation_smoke.py",
+    "src/try_fresnel.py",
+    "config/implementation_smoke.json"
+  ],
+  "parameter_file": "config/implementation_smoke.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "geometry": {
+      "wavelength_m": 6.33e-07,
+      "L1_m": 0.35,
+      "L2_m": 0.35,
+      "slit_separation_m": 0.0005,
+      "slit_width_m": 0.00025,
+      "detector_x_m": -0.000110775,
+      "y_min_m": -0.0015,
+      "y_max_m": 0.0015,
+      "noise_floor_fraction": 0.02
+    },
+    "main_numerics": {
+      "y_points": 301,
+      "quadrature_order": 64
+    },
+    "width_scan": {
+      "slit_widths_m": [
+        2e-05,
+        4e-05,
+        8e-05,
+        0.00015,
+        0.00025
+      ],
+      "y_points": 201,
+      "quadrature_order": 48
+    }
+  },
+  "outputs": [
+    "outputs/data/implementation_validation/fig001a_baseline.csv",
+    "outputs/data/implementation_validation/fig001b_scores.csv",
+    "outputs/data/implementation_validation/fig001c_codes.csv",
+    "outputs/data/implementation_validation/fig001d_retention.csv",
+    "outputs/data/implementation_validation/figs001_width_scan.csv",
+    "outputs/checks/implementation_validation/fig001a_baseline.json",
+    "outputs/checks/implementation_validation/fig001b_scores.json",
+    "outputs/checks/implementation_validation/fig001c_codes.json",
+    "outputs/checks/implementation_validation/fig001d_retention.json",
+    "outputs/checks/implementation_validation/figs001_width_scan.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

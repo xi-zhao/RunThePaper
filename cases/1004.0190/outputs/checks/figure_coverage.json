@@ -1,0 +1,1592 @@
+{
+  "schema_version": 2,
+  "paper_id": "1004.0190",
+  "scope_mode": "whole_paper_atomic_w1",
+  "inventory_boundary": {
+    "status": "complete",
+    "unknown_remainder": false,
+    "source_ref": "outputs/review/phase1_inventory_v6.json (58 frozen rows) and outputs/review/reviewer_submission_v6.json (57 numeric claim reviews)",
+    "reason": "The fresh-context phase-1 inventory is the authoritative atomic denominator: 57 numeric claims plus one nonnumeric circuit schematic. The paired reviewer submission adjudicates every numeric claim.",
+    "next_action": "Keep the 58-row inventory frozen. W2 work is limited to the three explicitly uncovered numeric claims R046, R053, and R054."
+  },
+  "implementations": {
+    "whole_paper": {
+      "status": "ready",
+      "code_refs": [
+        "src/geometric_discord/model.py",
+        "scripts/run_reproduction.py",
+        "scripts/render_geometry.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/random_state_checks.csv",
+        "outputs/data/discord_geometry.csv",
+        "outputs/data/dqc1_checks.csv",
+        "outputs/data/multipartite_scaling.csv",
+        "outputs/data/multipartite_discord.csv",
+        "outputs/data/local_operation_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Direct dephasing minimization matches the closed formula.",
+        "Classical-quantum states satisfy the commutator and rank criteria.",
+        "All formula-defined Fig. 1 domains and extrema are generated.",
+        "DQC1 trace, separability, and classicality identities pass.",
+        "The subsystem-versus-rest criterion works for 2-8 parties and local dimensions 2-5, with exact basis-search dimensions frozen.",
+        "The reconstructed multipartite optimizer recovers rotated classical, GHZ, and maximally entangled qudit analytic references.",
+        "The paper's local prepare/reset examples create and remove discord without using source pixels.",
+        "The runner reads no raw source, author code, author arrays, or source pixels."
+      ]
+    },
+    "t009_hardness_boundary": {
+      "status": "ready",
+      "code_refs": [
+        "src/geometric_discord/dqc1_hardness.py",
+        "scripts/run_t009_hardness_boundary.py"
+      ],
+      "config_ref": "config/t009_hardness_boundary.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t009_hardness_boundary.py",
+        "--config",
+        "config/t009_hardness_boundary.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/T009_phase_involution_trace.csv",
+        "outputs/checks/t009_dqc1_hardness.json"
+      ],
+      "acceptance_criteria": [
+        "The phase-times-involution normalized-trace identity passes direct matrix cross-checks.",
+        "Missing circuit-family, approximation, classical-model, and reduction fields remain explicit rather than guessed.",
+        "The runner reads no raw source, author code, author arrays, or source pixels."
+      ]
+    },
+    "t010_bipartition_entanglement": {
+      "status": "ready",
+      "code_refs": [
+        "src/geometric_discord/dqc1_entanglement.py",
+        "scripts/run_t010_bipartition_entanglement.py"
+      ],
+      "config_ref": "config/t010_bipartition_entanglement.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t010_bipartition_entanglement.py",
+        "--config",
+        "config/t010_bipartition_entanglement.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/T010_dqc1_bipartition_negativity.csv",
+        "outputs/checks/t010_dqc1_bipartition_entanglement.json"
+      ],
+      "acceptance_criteria": [
+        "Every unique bipartition with the control fixed on side A is enumerated.",
+        "The analytic control-versus-register separability limit has zero negativity.",
+        "The chosen negativity proxy and all paper-omitted conventions remain explicit.",
+        "The runner reads no raw source, author code, author arrays, or source pixels."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "R044",
+      "item_type": "figure_schematic",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "supporting",
+      "denominator_role": "supporting",
+      "source_ref": "Fig. 2, p. 4",
+      "scientific_object": "DQC1 Hadamard, controlled-U, and control-measurement circuit drawing.",
+      "paper_assertion": "Figure 2 schematically depicts the DQC1 circuit.",
+      "decision": "excluded",
+      "coverage_status": "excluded",
+      "reason": "The circuit topology is nonnumeric; its quantitative consequences are inventoried separately as R039-R043 and R045-R054."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "R001",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (1), p. 1",
+      "scientific_object": "Quantum mutual-information identity.",
+      "paper_assertion": "I(rho)=H(rho_A)+H(rho_B)-H(rho).",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R001"
+      ],
+      "critical": true,
+      "reason": "Fresh review supports the independently checked identity.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R002",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (2), pp. 1-2",
+      "scientific_object": "POVM-optimized classical-correlation definition.",
+      "paper_assertion": "Q_A=H(rho_B)-min sum_k p_k H(rho_{B|k}).",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R002"
+      ],
+      "critical": true,
+      "reason": "Fresh review supports the independently checked definition.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R003",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (3), p. 2",
+      "scientific_object": "One-sided quantum-discord definition.",
+      "paper_assertion": "D_A=I-Q_A.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R003"
+      ],
+      "critical": true,
+      "reason": "Fresh review supports the identity.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R004",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (3), p. 2",
+      "scientific_object": "Nonnegativity and exact classical-state zero of D_A.",
+      "paper_assertion": "D_A is nonnegative and vanishes for classically correlated states.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R004"
+      ],
+      "critical": true,
+      "reason": "Independent exact and regression checks support the claim.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R005",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (4), p. 2",
+      "scientific_object": "Normalization, positivity, and separability of the displayed two-qubit state.",
+      "paper_assertion": "Eq. (4) is a normalized separable density state.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R005"
+      ],
+      "critical": true,
+      "reason": "Fresh review and independent matrix construction support all three properties.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R006",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Text introducing Eq. (4), p. 2",
+      "scientific_object": "Nonzero left discord of the separable Eq. (4) state.",
+      "paper_assertion": "The Eq. (4) state has non-vanishing left discord.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R006"
+      ],
+      "critical": true,
+      "reason": "Fresh review applies a basis-independent zero-discord criterion.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R007",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (5), p. 2",
+      "scientific_object": "Measurement-invariance characterization of zero discord.",
+      "paper_assertion": "D_A=0 iff a rank-one local measurement on A leaves rho invariant.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R007"
+      ],
+      "critical": true,
+      "reason": "Fresh review supports both directions.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R008",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (5), p. 2",
+      "scientific_object": "Classical-quantum decomposition of zero-left-discord states.",
+      "paper_assertion": "Zero-left-discord states have the orthogonal-label decomposition printed in the paper.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R008"
+      ],
+      "critical": true,
+      "reason": "Fresh review supports the equivalence.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R009",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Before Eq. (6), p. 2",
+      "scientific_object": "Real correlation-matrix expansion in local Hermitian bases.",
+      "paper_assertion": "Every bipartite state has the printed real R expansion.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R009"
+      ],
+      "critical": true,
+      "reason": "Independent reconstruction supports the expansion.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R010",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Before Eq. (6), p. 2",
+      "scientific_object": "Operator-Schmidt SVD and rank identity.",
+      "paper_assertion": "SVD of R gives L=rank(R) nonzero operator-Schmidt terms.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R010"
+      ],
+      "critical": true,
+      "reason": "Independent rank/reconstruction checks support the claim.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R011",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (6), p. 2",
+      "scientific_object": "Coefficientwise measurement invariance of nonzero Schmidt operators.",
+      "paper_assertion": "rho invariance is equivalent to invariance of each nonzero S_n.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R011"
+      ],
+      "critical": true,
+      "reason": "Fresh proof and exact-rank tests support the claim.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R012",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (7), p. 2",
+      "scientific_object": "Pairwise-commutation criterion for zero left discord.",
+      "paper_assertion": "D_A=0 iff all left Schmidt operators commute pairwise.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R012"
+      ],
+      "critical": true,
+      "reason": "Independent commutator and structure checks support the criterion.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R013",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (7), p. 2",
+      "scientific_object": "Unordered-pair commutator count.",
+      "paper_assertion": "At most L(L-1)/2 commutators must be checked.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R013"
+      ],
+      "critical": false,
+      "reason": "Exact pair enumeration supports the count.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R014",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (7), p. 2",
+      "scientific_object": "Rectangular correlation-matrix rank bound.",
+      "paper_assertion": "L<=min(d_A^2,d_B^2).",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R014"
+      ],
+      "critical": false,
+      "reason": "Linear-algebra audit supports the bound.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R015",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (7), p. 2",
+      "scientific_object": "Operator-Schmidt rank bound for classical-quantum states.",
+      "paper_assertion": "Every zero-left-discord state has L<=d_A.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R015"
+      ],
+      "critical": true,
+      "reason": "Fresh proof and exact examples support the bound.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R016",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (7), p. 2",
+      "scientific_object": "Rank witness for nonzero left discord.",
+      "paper_assertion": "L>d_A suffices to witness nonzero left discord.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R016"
+      ],
+      "critical": true,
+      "reason": "Contrapositive and physical-state checks support the witness.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R017",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Final criterion paragraph, p. 2",
+      "scientific_object": "Partial-correlation-matrix rank certification without tomography.",
+      "paper_assertion": "d_A+1 independent measured rows/columns certify nonzero discord.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R017"
+      ],
+      "critical": true,
+      "reason": "Independent rank construction supports the certification rule.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "R018",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (8), p. 2",
+      "scientific_object": "Hilbert-Schmidt geometric-discord definition.",
+      "paper_assertion": "D_A^(2)=min_{chi in Omega_0} Tr[(rho-chi)^2].",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R018"
+      ],
+      "critical": true,
+      "reason": "Fresh minimization audit supports the definition.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R019",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (9), p. 2",
+      "scientific_object": "Complete two-qubit Bloch representation.",
+      "paper_assertion": "Every two-qubit state has the printed x,y,T Pauli expansion.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R019"
+      ],
+      "critical": true,
+      "reason": "Independent reconstruction supports the representation.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R020",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (10), p. 3",
+      "scientific_object": "Unit Bloch vector of a pure basis state.",
+      "paper_assertion": "e=<psi_1|sigma|psi_1> and ||e||=1.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R020"
+      ],
+      "critical": false,
+      "reason": "Exact Pauli checks support the identity.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R021",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (11), p. 3",
+      "scientific_object": "Conditional Bloch-vector definitions s_plus/minus.",
+      "paper_assertion": "s_plus/minus equal the printed weighted conditional Pauli traces.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R021"
+      ],
+      "critical": false,
+      "reason": "Direct matrix evaluation supports the identity.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R022",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eqs. (10)-(11), p. 3",
+      "scientific_object": "Bloch triple and parameter bounds for zero-left-discord states.",
+      "paper_assertion": "A zero-left-discord state has {t e,s_plus,e s_minus^T} with the printed bounds.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R022"
+      ],
+      "critical": true,
+      "reason": "Fresh structure and norm checks support the parameterization.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R023",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (12), p. 3",
+      "scientific_object": "Expanded Hilbert-Schmidt distance objective.",
+      "paper_assertion": "||rho-chi||^2 equals the displayed quadratic function.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R023"
+      ],
+      "critical": true,
+      "reason": "Independent algebra supports the expansion.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R024",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (12), p. 3",
+      "scientific_object": "Strict convexity and unique fixed-e minimum.",
+      "paper_assertion": "The fixed-e objective has positive nonsingular Hessian and a unique global minimum.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R024"
+      ],
+      "critical": true,
+      "reason": "Independent Hessian calculation supports the claim.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R025",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (13), p. 3",
+      "scientific_object": "Stationary solution t=x dot e.",
+      "paper_assertion": "Stationarity gives t=x dot e.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R025"
+      ],
+      "critical": false,
+      "reason": "Independent differentiation supports the equation.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R026",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (14), p. 3",
+      "scientific_object": "Stationary solution s_plus=y.",
+      "paper_assertion": "Stationarity gives s_plus=y.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R026"
+      ],
+      "critical": false,
+      "reason": "Independent differentiation supports the equation.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R027",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (15), p. 3",
+      "scientific_object": "Stationary solution s_minus=T^T e.",
+      "paper_assertion": "Stationarity gives s_minus=T^T e.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R027"
+      ],
+      "critical": false,
+      "reason": "Independent differentiation supports the equation.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R028",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (15), p. 3",
+      "scientific_object": "Feasibility bounds for the stationary point.",
+      "paper_assertion": "|x dot e|, ||y||, and ||T^T e|| are at most one.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R028"
+      ],
+      "critical": false,
+      "reason": "State-positivity and norm checks support the bounds.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R029",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (16), p. 3",
+      "scientific_object": "Closed two-qubit geometric-discord formula.",
+      "paper_assertion": "D_A^(2)=1/4(||x||^2+||T||^2-k_max).",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R029"
+      ],
+      "critical": true,
+      "reason": "Direct minimization and eigenvalue checks support the formula.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "R030",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Maximally mixed marginals paragraph and Fig. 1, p. 3",
+      "scientific_object": "Local-unitary Bell-diagonal canonical form.",
+      "paper_assertion": "Every two-qubit state with maximally mixed marginals is LU-equivalent to rho(t).",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R030",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Fresh analytic review and generated geometry support the claim.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "R031",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 1, p. 3",
+      "scientific_object": "Physical Bell-diagonal tetrahedron and its four vertices.",
+      "paper_assertion": "Physical t-vectors form the printed tetrahedron.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R031",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Independent eigenvalue constraints support the tetrahedron.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "R032",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 1, p. 3",
+      "scientific_object": "Separable Bell-diagonal octahedron and its six vertices.",
+      "paper_assertion": "Separable t-vectors form the printed octahedron.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R032",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Independent PPT constraints support the octahedron.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "R033",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Fig. 1, p. 3",
+      "scientific_object": "Bell-diagonal specialization of geometric discord.",
+      "paper_assertion": "D_A^(2)(t)=1/4(sum t_i^2-max t_i^2).",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R033",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Formula substitution and generated geometry support the claim.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "R034",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 1 red lines, p. 3",
+      "scientific_object": "Zero-discord coordinate-axis line segments.",
+      "paper_assertion": "Bell-diagonal discord vanishes exactly when at most one t_i is nonzero.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R034",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Exact formula and geometry checks support the axes.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "R035",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 1 caption, p. 3",
+      "scientific_object": "Global Bell-state maximum of geometric discord.",
+      "paper_assertion": "The global maximum is 1/2 at the tetrahedron vertices.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R035",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Exact constrained evaluation supports the Bell-state maximum.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "R036",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 1 caption, p. 3",
+      "scientific_object": "Separable-domain maximum and maximizer locations.",
+      "paper_assertion": "The separable maximum is 1/6 at all eight facet centers.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "paper_assessment": "paper_error_candidate",
+      "paper_error_status": "fresh_context_validated",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R036",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Exact rederivation and independent enumeration reproduce a stable contradiction: facet centers give 1/18 and edge midpoints maximize at 1/16.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "R037",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (17), p. 3",
+      "scientific_object": "Index-generated family of separable-discord maximizers.",
+      "paper_assertion": "i_k=plus/minus1 in (-1)^{i_k} generates eight distinct states.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "paper_assessment": "paper_error_candidate",
+      "paper_error_status": "fresh_context_validated",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R037",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": true,
+      "reason": "Exact exponent enumeration validates the paper-error candidate: the literal domain collapses to one matrix.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "R038",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (17), p. 3",
+      "scientific_object": "Swap symmetry and equality of left/right discord for the intended Eq. (17) family.",
+      "paper_assertion": "The intended family is swap-symmetric and D_A=D_B.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R038",
+        "outputs/data/discord_geometry.csv"
+      ],
+      "critical": false,
+      "reason": "Independent matrix symmetry checks support the claim after separating the R037 typo.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "R039",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "DQC1 input description, p. 3",
+      "scientific_object": "Normalized DQC1 input state.",
+      "paper_assertion": "The control is (I+alpha sigma_3)/2 and register I/2^n.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R039",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": false,
+      "reason": "Independent density-matrix checks support the input.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "R040",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (18), p. 3",
+      "scientific_object": "Exact DQC1 output density matrix.",
+      "paper_assertion": "The circuit output equals the printed block expression.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R040",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Independent circuit/block-matrix derivation supports the output.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "R041",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (18), p. 3",
+      "scientific_object": "Loss of trace signal at alpha=0.",
+      "paper_assertion": "At alpha=0 the output is completely mixed and carries no trace-task signal.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R041",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": false,
+      "reason": "Exact limit check supports the claim.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "R042",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 2 caption and after Eq. (18), pp. 3-4",
+      "scientific_object": "Control Pauli readout of normalized trace.",
+      "paper_assertion": "sigma_1/sigma_2 means yield Re/Im Tr(U)/2^n.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R042",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Independent trace identities support the readout.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "R043",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 2 caption and after Eq. (18), pp. 3-4",
+      "scientific_object": "Sampling overhead scaling with control polarization.",
+      "paper_assertion": "Normalized-trace sampling overhead scales as 1/alpha^2.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R043",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": false,
+      "reason": "Independent variance/error scaling supports the claim.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "R045",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "DQC1 discussion after Fig. 2, p. 4",
+      "scientific_object": "Control-versus-register separability of DQC1 output.",
+      "paper_assertion": "The control qubit is completely separable from the register.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R045",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Fresh analytic decomposition supports the split.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R046",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "DQC1 discussion after Fig. 2, p. 4",
+      "scientific_object": "Entanglement across every split grouping control with register qubits and its n-scaling.",
+      "paper_assertion": "Entanglement is vanishingly small across all such regrouped bipartitions.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "t010_bipartition_entanglement",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "evidence_refs": [
+        "outputs/data/T010_dqc1_bipartition_negativity.csv",
+        "outputs/checks/t010_dqc1_bipartition_entanglement.json"
+      ],
+      "reason": "All regrouped splits now have runnable negativity code and attested finite-size data, but the paper supplies no entanglement measure, smallness threshold, unitary ensemble, or asymptotic rate, so the paper claim remains scientifically underdetermined.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T010",
+      "claim_refs": [
+        "CLM_T010"
+      ]
+    },
+    {
+      "item_id": "R047",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Before Eq. (19), p. 4",
+      "scientific_object": "Generic nonzero discord for Haar-random U.",
+      "paper_assertion": "Almost every random U produces non-vanishing left discord.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R047",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Fresh measure-zero argument and independent sampling support the claim.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R048",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "denominator_role": "primary",
+      "source_ref": "Eq. (19), p. 4",
+      "scientific_object": "Equivalence of Eq. (18) and sigma_1/sigma_2 decomposition.",
+      "paper_assertion": "Eq. (18) equals the printed Eq. (19) decomposition.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R048",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": false,
+      "reason": "Direct matrix expansion supports the identity.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R049",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (19), p. 4",
+      "scientific_object": "Linear-dependence criterion for zero DQC1 discord.",
+      "paper_assertion": "At alpha nonzero, zero discord iff Hermitian and anti-Hermitian parts of U are linearly dependent.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R049",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Independent commutator analysis supports the equivalence.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R050",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (19), p. 4",
+      "scientific_object": "Scalar-adjoint form of the DQC1 zero-discord condition.",
+      "paper_assertion": "Linear dependence is equivalent to U^dagger=kU.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R050",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Fresh algebra supports the equivalence.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R051",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (19), p. 4",
+      "scientific_object": "Phase-times-involution characterization.",
+      "paper_assertion": "U^dagger=kU iff U=e^{i phi}A with A^2=I.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R051",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Spectral derivation and matrix checks support the characterization.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R052",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "After Eq. (19), p. 4",
+      "scientific_object": "Classicality of all correlations for phase-times-involution U.",
+      "paper_assertion": "For U=e^{i phi}A with A^2=I, all DQC1 output correlations are classical.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R052",
+        "outputs/data/dqc1_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Independent zero-discord structure checks support the claim.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "R053",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Final DQC1 paragraph, p. 4",
+      "scientific_object": "Classical hardness of normalized trace for zero-discord phase-times-involution instances.",
+      "paper_assertion": "The task remains classically hard because A may have complex eigenvectors.",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "t009_hardness_boundary",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "evidence_refs": [
+        "outputs/data/T009_phase_involution_trace.csv",
+        "outputs/checks/t009_dqc1_hardness.json"
+      ],
+      "reason": "The executable boundary verifies that the normalized trace depends only on the phase and +/-1 multiplicities, but no input encoding, approximation tolerance, classical model, or reduction is specified, so hardness remains unproved.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T009",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    },
+    {
+      "item_id": "R054",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Abstract and final DQC1 paragraph, pp. 1 and 4",
+      "scientific_object": "Resource conclusion excluding discord as the cause of DQC1 speedup.",
+      "paper_assertion": "Quantum discord is unlikely to be the resource responsible for DQC1 speedup.",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "t009_hardness_boundary",
+      "coverage_status": "uncovered",
+      "critical": true,
+      "evidence_refs": [
+        "outputs/checks/t009_dqc1_hardness.json"
+      ],
+      "reason": "The algebraic zero-discord family and its trace identity are executable, but the resource conclusion still depends on the unresolved R053 hardness premise.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T009",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    },
+    {
+      "item_id": "R055",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Final paragraph, p. 4",
+      "scientific_object": "Nonmonotonicity of Hilbert-Schmidt geometric discord under local operations.",
+      "paper_assertion": "D_A^(2) is not monotonic under local operations.",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R055",
+        "outputs/data/local_operation_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Independent prepare/reset channels support both directions of nonmonotonicity.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "R056",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Local-operation example, p. 4",
+      "scientific_object": "Normalization of the written zero-discord input operator.",
+      "paper_assertion": "|00><00|+|11><11| is a density state.",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "paper_assessment": "paper_error_candidate",
+      "paper_error_status": "fresh_context_validated",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R056",
+        "outputs/data/local_operation_checks.csv"
+      ],
+      "critical": true,
+      "reason": "Exact trace evaluation and independent channel construction validate a missing factor 1/2 in the printed state.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "R057",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Local-operation example, p. 4",
+      "scientific_object": "Discord creation by mapping orthogonal labels to nonorthogonal states.",
+      "paper_assertion": "The local map converts the normalized zero-discord input into nonzero discord.",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R057",
+        "outputs/data/local_operation_checks.csv"
+      ],
+      "critical": true,
+      "reason": "A valid measure-and-prepare channel and independent commutator/dephasing checks support the intended claim.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "R058",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "denominator_role": "primary",
+      "source_ref": "Final sentence, p. 4",
+      "scientific_object": "Multipartite extension and scaling of criterion/evaluation difficulty.",
+      "paper_assertion": "The method extends to any number of subsystems while evaluation becomes harder with count and dimension.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper",
+      "coverage_status": "covered",
+      "evidence_refs": [
+        "outputs/review/reviewer_submission_v6.json#R058",
+        "outputs/data/multipartite_scaling.csv",
+        "outputs/data/multipartite_discord.csv"
+      ],
+      "critical": true,
+      "reason": "Fresh review and independently generated multipartite scaling/optimizer evidence support the extension.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    }
+  ],
+  "inventory_summary": {
+    "items_total": 58,
+    "eligible_items": 57,
+    "covered_items": 54,
+    "uncovered_items": 3,
+    "supporting_items": 0,
+    "excluded_items": 1,
+    "numeric_claims": 57,
+    "nonnumeric_items": 1
+  }
+}

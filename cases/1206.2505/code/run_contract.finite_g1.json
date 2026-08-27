@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "run_id": "1206.2505-finite-g1-audit-v1-20260824",
+  "target_ids": [
+    "T015"
+  ],
+  "command": [
+    "python",
+    "scripts/run_finite_g1_audit.py",
+    "--config",
+    "config/finite_g1_audit.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/dqpt_tfim/__init__.py",
+    "src/dqpt_tfim/model.py",
+    "src/dqpt_tfim/finite_g1.py",
+    "scripts/run_finite_g1_audit.py",
+    "config/finite_g1_audit.json"
+  ],
+  "parameter_file": "config/finite_g1_audit.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "sites": 8,
+    "periodic": true,
+    "g0": 0.0,
+    "g1_values": [
+      4.0,
+      8.0,
+      16.0
+    ],
+    "phase_min": 0.2,
+    "phase_max": 2.8,
+    "phase_points": 14
+  },
+  "outputs": [
+    "outputs/data/finite_g1_correction_audit.csv",
+    "outputs/checks/finite_g1_correction_audit.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

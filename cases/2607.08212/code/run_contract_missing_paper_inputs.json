@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.08212-missing-paper-inputs-v2-20260824",
+  "target_ids": [
+    "FIG3A_ZAP",
+    "FIG3C_NATIVE",
+    "ZX_EXTRACTOR_INPUT_GAP"
+  ],
+  "command": [
+    "python",
+    "scripts/run_missing_input_campaign.py",
+    "--config",
+    "config/missing_paper_input_contracts.json",
+    "--output-root",
+    "outputs/checks/missing_paper_input_campaign"
+  ],
+  "inputs": [
+    "src/mobius_compiler.py",
+    "src/paper_input_models.py",
+    "src/missing_input_campaign.py",
+    "scripts/run_missing_input_campaign.py",
+    "config/missing_paper_input_contracts.json"
+  ],
+  "parameter_file": "config/missing_paper_input_contracts.json",
+  "parameter_selector": "implementation_attestation_parameters",
+  "expected_parameters": {
+    "profile": "strict_paper_input_boundary",
+    "scientific_promotion": false
+  },
+  "outputs": [
+    "outputs/checks/missing_paper_input_campaign/FIG3A_ZAP.json",
+    "outputs/checks/missing_paper_input_campaign/FIG3C_NATIVE.json",
+    "outputs/checks/missing_paper_input_campaign/ZX_EXTRACTOR_INPUT_GAP.json",
+    "outputs/checks/missing_paper_input_campaign/campaign_summary.json"
+  ],
+  "timeout_seconds": 60,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "legacy_outputs_read_by_runner": false
+  }
+}

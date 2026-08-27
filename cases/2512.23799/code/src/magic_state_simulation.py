@@ -11,7 +11,7 @@ from typing import Iterable
 import numpy as np
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "outputs" / "data"
 CHECK_DIR = ROOT / "outputs" / "checks"
 
@@ -304,20 +304,31 @@ def write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def run_all() -> dict:
-    DATA_DIR.mkdir(parents=True, exist_ok=True)
-    CHECK_DIR.mkdir(parents=True, exist_ok=True)
-    p_grid = np.array([1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2])
-    protocol = ToyProtocol()
+def run_all(
+    *,
+    data_dir: Path | None = None,
+    check_dir: Path | None = None,
+    p_grid: Iterable[float] | None = None,
+    protocol: ToyProtocol | None = None,
+) -> dict:
+    data_dir = Path(data_dir) if data_dir is not None else DATA_DIR
+    check_dir = Path(check_dir) if check_dir is not None else CHECK_DIR
+    data_dir.mkdir(parents=True, exist_ok=True)
+    check_dir.mkdir(parents=True, exist_ok=True)
+    p_grid_array = np.asarray(
+        list(p_grid) if p_grid is not None else [1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2],
+        dtype=float,
+    )
+    protocol = protocol or ToyProtocol()
 
     formula_checks = psc_formula_checks()
-    benchmark_rows = simulate_protocol(p_grid, protocol)
-    runtime_rows = runtime_proxy(p_grid, protocol)
+    benchmark_rows = simulate_protocol(p_grid_array, protocol)
+    runtime_rows = runtime_proxy(p_grid_array, protocol)
     sampling_rows, sampling_slope = sampling_scaling(protocol=protocol)
 
-    write_csv(DATA_DIR / "fidelity_acceptance_benchmark.csv", benchmark_rows)
-    write_csv(DATA_DIR / "runtime_proxy_benchmark.csv", runtime_rows)
-    write_csv(DATA_DIR / "sampling_scaling.csv", sampling_rows)
+    write_csv(data_dir / "fidelity_acceptance_benchmark.csv", benchmark_rows)
+    write_csv(data_dir / "runtime_proxy_benchmark.csv", runtime_rows)
+    write_csv(data_dir / "sampling_scaling.csv", sampling_rows)
 
     acceptance_errors = np.array([row["acceptance_abs_error"] for row in benchmark_rows])
     infidelity_errors = np.array([row["infidelity_abs_error"] for row in benchmark_rows])
@@ -366,15 +377,15 @@ def run_all() -> dict:
     if not all(numerical_checks["feature_gates"].values()):
         numerical_checks["status"] = "partial"
 
-    write_json(CHECK_DIR / "formula_verification.json", formula_checks)
-    write_json(CHECK_DIR / "numerical_feature_checks.json", numerical_checks)
+    write_json(check_dir / "formula_verification.json", formula_checks)
+    write_json(check_dir / "numerical_feature_checks.json", numerical_checks)
     return {
         "formula_checks": formula_checks,
         "numerical_checks": numerical_checks,
         "data_files": [
-            "outputs/data/fidelity_acceptance_benchmark.csv",
-            "outputs/data/runtime_proxy_benchmark.csv",
-            "outputs/data/sampling_scaling.csv",
+            str(data_dir / "fidelity_acceptance_benchmark.csv"),
+            str(data_dir / "runtime_proxy_benchmark.csv"),
+            str(data_dir / "sampling_scaling.csv"),
         ],
     }
 

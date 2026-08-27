@@ -46,12 +46,26 @@
 - Acceptance: residuals below \(10^{-10}\); overlaps in \([0,1]\); N-fold
   sector-energy spread below \(10^{-10}\); trend and digitized values match.
 
+## Declared But Not Yet Implemented
+
+| Target | Required method | First acceptance check |
+| --- | --- | --- |
+| V003 | open-boundary projector Hamiltonian plus fractionalized-state rank | nullity and rank equal \(2^{N+1}-1\) for even \(N=2,4,6\) |
+| V004 | open \(K=0,Q=1\) spectrum plus combinatorial recurrence | nullity equals \(2N+1\) for even \(N=2,4,6,8\) |
+| V005 | open \(K=0,Q=-1\) product states and full small-\(N\) spectrum | four states, energy \(-(N-1)\), and independent edge \(w\) labels |
+| V006 | physical-MPS expansion in the singlet/triplet bond basis | every nonzero coefficient has both required even parities |
+| V007 | Rayleigh-Schrödinger matrix elements plus exact-spectrum sector scan | first-order shift zero and every reachable correction remains uniform-positive-\(w\) |
+
+These are method gaps. No paper-scale runner, resource estimate, or completion
+claim is made until the small local canaries exist.
+
 ## Efficiency And Risk
 
 - Enumerating \(3^N\) Cartesian labels at \(N=12\) is inexpensive; the retained
   fixed-\(w\) matrices are much smaller than the full Hilbert space.
 - Matrix assembly uses exact local transition tables and sparse storage.
-- The highest risk is not compute but tensor/index convention. Small-\(N\)
+- The highest risk is not compute but tensor/index and open-boundary convention.
+  Small-\(N\)
   full-space parity, exact-point zero energy, and \(w\)-support tests are
   mandatory before Fig. 5 runs.
 - Generated CSV and JSON checks are written before plots.

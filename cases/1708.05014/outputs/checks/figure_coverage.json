@@ -1,0 +1,1488 @@
+{
+  "schema_version": 2,
+  "paper_id": "1708.05014",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (15 pages including embedded Supplemental Material) and paper-source/arxiv_v2_main.tex",
+    "known_items": [
+      "Main Figures 1-4",
+      "Supplement Figures S1-S7",
+      "one no-display analytic claim from Supplement Eq. (S17)",
+      "no tables"
+    ],
+    "unknown_remainder": false,
+    "reason": "The complete paper and supplement were read end to end. TeX was used only to verify captions and equations; author numerical code, author arrays, and source pixels were not used as scientific inputs."
+  },
+  "implementations": {
+    "paper_scale_all_targets": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_paper_scale.py",
+        "src/boundary_time_crystal/paper_scale.py",
+        "src/boundary_time_crystal/paper_scale_kernels.py",
+        "src/boundary_time_crystal/model.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--resume",
+        "--aggregate"
+      ],
+      "expected_outputs": [
+        "outputs/paper_scale/data/main_fig1_dynamics.csv",
+        "outputs/paper_scale/data/main_fig2_spectrum.csv",
+        "outputs/paper_scale/data/main_fig3_scaling.csv",
+        "outputs/paper_scale/data/main_fig4_fourier.csv",
+        "outputs/paper_scale/data/main_fig4_decay.csv",
+        "outputs/paper_scale/data/supp_real_scaling_strong.csv",
+        "outputs/paper_scale/data/supp_phase_diagram.csv",
+        "outputs/paper_scale/data/supp_imaginary_gap.csv",
+        "outputs/paper_scale/data/supp_phase_trajectories.csv",
+        "outputs/paper_scale/data/supp_branch_surface.csv",
+        "outputs/paper_scale/data/supp_branch_trajectories.csv",
+        "outputs/paper_scale/checks/backend_parity.json",
+        "outputs/paper_scale/checks/paper_scale_acceptance.json",
+        "outputs/paper_scale/checks/machine_contract.json",
+        "outputs/paper_scale/checks/run_summary.json",
+        "outputs/paper_scale/manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All 24 existing paper-scale target contracts in config/paper_scale.json pass on hash-valid immutable jobs; aggregation refuses any missing shard.",
+        "Eigen residuals are <=2e-6, N_b=600 steady residuals are <=2e-8, trace errors are <=2e-8, and semiclassical sphere-norm drift is <=2e-6.",
+        "Small-N backend parity passes before paper-scale acceptance.",
+        "No numerical process reads paper pixels, digitized curves, author code, author arrays, raw paper files, or the network.",
+        "Execution alone cannot promote paper-exact or paper-error status without independent checks and fresh review."
+      ]
+    },
+    "eta_dynamics_fit": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_claim_repairs.py",
+        "src/boundary_time_crystal/claim_repairs.py",
+        "src/boundary_time_crystal/model.py"
+      ],
+      "config_ref": "config/claim_repairs.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_claim_repairs.py",
+        "--config",
+        "config/claim_repairs.json",
+        "--target",
+        "T025",
+        "--profile",
+        "paper_scale"
+      ],
+      "expected_outputs": [
+        "outputs/data/claim_repairs/t025_eta_paper_scale_summary.csv",
+        "outputs/data/claim_repairs/t025_eta_paper_scale_traces.csv",
+        "outputs/checks/claim_repairs/t025_eta_paper_scale_validation.json"
+      ],
+      "acceptance_criteria": [
+        "For every declared paper-scale N, eta is fitted from the generated magnetization time series using a frozen damped-oscillation model; no Liouvillian eigenvalue enters the fit.",
+        "Every fit meets the frozen R-squared threshold and emits its generated trace and fitted prediction."
+      ]
+    },
+    "s17_fixed_point_check": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_claim_repairs.py",
+        "src/boundary_time_crystal/claim_repairs.py",
+        "src/boundary_time_crystal/model.py"
+      ],
+      "config_ref": "config/claim_repairs.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_claim_repairs.py",
+        "--config",
+        "config/claim_repairs.json",
+        "--target",
+        "T026"
+      ],
+      "expected_outputs": [
+        "outputs/data/claim_repairs/t026_s17_fixed_points.csv",
+        "outputs/checks/claim_repairs/t026_s17_validation.json"
+      ],
+      "acceptance_criteria": [
+        "Substitution of both printed and independently rederived fixed points into Supplement Eq. (S13) records RHS and unit-norm residuals and verifies the stated transition value.",
+        "A discrepancy remains a review candidate; this implementation never promotes it to a paper error by itself."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M1-A-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "source_ref": "Main Fig. 1(a), PDF p. 1",
+      "scientific_object": "Conceptual bulk-boundary geometry",
+      "decision": "excluded",
+      "reason": "Conceptual illustration without a theoretical numerical observable."
+    },
+    {
+      "item_id": "M1-B-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "source_ref": "Main Fig. 1(b), PDF p. 1",
+      "scientific_object": "Conceptual boundary time-crystal ordering",
+      "decision": "excluded",
+      "reason": "Conceptual illustration without a theoretical numerical observable."
+    },
+    {
+      "item_id": "M1-C-N040",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 1(c), PDF p. 1, N_b=40",
+      "scientific_object": "Finite-size boundary magnetization dynamics for N_b=40",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent dynamics cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M1-C-N080",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 1(c), PDF p. 1, N_b=80",
+      "scientific_object": "Finite-size boundary magnetization dynamics for N_b=80",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent dynamics cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M1-C-N160",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 1(c), PDF p. 1, N_b=160",
+      "scientific_object": "Finite-size boundary magnetization dynamics for N_b=160",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent dynamics cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M1-C-NINF",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 1(c), PDF p. 1, N_b->infinity",
+      "scientific_object": "Thermodynamic-limit boundary magnetization dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Independent semiclassical ODE data cover the observable.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M2-L-SPECTRUM",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 2 left main axes, PDF p. 3",
+      "scientific_object": "Strong-dissipation full Liouvillian spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Independent diagonalization covers the spectral object at reduced N.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M2-L-INSET-ZOOM",
+      "item_type": "figure_panel",
+      "denominator_role": "supporting",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2 left inset, PDF p. 3",
+      "scientific_object": "Zoom of leading eigenvalues already contained in M2-L-SPECTRUM",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Auditable zoom, not a second scientific denominator item.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M2-R-SPECTRUM",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 2 right main axes, PDF p. 3",
+      "scientific_object": "BTC full Liouvillian spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent diagonalization covers the spectral object at reduced N.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M2-R-INSET-ZOOM",
+      "item_type": "figure_panel",
+      "denominator_role": "supporting",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2 right inset, PDF p. 3",
+      "scientific_object": "Zoom of leading eigenvalues already contained in M2-R-SPECTRUM",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Auditable zoom, not a second scientific denominator item.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J01",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=1",
+      "scientific_object": "Liouvillian real-part scaling branch j=1",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J02",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=2",
+      "scientific_object": "Liouvillian real-part scaling branch j=2",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J03",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=3",
+      "scientific_object": "Liouvillian real-part scaling branch j=3",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J04",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=4",
+      "scientific_object": "Liouvillian real-part scaling branch j=4",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J05",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=5",
+      "scientific_object": "Liouvillian real-part scaling branch j=5",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J06",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=6",
+      "scientific_object": "Liouvillian real-part scaling branch j=6",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J07",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=7",
+      "scientific_object": "Liouvillian real-part scaling branch j=7",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J08",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=8",
+      "scientific_object": "Liouvillian real-part scaling branch j=8",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J09",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=9",
+      "scientific_object": "Liouvillian real-part scaling branch j=9",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-L-J10",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 left, PDF p. 3, j=10",
+      "scientific_object": "Liouvillian real-part scaling branch j=10",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M3-R-BANDS",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 3 right, PDF p. 3",
+      "scientific_object": "Imaginary Liouvillian band cloud under nu=j^2/N_b<0.025",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independent eigenpairs cover the qualitative band object; current sizes do not establish the paper-threshold limit.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-L-N040",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 left, PDF p. 4, N_b=40",
+      "scientific_object": "Magnetization Fourier spectrum for N_b=40",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent Fourier data cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-L-N080",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 left, PDF p. 4, N_b=80",
+      "scientific_object": "Magnetization Fourier spectrum for N_b=80",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent Fourier data cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-L-N160",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 left, PDF p. 4, N_b=160",
+      "scientific_object": "Magnetization Fourier spectrum for N_b=160",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent Fourier data cover the observable at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-L-NINF",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 left inset, PDF p. 4",
+      "scientific_object": "Thermodynamic-limit magnetization Fourier spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Paper-parameter semiclassical data cover the observable.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-R-ETA",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 right, PDF p. 4, eta series",
+      "scientific_object": "Decay rate eta independently inferred from magnetization dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T025"
+      ],
+      "implementation_ref": "eta_dynamics_fit",
+      "reason": "The paper-scale eta series is independently fitted from generated dynamics and passes every frozen fit gate.",
+      "claim_refs": [
+        "CLM_ETA_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "M4-R-LAMBDA1",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 right, PDF p. 4, |Re(lambda_1)|",
+      "scientific_object": "Leading Liouvillian decay scale versus inverse size",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent eigenvalue data cover this series at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "M4-R-LAMBDA2",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "source_ref": "Main Fig. 4 right, PDF p. 4, |Re(lambda_2)|",
+      "scientific_object": "Second Liouvillian decay scale versus inverse size",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent eigenvalue data cover this series at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S1-A-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 8",
+      "scientific_object": "General chain-mapping transformation",
+      "decision": "excluded",
+      "reason": "Conceptual mapping schematic."
+    },
+    {
+      "item_id": "S1-B-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 8",
+      "scientific_object": "Collective boundary coupling under chain mapping",
+      "decision": "excluded",
+      "reason": "Conceptual mapping schematic."
+    },
+    {
+      "item_id": "S1-C-SCHEMATIC",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic",
+      "source_ref": "Supplement Fig. S1(c), PDF p. 8",
+      "scientific_object": "Independent local-bath chain mappings",
+      "decision": "excluded",
+      "reason": "Conceptual mapping schematic."
+    },
+    {
+      "item_id": "S2-L-SX",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 left, PDF p. 10, <Sx>/S",
+      "scientific_object": "NESS collective-spin x mean",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Independent steady-state data cover the observable at reduced N.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S2-L-SY",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 left, PDF p. 10, <Sy>/S",
+      "scientific_object": "NESS collective-spin y mean",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Independent steady-state data cover the observable at reduced N.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S2-L-SZ",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 left, PDF p. 10, <Sz>/S",
+      "scientific_object": "NESS collective-spin z mean",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Independent steady-state data cover the observable at reduced N.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S2-R-SX",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 right, PDF p. 10, x series",
+      "scientific_object": "NESS x statistic labelled as variance",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "Three candidate statistics are frozen; source semantics remain inconclusive.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S2-R-SY",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 right, PDF p. 10, y series",
+      "scientific_object": "NESS y statistic labelled as variance",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "Three candidate statistics are frozen; source semantics remain inconclusive.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S2-R-SZ",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S2 right, PDF p. 10, z series",
+      "scientific_object": "NESS z statistic labelled as variance",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "Three candidate statistics are frozen; source semantics remain inconclusive.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J01",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=1",
+      "scientific_object": "Strong-phase real-part scaling branch j=1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J02",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=2",
+      "scientific_object": "Strong-phase real-part scaling branch j=2",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J03",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=3",
+      "scientific_object": "Strong-phase real-part scaling branch j=3",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J04",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=4",
+      "scientific_object": "Strong-phase real-part scaling branch j=4",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J05",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=5",
+      "scientific_object": "Strong-phase real-part scaling branch j=5",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J06",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=6",
+      "scientific_object": "Strong-phase real-part scaling branch j=6",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J07",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=7",
+      "scientific_object": "Strong-phase real-part scaling branch j=7",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-L-J08",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 left, PDF p. 10, j=8",
+      "scientific_object": "Strong-phase real-part scaling branch j=8",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Independent scaling data cover this branch at reduced sizes.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J01",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=1",
+      "scientific_object": "BTC real-part scaling branch j=1",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J02",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=2",
+      "scientific_object": "BTC real-part scaling branch j=2",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J03",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=3",
+      "scientific_object": "BTC real-part scaling branch j=3",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J04",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=4",
+      "scientific_object": "BTC real-part scaling branch j=4",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J05",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=5",
+      "scientific_object": "BTC real-part scaling branch j=5",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J06",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=6",
+      "scientific_object": "BTC real-part scaling branch j=6",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J07",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=7",
+      "scientific_object": "BTC real-part scaling branch j=7",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J08",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=8",
+      "scientific_object": "BTC real-part scaling branch j=8",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J09",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=9",
+      "scientific_object": "BTC real-part scaling branch j=9",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J10",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=10",
+      "scientific_object": "BTC real-part scaling branch j=10",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S3-R-J11",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S3 right, PDF p. 10, j=11",
+      "scientific_object": "BTC real-part scaling branch j=11",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Independent scaling data cover this supplementary display series.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S4-N010",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4, PDF p. 11, N_b=10",
+      "scientific_object": "Lowest nonzero-imaginary excitation for N_b=10",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Independent mode extraction covers the observable on a reduced N grid.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S4-N020",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4, PDF p. 11, N_b=20",
+      "scientific_object": "Lowest nonzero-imaginary excitation for N_b=20",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Independent mode extraction covers the observable on a reduced N grid.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S4-N040",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4, PDF p. 11, N_b=40",
+      "scientific_object": "Lowest nonzero-imaginary excitation for N_b=40",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Independent mode extraction covers the observable on a reduced N grid.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S4-N060",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S4, PDF p. 11, N_b=60",
+      "scientific_object": "Lowest nonzero-imaginary excitation for N_b=60",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Independent mode extraction covers the observable on a reduced N grid.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S5-A",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S5(a), PDF p. 14, omega_z=0",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "Printed ODE and couplings are reproduced; initial sampling is reconstructed.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S5-B",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S5(b), PDF p. 14, omega_z=0.1",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Printed ODE and couplings are reproduced; initial sampling is reconstructed.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S5-C",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S5(c), PDF p. 14, omega_z=0.5",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "Printed ODE and couplings are reproduced; initial sampling is reconstructed.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S5-D",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S5(d), PDF p. 14, omega_z=0.6",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Printed ODE and couplings are reproduced; initial sampling is reconstructed.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S6-TRAJECTORIES",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S6, PDF p. 14, red trajectories",
+      "scientific_object": "Semiclassical trajectories spiralling toward the fixed point",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Independent integration generates the trajectory layer.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S6-BRANCH-CUT",
+      "item_type": "figure_series",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S6, PDF p. 14, blue branch cut",
+      "scientific_object": "Analytic branch-cut locus of the conserved quantity",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Generated from the printed invariant.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S6-R-FIELD",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S6, PDF p. 14, R/(2*pi*kappa) color field",
+      "scientific_object": "Scalar field of the conserved quantity",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Generated directly from the printed invariant.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S6-R-CONTOURS",
+      "item_type": "figure_series",
+      "denominator_role": "supporting",
+      "kind": "numeric",
+      "scientific_role": "supporting_duplicate",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S6, PDF p. 14, gray contours",
+      "scientific_object": "Contour rendering of the same R scalar field",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Auditable duplicate rendering, not a second observable.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S7-A",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S7(a), PDF p. 15, omega_x=0.1, omega_z=0",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T021"
+      ],
+      "reason": "Printed ODE and couplings are reproduced with reconstructed initials.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S7-B",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S7(b), PDF p. 15, omega_x=2, omega_z=0",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T022"
+      ],
+      "reason": "Printed ODE and couplings are reproduced with reconstructed initials.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S7-C",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S7(c), PDF p. 15, omega_x=0.1, omega_z=0.6",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T023"
+      ],
+      "reason": "Printed ODE and couplings are reproduced with reconstructed initials.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    },
+    {
+      "item_id": "S7-D",
+      "item_type": "figure_panel",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Supplement Fig. S7(d), PDF p. 15, omega_x=2, omega_z=0.6",
+      "scientific_object": "Semiclassical phase-space trajectory ensemble",
+      "decision": "target",
+      "target_ids": [
+        "T024"
+      ],
+      "reason": "Printed ODE and couplings are reproduced with reconstructed initials.",
+      "implementation_ref": "paper_scale_all_targets",
+      "claim_refs": [
+        "CLM_BTC"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "QCLM-S17-FIXED-POINT",
+      "item_type": "quantitative_claim",
+      "denominator_role": "primary",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "critical": true,
+      "source_ref": "Supplement Eq. (S17) and following threshold statement, PDF p. 12",
+      "scientific_object": "Coordinates and existence threshold of the non-trivial semiclassical fixed points",
+      "decision": "target",
+      "target_ids": [
+        "T026"
+      ],
+      "implementation_ref": "s17_fixed_point_check",
+      "reason": "The printed and rederived fixed points are independently substituted into the governing equations; fresh review adjudicates the stable paper discrepancy.",
+      "claim_refs": [
+        "CLM_S17_FIXED_POINT"
+      ]
+    }
+  ]
+}

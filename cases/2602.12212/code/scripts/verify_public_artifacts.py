@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""Validate the frozen public artifacts without reading any paper image."""
+"""Verify that the frozen public artifacts still match their recorded hashes."""
 from __future__ import annotations
 
-import csv
 import hashlib
 import json
 from pathlib import Path
 
-
 CASE_ROOT = Path(__file__).resolve().parents[2]
-OUTPUT_ROOT = CASE_ROOT / "outputs"
+MANIFEST = CASE_ROOT / "outputs" / "checks" / "public_artifact_verification.json"
 
 
 def digest(path: Path) -> str:
@@ -20,40 +18,16 @@ def digest(path: Path) -> str:
     return value.hexdigest()
 
 
-def main() -> None:
-    records = []
-    for group in ("data", "figures"):
-        for path in sorted((OUTPUT_ROOT / group).rglob("*")):
-            if not path.is_file():
-                continue
-            record = {
-                "path": str(path.relative_to(CASE_ROOT)),
-                "bytes": path.stat().st_size,
-                "sha256": digest(path),
-            }
-            if path.suffix.lower() == ".json":
-                json.loads(path.read_text(encoding="utf-8"))
-                record["format_check"] = "valid_json"
-            elif path.suffix.lower() == ".csv":
-                with path.open(newline="", encoding="utf-8") as handle:
-                    record["data_rows"] = max(sum(1 for _ in csv.reader(handle)) - 1, 0)
-                record["format_check"] = "readable_csv"
-            else:
-                record["format_check"] = "nonempty" if path.stat().st_size else "empty"
-            records.append(record)
-    if not records or any(item["bytes"] == 0 for item in records):
-        raise SystemExit("public artifact verification failed")
-    payload = {
-        "schema_version": 1,
-        "policy": "artifact-integrity-only; no paper image or source-derived points are read",
-        "status": "passed",
-        "artifacts": records,
-    }
-    destination = OUTPUT_ROOT / "checks" / "public_artifact_verification.json"
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    destination.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"verified {len(records)} generated public artifacts")
+def main() -> int:
+    payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    failures = []
+    for relative, expected in payload["files"].items():
+        path = CASE_ROOT / relative
+        if not path.is_file() or digest(path) != expected:
+            failures.append(relative)
+    print(json.dumps({"status": "passed" if not failures else "failed", "failures": failures}, indent=2))
+    return 0 if not failures else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

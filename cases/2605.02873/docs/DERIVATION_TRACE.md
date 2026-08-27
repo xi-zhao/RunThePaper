@@ -1,112 +1,121 @@
 # Derivation Trace
 
-This trace records the independent reasoning that authorizes the numerical
-implementation. `DERIVATION.md` is generated from the corresponding equation
-cards.
+This trace records the independent reasoning that opens the numerical gate for
+arXiv:2605.02873v1. `DERIVATION.md` is generated from the equation cards and
+must not be edited by hand.
 
-## EQ001 — Finite-width Fresnel field
+## EQC001 - Finite aperture
 
-The aperture is the disjoint union
+Each `rect` term has unit support where its argument has magnitude at most
+\(1/2\). The two supports are therefore
+\([-d/2-a/2,-d/2+a/2]\) and
+\([d/2-a/2,d/2+a/2]\). Splitting the integral into these intervals is exact
+and avoids an arbitrary truncation of the slit-plane coordinate.
+
+## EQC002 - Field and baseline
+
+At \((\theta_t,\theta_f)=(0,0)\), the aberration factor is one. The remaining
+kernel contains the two Fresnel phases and the finite aperture. Its modulus
+square is real and nonnegative. Any omitted global propagation prefactor would
+multiply all field moments by the same constant; it changes the absolute
+intensity scale but not normalized panels or Fisher-retention ratios.
+
+## EQC003 - Local response derivatives
+
+For either generator \(q_\mu\),
+
 \[
-[-d/2-a/2,-d/2+a/2]\cup[d/2-a/2,d/2+a/2].
+\partial_{\theta_\mu}e^{i\theta_\mu q_\mu}
+=iq_\mu e^{i\theta_\mu q_\mu},
 \]
-On that finite support the propagation kernel is continuous and bounded, so
-the field is evaluated as the sum of two ordinary finite integrals. Expanding
-the phase confirms that all retained terms are dimensionless. Global
-source-independent Fresnel prefactors are omitted consistently and only set an
-overall scale.
 
-Independent checks: dimensional phase check; convergence under doubled
-Gauss--Legendre order; conjugation-free direct evaluation on both slits.
+so differentiation under the finite integral gives
+\(\partial_{\theta_\mu}E|_0=iM_\mu\). Then
 
-## EQ002 — Differentiation under the integral
-
-For \(q_t=x/W\) and \(q_f=(x/W)^2\), the finite aperture gives an integrable
-parameter-independent bound. Dominated differentiation therefore yields
 \[
-\left.\partial_{\theta_\mu}E\right|_0
-=i\int K(x,y)q_\mu(x)\,dx=iM_\mu(y).
-\]
-A central finite-difference derivative of the full perturbed field is an
-independent numerical check, not the implementation used to create the scores.
-
-## EQ003 — Exact local scores
-
-From \(R=EE^*\),
-\[
-\partial_{\theta_\mu}R
+\partial_{\theta_\mu}|E|^2
 =2\operatorname{Re}\!\left(E^*\partial_{\theta_\mu}E\right)
 =2\operatorname{Re}(iE_0^*M_\mu)
 =-2\operatorname{Im}(E_0^*M_\mu).
 \]
-This fixes the sign and shows why only the quadrature component changes
-intensity at first order. In the point-slit limit \(q_f(\pm W)=1\), hence
-\(M_f=E_0\) and \(g_f=0\), while \(q_t(\pm W)=\pm1\) remains differential.
 
-Independent checks: finite-difference score agreement; real-valued output;
-narrow-slit suppression of the defocus Fisher term.
+This checks the paper's sign and factor without fitting a plotted curve. In
+the point-slit limit \(q_f(\pm W)=1\), hence \(M_f=E_0\) and \(g_f=0\);
+\(q_t(\pm W)=\pm1\) remains differential.
 
-## EQ004 — Full local Fisher information
+## EQC004 - Full Fisher matrix
 
-With locally independent shot-noise samples and regularized variance density
-\(N=R_0+B\), the linear response Jacobian is \(g_\mu\), giving
+With \(s_\mu=g_\mu/N\),
+\(\langle s_\mu,s_\nu\rangle_N=\int N(g_\mu/N)(g_\nu/N)dy\), which reduces
+exactly to the full Fisher integral. Since \(B>0\), this is a positive
+semidefinite Gram matrix and is safe to whiten when it is positive definite
+for the paper geometry.
+
+## EQC005 - Optimal codes
+
+For any trial code \(w\), the squared local SNR is proportional to
+\((\langle w,g/N\rangle_N)^2/\langle w,w\rangle_N\). Cauchy--Schwarz is
+saturated by \(w\propto g/N\). The two explicit subtractions are ordinary
+Gram--Schmidt in the same noise metric. Algebraically they impose
+
 \[
-F_{\mu\nu}^{\rm full}=\int g_\mu g_\nu/N\,dy.
+\langle w_t,1\rangle_N=\langle w_f,1\rangle_N
+=\langle w_t,w_f\rangle_N=0,\qquad
+\|w_t\|_N=\|w_f\|_N=1.
 \]
-The matrix is a Gram matrix of \(g_\mu/\sqrt N\), hence it must be symmetric
-positive semidefinite. This property is checked numerically.
 
-## EQ005 — Optimized source codes
+These four residuals will be checked numerically before Fig. 1(c) is accepted.
 
-The Cauchy--Schwarz inequality in the \(N\)-weighted inner product makes
-\(g_\mu/N\) the single-channel matched filter. Projecting first against the
-constant nuisance mode and then against the already projected tilt direction
-is ordinary Gram--Schmidt:
+## EQC006 - Coded information and retention
+
+The coded means change as \(G\theta\) and have covariance \(\Sigma\), so the
+Gaussian/local Fisher expression is \(G^\mathsf{T}\Sigma^{-1}G\). Under a
+nonsingular code-basis change \(A\), \(G\to AG\) and
+\(\Sigma\to A\Sigma A^\mathsf{T}\); all \(A\) factors cancel. The result
+depends only on the code subspace.
+
+Whitening by the symmetric eigendecomposition of \(F^{\rm full}\) gives a
+basis-independent retention matrix. Because the coded score directions are
+orthogonal projections of the full directions, exact retention eigenvalues
+cannot exceed one. Tiny excess from floating-point roundoff will be clipped
+only for presentation, while raw values remain in the check artifact.
+
+## EQC007 - Toy comparator
+
+The toy coordinate is constructed from the independently generated \(R_0\),
+not from a fitted Gaussian or the source image. Its odd/even templates are
+processed with the identical nuisance projection and normalization used by the
+optimized codes. Therefore the comparison isolates the missing
+fringe-structured subspace instead of confounding it with different noise or
+normalization rules.
+
+## EQC008 - Finite-width origin
+
+Writing \(x=sW+u\) shows
+
 \[
-\widetilde w_t=s_t-\frac{\langle s_t,1\rangle_N}{\langle1,1\rangle_N},\qquad
-\widetilde w_f=s_f-\frac{\langle s_f,1\rangle_N}{\langle1,1\rangle_N}
--\frac{\langle s_f,\widetilde w_t\rangle_N}
-{\langle\widetilde w_t,\widetilde w_t\rangle_N}\widetilde w_t .
+(x/W)^2=1+2su/W+(u/W)^2.
 \]
-Normalization forces unit covariance and the three orthogonality residuals
-must be near machine precision.
 
-## EQ006 — Coded Fisher information and retention
+The constant term creates only a global phase. The remaining terms vanish as
+the slit width shrinks, proving the narrow-slit suppression independently of
+Fig. S1. The numerical width scan must rebuild all fields and Fisher matrices
+at each of the five paper widths; Table S1 is withheld from generation and
+used only afterward as an exact comparison.
 
-Linear coded means have Jacobian \(G_{m\mu}=\int w_mg_\mu dy\), and their
-covariance is \(\Sigma_{mn}=\langle w_m,w_n\rangle_N\). The Gaussian/local
-Fisher form therefore gives \(F^{\rm code}=G^T\Sigma^{-1}G\).
-Whitening by the symmetric eigendecomposition of \(F^{\rm full}\) makes the
-retention eigenvalues basis independent. The projection theorem requires each
-eigenvalue to lie in \([0,1]\), up to quadrature roundoff.
+## Numerical Translation and Verification Plan
 
-## EQ007 — Gaussian toy-code baseline
+- Gauss--Legendre quadrature is applied separately to each finite slit.
+- A single source grid and trapezoidal weights are reused for all \(y\)
+  integrals within a target.
+- Higher-order slit quadrature and denser source grids provide convergence
+  checks independent of the paper's reported values.
+- Panel normalization is applied only after physical quantities are computed:
+  \(R_0/\max R_0\), and \(g_t/\max|g_t|\),
+  \(g_f/\max|g_f|\) separately.
+- All source PNGs remain outside the numerical code path.
 
-The toy coordinate uses the independently generated baseline:
-\[
-\xi=(y-\bar y)/\sigma_y,\quad
-h_t^{(0)}=\xi,\quad h_f^{(0)}=(\xi^2-1)/\sqrt2.
-\]
-Applying the identical nuisance projection and normalization isolates the
-effect of the subspace choice. Thus optimized-versus-toy retention compares
-models, not normalization conventions.
-
-## EQ008 — Finite-width defocus mechanism
-
-Writing \(x=sW+u\) inside a slit gives
-\[
-q_f=1+2s(u/W)+(u/W)^2.
-\]
-The common term cannot change intensity to first order; only finite-\(u\)
-variation contributes. Repeating the complete Fresnel and Fisher calculation
-at \(a=\{20,40,80,150,250\}\,\mu{\rm m}\) yields the plotted ratio
-\(\rho=F_{ff}^{\rm full}/F_{tt}^{\rm full}\). The direct narrow-slit limit and
-monotonic growth are independent checks.
-
-## Numerical Authorization
-
-All eight cards have a source trace and at least one independent symbolic,
-limiting-case, dimensional, normalization, or numerical-sanity check. No
-source-only card is used. MTH001 specifies deterministic quadrature and
-convergence checks. Therefore all five paper-exact targets may enter guarded
-final execution.
+All eight cards have passed a source trace plus at least one independent
+symbolic, limiting, normalization, dimensional, or sanity check. They are
+eligible for `final_reproduction` readiness once the current generated
+`DERIVATION.md` exists and the project parameter contracts validate.

@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.23978",
+  "cards": [
+    {
+      "id": "QS001",
+      "title": "Probe state and phase encoding",
+      "source_refs": [
+        "Eqs. (1)-(2)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/sensing.py::probe_state",
+        "src/sensing.py::encoded_state"
+      ],
+      "checks": [
+        {
+          "id": "QS001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The mixture, |Psi0,1>, p, and M_theta are explicit."
+        },
+        {
+          "id": "QS001-density",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "rho is Hermitian, positive for p in [0,1], and has trace one."
+        },
+        {
+          "id": "QS001-phase",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Encoding rotates the off-diagonal coherence by exp(i theta)."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "QS002",
+      "title": "Optimal observables and error-propagation order audit",
+      "source_refs": [
+        "Eqs. (3)-(5)",
+        "F_nH and F_H paragraph"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/sensing.py::optimal_observables",
+        "src/sensing.py::error_propagation_variance"
+      ],
+      "checks": [
+        {
+          "id": "QS002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Eq. (3), both printed matrices, and both Fisher expressions are transcribed directly."
+        },
+        {
+          "id": "QS002-hermitian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "The Hermitian observable gives 1/F_H under Eq. (3)."
+        },
+        {
+          "id": "QS002-order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Printed A_nH gives 1/F_nH+4 with A^dagger A, but exactly 1/F_nH with A A^dagger; both identities are retained."
+        }
+      ],
+      "open_questions": [
+        "The printed Eq. (3) operator order with printed Eq. (5) gives 1/F_nH+4, whereas the plotted/intended lane gives 1/F_nH; fresh independent review is still required before attributing a paper error."
+      ]
+    },
+    {
+      "id": "QS003",
+      "title": "Polar normalization and interferometric fringe",
+      "source_refs": [
+        "Eqs. (6)-(11)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/sensing.py::polar_normalize",
+        "src/sensing.py::normalized_fringe"
+      ],
+      "checks": [
+        {
+          "id": "QS003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "A=UR, R'=R/a, and I/n0 are explicit."
+        },
+        {
+          "id": "QS003-polar",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "A'=U R' and R'^2=A'^dagger A'."
+        },
+        {
+          "id": "QS003-range",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The normalized port probability remains in [0,1] within floating tolerance."
+        }
+      ],
+      "open_questions": [
+        "The phase-to-window-position calibration is in the missing Supplement; theory uses phi directly."
+      ]
+    },
+    {
+      "id": "QS004",
+      "title": "Amplitude-damping channel",
+      "source_refs": [
+        "Eq. (12)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/sensing.py::amplitude_damping"
+      ],
+      "checks": [
+        {
+          "id": "QS004-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Both Kraus matrices and gamma range are explicit."
+        },
+        {
+          "id": "QS004-cptp",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "E0^dagger E0+E1^dagger E1=I and output trace is one."
+        },
+        {
+          "id": "QS004-limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "gamma=0 is identity and gamma=1 maps population to |0>."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "QS005",
+      "title": "Finite-difference derivatives for theta and gamma",
+      "source_refs": [
+        "Eq. (13)",
+        "Results paragraph after Eq. (11)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/sensing.py::central_difference"
+      ],
+      "checks": [
+        {
+          "id": "QS005-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Both central difference and CFI sum are explicit."
+        },
+        {
+          "id": "QS005-central",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Noise curves use symmetric differences away from endpoints and one-sided limits only at boundaries."
+        }
+      ],
+      "open_questions": [
+        "The paper states Delta theta=0.1, but the frozen run used theta_derivative_step=1e-5; both lanes must be compared before paper-exact status is allowed.",
+        "The finite Delta gamma for Fig. 3(c) is not stated outside the unavailable Supplement."
+      ]
+    },
+    {
+      "id": "QS006",
+      "title": "Non-optimal observables A1 and A2",
+      "source_refs": [
+        "Fig. 2 caption",
+        "Results section",
+        "unavailable Supplemental Material"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "blocked",
+      "code_refs": [],
+      "checks": [
+        {
+          "id": "QS006-source",
+          "type": "source_trace",
+          "status": "blocked",
+          "detail": "The main text names A1 and A2 but does not provide their matrices; the cited Supplement is absent from the public bundle."
+        }
+      ],
+      "open_questions": [
+        "Obtain a public formula-level definition before implementing; do not digitize the plotted curves or use author arrays."
+      ]
+    },
+    {
+      "id": "QS007",
+      "title": "Complete-POVM classical Fisher-information bound",
+      "source_refs": [
+        "Eq. (14)",
+        "Conclusion and discussion",
+        "unavailable Supplemental Material"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "blocked",
+      "code_refs": [],
+      "checks": [
+        {
+          "id": "QS007-source",
+          "type": "source_trace",
+          "status": "blocked",
+          "detail": "The CFI sum is printed, but the physical POVM elements and output-port probabilities are not public in this bundle."
+        }
+      ],
+      "open_questions": [
+        "Obtain the explicit POVM, then independently check positivity, completeness, loss normalization, and the claimed Hermitian bound."
+      ]
+    }
+  ]
+}

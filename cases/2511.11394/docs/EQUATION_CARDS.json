@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "paper_id": "2511.11394",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Two-band projector mismatch",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:HS"
+        },
+        {
+          "type": "tex_contains",
+          "value": "expand the form factor"
+        }
+      ],
+      "latex": "D(k,q)=tr[P(k)(1-P(k+q))]=(1-n(k) dot n(k+q))/2",
+      "role": "Defines the finite-momentum geometric event weight.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source Hartree-Fock energy uses tr[P(k)P(k-q)] and explicitly expands this form factor."
+        },
+        {
+          "id": "EQC001_pauli",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Pauli trace identities give tr[P_k P_kq]=(1+n_k dot n_kq)/2."
+        }
+      ],
+      "numerical_form": "Pointwise unit-vector dot product.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:projector_mismatch"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Small-q quantum-metric expansion",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "Expanding up to a quadratic order"
+        }
+      ],
+      "latex": "D(k,q)=q_i q_j g_ij(k)+O(|q|^3), g_ij=(1/4) partial_i n dot partial_j n",
+      "role": "Connects finite-momentum mismatch to the local quantum metric.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper's small-q expansion of the same form factor produces the Dirichlet energy."
+        },
+        {
+          "id": "EQC002_taylor",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Taylor expansion plus n dot partial_i n=0 yields the stated coefficient."
+        }
+      ],
+      "numerical_form": "Symmetrize over plus/minus q to remove odd corrections.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:directional_mismatch"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Four-direction jump second moment",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:hsapprox"
+        },
+        {
+          "type": "tex_contains",
+          "value": "Dirichlet energy is the integral of the trace"
+        }
+      ],
+      "latex": "K_jump(q)=(2/q^2) integral_BZ Dbar(k,q) d^2k = integral_BZ tr(g) d^2k+O(q^2)",
+      "role": "Defines the calibrated isotropic probe whose topology can be bounded.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source identifies the small-q density form factor with the integrated quantum metric/Dirichlet energy."
+        },
+        {
+          "id": "EQC003_angular",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Averaging plus/minus x and y gives Dbar=q^2 tr(g)/2+O(q^4), fixing the prefactor 2/q^2."
+        }
+      ],
+      "numerical_form": "Periodic interpolation at four displacements followed by Brillouin-zone quadrature.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:jump_metric_estimator"
+      ],
+      "open_questions": [
+        "A detector-specific bath kernel and unraveling are required before interpreting this calibrated weight as raw total click activity."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "Chern lower bound and Dirichlet normalization",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "satisfies the topological bound"
+        },
+        {
+          "type": "tex_contains",
+          "value": "E_{\\mathrm D}(P)"
+        }
+      ],
+      "latex": "K=integral tr(g) >= 2 pi |C|; E_D=K/2 >= pi |C|",
+      "role": "Supplies the topological go/no-go inequality.",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source states the trace inequality and E_D >= pi |C|."
+        },
+        {
+          "id": "EQC004_factor",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The displayed projector definition gives E_D=(1/4) integral tr(partial_i P partial_i P)=K/2 for the standard metric g_ij=(1/2)tr(partial_i P partial_j P)."
+        }
+      ],
+      "numerical_form": "Report both K/(2 pi |C|) and E_D/(pi |C|); the ratios are identical.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:geometry_observables"
+      ],
+      "open_questions": [
+        "The prose factor E_D=(1/4) integral tr(g) conflicts with the displayed projector formula and stated bound; this case uses the internally consistent convention."
+      ]
+    },
+    {
+      "id": "EQC005",
+      "title": "Massive Dirac texture and lattice Chern number",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "M=-0.5 so the lower band"
+        }
+      ],
+      "latex": "d=(sin k_x,sin k_y,M-cos k_x-cos k_y), n_0=-d/|d|, C=(1/4 pi) sum_triangles Omega_triangle",
+      "role": "Defines the paper's topological test texture and a gauge-free numerical invariant.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text specifies d(k), M=-0.5, n_0=-d/|d|, and C=1."
+        },
+        {
+          "id": "EQC005_solid_angle",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Oriented spherical-triangle areas discretize the degree and return zero for a constant texture."
+        }
+      ],
+      "numerical_form": "Two oriented triangles per periodic momentum plaquette.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:qwz_texture",
+        "src/chern_jump_geometry.py:chern_number_solid_angle"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Small-q Landau-Lifshitz-Gilbert flow",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq: LLG equation"
+        }
+      ],
+      "latex": "partial_t n=-n cross h+gamma n cross(n cross h), (2 pi)^2 h=2 lambda_T d-lambda_D laplacian(n)",
+      "role": "Defines the feature-level dynamical reproduction.",
+      "derived_from": [
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation LLG equation and parameters gamma=1.5, lambda_D=1.25, lambda_T=0.025 are explicit in the main text."
+        },
+        {
+          "id": "EQC006_pauli",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting P=(I+n dot sigma)/2 and [a dot sigma,b dot sigma]=2i(a cross b) dot sigma into the projector flow gives the printed precession and double-cross damping terms."
+        },
+        {
+          "id": "EQC006_tangent",
+          "type": "conservation_law",
+          "status": "passed",
+          "reason": "Both cross-product terms are perpendicular to n, so d|n|^2/dt=2 n dot partial_t n=0 before discretization."
+        }
+      ],
+      "numerical_form": "Periodic finite differences and RK4 with unit-vector projection.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:llg_rhs",
+        "src/chern_jump_geometry.py:rk4_step"
+      ],
+      "open_questions": [
+        "The source does not specify grid, step size, or integrator."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Metriplectic Lyapunov inequality",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq: Lyapunov"
+        }
+      ],
+      "latex": "dH_S/dt=-gamma tr[Pi_P(partial H_S/partial P)^2] <= 0",
+      "role": "Defines the monotonicity acceptance check for the numerical flow.",
+      "derived_from": [
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The inequality is displayed as Eq. Lyapunov in the main text."
+        },
+        {
+          "id": "EQC007_trace",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Cyclicity removes the Hamiltonian commutator contribution and turns the dissipative term into minus gamma times the Hilbert-Schmidt norm squared of the tangent projection."
+        }
+      ],
+      "numerical_form": "Check discrete energy increments against an integration tolerance and track topology separately.",
+      "code_refs": [
+        "scripts/run_validation.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Paper bath is momentum-local",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eq. (50)"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Eq. (103)"
+        }
+      ],
+      "latex": "H_I=lambda sum_{k,alpha} c_k^dagger [b_{alpha,k}^dagger V_alpha(k)+b_{alpha,k} V_alpha^dagger(k)] c_k",
+      "role": "Fixes the actual Mera-Ozawa system-bath vertex and shows that it contains no transferred momentum q.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The published Supplemental Material writes the generic orbital vertex in Eq. (50) and its Bloch-band form in Eq. (103), with the same k on both fermion operators."
+        },
+        {
+          "id": "EQC008_indices",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Reading the two fermion indices in the Bloch vertex gives c_k^dagger V(k)c_k; with no c_{k+q} term, its interband weight is same-k orbital rotation rather than the finite-q density overlap."
+        }
+      ],
+      "numerical_form": "Compare its same-k interband matrix elements with the finite-q density-probe form factor.",
+      "code_refs": [
+        "src/detector_sum_rule.py:paper_bath_complete_vertex_strength"
+      ],
+      "open_questions": [
+        "The source derives an averaged one-particle flow, not a Lindblad generator or a detector unraveling."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Paper Ohmic spectral superoperator and friction",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (74)-(85)"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Eq. (104)"
+        }
+      ],
+      "latex": "J(omega,k)=sum_alpha delta(omega-Omega_alpha(k)) |V_alpha(k)><V_alpha(k)| approximately eta omega exp(-omega/omega_c) I_HS; gamma=2 pi eta lambda^2",
+      "role": "Separates the deterministic metriplectic damping coefficient from a physical click rate.",
+      "derived_from": [
+        "EQC008"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement defines the matrix-space spectral density in Eq. (74), assumes an Ohmic identity superoperator in Eq. (76), and obtains gamma=2 pi eta lambda^2 after Eq. (85)."
+        },
+        {
+          "id": "EQC009_positive",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A sum of outer products |V_alpha><V_alpha| is a positive superoperator; replacing it by a positive Ohmic scalar times I_HS preserves positivity and yields a nonnegative damping coefficient."
+        },
+        {
+          "id": "EQC009_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The friction coefficient vanishes as lambda or eta tends to zero, recovering the Hamiltonian projector flow."
+        }
+      ],
+      "numerical_form": "Use an orthonormal Hilbert-Schmidt vertex basis to test what the identity superoperator can resolve.",
+      "code_refs": [
+        "src/detector_sum_rule.py:paper_bath_complete_vertex_strength"
+      ],
+      "open_questions": [
+        "Bath occupation n_B appears in the assumptions but drops out of Eqs. (68)-(85), because the derivation evolves only the mean bath amplitude and omits noise correlations."
+      ]
+    },
+    {
+      "id": "EQC010",
+      "title": "Independent finite-q density probe",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eq. (29), density operator only"
+        },
+        {
+          "type": "doi",
+          "value": "10.1103/PhysRevLett.133.206602"
+        }
+      ],
+      "latex": "H_probe=lambda sum_q (b_q^dagger rho_q+b_q rho_-q), rho_q=sum_{k,m,n} F_mn(k,q) gamma_{m,k+q}^dagger gamma_{n,k}, F_mn=<u_m(k+q)|u_n(k)>",
+      "role": "Defines a detector-fixed spectator probe whose records contain the finite-q Bloch overlap.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_density",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement's Eq. (29) gives rho_q=sum_{k,i} c^dagger_{k+q,i} c_{k,i}; changing to the instantaneous band basis gives F_mn."
+        },
+        {
+          "id": "EQC010_basis",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Insert c_{k,i}=sum_n u_{n,i}(k) gamma_{n,k}; orbital completeness produces the stated overlap."
+        }
+      ],
+      "numerical_form": "Evaluate the band-basis form factor gauge-free as tr[P(k)(1-P(k+q))].",
+      "code_refs": [
+        "src/detector_sum_rule.py:density_probe_weight"
+      ],
+      "open_questions": [
+        "This spectator probe is not the bath used to generate the Mera-Ozawa flow."
+      ]
+    },
+    {
+      "id": "EQC011",
+      "title": "Frequency-resolved calibrated click sum",
+      "source_refs": [
+        {
+          "type": "doi",
+          "value": "10.1103/PhysRevLett.133.206602"
+        },
+        {
+          "type": "arxiv",
+          "value": "2406.06783"
+        }
+      ],
+      "latex": "R(q,omega)=2 pi lambda^2 J(q,omega) nu(omega) sum_k D(k,q) delta(omega-Delta_kq); A_cal(q)=integral d omega R/[2 pi lambda^2 J nu]=sum_k D(k,q)",
+      "role": "States exactly what must be energy resolved and calibrated before a click record becomes geometric.",
+      "derived_from": [
+        "EQC001",
+        "EQC010"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The cited quantum-weight and topological-structure-factor papers identify the small-q density response with the static structure factor; the resolved detector kernel is the standard Fermi-golden-rule realization of that response."
+        },
+        {
+          "id": "EQC011_fgr",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Fermi's golden rule supplies the positive detector kernel and the squared density form factor for each resolved transition."
+        },
+        {
+          "id": "EQC011_closure",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Dividing each resolved spectral bin by its nonzero kernel and integrating uses unoccupied-band completeness to return tr[P_k(1-P_kq)]."
+        }
+      ],
+      "numerical_form": "Calibrate transition by transition; never divide an already integrated raw rate by a single average kernel.",
+      "code_refs": [
+        "src/detector_sum_rule.py:calibrated_density_response"
+      ],
+      "open_questions": [
+        "Kernel zeros and a finite detector energy window make the reconstruction incomplete."
+      ]
+    },
+    {
+      "id": "EQC012",
+      "title": "Conditional click-record topology bound",
+      "source_refs": [
+        {
+          "type": "doi",
+          "value": "10.1103/PhysRevLett.133.206602"
+        },
+        {
+          "type": "workspace_card",
+          "value": "EQC003-EQC004"
+        }
+      ],
+      "latex": "K_click(q)=2 Abar_cal(q)/q^2 -> integral_BZ tr(g) d^2k >= 2 pi |C|",
+      "role": "Gives the strongest valid version of the no-dark statement for a fixed scalar probe with full calibration.",
+      "derived_from": [
+        "EQC003",
+        "EQC004",
+        "EQC011"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Phys. Rev. Lett. 133, 206602 establishes the Chern lower bound on the long-wavelength static structure factor; EQC003-EQC004 fix this case's normalization."
+        },
+        {
+          "id": "EQC012_chain",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "EQC011 reduces the calibrated record to EQC001; EQC002-EQC004 then give the small-q limit and Chern lower bound."
+        }
+      ],
+      "numerical_form": "Use four symmetric momenta and extrapolate linearly in q^2.",
+      "code_refs": [
+        "src/detector_sum_rule.py:density_probe_metric_estimator"
+      ],
+      "open_questions": [
+        "The static quantum-weight/structure-factor bound is already established literature; novelty must come from time-resolved monitoring of the dissipative approach to saturation."
+      ]
+    },
+    {
+      "id": "EQC013",
+      "title": "Paper-bath complete-vertex response is texture blind",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (74), (76), and (104)"
+        }
+      ],
+      "latex": "sum_a tr[Q V_a P V_a^dagger]=tr(Q) tr(P)=1 for rank(P)=rank(Q)=1",
+      "role": "Provides a decisive counterexample to reading quantum geometry from the paper's isotropic matrix-space bath.",
+      "derived_from": [
+        "EQC008",
+        "EQC009"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplemental Eqs. (74), (76), and (104) explicitly replace the vertex sum by the identity superoperator in Hilbert-Schmidt matrix space."
+        },
+        {
+          "id": "EQC013_completeness",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For an orthonormal Hilbert-Schmidt basis, sum_a V_a X V_a^dagger=tr(X) I; tracing with Q gives the stated result."
+        },
+        {
+          "id": "EQC013_control",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The result is identical for a Chern texture and a constant trivial projector, so it cannot carry a Chern lower bound."
+        }
+      ],
+      "numerical_form": "Evaluate the four normalized Pauli-basis vertices pointwise for both topological and constant projectors.",
+      "code_refs": [
+        "src/detector_sum_rule.py:paper_bath_complete_vertex_strength"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC014",
+      "title": "Raw-rate and orbital-vertex failure modes",
+      "source_refs": [
+        {
+          "type": "workspace_card",
+          "value": "EQC010-EQC011"
+        }
+      ],
+      "latex": "R_raw proportional to lambda^2 J nu; R_raw -> 0 as lambda or nu -> 0, while D_M(k,0)=tr[P M^dagger (1-P) M] can be nonzero for M not proportional to I",
+      "role": "Shows why neither raw total activity nor an arbitrary orbital detector has a topology-only lower bound.",
+      "derived_from": [
+        "EQC010",
+        "EQC011"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The detector-kernel dependence follows directly from the Fermi-golden-rule rate in EQC011, while the orbital vertex is the same general matrix structure used in Supplemental Eq. (50)."
+        },
+        {
+          "id": "EQC014_scaling",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Golden-rule rates scale as lambda squared and thermal absorption vanishes when the incident occupation nu=n_B is zero."
+        },
+        {
+          "id": "EQC014_vertex",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At q=0 the scalar identity vertex gives P(1-P)=0, while a generic M rotates occupied weight into Q and leaves a nonzero constant term."
+        }
+      ],
+      "numerical_form": "Sweep lambda, temperature, detector window, and a non-scalar orbital vertex.",
+      "code_refs": [
+        "src/detector_sum_rule.py:raw_absorption_rate",
+        "src/detector_sum_rule.py:orbital_vertex_weight"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC015",
+      "title": "Exact extended-Hubbard effective field",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (117), (123), (124), (127), and (128)"
+        }
+      ],
+      "latex": "(2 pi)^2 h(k)=2 lambda_T d(k)-(1/pi^2) integral_BZ d^2q [U+2V(cos q_x+cos q_y)] n(k-q)",
+      "role": "Defines the exact finite-q evolution used for the paper's main Figs. 2 and 3.",
+      "derived_from": [
+        "EQC005",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC015_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The official Supplemental Material prints the interaction kernel, Hartree-Fock functional, two-band LLG equation, and the 1/pi^2 exact-field prefactor in Eqs. (117), (123)-(124), and (127)-(128)."
+        },
+        {
+          "id": "EQC015_variation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Varying the symmetric double momentum integral produces two equal projector-overlap terms; the Pauli trace reduces them to the convolution with n(k-q)."
+        },
+        {
+          "id": "EQC015_low_rank",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Using cos(k_i-p_i)=cos(k_i)cos(p_i)+sin(k_i)sin(p_i) reduces the convolution exactly to five Fourier moments."
+        },
+        {
+          "id": "EQC015_constant",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For a constant texture the cosine moments vanish, the interaction field is parallel to n, and the interaction-only torque is zero."
+        }
+      ],
+      "numerical_form": "Periodic quadrature of five vector Fourier moments followed by projected RK4.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:extended_hubbard_convolution",
+        "src/chern_jump_geometry.py:exact_extended_hubbard_rhs",
+        "src/chern_jump_geometry.py:rk4_step_exact_extended_hubbard"
+      ],
+      "open_questions": [
+        "The paper does not disclose its momentum mesh, time step, or integrator."
+      ]
+    },
+    {
+      "id": "EQC016",
+      "title": "Small-q coupling for the extended Hubbard kernel",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (129)-(134)"
+        }
+      ],
+      "latex": "lambda_D=[(U+4V)Q^4/4-VQ^6/6]/(4 pi)",
+      "role": "Maps the exact interaction parameters to the comparison small-q flow.",
+      "derived_from": [
+        "EQC006",
+        "EQC015"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC016_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplemental Eq. (131) prints the closed form after expanding v(q) through q squared."
+        },
+        {
+          "id": "EQC016_integral",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integrating q^3[(U+4V)-Vq^2] from zero to Q gives the printed Q^4/4 and Q^6/6 terms."
+        },
+        {
+          "id": "EQC016_value",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "U=8, V=0.75, and Q=pi/2 give lambda_D=1.1828772769..., consistent with the paper's rounded 1.183."
+        }
+      ],
+      "numerical_form": "Direct scalar evaluation before running the approximate flow.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:extended_hubbard_lambda_d"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC017",
+      "title": "Trace-condition deviation map",
+      "source_refs": [
+        {
+          "type": "figure_caption",
+          "value": "Main Fig. 3 and Supplemental Fig. 4"
+        }
+      ],
+      "latex": "Delta_tr(k)=0.5 [tr g(k)-|F_12(k)|] >= 0",
+      "role": "Defines the momentum-resolved observable plotted in the paper's main Fig. 3.",
+      "derived_from": [
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC017_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The source figure's color-bar label explicitly uses one half of the trace-minus-absolute-curvature difference."
+        },
+        {
+          "id": "EQC017_geometry",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For P=(I+n dot sigma)/2, g_ij=(partial_i n dot partial_j n)/4 and F_12=-(n dot partial_x n cross partial_y n)/2."
+        },
+        {
+          "id": "EQC017_bound",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The pointwise trace inequality makes Delta_tr nonnegative in the continuum; small negative samples are therefore a discretization diagnostic rather than physical data."
+        },
+        {
+          "id": "EQC017_mesh",
+          "type": "method_identity",
+          "status": "passed",
+          "reason": "The supplement says energy and Chern use the same finite-mesh integration scheme but omits the stencil. Periodic spectral derivatives reproduce the reported near-pi energy, noninteger transition profile, and sharp T_short peak on one common mesh; centered differences and solid-angle Chern remain independent checks."
+        }
+      ],
+      "numerical_form": "Periodic spectral derivatives on a half-cell-shifted mesh for metric and curvature, with centered-difference and solid-angle diagnostics retained separately.",
+      "code_refs": [
+        "src/chern_jump_geometry.py:local_geometry"
+      ],
+      "open_questions": [
+        "The paper does not report the grid or its origin shift; N=141 and a half-cell shift are a convergence-backed reconstruction, not author metadata."
+      ]
+    }
+  ]
+}

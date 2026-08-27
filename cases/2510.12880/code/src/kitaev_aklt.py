@@ -161,7 +161,12 @@ def all_sectors(number_sites: int) -> tuple[tuple[int, ...], ...]:
     return tuple(product((-1, 1), repeat=number_sites))
 
 
-def _assemble_hamiltonian(configurations: np.ndarray, theta: float) -> np.ndarray:
+def _assemble_hamiltonian(
+    configurations: np.ndarray,
+    theta: float,
+    *,
+    periodic: bool = True,
+) -> np.ndarray:
     number_states, number_sites = configurations.shape
     state_to_index = {
         tuple(int(value) for value in configuration): index
@@ -175,7 +180,8 @@ def _assemble_hamiltonian(configurations: np.ndarray, theta: float) -> np.ndarra
 
     for column, configuration_array in enumerate(configurations):
         configuration = [int(value) for value in configuration_array]
-        for bond in range(number_sites):
+        bond_count = number_sites if periodic else number_sites - 1
+        for bond in range(bond_count):
             next_site = (bond + 1) % number_sites
             local_input = 3 * configuration[bond] + configuration[next_site]
             local_operator = local_operators[bond_character(bond)]
@@ -218,6 +224,20 @@ def full_hamiltonian(number_sites: int, theta: float) -> tuple[np.ndarray, np.nd
         raise ValueError("the periodic alternating chain requires even N")
     configurations = _all_configurations(number_sites)
     return _assemble_hamiltonian(configurations, theta), configurations
+
+
+def open_hamiltonian(number_sites: int, theta: float) -> tuple[np.ndarray, np.ndarray]:
+    """Return the full open-chain Hamiltonian for a small even system.
+
+    With even ``number_sites`` the alternating bond sequence is
+    X,Y,...,X, so the two open ends are both adjacent to X bonds as specified
+    in the supplemental edge-state discussion.
+    """
+
+    if number_sites < 2 or number_sites % 2:
+        raise ValueError("the open-chain claims require even N>=2")
+    configurations = _all_configurations(number_sites)
+    return _assemble_hamiltonian(configurations, theta, periodic=False), configurations
 
 
 def cluster_mps_matrices() -> dict[int, dict[int, np.ndarray]]:

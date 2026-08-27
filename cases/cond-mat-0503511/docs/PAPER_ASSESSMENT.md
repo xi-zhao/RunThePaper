@@ -11,18 +11,101 @@ This report is a human-readable projection of the validated structured independe
 | Protocol status | `passed` |
 | Protocol valid | `true` |
 | Whole-paper scope | `complete` |
-| Paper assessment | `mixed` |
+| Paper assessment | `inconclusive` |
+| Reviewed atomic claims | `74` |
+| Candidate atomic claims | `0` |
 | Candidate targets | `0` |
+
+## Atomic claim adjudication
+
+| Claim | Targets | Assessment | Independent-review reason |
+| --- | --- | --- | --- |
+| R001 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R002 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R003 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R004 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R005 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R006 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R007 | T001 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R008 | T002 | `inconclusive` | The available evidence is informative but not paper-exact, so the claim remains non-decisive in fresh review. |
+| R009 | T002 | `inconclusive` | The available evidence is informative but not paper-exact, so the claim remains non-decisive in fresh review. |
+| R010 | T002 | `inconclusive` | The available evidence is informative but not paper-exact, so the claim remains non-decisive in fresh review. |
+| R011 | T002 | `inconclusive` | The available evidence is informative but not paper-exact, so the claim remains non-decisive in fresh review. |
+| R012 | T003 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R013 | T003 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R014 | T003 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R015 | T003 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R016 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R017 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R018 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R019 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R020 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R021 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R022 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R023 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R024 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R025 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R026 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R027 | T004 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R028 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R029 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R030 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R031 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R032 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R033 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R034 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R035 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R036 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R037 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R038 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R039 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R040 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R041 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R042 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R043 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R044 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R045 | T005 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R046 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R047 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R048 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R049 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R050 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R051 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R052 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R053 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R054 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R055 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R056 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R057 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R058 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R059 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R060 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R061 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R062 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R063 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R064 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R065 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R066 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R067 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R068 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R069 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R070 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R071 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R072 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R073 | T007 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
+| R074 | T006 | `paper_supported` | The packaged paper-exact evidence supports this claim and the fresh falsification attempt did not overturn it. |
 
 ## Target adjudication
 
 | Target | Assessment | Independent-review reason |
 | --- | --- | --- |
-| T001 | `paper_supported` | The frozen open-chain data independently recover the central Fig. 1 scaling: an ordinary least-squares fit over the paper-declared KZM window gives exponent 0.5806856 in the rate variable, equivalent to nu proportional to tauQ^-0.5806856. The fitted prefactor 0.178889 is reasonably consistent with the paper's approximate 0.16 rather than evidence of a resolved discrepancy. The Hamiltonian, quench endpoints, chain lengths, axis conversion, and KZM formula are paper exact, and the isolated v6 attestation reports no forbidden source access. |
-| T002 | `reproduction_defect` | The parity-resolved spectrum method and the critical accessible gap are scientifically sound: an independent critical-chain formula gives 4[sin(pi/82)+sin(3pi/82)]=0.6119446W, identical to the frozen N=20 value and 2.606% below the asymptotic 4piW/N estimate. However, the configured J/W domain stops at 2.0 and the energy/particle/grid cutoffs are reconstructed assumptions, so the full numerical panel is not paper exact. This is a coverage/provenance defect in the reproduction, not evidence against the paper. |
-| T003 | `reproduction_defect` | The fixed-time fidelity data recover a=57.8368, close to the reported 59, and every 99% crossing is numerically resolved. But the reported 1.93 size exponent is recovered only after applying the undeclared N>=40 cutoff: refitting all ten configured N values gives 1.8472909, while N>=40 gives 1.9336471. In addition, the printed LZF chain is internally inconsistent by a factor of two in its velocity slope. Because the fit selection is not paper exact and the bundle lacks a controlled tolerance sweep sufficient to promote the formula issue to a paper-error candidate, the correct classification is reproduction defect. |
-| T004 | `reproduction_defect` | Direct fits to the frozen exact fidelities recover a=59.2914, 58.5300, 57.1727, and 54.0447 for N=90,70,50,30, agreeing with the paper's 59,59,57,54 to below 0.8%, and exact fidelity stays within the printed moment bounds. Nevertheless, the implementation adds an upper fit cutoff f<=0.99 while the paper specifies only f>0.6, and the LZF derivation retains the factor-of-two slope inconsistency. Thus the numerical signal supports the paper, but this artifact does not provide a paper-exact adjudication. |
-| T005 | `inconclusive` | The KZM portion is strongly supported: independent regressions give slopes 0.6696, 0.6374, 0.6160, 0.6009, 0.5895, and 0.5807 for N=50 through 100, reproducing the caption's rounded 0.66-to-0.58 range. The common tauQ^-1/2 scaling of KZM and LZF also follows analytically. However, the LZF normalization is internally inconsistent in the paper, the artifact's LZF fit window is not paper exact, and the fastest frozen N=100 points still increase from 16.97 kinks at rate 0.7 to 34.16 at rate 4.0 rather than documenting a converged plateau. With no controlled tolerance/fast-rate convergence evidence, the combined-regime target cannot be finally adjudicated. |
+| T001 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T002 | `inconclusive` | Derived from linked atomic claim assessments. |
+| T003 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T004 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T005 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T006 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T007 | `paper_supported` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 

@@ -1,0 +1,196 @@
+{
+  "schema_version": 2,
+  "paper_id": "10.1103-PhysRevB.91.085420",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (complete nine-page published article)",
+    "known_items": [
+      "Main Fig. 1(a-b)",
+      "Main Fig. 2(a-b), with three Floquet-band columns in each row",
+      "Main Fig. 3",
+      "Main Fig. 4",
+      "no supplementary material and no numerical tables"
+    ],
+    "unknown_remainder": false,
+    "reason": "The full article, all four captions, main text, appendix, and references were audited; the fixed denominator is six numerical figure/subfigure items."
+  },
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T101",
+        "T201",
+        "T301",
+        "T401"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/cdhm.py",
+        "src/observables.py",
+        "src/theory.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "One clean-room campaign executes Floquet spectra, band populations, one-cycle dynamics, Equation (8), and Equation (13) from case-local scientific code.",
+        "Unitarity and probability-conservation invariants pass on the frozen reduced profile.",
+        "Every result states that paper scale was not executed and scientific coverage is unchanged."
+      ],
+      "execution_evidence": "outputs/runs/10.1103-PhysRevB.91.085420-implementation-closure-v1/run_attestation.json"
+    },
+    "paper_scale_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T101",
+        "T201",
+        "T301",
+        "T401"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale_all.py",
+        "--config",
+        "config/paper_scale_all.json",
+        "--output-root",
+        "outputs/checks/paper_scale_all"
+      ],
+      "code_refs": [
+        "src/cdhm.py",
+        "src/observables.py",
+        "src/theory.py",
+        "scripts/gen_fig1.py",
+        "scripts/gen_fig2.py",
+        "scripts/gen_fig3.py",
+        "scripts/gen_fig4.py",
+        "scripts/run_paper_scale_all.py"
+      ],
+      "config_ref": "config/paper_scale_all.json",
+      "run_contract_ref": "run_contract.paper_scale_all.json",
+      "expected_outputs": [
+        "outputs/checks/fig1.json",
+        "outputs/checks/fig2.json",
+        "outputs/checks/fig3.json",
+        "outputs/checks/fig4.json",
+        "outputs/checks/paper_scale_all/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "All six numerical figure/subfigure items are regenerated from the published equations and one frozen paper-scale parameter profile.",
+        "Floquet unitarity, probability conservation, actual-versus-perturbative agreement, T-independence, Chern quantization, and transition location pass target-specific checks.",
+        "The isolated campaign reads no paper image, source pixel, author code, or author numerical array."
+      ],
+      "execution_evidence": "outputs/runs/10.1103-PhysRevB.91.085420-paper-scale-all-v2-20260825/run_attestation.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Figure 1(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T101"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "Independent Floquet propagation generates all three quasienergy surfaces.",
+      "claim_refs": [
+        "CLM_FLOQUET_BAND_SURFACES"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T101"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "The site-localized initial state is independently projected onto all three Floquet bands.",
+      "claim_refs": [
+        "CLM_INITIAL_BAND_POPULATIONS"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T201"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "Full one-cycle propagation independently generates the actual band-population changes.",
+      "claim_refs": [
+        "CLM_EXACT_ONE_CYCLE_POPULATION_CHANGE"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T201"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "Equation (8) independently generates the first-order population-change prediction.",
+      "claim_refs": [
+        "CLM_FIRST_ORDER_POPULATION_CHANGE"
+      ]
+    },
+    {
+      "item_id": "Main Figure 3",
+      "kind": "numeric",
+      "item_type": "figure",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T301"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "All six pumping durations, the Eq. (13) total, and the Berry-only branch are independently evaluated.",
+      "claim_refs": [
+        "CLM_IBC_CORRECTED_DISPLACEMENT"
+      ]
+    },
+    {
+      "item_id": "Main Figure 4",
+      "kind": "numeric",
+      "item_type": "figure",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T401"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "reason": "The actual, total-theory, and Berry-only scans across the Floquet-Chern transition are independently generated.",
+      "claim_refs": [
+        "CLM_FLOQUET_CHERN_TRANSITION"
+      ]
+    }
+  ]
+}

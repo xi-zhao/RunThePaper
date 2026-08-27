@@ -10,7 +10,7 @@
 
 ## Reusable Checks Or Tools
 
-- Add an internal arXiv source renderer for visual validation without redistributing source figures.
+- Add an arXiv source renderer that extracts figure PDFs and converts them into `internal-paper-reference/`.
 - Add a Porter-Thomas feature checker for random-circuit papers: histogram slope, XEB near zero for full batch, post-selection curve, and conditional normalization.
 - Add a large-scale feasibility classifier with statuses such as `feature_reproduced`, `author_data_validated`, `exact_large_scale_blocked`, and `hardware_rerun_required`.
 - Add a memory-vs-time classification so the agent knows when to offer longer local runs and when to recommend external hardware immediately.

@@ -1,0 +1,377 @@
+{
+  "schema_version": 1,
+  "paper_id": "quant-ph-0211074",
+  "status": "passed",
+  "audit_purpose": "Target-specific proof that each claimed publication blocker is a missing scientific definition or input, rather than missing workflow metadata.",
+  "source_boundary": {
+    "fully_audited": [
+      "paper-source/paper.tex",
+      "raw/paper.pdf",
+      "paper-source.tar",
+      "paper-source/ising.eps",
+      "paper-source/xx-xxx.eps"
+    ],
+    "locations_checked": [
+      "main text",
+      "all displayed equations",
+      "figure captions and labels",
+      "footnotes and bibliography notes",
+      "source archive member list",
+      "EPS labels and metadata"
+    ],
+    "supplement_status": "No supplementary manuscript or parameter table is present in the publication source archive.",
+    "forbidden_numeric_inputs": {
+      "author_code_used": false,
+      "author_numeric_arrays_used": false,
+      "source_figure_pixels_used": false,
+      "note": "EPS files were checked only for publication labels/metadata and were not sampled or digitized."
+    }
+  },
+  "decision_rule": "confirmed_publication_underspecified requires a complete source trace, at least two scientifically admissible reconstructions, a target-specific independent attempt, and checks excluding an implementation fault in that attempt.",
+  "targets": {
+    "T001": {
+      "published_object": "Main Fig. 1 entropy surface and its qualitative noncritical saturation/critical-edge behavior.",
+      "source_refs": [
+        "paper-source/paper.tex:176-190",
+        "paper-source/paper.tex:225-234"
+      ],
+      "published_inputs": [
+        "Ising gamma=1",
+        "displayed a domain",
+        "displayed block-size domain",
+        "thermodynamic covariance equations"
+      ],
+      "missing_unique_inputs": [
+        "finite a sampling grid",
+        "whether every integer L was sampled",
+        "surface interpolation rule",
+        "numerical tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "uniform 51-point a grid with all integer L",
+        "adaptive near-critical a grid with a sparse L grid"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/fig1_ising_surface.csv",
+        "outputs/checks/science_checks.json#target_results.T001"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py",
+        "outputs/checks/science_checks.json#gates"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T003": {
+      "published_object": "Eq. (21) majorization relation asserted for every positive block length after numerical verification.",
+      "source_refs": [
+        "paper-source/paper.tex:316-330"
+      ],
+      "published_inputs": [
+        "product spectrum Eq. (20)",
+        "majorization direction",
+        "L-to-L+2 comparison"
+      ],
+      "missing_unique_inputs": [
+        "finite verification range",
+        "XY parameter points",
+        "partial-sum tolerance",
+        "precision and zero-padding convention"
+      ],
+      "nonunique_reconstructions": [
+        "L=1..16 at critical Ising and XX",
+        "a wider sweep at one XY parameter point with a different tolerance"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/majorization_checks.csv",
+        "outputs/checks/science_checks.json#target_results.T003"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py::test_majorization_survives_extended_critical_ising_and_xx_sweep",
+        "outputs/checks/science_checks.json#gates.majorization_finite_sweep"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T005": {
+      "published_object": "Post-Eq. (13) claim that the covariance procedure is polynomial and reliable for blocks of up to several tens of spins.",
+      "source_refs": [
+        "paper-source/paper.tex:168-176"
+      ],
+      "published_inputs": [
+        "2L by 2L covariance diagonalization",
+        "qualitative size range of several tens"
+      ],
+      "missing_unique_inputs": [
+        "specific L values",
+        "XY parameters",
+        "reliability error metric",
+        "reference precision and tolerance",
+        "hardware/runtime convention for an empirical effort claim"
+      ],
+      "nonunique_reconstructions": [
+        "quadrature-doubling accuracy at L=20,40,80",
+        "wall-time scaling over a dense L grid at fixed quadrature"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/formula_pipeline_reliability.csv",
+        "outputs/checks/science_checks.json#target_results.T005"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py",
+        "outputs/checks/science_checks.json#gates.formula_pipeline_convergence"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T009": {
+      "published_object": "N=20 XXZ entropy distinguishes critical and noncritical parameter regimes.",
+      "source_refs": [
+        "paper-source/paper.tex:192-203",
+        "paper-source/paper.tex:237-255"
+      ],
+      "published_inputs": [
+        "N up to 20",
+        "periodic chain implied by Eq. (3)",
+        "Delta=1 and lambda=0 for the displayed XXX curve"
+      ],
+      "missing_unique_inputs": [
+        "noncritical Delta/lambda probe",
+        "Bethe sector/root-selection procedure",
+        "finite-size comparison metric",
+        "numerical tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "Delta=2, lambda=0 easy-axis comparison",
+        "field-driven noncritical comparison at Delta=1"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/checks/science_checks.json#target_results.T009"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py",
+        "outputs/checks/science_checks.json#gates.xxz_critical_noncritical_regimes"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T010": {
+      "published_object": "Fig. 1 caption scaling form log[L f(L|1-a|)].",
+      "source_refs": [
+        "paper-source/paper.tex:225-234"
+      ],
+      "published_inputs": [
+        "scaling coordinate L|1-a|",
+        "logarithmic scaling form"
+      ],
+      "missing_unique_inputs": [
+        "function f",
+        "normalization/additive constant",
+        "a and L grid",
+        "scaling window",
+        "collapse statistic and tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "fixed-coordinate spread after subtracting log2(L)/6",
+        "global nonlinear fit of an arbitrary normalized f"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json#target_results.T010"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py",
+        "outputs/checks/science_checks.json#gates.noncritical_scaling_proxy_consistency"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T012": {
+      "published_object": "Eq. (18) limiting entropy offset between gamma=1 and 0<gamma<1.",
+      "source_refs": [
+        "paper-source/paper.tex:210-222"
+      ],
+      "published_inputs": [
+        "a=1",
+        "0<gamma<=1",
+        "asymptotic offset formula"
+      ],
+      "missing_unique_inputs": [
+        "finite gamma values",
+        "finite L sequence",
+        "extrapolation model",
+        "convergence tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "direct finite-L residual at gamma=0.25,0.5,0.75",
+        "joint 1/L extrapolation over another gamma grid"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/quantitative_claim_checks.json",
+        "outputs/checks/science_checks.json#target_results.T012"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py::test_critical_anisotropy_offset_matches_printed_asymptote",
+        "outputs/checks/science_checks.json#gates.anisotropy_offset"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T015": {
+      "published_object": "Entanglement decreases along renormalization-group trajectories.",
+      "source_refs": [
+        "paper-source/paper.tex:290-314"
+      ],
+      "published_inputs": [
+        "UV-to-IR central-charge inequality",
+        "qualitative block-spin plus rescaling interpretation"
+      ],
+      "missing_unique_inputs": [
+        "lattice RG transformation",
+        "trajectory and couplings",
+        "state/observable matching across scales",
+        "regularization",
+        "monotonicity statistic and tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "mass-deformation proxy at fixed block length",
+        "explicit real-space blocking with a separately chosen state-matching rule"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/rg_flow_proxy.csv",
+        "outputs/checks/science_checks.json#target_results.T015"
+      ],
+      "code_fault_exclusion_refs": [
+        "outputs/checks/science_checks.json#gates.rg_mass_flow_proxy_monotonic",
+        "config/paper_exact.json"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T016": {
+      "published_object": "Eq. (20) gives the complete reduced-density-matrix spectrum and enables examination of its reshuffling with L.",
+      "source_refs": [
+        "paper-source/paper.tex:316-330"
+      ],
+      "published_inputs": [
+        "exact product-spectrum formula",
+        "binary occupations x_m",
+        "L-to-L+2 majorization direction"
+      ],
+      "missing_unique_inputs": [
+        "XY parameter point(s) for the reported numerical examination",
+        "finite L range",
+        "spectrum ordering/degeneracy convention",
+        "reshuffling statistic and tolerance"
+      ],
+      "nonunique_reconstructions": [
+        "full enumeration through L=16 at critical Ising and XX",
+        "modewise spectrum comparison at a noncritical XY point"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json#target_results.T016"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py::test_entanglement_spectrum_is_normalized",
+        "outputs/checks/science_checks.json#gates.product_spectrum_entropy_identity"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T017": {
+      "published_object": "The number of relevant eigenvectors of rho_L grows without bound at criticality, motivating the DMRG limitation.",
+      "source_refs": [
+        "paper-source/paper.tex:258-260"
+      ],
+      "published_inputs": [
+        "critical versus noncritical distinction",
+        "qualitative growth/saturation argument"
+      ],
+      "missing_unique_inputs": [
+        "definition of relevant eigenvector",
+        "retained-weight or eigenvalue threshold",
+        "finite L range",
+        "DMRG truncation/error convention",
+        "criterion for unbounded growth"
+      ],
+      "nonunique_reconstructions": [
+        "epsilon-effective rank at retained weight 0.9999",
+        "count above a fixed absolute eigenvalue threshold"
+      ],
+      "independent_attempt_refs": [
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/checks/science_checks.json#target_results.T017"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_model.py::test_resolved_rank_is_not_the_retained_weight_proxy",
+        "outputs/checks/science_checks.json#gates.effective_rank_semantics_separated"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    },
+    "T018": {
+      "published_object": "Higher-dimensional critical spin-lattice entropy obeys S_R approximately kappa sigma(R).",
+      "source_refs": [
+        "paper-source/paper.tex:276-288"
+      ],
+      "published_inputs": [
+        "spatial dimension 2 or 3",
+        "boundary-area scaling form"
+      ],
+      "missing_unique_inputs": [
+        "spin Hamiltonian",
+        "critical coupling",
+        "region family",
+        "lattice discretization",
+        "boundary condition",
+        "coefficient kappa",
+        "finite-size convergence rule"
+      ],
+      "nonunique_reconstructions": [
+        "2D transverse-field Ising square regions",
+        "3D Heisenberg cubic regions"
+      ],
+      "independent_attempt_refs": [
+        "outputs/checks/T018_area_law_assessment.json"
+      ],
+      "code_fault_exclusion_refs": [
+        "tests/test_area_law.py",
+        "outputs/runs/quant-ph-0211074-area-law-boundary-v1-20260824/run_attestation.json"
+      ],
+      "verdict": "confirmed_publication_underspecified",
+      "external_proof": {
+        "kind": "source_trace",
+        "result": "passed"
+      }
+    }
+  }
+}

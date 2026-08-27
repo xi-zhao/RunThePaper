@@ -2,56 +2,41 @@
 
 ## Method Cards
 
-### NUM001
+### MTH001 — Stable proper-time quadrature
 
-- Target: T001, paper Figure 2(a,b).
-- Equations/method cards: EQC002-EQC006; MTH001.
-- Parameters: `m_0={0,0.5,1,1.5}`; left `alpha_0=0..30`; right
-  `alpha_0>0..12`; paper normalization `8 pi^2 L^3/A`.
-- Grid or benchmark: deterministic dense display grid; all claim-relevant
-  masses and full paper axes.
-- Boundary conditions: encoded by `j=1,2,...` Poisson image sum for two
-  Dirichlet plates.
-- Solver: positive modified-Bessel series; original proper-time quadrature for
-  independent checkpoints.
-- Tolerance: Bessel-argument cutoff 42 (production) and 46 (convergence
-  check); adaptive quadrature relative tolerance `2e-9`.
-- Random seed: not applicable; calculation is deterministic.
-- Output schema: tidy CSV columns
-  `target_id,panel_id,alpha0,m0,normalized_energy,series_id`.
-- Validation checks: analytic zero-coupling Landau values, quadrature
-  agreement, tail stability, monotonic suppression, mass ordering, correction
-  divergence.
-- Numerical risks: cancellation is absent because all magnitudes are
-  positive; underflow at very large Bessel arguments is harmless and occurs
-  below the tail bound.
-
-### NUM002
-
-- Target: T002, paper Figure 3.
-- Equations/method cards: EQC002-EQC004, EQC006-EQC007; MTH001.
-- Parameters: `m_0={0,0.5,1,1.5}`; `alpha_0>0..25`; full paper axes.
-- Solver: independently recompute both positive series within the T002
-  authorization, then form `1+S_c/S_L`.
-- Output schema: tidy CSV columns
-  `target_id,panel_id,alpha0,m0,energy_ratio,series_id`.
-- Validation checks: `R>1`, monotone decrease over the rendered range,
-  explicit algebraic ratio identity, direct-quadrature checkpoint, approach
-  to unity.
+- Targets: T001 and T002
+- Equations: EQC002–EQC007
+- Parameters: \(m_0=0,0.5,1,1.5\); paper-exact displayed ranges
+- T001 grids: 301 Landau points on `[0,30]`; 240 correction points on `[0.1,12]`
+- T002 grid: 250 points on `[0.1,25]`
+- Solver: vector-valued adaptive Gauss–Kronrod quadrature after
+  \(u=\log\tau\)
+- Plate sum: direct at small \(\tau\), Jacobi/Poisson-resummed at large
+  \(\tau\)
+- Hyperbolic factors: exponentially scaled to avoid overflow
+- Relative quadrature tolerance: \(2\times10^{-9}\)
+- Random seed: not applicable; the calculation is deterministic
+- Output: `fig2_energy_contributions.csv` (2,164 rows) and
+  `fig3_energy_ratio.csv` (1,000 rows)
+- Independent oracle: positive modified-Bessel \(K_1\) sums
+- Maximum representation discrepancy: `2.0875e-11`
 
 ## Efficiency And Reuse Plan
 
-- Baseline implementation: direct adaptive quadrature for every curve point.
-- Main bottleneck: nested quadrature over a slowly converging image sum.
-- Efficient implementation choice: analytically integrate each positive
-  exponential term to `K_1`, then truncate by Bessel argument.
-- Complexity or scaling: deterministic finite positive sums; required term
-  count falls approximately as `1/alpha_0` and exponentially with image index.
-- Performance bottleneck removed: quadrature is retained only at a few
-  independent checkpoints.
-- Optional harness promotion candidate: none during this frozen Trial.
-- Case-specific parts that should not enter the harness: Casimir integrals,
-  asymptotic corrections, target axes and plotting styles.
-- Performance evidence: recorded in
-  `outputs/checks/T001_scientific_checks.json`,
-  `outputs/checks/T002_scientific_checks.json`, and `PERFORMANCE_PROFILE.md`.
+- Baseline: direct proper-time integral definitions from the paper
+- Main risk: slowly convergent Gaussian mode sum and large exponential arguments
+- Efficient choice: Poisson transform plus vector integration
+- Scaling: linear in the number of requested \(\alpha_0\) grid points, with a
+  short exponentially convergent auxiliary sum
+- Paper-scale data generation: about 0.05 s per target on the Trial host
+- Reusable candidate: the stable Gaussian mode-sum helper
+- Case-local logic: physical prefactors, sector definitions, limits, and all
+  formula-error diagnostics
+
+## Validation Sequence
+
+1. exploratory Bessel-versus-quadrature benchmark;
+2. guarded final data generation;
+3. sign, monotonicity, ordering, identity, and limit checks;
+4. guarded rendering from accepted CSV;
+5. registered scientific and pixel comparison.

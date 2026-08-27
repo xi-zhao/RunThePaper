@@ -6,7 +6,7 @@ Published as: [Tuning Transport in Solid-State Bose-Fermi Mixtures by Feshbach R
 
 Formal citation: Phys. Rev. Lett. 134, 126502 (2025) · DOI `10.1103/PhysRevLett.134.126502` · Locator `126502`
 
-Public status: **Partial scientific reproduction** · Audit score: **54.90/100**
+Public status: **Partial scientific reproduction** · Audit score: **54.91/100**
 
 The arXiv paper and source archive were frozen before implementation.
 
@@ -85,7 +85,7 @@ cd cases/2409.18176/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
@@ -116,3 +116,5 @@ Final-parameter rule: final public figures use the paper parameters when feasibl
 ![T009 supp fig6 kubo difference](outputs/figures/T009_supp_fig6_kubo_difference.png)
 
 ![T010 supp fig7 trion drag](outputs/figures/T010_supp_fig7_trion_drag.png)
+
+![T011 main fig3 inset far detuned](outputs/figures/T011_main_fig3_inset_far_detuned.png)

@@ -26,7 +26,6 @@
 - `outputs/data/iteration2_fig2_variance_L10.csv`
 - `outputs/data/iteration2_fig3_mutual_information_corrected.csv`
 - `outputs/data/iteration2_fig4_long_range_variance_L10.csv`
-- `outputs/data/fig3_large_ed_campaign.csv` (medium campaign, 55 aggregated paper points)
 
 ## Generated Figures
 
@@ -39,7 +38,6 @@
 - `outputs/figures/iteration2_fig2_level_statistics_variance_L10.png`
 - `outputs/figures/iteration2_fig3_mutual_information_corrected.png`
 - `outputs/figures/iteration2_fig4_long_range_variance_L10.png`
-- `outputs/figures/fig3_scaling_collapse.png`
 
 ## Checks
 
@@ -49,9 +47,15 @@
 - `outputs/checks/iteration2_dtc_feature_checks.json`
 - `outputs/checks/reproduction_scope_check.json`
 - `outputs/checks/harness_case_audit.json`
-- `outputs/checks/fig3_scaling_collapse.json`
-- `outputs/checks/completion_assessment.json`
 
 ## Limitations
 
-The medium Fig. 3 campaign covers `L=8,10,12`, 168 completed CuPy/NumPy jobs, and 55 aggregated paper-parameter points. The paper-scale final profile adds `L=14` and per-point disorder targets of `10000/10000/3000/1000` for `L=8/10/12/14`; optional `L=16,18` require a memory-aware eigensolver. These runs were not launched because they exceed the current compute and memory boundary.
+The local case now reproduces the main numerical features, but the original paper's large-scale claims still require larger `L` and much heavier disorder averaging. This case therefore remains a feature-level reproduction with explicit large-scale blockers.
+
+## Complete paper-scale channel
+
+The migration adds `config/paper_scale_all.json`, `src/dtc_paper_scale.py`, and `scripts/run_paper_scale_all.py`. Together they enumerate all 38 numerical items across seven calculation families. Dense Floquet diagonalization is used through L=14; the L=16/18 mutual-information check uses a phase-stratified matrix-free Hermitian-pencil subset across eight quasienergy anchors. Time-evolution targets stream state vectors and persist only scalar summaries.
+
+Every work unit has a deterministic identity and seed. Atomic shard files bind the configuration, implementation, and work-unit hashes; aggregation refuses incomplete or stale inputs. The smoke profile exercises every family but substitutes L=4, one realization, short traces, and two-point grids, so its outputs are implementation evidence only.
+
+The isolated execution contracts add `--skip-render`: they freeze and hash the seven aggregate numerical datasets plus checks without importing Matplotlib. Rendering remains a separate post-freeze action over those generated arrays, preventing font discovery or any other presentation concern from entering the attested numerical process.

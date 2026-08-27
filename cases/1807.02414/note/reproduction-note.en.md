@@ -2,7 +2,7 @@
 
 ## Result
 
-Independent TBA reproduces the six theory curves and text values; the full spectral diffusion operator and external tDMRG remain open.
+Euler GHD, spin Onsager values, and three analytic limits are reproduced; full diffusive GHD and tDMRG paper-time campaigns are externally compute-blocked.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, science=failed, execution=attested, pixel=mixed, independent_review=missing, paper_assessment=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=paper_exact, parameter_provenance=missing, causal_resolution=terminal_blocker, science=pending, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 

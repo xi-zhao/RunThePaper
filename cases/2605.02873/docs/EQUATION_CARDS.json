@@ -1,0 +1,358 @@
+{
+  "schema_version": 1,
+  "paper_id": "2605.02873",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Finite double-slit support",
+      "role": "Defines the exact finite aperture over which every generated Fresnel integral is evaluated.",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "main.tex Eq. (1), slit transmission"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "supplement.tex Eq. (S23), finite-slit integral decomposition"
+        }
+      ],
+      "latex": "T(x)=\\operatorname{rect}\\!\\left(\\frac{x+d/2}{a}\\right)+\\operatorname{rect}\\!\\left(\\frac{x-d/2}{a}\\right),\\qquad \\int T(x)F(x)\\,dx=\\sum_{s=\\pm1}\\int_{sd/2-a/2}^{sd/2+a/2}F(x)\\,dx.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC001-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The transmission and the two explicit integration intervals are stated in the main paper and Supplement S2."
+        },
+        {
+          "id": "CHK-EQC001-IDENTITY",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The two rect supports are centered at -d/2 and +d/2 with half-width a/2, giving exactly the two stated finite intervals."
+        }
+      ],
+      "numerical_form": "Use independent Gauss--Legendre nodes on each interval [s*d/2-a/2, s*d/2+a/2] and concatenate the weighted sums; never integrate over source-image data.",
+      "code_refs": [
+        "src/try_fresnel.py::slit_quadrature"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Fresnel field and baseline TRY response",
+      "role": "Defines the independently evaluated complex field, its zero-aberration limit, and the Fig. 1(a) observable.",
+      "source_refs": [
+        {
+          "type": "main_equations",
+          "value": "main.tex Eqs. (2)-(4)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S1)-(S5)"
+        }
+      ],
+      "latex": "E(y|\\theta_t,\\theta_f)=\\int T(x)\\exp\\!\\left[\\frac{ik(x-y)^2}{2L_1}+\\frac{ik(X_D-x)^2}{2L_2}+i\\theta_t\\frac{x}{W}+i\\theta_f\\left(\\frac{x}{W}\\right)^2\\right]dx,\\quad E_0(y)=E(y|0,0),\\quad R_0(y)=|E_0(y)|^2.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC002-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The phase convention, detector coordinate, and omission of only overall constant Fresnel prefactors are explicit in the paper and supplement."
+        },
+        {
+          "id": "CHK-EQC002-BASELINE",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Setting both dimensionless aberration coefficients to zero removes only the last two phase factors, and the measured response is the real nonnegative modulus square."
+        }
+      ],
+      "numerical_form": "Evaluate the complex exponential at all y samples and finite-slit quadrature nodes; multiply by the quadrature weights to obtain E0, then compute R0=real(E0*conj(E0)).",
+      "code_refs": [
+        "src/try_fresnel.py::fresnel_observables"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Weighted moments and exact local intensity derivatives",
+      "role": "Connects the physical Fresnel field to the tilt and defocus response functions plotted in Fig. 1(b).",
+      "source_refs": [
+        {
+          "type": "main_equations",
+          "value": "main.tex Eqs. (5)-(9)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S6)-(S19)"
+        }
+      ],
+      "latex": "M_\\mu(y)=\\int K(x,y)q_\\mu(x)\\,dx,\\quad q_t=x/W,\\quad q_f=(x/W)^2,\\quad \\left.\\partial_{\\theta_\\mu}E\\right|_0=iM_\\mu,\\quad g_\\mu(y)=\\left.\\partial_{\\theta_\\mu}|E|^2\\right|_0=-2\\operatorname{Im}[E_0^*(y)M_\\mu(y)].",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC003-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both weighted moments and the signed intensity derivatives are explicitly stated and derived in Supplement S1."
+        },
+        {
+          "id": "CHK-EQC003-DERIVATIVE",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating exp(i*theta*q) gives i*q; applying d|E|^2=2 Re(E* dE) and Re(i z)=-Im(z) yields the stated factor and minus sign."
+        },
+        {
+          "id": "CHK-EQC003-NARROW",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For point slits x=+/-W, q_f=1 so M_f=E0 and g_f=-2 Im(|E0|^2)=0, while q_t remains differential."
+        }
+      ],
+      "numerical_form": "Reuse the baseline phase matrix and evaluate weighted sums for q_t and q_f. Compute g_t and g_f from the complex cross-products, without finite differencing the plotted curves.",
+      "code_refs": [
+        "src/try_fresnel.py::fresnel_observables"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Noise weight and full source-resolved Fisher matrix",
+      "role": "Defines the information benchmark used by Fig. 1(d) and Fig. S1.",
+      "source_refs": [
+        {
+          "type": "main_equations",
+          "value": "main.tex Eqs. (11)-(12)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S25), (S40)-(S41)"
+        }
+      ],
+      "latex": "N(y)=R_0(y)+B,\\quad B=0.02\\max_yR_0(y),\\qquad F^{\\mathrm{full}}_{\\mu\\nu}=\\int\\frac{g_\\mu(y)g_\\nu(y)}{N(y)}\\,dy=\\left\\langle\\frac{g_\\mu}{N},\\frac{g_\\nu}{N}\\right\\rangle_N.",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC004-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The 2% regularizing floor and both full-Fisher representations are stated in the main text and Supplement S3."
+        },
+        {
+          "id": "CHK-EQC004-GRAM",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting s_mu=g_mu/N into <s_mu,s_nu>_N=integral N*s_mu*s_nu gives integral g_mu*g_nu/N exactly."
+        },
+        {
+          "id": "CHK-EQC004-POSITIVE",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Because B is strictly positive and R0 is nonnegative, N is positive and the Fisher matrix is a positive-semidefinite Gram matrix."
+        }
+      ],
+      "numerical_form": "Use the same trapezoidal y weights for every full/coded inner product. Assemble the symmetric 2x2 matrix from g_t, g_f, and positive N.",
+      "code_refs": [
+        "src/try_fresnel.py::full_fisher"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Matched filters and nuisance-orthogonal source codes",
+      "role": "Defines the optimized code pair plotted in Fig. 1(c).",
+      "source_refs": [
+        {
+          "type": "main_equations",
+          "value": "main.tex Eqs. (14)-(15)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S26)-(S39)"
+        }
+      ],
+      "latex": "w_t^{\\mathrm{raw}}=g_t/N,\\quad w_f^{\\mathrm{raw}}=g_f/N,\\quad \\widetilde w_t=w_t^{\\mathrm{raw}}-\\frac{\\langle w_t^{\\mathrm{raw}},1\\rangle_N}{\\langle1,1\\rangle_N},\\quad \\widetilde w_f=w_f^{\\mathrm{raw}}-\\frac{\\langle w_f^{\\mathrm{raw}},1\\rangle_N}{\\langle1,1\\rangle_N}-\\frac{\\langle w_f^{\\mathrm{raw}},\\widetilde w_t\\rangle_N}{\\langle\\widetilde w_t,\\widetilde w_t\\rangle_N}\\widetilde w_t,\\quad w_\\mu=\\widetilde w_\\mu/\\|\\widetilde w_\\mu\\|_N.",
+      "derived_from": [
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC005-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The raw weights, projection order, normalization, and discrete inner product are fully specified in Supplement S2."
+        },
+        {
+          "id": "CHK-EQC005-CS",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Cauchy--Schwarz in the N metric maximizes the one-parameter SNR for w proportional to g/N."
+        },
+        {
+          "id": "CHK-EQC005-ORTHO",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Standard Gram--Schmidt algebra makes both codes orthogonal to the constant mode, mutually orthogonal, and unit norm in the N metric."
+        }
+      ],
+      "numerical_form": "Compute weighted projections with the common y integration weights; normalize only after subtracting the nuisance and preceding-code components. Record residual inner products as checks.",
+      "code_refs": [
+        "src/try_fresnel.py::optimized_codes",
+        "src/try_fresnel.py::noise_inner"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Coded Fisher matrix and basis-independent retention",
+      "role": "Defines the optimized and toy principal information fractions plotted in Fig. 1(d).",
+      "source_refs": [
+        {
+          "type": "main_equations",
+          "value": "main.tex Eqs. (16)-(18)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S42)-(S51)"
+        }
+      ],
+      "latex": "G_{m\\mu}=\\int w_mg_\\mu\\,dy,\\quad \\Sigma_{mn}=\\int Nw_mw_n\\,dy,\\quad F^{\\mathrm{code}}=G^{\\mathsf T}\\Sigma^{-1}G,\\quad \\mathcal R=(F^{\\mathrm{full}})^{-1/2}F^{\\mathrm{code}}(F^{\\mathrm{full}})^{-1/2}.",
+      "derived_from": [
+        "EQC004",
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC006-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The transfer, covariance, Fisher, projection interpretation, and retention matrix are all explicit in Supplement S3."
+        },
+        {
+          "id": "CHK-EQC006-BASIS",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Under any nonsingular code-basis transform A, G->AG and Sigma->A Sigma A^T, so G^T Sigma^-1 G is unchanged."
+        },
+        {
+          "id": "CHK-EQC006-BOUND",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Projection cannot add score-space information, so exact-arithmetic retention eigenvalues must lie in [0,1], up to numerical roundoff."
+        }
+      ],
+      "numerical_form": "Assemble G and Sigma with common y weights, solve linear systems rather than explicitly inverting Sigma, whiten F_code with the symmetric eigendecomposition of F_full, and sort retention eigenvalues ascending.",
+      "code_refs": [
+        "src/try_fresnel.py::coded_fisher",
+        "src/try_fresnel.py::retention_eigenvalues"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Gaussian toy-code basis",
+      "role": "Defines the fair parity-only comparator in Fig. 1(c,d), using the same physical response and noise metric.",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S52)-(S70)"
+        }
+      ],
+      "latex": "\\bar y=\\frac{\\int yR_0dy}{\\int R_0dy},\\quad \\sigma_y^2=\\frac{\\int(y-\\bar y)^2R_0dy}{\\int R_0dy},\\quad \\xi=(y-\\bar y)/\\sigma_y,\\quad h_t^{(0)}=\\xi,\\quad h_f^{(0)}=(\\xi^2-1)/\\sqrt2,",
+      "derived_from": [
+        "EQC002",
+        "EQC004",
+        "EQC005",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC007-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement S4 fully specifies the R0-derived coordinate, raw toy functions, and identical nuisance-orthogonal processing."
+        },
+        {
+          "id": "CHK-EQC007-FAIR",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Applying the same constant removal, noise metric, orthogonalization, and normalization isolates the subspace choice as the only optimized-versus-toy difference."
+        }
+      ],
+      "numerical_form": "Compute ybar and sigma from independently generated R0, build the two raw templates, pass them through the same noise-metric Gram--Schmidt helper, and evaluate their Fisher retention with EQC006.",
+      "code_refs": [
+        "src/try_fresnel.py::toy_codes"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Finite-width defocus visibility and width-scan ratio",
+      "role": "Defines the Fig. S1 quantity and its analytically verified narrow-slit limit.",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "supplement.tex Eqs. (S71)-(S84), Table S1, and Fig. S1"
+        }
+      ],
+      "latex": "x=sW+u\\Rightarrow q_f(sW+u)=1+2s\\frac{u}{W}+\\left(\\frac{u}{W}\\right)^2,\\qquad \\rho(a)=\\frac{F^{\\mathrm{full}}_{ff}(a)}{F^{\\mathrm{full}}_{tt}(a)}.",
+      "derived_from": [
+        "EQC001",
+        "EQC002",
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "CHK-EQC008-SOURCE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The within-slit expansion, repeated-Fisher procedure, five widths, and exact ratio table are stated in Supplement S5."
+        },
+        {
+          "id": "CHK-EQC008-LIMIT",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At a->0 the non-common terms 2s*u/W and (u/W)^2 vanish, so the normalized quadratic phase becomes common mode and rho tends to zero."
+        },
+        {
+          "id": "CHK-EQC008-DIMENSION",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Both theta parameters are dimensionless, so F_ff/F_tt is dimensionless and can be compared across slit widths."
+        }
+      ],
+      "numerical_form": "For every paper width in [20,40,80,150,250] micrometres, rebuild the finite-slit quadrature, E0, scores, N, and F_full; write rho=F_ff/F_tt without using Table S1 as an input.",
+      "code_refs": [
+        "src/try_fresnel.py::width_scan"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -1,0 +1,478 @@
+{
+  "schema_version": 1,
+  "paper_id": "2507.09447",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Finite-range disordered Hamiltonian",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "model"
+        }
+      ],
+      "latex": "H=\\sum_{|i-j|\\le M} t_{i,j}c_i^\\dagger c_j",
+      "role": "Fixes hopping orientation, onsite disorder, and boundary matrices.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Equation label model in the TeX source."
+        },
+        {
+          "id": "EQC001_bandwidth",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "M=2 gives two upper and two lower hopping diagonals."
+        }
+      ],
+      "numerical_form": "LongRangeModel.hamiltonian(onsite, boundary, twist)",
+      "code_refs": [
+        "src/lyapunov_band.py::LongRangeModel.hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "M=2 one-site transfer matrix",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "\\tilde{T}_l(E)="
+        }
+      ],
+      "latex": "psi_{i+2}=-(t_1/t_2)psi_{i+1}+((E-w_i)/t_2)psi_i-(t_{-1}/t_2)psi_{i-1}-(t_{-2}/t_2)psi_{i-2}",
+      "role": "Propagates the same eigen-equation as the finite Hamiltonian by one site.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendix S3 gives the general 2M one-site companion matrix."
+        },
+        {
+          "id": "EQC002_rearrangement",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Rearranging the row-i eigen-equation gives the recorded first row."
+        }
+      ],
+      "numerical_form": "site_transfer_matrices(energies, onsite, model)",
+      "code_refs": [
+        "src/lyapunov_band.py::site_transfer_matrices"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Lyapunov spectrum and clean beta-root limit",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "t_matrix"
+        },
+        {
+          "type": "tex_contains",
+          "value": "\\ln|\\beta_{s}(E)|\\rightarrow \\gamma_s(E)"
+        }
+      ],
+      "latex": "gamma_s=lim_{L to infinity} eig[(2L)^{-1} ln(T^dagger T)]_s; gamma_s=ln|beta_s| at W=0",
+      "role": "Defines the ordered state vector behind every Lyapunov prediction.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main text defines the product; Appendix S3 proves the clean beta-root limit."
+        },
+        {
+          "id": "EQC003_qr",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Periodic QR evaluates asymptotic growth; the clean case is checked against log|beta|."
+        }
+      ],
+      "numerical_form": "lyapunov_exponents(energies, onsite_sequence, model)",
+      "code_refs": [
+        "src/lyapunov_band.py::lyapunov_exponents"
+      ],
+      "open_questions": [
+        "The arXiv source does not report transfer length or QR interval; the formal supplement confirms periodic QR but not the interval."
+      ]
+    },
+    {
+      "id": "EQC004",
+      "title": "OBC non-Hermitian Thouless relation",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "pot_obc"
+        },
+        {
+          "type": "label",
+          "value": "den_obc"
+        }
+      ],
+      "latex": "phi_OBC=sum_{s=M+1}^{2M} gamma_s+E[ln|t_M|]; rho_OBC=(2pi)^{-1} nabla^2 phi_OBC",
+      "role": "Predicts OBC potential and density from the M largest exponents.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main-text Eqs. pot_obc/den_obc, derived in Appendix S1."
+        },
+        {
+          "id": "EQC004_target_regime",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "In the reproduced paper regime, the M-largest-exponent density overlaps independently diagonalized OBC spectra by 0.806917; a stable finite-spectrum log-determinant test also verifies the finite observable. This is target-regime validation, not a claim of a new general theorem proof."
+        }
+      ],
+      "numerical_form": "lyapunov_potentials(exponents, model).obc",
+      "code_refs": [
+        "src/lyapunov_band.py::lyapunov_potentials"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "PBC non-Hermitian Thouless relation",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "pot_pbc"
+        },
+        {
+          "type": "label",
+          "value": "den_pbc"
+        }
+      ],
+      "latex": "phi_PBC=sum_{gamma_s>0} gamma_s+E[ln|t_M|]; rho_PBC=(2pi)^{-1} nabla^2 phi_PBC",
+      "role": "Predicts PBC potential and density from the positive exponents.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main-text Eqs. pot_pbc/den_pbc, derived in Appendix S2."
+        },
+        {
+          "id": "EQC005_target_regime",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "In the reproduced paper regime, the positive-exponent density overlaps independently diagonalized PBC spectra by 0.849765, while direct twist winding and Lyapunov winding agree in spectral holes. This is target-regime validation, not a claim of a new general theorem proof."
+        }
+      ],
+      "numerical_form": "lyapunov_potentials(exponents, model).pbc",
+      "code_refs": [
+        "src/lyapunov_band.py::lyapunov_potentials"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Essential Lyapunov exponent and mobility edge",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "ess"
+        },
+        {
+          "type": "label",
+          "value": "mobility"
+        }
+      ],
+      "latex": "gamma_ess=argmin_{gamma in {gamma_M,gamma_{M+1}}}|gamma|; gamma_ess(E)=0",
+      "role": "Centralizes the ALM/skin/UCS transition rule and mobility-edge contour.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main-text Eqs. ess/mobility."
+        },
+        {
+          "id": "EQC006_sign",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Opposite central signs are ALM, zero is the boundary, same signs are skin."
+        }
+      ],
+      "numerical_form": "essential_lyapunov(exponents) and classify_state(exponents)",
+      "code_refs": [
+        "src/lyapunov_band.py::essential_lyapunov",
+        "src/lyapunov_band.py::classify_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Winding number from positive Lyapunov count",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "winding"
+        },
+        {
+          "type": "label",
+          "value": "winding2"
+        }
+      ],
+      "latex": "nu(E)=M-n_P(E)",
+      "role": "Defines the integer topological criterion for skin versus ALM.",
+      "derived_from": [
+        "EQC003",
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. winding2 is proved via transfer-matrix duality in Appendix S5."
+        },
+        {
+          "id": "EQC007_integer",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "For M=2, M-n_P is integer and vanishes exactly when two exponents are positive."
+        }
+      ],
+      "numerical_form": "winding_from_lyapunov(exponents, M=2)",
+      "code_refs": [
+        "src/lyapunov_band.py::winding_from_lyapunov",
+        "src/lyapunov_band.py::direct_twist_winding"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Anderson-localized fraction",
+      "source_refs": [
+        {
+          "type": "label",
+          "value": "ratio"
+        }
+      ],
+      "latex": "alpha=int rho_OBC(E) Theta[-gamma_M(E)gamma_{M+1}(E)] d^2E",
+      "role": "Summarizes the transition as the fraction of OBC states with opposite-sign central exponents.",
+      "derived_from": [
+        "EQC004",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Definition immediately before Fig. 5 in the main text."
+        },
+        {
+          "id": "EQC008_bounds",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Normalized density times a binary ALM indicator gives 0<=alpha<=1."
+        }
+      ],
+      "numerical_form": "alm_fraction(eigenvalues, exponents)",
+      "code_refs": [
+        "src/lyapunov_band.py::alm_fraction"
+      ],
+      "open_questions": [
+        "The paper does not report the Fig. 5(b) ensemble and quadrature details."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "Nearest-neighbour transfer recurrence for the supplemental Hatano-Nelson models",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "S32"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "S33"
+        }
+      ],
+      "latex": "psi_{j+1}=((E-v_j)/h_+)psi_j-(h_-/h_+)psi_{j-1}, h_+=H_{j,j+1}=t+gamma, h_-=H_{j,j-1}=t-gamma",
+      "role": "Fixes the forward denominator and backward numerator shared by the Fig. S1/S2 transfer and ED paths.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Published supplement Eqs. S32-S33 place t+gamma on H[j,j+1] and t-gamma on H[j,j-1]."
+        },
+        {
+          "id": "EQC009_row_residual",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Independent tests substitute one transfer step back into the matching ED Hamiltonian row for both models."
+        }
+      ],
+      "numerical_form": "offdiag_transfer_matrices and quasiperiodic_transfer_matrices",
+      "code_refs": [
+        "src/supplement_hatano_nelson.py::offdiag_transfer_matrices",
+        "src/supplement_hatano_nelson.py::quasiperiodic_transfer_matrices"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Unidirectional OBC density identity",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "paragraph after Fig. 4"
+        }
+      ],
+      "latex": "H_{OBC}=diag(w_1,...,w_L)+t_1 S_+ implies spec(H_{OBC})={w_i}; therefore rho_{OBC}=rho_w",
+      "role": "Turns the independent main-text limiting claim into an analytic and finite numerical target.",
+      "derived_from": [
+        "EQC001",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paragraph after Fig. 4 states the one-way nearest-neighbour OBC limit and rho_OBC=rho_w."
+        },
+        {
+          "id": "EQC010_triangular",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "With only one OBC hopping direction the Hamiltonian is triangular and its eigenvalues equal its onsite diagonal."
+        }
+      ],
+      "numerical_form": "unidirectional_hamiltonian plus eigvals/onsite multiset comparison",
+      "code_refs": [
+        "src/supplement_additional_numerics.py::unidirectional_hamiltonian",
+        "src/supplement_additional_numerics.py::run_unidirectional_claim"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "Fig. S3 arithmetic-precision deviation",
+      "source_refs": [
+        {
+          "type": "supplement_figure",
+          "value": "S3"
+        }
+      ],
+      "latex": "delta_phi^(b)(E)=|phi_method^(b)(E)-phi_ED^(256)(E)|",
+      "role": "Defines the matched-precision ED/QR benchmark against the published 256-bit ED reference contract.",
+      "derived_from": [
+        "EQC002",
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Published Fig. S3 and its caption define the two energies, four precisions, L=1000, 1600 samples, and 256-bit ED reference."
+        },
+        {
+          "id": "EQC011_small_chain",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Arbitrary-precision dense ED and modified-Gram-Schmidt QR both return finite potentials on the same frozen small chain."
+        }
+      ],
+      "numerical_form": "run_precision_pilot at configured bit depths and energies",
+      "code_refs": [
+        "src/supplement_additional_numerics.py::_mp_ed_potentials",
+        "src/supplement_additional_numerics.py::_mp_qr_potential"
+      ],
+      "open_questions": [
+        "The paper-scale L=1000 x 1600 arbitrary-precision ED sweep is code-ready but exceeds the measured local budget."
+      ]
+    },
+    {
+      "id": "EQC012",
+      "title": "Fig. S4 finite-size Lyapunov-gap deviation",
+      "source_refs": [
+        {
+          "type": "supplement_figure",
+          "value": "S4"
+        }
+      ],
+      "latex": "d_L(E_0)=|[gamma_3^L(E_0)-gamma_2^L(E_0)]-[gamma_3^1000(E_0)-gamma_2^1000(E_0)]|",
+      "role": "Defines the plotted gap-deviation series and its exponential-versus-algebraic model comparison.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Published Fig. S4 and its caption define E0, L=50 through 400, and the L=1000 reference, while omitting the disorder realization protocol."
+        },
+        {
+          "id": "EQC012_finite",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "All configured finite-size gaps and both fit residuals are finite; the code preserves a failed exponential feature instead of tuning it."
+        }
+      ],
+      "numerical_form": "run_gap_scaling over L=50..400 with L=1000 reference",
+      "code_refs": [
+        "src/supplement_additional_numerics.py::run_gap_scaling"
+      ],
+      "open_questions": [
+        "The published supplement does not state the S4 disorder ensemble size, realization identity, averaging order, or QR interval."
+      ]
+    }
+  ]
+}

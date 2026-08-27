@@ -21,7 +21,7 @@ Numerical form:
 Per step: eigendecompose H (2^L x 2^L Hermitian), build U and rho_eq from the same eigenbasis, apply convex combination.
 ```
 
-Code: `code/scripts/qrc_engine.py::collisional_step`
+Code: `scripts/qrc_engine.py::collisional_step`
 
 
 ### EQC002 — Mackey-Glass drive generation and preprocessing
@@ -32,7 +32,7 @@ $$
 \frac{dx}{dt} = \frac{\beta_{\mathrm{MG}}\,x(t-\tau_{\mathrm{MG}})}{1+x^{10}(t-\tau_{\mathrm{MG}})} - \gamma_{\mathrm{MG}}\,x(t),\quad (\beta_{\mathrm{MG}},\gamma_{\mathrm{MG}},\tau_{\mathrm{MG}}) = (0.2, 0.1, 18)
 $$
 
-status: `verified` · source: equation: Eq. (18) + Methods 'Chaotic time-series generation'
+status: `source_only` · source: equation: Eq. (18) + Methods 'Chaotic time-series generation'
 
 Numerical form:
 
@@ -40,7 +40,7 @@ Numerical form:
 RK4 with dt_int = 0.1 and delay buffer; sequences centered and linearly scaled to the paper's stated ensemble variance sigma_s^2 = 0.11 (support within [-1,1]).
 ```
 
-Code: `code/scripts/mackey_glass.py::generate_mg_sequences`
+Code: `scripts/mackey_glass.py::generate_mg_sequences`
 
 
 ### EQC003 — Holevo memory capacity and relative-entropy recast
@@ -59,7 +59,7 @@ Numerical form:
 chi_m = S(rho_bar) - sum_b P_b S(rho_b) with eigenvalue truncation 1e-12; rho_b = bin-averaged density matrix keyed by s_n.
 ```
 
-Code: `code/scripts/qrc_engine.py::holevo_capacity`
+Code: `scripts/qrc_engine.py::holevo_capacity`
 
 
 ### EQC004 — Holevo predictive capacity
@@ -78,7 +78,7 @@ Numerical form:
 Identical to EQC003 with bin key s_{n+1}.
 ```
 
-Code: `code/scripts/qrc_engine.py::holevo_capacity`
+Code: `scripts/qrc_engine.py::holevo_capacity`
 
 
 ### EQC005 — Quantum informational dissipation (QID)
@@ -89,7 +89,7 @@ $$
 \chi^{\mathrm{d}}_{t_{n+1}} = \chi^{\mathrm{m}}_{t_{n+1}} - \chi^{\mathrm{p}}_{t_{n+1}}
 $$
 
-status: `verified` · derived from: `EQC003`, `EQC004` · source: equation: Eq. (10)
+status: `source_only` · derived from: `EQC003`, `EQC004` · source: equation: Eq. (10)
 
 Numerical form:
 
@@ -97,7 +97,7 @@ Numerical form:
 Difference of the two estimated capacities per step; accumulated over N_eval steps for chi_d_tot.
 ```
 
-Code: `code/scripts/qrc_engine.py::step_metrics`
+Code: `scripts/qrc_engine.py::step_metrics`
 
 
 ### EQC006 — Coherence decomposition of the Holevo quantity
@@ -116,7 +116,7 @@ Numerical form:
 Delta(rho) = diagonal part in computational basis; I and C from binned ensembles.
 ```
 
-Code: `code/scripts/qrc_engine.py::coherence_decomposition`
+Code: `scripts/qrc_engine.py::coherence_decomposition`
 
 
 ### EQC007 — QID split into classical and coherent dissipation
@@ -135,7 +135,7 @@ Numerical form:
 Assembled from the same binned conditional states as EQC006.
 ```
 
-Code: `code/scripts/qrc_engine.py::coherence_decomposition`
+Code: `scripts/qrc_engine.py::coherence_decomposition`
 
 
 ### EQC008 — Macroscopic injection work from conditional ensembles
@@ -146,7 +146,7 @@ $$
 W_{n+1} = \sum_{s_{n+1}} P(s_{n+1})\,\mathrm{Tr}(\rho^{\mathrm{p}}_{s_{n+1}} H_{t_{n+1}}) - \sum_{s_n} P(s_n)\,\mathrm{Tr}(\rho^{\mathrm{m}}_{s_n} H_{t_n})
 $$
 
-status: `verified` · derived from: `microscopic quench work averaged over trajectories, conditioned via the probability product rule` · source: equation: SI Eq. (S62)
+status: `source_only` · derived from: `microscopic quench work averaged over trajectories, conditioned via the probability product rule` · source: equation: SI Eq. (S62)
 
 Numerical form:
 
@@ -154,7 +154,7 @@ Numerical form:
 Energy expectations of binned states against the instantaneous Hamiltonians; H_{t_{n+1}} uses the bin's own s_{n+1} value.
 ```
 
-Code: `code/scripts/qrc_engine.py::injection_work`
+Code: `scripts/qrc_engine.py::injection_work`
 
 
 ### EQC009 — Per-step identity: irreversible injection work equals QID
@@ -173,7 +173,7 @@ Numerical form:
 Checked each simulation step as a consistency invariant.
 ```
 
-Code: `code/scripts/qrc_engine.py::step_metrics`
+Code: `scripts/qrc_engine.py::step_metrics`
 
 
 ### EQC010 — Generalized Landauer bound and non-negative relaxation dissipation
@@ -192,7 +192,7 @@ Numerical form:
 W_relax accumulated from relative entropies of binned states vs instantaneous Gibbs states; W_irr_tot = sum(chi_d + beta*W_relax).
 ```
 
-Code: `code/scripts/qrc_engine.py::relaxation_work`
+Code: `scripts/qrc_engine.py::relaxation_work`
 
 
 ### EQC011 — BKM geometric expansion and analytic capacities
@@ -211,7 +211,7 @@ Numerical form:
 Evaluated in the H0 eigenbasis with thermal populations; G estimated from the drive statistics.
 ```
 
-Code: `code/scripts/analytics.py::bkm_capacity`
+Code: `scripts/verify_formulas.py::bkm_metric`
 
 
 ### EQC012 — Dynamic accumulation factor and spectral resonance peak
@@ -230,7 +230,7 @@ Numerical form:
 G(omega) evaluated from the Lorentzian C_a and directly from binned sequence statistics (S43) for Fig. S1a.
 ```
 
-Code: `code/scripts/analytics.py::accumulation_factor`
+Code: `scripts/run_figS1.py::g_factor_binned`
 
 
 ### EQC013 — Reservoir architectures: disordered TFIM and augmented cluster model
@@ -241,7 +241,7 @@ $$
 H_0^{\mathrm{TFIM}} = \sum_{i>j} J_{ij}\sigma^z_i\sigma^z_j + h\sum_i \sigma^x_i,\ h=1,\ J_{ij}\sim U[-J/2,J/2];\quad H_0^{\mathrm{cluster}} = -J_{zz}\sum_i \sigma^z_i\sigma^z_{i+1} - h_x\sum_i \sigma^x_i + J_{zxz}\sum_i \sigma^z_{i-1}\sigma^x_i\sigma^z_{i+1},\ J_{zz}=0.1,\ J_{zxz}=(1-J_{zz})\alpha,\ h_x=(1-J_{zz})(1-\alpha)
 $$
 
-status: `verified` · source: text: Main text, 'Quantum critical thermodynamics' (p. 7)
+status: `source_only` · source: text: Main text, 'Quantum critical thermodynamics' (p. 7)
 
 Numerical form:
 
@@ -249,7 +249,7 @@ Numerical form:
 Dense 2^L x 2^L Pauli-string construction; cluster chain OPEN (paper convention, resolved empirically); TFIM fully connected.
 ```
 
-Code: `code/scripts/qrc_engine.py::tfim_hamiltonian`, `code/scripts/qrc_engine.py::cluster_hamiltonian`
+Code: `scripts/qrc_engine.py::tfim_hamiltonian`, `scripts/qrc_engine.py::cluster_hamiltonian`
 
 
 ### EQC014 — Ridge readout and NMSE
@@ -260,7 +260,7 @@ $$
 \mathbf{w}_{\mathrm{opt}} = (\mathbf{X}^T\mathbf{X} + \eta I)^{-1}\mathbf{X}^T\hat{\mathbf{y}},\quad \mathrm{NMSE} = \frac{\|\mathbf{y} - \hat{\mathbf{y}}\|^2}{\|\hat{\mathbf{y}}\|^2}
 $$
 
-status: `verified` · source: equation: Eqs. (2)-(3)
+status: `source_only` · source: equation: Eqs. (2)-(3)
 
 Numerical form:
 
@@ -268,7 +268,7 @@ Numerical form:
 Standard ridge regression on training-window features; prediction target s_{n+h}.
 ```
 
-Code: `code/scripts/qrc_engine.py::nmse_readout`
+Code: `scripts/qrc_engine.py::nmse_readout`
 
 
 ### EQC015 — Markovian bound on coherent dissipation

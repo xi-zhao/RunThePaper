@@ -1,0 +1,160 @@
+{
+  "status": "completed_with_declared_boundaries",
+  "artifact_stage": "exploratory",
+  "parameter_match": "mixed_by_target",
+  "render_figures": false,
+  "runtime_seconds": 40.530625666026026,
+  "unidirectional": {
+    "status": "passed",
+    "model": {
+      "length": 128,
+      "realizations": 32,
+      "W": 0.8,
+      "hopping": [
+        1.0,
+        0.0
+      ],
+      "direction": "right"
+    },
+    "maximum_eigenvalue_onsite_error": 0.0,
+    "acceptance_threshold": 1e-12,
+    "analytic_basis": "An OBC one-way hopping matrix is triangular, so its eigenvalue multiset equals its onsite diagonal exactly."
+  },
+  "s3_precision": {
+    "status": "pilot_completed",
+    "paper_target": {
+      "length": 1000,
+      "realizations": 1600,
+      "precision_bits": [
+        64,
+        112,
+        160,
+        208
+      ],
+      "reference_bits": 256,
+      "energies": [
+        [
+          -0.72,
+          0.0
+        ],
+        [
+          3.2,
+          0.0
+        ]
+      ]
+    },
+    "pilot": {
+      "length": 12,
+      "realizations": 2,
+      "elapsed_seconds": 0.6772116250358522,
+      "reference_seconds": 0.142959792050533,
+      "per_precision_seconds": {
+        "64": 0.11250524991191924,
+        "112": 0.12588529207278043,
+        "160": 0.1404092920711264,
+        "208": 0.15543641708791256
+      },
+      "qr_more_accurate_than_ed_at_64bit_count": 0,
+      "qr_more_accurate_than_ed_at_64bit_total": 2
+    },
+    "resource_projection": {
+      "model": "measured_pilot_times_dense_ED_O_L3_ensemble_ratio",
+      "projected_paper_scale_seconds": 313523900.47956115,
+      "projected_paper_scale_days": 3628.7488481430687,
+      "local_cpu_count": 10,
+      "python_platform": "darwin",
+      "a100_precision_boundary": "The reference contract uses 112-256-bit arbitrary-precision dense eigensolving and ensembles. A standard A100 FP32/FP64 path does not natively provide the required arithmetic precision.",
+      "optimistic_a100_speedup_factor": 50.0,
+      "optimistic_a100_projected_days": 72.57497696286137,
+      "a100_conclusion": "available_a100_does_not_close_the_paper_scale_precision_and_time_boundary",
+      "conclusion": "paper_scale_not_attempted_after_measured_pilot_projection"
+    },
+    "scientific_boundary": "The pilot validates the independently written arbitrary-precision ED and QR paths. It does not promote the Fig. S3 precision-ordering claim because the published L=1000 x 1600 campaign was not executed."
+  },
+  "s4_gap_scaling": {
+    "status": "feature_not_resolved",
+    "paper_reported_parameters": {
+      "lengths": [
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350,
+        400
+      ],
+      "reference_length": 1000,
+      "energy": [
+        -0.9328,
+        0.221
+      ],
+      "model": {
+        "t_minus_2": 1.0,
+        "t_minus_1": 1.0,
+        "t_1": 1.5,
+        "t_2": 0.5
+      },
+      "W": 0.8
+    },
+    "declared_implementation_choice": {
+      "realizations": 64,
+      "seed": 250709477,
+      "qr_interval": 1,
+      "reason": "The supplement does not state the S4 disorder-ensemble count, realization identity, or QR interval."
+    },
+    "fits": {
+      "exponential": {
+        "slope": -0.0012690435513433465,
+        "intercept": -6.6100367968595934,
+        "r_squared": 0.018589693119299366
+      },
+      "power_law": {
+        "slope": -0.4818266054245972,
+        "intercept": -4.371957353550277,
+        "r_squared": 0.08839093831699851
+      },
+      "required_exponential_r_squared": 0.9,
+      "required_r_squared_margin_over_power": 0.02
+    },
+    "runtime_seconds": 2.6533917910419405,
+    "scientific_boundary": "The paper-reported size and energy grid are executed, but the unpublished ensemble/seed protocol prevents a paper-exact numerical identity claim."
+  },
+  "s4_protocol_sensitivity": {
+    "status": "completed",
+    "source_trace": {
+      "published": [
+        "E0=-0.9328+0.2210i",
+        "L=50,100,...,400",
+        "L=1000 reference",
+        "claimed exponential decay on a semi-log plot"
+      ],
+      "omitted": [
+        "disorder realization count and identity",
+        "averaging order",
+        "QR stabilization interval"
+      ],
+      "source": "Published Supplement Appendix S6 and Fig. S4 caption"
+    },
+    "protocols_total": 18,
+    "paper_feature_supported_total": 0,
+    "paper_feature_supported_fraction": 0.0,
+    "exponential_r_squared_range": [
+      0.004587228546410915,
+      0.7687189319298383
+    ],
+    "power_law_r_squared_range": [
+      0.013050403193132665,
+      0.6894721990854756
+    ],
+    "conclusion": "robust_non_match_in_declared_protocol_sweep",
+    "runtime_seconds": 37.185840792022645,
+    "scientific_boundary": "This finite protocol sweep tests the named publication omissions; only a fresh reviewer may promote a robust non-match to a paper-error candidate."
+  },
+  "scientific_input_attestation": {
+    "paper_or_source_pixels_used": false,
+    "author_code_used": false,
+    "author_numeric_arrays_used": false,
+    "paper_text_used_only_to_author_the_frozen_config": true
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "paper_id": "PhysRevLett.133.191801",
+  "campaign_scale": "formula_attestation_with_external_input_boundary",
+  "attestation_parameters": {
+    "campaign_revision": 1,
+    "target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T006"
+    ],
+    "scientific_coverage_promoted": false
+  },
+  "clean_room_boundary": {
+    "paper_pdf_read_by_runner": false,
+    "source_pixels_used": false,
+    "author_numeric_arrays_used": false,
+    "author_code_used": false
+  },
+  "formula_probe": {
+    "duration_s": 4.0,
+    "time_points": 2001,
+    "sensor": {
+      "resonance_hz": 5.36,
+      "coherence_s": 7.63,
+      "amplification": 145.0
+    },
+    "source_coherence_s": 7.04,
+    "gaussian_probe": {
+      "amplitude": 1.0,
+      "center_s": 2.0,
+      "sigma_s": 0.4,
+      "carrier_hz": 5.36,
+      "phase_rad": 0.0
+    },
+    "chirp_probe": {
+      "amplitude": 1.0,
+      "start_hz": 4.7,
+      "stop_hz": 6.0,
+      "duration_s": 4.0,
+      "envelope_ramp_s": 0.2
+    },
+    "uncertainty_components_aT": [
+      140.0,
+      45.0
+    ]
+  },
+  "targets": {
+    "T001": {
+      "required_input_schema": {
+        "measured_decay_traces": {
+          "type": "array_bundle",
+          "hash_required": true
+        },
+        "sampling_timebase": {
+          "type": "array",
+          "hash_required": true
+        },
+        "response_normalization": {
+          "type": "definition",
+          "hash_required": true
+        }
+      },
+      "supplied_inputs": {},
+      "next_execution": [
+        "validate hash-bound traces and timebase",
+        "evaluate Eq. (4) on the frozen timebase",
+        "fit with the predeclared normalization and compare residuals"
+      ],
+      "acceptance_criteria": [
+        "All measured arrays and calibration metadata are source-traced and hash-bound.",
+        "The Eq. (4) response and residual checks pass for every declared trace.",
+        "No rendered figure pixels substitute for measured arrays."
+      ]
+    },
+    "T002": {
+      "required_input_schema": {
+        "gaussian_waveform_calibration": {
+          "type": "calibration_bundle",
+          "hash_required": true
+        },
+        "measured_gaussian_response": {
+          "type": "array_bundle",
+          "hash_required": true
+        }
+      },
+      "supplied_inputs": {},
+      "next_execution": [
+        "load the calibrated Gaussian drive",
+        "run the frozen resonator response",
+        "compare to the measured response with a predeclared residual tolerance"
+      ],
+      "acceptance_criteria": [
+        "Waveform and response arrays are hash-bound.",
+        "The numerical response uses only the printed transfer model and frozen calibration.",
+        "Synthetic probe agreement does not count as paper-exact coverage."
+      ]
+    },
+    "T003": {
+      "required_input_schema": {
+        "chirp_waveform_calibration": {
+          "type": "calibration_bundle",
+          "hash_required": true
+        },
+        "measured_chirp_response": {
+          "type": "array_bundle",
+          "hash_required": true
+        }
+      },
+      "supplied_inputs": {},
+      "next_execution": [
+        "load the calibrated chirp",
+        "run the frozen resonator response",
+        "compare frequency-time response against measured data"
+      ],
+      "acceptance_criteria": [
+        "Chirp calibration and response arrays are hash-bound.",
+        "Instantaneous-frequency and response checks pass on the complete timebase.",
+        "No source-image digitization is accepted as numerical input."
+      ]
+    },
+    "T006": {
+      "required_input_schema": {
+        "dataset_estimates": {
+          "type": "array_bundle",
+          "hash_required": true
+        },
+        "calibration_covariance": {
+          "type": "matrix",
+          "hash_required": true
+        },
+        "systematic_decomposition": {
+          "type": "table",
+          "hash_required": true
+        }
+      },
+      "supplied_inputs": {},
+      "next_execution": [
+        "validate the 36 estimate records and covariance",
+        "recompute the weighted aggregate",
+        "recompute statistical and systematic uncertainty with the declared covariance"
+      ],
+      "acceptance_criteria": [
+        "All 36 estimates and uncertainty inputs are present and hash-bound.",
+        "Quadrature and covariance checks agree with the predeclared statistical model.",
+        "The aggregate is accepted only after all records pass calibration checks."
+      ]
+    }
+  }
+}

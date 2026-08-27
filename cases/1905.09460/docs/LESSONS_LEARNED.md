@@ -52,7 +52,7 @@
 
 | Candidate | Reuse value | Suggested destination |
 | --- | --- | --- |
-| source-inconsistency ledger checker | forces an explicit resolution when prose, equations, and captions disagree | `private validation harness/rr_harness/` |
+| source-inconsistency ledger checker | forces an explicit resolution when prose, equations, and captions disagree | `PRAgent-workflow/rr_harness/` |
 | derived-parameter trace | protects transformations such as `theta=phi+pi/2` | formula-card schema |
 | estimator/classifier provenance gate | prevents source pixels from silently defining an omitted numerical method | target-contract checker |
 | generation/reference import-boundary scan | mechanically verifies that numerical entrypoints cannot read source figures | provenance checker |

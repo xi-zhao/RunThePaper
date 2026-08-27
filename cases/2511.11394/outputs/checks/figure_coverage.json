@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "paper_id": "2511.11394",
+  "source": "Phys. Rev. Lett. 137, 046601 (2026); arXiv:2511.11394v2; official Supplemental Material",
+  "implementations": {
+    "t001_flow": {
+      "status": "ready",
+      "code_refs": [
+        "src/chern_jump_geometry.py",
+        "scripts/run_paper_target.py"
+      ],
+      "config_ref": "config/exploratory_targets.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_target.py",
+        "--config",
+        "config/exploratory_targets.json",
+        "--target",
+        "T001",
+        "--mode",
+        "feature"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig1_small_q_energy.csv",
+        "outputs/checks/fig1_small_q_energy.json"
+      ],
+      "acceptance_criteria": [
+        "Dirichlet energy is nonincreasing, the Chern sector and unit norm are preserved, and supplemental geometry arrays are independently generated."
+      ]
+    },
+    "t002_flow": {
+      "status": "ready",
+      "code_refs": [
+        "src/chern_jump_geometry.py",
+        "scripts/run_paper_target.py"
+      ],
+      "config_ref": "config/exploratory_targets.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_target.py",
+        "--config",
+        "config/exploratory_targets.json",
+        "--target",
+        "T002",
+        "--mode",
+        "feature"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig2_exact_vs_small_q.csv",
+        "outputs/checks/fig2_exact_vs_small_q.json"
+      ],
+      "acceptance_criteria": [
+        "Exact and small-q flows preserve declared invariants and the finite-mesh Chern transition is refinement stable."
+      ]
+    },
+    "t003_flow": {
+      "status": "ready",
+      "code_refs": [
+        "src/chern_jump_geometry.py",
+        "scripts/run_paper_target.py"
+      ],
+      "config_ref": "config/exploratory_targets.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_target.py",
+        "--config",
+        "config/exploratory_targets.json",
+        "--target",
+        "T003",
+        "--mode",
+        "feature"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig3_trace_deviation_maps.csv",
+        "outputs/checks/fig3_trace_deviation_maps.json"
+      ],
+      "acceptance_criteria": [
+        "Initial, exact, and small-q trace-deviation fields are generated on one frozen mesh and pass the geometry checks."
+      ]
+    },
+    "t004_sweep": {
+      "status": "ready",
+      "code_refs": [
+        "src/chern_jump_geometry.py",
+        "scripts/run_paper_target.py"
+      ],
+      "config_ref": "config/exploratory_targets.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_target.py",
+        "--config",
+        "config/exploratory_targets.json",
+        "--target",
+        "T004",
+        "--mode",
+        "feature"
+      ],
+      "expected_outputs": [
+        "outputs/data/sm_fig6_parameter_sweeps.csv",
+        "outputs/checks/sm_fig6_parameter_sweeps.json"
+      ],
+      "acceptance_criteria": [
+        "Fixed-U and fixed-V sweeps generate energy and Chern observables with the same conventions as the main targets."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Fig. 1",
+      "item_type": "figure",
+      "source_ref": "Main text Fig. 1",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "t001_flow",
+      "reason": "Small-q LLG energy flow. The physical trend is reproduced, while the source's factor-four plotted normalization and faster t=15 relaxation remain unexplained.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2",
+      "item_type": "figure",
+      "source_ref": "Main text Fig. 2",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "t002_flow",
+      "reason": "Exact versus small-q extended-Hubbard Dirichlet energy and the finite-mesh Chern transition are independently reproduced.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3 — initial",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 3, left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "t003_flow",
+      "reason": "Initial trace-condition-deviation map on the convergence-backed midpoint mesh.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3 — exact at T_short",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 3, center panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Exact-flow trace-condition-deviation map at T_short.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3 — small-q at T_short",
+      "item_type": "figure_panel",
+      "source_ref": "Main text Fig. 3, right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Small-q trace-condition-deviation map at T_short.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 1 — initial",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 1, left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Initial small-q trace-inequality-deviation map from the same guarded trajectory as Main Fig. 1.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 1 — final",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 1, right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Small-q trace-inequality-deviation map at t=15.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 2 — initial",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 2, left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Initial quantum-metric and Berry-curvature profiles.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 2 — final",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 2, right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Small-q quantum-metric and Berry-curvature profiles at t=15; incomplete saturation records the same mismatch as Main Fig. 1.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 3 — Dirichlet energy",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 3, upper panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Exact and small-q Dirichlet-energy trajectories.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 3 — numerical Chern number",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 3, lower panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Same-mesh exact and small-q numerical Chern trajectories.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 4 — initial",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 4, left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Initial quantum-metric and Berry-curvature profiles.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 4 — exact at T_short",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 4, center panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Exact-flow quantum-metric and Berry-curvature profiles at T_short.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 4 — small-q at T_short",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 4, right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Small-q quantum-metric and Berry-curvature profiles at T_short.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 5 — exact metric and curvature",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 5, left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Exact-flow quantum-metric and Berry-curvature profiles at t=8.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 5 — exact Berry curvature",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 5, center panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Exact-flow Berry curvature at t=8 showing the sign change.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 5 — small-q metric and curvature",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 5, right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Small-q quantum-metric and Berry-curvature profiles at t=8.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 6 — fixed U energy",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 6, upper-left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "t004_sweep",
+      "reason": "Exact-flow Dirichlet-energy sweep at fixed U=8 and varying V.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 6 — fixed U Chern number",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 6, upper-right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Numerical-Chern-number sweep at fixed U=8 and varying V.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 6 — fixed V energy",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 6, lower-left panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Exact-flow Dirichlet-energy sweep at fixed V=0.75 and varying U.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "Supplemental Fig. 6 — fixed V Chern number",
+      "item_type": "figure_panel",
+      "source_ref": "Official Supplemental Material Fig. 6, lower-right panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Numerical-Chern-number sweep at fixed V=0.75 and varying U.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    }
+  ]
+}

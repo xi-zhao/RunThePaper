@@ -1,60 +1,108 @@
 # Derivation Trace
 
-## Measurement probability
+The numerical code depends only on the eight verified cards in
+`EQUATION_CARDS.json`. This document records the independent reasoning behind
+their gates; `DERIVATION.md` is generated from the cards.
 
-In the two-dimensional good/bad subspace, one amplification operation rotates
-the state angle by `2 theta_a`. Starting at `theta_a`, after `m` operations the
-good amplitude is `sin((2m+1)theta_a)`. Squaring it gives the Bernoulli
-probability used by the numerical sampler. The `m=0` limit recovers `p=a`.
+## EQ001 — Amplified Bernoulli Probability
 
-## Joint likelihood and MLE
+In the good/bad two-dimensional subspace, \(\mathbf Q\) is a rotation by
+\(2\theta_a\). Starting from
+\(\sin\theta_a|{\rm good}\rangle+\cos\theta_a|{\rm bad}\rangle\), \(m\)
+applications therefore produce angle \((2m+1)\theta_a\). Squaring the good
+amplitude gives \(p_m=\sin^2((2m+1)\theta_a)\). The checks
+\(p_m+(1-p_m)=1\) and \(p_0=a\) close the gate.
 
-For independent counts `h_k` from `N_k` Bernoulli trials, multiplication of
-binomial kernels gives Eq. (5). Combinatorial factors are independent of
-`theta_a`, so maximizing the stable log form is equivalent to maximizing the
-paper likelihood. The estimator is constrained to the full physical domain
-`theta_a in [0,pi/2]`, then transformed through `a_hat=sin^2(theta_hat)`.
+## EQ002 — Joint Likelihood And MLE
 
-## Fisher information
+For circuit \(k\), \(h_k\) is binomial with parameters \(N_k,p_k\). Constants
+\(\binom{N_k}{h_k}\) do not depend on \(a\), so the product likelihood reduces
+after taking logs to
+\(\sum_k[h_k\log p_k+(N_k-h_k)\log(1-p_k)]\). All \(k\) share the same
+\(\theta_a\), which is why their otherwise independent data resolve periodic
+aliases. For \(m_k=0\) the score equation yields
+\(\hat a=\sum h_k/\sum N_k\), used as an implementation oracle.
 
-Differentiating one binomial log-likelihood with
-`p_k=sin^2(q_k theta_a)`, `q_k=2m_k+1`, and
-`d theta_a/d a = 1/(2 sqrt(a(1-a)))` gives
-`I_k=N_k q_k^2/[a(1-a)]`. Independence adds information, yielding Eq. (10).
-Direct query counting gives `N_q=sum N_k q_k`. Cauchy's inequality and the
-asymptotic unbiased-MLE limit yield Eq. (13).
+## EQ003 — Fisher Information
 
-## Schedule sums
+For one Bernoulli observation the information is
+\((\partial_a p)^2/[p(1-p)]\). With
+\(\theta=\arcsin\sqrt a\),
+\[
+\partial_a p_m
+=\frac{(2m+1)\sin(2(2m+1)\theta)}{2\sqrt{a(1-a)}}.
+\]
+Since \(p_m(1-p_m)=\sin^2(2(2m+1)\theta)/4\), the oscillatory factor cancels
+away from removable endpoints, leaving
+\((2m+1)^2/[a(1-a)]\). Multiplication by \(N_k\) and summation over independent
+circuits gives EQ003.
 
-For LIS, `q_k=2k+1`. Therefore
-`sum q_k=(M+1)^2` and
-`sum q_k^2=(M+1)(2M+1)(2M+3)/3`.
-Thus `N_q~N_shot M^2`, `I~N_shot M^3/[a(1-a)]`, and
-`epsilon~N_q^(-3/4)` at fixed `N_shot`.
+## EQ004 — Query Accounting
 
-For EIS, `m_0=0` and `m_k=2^(k-1)` for `k>=1`, so the largest query weight and
-both geometric sums are controlled by `2^M`. Hence
-`N_q~N_shot 2^(M+1)`, `I~N_shot 2^(2M+2)/(3a(1-a))`, and
-`epsilon~N_q^(-1)`.
+Each shot prepares \(\mathcal A|0\rangle\) once. Each \(\mathbf Q\) contains
+one \(\mathcal A\) and one \(\mathcal A^{-1}\), so \(m_k\) amplification
+operations cost \(2m_k+1\) calls to \(\mathcal A\) or its inverse. Summing
+over shots and circuits gives \(N_q\).
 
-## Complexity table
+## EQ005 — Schedule Sums
 
-The classical sampling relation `epsilon~N_q^(-1/2)` gives query and direct
-post-processing complexity `O(epsilon^-2)`. Eliminating `M` for LIS gives
-`O(epsilon^-4/3)` queries; an `O(1/epsilon)` brute-force grid times
-`O(M)=O(epsilon^-2/3)` likelihood work gives
-`O(epsilon^-5/3)`. EIS gives `O(epsilon^-1)` queries and an
-`O(epsilon^-1 log epsilon^-1)` global search.
+For LIS, \(2m_k+1=2k+1\). Thus
+\(\sum_{k=0}^M(2k+1)=(M+1)^2\), while expanding
+\(\sum(2k+1)^2\) and using the standard sums of \(k\) and \(k^2\) gives
+\((M+1)(2M+1)(2M+3)/3\).
 
-## Conventional QAE and resource counts
+For EIS, \(m_0=0\) and \(2m_k+1=2^k+1\) for \(k\ge1\). Geometric sums give
+\[
+\sum r_k=2^{M+1}+M-1,\qquad
+\sum r_k^2=\frac{4^{M+1}-4}{3}+2^{M+2}+M-3.
+\]
+Direct enumeration for every executed \(M\) is an independent runtime check.
 
-Appendix A defines the four nearest phase-grid integers. Mapping these
-candidates back through `sin^2` creates an independently executable
-quantization-error curve. For Table 2, the explicit circuit decomposition
-reduces to `C_proposed(q)=14q+4`, `Q_proposed=3`,
-`C_conventional(2^r)=262*2^r-127+r(r+1)`, and
-`Q_conventional=7+r`; substitution reproduces every frozen row.
+## EQ006 — Table 1 Exponents
 
-All executable equations are represented in `EQUATION_CARDS.json`. The
-reader-facing `DERIVATION.md` is generated from those cards and is not edited
-by hand.
+- Classical: \(\epsilon\sim N_q^{-1/2}\), hence \(N_q\sim\epsilon^{-2}\);
+  the direct sample mean also costs \(O(N_q)\).
+- LIS: \(N_q\sim M^2\), \(\mathcal I\sim M^3\), so
+  \(\epsilon\sim M^{-3/2}\sim N_q^{-3/4}\) and
+  \(N_q\sim\epsilon^{-4/3}\). A \(1/\epsilon\) search grid times
+  \(M\sim\epsilon^{-2/3}\) likelihood work gives
+  \(O(\epsilon^{-5/3})\).
+- EIS: \(N_q\sim2^M\), \(\mathcal I\sim4^M\), hence
+  \(\epsilon\sim N_q^{-1}\); a \(1/\epsilon\) grid and
+  \(M\sim\log(1/\epsilon)\) likelihood evaluation give
+  \(O(\epsilon^{-1}\log\epsilon^{-1})\).
+
+## EQ007 — Appendix Comparator
+
+Conventional AE discretizes the two symmetric phases
+\(\theta_a/\pi\) and \(1-\theta_a/\pi\) on a \(Q_m=2^m-1\) grid. The four
+floor/ceiling integers are mapped back through \(\sin^2\), and the largest
+absolute amplitude error is retained exactly as Appendix A specifies.
+Symmetry duplicates candidate amplitudes but is kept explicitly for audit.
+
+## EQ008 — Table 2 Resource Model
+
+The paper fixes \(n=2\), \(b_{\max}=\pi/4\), all-to-all connectivity, and the
+Qiskit 0.7 gate convention. Decomposing the displayed circuits into that CNOT
+basis gives:
+
+- state preparation \(\mathcal A\): 4 CNOTs;
+- one un-controlled \(\mathbf Q\): 14 CNOTs;
+- one controlled \(\mathbf Q\): 131 CNOTs;
+- an inverse QFT on \(j+1\) phase qubits: \(j(j+1)\) CNOTs.
+
+The proposed circuit with maximum \(q\) uses \(4+14q\). Conventional AE with
+maximum power \(q=2^j\) applies controlled \(\mathbf Q\)
+\(1+2+\cdots+2^j=2q-1\) times, giving
+\[
+4+131(2q-1)+j(j+1)=262q+j(j+1)-127.
+\]
+The proposed circuit stays at three qubits; the conventional circuit uses the
+three data/rotation qubits, \(j+1\) phase qubits, and three decomposition
+ancillas, i.e. \(j+7\).
+
+## Gate Decision
+
+All cards have a paper source trace plus at least one independent symbolic,
+limiting, normalization, dimensional, or numerical check. They are eligible
+for `final_reproduction`; no source-only card authorizes a run.

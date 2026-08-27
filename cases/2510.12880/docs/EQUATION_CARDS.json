@@ -1,0 +1,681 @@
+{
+  "schema_version": 1,
+  "paper_id": "2510.12880",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Spin-1 and Cartesian-basis conventions",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "Convention for spin-1 matrices"
+        },
+        {
+          "type": "tex_contains",
+          "value": "exp(i pi S_i^alpha)=I -2(S_i^alpha)^2"
+        }
+      ],
+      "latex": "|x>=(|+1>-|-1>)/sqrt(2), |y>=(|+1>+|-1>)/sqrt(2), |z>=|0>; R_x=diag(+1,-1,-1), R_y=diag(-1,+1,-1)",
+      "role": "Fixes the local basis in which every bond conserved quantity is diagonal.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints Sx, Sy, Sz, their squares, and the pi-rotation identity."
+        },
+        {
+          "id": "EQC001_eigenbasis",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct multiplication gives Sx|x>=0, Sy|y>=0, Sz|z>=0 and the stated rotation eigenvalues."
+        }
+      ],
+      "numerical_form": "Three local Cartesian labels x,y,z with diagonal arrays r_x=(+1,-1,-1), r_y=(-1,+1,-1).",
+      "code_refs": [
+        "src/kitaev_aklt.py:spin_one_operators",
+        "src/kitaev_aklt.py:cartesian_basis_transform"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Alternating Kitaev-AKLT Hamiltonian and bond sectors",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq.H"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq.Ws"
+        }
+      ],
+      "latex": "H(theta)=sum_even[K Sx_j Sx_j+1+Q(Sx_j Sx_j+1)^2]+sum_odd[K Sy_j Sy_j+1+Q(Sy_j Sy_j+1)^2], K=cos(theta), Q=sin(theta); W_even=Ry_j Ry_j+1, W_odd=Rx_j Rx_j+1",
+      "role": "Defines the physical Hamiltonian and the exact commuting blocks used for diagonalization.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text defines alternating X/Y bonds and two-site pi rotations."
+        },
+        {
+          "id": "EQC002_commutator",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A bond rotation either leaves its bond operator invariant or flips both adjacent spin components, so every W_j commutes with every bond term; integer-spin pi rotations commute on shared sites."
+        },
+        {
+          "id": "EQC002_typo",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Restoring the missing pi in the second factor of printed W_(2j+1) is required by W_j^2=1 and by the supplement's explicit action."
+        }
+      ],
+      "numerical_form": "Filter Cartesian product configurations by r_axis(a_j) r_axis(a_j+1)=w_j, then assemble H only inside that exact block.",
+      "code_refs": [
+        "src/kitaev_aklt.py:sector_basis",
+        "src/kitaev_aklt.py:sector_hamiltonian"
+      ],
+      "open_questions": [
+        "The main-source definition of W_(2j+1) omits pi in its second exponential; the intended pi rotation is unambiguous from the rest of the paper."
+      ]
+    },
+    {
+      "id": "EQC003",
+      "title": "Positive-projector identity at theta=pi/4",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq.Hproject"
+        },
+        {
+          "type": "tex_contains",
+          "value": "Projection onto maximal moments along the bond direction"
+        }
+      ],
+      "latex": "P_(S_i^a+S_j^a=+/-2)=1/2[A_a+A_a^2], A_a=S_i^a S_j^a; H_(pi/4)=sqrt(2) sum_b P_b",
+      "role": "Makes the exactly solvable point frustration free and fixes its zero-energy target.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The identity is printed in the main text and derived in the supplement."
+        },
+        {
+          "id": "EQC003_spectrum",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A_a has eigenvalues -1,0,+1; (A_a+A_a^2)/2 is one only for equal nonzero projections, exactly the total +/-2 subspace."
+        },
+        {
+          "id": "EQC003_prefactor",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "K=Q=1/sqrt(2) gives (A+A^2)/sqrt(2)=sqrt(2) P."
+        }
+      ],
+      "numerical_form": "Each two-site bond matrix is compared against sqrt(2) times an idempotent rank-two projector.",
+      "code_refs": [
+        "src/kitaev_aklt.py:bond_operator",
+        "tests/test_kitaev_aklt.py:test_projector_identity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Fractionalized bond states are frustration free",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "The net bond-spin along X is given by"
+        },
+        {
+          "type": "tex_contains",
+          "value": "On each X bond, we have a two-fold choice"
+        }
+      ],
+      "latex": "S_i^a+S_j^a=sigma_i,L^a+(sigma_i,R^a+sigma_j,L^a)+sigma_j,R^a, with the central pair in |s> or |t_a> and therefore central total a-spin zero",
+      "role": "Explains why every one of the 2^N bond choices is annihilated by all projectors after on-site spin-1 projection.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text explicitly gives the spinon decomposition and singlet/triplet bond states."
+        },
+        {
+          "id": "EQC004_bound",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "After the central pair cancels, two exterior spin-1/2 objects can sum only to -1,0,+1, never +/-2; on-site symmetrization commutes with physical rotations."
+        }
+      ],
+      "numerical_form": "At theta=pi/4, the constructed physical MPS must have norm-positive expectation H=0 to numerical tolerance.",
+      "code_refs": [
+        "src/kitaev_aklt.py:physical_mps_tensors",
+        "tests/test_kitaev_aklt.py:test_mps_is_zero_mode"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Bond rotations act as cluster stabilizers",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq.Waction"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq.Hwpert"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq.WPchi2"
+        }
+      ],
+      "latex": "W_k|chi>=g(chi_k)|...,bar(chi_(k-1)),chi_k,bar(chi_(k+1)),...>; W_k -> sigma_x(k-1) sigma_z(k) sigma_x(k+1)",
+      "role": "Maps the nonorthogonal fractionalized labels to a solvable cluster model and identifies orthogonal w sectors.",
+      "derived_from": [
+        "EQC001",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states the action and the supplement enumerates all eight local singlet/triplet cases."
+        },
+        {
+          "id": "EQC005_pauli",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Neighbor flips are sigma_x and the sign g(up)=+1, g(down)=-1 is sigma_z on the central bond label."
+        }
+      ],
+      "numerical_form": "The MPS labeled by w must have support only on Cartesian configurations with those W eigenvalues.",
+      "code_refs": [
+        "src/kitaev_aklt.py:configuration_sector",
+        "tests/test_kitaev_aklt.py:test_mps_sector_support"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Cluster-state MPS in bond-label space",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq.A_matrices"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq.HCluster"
+        }
+      ],
+      "latex": "A_(w=+1)^up=H_2/sqrt(2), A_(w=+1)^down=[[1,1],[-1,1]]/sqrt(2); A_(w=-1)^up=A_(w=+1)^down, A_(w=-1)^down=A_(w=+1)^up",
+      "role": "Provides the exact coefficient MPS that selects a desired set of conserved quantities.",
+      "derived_from": [
+        "EQC005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four A matrices are printed in the main text and justified by local x rotations in the supplement."
+        },
+        {
+          "id": "EQC006_stabilizer",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Swapping the up/down physical index at sites with w=-1 implements sigma_x and reverses exactly the central cluster stabilizer sign."
+        }
+      ],
+      "numerical_form": "Two 2x2 matrices per requested w_j.",
+      "code_refs": [
+        "src/kitaev_aklt.py:cluster_mps_matrices"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Bond-dimension-four physical spin-1 MPS",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "MPS matrices for the ground states at"
+        },
+        {
+          "type": "tex_contains",
+          "value": "C_{X,w=+1}^{+1}"
+        }
+      ],
+      "latex": "C_(lambda,w)^s=sum_(chi=up,down) (M^s B_lambda^chi) tensor A_w^chi; Psi_w(s_1...s_N)=Tr product_j C_(lambda_j,w_j)^(s_j)",
+      "role": "Combines fractionalized bond states, on-site spin-1 projection, and cluster coefficients into the executable variational state.",
+      "derived_from": [
+        "EQC004",
+        "EQC006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement defines B, M, A and prints all C matrices for w=+/-1."
+        },
+        {
+          "id": "EQC007_contraction",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Explicit Kronecker contraction reproduces the printed C^(+1) and C^(-1) matrices; the s=0 tensor follows from M^0B and resolves the supplement's M^(+1) typo."
+        },
+        {
+          "id": "EQC007_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The transfer-matrix trace printed in the supplement equals the squared norm; overlap calculations normalize the state explicitly."
+        }
+      ],
+      "numerical_form": "Evaluate traces of alternating X/Y 4x4 matrices only on the exact-sector basis, then normalize.",
+      "code_refs": [
+        "src/kitaev_aklt.py:physical_mps_tensors",
+        "src/kitaev_aklt.py:mps_state_in_sector"
+      ],
+      "open_questions": [
+        "The supplement labels two s=0 products as M^(+1)B; the preceding definitions and displayed matrices require M^0B."
+      ]
+    },
+    {
+      "id": "EQC008",
+      "title": "Ground-state MPS overlap",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "overlap of this ansatz with the true ground state"
+        },
+        {
+          "type": "figure",
+          "value": "fig.overlaps(a)"
+        }
+      ],
+      "latex": "F_GS(N,theta)=|<psi_0(N,theta)|Psi_(w_j=+1)>|^2",
+      "role": "Defines the observable in main Fig. 5(a).",
+      "derived_from": [
+        "EQC002",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text and caption define the plotted quantity as the overlap with the true ground state."
+        },
+        {
+          "id": "EQC008_range",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Normalized vectors and Cauchy-Schwarz give 0<=F_GS<=1; at theta=pi/4 the selected MPS is an exact zero mode in its one-dimensional w sector, so F_GS=1."
+        },
+        {
+          "id": "EQC008_semantics",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The source labels the axis 'Overlap' but its plotted theta=0 values match the squared inner product, not its magnitude; for N=12, 0.90043^2=0.81077 agrees with the visible point near 0.81."
+        }
+      ],
+      "numerical_form": "Squared absolute normalized inner product of the lowest eigenvector in the uniform + sector and the matching MPS vector.",
+      "code_refs": [
+        "src/kitaev_aklt.py:state_overlap",
+        "scripts/run_paper_target.py:run_t001"
+      ],
+      "open_questions": [
+        "The source does not release raw overlap values or eigensolver tolerances."
+      ]
+    },
+    {
+      "id": "EQC009",
+      "title": "First-excited-subspace MPS overlap",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "overlap of a single-spin-flip state"
+        },
+        {
+          "type": "figure",
+          "value": "fig.overlaps(b)"
+        }
+      ],
+      "latex": "F_FE(N,theta)=<Psi_1flip|P_FE|Psi_1flip>",
+      "role": "Defines the basis-independent observable in main Fig. 5(b).",
+      "derived_from": [
+        "EQC002",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The caption specifies overlap with the space of N degenerate first excited states."
+        },
+        {
+          "id": "EQC009_projector",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The projector expectation is invariant under arbitrary rotations within a degenerate eigenspace; because W sectors are orthogonal, a one-flip MPS reduces to the squared overlap with the lowest eigenvector of its matching one-flip sector."
+        },
+        {
+          "id": "EQC009_semantics",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At theta=0 the squared one-flip-sector overlaps reproduce the plotted values, including 0.89464^2=0.80039 at N=12."
+        }
+      ],
+      "numerical_form": "Squared absolute overlap in one fixed one-w-flip sector, cross-checked against the N-fold sector energies.",
+      "code_refs": [
+        "src/kitaev_aklt.py:state_overlap",
+        "scripts/run_paper_target.py:run_t002"
+      ],
+      "open_questions": [
+        "The paper does not state which one-flip sector was plotted; translation plus X/Y rotation symmetry makes the choices equivalent."
+      ]
+    },
+    {
+      "id": "EQC010",
+      "title": "Direct-product energy bounds and phase controls",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "purely biquadratic model"
+        },
+        {
+          "type": "tex_contains",
+          "value": "H_{theta=pi/2} is a sum of positive semi-definite terms"
+        }
+      ],
+      "latex": "H_theta=sqrt(2)cos(theta) H_(pi/4)+(sin(theta)-cos(theta))H_(pi/2) for pi/4<=theta<=pi/2; E_(3pi/2)>=-N and |z>^N saturates",
+      "role": "Provides analytic controls for the doubly-degenerate and unique-ground-state parts of the phase diagram.",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement gives both the positive-semidefinite decomposition and the lower-bound saturation at 3pi/2."
+        },
+        {
+          "id": "EQC010_coefficients",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding the decomposition returns K=cos(theta), Q=sin(theta); both coefficients are nonnegative in the stated interval."
+        },
+        {
+          "id": "EQC010_bound",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "|z> is a +1 eigenstate of (Sx)^2 and (Sy)^2, so every negative biquadratic bond contributes -1."
+        }
+      ],
+      "numerical_form": "Evaluate product-state energies and small-system sector ground energies at representative theta values.",
+      "code_refs": [
+        "src/kitaev_aklt.py:product_state_energy",
+        "scripts/run_paper_target.py:run_v002"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC011",
+      "title": "Exact-point ground-state degeneracy",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "ground state degeneracy to 2^{N}+1"
+        },
+        {
+          "type": "tex_contains",
+          "value": "uniform w=-1 sector is the symmetric combination"
+        }
+      ],
+      "latex": "dim ker H_(pi/4)=2^N+1 = one fractionalized MPS in every w sector plus one additional antisymmetric product-state combination in the uniform w=-1 sector",
+      "role": "States the central macroscopic-degeneracy claim in a form that can be checked sector by sector.",
+      "derived_from": [
+        "EQC003",
+        "EQC005",
+        "EQC007"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC011_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states 2^N+1 and the supplement identifies the extra state in the uniform - sector."
+        },
+        {
+          "id": "EQC011_count",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Distinct w strings are orthogonal. The cluster MPS supplies one state for each of 2^N strings, while the two product states share uniform w=-1; their symmetric combination is already in the MPS span and the antisymmetric combination is independent."
+        }
+      ],
+      "numerical_form": "Count zero eigenvalues of every fixed-w block for small even N and verify that only the uniform - block has nullity two.",
+      "code_refs": [
+        "src/kitaev_aklt.py:exact_point_zero_mode_count",
+        "scripts/run_paper_target.py:run_v001"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC012",
+      "title": "Open-chain exact-point degeneracy",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "ground state degeneracy is (2^{N+1}-1)"
+        },
+        {
+          "type": "figure",
+          "value": "fig.edge"
+        }
+      ],
+      "latex": "dim ker H_open(theta=pi/4)=2^(N+1)-1, N even",
+      "role": "States the supplemental dangling-spinon count and its one-state linear dependency.",
+      "derived_from": [
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC012_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Edge states section prints the formula, enumerates the seven N=2 zero modes, and writes the one linear dependency explicitly."
+        }
+      ],
+      "numerical_form": "Construct the even-N open projector Hamiltonian and compare its nullity and fractionalized-state rank with 2^(N+1)-1.",
+      "code_refs": [],
+      "open_questions": [
+        "No independent open-boundary implementation or accepted count beyond the source derivation is currently registered."
+      ]
+    },
+    {
+      "id": "EQC013",
+      "title": "Open-chain theta=pi/2 degeneracy",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "ground state degeneracy is 2N+1"
+        }
+      ],
+      "latex": "dim ker H_open(theta=pi/2)=2N+1",
+      "role": "States the supplemental open-chain zero-mode sequence at the positive purely biquadratic point.",
+      "derived_from": [
+        "EQC002",
+        "EQC010"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC013_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The purely biquadratic theta=pi/2 section attributes the 2N+1 result to exact diagonalization and combinatorial arguments."
+        }
+      ],
+      "numerical_form": "Count zero eigenvalues of the open K=0,Q=1 Hamiltonian for an even-N sequence and verify a separate combinatorial recurrence.",
+      "code_refs": [],
+      "open_questions": [
+        "The source gives no raw spectra or explicit recurrence, and the current case implements periodic boundaries only."
+      ]
+    },
+    {
+      "id": "EQC014",
+      "title": "Open-chain theta=3pi/2 product-state manifold",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "ground state has a four-fold degeneracy"
+        },
+        {
+          "type": "tex_contains",
+          "value": "ground state energy comes out to be -(N-1)"
+        }
+      ],
+      "latex": "E0_open(theta=3pi/2)=-(N-1), dim G_open=4",
+      "role": "States the open-boundary negative-biquadratic energy bound and the two independent edge choices.",
+      "derived_from": [
+        "EQC002",
+        "EQC010"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC014_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The theta=3pi/2 supplement constructs the four edge product states and states the saturated -(N-1) energy."
+        }
+      ],
+      "numerical_form": "Evaluate the four proposed open product states and the full small-N ground-space nullity.",
+      "code_refs": [],
+      "open_questions": [
+        "No independent open-boundary spectrum or edge-state construction is registered."
+      ]
+    },
+    {
+      "id": "EQC015",
+      "title": "Theta=0 fractionalized-state parity selection",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "number of triplet-y bond-states must be even"
+        },
+        {
+          "type": "tex_contains",
+          "value": "number of triplet-x bond states must be even"
+        }
+      ],
+      "latex": "n_(t_x on X)=0 mod 2, n_(t_y on Y)=0 mod 2",
+      "role": "States the global-rotation selection rule for the uniform-positive-w theta=0 wavefunction.",
+      "derived_from": [
+        "EQC005",
+        "EQC007"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC015_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The variational-ansatz section derives both parity conditions from the Ux and Uy rotation eigenvalues."
+        }
+      ],
+      "numerical_form": "Expand the small-N uniform-positive-w MPS in the singlet/triplet bond basis and audit every nonzero coefficient's two parities.",
+      "code_refs": [],
+      "open_questions": [
+        "No independent bond-basis coefficient audit is currently implemented."
+      ]
+    },
+    {
+      "id": "EQC016",
+      "title": "Perturbative preservation of uniform positive w",
+      "source_refs": [
+        {
+          "type": "tex_contains",
+          "value": "lowest-order energy correction is obtained at second order"
+        },
+        {
+          "type": "tex_contains",
+          "value": "conserved quantities are unchanged at all orders"
+        }
+      ],
+      "latex": "Delta E^(1)=0; W_j |psi^(m)>=+|psi^(m)> for every perturbative order m",
+      "role": "States the perturbative mechanism behind the uniform-positive-w sector near theta=3pi/2.",
+      "derived_from": [
+        "EQC002",
+        "EQC010"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQC016_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The final supplemental section lists the bond-term actions and states the absent first-order shift and all-order sector preservation."
+        }
+      ],
+      "numerical_form": "Construct first- and second-order matrix elements, enumerate intermediate w sectors, and compare with small-N exact spectra.",
+      "code_refs": [],
+      "open_questions": [
+        "No independent perturbation-series implementation or accepted order-by-order check is currently registered."
+      ]
+    }
+  ]
+}

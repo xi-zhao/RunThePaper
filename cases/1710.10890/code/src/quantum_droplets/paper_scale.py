@@ -18,10 +18,6 @@ from pathlib import Path
 import tempfile
 from typing import Any, Iterable
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np
 
 from .coupled_gpe import lhy_finite_difference_check, run_split_step_scenario
@@ -885,6 +881,14 @@ def aggregate_campaign(
     _atomic_json(check_root / "convergence.json", convergence_rows)
     _atomic_json(check_root / "crosschecks.json", crosschecks)
     _atomic_json(check_root / "paper_review_assessment.json", assessment)
+
+    # Rendering is intentionally imported only on the aggregation path.  The
+    # numerical planner/validator can then run in the no-render isolated bundle
+    # without probing host fonts or launching font-discovery subprocesses.
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
 
     figure_root.mkdir(parents=True, exist_ok=True)
     fig, axes = plt.subplots(1, 2, figsize=(10.0, 4.0), constrained_layout=True)

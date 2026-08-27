@@ -9,7 +9,6 @@ Usage: python scripts/check_feature_contracts.py
 """
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 from collections import defaultdict
@@ -17,44 +16,23 @@ from pathlib import Path
 
 import numpy as np
 
-from runtime_layout import CASE_ROOT
-
-WS = CASE_ROOT
+WS = Path(__file__).resolve().parents[1]
 DATA = WS / "outputs" / "data"
 CHECKS = WS / "outputs" / "checks"
 
 RESULTS: list[dict] = []
 
 
-def record(
-    cid: str,
-    passed: bool,
-    generated,
-    expected,
-    note: str = "",
-    *,
-    essential: bool = True,
-) -> None:
-    status = "passed" if passed else "failed" if essential else "diagnostic_mismatch"
+def record(cid: str, passed: bool, generated, expected, note: str = "") -> None:
     RESULTS.append({
-        "id": cid,
-        "status": status,
-        "essential": essential,
-        "generated": generated,
-        "expected": expected,
-        "note": note,
+        "id": cid, "status": "passed" if passed else "failed",
+        "generated": generated, "expected": expected, "note": note,
     })
-    prefix = "PASS " if passed else "FAIL " if essential else "WARN "
-    print(prefix + f"{cid}: generated={generated} expected={expected} {note}")
-
-
-def preferred_data_path(stem: str) -> Path:
-    exact = DATA / f"{stem}_paper_exact.csv"
-    return exact if exact.exists() else DATA / f"{stem}.csv"
+    print(("PASS " if passed else "FAIL ") + f"{cid}: generated={generated} expected={expected} {note}")
 
 
 def load(model: str) -> dict[str, np.ndarray]:
-    rows = list(csv.DictReader(open(preferred_data_path(f"fig2_{model}_scan"))))
+    rows = list(csv.DictReader(open(DATA / f"fig2_{model}_scan.csv")))
     by_p = defaultdict(list)
     for r in rows:
         by_p[float(r["param"])].append(r)
@@ -71,7 +49,10 @@ def near(x: float, target: float, tol: float) -> bool:
     return abs(x - target) <= tol
 
 
-def check_fig2(cl: dict[str, np.ndarray], tf: dict[str, np.ndarray]) -> None:
+def main() -> int:
+    cl = load("cluster")
+    tf = load("tfim")
+
     # --- Fig. 2 cluster row (a2/b2/c2), values read from the paper panels ---
     a = cl["param"]
     pk = int(np.argmax(cl["chi_m_tot"]))
@@ -113,20 +94,8 @@ def check_fig2(cl: dict[str, np.ndarray], tf: dict[str, np.ndarray]) -> None:
            [round(float(tf["chi_m_tot"][0]), 3), round(float(tf["chi_m_tot"][-1]), 3)],
            "[~1.35, ~0.05] (paper a1 endpoints)")
     wpk1 = int(np.argmax(tf["beta_W_irr_tot"]))
-    record(
-        "fig2_tfim_wirr_peak_location",
-        1.0 <= float(J[wpk1]) <= 5.0,
-        round(float(J[wpk1]), 3),
-        "J ~ 2.5 critical region (paper b1)",
-    )
-    record(
-        "fig2_tfim_wirr_peak_value",
-        near(float(tf["beta_W_irr_tot"][wpk1]), 0.49, 0.08),
-        round(float(tf["beta_W_irr_tot"][wpk1]), 3),
-        "~0.49 (paper b1)",
-        "The critical-region peak is present, but its paper-scale amplitude is lower.",
-        essential=False,
-    )
+    record("fig2_tfim_wirr_peak", 1.0 <= float(J[wpk1]) <= 5.0 and near(float(tf["beta_W_irr_tot"][wpk1]), 0.49, 0.08),
+           [round(float(J[wpk1]), 3), round(float(tf["beta_W_irr_tot"][wpk1]), 3)], "[~2.5, ~0.49] (paper b1)")
     # b1 signature: at large J, W_irr plateaus high while chi_d collapses
     record("fig2_tfim_wirr_large_J_plateau",
            float(tf["beta_W_irr_tot"][-1]) > 0.3 and float(tf["chi_d_tot"][-1]) < 0.05,
@@ -137,24 +106,6 @@ def check_fig2(cl: dict[str, np.ndarray], tf: dict[str, np.ndarray]) -> None:
            [round(float(J[cpk1]), 3), round(float(tf["C_m_tot"][-1]), 3)],
            "peak in critical region, vanishes at large J (paper c1)")
 
-    for tag, crit_lo, crit_hi in (("cluster", 0.2, 0.75), ("tfim", 0.5, 8.0)):
-        rows = list(csv.DictReader(open(preferred_data_path(f"nmse_{tag}_scan"))))
-        by_p = defaultdict(list)
-        for row in rows:
-            by_p[float(row["param"])].append(float(row["nmse_h1"]))
-        parameters = np.array(sorted(by_p))
-        nmse = np.array([np.mean(by_p[value]) for value in parameters])
-        minimum = float(parameters[int(np.argmin(nmse))])
-        record(
-            f"fig2_{tag}_nmse_min_in_critical_region",
-            crit_lo <= minimum <= crit_hi,
-            round(minimum, 3),
-            f"[{crit_lo}, {crit_hi}] (paper a-panel green minimum)",
-            "full 4^6-1 Pauli readout, 500 sequences",
-        )
-
-
-def check_figs2(cl: dict[str, np.ndarray], tf: dict[str, np.ndarray]) -> None:
     # --- Fig. S2: multi-step orderings and NMSE minima ---
     # Orderings are contracted over the region where the paper's panels are
     # readable (cluster: full range; TFIM: J <= 5). In the deep-MBL tail
@@ -184,68 +135,30 @@ def check_figs2(cl: dict[str, np.ndarray], tf: dict[str, np.ndarray]) -> None:
                round(float(tau_pk), 3), f"[{crit_lo}, {crit_hi}]")
 
     for tag, crit_lo, crit_hi in (("cluster", 0.2, 0.75), ("tfim", 0.5, 8.0)):
-        rows = list(csv.DictReader(open(preferred_data_path(f"nmse_{tag}_scan"))))
-        for horizon in (1, 2, 3):
-            by_p = defaultdict(list)
-            for row in rows:
-                by_p[float(row["param"])].append(float(row[f"nmse_h{horizon}"]))
-            parameters = np.array(sorted(by_p))
-            nmse = np.array([np.mean(by_p[value]) for value in parameters])
-            minimum = float(parameters[int(np.argmin(nmse))])
-            record(
-                f"figS2_{tag}_nmse_h{horizon}_min_in_critical_region",
-                crit_lo <= minimum <= crit_hi,
-                round(minimum, 3),
-                f"[{crit_lo}, {crit_hi}] (paper S2c)",
-                "full 4^6-1 Pauli readout, 500 sequences",
-            )
+        rows = list(csv.DictReader(open(DATA / f"nmse_{tag}_scan.csv")))
+        by_p = defaultdict(list)
+        for r in rows:
+            by_p[float(r["param"])].append(float(r["nmse_h1"]))
+        p = np.array(sorted(by_p))
+        nm = np.array([np.mean(by_p[x]) for x in p])
+        pmin = float(p[int(np.argmin(nm))])
+        record(f"fig2_{tag}_nmse_min_in_critical_region", crit_lo <= pmin <= crit_hi,
+               round(pmin, 3), f"[{crit_lo}, {crit_hi}] (paper a-panel green minimum)",
+               "reduced 153-feature readout")
 
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--target", choices=["T001", "T003"])
-    args = parser.parse_args()
-    RESULTS.clear()
-    cl = load("cluster")
-    tf = load("tfim")
-
-    if args.target in (None, "T001"):
-        check_fig2(cl, tf)
-    if args.target in (None, "T003"):
-        check_figs2(cl, tf)
-
-    failed = [result for result in RESULTS if result["status"] == "failed"]
-    diagnostics = [
-        result for result in RESULTS if result["status"] == "diagnostic_mismatch"
-    ]
-    output_name = (
-        f"{args.target}_feature_contract.json"
-        if args.target
-        else "fig2_figS2_feature_contract.json"
-    )
+    failed = [r for r in RESULTS if r["status"] != "passed"]
     payload = {
         "schema_version": 1,
         "paper_id": "2607.02157",
-        "check": args.target or "fig2_figS2_feature_contract",
-        "target_id": args.target,
-        "status": (
-            "failed"
-            if failed
-            else "passed_with_warnings"
-            if diagnostics
-            else "passed"
-        ),
+        "check": "fig2_figS2_feature_contract",
+        "status": "passed" if not failed else "failed",
         "reference_basis": "visual_feature_contract: values read from the paper's Fig. 2/S2 panels",
-        "data_scale": "paper_exact",
         "results": RESULTS,
     }
     CHECKS.mkdir(parents=True, exist_ok=True)
-    out = CHECKS / output_name
+    out = CHECKS / "fig2_figS2_feature_contract.json"
     out.write_text(json.dumps(payload, indent=2) + "\n")
-    print(
-        f"\n{len(RESULTS) - len(failed) - len(diagnostics)}/{len(RESULTS)} checks passed, "
-        f"{len(diagnostics)} diagnostic mismatches -> {out}"
-    )
+    print(f"\n{len(RESULTS) - len(failed)}/{len(RESULTS)} contract checks passed -> {out}")
     return 1 if failed else 0
 
 

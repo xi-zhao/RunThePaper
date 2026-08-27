@@ -5,7 +5,7 @@
 | quantitative feature match | 7 | Fig. 1(a), Fig. 2(b,c), Fig. 4(a-d) |
 | qualitative formula/flow match | 4 | Fig. S1 four panels |
 | partial reduced-scale match | 2 | Fig. 1(b), Fig. 2(a) |
-| failed scientific target | 2 | Fig. S2(a,b) |
+| parameter-ambiguous target | 2 | Fig. S2(a,b) |
 
 ## Strong anchors
 
@@ -36,7 +36,7 @@ Fig. 2(a) has executable candidate
 size shards but cannot claim the plotted sequence because the paper omits the
 exact L list.
 
-Fig. S2 is not reproduced after the printed Hamiltonian-to-flow projection and
+Fig. S2 is not aligned after the printed Hamiltonian-to-flow projection and
 ring convergence pass independent checks. The supplement does not provide the
 closed deformed residual construction or numerical orbit-integral procedure,
 so protocol-v2 assigns `parameter_ambiguity`. `paper_error_candidate` is

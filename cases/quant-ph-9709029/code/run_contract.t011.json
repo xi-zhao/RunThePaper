@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "run_id": "quant-ph-9709029-t011-operational-rate-v2-20260824",
+  "target_ids": [
+    "T011"
+  ],
+  "command": [
+    "python",
+    "scripts/run_t011_operational_rate.py",
+    "--config",
+    "config/t011_operational_rate.json"
+  ],
+  "inputs": [
+    "src/wootters/__init__.py",
+    "src/wootters/model.py",
+    "src/wootters/operational_rate.py",
+    "scripts/run_t011_operational_rate.py",
+    "config/t011_operational_rate.json"
+  ],
+  "parameter_file": "config/t011_operational_rate.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "schmidt_probabilities": [
+      0.1,
+      0.25,
+      0.5
+    ],
+    "copy_counts": [
+      128,
+      512,
+      2048,
+      8192,
+      32768
+    ],
+    "allowed_infidelity_exponent": 0.4
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "outputs": [
+    "outputs/data/T011_operational_communication_rate.csv",
+    "outputs/checks/t011_operational_rate_theorem.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPYCACHEPREFIX": "outputs/.pycache"
+  }
+}

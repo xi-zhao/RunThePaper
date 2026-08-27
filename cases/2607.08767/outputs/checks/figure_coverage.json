@@ -1,0 +1,270 @@
+{
+  "schema_version": 2,
+  "paper_id": "2607.08767",
+  "implementations": {
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "F5A_PROXY",
+        "T_FIG5B",
+        "T_FIG6A",
+        "T_FIG6B",
+        "T_FIG7",
+        "T_FIG8",
+        "T_FIG11"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/public_targets.py",
+        "src/fig5a_proxy_core.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "A deterministic clean-room density-matrix proxy executes Eqs. (9)-(10) on the declared GHZ model without changing the existing proxy-only scientific scope.",
+        "Public leakage, transmon, neutral-atom-axis, and trapped-ion heating inputs are checked independently where printed equations permit.",
+        "Every unavailable QEC circuit/sampler/decoder bundle is represented by a strict path-plus-SHA-256 schema and an executable blocked artifact; no author arrays, source pixels, commercial code, or guessed conventions are used."
+      ],
+      "execution_evidence": "outputs/runs/2607.08767-implementation-closure-v2/run_attestation.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "FIG1",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 1 and caption",
+      "scientific_role": "schematic_context",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Platform overview schematic; it carries no independently adjudicable numerical output."
+    },
+    {
+      "item_id": "FIG2",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 2 and caption",
+      "scientific_role": "schematic_context",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Simulation workflow schematic; the arrows and blocks are not numerical results."
+    },
+    {
+      "item_id": "FIG3",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 3 and caption",
+      "scientific_role": "schematic_context",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "XPauli state-representation schematic."
+    },
+    {
+      "item_id": "FIG4",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 4 and caption",
+      "scientific_role": "schematic_context",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Near-Clifford algorithm and estimator schematic."
+    },
+    {
+      "item_id": "TABLE_I",
+      "item_type": "table",
+      "source_ref": "Main Table I",
+      "scientific_role": "qualitative_inventory",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Qualitative capability inventory rather than a numerical result."
+    },
+    {
+      "item_id": "TABLE_II",
+      "item_type": "table",
+      "source_ref": "Main Table II",
+      "scientific_role": "qualitative_inventory",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Qualitative sampler taxonomy rather than a numerical result."
+    },
+    {
+      "item_id": "TABLE_III",
+      "item_type": "table",
+      "source_ref": "Main Table III and Eq. (12)",
+      "scientific_object": "Generalized-Pauli sector-transition probabilities and Pauli-error weights of the printed two-Kraus leakage channel.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_TABLE3"
+      ],
+      "critical": true,
+      "reason": "All transition and Pauli weights follow independently from the printed two-Kraus channel.",
+      "claim_refs": [
+        "CLM_TABLE3"
+      ]
+    },
+    {
+      "item_id": "FIG5_A",
+      "item_type": "figure_panel",
+      "source_ref": "Main Fig. 5(a) and Eqs. (9)-(10)",
+      "scientific_object": "Logical-error probabilities under coherent over-rotation for Clifford, near-Clifford, and full-state samplers.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "F5A_PROXY"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "An explicit independent proxy covers the qualitative twirling direction but not the paper's circuit-level values.",
+      "claim_refs": [
+        "CLM_TWIRL_DIRECTION"
+      ]
+    },
+    {
+      "item_id": "FIG5_B",
+      "item_type": "figure_panel",
+      "source_ref": "Main Fig. 5(b), Eq. (12), and Table III",
+      "scientific_object": "Logical-error probabilities of the leakage-after-CZ channel for Clifford, XPauli, and full-state samplers.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG5B"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "The channel is public, but no independent paper-scoped circuit, sampler, and decoder calculation has been implemented.",
+      "claim_refs": [
+        "CLM_FIG5B"
+      ]
+    },
+    {
+      "item_id": "FIG6_A",
+      "item_type": "figure_panel",
+      "source_ref": "Main Fig. 6(a), Eqs. (15)-(16), and caption",
+      "scientific_object": "Distance-three transmon-CZ heating scan comparing Stim, XPauli, and full-state logical errors.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG6A"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "No independent transmon-channel-to-QEC calculation currently generates the panel.",
+      "claim_refs": [
+        "CLM_FIG6A"
+      ]
+    },
+    {
+      "item_id": "FIG6_B",
+      "item_type": "figure_panel",
+      "source_ref": "Main Fig. 6(b), Eqs. (15)-(16), and caption",
+      "scientific_object": "Distance-nine transmon-CZ heating scan comparing Stim and XPauli logical errors.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG6B"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": false,
+      "reason": "No independent larger-code leakage-aware calculation currently generates the panel.",
+      "claim_refs": [
+        "CLM_FIG6B"
+      ]
+    },
+    {
+      "item_id": "FIG7",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 7 and Eqs. (15)-(16)",
+      "scientific_object": "Distance-5-to-19 transmon threshold curves and the XPauli-versus-Stim threshold shift.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG7"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "The finite-size-scaling pipeline and paper-scoped QEC simulation are not implemented independently.",
+      "claim_refs": [
+        "CLM_FIG7"
+      ]
+    },
+    {
+      "item_id": "FIG8",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 8, Eqs. (18)-(19), and caption",
+      "scientific_object": "Three-parameter neutral-atom threshold surfaces for Clifford and XPauli representations.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG8"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "No independent neutral-atom channel, ray scan, and threshold-surface calculation is registered.",
+      "claim_refs": [
+        "CLM_FIG8"
+      ]
+    },
+    {
+      "item_id": "FIG9",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 9 and caption",
+      "scientific_role": "schematic_context",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Ion-sector architecture schematic."
+    },
+    {
+      "item_id": "FIG10",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 10 and Eqs. (20)-(21)",
+      "scientific_object": "Five-sector thermal transition matrix at Gamma_h=0.2 and n_th=1.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG10"
+      ],
+      "critical": true,
+      "reason": "The full 5x5 transition matrix follows from the printed Lindbladian and parameters.",
+      "claim_refs": [
+        "CLM_HEATING"
+      ]
+    },
+    {
+      "item_id": "FIG11",
+      "item_type": "figure",
+      "source_ref": "Main Fig. 11 and Eqs. (20)-(22)",
+      "scientific_object": "Rotated-planar-code logical errors under non-stationary sector heating and the fitted threshold.",
+      "scientific_role": "theoretical_numerical",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG11"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "critical": true,
+      "reason": "No independent sector-history QEC simulation and threshold fit currently generates the panel.",
+      "claim_refs": [
+        "CLM_FIG11"
+      ]
+    }
+  ],
+  "quantitative_claims": []
+}

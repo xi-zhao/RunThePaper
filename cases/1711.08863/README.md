@@ -6,7 +6,7 @@ Published as: [Decoherence-Free Interaction between Giant Atoms in Waveguide QED
 
 Formal citation: 120, 140404 (2018) · DOI `10.1103/PhysRevLett.120.140404` · Locator `140404`
 
-Public status: **Scientific reproduction — independent review pending** · Audit score: **80.64/100**
+Public status: **Scientific reproduction — independent review pending** · Audit score: **87.66/100**
 
 All 13 numerical curves in the paper's only numerical figure are independently formula-derived.
 
@@ -45,13 +45,13 @@ cd cases/1711.08863/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 1 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Artifact checks pass; fresh-context independent scientific review remains pending.
+Remaining limitation: Whole-paper atomic audit: 4 eligible items, 4 reproduced; coverage 100.00%, fidelity and degree 87.66. T002-T004 use exact all-size witnesses plus isolated numerical sanity checks and do not require raster targets. Artifact and scientific checks pass for T001-T004; fresh-context independent review remains a lifecycle gate.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

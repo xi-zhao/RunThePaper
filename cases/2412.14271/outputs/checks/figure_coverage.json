@@ -1,0 +1,799 @@
+{
+  "schema_version": 2,
+  "paper_id": "2412.14271",
+  "implementations": {
+    "t004_bogoliubov_spectrum": {
+      "status": "ready",
+      "target_ids": [
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t004_bogoliubov_campaign.py",
+        "--config",
+        "config/t004_bogoliubov_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dicke.py",
+        "src/t004_bogoliubov_campaign.py",
+        "scripts/run_t004_bogoliubov_campaign.py"
+      ],
+      "config_ref": "config/t004_bogoliubov_campaign.json",
+      "run_contract_ref": "run_contract.t004_bogoliubov_campaign.json",
+      "expected_outputs": [
+        "outputs/checks/t004_bogoliubov_closure/manifest.json",
+        "outputs/checks/t004_bogoliubov_closure/T004.json",
+        "outputs/data/t004_bogoliubov_closure/T004.json"
+      ],
+      "acceptance_criteria": [
+        "The full frozen 61-point grid uses omega_c=1, omega_a=2, and kappa1=0.4 from the printed formal parameters.",
+        "The six-mode normal spectrum is nonexpanding after excluding the exact neutral mode, while every existing superradiant fixed point has a positive-real Bogoliubov mode.",
+        "Both fixed-denominator Fig. S1 panels map exactly once to T004; successful execution does not promote or alter scientific coverage.",
+        "The numerical runner reads no paper, source image, author code, author array, or prior output."
+      ],
+      "execution_evidence": "outputs/runs/2412.14271-t004-bogoliubov-v1-20260824/run_attestation.json"
+    },
+    "stability_implementation_closure": {
+      "status": "ready",
+      "target_ids": [
+        "T005"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_stability_implementation_campaign.py",
+        "--config",
+        "config/stability_implementation_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dicke.py",
+        "src/stability_implementation_campaign.py",
+        "scripts/run_stability_implementation_campaign.py"
+      ],
+      "config_ref": "config/stability_implementation_campaign.json",
+      "run_contract_ref": "run_contract.stability_implementation_campaign.json",
+      "expected_outputs": [
+        "outputs/checks/stability_implementation_closure/manifest.json",
+        "outputs/checks/stability_implementation_closure/T005.json",
+        "outputs/data/stability_implementation_closure/T005.json"
+      ],
+      "acceptance_criteria": [
+        "The printed-equation solver resolves normal, smallest-photon, and largest-photon eight-mode spectra on every frozen reduced coupling point.",
+        "Both nonzero branches satisfy the fixed-point residual tolerance and the existing branch-to-spectrum discrepancy remains explicit rather than tuned away.",
+        "The runner reads no paper, source image, author code, author array, or digitized reference and never promotes scientific coverage."
+      ],
+      "execution_evidence": "outputs/runs/2412.14271-stability-implementation-v1-20260824/run_attestation.json"
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T006"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/checks/implementation_closure"
+      ],
+      "code_refs": [
+        "src/dicke.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/campaign_summary.json",
+        "outputs/checks/implementation_closure/formal_supplement_blocked.json"
+      ],
+      "acceptance_criteria": [
+        "The clean-room Fig. 2 path constructs the printed one-photon Hamiltonian and Lindblad Liouvillian directly, solves a sparse trace-constrained steady state, and emits mean-field, photon, spin, and Fock observables.",
+        "Reduced attestation passes trace, Hermiticity, positivity, and Liouvillian-residual checks while paper N=5 and M=60,80,100 remain explicitly not run.",
+        "Formal S3/S4 remain input-blocked until an authorized supplement hash and every declared panel/method field are frozen; the runner rejects guessed fields."
+      ],
+      "execution_evidence": "outputs/runs/2412.14271-implementation-closure-v1/run_attestation.json"
+    },
+    "paper_scale_randomized_trajectories": {
+      "status": "ready",
+      "target_ids": [
+        "T002",
+        "T003",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale_trajectories.py",
+        "run-all",
+        "--config",
+        "config/quantum_main_paper_scale.json",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/dicke.py",
+        "src/paper_scale_trajectories.py",
+        "scripts/run_paper_scale_trajectories.py"
+      ],
+      "config_ref": "config/quantum_main_paper_scale.json",
+      "run_contract_ref": "run_contract_quantum_main_paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/paper_scale_quantum_plan.json",
+        "outputs/data/paper_scale_quantum.npz",
+        "outputs/data/paper_scale_quantum_summary.json",
+        "outputs/checks/paper_scale_quantum_science.json",
+        "outputs/checks/paper_scale_quantum_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All six N=15 parameter points contain exactly 3000 independently initialized trajectories, with exact-once index coverage and frozen 500/3000 prefix ensembles.",
+        "Every shard checkpoint is atomically written and bound to the effective config and implementation digests; aggregation fails on gaps, overlap, or stale checkpoints.",
+        "Trace, Hermiticity, positivity, photon-cutoff tail, and Wigner-normalization checks satisfy config/quantum_main_paper_scale.json.",
+        "The numeric runner reads no author code, author arrays, digitized curves, source-figure pixels, or PDF pixels.",
+        "The production run remains a paper-scale candidate rather than paper-exact because the paper does not disclose final integration times or random seeds and fresh independent review remains pending."
+      ],
+      "compute_status": "code_ready_full_18000_trajectory_campaign_not_run",
+      "smoke_evidence": {
+        "profile": "local_non_isolated_smoke",
+        "paper_parameters_executed": false,
+        "manifest": "outputs/checks/paper_scale_quantum_smoke_manifest.json",
+        "science_checks": "outputs/checks/paper_scale_quantum_smoke_science.json"
+      }
+    },
+    "parity_paper_parameters": {
+      "status": "ready",
+      "target_ids": [
+        "T008"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_quantum_parity.py",
+        "--config",
+        "config/quantum_parity.json"
+      ],
+      "code_refs": [
+        "src/dicke.py",
+        "scripts/run_quantum_parity.py"
+      ],
+      "config_ref": "config/quantum_parity.json",
+      "run_contract_ref": "run_contract_quantum_parity.json",
+      "expected_outputs": [
+        "outputs/data/figS_parity.npz",
+        "outputs/data/figS_parity_summary.json",
+        "outputs/checks/figS_parity_science.json"
+      ],
+      "acceptance_criteria": [
+        "The sparse Liouvillian contains two independently resolved near-zero modes at the printed N=4, M=50, kappa1=0, kappa2=0.05, and lambda=0.85 parameters.",
+        "Even and odd initial sectors retain zero opposite-parity probability within numerical tolerance.",
+        "The generated density matrices pass trace, positivity, and photon-cutoff checks without source-derived numerical inputs."
+      ],
+      "execution_evidence": "outputs/runs/quantum-parity-paper-v3/run_attestation.json"
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Fig. 1(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Formal Fig. 1 caption, published p. 2",
+      "scientific_object": "cavity-emitter and one-/two-photon loss schematic",
+      "reason": "Conceptual apparatus drawing; it is not a computed observable."
+    },
+    {
+      "item_id": "Main Fig. 1(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Formal Fig. 1 caption, published p. 2",
+      "scientific_object": "conceptual Z4 phase-space sketch",
+      "reason": "Symmetry sketch only; the numerical Z4 observable is carried by Main Fig. 4."
+    },
+    {
+      "item_id": "Main Fig. 1(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Formal Fig. 1 caption, published p. 2",
+      "scientific_object": "conceptual Z2 phase-space sketch",
+      "reason": "Comparison sketch only; it is not a numerical result of the reproduced model."
+    },
+    {
+      "item_id": "Main Fig. 2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "mean-field cavity photon occupation versus coupling with stable and unstable branches",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Formula-derived one-photon-loss instability branch.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "mean-field collective-spin components versus coupling with stable and unstable branches",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Formula-derived spin signature of the one-photon-loss fixed points.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "finite-system photon occupation versus coupling for M=60,80,100 at N=5",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Cutoff drift is the full-quantum evidence that one-photon loss does not yield a converged NESS.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(d)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "finite-system collective-spin polarization versus coupling for M=60,80,100 at N=5",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Full-quantum spin observable across the analytic transition threshold.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(e)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "Fock-state probability P(n) at lambda=1.25 and M=60",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "High-cutoff occupation is an independently adjudicable instability panel.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(f)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "Fock-state probability P(n) at lambda=1.25 and M=80",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "High-cutoff occupation is an independently adjudicable instability panel.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(g)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "source_ref": "Formal Fig. 2 caption, published p. 3",
+      "scientific_object": "Fock-state probability P(n) at lambda=1.25 and M=100",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "High-cutoff occupation is an independently adjudicable instability panel.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=5 Fock-state distribution at lambda=0.62 with both losses",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Finite-system numerical evidence for the stabilized normal phase.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=5 Fock-state distribution and Gaussian fit at lambda=0.79",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Finite-system side-lobe evidence used to extract the superradiant photon number.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=5 Fock-state distribution and Gaussian fit at lambda=1.1",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Finite-size bimodal occupation in the strong-coupling regime.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(d)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=15 Fock-state distribution at lambda=0.62 from quantum trajectories",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system trajectory evidence for stabilization before threshold.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(e)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=15 Fock-state distribution and Gaussian fit at lambda=0.79",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system side-lobe evidence used to extract the superradiant photon number.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(f)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "N=15 Fock-state distribution and Gaussian fit at lambda=1.1",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system strong-coupling distribution distinguishes the thermodynamic branch from the finite-size state.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(g)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 3 caption, published p. 3",
+      "scientific_object": "analytic stable/unstable photon branches and finite-N photon means versus coupling, including inset",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Direct comparison between cumulant phase boundaries and independently generated ED/QT observables.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=5 photonic Wigner function at lambda=0.62",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Phase-space observable computed from an independently generated reduced density matrix.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=5 photonic Wigner function at lambda=0.79",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Four-lobe plus vacuum phase-space structure tests Z4 symmetry and phase coexistence.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=5 photonic Wigner function at lambda=1.1",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Finite-size phase-space evidence for the additional smaller superradiant branch.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(d)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=15 photonic Wigner function at lambda=0.62",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system normal-phase Wigner observable.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(e)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=15 photonic Wigner function at lambda=0.79",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system four-lobe plus vacuum structure tests Z4 symmetry and coexistence.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 4(f)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Formal Fig. 4 caption and text, published pp. 4-5",
+      "scientific_object": "N=15 photonic Wigner function at lambda=1.1",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Large-system strong-coupling Wigner observable for the surviving superradiant phase.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S1 / arXiv v1 Fig. 5(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "source_ref": "arXiv v1 SM Fig. 5(a), paper-source/main.tex lines 319-324",
+      "scientific_object": "one-photon-loss Bogoliubov spectrum of the normal state versus coupling",
+      "paper_level_role": "supporting",
+      "implementation_ref": "t004_bogoliubov_spectrum",
+      "reason": "Printed-equation stability spectrum for the always-stable normal branch.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S1 / arXiv v1 Fig. 5(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "source_ref": "arXiv v1 SM Fig. 5(b), paper-source/main.tex lines 319-324",
+      "scientific_object": "one-photon-loss Bogoliubov spectrum of the superradiant state versus coupling",
+      "paper_level_role": "supporting",
+      "implementation_ref": "t004_bogoliubov_spectrum",
+      "reason": "Printed-equation positive-real-part spectrum tests superradiant instability.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S2 / arXiv v1 Fig. 6(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "stability_implementation_closure",
+      "source_ref": "arXiv v1 SM Fig. 6(a), paper-source/main.tex lines 437-442",
+      "scientific_object": "both-loss Bogoliubov spectrum of the normal state versus coupling",
+      "paper_level_role": "supporting",
+      "reason": "Printed-equation stability spectrum for the normal solution.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S2 / arXiv v1 Fig. 6(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "stability_implementation_closure",
+      "source_ref": "arXiv v1 SM Fig. 6(b), paper-source/main.tex lines 437-442",
+      "scientific_object": "both-loss Bogoliubov spectrum of the larger superradiant state versus coupling",
+      "critical": true,
+      "paper_level_role": "supporting",
+      "reason": "Stability spectrum for the superradiant branch retained in the thermodynamic limit.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S2 / arXiv v1 Fig. 6(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "stability_implementation_closure",
+      "source_ref": "arXiv v1 SM Fig. 6(c), paper-source/main.tex lines 437-442",
+      "scientific_object": "both-loss Bogoliubov spectrum of the smaller superradiant state versus coupling",
+      "critical": true,
+      "paper_level_role": "supporting",
+      "reason": "The independent printed-equation calculation exposes the currently documented branch-stability discrepancy.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S3 (panel inventory unavailable)",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Published p. 4 cites formal Fig. S3; Ref. 73 describes exact-solution convergence versus two-photon loss",
+      "scientific_object": "formal supplemental exact-solution convergence result associated with two-photon loss",
+      "paper_level_role": "method_validation",
+      "reason": "The APS formal supplement requires authorization, and the frozen arXiv v1 supplement predates this figure; its panel count, parameters, and observables cannot be guessed.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S4 (panel inventory unavailable)",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "implementation_closure_campaign",
+      "blocker": "missing_source_input",
+      "source_ref": "Published p. 4 cites formal Fig. S4; Ref. 73 describes the effect of two-photon loss on stabilization",
+      "scientific_object": "formal supplemental stabilization or convergence result as the two-photon loss value changes",
+      "paper_level_role": "method_validation",
+      "reason": "The APS formal supplement requires authorization, and the frozen arXiv v1 supplement predates this figure; its panel count, parameters, and observables cannot be guessed.",
+      "claim_refs": [
+        "CLM005"
+      ]
+    },
+    {
+      "item_id": "Formal Fig. S5 / arXiv v1 Fig. 7",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale_randomized_trajectories",
+      "source_ref": "Published p. 4 and arXiv v1 SM Fig. 7, paper-source/main.tex lines 459-464",
+      "scientific_object": "N=15 mean photon occupation versus coupling for 500 and 3000 trajectories against the analytic branch",
+      "paper_level_role": "method_validation",
+      "reason": "Single-panel convergence diagnostic; the current artifact is covered at reduced trajectory count and remains fidelity-capped.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "arXiv v1 SM Fig. 8(a) (formal numbering unverified)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "parity_paper_parameters",
+      "source_ref": "arXiv v1 SM Fig. 8(a), paper-source/main.tex lines 470-475",
+      "scientific_object": "eight Liouvillian eigenvalues nearest zero for pure two-photon loss",
+      "paper_level_role": "supporting",
+      "reason": "Formula-defined rank-two steady-state kernel at the printed parameters.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "arXiv v1 SM Fig. 8(b) (formal numbering unverified)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "parity_paper_parameters",
+      "source_ref": "arXiv v1 SM Fig. 8(b), paper-source/main.tex lines 470-475",
+      "scientific_object": "odd-sector steady-state Fock distribution initialized at |15>",
+      "paper_level_role": "supporting",
+      "reason": "Parity-resolved probability distribution generated from the model, not from author arrays.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    },
+    {
+      "item_id": "arXiv v1 SM Fig. 8(c) (formal numbering unverified)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "parity_paper_parameters",
+      "source_ref": "arXiv v1 SM Fig. 8(c), paper-source/main.tex lines 470-475",
+      "scientific_object": "even-sector steady-state Fock distribution initialized at |10>",
+      "paper_level_role": "supporting",
+      "reason": "Parity-resolved probability distribution generated from the model, not from author arrays.",
+      "claim_refs": [
+        "CLM004"
+      ]
+    }
+  ],
+  "quantitative_claims": []
+}

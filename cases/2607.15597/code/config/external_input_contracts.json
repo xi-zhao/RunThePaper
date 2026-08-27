@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "policy": "No paper parameter or scientific definition may be guessed. The runner rejects incomplete packages.",
+  "implementation_attestation_parameters": {
+    "scientific_promotion": false,
+    "profile": "strict_input_boundary_attestation"
+  },
+  "implementation_closure": {
+    "scientific_promotion": false,
+    "profile": "strict_input_boundary_attestation",
+    "target_items": {
+      "T018": [
+        "TS05-MQDT-POLARIZABILITY",
+        "S2-A-S1F32",
+        "S2-A-D1F12",
+        "S2-A-P0F12",
+        "S2-A-P1F12-CURRENT",
+        "S2-A-D2F32-OPT",
+        "S2-A-P2F32-OPT",
+        "S2-B-CURRENT-MISLABEL",
+        "S2-B-D1P0-RATIO",
+        "S2-B-D2P2-RATIO",
+        "QCLM-S6-MQDT-CROSSCHECK"
+      ],
+      "T020": [
+        "TS08-QLDPC-TRANSFER-MC",
+        "QCLM-S8-R1-OPTIMAL"
+      ],
+      "T021": [
+        "TS09-PASSIVE-ION-MEMORY"
+      ],
+      "T022": [
+        "TS10-QLDPC-SE-MC"
+      ],
+      "T023": [
+        "TS12-APM-BB-MC"
+      ],
+      "T024": [
+        "S5-A-MC-ATOM",
+        "S5-A-MC-ION",
+        "S5-A-MC-HYBRID"
+      ],
+      "T027": [
+        "QCLM-S7-ANHARMONIC-TOGGLE"
+      ]
+    },
+    "acceptance": [
+      "Every fixed-denominator item maps exactly once to a target-specific strict input schema.",
+      "The implementation emits blocked_on_paper_input until a complete external package passes field-level validation.",
+      "Implementation attestation must not change scientific coverage or claim paper-exact agreement."
+    ]
+  },
+  "contracts": [
+    {
+      "target_id": "T016",
+      "model": "table_s3_error_budget",
+      "implementation": "src/supplement_claims.py#table_s3_error_budget",
+      "status": "partial_runner_ready_input_blocked",
+      "missing_inputs": [
+        "apparatus-specific thermal, heating, micromotion, scattering and Stark-shift model parameters"
+      ]
+    },
+    {
+      "target_id": "T018",
+      "model": "sum_over_states_dynamic_polarizability",
+      "implementation": "src/external_input_models.py#dynamic_polarizability_sweep",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "states[].state_id",
+        "states[].samples[].field_v_m",
+        "states[].samples[].drive_energy_hartree",
+        "states[].samples[].transitions[].delta_energy_hartree",
+        "states[].samples[].transitions[].reduced_dipole_au",
+        "states[].samples[].transitions[].angular_factor"
+      ]
+    },
+    {
+      "target_id": "T020",
+      "model": "binary_css_monte_carlo",
+      "implementation": "src/external_input_models.py#css_monte_carlo_campaign",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "experiments[].label",
+        "experiments[].parity_check_z",
+        "experiments[].logical_z",
+        "experiments[].error_probability",
+        "experiments[].shots",
+        "experiments[].seed",
+        "experiments[].decoder"
+      ]
+    },
+    {
+      "target_id": "T021",
+      "model": "binary_css_monte_carlo",
+      "implementation": "src/external_input_models.py#css_monte_carlo_campaign",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "experiments[].label",
+        "experiments[].parity_check_z",
+        "experiments[].logical_z",
+        "experiments[].error_probability",
+        "experiments[].shots",
+        "experiments[].seed",
+        "experiments[].decoder"
+      ]
+    },
+    {
+      "target_id": "T022",
+      "model": "binary_css_monte_carlo",
+      "implementation": "src/external_input_models.py#css_monte_carlo_campaign",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "experiments[].label",
+        "experiments[].parity_check_z",
+        "experiments[].logical_z",
+        "experiments[].error_probability",
+        "experiments[].shots",
+        "experiments[].seed",
+        "experiments[].decoder"
+      ]
+    },
+    {
+      "target_id": "T023",
+      "model": "binary_css_monte_carlo",
+      "implementation": "src/external_input_models.py#css_monte_carlo_campaign",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "experiments[].label",
+        "experiments[].parity_check_z",
+        "experiments[].logical_z",
+        "experiments[].error_probability",
+        "experiments[].shots",
+        "experiments[].seed",
+        "experiments[].decoder"
+      ]
+    },
+    {
+      "target_id": "T024",
+      "model": "binary_css_monte_carlo",
+      "implementation": "src/external_input_models.py#css_monte_carlo_campaign",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "experiments[].label",
+        "experiments[].parity_check_z",
+        "experiments[].logical_z",
+        "experiments[].error_probability",
+        "experiments[].shots",
+        "experiments[].seed",
+        "experiments[].decoder"
+      ],
+      "prohibition": "Direct Monte Carlo markers must never be interpolated from analytic Fowler curves."
+    },
+    {
+      "target_id": "T027",
+      "model": "piecewise_constant_toggled_hamiltonian",
+      "implementation": "src/external_input_models.py#toggled_hamiltonian_evolution",
+      "status": "runner_ready_input_blocked",
+      "required_fields": [
+        "base_hamiltonian_rad_s",
+        "toggle_hamiltonian_rad_s",
+        "schedule"
+      ]
+    },
+    {
+      "target_id": "T028",
+      "model": "rf_dressing_sweep",
+      "implementation": "src/supplement_claims.py#rf_dressing_sweep",
+      "status": "partial_runner_ready_input_blocked",
+      "missing_inputs": [
+        "absolute dipole matrix elements",
+        "bare polarizabilities",
+        "unambiguous Eq. S24 unit convention"
+      ]
+    }
+  ]
+}

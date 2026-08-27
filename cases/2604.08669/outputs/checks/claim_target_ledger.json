@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "passed_with_warnings",
+  "summary": {
+    "claims_total": 1,
+    "numeric_claims_total": 1,
+    "numeric_claims_without_targets": 0,
+    "targets_total": 3,
+    "targets_without_claim_refs": 2,
+    "claims_by_coverage_status": {
+      "target_declared": 1
+    },
+    "findings_total": 2,
+    "finding_counts": {
+      "error": 0,
+      "warning": 2,
+      "info": 0
+    }
+  },
+  "claims": [
+    {
+      "claim_id": "CLM_FIG3_GNN_MOVEMENT_DISTANCE",
+      "status": "active",
+      "statement": "Fig. 3 reports the GNN path planner's average and maximum atom movement distances; the reproduction target is to match or improve those paper metrics.",
+      "source_refs": [
+        "figure:FIG003"
+      ],
+      "numeric_source_refs": [
+        "figure:FIG003"
+      ],
+      "formula_refs": [],
+      "target_refs": [
+        "T001"
+      ],
+      "target_count": 1,
+      "target_statuses": [
+        "partially_reproduced"
+      ],
+      "evidence_comparison_count": 0,
+      "coverage_status": "target_declared"
+    }
+  ],
+  "targets": [
+    {
+      "target_id": "T001",
+      "figure_id": "FIG003",
+      "target_kind": "assignment_benchmark",
+      "status": "partially_reproduced",
+      "claim_refs": [
+        "CLM_FIG3_GNN_MOVEMENT_DISTANCE"
+      ],
+      "formula_refs": [],
+      "method_refs": [
+        "MTH001"
+      ],
+      "parameter_match": "reduced_scale",
+      "evidence_fields": [
+        "mean_predicted_average_distance",
+        "mean_predicted_max_distance",
+        "rank1_rate"
+      ],
+      "acceptance_metrics": {
+        "mean_predicted_average_distance": {
+          "reference": 0.512,
+          "direction": "lt",
+          "tolerance": 0.0,
+          "aggregation": "mean",
+          "split": "val64",
+          "role": "paper_metric"
+        },
+        "mean_predicted_max_distance": {
+          "reference": 1.93,
+          "direction": "lt",
+          "tolerance": 0.0,
+          "aggregation": "mean",
+          "split": "val64",
+          "role": "paper_metric"
+        },
+        "rank1_rate": {
+          "reference": 0.8,
+          "direction": "gt",
+          "tolerance": 0.0,
+          "aggregation": "mean",
+          "split": "shard32",
+          "role": "diagnostic_proxy"
+        }
+      },
+      "required_artifacts": [
+        "outputs/checks/paper_gnn_target_stage13_paper_metric_verdict_audit/paper_metric_verdict_audit.json"
+      ],
+      "dataset_count": 1,
+      "rendered_figure_count": 1,
+      "evidence_comparison_count": 0
+    },
+    {
+      "target_id": "T002",
+      "figure_id": "FIG004",
+      "target_kind": "hologram_continuity",
+      "status": "data_generated",
+      "claim_refs": [],
+      "formula_refs": [],
+      "method_refs": [
+        "MTH002"
+      ],
+      "parameter_match": "reduced_scale",
+      "evidence_fields": [],
+      "acceptance_metrics": {},
+      "required_artifacts": [],
+      "dataset_count": 1,
+      "rendered_figure_count": 1,
+      "evidence_comparison_count": 0
+    },
+    {
+      "target_id": "T003",
+      "figure_id": "FIG005",
+      "target_kind": "pipelined_runtime_model",
+      "status": "data_generated",
+      "claim_refs": [],
+      "formula_refs": [],
+      "method_refs": [
+        "MTH003"
+      ],
+      "parameter_match": "model_only",
+      "evidence_fields": [],
+      "acceptance_metrics": {},
+      "required_artifacts": [],
+      "dataset_count": 5,
+      "rendered_figure_count": 1,
+      "evidence_comparison_count": 0
+    }
+  ],
+  "findings": [
+    {
+      "severity": "warning",
+      "code": "target_without_claim_ref",
+      "message": "Reproduction target is not linked to a paper claim.",
+      "claim_id": null,
+      "target_id": "T002"
+    },
+    {
+      "severity": "warning",
+      "code": "target_without_claim_ref",
+      "message": "Reproduction target is not linked to a paper claim.",
+      "claim_id": null,
+      "target_id": "T003"
+    }
+  ]
+}

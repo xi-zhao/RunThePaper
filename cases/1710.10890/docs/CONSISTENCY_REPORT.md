@@ -11,7 +11,7 @@ and the T007/T008 3D production campaign is code-ready but unrun.
 | --- | ---: | --- |
 | exact_match | 0 | No target has both exact inputs and high-confidence numeric agreement over every observable. |
 | feature_match | 5 | T001--T004 and T006 reproduce their declared scientific feature. |
-| partial_match | 2 | T005 has a branch-order mismatch; T007 is qualitative only. |
+| partial_match | 2 | T005 is parameter-ambiguous; T007 is qualitative only. |
 | input_match_only | 0 | No target is accepted from inputs alone. |
 | code_ready_unrun | 1 campaign | 12-task 3D production/refinement contract exists and passed smoke only. |
 | blocked | 1 | Main Fig. 4 lacks exact per-curve atom numbers for a paper-exact comparison. |

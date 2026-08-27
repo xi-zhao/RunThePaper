@@ -1,31 +1,21 @@
-# 复现说明
+# Enhancing Nonreciprocity through Squeezing-Induced Symmetry Breaking：科学复现讲义
 
-我们独立复现了论文 *Enhancing Nonreciprocity through Squeezing-Induced
-Symmetry Breaking*（PRL 136, 253602, 2026）中全部可复现的理论数值内容：共
-23 个数值子图，归入 10 个可执行目标。实现从论文中的 Bogoliubov 耦合、
-封闭高斯矩方程、稳态能量、被动态能量不变量和散射矩阵出发，不对原图曲线
-取点，也不把论文像素作为生成输入。
+## 结论
 
-论文的四个科学主张得到了验证：压缩增强需要相位或振幅交换对称性破缺；
-储能与可提取功按预期增强；最优耦合与阈值结构可由解析导数得到；光学隔离器
-保持单向传输并被压缩放大。八个目标完整复现。Figure 4 只能判为部分复现，
-因为 Zenodo 中公开的传输数组属于更早的稿件版本，峰值约 10.07，而最终公式
-给出 27.31。
+All ten target bundles were executed; Figure S1 is scientifically adjudicated with a rejected quantitative cutoff claim.
 
-我们还发现 Figure S3 的坐标语义错误。图中纵轴印成绝对能量
-`E_i^ss/omega_b`，但三个面板的九条曲线在 `r=0` 都从 1 出发。公式 EQ002
-给出的三个绝对基线分别为 1.5242、1.0412 和 0.1176，不可能同时等于 1；按
-各自的无压缩基线归一化后，`E_i^ss/E^ss` 的起点和所有可见终点尺度都吻合。
-因此公开图采用公式推导出的归一化量并修正标签，同时在 NPZ 中保留绝对量和
-归一化量。原图只用于生成后的语义核验，没有参与计算或取点。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-最重要的结果是发现 Figure S1 的定量问题。论文模型是二次 Hamiltonian 加
-线性 Lindblad 跳跃，因此高斯矩闭合是精确的。精确解在 S1(d) 参数下峰值为
-59.97；Fock 截断为 10 时峰值为 3.75，与原图约 4 的尺度接近，但该截断同时
-把占据数上限限制在 9。补充材料没有披露实际截断维数，也没有收敛性分析。
-因此我们复现了有限失谐增强这一物理特征，但拒绝把原论文的 S1(d) 当作收敛
-的定量结果。
+## 我们复现的是什么
 
-公开的作者数组采用 CC BY 4.0，仅在独立生成之后用于比较。当前科学视觉保真
-分为 90.31；排版保真诊断为 66.23，后者不贡献科学分。科学复现是否完成由
-推导、独立数值、守恒量和明确的差异归因决定，而不是由版式像素相似度决定。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
+
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=passed, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
+
+## 运行
+
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
+
+## 论文审查边界
+
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：First milestone targets T001, T002C, T003, and T004. Zenodo transmission arrays appear to belong to an older manuscript version.

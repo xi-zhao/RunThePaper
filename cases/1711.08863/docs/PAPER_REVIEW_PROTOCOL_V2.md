@@ -14,6 +14,10 @@ This document is a formal pre-review audit, not a substitute for
 `independent_review.json`. A disagreement is not promoted merely because it is
 stable in the reproducer's context.
 
+Its implemented target scope is T001 only. The later whole-paper atomic audit
+declares T002-T004 as uncovered analytic claim families; this protocol artifact
+does not review them and must not be cited as whole-paper scientific approval.
+
 ## Active Falsification of the Numerical Claim
 
 | Attempt | Independent method | Result | Evidence |

@@ -1,33 +1,21 @@
-# Möbius-Guided Diagonal-Gate Compilation with Native Multiqubit Controlled-Phase Gates on Neutral-Atom Processors: scientific numerical reproduction note
+# Möbius-Guided Diagonal-Gate Compilation with Native Multiqubit Controlled-Phase Gates on Neutral-Atom Processors: scientific reproduction note
 
-## Bottom line
+## Result
 
-This is the public package for the historical `2607.08212` scientific reproduction. Its public status is **Historical scientific artifact (6 numerical targets; 4 evidence_compared, 1 partially_reproduced, 1 reproduced)** and its frozen audit score is **70.85/100**. The score records evidence strength; it is neither a percentage of correctness nor a declaration that the whole paper is complete.
+Case scaffolded from framework/templates/paper_case.
 
-Here, reproduction means understanding the paper, following its equations or method, implementing the numerical work independently, and then generating data and figures. The data come from equations, independent numerics, or analytic derivation, not sampled pixels from paper figures. The public package excludes the paper PDF, standalone source figures, digitized image points, comparison boards, author code, and private runtime state. This is a legacy case without a machine-verifiable author-code isolation attestation, so publication does not upgrade it to complete.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Numerical targets
+## What is reproduced
 
-| Target | Paper item | Scientific meaning | Frozen status | Parameter match |
-| --- | --- | --- | --- | --- |
-| `ALGEBRA_CORE` | FIG002 | Exact algebraic frontend for diagonal projector phases. | reproduced | paper_exact |
-| `FIG3C_NATIVE` | FIG003C | Many-body projector phases remain visible as native CCZ operations. | evidence_compared | paper_subset |
-| `FIG3A_ZAP` | FIG003A | Early lowering expands six CCZ blocks into a large one-/two-qubit stream. | evidence_compared | paper_subset |
-| `ROUTING_PROXY` | FIG004_008 | Preserving native three- and four-body supports reduces serialized routed work across six disclosed many-body proxy families, without creating an artificial advantage for pairwise controls. | evidence_compared | proxy_model |
-| `ROUTING_PROXY_SCALING` | FIG006 | Compact native support streams reduce routed quantum duration and classical compilation/routing work as size grows. | evidence_compared | proxy_model |
-| `ROUTING_PROXY_SENSITIVITY` | FIG007 | Fixed routed streams isolate how assumed native three- and four-qubit errors alter the native-vs-ZAP decision. | partially_reproduced | proxy_model |
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Public artifacts
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=missing, causal_resolution=terminal_blocker, science=failed, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
-- 5 independently generated data files;
-- 6 independently generated figures;
-- runnable and inspectable code under `code/`;
-- machine-readable boundaries and scoring under `outputs/checks/`.
+## Run
 
-Run `python code/scripts/verify_public_artifacts.py` to recompute hashes and format/non-empty checks for every published artifact. Numerical entrypoint sources are retained under `code/scripts/` and `code/src/`; some legacy scripts require paper-specific parameters or external public data, as documented in their comments and the numerical-method note.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-## Remaining boundary
+## Paper-review boundary
 
-Frozen non-final target states: FIG3C_NATIVE=evidence_compared, FIG3A_ZAP=evidence_compared, ROUTING_PROXY=evidence_compared, ROUTING_PROXY_SCALING=evidence_compared, ROUTING_PROXY_SENSITIVITY=partially_reproduced. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
-
-Layout, typography, axes, line styles, palettes, and interpolation may be optimized for rendering diagnostics, but they must not alter physical parameters or numerical arrays and must never replace scientific computation with source-image pixels.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Bounded pass reproduces the algebra and Fig. 3 gate accounting; routed benchmark metadata remains incomplete. User-approved proxy campaign expanded on 2026-07-10 to every locally feasible target: Figs. 4/5/8 eight-family matrix, Fig. 6 scaling, and Fig. 7 sensitivity. The Fig. 7 proxy preserves a genuine mismatch: no paper-like break-even contours appear within the declared 0-20% grid. Exact Figs. 4-8 remain blocked by author generators, route state, timing environment, and ZX configuration.

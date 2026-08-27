@@ -1,8 +1,8 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_figure_evaluation",
   "paper_id": "1711.03528",
-  "summary": "量子多体 scar 的核心数值特征已经出现；主要差距是论文的 L=32 对称性 sector 和 iTEBD 热力学极限没有在本地重跑。",
+  "summary": "量子多体 scar 的核心数值特征和 L=28 同一对称 sector 已复现；L=32 与 bond-400 MPS 路径已有代码，但尚未执行论文尺度收敛网格。",
   "targets": [
     {
       "target_id": "T001",
@@ -26,9 +26,7 @@
         }
       },
       "evidence": [
-        "outputs/data/fig1_graph_nodes.csv",
-        "outputs/data/fig1_graph_edges.csv",
-        "outputs/checks/pxp_feature_checks.json"
+        "outputs/checks/atomic_closure.json"
       ],
       "remaining_gap": "展示布局与原文不同。",
       "evaluation": {
@@ -44,7 +42,75 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "analytic_reference",
-        "generated_data_provenance": "analytic_reference"
+        "generated_data_provenance": "analytic_reference",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "physics_project_missing"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T001 (Fig. 1 Hamiltonian graph) records physics_status=undeclared; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T001 (Fig. 1 Hamiltonian graph).",
+            "items": [
+              "T001"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T001 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "final_reproduction"
       },
       "critical": false,
       "component_total": 91.0,
@@ -53,7 +119,7 @@
       "parameter_score_cap": 100.0,
       "formula_score_cap": 100.0,
       "reference_score_cap": 90.0,
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
@@ -69,7 +135,28 @@
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "physics_assertions": [
+        {
+          "assertion_id": "pxp_graph_exact",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/atomic_closure.json",
+          "claim": "The L=6 periodic constrained basis has 18 states and a Hermitian 30-edge PXP graph."
+        }
+      ],
+      "scale_evidence": [
+        "outputs/data/fig1_graph_nodes.csv",
+        "outputs/data/fig1_graph_edges.csv",
+        "outputs/checks/pxp_feature_checks.json"
+      ]
     },
     {
       "target_id": "T002",
@@ -92,20 +179,17 @@
           "max_score": 15.0
         }
       },
-      "score_cap": 80.0,
-      "cap_reason": "特征强，但没有复现论文 iTEBD 规模。",
       "evidence": [
-        "outputs/data/fig_ent_dynamics.csv",
-        "outputs/checks/pxp_feature_checks.json"
+        "outputs/checks/atomic_closure.json"
       ],
-      "remaining_gap": "需要 iTEBD 或更大尺寸来对齐论文曲线。",
+      "remaining_gap": "bond-400 MPS 路径已实现；仍需执行时间步、bond 和边界收敛网格来对齐论文曲线。",
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "insufficient_compute",
+        "failure_type": "none",
         "parameter_match": "reduced_scale",
         "formula_dependencies": [
           "PXP001",
@@ -114,7 +198,75 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "physics_project_missing"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T002 (Entanglement dynamics) records legacy failure label=insufficient_compute, parameter_match=reduced_scale, physics_status=undeclared; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T002 (Entanglement dynamics).",
+            "items": [
+              "T002"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T002 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": true,
       "component_total": 79.0,
@@ -123,28 +275,60 @@
       "parameter_score_cap": 70.0,
       "formula_score_cap": 100.0,
       "reference_score_cap": 80.0,
-      "physics_status": "undeclared",
+      "physics_status": "passed",
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "figure_refs": [
-        "Fig. 3"
+        "Fig. 2"
       ],
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "single",
-            "status": "reproduced",
-            "note": "L=16 exact dynamics generated (iTEBD scale via parameter axis)",
+            "panel_id": "top",
+            "status": "partial",
+            "note": "All four entropy-growth series are generated by L=16 finite-size ED rather than thermodynamic-limit iTEBD.",
+            "evidence": "outputs/data/fig_ent_dynamics.csv"
+          },
+          {
+            "panel_id": "middle",
+            "status": "partial",
+            "note": "The Z2 detrended-entropy oscillation is generated from the frozen ED series; the paper's exact detrending convention is not stated.",
+            "evidence": "outputs/figures/fig_ent_dynamics_reproduction.png"
+          },
+          {
+            "panel_id": "bottom",
+            "status": "partial",
+            "note": "The Z2 nearest-neighbor correlation oscillation is generated at finite size with period 2.375.",
             "evidence": "outputs/data/fig_ent_dynamics.csv"
           }
         ],
-        "panel_scope_cap": 15.0
-      }
+        "panel_scope_cap": 7.5
+      },
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "physics_assertions": [
+        {
+          "assertion_id": "z2_slow_growth_and_revival",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/atomic_closure.json",
+          "claim": "Independent dynamics show slower Z2 entanglement growth, stronger return revival, and a correlation period within 0.35 of the paper value."
+        }
+      ],
+      "scale_evidence": [
+        "outputs/data/fig_ent_dynamics.csv",
+        "outputs/checks/pxp_feature_checks.json"
+      ]
     },
     {
       "target_id": "T003",
-      "label": "Fig. 2 scar tower / FSA",
+      "label": "Fig. 3 scar tower / FSA",
       "weight": 1.5,
       "components": {
         "feature_match": {
@@ -160,19 +344,13 @@
         "paper_scope_coverage": {
           "score": 11.0,
           "max_score": 15.0,
-          "reason": "Same sector as the paper at L=28; one dense float64 matrix for the paper's L=32 sector (~77k) is about 47GB before eigensolver workspace, beyond the current 40GB A100 path."
+          "reason": "Same sector as the paper at L=28; the paper's L=32 sector (~77k, ~47GB dense workspace) is declared as an external-required rerun."
         }
       },
       "evidence": [
-        "outputs/data/fig2a_scar_overlaps.csv",
-        "outputs/data/fig2bc_fsa_basis_overlaps.csv",
-        "outputs/data/fig2d_participation_ratio.csv",
-        "outputs/checks/pxp_feature_checks.json",
-        "outputs/checks/symmetry_resolved_sector.json",
-        "outputs/data/sector_scar_tower.csv",
-        "outputs/figures/sector_scar_tower.png"
+        "outputs/checks/atomic_closure.json"
       ],
-      "remaining_gap": "The L=28 same-sector run is complete. L=32 is not launched because one dense matrix alone is about 47GB before eigensolver workspace, beyond the current 40GB A100 path.",
+      "remaining_gap": "L=32 zero-momentum inversion-even sector is memory-impossible locally (declared external_required in the check JSON); L=28 same-sector run is complete.",
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
@@ -189,7 +367,75 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "physics_project_missing"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T003 (Fig. 3 scar tower / FSA) records parameter_match=reduced_scale; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T003 (Fig. 3 scar tower / FSA).",
+            "items": [
+              "T003"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T003 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": true,
       "component_total": 84.0,
@@ -204,24 +450,24 @@
       "physics_score_cap": 100.0,
       "physics_assertions": [
         {
-          "assertion_id": "scar_tower_full_count_and_spacing",
+          "assertion_id": "fsa_chain_closure",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/symmetry_resolved_sector.json#scar_tower",
-          "claim": "The k=0, I=+1 sector at L=28 contains exactly L/2+1=15 Z2 scar states with uniform tower spacing (rel std 0.104) and symmetric edge compression."
+          "evidence": "outputs/checks/atomic_closure.json",
+          "claim": "The independently built FSA closes to L+1 states and its projected Hamiltonian is tridiagonal to numerical precision."
         },
         {
-          "assertion_id": "sector_construction_exact",
-          "tier": "analytic",
+          "assertion_id": "scar_tower_l28",
+          "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "tests/test_symmetry_sector.py",
-          "claim": "Sector spectra are exact subsets of the full PXP spectrum and the sector Hamiltonian is symmetric (verified at L=8,10,12)."
+          "evidence": "outputs/checks/symmetry_resolved_sector.json",
+          "claim": "The frozen L=28 k=0, inversion-even calculation contains the complete 15-state scar tower."
         }
       ],
       "figure_refs": [
-        "Fig. 2"
+        "Fig. 3"
       ],
       "panel_coverage": {
         "panels": [
@@ -250,7 +496,22 @@
           }
         ],
         "panel_scope_cap": 15.0
-      }
+      },
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "scale_evidence": [
+        "outputs/data/fig2a_scar_overlaps.csv",
+        "outputs/data/fig2bc_fsa_basis_overlaps.csv",
+        "outputs/data/fig2d_participation_ratio.csv",
+        "outputs/checks/pxp_feature_checks.json",
+        "outputs/checks/symmetry_resolved_sector.json",
+        "outputs/data/sector_scar_tower.csv",
+        "outputs/figures/sector_scar_tower.png"
+      ]
     },
     {
       "target_id": "T004",
@@ -268,20 +529,15 @@
           "reason": "Mean gap ratio r=0.497 (GOE 0.531, Poisson 0.386) - the PXP-typical value; unfolded spacing histogram is closer to the Wigner surmise than to Poisson in L1 distance."
         },
         "paper_scope_coverage": {
-          "score": 11.0,
+          "score": 7.5,
           "max_score": 15.0,
-          "reason": "Symmetry-resolved unfolding is complete at L=28; the paper's largest sizes remain in the declared remote rerun."
+          "reason": "Both the spacing distribution and density-of-states inset are reproduced in the paper's symmetry sector at reduced size; the paper's L=32 scale remains in the declared high-memory run."
         }
       },
       "evidence": [
-        "outputs/data/fig4_level_spacing_distribution.csv",
-        "outputs/data/fig4_density_of_states.csv",
-        "outputs/checks/pxp_feature_checks.json",
-        "outputs/checks/symmetry_resolved_sector.json",
-        "outputs/data/sector_level_spacings.csv",
-        "outputs/figures/sector_level_statistics.png"
+        "outputs/checks/atomic_closure.json"
       ],
-      "remaining_gap": "Method gap closed at L=28 (symmetry-resolved unfolding done); L=32 remains outside the current 40GB A100 dense-memory boundary.",
+      "remaining_gap": "Method gap closed (symmetry-resolved unfolding done); larger L for sharper statistics queues with the declared remote rerun.",
       "evaluation": {
         "critical": false,
         "paper_level_role": "supporting",
@@ -296,10 +552,78 @@
         ],
         "formula_gate": "verified",
         "reference_comparison": "visual_feature_contract",
-        "generated_data_provenance": "independent_numerics"
+        "generated_data_provenance": "independent_numerics",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "physics_project_missing"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "unresolved",
+            "statement": "T004 (Fig. 4 level statistics) records parameter_match=reduced_scale; the legacy evidence does not establish which observed gate is the immediate cause.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "root_cause": {
+            "category": "unresolved",
+            "statement": "The historical case package does not yet distinguish an implementation or method gap from missing publication input, compute limits, scope definition, or evidence-process debt.",
+            "confidence": "open",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_excluded",
+            "statement": "The legacy target record contains no target-specific set of checks sufficient to exclude a reproduction-code defect.",
+            "checks": [
+              {
+                "kind": "manual_code_review",
+                "result": "inconclusive",
+                "statement": "The scorecard exposes the acceptance state but does not contain a complete code-fault exclusion audit.",
+                "evidence": [
+                  "outputs/checks/similarity_scorecard.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "review_or_evidence_process_gap",
+              "status": "open",
+              "statement": "The apparent limitation may be caused by missing run, science, render, or fresh-review evidence rather than incorrect numerics.",
+              "evidence": [
+                "outputs/checks/similarity_scorecard.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The unresolved attribution applies to T004 (Fig. 4 level statistics).",
+            "items": [
+              "T004"
+            ],
+            "completion": "0/1 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Audit T004 against its paper parameter source, formula or method card, isolated-run attestation, physics checks, pixel evidence, and fresh claim review before assigning a root cause.",
+            "expected_resolution": "The audit either identifies an internal repair action, proves an accepted external boundary, or closes the target limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/causal_diagnosis_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper",
+        "artifact_stage": "exploratory"
       },
       "critical": false,
-      "component_total": 77.0,
+      "component_total": 73.5,
       "score": 70.0,
       "similarity_level": "numerical_feature_reproduction",
       "parameter_score_cap": 70.0,
@@ -311,20 +635,20 @@
       "physics_score_cap": 100.0,
       "physics_assertions": [
         {
-          "assertion_id": "level_statistics_goe_not_poisson",
+          "assertion_id": "sector_construction_exact",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/symmetry_resolved_sector.json#level_statistics",
-          "claim": "The symmetry-resolved mean gap ratio r=0.497 is decisively on the GOE side (GOE 0.531 vs Poisson 0.386), with zero modes excluded."
+          "evidence": "outputs/checks/atomic_closure.json",
+          "claim": "For L=8,10,12 the symmetry-sector Hamiltonian is Hermitian and its spectrum is an exact subset of the full PXP spectrum."
         },
         {
-          "assertion_id": "spacing_distribution_wigner",
+          "assertion_id": "level_statistics_l28",
           "tier": "numeric",
           "essential": true,
           "status": "passed",
-          "evidence": "outputs/checks/symmetry_resolved_sector.json#level_statistics",
-          "claim": "The unfolded spacing distribution is closer to the Wigner surmise than to Poisson (L1: wigner < poisson)."
+          "evidence": "outputs/checks/symmetry_resolved_sector.json",
+          "claim": "The frozen L=28 symmetry-resolved spectrum is closer to GOE/Wigner-Dyson than Poisson under the declared checks."
         }
       ],
       "figure_refs": [
@@ -333,14 +657,34 @@
       "panel_coverage": {
         "panels": [
           {
-            "panel_id": "single",
-            "status": "reproduced",
-            "note": "symmetry-resolved level statistics",
+            "panel_id": "main",
+            "status": "partial",
+            "note": "Symmetry-resolved unfolded spacing statistics are generated at L=28 rather than the paper's L=32.",
             "evidence": "outputs/figures/sector_level_statistics.png"
+          },
+          {
+            "panel_id": "inset",
+            "status": "partial",
+            "note": "The Gaussian density-of-states trend and zero-mode structure are generated at reduced scale; the paper-scale runner now emits the same observable.",
+            "evidence": "outputs/data/fig4_density_of_states.csv"
           }
         ],
-        "panel_scope_cap": 15.0
-      }
+        "panel_scope_cap": 7.5
+      },
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required",
+      "scale_evidence": [
+        "outputs/data/fig4_level_spacing_distribution.csv",
+        "outputs/data/fig4_density_of_states.csv",
+        "outputs/checks/pxp_feature_checks.json",
+        "outputs/checks/symmetry_resolved_sector.json",
+        "outputs/data/sector_level_spacings.csv",
+        "outputs/figures/sector_level_statistics.png"
+      ]
     }
   ],
   "overall_score": 72.5,
@@ -386,7 +730,60 @@
     "physics_assertion_status_counts": {
       "passed": 4
     },
-    "essential_physics_failures": []
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [
+      "T001"
+    ],
+    "final_reproduction_blocked_target_ids": [
+      "T001"
+    ],
+    "final_reproduction_block_reasons": {
+      "T001": [
+        "science_checks_not_passed"
+      ]
+    },
+    "exploratory_target_ids": [
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 4
+    },
+    "causal_diagnosis_disposition_counts": {
+      "react_loop_required": 4
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004"
+    ],
+    "direct_cause_counts": {
+      "unresolved": 4
+    },
+    "root_cause_counts": {
+      "unresolved": 4
+    },
+    "code_fault_status_counts": {
+      "not_excluded": 4
+    }
   },
   "status": "passed"
 }

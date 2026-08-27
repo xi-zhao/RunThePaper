@@ -1,0 +1,3 @@
+# Similarity Scorecard
+
+The primary score combines scientific correctness with predeclared visual fidelity: formula identities, constructive separability, partition witnesses, finite-grid falsification, and pointwise finite-ensemble data are evaluated first; Main Fig. 1 then uses foreground-only pixel difference in the declared scientific axes. Its foreground score is `48.56/100`, while the `99.04/100` full-canvas score is only a whitespace/layout diagnostic. T009 remains strongly capped because the cited first-level symmetric-extension result has neither publication parameters nor a certificate. The aggregate pre-review score is `77.92/100`.

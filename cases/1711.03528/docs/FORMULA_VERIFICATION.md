@@ -11,7 +11,7 @@ outputs/checks/formula_verification.json
 Run:
 
 ```bash
-cat cases/1711.03528/outputs/checks/formula_verification.json
+python PRAgent-workflow/scripts/check_formula_gate.py case/1711.03528 --write
 ```
 
 ## Gate Summary

@@ -24,6 +24,20 @@
   waveguide-QED geometry sums; keep this implementation case-local until a
   second paper needs the same abstraction.
 
+## Analytic Claim Methods
+
+- T002: direct arbitrary-point coefficient sums are compared with the
+  independently factorized emission-phasor expression, including unequal
+  point rates and separate, nested and braided topologies.
+- T003: the even-column identity minor proves the chain constraint rank is `N`
+  for every `N`; the free phases construct the `N-1` couplings, with N=3,4,6
+  numerical sanity checks.
+- T004: a unit upper-triangular minor proves the all-to-all rank for every `N`;
+  both printed N=3 phase constructions are evaluated directly.
+
+All three methods ran in one isolated, hash-attested local CPU run. They are
+analytic scientific evidence, so pixel comparison is intrinsically inapplicable.
+
 ## Paper-Scale Campaign Contract
 
 - Config: `config/paper_scale_campaign.json`.

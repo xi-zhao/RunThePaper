@@ -21,9 +21,8 @@ import sys
 from time import perf_counter
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / "outputs" / "cache" / "matplotlib"))
 
 import matplotlib
 
@@ -31,8 +30,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "scripts"))
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "scripts"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from finite_size_scaling import (  # noqa: E402
     ScalingCurve,
@@ -93,6 +92,13 @@ class BlockFit:
     alpha_error: float
     alpha_intercept: float
     alpha_r_squared: float
+
+
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
 
 
 def scale_spec(scale: str) -> ScaleSpec:
@@ -584,6 +590,7 @@ def build_checks(
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
     spec = scale_spec(args.scale)
     bootstrap_samples = args.bootstrap_samples or spec.bootstrap_samples
@@ -670,9 +677,9 @@ def main() -> int:
         )
     fit_records = tuple(fits)
 
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
     staged_outputs = tuple(

@@ -18,11 +18,11 @@ Formula verification is a required gate before numerical reproduction.
 
 ## Current Status
 
-The public formula cards are documented in [EQUATION_CARDS.md](EQUATION_CARDS.md).
-The source map used during the internal formula-trace pass is not redistributed.
+The canonical machine-readable formula cards are now `EQUATION_CARDS.json`.
+The older source map `formula_source_map.json` is retained as provenance for
+the first formula gate pass.
 
-The public verification output is
-[formula_verification.json](../outputs/checks/formula_verification.json).
+The verification output is `outputs/checks/formula_verification.json`.
 
 Latest verification result:
 
@@ -42,7 +42,7 @@ Latest verification result:
 Run:
 
 ```bash
-cat cases/1803.01876/outputs/checks/formula_verification.json
+python PRAgent-workflow/scripts/check_formula_gate.py case/1803.01876 --write
 ```
 
 Current intended gates:

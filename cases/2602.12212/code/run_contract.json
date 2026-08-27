@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "run_id": "2602.12212-implementation-probe-v4-20260824",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008A",
+    "T008B",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/implementation_probe.json"
+  ],
+  "inputs": [
+    "config/implementation_probe.json",
+    "mplconfig/fontlist-v390.json",
+    "scripts/run_reproduction.py",
+    "scripts/run_spin1_foliation.py",
+    "scripts/run_manybody_campaign.py",
+    "scripts/run_dynamics.py",
+    "src/leaf_thermodynamics.py"
+  ],
+  "parameter_file": "config/implementation_probe.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "implementation-probe",
+    "steps": [
+      {
+        "module": "run_spin1_foliation",
+        "target_ids": [
+          "T001"
+        ],
+        "args": [
+          "--no-reference-comparison"
+        ]
+      },
+      {
+        "module": "run_manybody_campaign",
+        "target_ids": [
+          "T002",
+          "T004",
+          "T005",
+          "T006",
+          "T007",
+          "T008A",
+          "T008B",
+          "T009"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--lengths",
+          "6",
+          "--groups",
+          "main",
+          "supplemental",
+          "integrable",
+          "--boundary",
+          "periodic",
+          "--force"
+        ]
+      },
+      {
+        "module": "run_dynamics",
+        "target_ids": [
+          "T003"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--length",
+          "6",
+          "--beta",
+          "0.5",
+          "--time-max",
+          "1.0",
+          "--time-points",
+          "9",
+          "--boundary",
+          "periodic",
+          "--max-band-representatives",
+          "8",
+          "--no-reference-comparison"
+        ]
+      }
+    ]
+  },
+  "outputs": [
+    "outputs/checks/implementation_probe/implementation_probe_summary.json",
+    "outputs/checks/implementation_probe/t001_spin1_foliation.json",
+    "outputs/checks/implementation_probe/t003_dynamics.json",
+    "outputs/checks/implementation_probe/manybody_campaign_manifest.json",
+    "outputs/checks/implementation_probe/campaign_shards/main_L6.json",
+    "outputs/checks/implementation_probe/campaign_shards/supplemental_L6.json",
+    "outputs/checks/implementation_probe/campaign_shards/integrable_L6.json",
+    "outputs/data/implementation_probe/t001_spin1_foliation.csv",
+    "outputs/data/implementation_probe/t003_dynamics.csv",
+    "outputs/data/implementation_probe/campaign_shards/main_L6_typicality.csv",
+    "outputs/data/implementation_probe/campaign_shards/main_L6_compression.csv",
+    "outputs/data/implementation_probe/campaign_shards/supplemental_L6_typicality.csv",
+    "outputs/data/implementation_probe/campaign_shards/supplemental_L6_compression.csv",
+    "outputs/data/implementation_probe/campaign_shards/integrable_L6_typicality.csv",
+    "outputs/figures/implementation_probe/t001_spin1_foliation.png",
+    "outputs/figures/implementation_probe/t003_dynamics.png"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MPLCONFIGDIR": "mplconfig"
+  }
+}

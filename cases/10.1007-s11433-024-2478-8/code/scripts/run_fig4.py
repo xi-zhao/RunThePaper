@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Reproduce Fig. 4 (two-photon ground-Rydberg BAM CZ): waveforms, populations,
-phases for the hybrid (a-c) and amplitude-only (d-f) protocols, rendered in the
-paper's panel layout.
+phases for the hybrid (a-c) and amplitude-only (d-f) protocols, plus a paper-style
+render and a side-by-side against the original.
 
-Run:  python code/scripts/run_fig4.py   (from the case root)
+Run:  PYTHONPATH=src python scripts/run_fig4.py
 """
 from __future__ import annotations
 
@@ -13,21 +13,23 @@ from pathlib import Path
 
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code" / "src"))
+HERE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(HERE / "src"))
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from PIL import Image  # noqa: E402
 
 import coefficients as C  # noqa: E402
 import gate  # noqa: E402
 import gate_2p as G2  # noqa: E402
 from waveforms import TWO_PI, TAU_US  # noqa: E402
 
-DATA = ROOT / "outputs" / "data"
-CHECKS = ROOT / "outputs" / "checks"
-FIGS = ROOT / "outputs" / "figures"
+DATA = HERE / "outputs" / "data"
+CHECKS = HERE / "outputs" / "checks"
+FIGS = HERE / "outputs" / "figures"
+REF = HERE / "references" / "original_figures" / "page5_img59.png"
 
 COL = {"om1": "#0064b4", "om2": "#e67300", "om1s": "#9ecae1", "om2s": "#fdae6b",
        "de1": "#1e961e", "de2": "#c81919",
@@ -110,6 +112,21 @@ def main():
     report = {"status": "passed", "hybrid": s_hyb, "amplitude": s_amp,
               "note": "Full three-level (a5/a6) model; gate error is the honest full-physics value."}
     (CHECKS / "fig4_twophoton.json").write_text(json.dumps(report, indent=2))
+
+    orig = Image.open(REF).convert("RGB"); rep = Image.open(repro).convert("RGB")
+    h = 1500
+    ow, rw = int(orig.width * h / orig.height), int(rep.width * h / rep.height)
+    pad = 30
+    canvas = Image.new("RGB", (ow + rw + 3 * pad, h + 90), "white")
+    canvas.paste(orig.resize((ow, h)), (pad, 80)); canvas.paste(rep.resize((rw, h)), (ow + 2 * pad, 80))
+    try:
+        from PIL import ImageDraw
+        d = ImageDraw.Draw(canvas)
+        d.text((pad + ow // 2 - 90, 30), "Original (Sun 2024, Fig. 4)", fill="black")
+        d.text((ow + 2 * pad + rw // 2 - 70, 30), "PRAgent reproduction", fill="black")
+    except Exception:
+        pass
+    canvas.save(FIGS / "fig4_original_vs_repro.png")
     print(json.dumps(report, indent=2))
 
 

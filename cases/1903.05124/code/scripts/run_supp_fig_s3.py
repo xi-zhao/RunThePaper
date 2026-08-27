@@ -17,9 +17,8 @@ import sys
 from time import perf_counter
 
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / "outputs" / "cache" / "matplotlib"))
 
 import matplotlib
 
@@ -27,7 +26,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from stabilizer_dynamics import DynamicsConfig, run_trajectory_ensemble  # noqa: E402
 
@@ -81,6 +80,13 @@ PAPER_SETTINGS = (
 )
 
 
+def require_guard() -> None:
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--scale", choices=("smoke", "feature", "paper"), default="smoke")
@@ -128,7 +134,7 @@ def checkpoint_path(
     root_seed: int,
     setting: Setting,
 ) -> Path:
-    directory = CASE / ".checkpoints" / "t003"
+    directory = WORKSPACE / "outputs" / "checkpoints" / "t003"
     directory.mkdir(parents=True, exist_ok=True)
     signature = f"{MODEL_REVISION}_{scale}_r{realizations}_seed{root_seed}"
     return directory / f"{signature}_{setting.key}_d{setting.depth}_p{setting.measurement_fraction:g}_t{setting.steps}.npz"
@@ -620,10 +626,11 @@ def metadata_payload(
 
 
 def main() -> int:
+    require_guard()
     args = parse_args()
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
     csv_path = data_dir / "supp_fig_s3_trajectories.csv"

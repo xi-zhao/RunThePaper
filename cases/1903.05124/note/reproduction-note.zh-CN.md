@@ -1,49 +1,21 @@
-# 扰乱动力学中的量子纠错：科学数值复现说明
+# Quantum Error Correction in Scrambling Dynamics and Measurement-Induced Phase Transition：科学复现讲义
 
-本公开包复现 Choi、Bao、Qi 与 Altman 发表于 Phys. Rev. Lett. **125**,
-030505 (2020) 的 *Quantum Error Correction in Scrambling Dynamics and
-Measurement-Induced Phase Transition*。这里的“复现”不是描图：我们先跟随
-解耦界、Clifford frame potential、稳定子熵和有限尺寸标度的推导，再由独立
-Clifford/稳定子模拟与对生成数据的拟合得到全部数值数组。论文像素只在最后
-的比较板中用于呈现审计，从不进入数值生成路径。
+## 结论
 
-## 范围与结论
+Full twenty-page arXiv PDF and both TeX manuscripts read before target selection.
 
-Main Fig. 2(b–e) 与 Supplement Figs. S2–S6 中 44 个可见理论数值子图和
-inset 均已覆盖；电路、信道和张量网络示意图不冒充数值复现对象。其中 20
-项达到论文尺度：S2 四个 frame-potential 子图采用 `n=22`、22 个深度、每个
-深度 50,000 个样本；S3 十六个子图采用 `L=32,m=11`、每组 240 条轨迹。
-其余 24 项均有独立公式数值证据，但系统尺寸或统计量缩减，因此明确标为
-feature scale，而不是论文精度。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-科学审计分为 **78.41/100**。T001、T002、T003、T004 和 T006 均为 80；
-T005 为 70，因为临界点位置通过，但在 `L<=24` 下拟合得到的临界指数随深度
-变化仍偏大。下游像素呈现分为 **68.30/100**，只用于衡量画幅、线密度、
-字体和独立 Monte Carlo 噪声，不给科学正确性加分。
+## 我们复现的是什么
 
-关键结果包括：论文尺度的 `F1,F2,F3` 向 Haar 值靠近；晚深度
-`F4=29.00±0.85`，其 95% 下界仍高于 24；强扰乱下测量导致的熵损失在饱和
-前受到抑制；Main Fig. 2 与 S5 独立拟合的 `p_c` 相对论文汇总表的平均绝对
-误差分别为 `0.00409` 和 `0.00484`。S6 覆盖论文全部六个 block size 并保持
-精确 `d/m=3`，同时如实保留 `L<=24` 的有限尺寸边界。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-## 运行与检查
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=passed, execution=attested, pixel=needs_repair, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
-在仓库根目录执行：
+## 运行
 
-```bash
-python -m unittest discover -s cases/1903.05124/code/tests -v
-python cases/1903.05124/code/scripts/run_supp_fig_s2.py --render-only
-python cases/1903.05124/code/scripts/run_supp_fig_s3.py --render-only
-python cases/1903.05124/code/scripts/run_supp_fig_s4.py \
-  --refinement-input cases/1903.05124/outputs/data/supp_fig_s5_refinement_numerical_data.csv
-python cases/1903.05124/code/scripts/run_supp_fig_s5.py \
-  --refinement-input cases/1903.05124/outputs/data/supp_fig_s5_refinement_numerical_data.csv
-```
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-模拟脚本还提供快速 `--scale smoke`，并在适用处提供 feature/paper 模式。
-脚本会先写结构化 CSV/NPZ 数据和 JSON 科学检查，再渲染 PNG。
+## 论文审查边界
 
-公开包不包含论文 PDF、独立原图或从原图数字化得到的曲线。进一步阅读：
-[公式推导](../docs/DERIVATION.md)、[方法链路](../docs/METHOD_TRACE.md)和
-[评分边界](../docs/SIMILARITY_SCORECARD.md)。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：All 44 visible theory-numerical panels and insets are frozen in the reproduction scope. Nine schematic panels and one numerical summary table are inventoried but excluded from figure generation. Source figures are comparison-only; every generated value must come from formulas or an independent Clifford/stabilizer computation. T001 now has a feature-scale reproduction of all four Main Fig. 2 numerical panels; paper geometry is preserved while sampling and finite-size grids remain reduced and explicitly labeled. T004 now has all ten Supplement Fig. S4 numerical items from a fresh EQC007 half-chain fit over independent generated observations; every scientific check passes at feature scale. T005 now has all seven Supplement Fig. S5 panels from 4,352 independent periodic-chain trajectories; critical points pass, while exponent-depth stability remains partial at L<=24 and eight realizations per cell. T006 now has all three Supplement Fig. S6 panels from 2,880 independent trajectories over every paper block size at exact d/m=3; all frozen scientific checks pass at feature scale, with sizes limited to L<=24. All 44 theory-numerical items now have independent formula-based evidence; 20 are paper scale and 24 are explicitly feature scale.

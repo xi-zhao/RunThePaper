@@ -4,13 +4,13 @@
 
 All nine numerical figure targets and nineteen reproducible quantitative claims are covered by formula-derived paper-scale implementations.
 
-The public status is **Scientific reproduction — paper-error candidates identified**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
+The public status is **Scientific reproduction — independent review pending**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
 ## What is reproduced
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=passed, science=passed, execution=attested, pixel=passed, independent_review=passed, paper_assessment=paper_error_candidate`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=passed, causal_resolution=not_required, science=passed, execution=attested, pixel=passed_with_not_comparable, independent_review=stale, review_scope=stale, paper_assessment=stale`.
 
 ## Run
 

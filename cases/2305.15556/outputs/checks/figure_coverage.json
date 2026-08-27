@@ -1,0 +1,175 @@
+{
+  "schema_version": 2,
+  "paper_id": "2305.15556",
+  "_howto": [
+    "One item per paper figure/table (or panel group). This file is the machine-readable coverage contract:",
+    "kind: numeric | non_numeric.",
+    "decision for numeric items: target (with target_ids) | deferred_blocked (with blocker).",
+    "decision for non_numeric items: excluded | target.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', or 'similar to another figure' are NOT blockers: reproduce the item instead.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If scientific input is missing, deferred_blocked with evidence is an honest partial state.",
+    "If execution is compute/hardware-limited or a mapped target is reduced_scale, add a code-ready implementation contract: status=ready, case-local code_refs, config config_ref, working_directory=workspace, argv-style entrypoint, expected_outputs, and acceptance_criteria.",
+    "Put reusable contracts in top-level implementations and reference them from items with implementation_ref; an inline implementation object is also accepted.",
+    "Compute may postpone execution; it may not postpone writing runnable code.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "paper_exact_qfim": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_reproduction.py",
+        "src/optimal_generators/bosons.py",
+        "src/optimal_generators/model.py",
+        "src/optimal_generators/reproduction.py",
+        "src/optimal_generators/rendering.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/T001_main_fig1a_husimi.csv",
+        "outputs/data/T002_main_fig1b_husimi.csv",
+        "outputs/data/T003_main_fig1c_qfim.csv",
+        "outputs/data/T004_main_fig1d_generator.csv",
+        "outputs/data/T005_main_fig2a_qfim.csv",
+        "outputs/data/T006_main_fig2b_coefficients.csv",
+        "outputs/checks/target_checks.json",
+        "outputs/checks/solver_parity.json",
+        "outputs/checks/paper_consistency_checks.json",
+        "outputs/checks/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All six numerical panels use N=20, the printed Hamiltonians, explicit initial states, and the complete plotted time range.",
+        "The SU(2) numerical largest eigenvalue agrees with Main Eq. (8) on its stated early-time validity interval.",
+        "The SU(4) run reproduces six SQL eigenvalues at tau=0, a leading maximum near 146, and the three printed pi/4 eigenvalue anchors.",
+        "Dense and sparse evolution agree on smaller systems, and every QFIM is positive semidefinite within tolerance.",
+        "Degenerate optimal-generator vectors are assessed through their projectors; source pixels never select an eigenvector gauge.",
+        "The isolated runner reads no raw paper, TeX, authored figure, comparison image, author code, or author array."
+      ],
+      "checkpoint_resume": {
+        "status": "not_required",
+        "reason": "The exact N=20 symmetric-space campaign is projected to complete in minutes and is cheaper to recompute deterministically than checkpoint."
+      }
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Figure 1(a) - initial OAT Husimi distribution",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "The printed coherent state and Hamiltonian uniquely generate the full probability surface.",
+      "claim_refs": [
+        "CLM_OAT_RECOVERY"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1(b) - squeezed OAT Husimi distribution",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "The panel is independently generated at the printed tau=N^(-2/3).",
+      "claim_refs": [
+        "CLM_OAT_RECOVERY"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1(c) - OAT QFIM spectrum",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "All three eigenvalue curves and the analytic comparator are generated from the printed equations.",
+      "claim_refs": [
+        "CLM_OAT_RECOVERY"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1(d) - optimal SU(2) generator path",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "The path and QFI color are derived from QFIM eigenvectors with an explicit deterministic sign convention.",
+      "claim_refs": [
+        "CLM_OAT_RECOVERY"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(a) - SU(4) QFIM spectrum and subgroup bound",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "The exact N=20 symmetric four-mode evolution is locally feasible and produces every displayed curve.",
+      "claim_refs": [
+        "CLM_QFIM_OPTIMAL_GENERATOR"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(b) - optimal SU(4) generator coefficients",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "A deterministic representative is rendered, while degenerate-subspace projectors provide the gauge-invariant scientific check.",
+      "claim_refs": [
+        "CLM_QFIM_OPTIMAL_GENERATOR"
+      ]
+    },
+    {
+      "item_id": "SU(4) printed initial-axis consistency",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "paper_consistency_check",
+      "denominator_role": "supporting",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Figure 2 setup and Supplement operator definitions; outputs/checks/paper_consistency_checks.json",
+      "scientific_object": "Whether the printed explicit SU(4) initial ket is an eigenstate of the adjacent K_y label under the paper's own operator definitions.",
+      "decision": "target",
+      "target_ids": [
+        "T005",
+        "T006"
+      ],
+      "implementation_ref": "paper_exact_qfim",
+      "reason": "The literal ket and operator definitions are evaluated independently; the resulting nonzero residual records a paper-consistency issue rather than choosing a silent convention.",
+      "claim_refs": [
+        "CLM_PRINTED_INITIAL_AXIS"
+      ]
+    },
+    {
+      "item_id": "Supplement Figure 1 - commutative manifold diagram",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Conceptual diagram of maps and projections; it contains no evaluated numerical observable."
+    }
+  ]
+}

@@ -1,0 +1,686 @@
+{
+  "schema_version": 2,
+  "paper_id": "10.1007-s11433-024-2478-8",
+  "implementations": {
+    "cleanroom_target_campaign_v1": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "scripts/run_implementation_campaign.py",
+        "scripts/run_fig3.py",
+        "scripts/run_fig4.py",
+        "scripts/run_fig5.py",
+        "scripts/run_fig7.py",
+        "src/coefficients.py",
+        "src/gate.py",
+        "src/gate_2p.py",
+        "src/hamiltonians.py",
+        "src/hamiltonians_2p.py",
+        "src/waveforms.py"
+      ],
+      "config_ref": "config/implementation_campaign.json",
+      "run_contract_ref": "run_contract.implementation_campaign.json",
+      "expected_outputs": [
+        "outputs/data/implementation_validation/t001.json",
+        "outputs/data/implementation_validation/t002.json",
+        "outputs/data/implementation_validation/t003.json",
+        "outputs/data/implementation_validation/t004.json",
+        "outputs/data/implementation_validation/t005.json",
+        "outputs/data/implementation_validation/t006.json",
+        "outputs/data/implementation_validation/t007.json",
+        "outputs/data/implementation_validation/t008.json",
+        "outputs/checks/implementation_validation/summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every declared numerical item resolves to independently written case-local Hamiltonian or waveform code.",
+        "The implementation path reads no paper pixels, digitized curves, author arrays, author code, raw/, or reference figures.",
+        "Missing interaction-graph or waveform-coefficient inputs produce explicit blocked artifacts with strict schemas instead of guessed physics.",
+        "Implementation validation does not change scientific coverage, fidelity, or acceptance."
+      ]
+    },
+    "remaining_scientific_targets_v1": {
+      "status": "ready",
+      "target_ids": [
+        "T007",
+        "T008"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_remaining_targets.py",
+        "--config",
+        "config/remaining_targets.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "scripts/run_remaining_targets.py",
+        "src/coefficients.py",
+        "src/gate.py",
+        "src/gate_2p.py",
+        "src/hamiltonians.py",
+        "src/hamiltonians_2p.py",
+        "src/waveforms.py"
+      ],
+      "config_ref": "config/remaining_targets.json",
+      "run_contract_ref": "run_contract.remaining_targets.json",
+      "expected_outputs": [
+        "outputs/data/remaining_targets/targets.json",
+        "outputs/data/remaining_targets/trajectories.npz",
+        "outputs/checks/remaining_targets/targets.json",
+        "outputs/runs/10.1007-s11433-024-2478-8-remaining-targets-v2/run_attestation.json"
+      ],
+      "acceptance_criteria": [
+        "Every panel is generated from printed Hamiltonians and printed coefficients.",
+        "The isolated runner cannot read raw/, reference images, author code, author arrays, or network resources.",
+        "Scientific mismatches remain failures until fresh-context review adjudicates them."
+      ]
+    }
+  },
+  "quantitative_claims": [
+    {
+      "item_id": "R002",
+      "kind": "numeric",
+      "item_type": "quantitative_claim",
+      "scientific_role": "external_citation_context",
+      "source_ref": "Sec. 1, p. 2 and cited experimental record",
+      "scientific_object": "Reported loading of more than 1000 cold-atom qubits",
+      "decision": "excluded",
+      "reason": "Citation-dependent experimental context, not a result derived or numerically claimed by this paper. It is recorded for scope completeness and excluded from the scientific-reproduction denominator."
+    }
+  ],
+  "items": [
+    {
+      "item_id": "Main Figure 1",
+      "kind": "non_numeric",
+      "item_type": "figure",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Illustrative ORMD waveform examples, not a BAM numerical result."
+    },
+    {
+      "item_id": "Main Figure 2",
+      "kind": "non_numeric",
+      "item_type": "figure",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Atomic levels and buffer-layout cartoons."
+    },
+    {
+      "item_id": "Main Figure 3(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_T001_SINGLE_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Printed hybrid coefficients independently generate every Rabi-frequency and detuning waveform."
+    },
+    {
+      "item_id": "Main Figure 3(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_T001_SINGLE_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates all return-population branches."
+    },
+    {
+      "item_id": "Main Figure 3(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_T001_SINGLE_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates all accumulated-phase branches."
+    },
+    {
+      "item_id": "Main Figure 3(d)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_T002_SINGLE_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Printed amplitude-only coefficients independently generate every waveform."
+    },
+    {
+      "item_id": "Main Figure 3(e)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_T002_SINGLE_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates all return-population branches."
+    },
+    {
+      "item_id": "Main Figure 3(f)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_T002_SINGLE_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates all accumulated-phase branches."
+    },
+    {
+      "item_id": "Main Figure 4(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004_TWO_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level two-photon dynamics generate all hybrid waveforms."
+    },
+    {
+      "item_id": "Main Figure 4(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004_TWO_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level dynamics generate all hybrid return populations."
+    },
+    {
+      "item_id": "Main Figure 4(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004_TWO_PHOTON_HYBRID_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level dynamics generate all hybrid accumulated phases."
+    },
+    {
+      "item_id": "Main Figure 4(d)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_T005_TWO_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level dynamics generate all amplitude-only waveforms."
+    },
+    {
+      "item_id": "Main Figure 4(e)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_T005_TWO_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level dynamics generate all amplitude-only populations; the scientific mismatch remains visible."
+    },
+    {
+      "item_id": "Main Figure 4(f)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_T005_TWO_PHOTON_AMPLITUDE_CZ"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent three-level dynamics generate all amplitude-only phases; the scientific mismatch remains visible."
+    },
+    {
+      "item_id": "Main Figure 5(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_DUAL_PULSE_DOPPLER_CANCELLATION"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent integration generates the dual-pulse waveform sequence."
+    },
+    {
+      "item_id": "Main Figure 5(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_DUAL_PULSE_DOPPLER_CANCELLATION"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent forward/backward integrations generate the return-population and phase branches."
+    },
+    {
+      "item_id": "Main Figure 5(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_DUAL_PULSE_DOPPLER_CANCELLATION"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent velocity scans quantify the first-order Doppler cancellation."
+    },
+    {
+      "item_id": "Main Figure 7",
+      "kind": "numeric",
+      "item_type": "figure",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "claim_refs": [
+        "CLM_T003_RABI_ROBUSTNESS"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "The complete two-dimensional Rabi-ratio error map is independently recomputed from the Figure 3(a) Hamiltonian."
+    },
+    {
+      "item_id": "Appendix Figures a1-a4",
+      "kind": "non_numeric",
+      "item_type": "figure",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Level/linkage and relay-geometry diagrams."
+    },
+    {
+      "item_id": "Appendix Tables a1-a2",
+      "kind": "non_numeric",
+      "item_type": "table",
+      "scientific_role": "context",
+      "decision": "excluded",
+      "reason": "Relay-gate logical-state bookkeeping rather than numerical results."
+    },
+    {
+      "item_id": "Main Figure 6(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007_TOFFOLI_CCZ"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed two-photon Fourier coefficients generate the Toffoli/CCZ waveforms."
+    },
+    {
+      "item_id": "Main Figure 6(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007_TOFFOLI_CCZ"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "The three published atoms define all eight independently integrated populations."
+    },
+    {
+      "item_id": "Main Figure 6(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007_TOFFOLI_CCZ"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "The same amplitudes define every accumulated computational-basis phase."
+    },
+    {
+      "item_id": "Appendix Figure a5(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_SINGLE_PULSE_REFERENCE"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Printed single-pulse coefficients generate the waveform panel."
+    },
+    {
+      "item_id": "Appendix Figure a5(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_SINGLE_PULSE_REFERENCE"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates return populations."
+    },
+    {
+      "item_id": "Appendix Figure a5(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006_SINGLE_PULSE_REFERENCE"
+      ],
+      "implementation_ref": "cleanroom_target_campaign_v1",
+      "reason": "Independent Hamiltonian integration generates accumulated phases."
+    },
+    {
+      "item_id": "Appendix Figure a6(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A6_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed single-photon parameters independently generate hybrid-modulation waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a6(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A6_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed single-photon parameters independently generate hybrid-modulation populations and phases."
+    },
+    {
+      "item_id": "Appendix Figure a6(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A6_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed single-photon parameters independently generate amplitude-only waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a6(d)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A6_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed single-photon parameters independently generate amplitude-only populations and phases."
+    },
+    {
+      "item_id": "Appendix Figure a7(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A7_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed two-photon parameters independently generate hybrid-modulation waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a7(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A7_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed two-photon parameters independently generate hybrid-modulation populations and phases."
+    },
+    {
+      "item_id": "Appendix Figure a7(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A7_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed two-photon parameters independently generate amplitude-only waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a7(d)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A7_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed two-photon parameters independently generate amplitude-only populations and phases."
+    },
+    {
+      "item_id": "Appendix Figure a8(a)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A8_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed end-coupled two-photon parameters independently generate hybrid-modulation waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a8(b)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A8_HYBRID"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed end-coupled two-photon parameters independently generate hybrid-modulation populations and phases."
+    },
+    {
+      "item_id": "Appendix Figure a8(c)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A8_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed end-coupled two-photon parameters independently generate amplitude-only waveforms."
+    },
+    {
+      "item_id": "Appendix Figure a8(d)",
+      "kind": "numeric",
+      "item_type": "figure_panel",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "claim_refs": [
+        "CLM_T008_A8_AMPLITUDE"
+      ],
+      "implementation_ref": "remaining_scientific_targets_v1",
+      "reason": "Printed end-coupled two-photon parameters independently generate amplitude-only populations and phases."
+    }
+  ]
+}

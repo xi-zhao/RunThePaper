@@ -173,12 +173,19 @@
           "type": "limiting_case",
           "status": "passed",
           "reason": "At g=0 the matrix becomes diagonal: holes are Drude and neutral drag is zero."
+        },
+        {
+          "id": "EQ004-C4",
+          "type": "algebraic_cross_check",
+          "status": "passed",
+          "reason": "Direct three-species solution and explicit trion Schur-complement elimination agree to floating-point tolerance; therefore the effective g^4 Q terms of Supplement Eqs. (21)-(32) are retained."
         }
       ],
       "numerical_form": "Assemble the l=1 radial collocation matrix using analytic angular delta roots, solve it at each detuning/temperature/frequency, and integrate the currents.",
       "code_refs": [
         "src/bose_fermi_transport/kinetic.py::assemble_operator",
-        "src/bose_fermi_transport/kinetic.py::solve_transport"
+        "src/bose_fermi_transport/kinetic.py::solve_transport",
+        "src/bose_fermi_transport/collocation.py::solve_collocation_eliminated"
       ],
       "open_questions": [
         "The source omits its momentum grid, cutoff, interpolation, and delta regularization; convergence is therefore reconstructed and machine-attested separately."
@@ -357,7 +364,7 @@
         "src/bose_fermi_transport/hydrodynamic.py::conductivities_closed"
       ],
       "open_questions": [
-        "The fitted operating-point species densities are not printed; this case supplies them from EQ003 and keeps paper_subset status."
+        "The fitted operating-point species densities are not printed; this case supplies a reconstructed EQ003 closure and does not promote the ac panels to paper-exact."
       ]
     },
     {
@@ -394,12 +401,63 @@
           "reason": "The numerical tau_ph calibration is delegated to external references and is not printed in this paper; the formula remains open only for an explicitly configured proxy."
         }
       ],
-      "numerical_form": "Use an explicitly configured Bloch-Gruneisen interpolation only as a proxy overlay; it cannot promote T005 to paper-exact.",
+      "numerical_form": "Use an explicitly configured Bloch-Gruneisen interpolation only as a proxy overlay; it cannot promote T005 or T011 to paper-exact.",
       "code_refs": [
         "src/bose_fermi_transport/phonons.py::phonon_resistivity"
       ],
       "open_questions": [
         "What material constants and normalization were used for the inset's tau_ph?"
+      ]
+    },
+    {
+      "id": "EQ010",
+      "title": "Far-detuned total-resistivity limit",
+      "source_refs": [
+        {
+          "type": "text",
+          "value": "Main text below Eq. (3): background Drude resistivity is recovered for sufficiently strong detuning"
+        },
+        {
+          "type": "figure_label",
+          "value": "Main Fig. 3 inset dash-dot lane: Delta much greater than Delta_star"
+        }
+      ],
+      "latex": "\\lim_{\\Delta/\\Delta_\\star\\to\\infty}\\rho^h=\\rho_0^h,\\qquad \\rho_{\\mathrm{total}}^h=\\rho_0^h+\\rho_{\\mathrm{ph}}^h",
+      "role": "asymptotic_observable",
+      "derived_from": [
+        "EQ004",
+        "EQ005",
+        "EQ006",
+        "EQ009"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ010-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states recovery of the Drude background at strong detuning, and the inset explicitly labels the asymptotic lane."
+        },
+        {
+          "id": "EQ010-C1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Removing the off-resonant many-body channel from the total leaves exactly the Drude background plus acoustic-phonon resistivity."
+        },
+        {
+          "id": "EQ010-C2",
+          "type": "numeric_identity",
+          "status": "passed",
+          "reason": "The isolated T011 run checks zero many-body contribution and the component-sum identity to floating-point precision."
+        }
+      ],
+      "numerical_form": "Evaluate the Delta/Delta_star to infinity limit directly. Do not choose or fit a finite far-detuning value from the source figure.",
+      "code_refs": [
+        "src/bose_fermi_transport/far_detuned.py::asymptotic_far_detuned_resistivity"
+      ],
+      "open_questions": [
+        "The absolute acoustic-phonon calibration remains delegated to external references, so only the limiting structure is paper-exact."
       ]
     }
   ]

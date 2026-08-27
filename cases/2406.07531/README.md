@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 133, 216402 (2024) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **16.00/100**
 
-Nine targets are inventoried and code-ready, while all paper-scale material observables remain compute-deferred.
+Nine targets are inventoried and code-ready, while all paper-scale material observables remain blocked by unavailable production inputs and unexecuted large-scale computation.
 
 ## Start Here / 从这里开始
 
@@ -37,14 +37,18 @@ cd cases/2406.07531/code
 python scripts/run_reproduction.py --config config/feature.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
 Remaining limitation: APS supplement returned HTTP 403 locally and through the authorised institutional Jupyter network; Tables S6/S7 remain missing source material. No public author source code or point-level numerical arrays were found in the arXiv archive.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
+
+![method validation dos](outputs/figures/feature/method_validation_dos.png)
+
+![method validation nonlocal self energy](outputs/figures/feature/method_validation_nonlocal_self_energy.png)

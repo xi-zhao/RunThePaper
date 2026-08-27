@@ -1,0 +1,497 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1126-science.aaw1611",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Calibrated Bose-Hubbard chain Hamiltonian",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Eq. 1"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Eq. S24"
+        },
+        {
+          "type": "supplement_table",
+          "value": "Table S1"
+        }
+      ],
+      "latex": "H=\\sum_{j=1}^{L-1}J_j(a_j^\\dagger a_{j+1}+a_{j+1}^\\dagger a_j)+\\sum_{j=1}^{L}\\frac{U_j}{2}n_j(n_j-1)+\\sum_{j=1}^{L}h_j n_j",
+      "role": "Defines every exact-dynamics target and its calibrated couplings.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. 1 and supplement Eq. S24 give the same Hamiltonian; Table S1 supplies all J and U values."
+        },
+        {
+          "id": "EQC001_hermitian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Each hopping term is paired with its Hermitian conjugate and diagonal interaction/on-site terms are real."
+        },
+        {
+          "id": "EQC001_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Quoted MHz frequencies are converted to angular rad/ns by 2*pi*1e-3 before multiplication by time in ns."
+        }
+      ],
+      "numerical_form": "Use J/2pi=[12.1,12.2,12.3,12.4,12.5,12.6,12.6,12.6,12.6,12.5,12.4] MHz and U/2pi=[-246,-204,-246,-200,-248,-196,-248,-196,-246,-214,-244,-200] MHz. Set equal h_j to zero in a fixed-N sector.",
+      "code_refs": [
+        "src/quantum_walk.py:build_hamiltonian",
+        "config/paper_exact.json"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Fixed-particle occupation-basis matrix elements",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Numerical simulation"
+        },
+        {
+          "type": "standard_identity",
+          "value": "bosonic ladder operators"
+        }
+      ],
+      "latex": "a_j|\\ldots,n_j,\\ldots\\rangle=\\sqrt{n_j}|\\ldots,n_j-1,\\ldots\\rangle;\\quad a_j^\\dagger|\\ldots,n_j,\\ldots\\rangle=\\sqrt{n_j+1}|\\ldots,n_j+1,\\ldots\\rangle",
+      "role": "Turns EQC001 into exact finite matrices without a full tensor-product Hilbert space.",
+      "derived_from": [
+        "EQC001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement specifies a local three-level basis and QuTiP bosonic operators for the two-photon simulation."
+        },
+        {
+          "id": "EQC002_dimensions",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The enumerated sectors have dimensions 11 for one photon, C(13,2)=78 for two bosons on 12 sites, and C(12,2)=66 in the hard-core sector."
+        },
+        {
+          "id": "EQC002_conservation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Every hopping event removes and creates one boson, while diagonal terms preserve occupation; total particle number is invariant."
+        }
+      ],
+      "numerical_form": "Enumerate occupation tuples with fixed total N and optional per-site cap; add J_j*sqrt(n_j*(n_{j+1}+1)) for j to j+1 and its reverse.",
+      "code_refs": [
+        "src/quantum_walk.py:occupation_basis",
+        "src/quantum_walk.py:build_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Coherent short-time evolution",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Numerical simulation; decoherence neglected because the evolution time is much shorter than T1 and T2"
+        }
+      ],
+      "latex": "|\\psi(t)\\rangle=e^{-iHt}|\\psi(0)\\rangle",
+      "role": "Advances every initial Fock state on the paper time grid.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement numerical-simulation text states that decoherence is not included in the theoretical results."
+        },
+        {
+          "id": "EQC003_unitarity",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For Hermitian H, exp(-iHt) is unitary and preserves state norm."
+        },
+        {
+          "id": "EQC003_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At t=0 the eigenphase is one and the initial state is recovered exactly."
+        }
+      ],
+      "numerical_form": "Diagonalize the Hermitian matrix once and evaluate eigenphases for all requested times.",
+      "code_refs": [
+        "src/quantum_walk.py:evolve_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Site density and one-site entropy",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "Fig. 2 information spreading"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "Figs. S14-S17"
+        }
+      ],
+      "latex": "p_j(t)=\\langle n_j\\rangle;\\quad S_j=-\\mathrm{Tr}[\\rho_j\\ln\\rho_j]",
+      "role": "Produces the one-photon density and entropy panels.",
+      "derived_from": [
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text defines measured probabilities and one-site von Neumann entropy; Figs. S14-S17 show theory outputs."
+        },
+        {
+          "id": "EQC004_one_particle",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "In the one-particle sector rho_j=diag(1-p_j,p_j), so S_j=-p_j ln p_j-(1-p_j)ln(1-p_j)."
+        },
+        {
+          "id": "EQC004_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Sum_j p_j=N follows from fixed-particle-number normalization."
+        }
+      ],
+      "numerical_form": "Compute occupations as probability-weighted basis values; use the binary entropy with 0*log(0)=0 for N=1.",
+      "code_refs": [
+        "src/quantum_walk.py:site_density",
+        "src/quantum_walk.py:one_particle_entropy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC005",
+      "title": "Connected z correlation and one-photon concurrence",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Eq. 2"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. S25-S27"
+        }
+      ],
+      "latex": "C^z_{ij}=\\langle\\sigma_i^z\\sigma_j^z\\rangle-\\langle\\sigma_i^z\\rangle\\langle\\sigma_j^z\\rangle;\\quad \\mathcal C_{ij}=2|c_i c_j|\\;(N=1)",
+      "role": "Produces the correlation and entanglement-spreading views of the one-photon wavefunction.",
+      "derived_from": [
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. 2 defines concurrence and the supplement gives the reduced-density-matrix construction and connected correlation."
+        },
+        {
+          "id": "EQC005_one_particle",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "With sigma_z=2n-1 and no simultaneous occupation for i!=j, C^z_ij=-4p_i p_j; the two-site reduced state gives concurrence 2|c_i c_j|."
+        },
+        {
+          "id": "EQC005_bounds",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The formulas give |C^z_ij|<=1 and 0<=concurrence<=1 for normalized one-particle states."
+        }
+      ],
+      "numerical_form": "For i!=j compute -4*p_i*p_j and 2*abs(c_i*c_j); diagonal connected variance is 4*p_i*(1-p_i).",
+      "code_refs": [
+        "src/quantum_walk.py:connected_z_correlation",
+        "src/quantum_walk.py:one_particle_concurrence"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Dispersion envelope and group velocity",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. S28-S30"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "Fig. S12"
+        }
+      ],
+      "latex": "k_n=n\\pi/(L+1);\\quad v_g^{\\max}=\\max_n |(\\omega_{k_{n+1}}-\\omega_{k_n})/(\\pi/(L+1))|=153.99343\\;\\mathrm{sites}/\\mu\\mathrm{s}",
+      "role": "Connects the ballistic density front to the reported information-propagation speed.",
+      "derived_from": [
+        "EQC001",
+        "EQC004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. S28-S30 and Fig. S12 define the envelope fit and report 153.99 sites/us."
+        },
+        {
+          "id": "EQC006_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "J in rad/ns gives sites/ns under the lattice-spacing-one convention; multiplying by 1000 gives sites/us."
+        },
+        {
+          "id": "EQC006_spectral_match",
+          "type": "numeric_identity",
+          "status": "passed",
+          "reason": "The Table S1 open-chain spectrum gives 153.993429485 sites/us, matching the reported 153.99 within 2.23e-5 relative error."
+        }
+      ],
+      "numerical_form": "Diagonalize the 11-site Table S1 hopping matrix and evaluate the finite-difference derivative in Eq. S29 using delta_k=pi/(L+1).",
+      "code_refs": [
+        "src/quantum_walk.py:spectral_group_velocity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC007",
+      "title": "Two-particle correlator and double occupancy",
+      "source_refs": [
+        {
+          "type": "main_equation",
+          "value": "Eq. 3"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "Fig. S8"
+        }
+      ],
+      "latex": "G_{ij}=\\langle a_i^\\dagger a_j^\\dagger a_i a_j\\rangle;\\quad G_{ii}=\\langle n_i(n_i-1)\\rangle",
+      "role": "Produces two-photon correlation matrices and verifies suppression of double occupancy.",
+      "derived_from": [
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. 3 defines G_ij and Fig. S8 reports site-resolved double occupancy below 3%."
+        },
+        {
+          "id": "EQC007_occupation",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For i!=j the operator equals n_i n_j; for i=j bosonic commutation gives n_i(n_i-1)."
+        },
+        {
+          "id": "EQC007_pair_sum",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For N=2, sum_ij G_ij=N(N-1)=2."
+        }
+      ],
+      "numerical_form": "Average n_i*n_j over basis probabilities off diagonal and n_i*(n_i-1) on diagonal; double-occupancy probability at i is P(n_i=2)=G_ii/2.",
+      "code_refs": [
+        "src/quantum_walk.py:two_particle_correlator",
+        "src/quantum_walk.py:double_occupancy_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC008",
+      "title": "Hard-core boson comparator",
+      "source_refs": [
+        {
+          "type": "main_text",
+          "value": "hard-core-boson/free-fermion interpretation of Figs. 3-4"
+        },
+        {
+          "type": "supplement_section",
+          "value": "Numerical simulation"
+        }
+      ],
+      "latex": "|U/J|\\rightarrow\\infty\\;\\Rightarrow\\;n_j\\in\\{0,1\\}",
+      "role": "Tests the paper's fermionization interpretation against an explicit occupancy-constrained limit.",
+      "derived_from": [
+        "EQC001",
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper interprets |U/J| about 16-20 as hard-core behavior and compares it with free fermions."
+        },
+        {
+          "id": "EQC008_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Removing n_j=2 basis states is the finite-sector U-to-infinity limit and forces all diagonal double occupancy to zero."
+        },
+        {
+          "id": "EQC008_projection",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The occupancy-capped Hamiltonian equals the full two-boson hopping Hamiltonian projected onto the no-double-occupancy subspace."
+        }
+      ],
+      "numerical_form": "Build the N=2 basis with max occupation one and the same hopping couplings; verify it equals the projected full-boson hopping Hamiltonian, then compare normalized off-diagonal G matrices with the calibrated-U run and U=0 run.",
+      "code_refs": [
+        "src/quantum_walk.py:occupation_basis",
+        "src/quantum_walk.py:build_hamiltonian",
+        "src/quantum_walk.py:normalized_correlation_distance"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC009",
+      "title": "Disordered on-site potentials and detuning-renormalized hopping",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Sec. IV.C, effect of unbalanced qubit frequencies"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "Figs. S9-S10"
+        }
+      ],
+      "latex": "h_j=\\bar h+\\delta h_j,\\quad \\delta h_j\\in[-W/2,W/2],\\quad J_{j,j+1}(\\Delta)=\\frac{J_{j,j+1}^2}{\\sqrt{J_{j,j+1}^2+\\Delta_{j,j+1}^2}},\\quad \\Delta_{j,j+1}=h_{j+1}-h_j",
+      "role": "Defines the 50-realization one- and two-photon disorder ensembles plotted in Figs. S9 and S10.",
+      "derived_from": [
+        "EQC001",
+        "EQC002",
+        "EQC003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Sec. IV.C prints the uniform interval, the detuning-dependent hopping formula, six W values, and the 50-sequence average."
+        },
+        {
+          "id": "EQC009_zero_disorder",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At W=0 every detuning vanishes and the effective hopping reduces exactly to the Table S1 coupling."
+        },
+        {
+          "id": "EQC009_large_detuning",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For detuning much larger than J, the effective hopping tends to zero, producing localization rather than faster spreading."
+        }
+      ],
+      "numerical_form": "For each printed W, independently sample 50 on-site vectors from the printed uniform interval, compute every effective bond from the printed formula, evolve the Table S1 Hamiltonian, and average site densities. A deterministic seed is selected independently as a reproducibility representative; source pixels are not used to select it.",
+      "code_refs": [
+        "src/quantum_walk.py",
+        "scripts/run_paper_exact.py",
+        "config/paper_exact.json"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC010",
+      "title": "Coupling-error fidelity with optional Lindblad decoherence",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Sec. IV.E, measurement precision of nearest-neighbor coupling"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "Fig. S11"
+        },
+        {
+          "type": "supplement_table",
+          "value": "Table S1"
+        }
+      ],
+      "latex": "F(t)=\\sum_{j=1}^{11}\\sqrt{p_j(t)q_j(t)},\\qquad \\dot\\rho=-i[H,\\rho]+\\sum_k\\left(L_k\\rho L_k^\\dagger-\\tfrac12\\{L_k^\\dagger L_k,\\rho\\}\right)",
+      "role": "Produces the three ideal-versus-perturbed fidelity curves and the optional decoherence/disorder comparison in Fig. S11.",
+      "derived_from": [
+        "EQC001",
+        "EQC003",
+        "EQC004"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC010_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement prints the fidelity definition, maximum plus/minus 2.5 percent coupling error, 0.5 MHz disorder width, and Table S1 T1/T2-star inputs."
+        },
+        {
+          "id": "EQC010_bounds",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For normalized nonnegative distributions, the Bhattacharyya coefficient F lies in [0,1]."
+        },
+        {
+          "id": "EQC010_zero_noise",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With zero coupling error, zero disorder, and no collapse operators, p=q and F(t)=1 at every time."
+        },
+        {
+          "id": "EQC010_trace",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The commutator and every Lindblad dissipator are trace preserving."
+        }
+      ],
+      "numerical_form": "Use one deterministic source-independent uniform coupling-error realization within plus/minus 2.5 percent for all three launches. For the dashed diagnostic, add an independently selected 0.5 MHz disorder realization and a standard Markovian T1/T2-star Lindblad model. The exact author seed and collapse-operator convention are not published, so this target remains reconstructed rather than author-realization exact.",
+      "code_refs": [
+        "src/quantum_walk.py",
+        "scripts/run_paper_exact.py",
+        "config/paper_exact.json"
+      ],
+      "open_questions": [
+        "The publication does not give the coupling-error seed or distribution beyond the plus/minus 2.5 percent bound.",
+        "The publication names QuTiP and T1/T2-star but does not state the exact collapse-operator convention."
+      ]
+    }
+  ]
+}

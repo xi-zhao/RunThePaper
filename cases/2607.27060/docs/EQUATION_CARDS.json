@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.27060",
+  "cards": [
+    {
+      "id": "EQ-ERR-DET1",
+      "title": "First-order deterministic precision function",
+      "role": "Defines the monotone error predicate used by Fig. 2a and Fig. 3a.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 row 1; main.tex lines 164-170"
+        }
+      ],
+      "latex": "\\hat\\epsilon_{1,\\mathrm{det}}(t,\\lambda,M,N)=\\frac{(t\\lambda M)^2}{N}\\exp\\left(\\frac{t\\lambda M}{N}\\right)",
+      "derived_from": [
+        "paper-stated deterministic first-order TS-PF error guarantee"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-ERR-DET1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed directly from Table 1."
+        },
+        {
+          "id": "MONO-ERR-DET1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "d log(f)/dN = -1/N-a/N^2 < 0 for a,N>0."
+        },
+        {
+          "id": "LIM-ERR-DET1",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The bound tends to zero as N tends to infinity."
+        }
+      ],
+      "numerical_form": "a=t*lambda*M; return a*a/N * exp(a/N)",
+      "code_refs": [
+        "src/trotter_bounds.py::epsilon_hat_det1"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-ERR-RAN1",
+      "title": "First-order randomised precision function",
+      "role": "Defines the monotone error predicate used by Fig. 2b and Fig. 3b.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 row 2; main.tex lines 164-171"
+        }
+      ],
+      "latex": "\\hat\\epsilon_{1,\\mathrm{ran}}(t,\\lambda,M,N)=\\frac{(t\\lambda M)^3}{3N^2}\\exp\\left(\\frac{t\\lambda M}{N}\\right)",
+      "derived_from": [
+        "paper-stated randomised first-order TS-PF error guarantee"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-ERR-RAN1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed directly from Table 1."
+        },
+        {
+          "id": "MONO-ERR-RAN1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "d log(f)/dN = -2/N-a/N^2 < 0 for a,N>0."
+        },
+        {
+          "id": "IDENTITY-RAN1-DET2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The expression is identical to EQ-ERR-DET2, predicting equal N sequences."
+        }
+      ],
+      "numerical_form": "a=t*lambda*M; return a**3/(3*N**2) * exp(a/N)",
+      "code_refs": [
+        "src/trotter_bounds.py::epsilon_hat_ran1"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-ERR-DET2",
+      "title": "Second-order deterministic precision function",
+      "role": "Defines the monotone error predicate used by Fig. 2c and Fig. 3c.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 row 3; main.tex lines 164-172"
+        }
+      ],
+      "latex": "\\hat\\epsilon_{2,\\mathrm{det}}(t,\\lambda,M,N)=\\frac{(t\\lambda M)^3}{3N^2}\\exp\\left(\\frac{t\\lambda M}{N}\\right)",
+      "derived_from": [
+        "paper-stated deterministic second-order TS-PF error guarantee"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-ERR-DET2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed directly from Table 1."
+        },
+        {
+          "id": "MONO-ERR-DET2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "d log(f)/dN = -2/N-a/N^2 < 0 for a,N>0."
+        },
+        {
+          "id": "IDENTITY-DET2-RAN1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The expression is identical to EQ-ERR-RAN1."
+        }
+      ],
+      "numerical_form": "a=t*lambda*M; return a**3/(3*N**2) * exp(a/N)",
+      "code_refs": [
+        "src/trotter_bounds.py::epsilon_hat_det2"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-ERR-RAN2",
+      "title": "Second-order randomised precision function",
+      "role": "Defines the monotone error predicate used by Fig. 2d and Fig. 3d.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 row 4; main.tex lines 164-172"
+        }
+      ],
+      "latex": "\\hat\\epsilon_{2,\\mathrm{ran}}(t,\\lambda,M,N)=\\frac{(t\\lambda)^3M^2}{N^2}\\exp\\left(\\frac{t\\lambda M}{N}\\right)",
+      "derived_from": [
+        "paper-stated randomised second-order TS-PF error guarantee"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-ERR-RAN2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transcribed directly from Table 1."
+        },
+        {
+          "id": "MONO-ERR-RAN2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "d log(f)/dN = -2/N-a/N^2 < 0 for a,N>0."
+        },
+        {
+          "id": "MSCALE-ERR-RAN2",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "t*lambda is dimensionless and M,N are counts; the error bound is dimensionless."
+        }
+      ],
+      "numerical_form": "a=t*lambda*M; return (t*lambda)**3*M**2/N**2 * exp(a/N)",
+      "code_refs": [
+        "src/trotter_bounds.py::epsilon_hat_ran2"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-N-DET1",
+      "title": "First-order deterministic analytic step bound",
+      "role": "Generates N_analytic in Fig. 2a and Fig. 3a.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Sec. 3 first proposition; main.tex lines 183-214"
+        }
+      ],
+      "latex": "N^{\\mathrm{analytic}}_{1,\\mathrm{det}}=\\left\\lceil\\max\\left\\{t\\lambda M,\\frac{e(t\\lambda M)^2}{\\epsilon}\\right\\}\\right\\rceil",
+      "derived_from": [
+        "EQ-ERR-DET1"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-N-DET1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches the proposition and proof."
+        },
+        {
+          "id": "DERIVE-N-DET1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "N>=a implies exp(a/N)<=e; N>=e*a^2/epsilon then implies epsilon_hat<=epsilon."
+        }
+      ],
+      "numerical_form": "ceil(max(a, e*a*a/epsilon)) with a=t*lambda*M",
+      "code_refs": [
+        "src/trotter_bounds.py::analytic_steps"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-N-RAN1",
+      "title": "First-order randomised analytic step bound",
+      "role": "Generates N_analytic in Fig. 2b and Fig. 3b.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Sec. 3 second proposition; main.tex lines 216-225"
+        }
+      ],
+      "latex": "N^{\\mathrm{analytic}}_{1,\\mathrm{ran}}=\\left\\lceil\\max\\left\\{t\\lambda M,\\sqrt{\\frac{e(t\\lambda M)^3}{3\\epsilon}}\\right\\}\\right\\rceil",
+      "derived_from": [
+        "EQ-ERR-RAN1"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-N-RAN1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches the proposition."
+        },
+        {
+          "id": "DERIVE-N-RAN1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Under N>=a, solving e*a^3/(3*N^2)<=epsilon yields the square-root term."
+        }
+      ],
+      "numerical_form": "ceil(max(a, sqrt(e*a**3/(3*epsilon))))",
+      "code_refs": [
+        "src/trotter_bounds.py::analytic_steps"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-N-DET2",
+      "title": "Second-order deterministic analytic step bound",
+      "role": "Generates N_analytic in Fig. 2c and Fig. 3c.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Sec. 3 third proposition; main.tex lines 227-236"
+        }
+      ],
+      "latex": "N^{\\mathrm{analytic}}_{2,\\mathrm{det}}=\\left\\lceil\\max\\left\\{t\\lambda M,\\sqrt{\\frac{e(t\\lambda M)^3}{3\\epsilon}}\\right\\}\\right\\rceil",
+      "derived_from": [
+        "EQ-ERR-DET2"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-N-DET2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches the proposition."
+        },
+        {
+          "id": "DERIVE-N-DET2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The derivation is identical to EQ-N-RAN1 because the precision functions are identical."
+        }
+      ],
+      "numerical_form": "ceil(max(a, sqrt(e*a**3/(3*epsilon))))",
+      "code_refs": [
+        "src/trotter_bounds.py::analytic_steps"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-N-RAN2",
+      "title": "Second-order randomised analytic step bound",
+      "role": "Generates N_analytic in Fig. 2d and Fig. 3d.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Sec. 3 fourth proposition; main.tex lines 238-247"
+        }
+      ],
+      "latex": "N^{\\mathrm{analytic}}_{2,\\mathrm{ran}}=\\left\\lceil\\max\\left\\{t\\lambda M,\\sqrt{\\frac{e(t\\lambda)^3M^2}{\\epsilon}}\\right\\}\\right\\rceil",
+      "derived_from": [
+        "EQ-ERR-RAN2"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-N-RAN2",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches the proposition."
+        },
+        {
+          "id": "DERIVE-N-RAN2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Under N>=a, solving e*(t*lambda)^3*M^2/N^2<=epsilon yields the square-root term."
+        }
+      ],
+      "numerical_form": "ceil(max(a, sqrt(e*(t*lambda)**3*M**2/epsilon)))",
+      "code_refs": [
+        "src/trotter_bounds.py::analytic_steps"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-GATE-FO",
+      "title": "First-order gate-complexity proxy",
+      "role": "Generates g_analytic and g_min in first-order panels.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 rows 1-2; Sec. 4 gate-complexity definition"
+        }
+      ],
+      "latex": "g_{1,\\mathrm{det}}=g_{1,\\mathrm{ran}}=MN",
+      "derived_from": [
+        "one M-exponential product per first-order Trotter step"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-GATE-FO",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches Table 1."
+        },
+        {
+          "id": "COUNT-GATE-FO",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "M exponentials per step repeated N times gives M*N."
+        }
+      ],
+      "numerical_form": "return M*N",
+      "code_refs": [
+        "src/trotter_bounds.py::gate_complexity"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ-GATE-SO",
+      "title": "Second-order gate-complexity proxy",
+      "role": "Generates g_analytic and g_min in second-order panels.",
+      "source_refs": [
+        {
+          "type": "paper",
+          "value": "Table 1 rows 3-4; Sec. 4 gate-complexity definition"
+        }
+      ],
+      "latex": "g_{2,\\mathrm{det}}=g_{2,\\mathrm{ran}}=2MN",
+      "derived_from": [
+        "forward and reverse M-exponential products per second-order Trotter step"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-GATE-SO",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Matches Table 1."
+        },
+        {
+          "id": "COUNT-GATE-SO",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Two M-exponential sweeps per step repeated N times gives 2*M*N."
+        }
+      ],
+      "numerical_form": "return 2*M*N",
+      "code_refs": [
+        "src/trotter_bounds.py::gate_complexity"
+      ],
+      "open_questions": []
+    }
+  ]
+}

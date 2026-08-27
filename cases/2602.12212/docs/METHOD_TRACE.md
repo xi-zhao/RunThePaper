@@ -37,7 +37,7 @@
 
 ## METHOD004 — source comparison boundary
 
-- Source figures are rendered into `private paper-reference panels/`.
+- Source figures are rendered into `internal-paper-reference/`.
 - They are comparison evidence only and never generated data.
 - Independent plots are compared side by side. Pixel-difference/SSIM boards
   are intentionally not used because the reconstructions are not

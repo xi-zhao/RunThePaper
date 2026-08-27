@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "paper_id": "1910.00020",
+  "implementations": {
+    "paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008"
+      ],
+      "code_refs": [
+        "src/measurement_criticality/stabilizer.py",
+        "src/measurement_criticality/reproduction.py",
+        "src/measurement_criticality/paper_scale.py",
+        "src/measurement_criticality/assessment.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "acceptance_ref": "config/paper_scale_acceptance.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "run-all",
+        "--config",
+        "config/paper_scale.json",
+        "--acceptance",
+        "config/paper_scale_acceptance.json",
+        "--workers",
+        "16"
+      ],
+      "expected_outputs": [
+        "outputs/data/paper_scale/aggregate_manifest.json",
+        "outputs/data/paper_scale/aggregates/T001.npz",
+        "outputs/data/paper_scale/aggregates/T002.npz",
+        "outputs/data/paper_scale/aggregates/T003.npz",
+        "outputs/data/paper_scale/aggregates/T004.npz",
+        "outputs/data/paper_scale/aggregates/T005.npz",
+        "outputs/data/paper_scale/aggregates/T006.npz",
+        "outputs/data/paper_scale/aggregates/T007.npz",
+        "outputs/data/paper_scale/aggregates/T008.npz",
+        "outputs/data/paper_scale/checks/scientific_assessment.json"
+      ],
+      "acceptance_criteria": [
+        "Every declared condition has complete, non-overlapping trajectory ids and a frozen aggregate hash.",
+        "All probabilities and entropies remain within their analytic stabilizer bounds.",
+        "T003 applies physical measurements everywhere and marginalizes only unrecorded outcomes; it must satisfy the data-processing order under increasing record size.",
+        "Critical-point, exponent, light-cone, and collapse checks use config/paper_scale_acceptance.json without retuning physical inputs to the paper.",
+        "A stable mismatch remains inconclusive until convergence, an independent falsification path, and fresh-context review are complete."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Fig. 1(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Circuit and reference-probe schematic; its protocol is implemented but the drawing is not a numerical result."
+    },
+    {
+      "item_id": "Main Fig. 1(b), finite-size crossing",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Independent random-Clifford trajectory average.",
+      "claim_refs": [
+        "CLM_ORDER"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 1(b), scaling-collapse inset",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Same generated entropy data rescaled by the printed p_c and nu.",
+      "claim_refs": [
+        "CLM_ORDER"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Measurement-by-measurement entropy-drop heatmap.",
+      "claim_refs": [
+        "CLM_LOCALITY"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 2(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Exact mixed-stabilizer entropy conditioned on the retained spatial measurement record.",
+      "claim_refs": [
+        "CLM_LOCALITY"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Surface order parameter and beta_s fit.",
+      "claim_refs": [
+        "CLM_ORDER"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Periodic-cylinder surface and bulk mutual-information branches.",
+      "claim_refs": [
+        "CLM_CORRELATIONS"
+      ]
+    },
+    {
+      "item_id": "Main Fig. 3(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Open-strip end-to-end and mixed mutual-information branches.",
+      "claim_refs": [
+        "CLM_CORRELATIONS"
+      ]
+    },
+    {
+      "item_id": "Supplement Fig. S1(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Decoding light cone after a volume-law p=0.08 pre-evolution.",
+      "claim_refs": [
+        "CLM_LOCALITY"
+      ]
+    },
+    {
+      "item_id": "Supplement Fig. S1(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Decoding light cone after a p=0 pseudorandom stabilizer pre-evolution.",
+      "claim_refs": [
+        "CLM_LOCALITY"
+      ]
+    },
+    {
+      "item_id": "Supplement Fig. S2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "One-reference critical purification dynamics.",
+      "claim_refs": [
+        "CLM_PURIFICATION"
+      ]
+    },
+    {
+      "item_id": "Supplement Fig. S2(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale",
+      "reason": "Four-reference critical purification dynamics.",
+      "claim_refs": [
+        "CLM_PURIFICATION"
+      ]
+    }
+  ]
+}

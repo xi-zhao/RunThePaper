@@ -1,52 +1,21 @@
-# 局域化驱动超辐射不稳定性：像素配准数值复现
+# Localization Driven Superradiant Instability：科学复现讲义
 
-## 论文与问题
+## 结论
 
-本公开包复现 Yin 等人在 *Physical Review Letters* **124**, 113601
-(2020) 中研究的局域化驱动超辐射不稳定性。核心问题是：准周期势使原子波函数局域化后，
-为什么腔散射响应反而会增强，并把超辐射阈值压低到零？
+Case scaffolded from framework/templates/paper_case.
 
-## 独立计算
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-代码独立实现有限链 Aubry–André / generalized Aubry–André 哈密顿量、态分辨 IPR、
-腔散射易感性、线性临界泵浦，以及原子轨道与腔场的自洽平均场迭代。所有公开曲线由包内
-CSV 数值重新绘制；论文图像只出现在有限的对照板中，不参与模型计算或图像生成。
+## 我们复现的是什么
 
-## 主要结果
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-- Fig. 2：移动边界出现在 `alpha=233`、`epsilon_c/J=0.4396`；377 个 IPR
-  矢量点的相关系数为 `0.99999999997`。激发态阈值归一化没有公开，因此该目标保持
-  exploratory。
-- Fig. 3：五个 panel 全部生成。`eta_c(chi=0)/J=0.27681`，Fig. 3(a) 的阈值
-  曲线与 PDF 矢量路径相关系数为 `0.99999695`。这是本 case 唯一达到
-  `complete_reproduction` 的目标。
-- Fig. 4：非线性光子数起点和腔波矢阈值 landscape 均复现；由于 published/arXiv
-  detuning convention 分裂，证据等级保持 paper subset。
-- Fig. S1：五组 normal/superradiant 密度曲线均生成，十条可见 PDF 矢量路径全部通过
-  点对点合同；原文没有给泵浦样本与迭代细节。
-
-完整画布 SSIM 分别为 Fig. 3 `0.8602`、Fig. 4 `0.7921`、Fig. S1 `0.7856`。
-这些数字来自独立数值图与论文几何配准后的比较，不是复制原图得到的。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`。
 
 ## 运行
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/10.1103-PhysRevLett.124.113601/code
-python scripts/run_linear_targets.py
-python scripts/run_nonlinear_targets.py
-python scripts/render_pixel_registered.py
-```
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-前两个脚本在 Apple M4 上最近一次完整重跑约为 22.65 秒；渲染与公开检查另需数秒。
-数据、图片与 JSON 检查分别写入 `../outputs/data`、`../outputs/figures` 和
-`../outputs/checks`。如需隔离验证输出，可设置 `LDSI_OUTPUT_ROOT=/tmp/ldsi-run`。
+## 论文审查边界
 
-## 复现边界
-
-Harness 总分为 `88.56/100`，全案等级为 `numerical_feature_reproduction`。
-Fig. 2 缺失阈值归一化，Fig. 4 存在版本间公式约定分裂，S1 缺失泵浦样本和迭代元数据。
-因此视觉接近不会把这些目标自动升级为完整复现。公开包不包含论文 PDF、原始图、矢量采样
-点或内部过程日志。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：User selected local Apple M4 execution; no remote accelerator is used. Published PDF and supplement are primary; arXiv v1 source is retained for traceability and source figures.

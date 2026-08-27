@@ -115,7 +115,7 @@ def render_t002_t003(data_dir: Path, figure_dir: Path) -> None:
     )
     _render_exponents(
         _read(data_dir / "T003_entropy_exponent.csv"),
-        key="direct_b",
+        key="fitted_b",
         theory_key="theory_b",
         ylabel=r"entropy exponent $b$",
         filename="T003_main_fig1e.png",

@@ -15,9 +15,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-WORKSPACE = Path(__file__).resolve().parents[2]
-SRC = WORKSPACE / "code" / "src"
+WORKSPACE = Path(__file__).resolve().parents[1]
+SRC = WORKSPACE / "src"
+SCRIPT_DIR = WORKSPACE / "scripts"
 sys.path.insert(0, str(SRC))
+sys.path.insert(0, str(SCRIPT_DIR))
 
 from nonhermitian_chern import (  # noqa: E402
     CylinderParams,
@@ -25,11 +27,25 @@ from nonhermitian_chern import (  # noqa: E402
     generate_cylinder_spectrum_rows,
     non_bloch_cylinder_bulk_eigenvalues,
 )
+from compare_eps_point_match import (  # noqa: E402
+    CHECK_PATH as EPS_POINT_MATCH_CHECK_PATH,
+    PAIR_DATA_PATH as EPS_POINT_MATCH_PAIR_DATA_PATH,
+    compare_eps_point_match,
+    write_outputs as write_eps_point_match_outputs,
+)
+from extract_eps_reference_points import (  # noqa: E402
+    CHECK_PATH as EPS_REFERENCE_CHECK_PATH,
+    DATA_PATH as EPS_REFERENCE_DATA_PATH,
+    extract_eps_reference_points,
+    write_outputs as write_eps_reference_outputs,
+)
 
 
 DATA_PATH = WORKSPACE / "outputs" / "data" / "first_target.csv"
 CHECK_PATH = WORKSPACE / "outputs" / "checks" / "first_target.json"
 FIGURE_PATH = WORKSPACE / "outputs" / "figures" / "first_target.png"
+SOURCE_PANEL_PATH = WORKSPACE / "references" / "original_figures" / "fig3b_pdf_reference.png"
+COMPARISON_FIGURE_PATH = WORKSPACE / "outputs" / "figures" / "fig3b_reference_comparison.png"
 RENDER_CHECK_PATH = WORKSPACE / "outputs" / "checks" / "first_target_render.json"
 SCORECARD_PATH = WORKSPACE / "outputs" / "checks" / "similarity_scorecard.json"
 BULK_KY_POINTS = 720
@@ -306,13 +322,49 @@ def render_first_target_figure(
         ),
         "edge_trace_residual_tolerance": EDGE_TRACE_RESIDUAL_TOLERANCE,
         "plateau_imag_tolerance": PLATEAU_IMAG_TOLERANCE,
-        "source_reference": "official paper figure, not redistributed in this public repository",
-        "source_reference_mode": "external_visual_reference_only",
+        "source_reference": "internal-paper-reference/fig3b_pdf_reference.png",
+        "source_reference_mode": "pdf_source_panel_reference",
         "warning": (
-            "The red points follow the analytic chiral edge trace. Source-derived "
-            "point-set and pixel-layout validation are internal checks and are not "
-            "required for this public run."
+            "The red points follow the analytic chiral edge trace; digitized EPS "
+            "red/blue point-set validation is still a later repair step."
         ),
+    }
+
+
+def write_reference_comparison_comparison(
+    source_path: Path = SOURCE_PANEL_PATH,
+    generated_path: Path = FIGURE_PATH,
+    output_path: Path = COMPARISON_FIGURE_PATH,
+) -> dict[str, object]:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    if not source_path.exists() or not generated_path.exists():
+        return {
+            "status": "blocked",
+            "comparison_path": _relative(output_path),
+            "reason": "source or generated panel is missing",
+            "source_path": _relative(source_path),
+            "generated_path": _relative(generated_path),
+        }
+
+    source_image = plt.imread(source_path)
+    generated_image = plt.imread(generated_path)
+    fig, axes = plt.subplots(1, 2, figsize=(8.94, 3.99), dpi=100)
+    panels = [
+        (axes[0], source_image, "Fig. 3(b) source panel from paper PDF"),
+        (axes[1], generated_image, "Generated: analytic chiral edge trace"),
+    ]
+    for axis, image, title in panels:
+        axis.imshow(image)
+        axis.set_title(title, fontsize=8)
+        axis.set_axis_off()
+    fig.tight_layout(pad=0.8)
+    fig.savefig(output_path)
+    plt.close(fig)
+    return {
+        "status": "passed",
+        "comparison_path": _relative(output_path),
+        "source_path": _relative(source_path),
+        "generated_path": _relative(generated_path),
     }
 
 
@@ -326,15 +378,35 @@ def _write_render_check(render_result: dict[str, object]) -> None:
 def build_similarity_scorecard_payload(
     render_result: dict[str, object],
     render_check_path: Path = RENDER_CHECK_PATH,
+    eps_point_match_result: dict[str, object] | None = None,
 ) -> dict[str, object]:
+    eps_match_passed = (
+        isinstance(eps_point_match_result, dict)
+        and eps_point_match_result.get("status") == "passed"
+    )
+    numeric_score = 27.0 if eps_match_passed else 20.0
+    score_cap = 86.0 if eps_match_passed else 82.0
     numeric_reason = (
-        "The public run validates the generated spectrum and analytic chiral edge "
-        "trace from independent numerics. Source-derived EPS point matching is an "
-        "internal reference check and is not redistributed here."
+        "The EPS red branch point-match gate passes "
+        f"(mean distance {float(eps_point_match_result['red_pair_mean_distance']):.4f}, "
+        f"max distance {float(eps_point_match_result['red_pair_max_distance']):.4f}); "
+        "full pixel/layout scoring is still not a required gate."
+        if eps_match_passed
+        else (
+            "The source EPS red/blue point objects are extracted as a reference set; "
+            "pointwise pixel/layout scoring is still not a required gate."
+        )
     )
     remaining_gap = (
-        "public_reference_boundary: full source-point and pixel-layout validation "
-        "requires original paper assets that are not redistributed in this public repository."
+        "pixel_layout_validation: the analytic chiral edge trace now passes EPS red-branch "
+        "point matching, but full panel layout, marker style, and blue point-cloud distance "
+        "are not yet gates."
+        if eps_match_passed
+        else (
+            "digitized_reference_validation: the analytic chiral edge trace now reproduces "
+            "the red branch cardinality and placement qualitatively, but EPS pointwise and "
+            "pixel-layout validation are not yet gates."
+        )
     )
     return {
         "schema_version": 1,
@@ -354,7 +426,7 @@ def build_similarity_scorecard_payload(
                         ),
                     },
                     "numeric_closeness": {
-                        "score": 20.0,
+                        "score": numeric_score,
                         "reason": numeric_reason,
                     },
                     "paper_scope_coverage": {
@@ -365,13 +437,19 @@ def build_similarity_scorecard_payload(
                         ),
                     },
                 },
-                "score_cap": 82.0,
-                "cap_reason": "The public run does not redistribute source-derived point or pixel validation assets.",
+                "score_cap": score_cap,
+                "cap_reason": "The red branch is validated against EPS points, but complete pixel-layout scoring is still missing.",
                 "evidence": [
                     "outputs/data/first_target.csv",
                     "outputs/checks/first_target.json",
                     _evidence_path(render_check_path),
                     str(render_result["figure_path"]),
+                    str(render_result.get("reference_comparison_comparison", {}).get("comparison_path", "")),
+                    _evidence_path(EPS_POINT_MATCH_CHECK_PATH),
+                    _evidence_path(EPS_POINT_MATCH_PAIR_DATA_PATH),
+                    "outputs/checks/eps_reference_points.json",
+                    "outputs/data/eps_reference_points.csv",
+                    "internal-paper-reference/fig3b_pdf_reference.png",
                 ],
                 "remaining_gap": remaining_gap,
                 "evaluation": {
@@ -382,7 +460,7 @@ def build_similarity_scorecard_payload(
                     "manual_interventions": 0,
                     "failure_type": "partial_target_coverage",
                     "parameter_match": "paper_exact",
-                    "reference_comparison": "external_visual_reference_not_redistributed",
+                    "reference_comparison": "digitized_curve",
                     "generated_data_provenance": "independent_numerics",
                     "formula_gate": "source_only",
                     "formula_dependencies": ["EQC001", "EQC002", "EQC004"],
@@ -406,10 +484,21 @@ def main() -> int:
     elapsed = time.perf_counter() - started
     annotated_rows = annotate_edge_branch_core(rows, params)
 
+    write_eps_reference_outputs(extract_eps_reference_points())
     _write_csv(rows)
     _write_check(params, rows, elapsed)
     render_result = render_first_target_figure(annotated_rows, FIGURE_PATH)
+    render_result["reference_comparison_comparison"] = (
+        write_reference_comparison_comparison()
+    )
     _write_render_check(render_result)
+    eps_point_match_result = compare_eps_point_match()
+    write_eps_point_match_outputs(eps_point_match_result)
+    _write_similarity_scorecard(
+        build_similarity_scorecard_payload(
+            render_result, eps_point_match_result=eps_point_match_result
+        )
+    )
     return 0
 
 

@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "paper_id": "1709.03478",
   "score_model": "rra_similarity_v1",
   "targets": [
@@ -44,11 +44,11 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
+        "failure_type": "insufficient_compute",
         "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
@@ -58,7 +58,114 @@
           "EQC003",
           "EQC005",
           "EQC006"
-        ]
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The independently written continuum campaign is complete and its reduced-scale run, all-task-kind isolated smoke, and one true L=738/q=8 stationary block execute successfully, but the full production-plus-convergence array has not been run.",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+              "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The declared acceptance campaign contains 2784 checkpointed CPU eigensolver tasks. A measured true-scale stationary block takes 27.004229 seconds, giving a 20.88 CPU-hour lower bound before aggregation; finite-time tasks may be slower, and the implementation has no validated CUDA backend for the available A100.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "config/paper_scale_rerun.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in the independently derived solver path: focused tests pass, the reduced campaign passes its physics invariants, the isolated smoke exercises every task kind, and a paper-scale stationary block completes without forbidden access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The case test suite covers Hamiltonian construction, normalization, observables, checkpointing, aggregation, configuration validation, and scientific invariants.",
+                "evidence": [
+                  "tests/test_reproduce_spme.py",
+                  "tests/test_paper_scale_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated smoke run exercises main-trace, stationary-sweep, finite-time-sweep, and supplement-trace task paths without reading paper pixels, author arrays, or author code.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "A real L=738, q=8 production stationary block completes in the isolated runner with no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The task inventory, measured true-scale block time, host capacity, CPU implementation boundary, and conservative lower-bound projection are recorded explicitly.",
+                "evidence": [
+                  "outputs/checks/paper_scale/resource_benchmark.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests, an all-kind isolated smoke, and a true-scale block found no implementation failure; this does not claim unexecuted production outputs are scientifically accepted.",
+              "evidence": [
+                "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+                "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The paper and supplement expose enough equations and principal scales to write the campaign; remaining tube-distribution conventions are declared assumptions, not the immediate reason the full array is absent.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finality is blocked for the theoretical results represented by T002-T006; reduced-scale scientific-feature evidence remains available but is not promoted to paper-exact production output.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006"
+            ],
+            "completion": "5/5 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Run all 2784 production and convergence tasks on a sufficiently provisioned CPU shard pool, aggregate the frozen checkpoints, and execute the declared convergence and paper-feature checks.",
+            "expected_resolution": "A passing full campaign can promote supported targets; an execution or scientific failure reopens a code, method, or paper-claim diagnosis with the failing checkpoint preserved.",
+            "evidence_to_produce": [
+              "outputs/checks/paper_scale/final_assessment.json",
+              "outputs/runs/1709.03478-paper-scale-production-*/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -107,7 +214,10 @@
       "score_aggregation": "included",
       "component_total": 75.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -150,11 +260,11 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
+        "failure_type": "insufficient_compute",
         "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "reconstructed",
@@ -166,7 +276,114 @@
           "EQC005",
           "EQC006",
           "EQC008"
-        ]
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The independently written continuum campaign is complete and its reduced-scale run, all-task-kind isolated smoke, and one true L=738/q=8 stationary block execute successfully, but the full production-plus-convergence array has not been run.",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+              "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The declared acceptance campaign contains 2784 checkpointed CPU eigensolver tasks. A measured true-scale stationary block takes 27.004229 seconds, giving a 20.88 CPU-hour lower bound before aggregation; finite-time tasks may be slower, and the implementation has no validated CUDA backend for the available A100.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "config/paper_scale_rerun.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in the independently derived solver path: focused tests pass, the reduced campaign passes its physics invariants, the isolated smoke exercises every task kind, and a paper-scale stationary block completes without forbidden access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The case test suite covers Hamiltonian construction, normalization, observables, checkpointing, aggregation, configuration validation, and scientific invariants.",
+                "evidence": [
+                  "tests/test_reproduce_spme.py",
+                  "tests/test_paper_scale_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated smoke run exercises main-trace, stationary-sweep, finite-time-sweep, and supplement-trace task paths without reading paper pixels, author arrays, or author code.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "A real L=738, q=8 production stationary block completes in the isolated runner with no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The task inventory, measured true-scale block time, host capacity, CPU implementation boundary, and conservative lower-bound projection are recorded explicitly.",
+                "evidence": [
+                  "outputs/checks/paper_scale/resource_benchmark.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests, an all-kind isolated smoke, and a true-scale block found no implementation failure; this does not claim unexecuted production outputs are scientifically accepted.",
+              "evidence": [
+                "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+                "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The paper and supplement expose enough equations and principal scales to write the campaign; remaining tube-distribution conventions are declared assumptions, not the immediate reason the full array is absent.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finality is blocked for the theoretical results represented by T002-T006; reduced-scale scientific-feature evidence remains available but is not promoted to paper-exact production output.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006"
+            ],
+            "completion": "5/5 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Run all 2784 production and convergence tasks on a sufficiently provisioned CPU shard pool, aggregate the frozen checkpoints, and execute the declared convergence and paper-feature checks.",
+            "expected_resolution": "A passing full campaign can promote supported targets; an execution or scientific failure reopens a code, method, or paper-claim diagnosis with the failing checkpoint preserved.",
+            "evidence_to_produce": [
+              "outputs/checks/paper_scale/final_assessment.json",
+              "outputs/runs/1709.03478-paper-scale-production-*/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -237,7 +454,10 @@
       "score_aggregation": "included",
       "component_total": 77.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T004",
@@ -280,18 +500,125 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "insufficient_compute",
         "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "reconstructed",
         "formula_dependencies": [
           "EQC008",
           "EQC009"
-        ]
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The independently written continuum campaign is complete and its reduced-scale run, all-task-kind isolated smoke, and one true L=738/q=8 stationary block execute successfully, but the full production-plus-convergence array has not been run.",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+              "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The declared acceptance campaign contains 2784 checkpointed CPU eigensolver tasks. A measured true-scale stationary block takes 27.004229 seconds, giving a 20.88 CPU-hour lower bound before aggregation; finite-time tasks may be slower, and the implementation has no validated CUDA backend for the available A100.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "config/paper_scale_rerun.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in the independently derived solver path: focused tests pass, the reduced campaign passes its physics invariants, the isolated smoke exercises every task kind, and a paper-scale stationary block completes without forbidden access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The case test suite covers Hamiltonian construction, normalization, observables, checkpointing, aggregation, configuration validation, and scientific invariants.",
+                "evidence": [
+                  "tests/test_reproduce_spme.py",
+                  "tests/test_paper_scale_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated smoke run exercises main-trace, stationary-sweep, finite-time-sweep, and supplement-trace task paths without reading paper pixels, author arrays, or author code.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "A real L=738, q=8 production stationary block completes in the isolated runner with no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The task inventory, measured true-scale block time, host capacity, CPU implementation boundary, and conservative lower-bound projection are recorded explicitly.",
+                "evidence": [
+                  "outputs/checks/paper_scale/resource_benchmark.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests, an all-kind isolated smoke, and a true-scale block found no implementation failure; this does not claim unexecuted production outputs are scientifically accepted.",
+              "evidence": [
+                "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+                "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The paper and supplement expose enough equations and principal scales to write the campaign; remaining tube-distribution conventions are declared assumptions, not the immediate reason the full array is absent.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finality is blocked for the theoretical results represented by T002-T006; reduced-scale scientific-feature evidence remains available but is not promoted to paper-exact production output.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006"
+            ],
+            "completion": "5/5 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Run all 2784 production and convergence tasks on a sufficiently provisioned CPU shard pool, aggregate the frozen checkpoints, and execute the declared convergence and paper-feature checks.",
+            "expected_resolution": "A passing full campaign can promote supported targets; an execution or scientific failure reopens a code, method, or paper-claim diagnosis with the failing checkpoint preserved.",
+            "evidence_to_produce": [
+              "outputs/checks/paper_scale/final_assessment.json",
+              "outputs/runs/1709.03478-paper-scale-production-*/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -346,7 +673,10 @@
       "score_aggregation": "included",
       "component_total": 49.5,
       "score": 49.5,
-      "similarity_level": "feature_not_accepted"
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T005",
@@ -389,11 +719,11 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
+        "failure_type": "insufficient_compute",
         "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "reconstructed",
@@ -404,7 +734,114 @@
           "EQC005",
           "EQC006",
           "EQC007"
-        ]
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The independently written continuum campaign is complete and its reduced-scale run, all-task-kind isolated smoke, and one true L=738/q=8 stationary block execute successfully, but the full production-plus-convergence array has not been run.",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+              "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The declared acceptance campaign contains 2784 checkpointed CPU eigensolver tasks. A measured true-scale stationary block takes 27.004229 seconds, giving a 20.88 CPU-hour lower bound before aggregation; finite-time tasks may be slower, and the implementation has no validated CUDA backend for the available A100.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "config/paper_scale_rerun.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in the independently derived solver path: focused tests pass, the reduced campaign passes its physics invariants, the isolated smoke exercises every task kind, and a paper-scale stationary block completes without forbidden access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The case test suite covers Hamiltonian construction, normalization, observables, checkpointing, aggregation, configuration validation, and scientific invariants.",
+                "evidence": [
+                  "tests/test_reproduce_spme.py",
+                  "tests/test_paper_scale_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated smoke run exercises main-trace, stationary-sweep, finite-time-sweep, and supplement-trace task paths without reading paper pixels, author arrays, or author code.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "A real L=738, q=8 production stationary block completes in the isolated runner with no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The task inventory, measured true-scale block time, host capacity, CPU implementation boundary, and conservative lower-bound projection are recorded explicitly.",
+                "evidence": [
+                  "outputs/checks/paper_scale/resource_benchmark.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests, an all-kind isolated smoke, and a true-scale block found no implementation failure; this does not claim unexecuted production outputs are scientifically accepted.",
+              "evidence": [
+                "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+                "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The paper and supplement expose enough equations and principal scales to write the campaign; remaining tube-distribution conventions are declared assumptions, not the immediate reason the full array is absent.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finality is blocked for the theoretical results represented by T002-T006; reduced-scale scientific-feature evidence remains available but is not promoted to paper-exact production output.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006"
+            ],
+            "completion": "5/5 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Run all 2784 production and convergence tasks on a sufficiently provisioned CPU shard pool, aggregate the frozen checkpoints, and execute the declared convergence and paper-feature checks.",
+            "expected_resolution": "A passing full campaign can promote supported targets; an execution or scientific failure reopens a code, method, or paper-claim diagnosis with the failing checkpoint preserved.",
+            "evidence_to_produce": [
+              "outputs/checks/paper_scale/final_assessment.json",
+              "outputs/runs/1709.03478-paper-scale-production-*/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -472,7 +909,10 @@
       "score_aggregation": "included",
       "component_total": 67.0,
       "score": 67.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T006",
@@ -515,11 +955,11 @@
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "not_paper_parameters",
+        "failure_type": "insufficient_compute",
         "parameter_match": "reduced_scale",
         "artifact_stage": "exploratory",
-        "pixel_status": "not_applicable",
-        "pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_gate": "verified",
@@ -530,7 +970,114 @@
           "EQC004",
           "EQC005",
           "EQC006"
-        ]
+        ],
+        "pixel_migration": {
+          "legacy_pixel_status": "not_applicable",
+          "legacy_pixel_status_reason": "Independent replot is not registered to the paper panel geometry.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "The independently written continuum campaign is complete and its reduced-scale run, all-task-kind isolated smoke, and one true L=738/q=8 stationary block execute successfully, but the full production-plus-convergence array has not been run.",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+              "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "compute_capacity_shortfall",
+            "statement": "The declared acceptance campaign contains 2784 checkpointed CPU eigensolver tasks. A measured true-scale stationary block takes 27.004229 seconds, giving a 20.88 CPU-hour lower bound before aggregation; finite-time tasks may be slower, and the implementation has no validated CUDA backend for the available A100.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/paper_scale/resource_benchmark.json",
+              "config/paper_scale_rerun.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found in the independently derived solver path: focused tests pass, the reduced campaign passes its physics invariants, the isolated smoke exercises every task kind, and a paper-scale stationary block completes without forbidden access.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The case test suite covers Hamiltonian construction, normalization, observables, checkpointing, aggregation, configuration validation, and scientific invariants.",
+                "evidence": [
+                  "tests/test_reproduce_spme.py",
+                  "tests/test_paper_scale_campaign.py"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The isolated smoke run exercises main-trace, stationary-sweep, finite-time-sweep, and supplement-trace task paths without reading paper pixels, author arrays, or author code.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "A real L=738, q=8 production stationary block completes in the isolated runner with no forbidden access.",
+                "evidence": [
+                  "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "resource_benchmark",
+                "result": "passed",
+                "statement": "The task inventory, measured true-scale block time, host capacity, CPU implementation boundary, and conservative lower-bound projection are recorded explicitly.",
+                "evidence": [
+                  "outputs/checks/paper_scale/resource_benchmark.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests, an all-kind isolated smoke, and a true-scale block found no implementation failure; this does not claim unexecuted production outputs are scientifically accepted.",
+              "evidence": [
+                "outputs/runs/1709.03478-paper-scale-smoke-v1-20260825/run_attestation.json",
+                "outputs/runs/1709.03478-paper-scale-stationary-pilot-v3-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "ruled_out",
+              "statement": "The paper and supplement expose enough equations and principal scales to write the campaign; remaining tube-distribution conventions are declared assumptions, not the immediate reason the full array is absent.",
+              "evidence": [
+                "parameter_provenance.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Paper-scale finality is blocked for the theoretical results represented by T002-T006; reduced-scale scientific-feature evidence remains available but is not promoted to paper-exact production output.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006"
+            ],
+            "completion": "5/5 target-level causal attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Run all 2784 production and convergence tasks on a sufficiently provisioned CPU shard pool, aggregate the frozen checkpoints, and execute the declared convergence and paper-feature checks.",
+            "expected_resolution": "A passing full campaign can promote supported targets; an execution or scientific failure reopens a code, method, or paper-claim diagnosis with the failing checkpoint preserved.",
+            "evidence_to_produce": [
+              "outputs/checks/paper_scale/final_assessment.json",
+              "outputs/runs/1709.03478-paper-scale-production-*/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "physics_assertions": [
         {
@@ -579,7 +1126,10 @@
       "score_aggregation": "included",
       "component_total": 70.0,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
   "overall_score": 63.55,
@@ -592,8 +1142,7 @@
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "not_paper_parameters": 4,
-      "partial_target_coverage": 1
+      "insufficient_compute": 5
     },
     "parameter_match_counts": {
       "reduced_scale": 5
@@ -625,6 +1174,7 @@
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T002",
       "T003",
@@ -639,7 +1189,39 @@
       "T005",
       "T006"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 5
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 5
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 5
+    },
+    "root_cause_counts": {
+      "compute_capacity_shortfall": 5
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 5
+    }
   },
   "status": "passed"
 }

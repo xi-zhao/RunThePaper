@@ -87,3 +87,31 @@ Output:
 | Goal | Exact large-scale contraction | Feature-level reproduction and formula validation |
 
 The local case is intentionally smaller. It is meant to verify the derivation and numerical behavior before attempting a hardware-scale contraction.
+
+## Superseding author baseline: v6 exact-public-circuit and formal-PRL closure
+
+The author closure now freezes the official Dryad v11 seed-0 ABCDCDAB QSIM
+files for 20 and 14 cycles.  A strict independent parser implements public
+qsim gate conventions, verifies representative gate unitarity, builds both
+53-qubit tensor networks, and performs value-preserving ADCRS simplification.
+The fixed-output networks contain 381 and 246 tensors respectively, matching
+the printed structural counts without using author code or arrays.
+
+For each fixed-subspace batch the runner performs a bounded cotengra path
+search and symbolic slicing to the declared `2^30` element target.  It never
+starts a contraction whose measured path estimate exceeds the local budget.
+The same isolated run executes a three-size official-gate complex64/complex128
+sweep, a four-amplitude shared-head check, exact marginal/XEB and memory-unit
+rederivations, paper-value arithmetic, a local complex64 GEMM benchmark, and
+all 17 target evidence writers. T014-T017 reuse one generic reduced official-
+circuit path that streams every generated amplitude through a per-batch ledger
+and rolling hash, checks normalization, builds a fixed Porter-Thomas histogram
+and KS statistic, evaluates a seeded sample-correlation/XEB diagnostic, and
+emits 43/50-qubit resource contracts. Paper scale is guarded rather than
+pretended: 43 qubits imply 16,384 batches and a 64-TiB logical stream; 50
+qubits imply 4,194,304 batches and an 8-PiB logical stream.
+
+The runner reads public QSIM circuit
+definitions, never author code, author result arrays, or source pixels. The
+attestation is
+`outputs/runs/2103.03074-scientific-closure-v6-20260825/run_attestation.json`.

@@ -27,6 +27,6 @@
 
 ## Provenance Boundary
 
-The generation method has no path to `source publication material/*.pdf` or
-`private paper-reference panels/*.png`. `scripts/build_pixel_comparisons.py` is a
+The generation method has no path to `paper-source/*.pdf` or
+`internal-paper-reference/*.png`. `scripts/build_pixel_comparisons.py` is a
 separate terminal evaluator and records `source_pixels_used_in_generation=false`.

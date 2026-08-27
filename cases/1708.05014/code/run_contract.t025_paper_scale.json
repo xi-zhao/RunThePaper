@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "run_id": "1708.05014-t025-paper-scale-v2-20260825",
+  "target_ids": [
+    "T025"
+  ],
+  "command": [
+    "python",
+    "scripts/run_claim_repairs.py",
+    "--config",
+    "config/claim_repairs.json",
+    "--target",
+    "T025",
+    "--profile",
+    "paper_scale"
+  ],
+  "inputs": [
+    "scripts/run_claim_repairs.py",
+    "src/boundary_time_crystal/__init__.py",
+    "src/boundary_time_crystal/claim_repairs.py",
+    "src/boundary_time_crystal/model.py",
+    "config/claim_repairs.json"
+  ],
+  "parameter_file": "config/claim_repairs.json",
+  "parameter_selector": "targets.T025.paper_scale",
+  "expected_parameters": {
+    "N": [
+      40,
+      60,
+      80,
+      100,
+      120,
+      160
+    ],
+    "kappa": 1.0,
+    "omega0_over_kappa": 1.5,
+    "time": {
+      "minimum": 0.0,
+      "maximum": 60.0,
+      "points": 601
+    },
+    "fit_minimum_time": 10.0,
+    "maximum_function_evaluations": 8000,
+    "minimum_r_squared": 0.97
+  },
+  "outputs": [
+    "outputs/data/claim_repairs/t025_eta_paper_scale_summary.csv",
+    "outputs/data/claim_repairs/t025_eta_paper_scale_traces.csv",
+    "outputs/checks/claim_repairs/t025_eta_paper_scale_validation.json"
+  ],
+  "timeout_seconds": 3600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

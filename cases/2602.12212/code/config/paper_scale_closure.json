@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "parameters": {
+    "profile": "paper-scale-closure",
+    "scientific_input_boundary": {
+      "source_pixels_used": false,
+      "author_numeric_arrays_used": false,
+      "author_code_used": false,
+      "reference_figures_accessed_by_runner": false
+    },
+    "steps": [
+      {
+        "module": "run_spin1_foliation",
+        "target_ids": [
+          "T001"
+        ],
+        "args": [
+          "--no-reference-comparison"
+        ]
+      },
+      {
+        "module": "run_manybody_campaign",
+        "target_ids": [
+          "T002",
+          "T004",
+          "T005",
+          "T006",
+          "T008A",
+          "T008B",
+          "T009"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--lengths",
+          "6",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "--groups",
+          "main",
+          "supplemental",
+          "--boundary",
+          "periodic",
+          "--force"
+        ]
+      },
+      {
+        "module": "run_manybody_campaign",
+        "target_ids": [
+          "T007"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--lengths",
+          "6",
+          "8",
+          "10",
+          "12",
+          "--groups",
+          "integrable",
+          "--boundary",
+          "periodic",
+          "--force"
+        ]
+      },
+      {
+        "module": "run_dynamics",
+        "target_ids": [
+          "T003"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--length",
+          "12",
+          "--beta",
+          "0.5",
+          "--time-max",
+          "3.0",
+          "--time-points",
+          "61",
+          "--boundary",
+          "periodic",
+          "--max-band-representatives",
+          "48",
+          "--no-reference-comparison"
+        ]
+      },
+      {
+        "module": "render_campaign_figures",
+        "target_ids": [
+          "T002",
+          "T004",
+          "T005",
+          "T006",
+          "T007",
+          "T008A",
+          "T008B",
+          "T009"
+        ],
+        "args": [
+          "--no-reference-comparison"
+        ]
+      }
+    ]
+  }
+}

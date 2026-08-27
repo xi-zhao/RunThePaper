@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.01815",
+  "implementations": {
+    "main_paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T_FIG1A",
+        "T_FIG1B",
+        "T_FIG2A",
+        "T_FIG4A",
+        "T_FIG4B",
+        "T_FIG4C",
+        "T_FIG4D"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--resume",
+        "--aggregate"
+      ],
+      "code_refs": [
+        "src/scar_tdvp/constrained.py",
+        "src/scar_tdvp/tdvp.py",
+        "src/scar_tdvp/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale/main/data/T_FIG1A_tdvp.npz",
+        "outputs/paper_scale/main/data/T_FIG1B_quench.npz",
+        "outputs/paper_scale/main/data/T_FIG2A_level_statistics.npz",
+        "outputs/paper_scale/main/data/T_FIG4AC_tdvp.npz",
+        "outputs/paper_scale/main/data/T_FIG4B_quench.npz",
+        "outputs/paper_scale/main/data/T_FIG4D_quench.npz",
+        "outputs/paper_scale/main/checks/backend_parity.json",
+        "outputs/paper_scale/main/checks/paper_scale_acceptance.json",
+        "outputs/paper_scale/main/checks/generated_data_manifest.json",
+        "outputs/paper_scale/main/checks/campaign_state.json"
+      ],
+      "acceptance_criteria": [
+        "All 30 digest-bound work units complete, including streaming exact quench lanes, TDVP ring refinements, and one independent Fig. 2(a) symmetry block per declared candidate size.",
+        "Checkpoint/resume retains only the current Krylov state and scalar observables; aggregation refuses missing or stale lanes.",
+        "Small-system streaming/batched parity is <=2e-12; candidate-size quench norm and energy drift are each <=1e-8.",
+        "TDVP periods, leakages, ring convergence, thermal relaxation, Z2 revival envelopes, Hamiltonian Hermiticity, and r-statistics gates in config/paper_scale.json all pass.",
+        "The missing Fig. 2(a) plotted L sequence remains parameter_ambiguity even after candidate-size execution; the campaign cannot promote it to paper_exact.",
+        "The manifest records no author code, author arrays, digitized curves, source pixels, or PDF pixels as numerical inputs.",
+        "Stable differences follow protocol-v2 attribution; paper_error_candidate requires paper-exact inputs, convergence, two independent cross-checks, source pinpoint, and fresh review."
+      ],
+      "compute_status": "code_ready_256GiB_30_unit_campaign_not_run"
+    },
+    "fig2_tdmrg_paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T_FIG2B",
+        "T_FIG2C"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_fig2_tdmrg.py",
+        "--config",
+        "config/fig2_tdmrg_paper_scale.json",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/scar_tdvp/fig2_tdmrg.py",
+        "scripts/run_fig2_tdmrg.py",
+        "requirements-paper-scale.txt"
+      ],
+      "config_ref": "config/fig2_tdmrg_paper_scale.json",
+      "run_contract_ref": "run_contract.fig2_tdmrg_paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale/fig2_tdmrg/data/T_FIG2BC_tdmrg.npz",
+        "outputs/paper_scale/fig2_tdmrg/checks/fig2_tdmrg_checks.json",
+        "outputs/paper_scale/fig2_tdmrg/checks/generated_data_manifest.json",
+        "outputs/paper_scale/fig2_tdmrg/checks/campaign_state.json"
+      ],
+      "acceptance_criteria": [
+        "The blocked Hamiltonian is exactly equivalent to the periodic L=30 PXP Hamiltonian on the constrained Hilbert space.",
+        "Six deterministic initial-state/refinement lanes complete with digest-bound checkpoints and the final unsharded --resume merge writes the aggregate arrays.",
+        "The run covers six-site entropy through t*Omega=100 and one-site entropy through t*Omega=120 for both the all-zero and Z2 initial states.",
+        "Norm, energy, constrained-subspace, entropy-bound, time-step-refinement, bond-refinement and generic-versus-scarred feature criteria in the paper-scale config all pass.",
+        "Stable differences are first classified as reproduction_defect, parameter_ambiguity, insufficient_compute or inconclusive; paper_error_candidate requires all five protocol-v2 gates.",
+        "The manifest records no author code, author arrays, digitized curves, source pixels or PDF pixels as numerical inputs."
+      ],
+      "acceptance_ref": "config/fig2_tdmrg_paper_scale.json",
+      "compute_status": "insufficient_compute_paper_scale_not_run"
+    }
+  },
+  "items": [
+    {
+      "item_id": "Fig. 1(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG1A"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "The flow field, TDVP residual color map, and isolated periodic orbit are generated independently from the printed equations of motion; the code-ready paper-scale campaign refines the orbit and finite-ring leakage checks.",
+      "claim_refs": [
+        "CLM_TDVP"
+      ]
+    },
+    {
+      "item_id": "Fig. 1(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG1B"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "Independent constrained-space time evolution covers the local-observable relaxation and revival curves. The paper does not report the quench L values, so parameter ambiguity remains.",
+      "claim_refs": [
+        "CLM_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "Fig. 2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG2A"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "The named symmetry sector has executable per-size diagonalization shards and aggregation. The paper caption omits the indispensable plotted system-size sequence, so the declared candidate sweep remains parameter_ambiguity and no plot-coordinate inference is used to claim paper_exact.",
+      "claim_refs": [
+        "CLM_CHAOS"
+      ]
+    },
+    {
+      "item_id": "Fig. 2(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG2B"
+      ],
+      "implementation_ref": "fig2_tdmrg_paper_scale",
+      "reason": "The printed periodic L=30 six-site entropy through t*Omega=100 has an executable blocked-MPS/tDMRG campaign with time-step and bond refinements.",
+      "claim_refs": [
+        "CLM_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "Fig. 2(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG2C"
+      ],
+      "implementation_ref": "fig2_tdmrg_paper_scale",
+      "reason": "The printed periodic L=30 one-site entropy through t*Omega=120 shares the same checkpointed paper-scale campaign.",
+      "claim_refs": [
+        "CLM_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "Fig. 3(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "Geometrical TDVP projection diagram; it explains the method but is not a numerical result."
+    },
+    {
+      "item_id": "Fig. 3(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "reason": "MPS construction diagram; it explains the ansatz but is not a numerical result."
+    },
+    {
+      "item_id": "Fig. 4(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG4A"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "The spin-1 flow field, TDVP residual color map, and periodic orbit are generated independently from the printed equations; the paper-scale channel adds orbit and finite-ring convergence checks.",
+      "claim_refs": [
+        "CLM_TDVP"
+      ]
+    },
+    {
+      "item_id": "Fig. 4(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG4B"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "Independent constrained-space time evolution covers the spin-1 local-observable relaxation and revival curves. The paper does not report the quench L values.",
+      "claim_refs": [
+        "CLM_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "Fig. 4(c)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG4C"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "The spin-2 flow field, TDVP residual color map, and periodic orbit are generated independently from the printed equations; the paper-scale channel adds orbit and finite-ring convergence checks.",
+      "claim_refs": [
+        "CLM_TDVP"
+      ]
+    },
+    {
+      "item_id": "Fig. 4(d)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIG4D"
+      ],
+      "implementation_ref": "main_paper_scale",
+      "reason": "Independent constrained-space time evolution covers the spin-2 local-observable relaxation and revival curves. The paper does not report the quench L values.",
+      "claim_refs": [
+        "CLM_DYNAMICS"
+      ]
+    },
+    {
+      "item_id": "Fig. S1 (h/Omega=-0.2)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS1_HM020"
+      ],
+      "reason": "The h/Omega=-0.2 deformed vector field is regenerated directly from the supplemental equations of motion.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    },
+    {
+      "item_id": "Fig. S1 (h/Omega=0)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS1_H000"
+      ],
+      "reason": "The h/Omega=0 deformed vector field is regenerated directly from the supplemental equations of motion.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    },
+    {
+      "item_id": "Fig. S1 (h/Omega=0.2)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS1_H020"
+      ],
+      "reason": "The h/Omega=0.2 deformed vector field is regenerated directly from the supplemental equations of motion.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    },
+    {
+      "item_id": "Fig. S1 (h/Omega=0.4)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS1_H040"
+      ],
+      "reason": "The h/Omega=0.4 deformed vector field is regenerated directly from the supplemental equations of motion.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    },
+    {
+      "item_id": "Fig. S2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS2A"
+      ],
+      "reason": "The integrated TDVP-orbit error is generated from an independently evaluated finite-ring MPS residual with an explicit convergence check.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    },
+    {
+      "item_id": "Fig. S2(b)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T_FIGS2B"
+      ],
+      "reason": "The integrated fluctuation around the TDVP orbit is generated from an independently evaluated finite-ring MPS residual with an explicit convergence check.",
+      "claim_refs": [
+        "CLM_DEFORMED"
+      ]
+    }
+  ]
+}

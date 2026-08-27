@@ -4,10 +4,11 @@
 
 - Paper: *Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain*
 - Paper ID: `2510.12880`
-- Final status: `complete_reproduction`, score `95/100`
-- Main reproduced targets: both panels of Main Fig. 5
-- Main residual: one bounded ground-state source-point discrepancy and missing
-  author solver metadata
+- Current status: partial whole-paper reproduction; historical Fig. 5 score `95/100`
+- Item measure: 4/9 covered, coverage `44.44%`, fidelity `92.03`, degree `40.90`
+- Main reproduced targets: V001, V002, and both panels of Main Fig. 5
+- Main residuals: V003-V007 are unimplemented scientific items; one bounded
+  ground-state source-point discrepancy and missing author solver metadata remain
 
 ## What Worked
 
@@ -18,9 +19,8 @@
   copying long printed tensor lists.
 - Exact-point zero energy, full-space small-\(N\) spectra, and sector-support
   tests caught tensor-index mistakes before curve generation.
-- A legacy marker-extraction lane was used only after the independent arrays
-  were frozen. It is excluded from this public package and never feeds the
-  Hamiltonian, physical parameters, or generated points.
+- Digitized markers were kept as reference data, while every generated point
+  came from independent diagonalization.
 
 ## What Was Difficult
 
@@ -40,6 +40,7 @@
 | Exact symmetry reduction is not reduced-scale evidence | a small block can still be the complete paper model | record the proof of invariance and full-space partition so scoring does not penalize exact block diagonalization |
 | Source typos should be resolved by invariants | copying a malformed equation can silently destroy a conserved quantity | preserve the printed form, corrected form, and invariant that selects the correction |
 | One isolated marker should not drive model changes | local fitting can corrupt a globally validated derivation | require residual, trend, negative-control, and remaining-point checks before classifying an isolated source discrepancy |
+| A schematic can carry an adjacent quantitative result | excluding the picture does not exclude a theorem or degeneracy stated beside it | enumerate the display and the independent claim separately, then mark the claim covered or uncovered |
 
 ## Common Pitfalls And Pain Points
 
@@ -57,7 +58,7 @@
 | full-space parity test | after implementing a symmetry block | \(N=4\) sector spectra match the full Hamiltonian |
 | exact-point invariant test | when a model has a frustration-free point | every constructed MPS has zero energy at \(\theta=\pi/4\) |
 | observable anchor check | when captions use informal language | squared amplitudes reproduce the visible \(N=12,\theta=0\) points |
-| reference/generated provenance split | whenever paper imagery is inspected | freeze independent arrays first; keep image-derived coordinates out of the public and numerical lanes |
+| reference/generated provenance split | whenever curves are digitized | source CSVs are labeled separately and never feed the Hamiltonian |
 
 ## New Failure Modes
 
@@ -81,7 +82,7 @@
 | --- | --- | --- |
 | Cartesian conserved-sector enumerator | \(N=12\) blocks shrink to 322 and 288 states | keep case-local |
 | basis-independent eigenspace fidelity | removes arbitrary degenerate eigenvector choices | promote as a documented pattern |
-| legacy marker-extraction helper | historical post-freeze diagnostic only | retire from the public workflow; use raster-level comparison after the independent data freeze |
+| colored-marker source digitizer | all 50 markers extracted with pixel uncertainty | keep case-local until another paper needs the same marker geometry |
 
 ## Harness Backlog Items
 

@@ -1,52 +1,21 @@
-# 12 比特超导处理器强关联量子行走：复现讲义
+# Strongly correlated quantum walks with a 12-qubit superconducting processor：科学复现讲义
 
-## 论文与问题
+## 结论
 
-Zhiguang Yan 等，*Strongly correlated quantum walks with a 12-qubit
-superconducting processor*，Science **364**, 753–756 (2019)，DOI
-`10.1126/science.aaw1611`。
+Case scaffolded from framework/templates/paper_case.
 
-论文用一条 12 个超导 transmon 比特组成的链，实现一个和两个微波光子的连续时间量子行走。
-真正有意思的不是“波包会扩散”，而是三个互相咬合的问题：单光子信息如何形成光锥式传播；
-强吸引相互作用下两个光子为什么呈现类似费米子的反聚束；以及双占据为何仍然被压低。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-## 核心模型
+## 我们复现的是什么
 
-公开代码只保留粒子数固定的 Bose–Hubbard 子空间。单光子空间只有 12 维；双光子玻色空间
-只有 78 维，硬核极限为 66 维。因此无需构造巨大的局域张量积，也不需要 A100 才能复现。
-同一个 Hamiltonian 构造器通过显式参数产生三种模型：论文标定的强相互作用、`U=0` 自由
-玻色子对照、以及禁止双占据的硬核极限。所有密度、熵、关联和并发度都由同一条状态演化
-产生，守恒律自然成为跨图的不变量。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-## 复现结果
-
-- Q6、Q1、Q11 三个单光子初态完整覆盖 0–250 ns，范数和总密度误差在机器精度内。
-- 独立计算的传播速度标度为 156.33 sites/us，与论文报告的 153.99 sites/us 相差 1.52%。
-- 双光子强相互作用关联矩阵到硬核极限的平均距离为 0.0196，而到自由玻色子为 1.177，
-  定量支持“强吸引相互作用下的费米化”这一主张。
-- 双占据峰值低于 3%，并通过独立的数值检查。
-
-公开包还给出论文版式的理论图和脱敏后的像素审计：单粒子密度 94.67%，单粒子熵
-92.54%，双粒子密度 96.34%，S20 关联矩阵 77.88%。最后一项明显较弱，尤其是自由玻色子
-晚时刻部分；我们保留这个差异，没有逐面板调参把它隐藏掉。
+当前权威维度：`artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=pending, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
 ## 运行
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/10.1126-science.aaw1611/code
-python scripts/run_reproduction.py
-```
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-脚本会在相邻的 `outputs` 目录生成 CSV 数组、四张概览图和 T001–T004 的 JSON 检查。
-详细推导、数值方法和像素审计分别见 `../docs/DERIVATION.md`、
-`../docs/NUMERICAL_METHODS.md` 与 `../docs/PIXEL_AUDIT.md`。
+## 论文审查边界
 
-## 证据边界
-
-正式审计分数为 **80/100**，等级是数值特征级复现。原因不是算力不足，而是作者没有公开
-理论作图数组、实验 shots 或 tomography 数组。原论文栅格图仅用于内部验证，不在公开包中
-再分发。因此 94% 一类数字表示理论面板内部的像素模式相似度，不等于作者数据逐点一致，
-也不能覆盖未复现的实验噪声与标定过程。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Published article and 35-page supplementary material ingested from institutional mirrors and recorded by SHA-256. The full paper and supplement contain 38 independently computable theoretical numerical items; all 38 have atomic targets and generated data. Experimental hardware measurements and raw tomography are excluded from the numerical-runner denominator. The current isolated CPU run attests all 38 targets; the historical A100 result is backend-portability evidence only. Twelve S20 panels retain an unresolved printed-time/source discrepancy, and S11 lacks author realization-level parameters.

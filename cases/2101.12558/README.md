@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. B 103, 165108 (2021) · DOI `10.1103/PhysRevB.103.16
 
 Public status: **Partial scientific reproduction** · Audit score: **16.00/100**
 
-All 18 numerical axes are inventoried and code-ready; every material-specific paper-scale observable remains compute/input deferred.
+The complete PDF contains 99 displayed numerical items and one independent surface-energy claim; all 100 are explicitly uncovered because no material-specific paper-scale arrays were generated.
 
 ## Start Here / 从这里开始
 
@@ -37,14 +37,18 @@ cd cases/2101.12558/code
 python scripts/run_reproduction.py --config config/feature.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
 Remaining limitation: Paper-scale execution is deferred because indispensable inputs and a full DFT+DMFT campaign are absent.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 
 ## Generated Figures
+
+![invariants](outputs/figures/method_validation/invariants.png)
+
+![layer spectra](outputs/figures/method_validation/layer_spectra.png)

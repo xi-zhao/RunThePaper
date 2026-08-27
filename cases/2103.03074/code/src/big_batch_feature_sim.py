@@ -352,7 +352,7 @@ def run_reproduction(workspace: Path) -> dict:
 
 
 def main() -> None:
-    workspace = Path(__file__).resolve().parents[2]
+    workspace = Path(__file__).resolve().parents[1]
     summary = run_reproduction(workspace)
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 

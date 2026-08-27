@@ -1,0 +1,728 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1038-s41467-025-67768-4",
+  "implementations": {
+    "missing_benchmark_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T008",
+        "T009"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_missing_benchmark_campaign.py",
+        "--config",
+        "config/missing_benchmark_contracts.json",
+        "--output-root",
+        "outputs/checks/missing_benchmark_campaign"
+      ],
+      "code_refs": [
+        "src/qem_models.py",
+        "src/missing_benchmark_models.py",
+        "src/missing_benchmark_campaign.py",
+        "scripts/run_missing_benchmark_target.py",
+        "scripts/run_missing_benchmark_campaign.py"
+      ],
+      "config_ref": "config/missing_benchmark_contracts.json",
+      "run_contract_ref": "run_contract_missing_benchmarks.json",
+      "expected_outputs": [
+        "outputs/checks/missing_benchmark_campaign/T008.json",
+        "outputs/checks/missing_benchmark_campaign/T009.json",
+        "outputs/checks/missing_benchmark_campaign/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Each deferred numerical panel maps exactly once to a strict circuit, fault, decoder, observable, and sampling schema.",
+        "Complete external contracts run through case-local binary circuit Monte Carlo and distance-aware ZNE handlers.",
+        "Missing publication inputs emit blocked_on_paper_input artifacts; no schedule, decoder, shot count, seed, author array, or pixel is guessed.",
+        "Implementation attestation cannot increase scientific coverage, paper-exact status, pixel acceptance, or independent-review status."
+      ]
+    }
+  },
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/main.pdf and raw/supplementary-information.pdf",
+    "unknown_remainder": false,
+    "reason": "The seven-page version of record and the complete fourteen-page Supplementary Information were audited through Supplementary Figure 10."
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1, PDF p. 2",
+      "scientific_object": "Concept sketch of physical- and logical-qubit ZNE",
+      "decision": "excluded",
+      "reason": "Conceptual schematic without a numerical parameter set."
+    },
+    {
+      "item_id": "main_fig2a_feedback_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Feedback error-correction circuit",
+      "decision": "excluded",
+      "reason": "Circuit schematic."
+    },
+    {
+      "item_id": "main_fig2b_no_correction_measurement_surface",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(b), left surface, PDF p. 3",
+      "scientific_object": "Measured Z0 expectation surface without correction",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T001"
+      ],
+      "reason": "Requires new Processor-I acquisitions; retained only as experimental context."
+    },
+    {
+      "item_id": "main_fig2b_with_correction_measurement_surface",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(b), right surface, PDF p. 3",
+      "scientific_object": "Measured Z0 expectation surface with correction",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T001"
+      ],
+      "reason": "Requires new Processor-I acquisitions; retained only as experimental context."
+    },
+    {
+      "item_id": "main_fig2c_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), dashed curves, PDF p. 3",
+      "scientific_object": "Four feedback/post-selection simulation curves for two states with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent exact Pauli-pattern enumeration produces the simulation family.",
+      "claim_refs": [
+        "CLM_FEEDBACK"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(c), markers, PDF p. 3",
+      "scientific_object": "Measured feedback/post-selection expectations and ZNE extrapolates",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T001"
+      ],
+      "reason": "Experimental markers are comparison context and are never reconstructed from pixels."
+    },
+    {
+      "item_id": "main_fig3a_repetition_layout",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Repetition-code device layout",
+      "decision": "excluded",
+      "reason": "Qubit-layout schematic."
+    },
+    {
+      "item_id": "main_fig3b_repetition_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 3(b), PDF p. 4",
+      "scientific_object": "Multi-round repetition-code circuit",
+      "decision": "excluded",
+      "reason": "Circuit schematic."
+    },
+    {
+      "item_id": "main_fig3c_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(c), dashed curves, PDF p. 4",
+      "scientific_object": "One-round repetition-code logical-Z simulations for d=3,5,7 and no correction",
+      "decision": "target",
+      "target_ids": [
+        "T002-MAIN"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent repetition-code model generates the four simulation curves.",
+      "claim_refs": [
+        "CLM_REPETITION"
+      ]
+    },
+    {
+      "item_id": "main_fig3c_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(c), markers, PDF p. 4",
+      "scientific_object": "Measured one-round repetition-code logical-Z expectations",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T002-MAIN"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "main_fig3d_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(d), PDF p. 4",
+      "scientific_object": "Experimental one-round bias versus sampling-overhead scatter",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "main_fig3e_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(e), dashed curves, PDF p. 4",
+      "scientific_object": "Distance-seven logical-Z simulations for M=1,2,3,4 parity-check rounds",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent multi-round repetition-code calculation generates the four curves.",
+      "claim_refs": [
+        "CLM_REPETITION"
+      ]
+    },
+    {
+      "item_id": "main_fig3e_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(e), markers, PDF p. 4",
+      "scientific_object": "Measured multi-round distance-seven expectations",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T003"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "main_fig3f_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(f), PDF p. 4",
+      "scientific_object": "Experimental multi-round bias versus sampling-overhead scatter",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "main_fig4a_surface_layout_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 4(a), PDF p. 5",
+      "scientific_object": "Surface-code layout and repeated parity-check circuit",
+      "decision": "excluded",
+      "reason": "Layout and circuit schematic."
+    },
+    {
+      "item_id": "main_fig4b_simulation_bloch_contours",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(b), dashed contours, PDF p. 5",
+      "scientific_object": "Depolarizing-model Bloch-circle contraction with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T004-MAIN"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent logical-Pauli enumeration generates the simulation contours.",
+      "claim_refs": [
+        "CLM_SURFACE"
+      ]
+    },
+    {
+      "item_id": "main_fig4b_experimental_bloch_points",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4(b), state markers, PDF p. 5",
+      "scientific_object": "Measured logical-state Bloch coordinates",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004-MAIN"
+      ],
+      "reason": "Measured state points require the processor and remain reference context."
+    },
+    {
+      "item_id": "main_fig4c_simulation_expectation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(c), dashed curves, PDF p. 5",
+      "scientific_object": "Surface-code logical-Z simulation curves with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T004-MAIN"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independent logical channel generates both simulation curves.",
+      "claim_refs": [
+        "CLM_SURFACE"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4(c), markers, PDF p. 5",
+      "scientific_object": "Measured surface-code logical-Z expectations",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004-MAIN"
+      ],
+      "reason": "Experimental markers are comparison context only."
+    },
+    {
+      "item_id": "main_fig4d_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4(d), PDF p. 5",
+      "scientific_object": "Experimental surface-code bias versus sampling overhead",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "main_fig5_processor_i_error_cdf",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5, Processor I panel, PDF p. 6",
+      "scientific_object": "Processor-I operation-error cumulative distributions",
+      "decision": "excluded",
+      "reason": "Requires physical-device characterization."
+    },
+    {
+      "item_id": "main_fig5_processor_ii_error_cdf",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 5, Processor II panel, PDF p. 6",
+      "scientific_object": "Processor-II operation-error cumulative distributions",
+      "decision": "excluded",
+      "reason": "Requires physical-device characterization."
+    },
+    {
+      "item_id": "supp_fig1_feedback_postselection_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplementary Fig. 1, supplement p. 2",
+      "scientific_object": "Feedback and post-selection example circuit",
+      "decision": "excluded",
+      "reason": "Circuit schematic."
+    },
+    {
+      "item_id": "supp_fig2_qldpc_logical_error_distribution",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 2, supplement p. 5",
+      "scientific_object": "[[72,12,6]] qLDPC Monte Carlo distribution of simultaneously affected logical qubits",
+      "decision": "deferred_blocked",
+      "blocker": "missing_benchmark_metadata",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "missing_benchmark_campaign",
+      "paper_level_role": "supporting",
+      "reason": "The paper omits the full circuit/noise process, decoder configuration, and Monte Carlo trial contract.",
+      "claim_refs": [
+        "CLM_Q_LDPC"
+      ]
+    },
+    {
+      "item_id": "supp_table1_processor_statistics",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Table 1, supplement p. 6",
+      "scientific_object": "Measured processor frequencies, coherence, readout, and gate statistics",
+      "decision": "excluded",
+      "reason": "Device measurements may be frozen inputs but are not independently generated theory results."
+    },
+    {
+      "item_id": "supp_table2_circuit_instance_counts",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Table 2, supplement p. 6",
+      "scientific_object": "Chosen experimental circuit-instance counts",
+      "decision": "excluded",
+      "reason": "Acquisition configuration rather than a computed scientific result."
+    },
+    {
+      "item_id": "supp_fig3_experimental_standard_errors",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 3, supplement p. 7",
+      "scientific_object": "Standard errors of measured logical-Z expectations",
+      "decision": "excluded",
+      "reason": "Requires hardware shot data."
+    },
+    {
+      "item_id": "supp_fig4_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 4, dashed curves, supplement p. 8",
+      "scientific_object": "Uncorrected one-round repetition-code simulations for d=3,5,7",
+      "decision": "target",
+      "target_ids": [
+        "T002-SUPP"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated by the existing independent one-round model.",
+      "claim_refs": [
+        "CLM_REPETITION"
+      ]
+    },
+    {
+      "item_id": "supp_fig4_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 4, markers, supplement p. 8",
+      "scientific_object": "Measured uncorrected one-round repetition-code expectations",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T002-SUPP"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "supp_table3_fixed_error_schedule",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Table 3, supplement p. 8",
+      "scientific_object": "Unit-error schedule intended to keep total injected error fixed",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Paper values and the cumulative-error invariant are independently evaluated.",
+      "claim_refs": [
+        "CLM_FIXED_ERROR"
+      ]
+    },
+    {
+      "item_id": "supp_fig5_experimental_zne_metrics",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 5, supplement p. 8",
+      "scientific_object": "Experimental relative bias and sampling overhead across distances and rounds",
+      "decision": "excluded",
+      "reason": "Computed from hardware samples rather than a paper theory series."
+    },
+    {
+      "item_id": "supp_fig6_state_preparation_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplementary Fig. 6, supplement p. 9",
+      "scientific_object": "Logical-state preparation circuit",
+      "decision": "excluded",
+      "reason": "Circuit schematic."
+    },
+    {
+      "item_id": "supp_fig7a_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 7(a), dashed curves, supplement p. 9",
+      "scientific_object": "Logical-Z simulations for initial |0_L> with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T004-SUPP"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated by the independent surface-code logical channel.",
+      "claim_refs": [
+        "CLM_SURFACE"
+      ]
+    },
+    {
+      "item_id": "supp_fig7a_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(a), markers, supplement p. 9",
+      "scientific_object": "Measured logical-Z values for initial |0_L>",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004-SUPP"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "supp_fig7b_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(b), supplement p. 9",
+      "scientific_object": "Experimental |0_L> bias versus sampling overhead",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "supp_fig7c_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 7(c), dashed curves, supplement p. 9",
+      "scientific_object": "Logical-X simulations for initial |+_L> with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T004-SUPP"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated by the independent surface-code logical channel.",
+      "claim_refs": [
+        "CLM_SURFACE"
+      ]
+    },
+    {
+      "item_id": "supp_fig7c_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(c), markers, supplement p. 9",
+      "scientific_object": "Measured logical-X values for initial |+_L>",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004-SUPP"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "supp_fig7d_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(d), supplement p. 9",
+      "scientific_object": "Experimental |+_L> bias versus sampling overhead",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "supp_fig7e_simulation_curves",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 7(e), dashed curves, supplement p. 9",
+      "scientific_object": "Logical-X simulations for the superposition state with and without correction",
+      "decision": "target",
+      "target_ids": [
+        "T004-SUPP"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated by the independent surface-code logical channel.",
+      "claim_refs": [
+        "CLM_SURFACE"
+      ]
+    },
+    {
+      "item_id": "supp_fig7e_experimental_markers",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(e), markers, supplement p. 9",
+      "scientific_object": "Measured logical-X values for the superposition state",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T004-SUPP"
+      ],
+      "reason": "Hardware samples are reference context only."
+    },
+    {
+      "item_id": "supp_fig7f_experimental_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Supplementary Fig. 7(f), supplement p. 9",
+      "scientific_object": "Experimental superposition-state bias versus sampling overhead",
+      "decision": "excluded",
+      "reason": "Derived exclusively from hardware samples."
+    },
+    {
+      "item_id": "supp_fig8_complete_partial_zne",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 8, supplement p. 10",
+      "scientific_object": "Complete versus injection-only ZNE bias and sampling overhead across code distances",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Independent ZNE and repetition-code calculations generate the full numerical panel.",
+      "claim_refs": [
+        "CLM_DISTANCE_AWARE_ZNE"
+      ]
+    },
+    {
+      "item_id": "supp_fig9a_logical_memory_bias",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 9(a), supplement p. 12",
+      "scientific_object": "Large-scale logical-memory relative bias versus extrapolation order",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated from the published analytic logical-error fit and ZNE equations.",
+      "claim_refs": [
+        "CLM_MEMORY"
+      ]
+    },
+    {
+      "item_id": "supp_fig9b_logical_memory_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 9(b), supplement p. 12",
+      "scientific_object": "Large-scale logical-memory sampling overhead versus extrapolation order",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Generated from the published analytic logical-error fit and ZNE equations.",
+      "claim_refs": [
+        "CLM_MEMORY"
+      ]
+    },
+    {
+      "item_id": "supp_fig10a_lattice_surgery_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Supplementary Fig. 10(a), supplement p. 13",
+      "scientific_object": "Measurement-based lattice-surgery CNOT circuit",
+      "decision": "excluded",
+      "reason": "Circuit schematic."
+    },
+    {
+      "item_id": "supp_fig10b_logical_cnot_expectation",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 10(b), supplement p. 13",
+      "scientific_object": "Circuit-level logical-CNOT expectation versus scaled noise",
+      "decision": "deferred_blocked",
+      "blocker": "missing_benchmark_metadata",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "missing_benchmark_campaign",
+      "paper_level_role": "supporting",
+      "reason": "The exact lattice-surgery schedule, syndrome rounds, decoder, and sampling contract are not reported.",
+      "claim_refs": [
+        "CLM_LATTICE_SURGERY"
+      ]
+    },
+    {
+      "item_id": "supp_fig10c_lattice_surgery_bias_overhead",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplementary Fig. 10(c), supplement p. 13",
+      "scientific_object": "First- and second-order lattice-surgery ZNE bias versus sampling overhead",
+      "decision": "deferred_blocked",
+      "blocker": "missing_benchmark_metadata",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "missing_benchmark_campaign",
+      "paper_level_role": "supporting",
+      "reason": "The exact lattice-surgery schedule, syndrome rounds, decoder, and sampling contract are not reported.",
+      "claim_refs": [
+        "CLM_LATTICE_SURGERY"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_distance_aware_polynomial",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Results and Supplementary Eqs. (11)-(18)",
+      "scientific_object": "A distance-d code removes polynomial terms below m=ceil(d/2)",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T002-MAIN",
+        "T002-SUPP",
+        "T003",
+        "T005",
+        "T006"
+      ],
+      "reason": "Retained as supporting evidence for displayed repetition-code and logical-memory items without double counting.",
+      "claim_refs": [
+        "CLM_DISTANCE_AWARE_ZNE"
+      ]
+    },
+    {
+      "item_id": "claim_feedback_source_alignment",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 2 discussion and Supplementary Note 3",
+      "scientific_object": "Feedback correction suppresses the amplified-noise expectation bias",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Directly represented by Main Fig. 2(c) and its source-alignment test.",
+      "claim_refs": [
+        "CLM_FEEDBACK"
+      ]
+    },
+    {
+      "item_id": "claim_large_scale_zne_bias_bound",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Supplementary Eqs. (31)-(35)",
+      "scientific_object": "Logical error reduction can make the ZNE residual-bias bound scale favorably at large code distance",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Represented by the two Supplementary Fig. 9 panels and retained only as supporting analytic evidence.",
+      "claim_refs": [
+        "CLM_DISTANCE_AWARE_ZNE"
+      ]
+    }
+  ]
+}

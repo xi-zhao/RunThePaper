@@ -6,15 +6,21 @@
 | --- | ---: | --- |
 | exact_match | 1 | General and closed-form coefficient arrays agree within floating-point roundoff. |
 | feature_match | 1 | The plotted topology-dependent zero-decay behavior matches. |
-| partial_match | 0 | No partial scientific target remains. |
-| blocked | 0 | No data or compute blocker. |
-| not_in_scope | 12 | Main and supplement schematic figure groups. |
+| partial_match | 0 | No partially accepted target is counted as covered. |
+| reproduced analytic claim | 3 | T002-T004 have independent derivations, exact witnesses and isolated checks. |
+| not_in_scope | 27 | Atomic formula/schematic display items retained but excluded. |
 
 ## Per-Target Consistency
 
 | Target | Paper item | Level | Evidence | Difference | Likely reason |
 | --- | --- | --- | --- | --- | --- |
 | T001 | Main Fig. 2, all curves | exact formula + feature match | `target_checks.json`, frozen CSV, comparison board | Only rasterization/font antialiasing can differ | Matplotlib-version and font-renderer presentation differences. |
+| T002 | Arbitrary multi-point topology theorem | analytic identity match | factorization artifact + isolated attestation | No scientific discrepancy found | Direct sums and emission-phasor factorization agree. |
+| T003 | Protected-chain tunability theorem | exact rank/feature match | identity-minor proof + constructive checks | No scientific discrepancy found | Exact all-N witness closes the former finite-size gap. |
+| T004 | Protected all-to-all control theorem | exact rank/feature match | triangular-minor proof + N=3 checks | No scientific discrepancy found | Exact all-N witness and printed constructions agree. |
+
+The atomic scientific result is 4/4 reproduced: coverage 100.00%, fidelity and
+reproduction degree 87.66. Fresh review remains a separate lifecycle gate.
 
 ## Protocol-v2 Paper Audit
 

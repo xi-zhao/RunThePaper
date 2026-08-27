@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "run_id": "2608.03987-implementation-closure-v1",
+  "target_ids": [
+    "T010",
+    "T011",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/benchmark_release.py",
+    "src/independent_tn.py",
+    "src/implementation_closure.py",
+    "scripts/run_independent_reimplementation.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json",
+    "inputs/clean_circuit_inputs.zip"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "reduced_greedy_attestation",
+    "input": {
+      "archive": "inputs/clean_circuit_inputs.zip",
+      "sha256": "003bfada0ebb2cafe69928ac05a988168b79c9ec142f066496277b881637b61d",
+      "schema": "qsim text plus structured circuit JSON and observable expressions"
+    },
+    "table1": {
+      "core_circuits": [
+        "test",
+        "rectangular_4x4_1-16-1_0",
+        "rochester_53_8_0_pABC",
+        "rectangular_6x6_1-32-1_0",
+        "bristlecone_48_1-16-1_0",
+        "rectangular_6x6_1-24-1_0",
+        "rectangular_6x6_1-16-1_0",
+        "bristlecone_70_1-16-1_0",
+        "sycamore_53_10_0"
+      ],
+      "extension_circuits": [
+        "rochester_53_12_0_pABC",
+        "bristlecone_70_1-24-1_0",
+        "rectangular_8x8_1-24-1_0"
+      ]
+    },
+    "optimizer": {
+      "method": "independent_python_greedy_no_anneal",
+      "seed": 260803987,
+      "paper_target_boundary": "paper TreeSA policy and convergence ensemble not executed"
+    },
+    "acceptance": {
+      "tolerance": 1e-12
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json",
+    "outputs/checks/implementation_closure/table1_random_complexity_audit.csv",
+    "outputs/checks/implementation_closure/table5_independent_complexity_audit.csv"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "allowed_frozen_clean_circuit_archive": "inputs/clean_circuit_inputs.zip",
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "author_trees_or_plans_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "historical_outputs_read_by_runner": false
+  }
+}

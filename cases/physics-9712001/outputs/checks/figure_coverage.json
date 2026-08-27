@@ -1,0 +1,597 @@
+{
+  "schema_version": 2,
+  "paper_id": "physics-9712001",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf; raw/paper.txt; paper-source.tar.gz; paper-source/ptsym.tex",
+    "unknown_remainder": false,
+    "reason": "The complete five-page paper, every caption and table, and the full TeX/EPS source bundle were enumerated; no separate supplement is present."
+  },
+  "implementations": {
+    "all_numeric_targets": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027",
+        "T028",
+        "T029"
+      ],
+      "code_refs": [
+        "src/pt_spectrum/model.py",
+        "scripts/run_reproduction.py",
+        "scripts/render_generated.py",
+        "run_contract.json"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig1_massless_spectrum.csv",
+        "outputs/data/table_i_exact_wkb.csv",
+        "outputs/data/table_ii_near_one.csv",
+        "outputs/data/fig3_massive_spectrum.csv",
+        "outputs/data/quantitative_claim_checks.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "All numerical figures and tables are generated from the printed Hamiltonian, complex boundary conditions and analytic formulas without EPS point extraction.",
+        "Table I and the first four Table II exact rows agree with the printed values at their declared precision, while every later discrepancy is preserved for independent falsification rather than tuned away.",
+        "All 28 numeric inventory entries have explicit target mappings and claim-linked machine checks; 20 primary reproduction items enter the denominator and eight supporting claims are retained without double counting."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1_massless_spectrum",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Fig. 1 and caption, PDF p. 2; paper-source/ptsym.tex:155-170",
+      "scientific_object": "Complete massless real-energy spectrum family versus N, including level mergers and the N=1 and N=2 transition structure.",
+      "data_refs": [
+        "outputs/data/fig1_massless_spectrum.csv"
+      ],
+      "reason": "The paper presents one unlabeled spectral family rather than separately declared mode-index series; the independently generated CSV covers the complete displayed object.",
+      "claim_refs": [
+        "CLM_REAL_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "fig2_stokes_wedge_schematic",
+      "item_type": "schematic",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "denominator_role": "primary",
+      "source_ref": "Fig. 2 and caption, PDF p. 2; paper-source/ptsym.tex:187-198",
+      "scientific_object": "Qualitative Stokes-wedge and contour diagram for N=4.2.",
+      "reason": "This is a schematic rather than a plotted numerical dataset; quantitative wedge angles remain an independent analytic claim."
+    },
+    {
+      "item_id": "table1_wkb_eigenvalues",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002",
+        "T003"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Table I, PDF p. 3; paper-source/ptsym.tex:267-280",
+      "scientific_object": "Exact and WKB eigenvalue comparison at N=3 and N=4.",
+      "data_refs": [
+        "outputs/data/table_i_exact_wkb.csv"
+      ],
+      "reason": "All nine exact/WKB row pairs are independently generated and checked at the printed precision.",
+      "claim_refs": [
+        "CLM_WKB"
+      ]
+    },
+    {
+      "item_id": "table2_ground_state_asymptotic",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Table II, PDF p. 4; paper-source/ptsym.tex:397-412",
+      "scientific_object": "Exact and asymptotic near-N=1 ground-state energies for seven epsilon values.",
+      "data_refs": [
+        "outputs/data/table_ii_near_one.csv"
+      ],
+      "reason": "The complete table is independently generated; the final three printed exact values remain an independently reviewed paper-error candidate rather than being tuned away.",
+      "claim_refs": [
+        "CLM_NEAR_ONE"
+      ]
+    },
+    {
+      "item_id": "fig3_m2_3_16_spectrum_family",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Fig. 3 blue-diamond family, PDF p. 4; paper-source/ptsym.tex:420-435",
+      "scientific_object": "Massive real-energy spectrum family versus N at m^2=3/16.",
+      "data_refs": [
+        "outputs/data/fig3_massive_spectrum.csv#mass_squared=0.1875"
+      ],
+      "reason": "The legend declares this mass value as an independently judgeable scientific series and the frozen CSV contains its complete generated family.",
+      "claim_refs": [
+        "CLM_MASSIVE"
+      ]
+    },
+    {
+      "item_id": "fig3_m2_5_16_spectrum_family",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Fig. 3 red-circle family, PDF p. 4; paper-source/ptsym.tex:420-435",
+      "scientific_object": "Massive real-energy spectrum family versus N at m^2=5/16.",
+      "data_refs": [
+        "outputs/data/fig3_massive_spectrum.csv#mass_squared=0.3125"
+      ],
+      "reason": "The legend declares this mass value as an independently judgeable scientific series and the frozen CSV contains its complete generated family.",
+      "claim_refs": [
+        "CLM_MASSIVE"
+      ]
+    },
+    {
+      "item_id": "fig3_m2_7_16_spectrum_family",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Fig. 3 black-square family, PDF p. 4; paper-source/ptsym.tex:420-435",
+      "scientific_object": "Massive real-energy spectrum family versus N at m^2=7/16.",
+      "data_refs": [
+        "outputs/data/fig3_massive_spectrum.csv#mass_squared=0.4375"
+      ],
+      "reason": "The legend declares this mass value as an independently judgeable scientific series and the frozen CSV contains its complete generated family.",
+      "claim_refs": [
+        "CLM_MASSIVE"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "I001_bessis_cubic_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, opening paragraph",
+      "reason": "Independent complex-contour diagonalization tests the Bessis cubic spectrum.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I002_cubic_linear_pt_contrast",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, second paragraph",
+      "reason": "The PT-symmetric and non-PT linear perturbations are solved independently and compared by reality and positivity.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I003_harmonic_oscillator_exact_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, harmonic-oscillator paragraph",
+      "reason": "The exact E_n=2n+1 sequence is retained as analytic support for the N=2 anchor already represented by Fig. 1, not counted twice.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I004_imaginary_linear_shift_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, harmonic-oscillator paragraph",
+      "reason": "The p^2+x^2+ix spectrum is derived by completing the square.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I005_real_linear_shift_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, harmonic-oscillator paragraph",
+      "reason": "The p^2+x^2-x spectrum is derived by completing the square.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I006_combined_linear_shift_complex_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 1, harmonic-oscillator paragraph",
+      "reason": "The p^2+x^2+ix-x complex spectrum is derived by a complex displacement.",
+      "claim_refs": [
+        "CLM_OPENING_EXAMPLES"
+      ]
+    },
+    {
+      "item_id": "I008_massless_unbroken_region",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T017"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 2 and Fig. 1 caption",
+      "reason": "The N>=2 real-positive anchors and large-N trend support the already counted Fig. 1 spectral object.",
+      "claim_refs": [
+        "CLM_REAL_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "I009_massless_broken_region_and_threshold",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T018"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 2 and Fig. 1 caption",
+      "reason": "The independently bracketed exceptional point supports the broken-phase structure already represented by Fig. 1.",
+      "claim_refs": [
+        "CLM_REAL_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "I010A_massless_N1_spectrum_boundary",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T019"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 2 and Fig. 1 caption, N=1 spectrum boundary",
+      "reason": "The disappearance of the real massless spectrum at N=1 is retained as supporting evidence for the plotted branch family.",
+      "claim_refs": [
+        "CLM_REAL_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "I010B_massless_N1_airy_obstruction",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T019"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 2 and Eqs. (6)-(10), N=1 Airy matching",
+      "reason": "The nonzero real-energy Airy matching derivative is checked independently as the obstruction at N=1.",
+      "claim_refs": [
+        "CLM_AIRY_OBSTRUCTION"
+      ]
+    },
+    {
+      "item_id": "I010C_near_N1_ground_state_divergence",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T019"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "p. 2 and Eq. (11), N approaches 1 from above",
+      "reason": "The independently solved ground state is checked against the printed divergent near-N=1 asymptote.",
+      "claim_refs": [
+        "CLM_NEAR_ONE"
+      ]
+    },
+    {
+      "item_id": "I012_antistokes_wedge_geometry",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eq. (3)",
+      "reason": "Both wedge centers, opening and limiting angles are evaluated analytically.",
+      "claim_refs": [
+        "CLM_CONTOUR_INVARIANCE"
+      ]
+    },
+    {
+      "item_id": "I013_complex_contour_deformation_invariance",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T021"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "text following Eq. (3)",
+      "reason": "Independent spectra on three admissible contour deformations are compared at N=3 and N=4.",
+      "claim_refs": [
+        "CLM_CONTOUR_INVARIANCE"
+      ]
+    },
+    {
+      "item_id": "I014_turning_point_formula_and_location",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T022"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eq. (4)",
+      "reason": "Both printed turning points are substituted into E+(ix)^N=0 and their half-planes are checked.",
+      "claim_refs": [
+        "CLM_COMPLEX_WKB_DOMAIN"
+      ]
+    },
+    {
+      "item_id": "I015_two_solver_numerical_crosscheck",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T023"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "numerical-method paragraph before semiclassical analysis",
+      "reason": "The two-solver comparison validates the independently generated figure/table data and is retained as evidence rather than a second scientific result.",
+      "claim_refs": [
+        "CLM_TWO_SOLVER"
+      ]
+    },
+    {
+      "item_id": "I016_leading_wkb_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eq. (5)",
+      "reason": "The complete complex-WKB formula is the analytic support for the already counted Table I comparison.",
+      "claim_refs": [
+        "CLM_COMPLEX_WKB_DOMAIN"
+      ]
+    },
+    {
+      "item_id": "I017_wkb_domain_failure_below_N2",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T024"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "text around Eqs. (4)-(5)",
+      "reason": "The WKB segment's actual intersection with the imaginary axis determines whether it crosses the positive-imaginary branch cut above and below N=2.",
+      "claim_refs": [
+        "CLM_COMPLEX_WKB_DOMAIN"
+      ]
+    },
+    {
+      "item_id": "I019_absolute_power_potential_limit",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "paragraph following Table I",
+      "reason": "The |x|^N WKB formula and square-well limit are checked with an independent Hermitian solver.",
+      "claim_refs": [
+        "CLM_HERMITIAN_COMPARISON"
+      ]
+    },
+    {
+      "item_id": "I020_exact_N1_airy_no_real_eigenvalue",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T025"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eqs. (6)-(7)",
+      "reason": "The Airy matching derivative is evaluated over several real energies.",
+      "claim_refs": [
+        "CLM_AIRY_OBSTRUCTION"
+      ]
+    },
+    {
+      "item_id": "I021_near_N1_ground_state_asymptotics",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eqs. (8)-(11)",
+      "reason": "The log-domain roots and two-thirds scaling support the asymptotic column already represented by Table II.",
+      "claim_refs": [
+        "CLM_NEAR_ONE_SCALING"
+      ]
+    },
+    {
+      "item_id": "I023_near_N2_level_merging_perturbation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T026"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Behavior near N=2 paragraph",
+      "reason": "A harmonic-basis two-level reduction verifies the negative non-Hermitian discriminant and high-level-first mergers.",
+      "claim_refs": [
+        "CLM_NEAR_N2_MERGER"
+      ]
+    },
+    {
+      "item_id": "I024_classical_period_transition",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T027"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Eq. (12)",
+      "reason": "The finite N>=2 period and N=2 harmonic anchor are evaluated analytically.",
+      "claim_refs": [
+        "CLM_CLASSICAL_TRANSITION"
+      ]
+    },
+    {
+      "item_id": "I025A_classical_spiral_transition",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T028"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "text following Eq. (12), classical spiral clause",
+      "reason": "A continuously unwrapped subcritical classical orbit is integrated and its turning-point passage events are recorded.",
+      "claim_refs": [
+        "CLM_CLASSICAL_TRANSITION"
+      ]
+    },
+    {
+      "item_id": "I025B_quantum_merger_ordering",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T028"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "text following Eq. (12), quantum-merger clause",
+      "reason": "Every computed quantum merger is ordered by level and mapped to the associated classical passage count.",
+      "claim_refs": [
+        "CLM_NEAR_N2_MERGER"
+      ]
+    },
+    {
+      "item_id": "I027_massive_phase_structure",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "denominator_role": "supporting",
+      "target_ids": [
+        "T029"
+      ],
+      "implementation_ref": "all_numeric_targets",
+      "source_ref": "Massive case paragraph",
+      "reason": "The exact N=0,1,2 anchors and phase counts support the three already counted Fig. 3 mass-family series.",
+      "claim_refs": [
+        "CLM_MASSIVE"
+      ]
+    }
+  ]
+}

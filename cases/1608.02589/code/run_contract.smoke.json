@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_id": "1608.02589-all-family-canary-v3",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale_all.py",
+    "--config",
+    "config/paper_scale_all.json",
+    "run-all",
+    "--profile",
+    "smoke",
+    "--workers",
+    "4",
+    "--skip-render",
+    "--resume"
+  ],
+  "inputs": [
+    "src/dtc_feature_sim.py",
+    "src/dtc_paper_scale.py",
+    "scripts/run_paper_scale_all.py",
+    "config/paper_scale_all.json"
+  ],
+  "parameter_file": "config/paper_scale_all.json",
+  "parameter_selector": "smoke",
+  "expected_parameters": {
+    "system_size": 4,
+    "samples": 1,
+    "steps": 20,
+    "grid_points_per_axis": 2,
+    "eigenpairs": 4
+  },
+  "outputs": [
+    "outputs/checks/paper_scale_smoke/attested_evidence.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

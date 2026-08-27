@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "run_id": "2404.08378-implementation-closure-v1",
+  "target_ids": [
+    "T019",
+    "T020",
+    "T021"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/lnoi_interference/modes.py",
+    "src/lnoi_interference/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "reduced_formula_attestation",
+    "T019": {
+      "printed_period_um": 2.478,
+      "scalar_mode": {
+        "pump_wavelength_um": 0.781,
+        "signal_wavelength_um": 1.562,
+        "x_extent_um": 2.8,
+        "y_min_um": -1.0,
+        "y_max_um": 1.4,
+        "nx": 61,
+        "ny": 45,
+        "film_height_um": 0.3,
+        "top_width_um": 1.2,
+        "sidewall_angle_deg": 70.0
+      },
+      "missing_indispensable_inputs": [
+        "paper vector-FEM mesh and boundary conditions",
+        "paper material-dispersion table and exact etched cross section"
+      ]
+    },
+    "T020": {
+      "split_state_chip_maximum": 1.0,
+      "bunched_state_chip_maximum": 0.5,
+      "detector_splitter_reflectivity": 0.5
+    },
+    "T021": {
+      "geometry": {
+        "electrode_gap_um": 75.0,
+        "waveguide_width_um": 1.2,
+        "inter_waveguide_gap_um": 5.0,
+        "requested_waveguides": 10
+      },
+      "missing_indispensable_inputs": [
+        "minimum electrode-edge clearance convention",
+        "quantitative crosstalk threshold and coupling model"
+      ]
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "historical_outputs_read_by_runner": false
+  }
+}

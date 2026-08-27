@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "paper_id": "1904.10246",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Amplified Bernoulli probability",
+      "role": "Maps an amplitude a and amplification count m_k to the good-state probability sampled by every numerical target.",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (2)-(3), label Qj2"
+        }
+      ],
+      "latex": "\\theta_a=\\arcsin\\sqrt a,\\qquad p_k(a)=\\sin^2\\!\\left[(2m_k+1)\\theta_a\\right].",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ001_M0",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "m_k=0 gives p_k=a exactly."
+        },
+        {
+          "id": "EQ001_NORM",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "p_k+(1-p_k)=sin^2+cos^2=1."
+        }
+      ],
+      "numerical_form": "theta = asin(sqrt(a)); p = sin((2*m + 1)*theta)**2",
+      "code_refs": [
+        "scripts/reproduce.py::amplified_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Joint binomial log-likelihood",
+      "role": "Defines the independent maximum-likelihood estimator used for Fig. 2 and Fig. A.",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (4)-(6), labels LHpart, LH, ML estimate"
+        }
+      ],
+      "latex": "\\ell(\\theta_a;\\mathbf h)=\\sum_{k=0}^{M}\\left[h_k\\ln p_k+(N_k-h_k)\\ln(1-p_k)\\right],\\qquad \\hat a=\\sin^2\\!\\left(\\arg\\max_{0\\leq\\theta\\leq\\pi/2}\\ell(\\theta;\\mathbf h)\\right).",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ002_BINOMIAL",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Taking the logarithm of the product of independent Bernoulli likelihoods yields the stated sum."
+        },
+        {
+          "id": "EQ002_CLASSICAL",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For m_k=0, optimization agrees with total successes divided by total shots."
+        }
+      ],
+      "numerical_form": "log_likelihood = h @ log(p_grid) + (N-h) @ log1p(-p_grid); a_hat = sin(theta_at_global_max)**2",
+      "code_refs": [
+        "scripts/reproduce.py::maximum_likelihood_estimates"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Fisher information and Cramer-Rao error",
+      "role": "Provides the analytic lower-bound curves and scaling checks in Fig. 2.",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eqs. (7)-(10), especially Eq. (10), label Fisher_final"
+        }
+      ],
+      "latex": "\\mathcal I(a)=\\frac{1}{a(1-a)}\\sum_{k=0}^{M}N_k(2m_k+1)^2,\\qquad \\epsilon_{\\rm CR}=\\mathcal I(a)^{-1/2}.",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ003_DERIVATIVE",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Bernoulli information (dp/da)^2/[p(1-p)] simplifies to (2m+1)^2/[a(1-a)]."
+        },
+        {
+          "id": "EQ003_FINITE_DIFF",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Finite-difference expected score curvature is checked by the target runner."
+        }
+      ],
+      "numerical_form": "fisher = sum(N_k*(2*m_k+1)**2)/(a*(1-a)); cr = 1/sqrt(fisher)",
+      "code_refs": [
+        "scripts/reproduce.py::fisher_information"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Total query count",
+      "role": "Defines the horizontal coordinate shared by both numerical figures.",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Eq. (11), label calling"
+        }
+      ],
+      "latex": "N_{\\rm q}=\\sum_{k=0}^{M}N_k(2m_k+1).",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ004_COUNT",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "One initial A plus m copies each of A and A^{-1} gives 2m+1 queries per shot."
+        }
+      ],
+      "numerical_form": "n_queries = sum(N_k*(2*m_k+1))",
+      "code_refs": [
+        "scripts/reproduce.py::query_count"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Exact LIS and EIS sequence sums",
+      "role": "Converts the paper's schedules to exact query counts and Fisher bounds.",
+      "source_refs": [
+        {
+          "type": "section",
+          "value": "Sec. 3.2, LIS/EIS bullet list and following paragraph"
+        }
+      ],
+      "latex": "\\begin{aligned}N_{q}^{\\rm LIS}&=N_{\\rm shot}(M+1)^2, &\\sum N_k(2m_k+1)^2&=\\frac{N_{\\rm shot}(M+1)(2M+1)(2M+3)}{3},\\\\N_q^{\\rm EIS}&=N_{\\rm shot}(2^{M+1}+M-1), &\\sum N_k(2m_k+1)^2&=N_{\\rm shot}\\left[\\frac{4^{M+1}-4}{3}+2^{M+2}+M-3\\right].\\end{aligned}",
+      "derived_from": [
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ005_SUMS",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Arithmetic and geometric sums are derived independently and checked term-by-term for M=0..12."
+        },
+        {
+          "id": "EQ005_M0",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both schedules reduce to one m=0 circuit and N_q=N_shot at M=0."
+        }
+      ],
+      "numerical_form": "lis: m=arange(M+1); eis: m=[0]+[2**(k-1) for k in 1..M]; sums are checked against direct enumeration",
+      "code_refs": [
+        "scripts/reproduce.py::schedule",
+        "scripts/reproduce.py::verify_schedule_sums"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Complexity exponents",
+      "role": "Generates every entry of Table 1 from the Fisher/query scalings and search cost.",
+      "source_refs": [
+        {
+          "type": "table",
+          "value": "Table 1 and preceding Sec. 3.3 complexity paragraph"
+        }
+      ],
+      "latex": "\\begin{array}{c|cc}\\text{rule}&\\text{queries}&\\text{post-processing}\\\\\\text{classical}&\\mathcal O(\\epsilon^{-2})&\\mathcal O(\\epsilon^{-2})\\\\\\text{LIS}&\\mathcal O(\\epsilon^{-4/3})&\\mathcal O(\\epsilon^{-5/3})\\\\\\text{EIS}&\\mathcal O(\\epsilon^{-1})&\\mathcal O(\\epsilon^{-1}\\ln\\epsilon^{-1})\\end{array}",
+      "derived_from": [
+        "EQ003",
+        "EQ004",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ006_EXPONENTS",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Eliminating M between I(M), N_q(M), and the brute-force grid size reproduces all six entries."
+        }
+      ],
+      "numerical_form": "complexity rows are produced from rational exponents, not copied output strings",
+      "code_refs": [
+        "scripts/reproduce.py::derive_complexity_table"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Conventional amplitude-estimation error envelope",
+      "role": "Provides the deterministic conventional comparator in Fig. A.",
+      "source_refs": [
+        {
+          "type": "section",
+          "value": "Appendix A, paragraph defining the four nearest integers"
+        }
+      ],
+      "latex": "Q_m=2^m-1,\\quad y\\in\\{\\lfloor Q_m\\theta_a/\\pi\\rfloor,\\lceil Q_m\\theta_a/\\pi\\rceil,Q_m-\\lfloor Q_m\\theta_a/\\pi\\rfloor,Q_m-\\lceil Q_m\\theta_a/\\pi\\rceil\\},\\quad e_m=\\max_y\\left|\\sin^2(\\pi y/Q_m)-a\\right|.",
+      "derived_from": [
+        "EQ001",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ007_SYMMETRY",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "sin^2(pi-y)=sin^2(y), so the two phase branches give the same amplitude candidates."
+        },
+        {
+          "id": "EQ007_CONVERGENCE",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Nearest-grid phase error is O(1/Q_m), hence amplitude error vanishes with queries."
+        }
+      ],
+      "numerical_form": "evaluate floor/ceil candidates on both symmetric phase branches and retain the largest absolute amplitude error",
+      "code_refs": [
+        "scripts/reproduce.py::conventional_ae_envelope"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ008",
+      "title": "Closed-form circuit resource counts",
+      "role": "Generates Table 2 from circuit-block counts for the paper's n=2, all-to-all, Qiskit 0.7 convention.",
+      "source_refs": [
+        {
+          "type": "figure_table",
+          "value": "Sec. 4.2, Figs. 6-7 and Table 2"
+        }
+      ],
+      "latex": "\\begin{aligned}C_{\\rm ours}(q)&=4+14q, & n_{\\rm ours}&=3,\\\\C_{\\rm conv}(2^j)&=4+131(2^{j+1}-1)+j(j+1)=262\\,2^j+j(j+1)-127, & n_{\\rm conv}&=j+7.\\end{aligned}",
+      "derived_from": [
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008_SOURCE",
+          "type": "source_trace",
+          "status": "passed"
+        },
+        {
+          "id": "EQ008_BLOCKS",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Four preparation CNOTs, 14 per bare Q, 131 per controlled Q, 2^m-1 controlled-Q applications, and j(j+1) inverse-QFT CNOTs yield the formulas."
+        },
+        {
+          "id": "EQ008_RECURRENCE",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The direct block sum and closed forms are checked independently for j=0..8."
+        }
+      ],
+      "numerical_form": "ours=4+14*q; conventional=4+131*(2*q-1)+j*(j+1); qubits=(3, j+7)",
+      "code_refs": [
+        "scripts/reproduce.py::derive_resource_table"
+      ],
+      "open_questions": []
+    }
+  ]
+}

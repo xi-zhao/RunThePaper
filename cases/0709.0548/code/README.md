@@ -12,4 +12,4 @@ python scripts/run_reproduction.py --config config/paper_scale.json
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, causal_resolution=repair_required, science=pending, pixel=needs_repair, paper_assessment=mixed.
+Boundary: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=pending, execution=failed, pixel=needs_repair, independent_review=stale, review_scope=stale, paper_assessment=mixed.

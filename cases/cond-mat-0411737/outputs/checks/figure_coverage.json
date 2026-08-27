@@ -1,0 +1,2796 @@
+{
+  "schema_version": 2,
+  "paper_id": "cond-mat-0411737",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "outputs/review/phase1_inventory_v18.json",
+    "unknown_remainder": false,
+    "reason": "Fresh-context v18 inventory enumerates every atomic display series and independent quantitative/analytic claim in the full paper."
+  },
+  "inventory_summary": {
+    "total_items": 120,
+    "eligible_numeric_items": 114,
+    "covered_items": 104,
+    "uncovered_items": 10,
+    "excluded_non_numeric_items": 6,
+    "atomic_coverage_fraction": 0.9123,
+    "review_ref": "outputs/review/reviewer_submission_v18.json"
+  },
+  "implementations": {
+    "whole_paper_clean_room": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013"
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py",
+        "src/kane_mele/boundary.py",
+        "src/kane_mele/edge_theory.py",
+        "src/kane_mele/microscopic.py",
+        "src/kane_mele/renormalization.py",
+        "src/kane_mele/response.py",
+        "src/kane_mele/symmetry.py",
+        "src/kane_mele/topology.py",
+        "scripts/run_reproduction.py",
+        "scripts/render_figures.py",
+        "config/render_contract.json",
+        "run_contract.json"
+      ],
+      "config_ref": "config/paper_reconstructed.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_reconstructed.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/main_fig1_bands.csv",
+        "outputs/data/width_convergence.csv",
+        "outputs/data/armchair_crossing_convergence.csv",
+        "outputs/data/flat_band_diagnostics.csv",
+        "outputs/data/rashba_boundary_sweep.csv",
+        "outputs/data/rashba_edge_spectral_flow.csv",
+        "outputs/data/rashba_kubo_sweep.csv",
+        "outputs/data/interaction_conductivity.csv",
+        "outputs/data/scalar_disorder_ensemble.csv",
+        "outputs/data/finite_cylinder_flux.csv",
+        "outputs/data/dirac_mass_symmetry_inventory.csv",
+        "outputs/data/parallel_field_bulk_path.csv",
+        "outputs/data/rg_exchange_sweep.csv",
+        "outputs/data/screened_coulomb.csv",
+        "outputs/data/analytic_checks.json",
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every declared atomic numerical claim is linked to an executable target and a named scientific check.",
+        "The Fig. 1 bands come only from independent diagonalization of the printed Hamiltonian; no author code, arrays, digitized coordinates, or source pixels enter the numerical runner.",
+        "The spin Chern numbers are computed from occupied Bloch eigenvectors on a periodic Fukui grid rather than returned as constants.",
+        "The Fig. 2 coefficients are computed from explicit spin-resolved Landauer-Buettiker transmission graphs rather than returned as constants.",
+        "The configured nearest-neighbour Rashba coupling changes the full spinful ribbon spectrum while Hermiticity, time reversal, and the edge Kramers degeneracy remain within tolerance.",
+        "Every declared subcritical zigzag and armchair Rashba branch is resolved by adaptive full-k edge-overlap tracking at three increasing widths.",
+        "A claimed translation-preserving bulk path is accepted only after continuous direct-gap minimization; a falsified minimal candidate is reported as publication-underspecified rather than passed on a coarse grid.",
+        "The isolated runner records zero forbidden access to raw and reference artifacts."
+      ],
+      "render_contract_ref": "config/render_contract.json",
+      "render_entrypoint": [
+        "python",
+        "scripts/render_figures.py",
+        "--contract",
+        "config/render_contract.json",
+        "--data-root",
+        "outputs",
+        "--output-root",
+        "outputs"
+      ],
+      "render_outputs": [
+        "outputs/figures/main_fig1_reproduction.png",
+        "outputs/checks/render_manifest.json"
+      ]
+    },
+    "implementation_closure": {
+      "status": "ready",
+      "target_ids": [
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023"
+      ],
+      "code_refs": [
+        "src/kane_mele/model.py",
+        "src/kane_mele/symmetry.py",
+        "src/implementation_closure.py",
+        "scripts/run_implementation_closure.py",
+        "config/implementation_closure.json",
+        "run_contract.implementation_closure.json"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs/data/implementation_closure"
+      ],
+      "expected_outputs": [
+        "outputs/data/implementation_closure/T014.json",
+        "outputs/data/implementation_closure/T015.json",
+        "outputs/data/implementation_closure/T016.json",
+        "outputs/data/implementation_closure/T017.json",
+        "outputs/data/implementation_closure/T018.json",
+        "outputs/data/implementation_closure/T019.json",
+        "outputs/data/implementation_closure/T020.json",
+        "outputs/data/implementation_closure/T021.json",
+        "outputs/data/implementation_closure/T022.json",
+        "outputs/data/implementation_closure/T023.json",
+        "outputs/data/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "All ten atomic gaps map once to executable formula output or a strict indispensable-input contract.",
+        "Reduced execution proves code readiness only and never promotes publication-underspecified results to scientific coverage.",
+        "The numerical campaign reads no paper PDF, author code, author arrays, reference pixels, or legacy outputs."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "R042",
+      "item_type": "figure",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Fig. 1 caption and axes",
+      "scientific_basis": "Diagonalize Eq. (6) for a zigzag strip at t_2/t=0.03 and plot E/t over the displayed one-dimensional momentum interval.",
+      "claim_type": "numerical_figure",
+      "paper_assertion": "Figure 1 shows the zigzag-strip one-dimensional band spectrum for t_2/t=0.03, with E/t plotted against k_x from 0 to 2π/a.",
+      "scientific_object": "Full strip eigenvalue array E_n(k_x)/t at t_2/t=0.03 over 0≤k_x≤2π/a.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "The paper fixes t_2/t and axes but omits ribbon width and sampling, so robust Figure 1 features are reproduced while the full plotted eigenvalue array is not uniquely paper-exact.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R042",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T018.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R042"
+      ]
+    },
+    {
+      "item_id": "R043",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper pp. 2-3, discussion and caption of Fig. 1",
+      "scientific_basis": "Locate the projected K momentum in the strip spectrum and measure the bulk conduction-valence separation there.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "Figure 1 contains a bulk band gap at the one-dimensional projection of K.",
+      "scientific_object": "Momentum-resolved projected bulk gap around K.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R043",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R043B",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper pp. 2-3, discussion and caption of Fig. 1",
+      "scientific_basis": "Locate the projected K′ momentum in the strip spectrum and measure the bulk conduction-valence separation there.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "Figure 1 contains a bulk band gap at the one-dimensional projection of K′.",
+      "scientific_object": "Momentum-resolved projected bulk gap around K′.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R043B",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R044",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper pp. 2-3, discussion and caption of Fig. 1",
+      "scientific_basis": "Count eigenvalue branches that traverse the bulk gap.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "Exactly two bands traverse the bulk gap in Figure 1.",
+      "scientific_object": "Number of gap-traversing eigenvalue branches.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R044",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R044B",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper pp. 2-3, discussion and caption of Fig. 1",
+      "scientific_basis": "Follow each in-gap eigenvalue branch across the one-dimensional Brillouin zone.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "The gap-traversing bands connect the projected K and K′ points in Figure 1.",
+      "scientific_object": "Valley-to-valley connectivity of the in-gap eigenvalue branches.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R044B",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R045",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph describing Fig. 1",
+      "scientific_basis": "Compute the transverse probability density or inverse participation of each in-gap eigenvector.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "The gap-traversing bands in Figure 1 are localized at the strip edges.",
+      "scientific_object": "Edge weight of each in-gap eigenstate versus k_x.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R045",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R046",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph describing Fig. 1",
+      "scientific_basis": "Resolve each in-gap branch by left-edge and right-edge localization and compare its eigenvalue degeneracy.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "Each in-gap edge band has a degenerate copy on the opposite edge.",
+      "scientific_object": "Left/right-edge eigenvalue pairs and their splitting versus strip width.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R046",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R047",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph describing Fig. 1",
+      "scientific_basis": "Compute group velocities of the two edge modes on a single boundary.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "Each edge supports propagation in both directions, so its edge spectrum is nonchiral.",
+      "scientific_object": "Signs of ∂E/∂k_x for edge-localized modes on one boundary.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T008",
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R047",
+      "claim_refs": [
+        "CLM_R047"
+      ]
+    },
+    {
+      "item_id": "R048",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph describing Figs. 1-2 and Fig. 1 caption",
+      "scientific_basis": "Evaluate s_z and group velocity for every in-gap edge eigenstate.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "The in-gap edge states are spin filtered: opposite spins propagate in opposite directions.",
+      "scientific_object": "Joint spin expectation and velocity sign for each edge branch.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T008",
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R048",
+      "claim_refs": [
+        "CLM_R048"
+      ]
+    },
+    {
+      "item_id": "R053",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 3, inset of Fig. 1 as identified by its caption",
+      "scientific_basis": "Inventory-only record of the strip-geometry schematic; no numerical verdict is assigned to its drawing.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "The Figure 1 inset schematically depicts the graphene strip used for the band calculation.",
+      "scientific_object": "A labeled zigzag-strip geometry schematic corresponding to the stated calculation.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R053"
+    },
+    {
+      "item_id": "R075",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 3, Fig. 2(a) schematic",
+      "scientific_basis": "Inventory-only record of the depicted two-terminal device; its populations and current formula are inventoried separately.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "Figure 2(a) schematically depicts a two-terminal QSH edge-transport geometry.",
+      "scientific_object": "Labeled two-terminal device geometry.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R075"
+    },
+    {
+      "item_id": "R075B",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 3, right-hand population diagram associated with Fig. 2(a)",
+      "scientific_basis": "Inventory-only record of the depicted channel-population pattern; its current formula is inventoried separately.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "The diagram associated with Figure 2(a) schematically depicts the populated spin-filtered edge channels under two-terminal bias.",
+      "scientific_object": "Labeled two-terminal edge-channel population schematic.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R075B"
+    },
+    {
+      "item_id": "R076",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Fig. 2(a) caption and Landauer-Büttiker paragraph",
+      "scientific_basis": "Apply the Landauer formula to the two transmitting edge channels at low temperature.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "In the two-terminal geometry, I=(2e^2/h)V, equivalently G=2e^2/h.",
+      "scientific_object": "Two-terminal current-voltage slope from the edge-channel transmission matrix.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R076",
+      "claim_refs": [
+        "CLM_T008_TWO_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R079",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 3, Fig. 2(b) schematic",
+      "scientific_basis": "Inventory-only record of the depicted four-terminal device; its populations, conductance, and current formulas are inventoried separately.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "Figure 2(b) schematically depicts a four-terminal QSH device.",
+      "scientific_object": "Labeled four-terminal device geometry.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R079"
+    },
+    {
+      "item_id": "R079B",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 3, right-hand population diagram associated with Fig. 2(b)",
+      "scientific_basis": "Inventory-only record of the depicted channel-population pattern; its quantitative current formula is inventoried separately.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "The diagram associated with Figure 2(b) schematically depicts the populated spin-filtered channels under four-terminal bias.",
+      "scientific_object": "Labeled four-terminal edge-channel population schematic.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R079B"
+    },
+    {
+      "item_id": "R083",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Fig. 2(b) caption and multiterminal paragraph",
+      "scientific_basis": "Use the voltages shown in Figure 2(b) and the adjacent-contact spin-conductance matrix to evaluate the right-lead spin current.",
+      "claim_type": "numerical_subfigure",
+      "paper_assertion": "In Figure 2(b), a spin current I^s=(e/(4π))V flows into the right contact.",
+      "scientific_object": "Right-contact spin current under the displayed four-terminal voltage bias.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R083",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R100",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "source_ref": "paper p. 4, Fig. 3 and caption",
+      "scientific_basis": "Inventory-only record of the leading-order self-energy/vertex diagram; its quantitative RG consequences are inventoried separately.",
+      "claim_type": "non_numeric",
+      "paper_assertion": "Figure 3 schematically shows the electron-propagator and Coulomb-interaction diagram used for spin-orbit-potential renormalization.",
+      "scientific_object": "Labeled Feynman-diagram topology with solid electron and wavy Coulomb lines.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "scientific_role": "non_numeric_context",
+      "reason": "Non-numerical schematic/context item; retained in the complete paper inventory but excluded from the numerical reproduction denominator.",
+      "review_evidence_ref": "outputs/review/phase1_inventory_v18.json#R100"
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "R001",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, introduction, paragraph citing Novoselov et al.",
+      "scientific_basis": "Check the quoted experimental mobility against the cited single-layer graphene measurement and its stated units.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "Reported single-layer graphene films have mobilities up to 10^4 cm^2/(V s).",
+      "scientific_object": "Maximum reported mobility value, 10^4 cm^2/(V s), in the cited experimental dataset.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The bundle contains the paper's secondary citation but not the cited mobility dataset, so the reported 10^4 cm^2/(V s) maximum cannot be independently adjudicated.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R001",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T014.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R001"
+      ]
+    },
+    {
+      "item_id": "R002",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, Eq. (1)",
+      "scientific_basis": "Project the low-energy lattice wavefunction onto sublattice and valley Bloch basis states and verify the stated envelope decomposition.",
+      "claim_type": "equation",
+      "paper_assertion": "The low-energy wavefunction is Ψ(r)=[(u_AK,u_BK),(u_AK′,u_BK′)]·ψ(r).",
+      "scientific_object": "Valley-sublattice Bloch-basis projection yielding the four amplitudes multiplying ψ(r).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R002",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R003",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text immediately after Eq. (1)",
+      "scientific_basis": "Count the independent A/B and K/K′ low-energy components and check the slowly varying envelope construction.",
+      "claim_type": "method_claim",
+      "paper_assertion": "ψ(r) is a four-component slowly varying envelope function.",
+      "scientific_object": "Four-component envelope ψ=(ψ_AK,ψ_BK,ψ_AK′,ψ_BK′) with Fourier support near the two valleys.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R003",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R004",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, Eq. (2)",
+      "scientific_basis": "Expand the nearest-neighbor graphene Bloch Hamiltonian to first order around K and K′ in the stated basis.",
+      "claim_type": "equation",
+      "paper_assertion": "The effective-mass Hamiltonian is H0=−iℏv_F ψ†(σ_x τ_z ∂_x+σ_y ∂_y)ψ.",
+      "scientific_object": "First-order continuum Dirac Hamiltonian around both graphene valleys.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R004",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R005",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text after Eq. (2)",
+      "scientific_basis": "Evaluate σ_z on the two sublattice basis states.",
+      "claim_type": "method_claim",
+      "paper_assertion": "σ_z=+1 and −1 label the A and B sublattices, respectively.",
+      "scientific_object": "Eigenvalue assignment of σ_z in the ordered A/B basis.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R005",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R006",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text after Eq. (2)",
+      "scientific_basis": "Evaluate τ_z on the two valley basis states.",
+      "claim_type": "method_claim",
+      "paper_assertion": "τ_z=+1 and −1 label the K and K′ valleys, respectively.",
+      "scientific_object": "Eigenvalue assignment of τ_z in the ordered K/K′ basis.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R006",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R007",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text after Eq. (2)",
+      "scientific_basis": "Diagonalize H0 at momentum q relative to either valley.",
+      "claim_type": "equation",
+      "paper_assertion": "The gapless spectrum of H0 is E(q)=±v_F|q| as printed in the paper.",
+      "scientific_object": "Positive and negative eigenvalue branches of the continuum Hamiltonian versus |q|, including an audit of the printed units.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Eq. (2) gives an ℏ v_F q spectrum for wavevector q, whereas the paper prints v_F|q| and later uses ℏ v_F q; the notation is internally inconsistent, but no dedicated frozen multi-q convergence dataset pins the intended q convention strongly enough for paper-error-candidate status.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R007",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R007"
+      ]
+    },
+    {
+      "item_id": "R008",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, paragraph after Eq. (2)",
+      "scientific_basis": "Classify all spinless q=0 mass matrices under graphene parity and time-reversal symmetries.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Without spin, the q=0 degeneracy is protected by symmetry.",
+      "scientific_object": "Symmetry representation at q=0 and the absence of a symmetry-preserving spinless mass.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R008",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R009",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, paragraph after Eq. (2)",
+      "scientific_basis": "Enumerate Hermitian matrices that anticommute with the two kinetic Dirac matrices in the spinless valley-sublattice space.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The only spinless terms that can open a gap are proportional to σ_z or σ_z τ_z.",
+      "scientific_object": "Complete algebraic set of spinless Dirac mass matrices.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R009",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R010",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, paragraph after Eq. (2)",
+      "scientific_basis": "Apply the A↔B parity operator to σ_z.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The staggered-sublattice mass σ_z is odd under parity.",
+      "scientific_object": "Parity transform P σ_z P^−1 and its sign.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R010",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R011",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, paragraph after Eq. (2)",
+      "scientific_basis": "Apply the A↔B and K↔K′ parity representation to σ_z τ_z.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The mass σ_z τ_z is even under parity.",
+      "scientific_object": "Parity transform P(σ_z τ_z)P^−1 and its sign.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R011",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R012",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, paragraph after Eq. (2)",
+      "scientific_basis": "Apply spinless time reversal, including K↔K′, to σ_z τ_z.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The mass σ_z τ_z is odd under time reversal.",
+      "scientific_object": "Time-reversal transform T(σ_z τ_z)T^−1 and its sign.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R012",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R013",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, Eq. (3)",
+      "scientific_basis": "Construct the intrinsic spin-orbit Dirac mass in valley, sublattice, and spin space.",
+      "claim_type": "equation",
+      "paper_assertion": "The intrinsic spin-orbit term is H_SO=Δ_so ψ† σ_z τ_z s_z ψ.",
+      "scientific_object": "Matrix form and spectrum of the intrinsic spin-orbit Hamiltonian.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R013",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R014",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text after Eq. (3)",
+      "scientific_basis": "Transform σ_z τ_z s_z under graphene lattice symmetries, time reversal, and mirror reflection.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The intrinsic spin-orbit term in Eq. (3) respects all graphene symmetries.",
+      "scientific_object": "Symmetry-character table for the σ_z τ_z s_z mass.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R014",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R015",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 1, text after Eq. (3)",
+      "scientific_basis": "Enumerate q=0 spin-dependent bilinears and impose the full symmetry group including reflection through the graphene plane.",
+      "claim_type": "method_claim",
+      "paper_assertion": "With mirror symmetry preserved, Eq. (3) is the only allowed spin-dependent term at q=0.",
+      "scientific_object": "Complete symmetry-filtered list of q=0 spin-dependent bilinears.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R015",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R016",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Eq. (4)",
+      "scientific_basis": "Construct the leading mirror-odd, time-reversal-symmetric spin-orbit bilinear in the continuum basis.",
+      "claim_type": "equation",
+      "paper_assertion": "Broken mirror symmetry permits H_R=λ_R ψ†(σ_x τ_z s_y−σ_y s_x)ψ.",
+      "scientific_object": "Continuum Rashba Hamiltonian matrix and its symmetry characters.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R016",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R017",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (4)",
+      "scientific_basis": "Diagonalize H0+H_SO at λ_R=0.",
+      "claim_type": "equation",
+      "paper_assertion": "At λ_R=0 the bulk dispersion is E(q)=±sqrt[(ℏv_F q)^2+Δ_so^2].",
+      "scientific_object": "Four-band eigenvalue spectrum of H0+H_SO versus q.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R017",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R018",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (4)",
+      "scientific_basis": "Evaluate the conduction-valence separation of the λ_R=0 spectrum at q=0.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "At λ_R=0 the intrinsic spin-orbit term opens an energy gap 2Δ_so.",
+      "scientific_object": "Minimum direct bulk gap at q=0 for λ_R=0.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R018",
+      "claim_refs": [
+        "CLM_T002_CONTINUUM"
+      ]
+    },
+    {
+      "item_id": "R019",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (4)",
+      "scientific_basis": "Diagonalize H0+H_SO+H_R at q=0 for 0<λ_R<Δ_so.",
+      "claim_type": "equation",
+      "paper_assertion": "For 0<λ_R<Δ_so the bulk gap is 2(Δ_so−λ_R).",
+      "scientific_object": "Minimum direct bulk gap as a function of λ_R below the transition.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R019",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R020",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (4)",
+      "scientific_basis": "Evaluate the minimum eigenvalue separation at λ_R=Δ_so.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "At λ_R=Δ_so, the bulk gap closes.",
+      "scientific_object": "Minimum bulk eigenvalue separation at λ_R/Δ_so=1.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R020",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R021",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (4)",
+      "scientific_basis": "Expand the post-transition low-energy eigenvalues to leading order in q.",
+      "claim_type": "method_claim",
+      "paper_assertion": "For λ_R>Δ_so the zero-gap semiconductor has quadratically dispersing low-energy bands.",
+      "scientific_object": "Leading q-dependence of the bands for λ_R/Δ_so>1.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R021",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R022",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph beginning 'The gap generated by σ_z τ_z s_z'",
+      "scientific_basis": "Evaluate the σ_z τ_z s_z mass coefficient separately at τ_z=+1 and τ_z=−1 for fixed spin.",
+      "claim_type": "method_claim",
+      "paper_assertion": "For a fixed spin, the intrinsic spin-orbit mass has opposite signs at K and K′.",
+      "scientific_object": "Valley-resolved Dirac mass signs.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R022",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R023",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph beginning 'The gap generated by σ_z τ_z s_z'",
+      "scientific_basis": "Interpolate between σ_z and σ_z τ_z s_z masses while preserving the stated symmetries and compute the minimum bulk gap.",
+      "claim_type": "method_claim",
+      "paper_assertion": "A symmetry-preserving path from the staggered-sublattice insulator to the intrinsic-SO state must pass through a bulk gap closing.",
+      "scientific_object": "Minimum gap along an explicit interpolation between the two mass terms.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R023",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R024",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph relating Eq. (3) to Haldane's model",
+      "scientific_basis": "Restrict H0+H_SO to a fixed s_z eigenvalue and compare its valley masses and hopping representation with the spinless Haldane model.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Each fixed-s_z block of the intrinsic-SO Hamiltonian is equivalent to Haldane's spinless model.",
+      "scientific_object": "Block-diagonal fixed-spin Hamiltonians and their mapping to Haldane-model parameters.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R024",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R025",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph relating Eq. (3) to Haldane's model",
+      "scientific_basis": "Apply time reversal to one fixed-spin block without exchanging it with the opposite-spin block.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Taken separately, the s_z=+1 and s_z=−1 Hamiltonians violate time-reversal symmetry.",
+      "scientific_object": "Time-reversal transform of each fixed-spin block.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R025",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R026",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph before Eq. (5)",
+      "scientific_basis": "Integrate the Berry curvature or evaluate the Kubo formula for each gapped fixed-spin block.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "Well below the gap, each fixed-spin Haldane block has quantized Hall conductance σ_xy=±e^2/h.",
+      "scientific_object": "Spin-resolved Chern number and Hall conductance.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R026",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R027",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, sentence immediately before Eq. (5)",
+      "scientific_basis": "Convert the difference of spin-resolved charge-current densities to angular-momentum current.",
+      "claim_type": "equation",
+      "paper_assertion": "The spin current is J_s=(ℏ/2e)(J_↑−J_↓).",
+      "scientific_object": "Spin-current normalization derived from opposite spin-resolved charge currents.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R027",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R028",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Eq. (5)",
+      "scientific_basis": "Combine the two opposite integer Hall conductances using the paper's spin-current normalization.",
+      "claim_type": "equation",
+      "paper_assertion": "For conserved s_z, the spin Hall conductivity is σ_xy^s=e/(2π).",
+      "scientific_object": "Zero-temperature spin Hall conductivity in the λ_R=0 bulk model.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R028",
+      "claim_refs": [
+        "CLM_T004_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "R029",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (5)",
+      "scientific_basis": "Use the conserved-spin construction referenced by the paper and evaluate its Kubo response with finite λ_R.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The conserved-spin Hall conductivity is not quantized when λ_R≠0.",
+      "scientific_object": "σ_xy^s(λ_R/Δ_so) computed with the conserved-spin operator.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "The target paper delegates the conserved-spin operator to an external citation; the bundle implements only a declared conventional-current proxy, so exact nonquantization of the cited observable remains inconclusive.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R029",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T016.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R029"
+      ]
+    },
+    {
+      "item_id": "R030",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Eq. (5)",
+      "scientific_basis": "Evaluate the fractional deviation of the finite-Rashba Kubo response from e/(2π) using graphene-scale couplings.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "For carbon's weak spin-orbit coupling, the finite-Rashba correction to Eq. (5) is small.",
+      "scientific_object": "Relative correction [σ_xy^s(λ_R)−e/(2π)]/[e/(2π)] at the paper's estimated couplings.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "The conventional-current proxy changes by 0.252% at λ_R/Δ_so=0.05, but the exact cited conserved-spin observable is unavailable, so the paper's small-correction claim cannot receive a definitive verdict.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R030",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T017.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R030"
+      ]
+    },
+    {
+      "item_id": "R031",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Laughlin flux-insertion paragraph",
+      "scientific_basis": "Compute the commutator [H0+H_SO,s_z] at λ_R=0.",
+      "claim_type": "method_claim",
+      "paper_assertion": "At λ_R=0, the Hamiltonian conserves s_z.",
+      "scientific_object": "Exact spin-conservation commutator.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004",
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R031",
+      "claim_refs": [
+        "CLM_R031"
+      ]
+    },
+    {
+      "item_id": "R032",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Laughlin flux-insertion paragraph",
+      "scientific_basis": "Compare the cylinder circumference/length scale with the bulk correlation length ℏv_F/Δ_so.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The flux-insertion argument assumes a cylinder larger than ℏv_F/Δ_so.",
+      "scientific_object": "Dimensionless system-size ratio LΔ_so/(ℏv_F)>1 and its finite-size gap.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T006",
+        "T008",
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R032",
+      "claim_refs": [
+        "CLM_R032"
+      ]
+    },
+    {
+      "item_id": "R033",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Laughlin flux-insertion paragraph",
+      "scientific_basis": "Apply one electromagnetic flux quantum through the cylinder and track spectral flow.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The adiabatic cycle inserts magnetic flux φ=h/e.",
+      "scientific_object": "Hamiltonian spectrum and pumped quantum over a flux interval 0≤φ≤h/e.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R033",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R034",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Laughlin flux-insertion paragraph",
+      "scientific_basis": "Compare the flux-ramp frequency with the bulk gap frequency Δ_so/ℏ and test adiabatic convergence.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "Flux insertion must be slower than the scale Δ_so/ℏ.",
+      "scientific_object": "Pumped spin and excitation probability versus ramp rate ω/(Δ_so/ℏ).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R034",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R035",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Laughlin flux-insertion paragraph",
+      "scientific_basis": "Integrate the induced spin current through a cross-section during one h/e flux cycle.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "One flux quantum transports spin ℏ from one end of the cylinder to the other.",
+      "scientific_object": "Net pumped spin per adiabatic h/e flux cycle.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R035",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R036",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, conclusion of Laughlin flux-insertion paragraph",
+      "scientific_basis": "Compute boundary spectral flow during the adiabatic cycle while confirming the bulk remains gapped.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The quantized spin pump requires gapless states at both cylinder ends.",
+      "scientific_object": "End-localized eigenvalues crossing the Fermi level under one flux cycle.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004",
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R036",
+      "claim_refs": [
+        "CLM_R036"
+      ]
+    },
+    {
+      "item_id": "R037",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, Eq. (6)",
+      "scientific_basis": "Construct the honeycomb-lattice Bloch Hamiltonian from nearest-neighbor hopping t and oriented second-neighbor hopping i t_2 ν_ij s_z.",
+      "claim_type": "equation",
+      "paper_assertion": "The lattice model is H=Σ_<ij>,α t c†_iα c_jα+Σ_<<ij>>,αβ i t_2 ν_ij s^z_αβ c†_iα c_jβ.",
+      "scientific_object": "Finite-lattice and Bloch-matrix representations of Eq. (6).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R037",
+      "claim_refs": [
+        "CLM_R037"
+      ]
+    },
+    {
+      "item_id": "R038",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, text after Eq. (6)",
+      "scientific_basis": "Reverse an oriented second-neighbor bond and compare the sign assigned to its hopping factor.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The orientation factor is antisymmetric: ν_ij=−ν_ji.",
+      "scientific_object": "Directed second-neighbor bond table and reversal signs.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R038",
+      "claim_refs": [
+        "CLM_R038"
+      ]
+    },
+    {
+      "item_id": "R039",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, text after Eq. (6)",
+      "scientific_basis": "Enumerate the two possible orientations of consecutive nearest-neighbor bonds on the honeycomb lattice.",
+      "claim_type": "method_claim",
+      "paper_assertion": "ν_ij=+1 or −1 according to whether the second-neighbor path makes a left or right turn.",
+      "scientific_object": "Geometric left/right-turn classifier and resulting ν_ij values.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R039",
+      "claim_refs": [
+        "CLM_R039"
+      ]
+    },
+    {
+      "item_id": "R040",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, text after Eq. (6)",
+      "scientific_basis": "Evaluate d_1×d_2 for every oriented second-neighbor path and compare it with ν_ij s_z.",
+      "claim_type": "equation",
+      "paper_assertion": "The spin-dependent second-neighbor factor has coordinate-independent form i(d_1×d_2)·s.",
+      "scientific_object": "Bond-resolved equality between the cross-product representation and the sign convention in Eq. (6).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R040",
+      "claim_refs": [
+        "CLM_R040"
+      ]
+    },
+    {
+      "item_id": "R041",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, text after Eq. (6)",
+      "scientific_basis": "Expand the second-neighbor lattice term around K and K′ and read off its continuum Dirac mass.",
+      "claim_type": "equation",
+      "paper_assertion": "At low energy the lattice model gives Δ_so=3sqrt(3)t_2.",
+      "scientific_object": "Continuum mass coefficient obtained from the K/K′ expansion of Eq. (6).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001",
+        "T002"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R041",
+      "claim_refs": [
+        "CLM_R041"
+      ]
+    },
+    {
+      "item_id": "R049",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Fig. 1 discussion",
+      "scientific_basis": "Diagonalize Eq. (6) in an armchair strip and test for boundary-localized branches crossing the bulk gap.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Armchair edges support edge states analogous to those of the zigzag strip.",
+      "scientific_object": "Armchair-strip spectrum and edge localization of its in-gap branches.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R049",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R050",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 2, paragraph after Fig. 1 discussion",
+      "scientific_basis": "Project the two two-dimensional valley momenta onto the armchair edge direction.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "For an armchair edge, both K and K′ project to one-dimensional momentum k=0.",
+      "scientific_object": "Projected armchair-edge momenta of K and K′.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R050",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R051",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph following Fig. 1 caption",
+      "scientific_basis": "Continue the zigzag-strip edge eigenstates as t_2 and hence Δ_so approach zero.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Zigzag edge states persist in the limit Δ_so→0.",
+      "scientific_object": "Existence and edge localization of the zigzag boundary branch as t_2/t→0.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R051",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R052",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph following Fig. 1 caption",
+      "scientific_basis": "Measure the bandwidth of the zigzag edge branch as t_2/t approaches zero.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The surviving zigzag edge states become perfectly flat as Δ_so→0.",
+      "scientific_object": "Limit of the edge-state bandwidth divided by t as t_2/t→0.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R052",
+      "claim_refs": [
+        "CLM_T001_RIBBON"
+      ]
+    },
+    {
+      "item_id": "R054",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph beginning 'We have also considered a nearest neighbor Rashba term'",
+      "scientific_basis": "Discretize the continuum Rashba interaction on a nearest-neighbor honeycomb bond and check Hermiticity and symmetry.",
+      "claim_type": "equation",
+      "paper_assertion": "The lattice Rashba term has bond form i z-hat·(s_αβ×d)c†_iα c_jβ.",
+      "scientific_object": "Nearest-neighbor Rashba hopping matrix for each bond orientation.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R054",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R055",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Compute the two-dimensional bulk gap of the lattice model while increasing λ_R below Δ_so.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The bulk band gap remains open for λ_R<Δ_so in the lattice Rashba model.",
+      "scientific_object": "Bulk minimum gap versus λ_R/Δ_so below one.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R055",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R056",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Diagonalize a strip with the lattice Rashba term and track boundary-localized spectral crossings.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Gapless edge states persist for λ_R<Δ_so even though s_z is not conserved.",
+      "scientific_object": "Finite-Rashba strip spectrum and boundary localization of its gap crossing.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R056",
+      "claim_refs": [
+        "CLM_T003_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R057",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Locate the time-reversal-invariant momentum in the zigzag-edge Brillouin zone and evaluate the two edge eigenvalues there.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "For a zigzag edge, the protected edge-state crossing occurs at k_x=π/a.",
+      "scientific_object": "Momentum and energy splitting of the zigzag edge doublet at k_x=π/a.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R057",
+      "claim_refs": [
+        "CLM_R057"
+      ]
+    },
+    {
+      "item_id": "R058",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Locate the time-reversal-invariant momentum in the armchair-edge Brillouin zone and evaluate the edge eigenvalues there.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "For an armchair edge, the protected edge-state crossing occurs at k=0.",
+      "scientific_object": "Momentum and energy splitting of the armchair edge doublet at k=0.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The paper-specified physical parameters are reproduced exactly; unprinted ribbon width or sampling density are numerical controls whose convergence is independently checked, so they do not alter this atomic feature verdict.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R058",
+      "claim_refs": [
+        "CLM_T005_FLUX"
+      ]
+    },
+    {
+      "item_id": "R059",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Apply the spinful time-reversal operator at k_x=π/a and verify T^2=−1 within the crossing subspace.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The two zigzag-edge states at k_x=π/a form a Kramers doublet.",
+      "scientific_object": "Kramers pairing of the two states at the time-reversal-invariant edge momentum.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R059",
+      "claim_refs": [
+        "CLM_R059"
+      ]
+    },
+    {
+      "item_id": "R059B",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Add general time-reversal-symmetric perturbations within the k_x=π/a crossing subspace and evaluate their allowed matrix elements.",
+      "claim_type": "method_claim",
+      "paper_assertion": "A time-reversal-symmetric perturbation cannot lift the degeneracy at k_x=π/a.",
+      "scientific_object": "Perturbative splitting of the k_x=π/a edge doublet under the complete symmetry-allowed perturbation basis.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R059B",
+      "claim_refs": [
+        "CLM_R059B"
+      ]
+    },
+    {
+      "item_id": "R060",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Apply time reversal to an edge eigenstate at π/a+q and identify its partner momentum.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Edge states at k_x=π/a+q and k_x=π/a−q are Kramers partners.",
+      "scientific_object": "Time-reversal overlap and energy equality E(π/a+q)=E(π/a−q).",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T003",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R060",
+      "claim_refs": [
+        "CLM_R060"
+      ]
+    },
+    {
+      "item_id": "R061",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, nearest-neighbor Rashba paragraph",
+      "scientific_basis": "Evaluate the matrix element of a time-reversal-symmetric random scalar potential between counterpropagating Kramers partners.",
+      "claim_type": "method_claim",
+      "paper_assertion": "Elastic backscattering by a random time-reversal-symmetric potential is forbidden for a single edge pair.",
+      "scientific_object": "Single-particle backscattering matrix element between the two edge modes.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R061",
+      "claim_refs": [
+        "CLM_T006_SCATTERING"
+      ]
+    },
+    {
+      "item_id": "R062",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, disorder S-matrix paragraph",
+      "scientific_basis": "Form the incoming and outgoing amplitudes of the left- and right-moving edge channels through a finite elastic scatterer.",
+      "claim_type": "equation",
+      "paper_assertion": "Elastic edge scattering is described by a 2×2 unitary matrix Φ_out=SΦ_in.",
+      "scientific_object": "Two-channel unitary scattering matrix for a finite disorder region.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R062",
+      "claim_refs": [
+        "CLM_T006_SCATTERING"
+      ]
+    },
+    {
+      "item_id": "R063",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, disorder S-matrix paragraph",
+      "scientific_basis": "Apply the spin-1/2 time-reversal operator to asymptotic incoming and outgoing edge-channel spinors.",
+      "claim_type": "equation",
+      "paper_assertion": "Under time reversal, Φ_in,out maps to s_y Φ*_out,in.",
+      "scientific_object": "Antiunitary transformation of the asymptotic two-component channel amplitudes.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R063",
+      "claim_refs": [
+        "CLM_T006_SCATTERING"
+      ]
+    },
+    {
+      "item_id": "R064",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, disorder S-matrix paragraph",
+      "scientific_basis": "Impose the transformation in R063 on Φ_out=SΦ_in and derive the constraint on S.",
+      "claim_type": "equation",
+      "paper_assertion": "Time-reversal symmetry constrains the edge S matrix to S=s_y S^T s_y.",
+      "scientific_object": "Algebraic time-reversal constraint on a general 2×2 unitary S matrix.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R064",
+      "claim_refs": [
+        "CLM_T006_SCATTERING"
+      ]
+    },
+    {
+      "item_id": "R065",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, conclusion of disorder S-matrix paragraph",
+      "scientific_basis": "Solve the matrix constraint S=s_y S^T s_y for a general 2×2 matrix.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The time-reversal constraint forces both off-diagonal elements of S to vanish.",
+      "scientific_object": "Allowed component form of S and its reflection amplitudes.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R065",
+      "claim_refs": [
+        "CLM_T006_SCATTERING"
+      ]
+    },
+    {
+      "item_id": "R066",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Apply time reversal and fermionic antisymmetry to the displayed derivative four-fermion operator.",
+      "claim_type": "equation",
+      "paper_assertion": "The interaction u ψ†_L↑ ∂_xψ†_L↑ ψ_R↓ ∂_xψ_R↓ is allowed by time-reversal symmetry.",
+      "scientific_object": "Symmetry transform and nonvanishing local form of the displayed two-particle backscattering operator.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R066",
+      "claim_refs": [
+        "CLM_T007_INTERACTION"
+      ]
+    },
+    {
+      "item_id": "R067",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Compute the free-edge scaling dimension of the derivative four-fermion operator.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The displayed two-particle backscattering operator has scaling dimension Δ=4 for weak interactions.",
+      "scientific_object": "Two-point correlation exponent and scaling dimension of the interaction operator.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R067",
+      "claim_refs": [
+        "CLM_T007_INTERACTION"
+      ]
+    },
+    {
+      "item_id": "R068",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Compare the operator dimension Δ=4 with the 1+1-dimensional relevance threshold.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The two-particle backscattering operator is renormalization-group irrelevant at weak interaction.",
+      "scientific_object": "Linearized RG eigenvalue of u at the weak-coupling edge fixed point.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R068",
+      "claim_refs": [
+        "CLM_T007_INTERACTION"
+      ]
+    },
+    {
+      "item_id": "R069",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Analyze whether the weak irrelevant interaction generates a mass term in the edge spectrum.",
+      "claim_type": "method_claim",
+      "paper_assertion": "At weak interaction, this backscattering term does not open an edge energy gap.",
+      "scientific_object": "Edge spectral gap versus small interaction strength u.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007",
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R069",
+      "claim_refs": [
+        "CLM_R069"
+      ]
+    },
+    {
+      "item_id": "R070",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Compute the long-distance edge conductance/localization behavior with weak interaction and time-reversal-symmetric disorder.",
+      "claim_type": "method_claim",
+      "paper_assertion": "At weak interaction, this backscattering term does not localize the edge.",
+      "scientific_object": "Localization length or zero-temperature transmission versus system length at small u.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007",
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R070",
+      "claim_refs": [
+        "CLM_R070"
+      ]
+    },
+    {
+      "item_id": "R071",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, electron-interaction paragraph",
+      "scientific_basis": "Evaluate the leading-order transport relaxation rate induced by the irrelevant operator of dimension Δ.",
+      "claim_type": "equation",
+      "paper_assertion": "To leading order, the edge conductivity scales as u^−2 T^(3−2Δ).",
+      "scientific_object": "Log-log temperature and coupling dependence of the edge conductivity, with Δ independently determined.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R071",
+      "claim_refs": [
+        "CLM_T007_INTERACTION"
+      ]
+    },
+    {
+      "item_id": "R072",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, conclusion of electron-interaction paragraph",
+      "scientific_basis": "Enumerate all symmetry-allowed single- and multiparticle edge backscattering operators near the weak-coupling fixed point and compute their dimensions.",
+      "claim_type": "method_claim",
+      "paper_assertion": "There are no relevant backscattering processes for weak interactions when time reversal is preserved.",
+      "scientific_object": "Complete weak-coupling operator list with RG eigenvalues.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R072",
+      "claim_refs": [
+        "CLM_T007_INTERACTION"
+      ]
+    },
+    {
+      "item_id": "R073",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph beginning 'A parallel magnetic field'",
+      "scientific_basis": "Add an in-plane Zeeman field to the edge Hamiltonian and diagonalize near the protected crossing.",
+      "claim_type": "method_claim",
+      "paper_assertion": "A parallel magnetic field produces an avoided crossing and gaps the edge states.",
+      "scientific_object": "Edge-state gap versus in-plane magnetic-field amplitude.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R073",
+      "claim_refs": [
+        "CLM_R073"
+      ]
+    },
+    {
+      "item_id": "R074",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph beginning 'A parallel magnetic field'",
+      "scientific_basis": "Construct a continuous bulk Hamiltonian path between σ_z τ_z s_z and σ_z after adding time-reversal-breaking terms allowed by the field, and monitor the gap.",
+      "claim_type": "method_claim",
+      "paper_assertion": "With a parallel magnetic field, a continuously gapped path connects the intrinsic-SO mass to a staggered-sublattice mass.",
+      "scientific_object": "Minimum bulk gap along the field-enabled interpolation.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "A uniform field gaps the edge and generic broken-time-reversal connectivity exists, but the paper does not print the bulk connecting terms; the minimal primitive-cell path built from printed terms closes its gap at 9.7e-17 t.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R074",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T019.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R074"
+      ]
+    },
+    {
+      "item_id": "R074B",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, paragraph beginning 'A parallel magnetic field'",
+      "scientific_basis": "Evaluate the symmetry class and applicable bulk topological invariant after time reversal is broken by the parallel field.",
+      "claim_type": "method_claim",
+      "paper_assertion": "A parallel magnetic field eliminates the topological distinction between the QSH phase and a simple insulator.",
+      "scientific_object": "Topological classification of the two field-broken endpoints and the invariant along the gapped interpolation.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T004",
+        "T006"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R074B",
+      "claim_refs": [
+        "CLM_R074B"
+      ]
+    },
+    {
+      "item_id": "R077",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Landauer-Büttiker paragraph after Fig. 2",
+      "scientific_basis": "Write the one-dimensional charge-current operator for the spin-filtered right- and left-moving channels.",
+      "claim_type": "equation",
+      "paper_assertion": "The edge charge-current density is proportional to n_R↑−n_L↓.",
+      "scientific_object": "Charge-current expectation value as a function of the two channel occupations.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R077",
+      "claim_refs": [
+        "CLM_T008_TWO_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R077B",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Landauer-Büttiker paragraph after Fig. 2",
+      "scientific_basis": "Write the one-dimensional spin-density operator for the spin-filtered right- and left-moving channels.",
+      "claim_type": "equation",
+      "paper_assertion": "The edge spin density is proportional to n_R↑−n_L↓.",
+      "scientific_object": "Spin-density expectation value as a function of the two channel occupations.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R077B",
+      "claim_refs": [
+        "CLM_T008_TWO_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R078",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, Landauer-Büttiker paragraph after Fig. 2",
+      "scientific_basis": "Solve the nonequilibrium channel occupations in the biased two-terminal device and evaluate edge spin density.",
+      "claim_type": "method_claim",
+      "paper_assertion": "A two-terminal charge current is accompanied by spin accumulation at the sample edges.",
+      "scientific_object": "Bias-dependent spin density on each edge.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R078",
+      "claim_refs": [
+        "CLM_T008_TWO_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R080",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, multiterminal paragraph",
+      "scientific_basis": "Define terminal spin currents as the linear response to all terminal voltages.",
+      "claim_type": "equation",
+      "paper_assertion": "The multiterminal spin conductance is defined by I_i^s=Σ_j G_ij^s V_j.",
+      "scientific_object": "Linear-response spin-current matrix for the four-terminal edge network.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R080",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R081",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, multiterminal paragraph",
+      "scientific_basis": "Apply time reversal to the multiterminal linear-response coefficients.",
+      "claim_type": "equation",
+      "paper_assertion": "Time-reversal symmetry requires G_ji^s=−G_ij^s.",
+      "scientific_object": "Antisymmetry of the spin-conductance matrix.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R081",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R082",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, multiterminal paragraph",
+      "scientific_basis": "Apply Landauer-Büttiker transport to two adjacent contacts connected by one spin-filtered edge channel.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "Adjacent contacts have spin conductance G_ij^s=±e/(4π), with sign set by orientation.",
+      "scientific_object": "Oriented adjacent-contact entries of the four-terminal spin-conductance matrix.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R082",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R084",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, final sentences of multiterminal paragraph",
+      "scientific_basis": "Propagate an incident spin-resolved distribution through the ideal four-terminal edge-channel scattering network.",
+      "claim_type": "method_claim",
+      "paper_assertion": "An incident spin current is split so that up spins reach the top contact and down spins reach the bottom contact.",
+      "scientific_object": "Spin-resolved terminal transmissions for injected spin current.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R084",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R084B",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 3, final sentences of multiterminal paragraph",
+      "scientific_basis": "Solve the open-circuit voltage-probe conditions for the top and bottom contacts under an injected spin current.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The spin-selective routing in the four-terminal device generates a measurable spin-Hall voltage.",
+      "scientific_object": "Top-minus-bottom probe voltage generated by a specified incident spin current.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R084B",
+      "claim_refs": [
+        "CLM_T009_FOUR_TERMINAL"
+      ]
+    },
+    {
+      "item_id": "R085",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, Eq. (7)",
+      "scientific_basis": "Take the nonrelativistic expansion of the Dirac Hamiltonian for an electron in scalar potential V.",
+      "claim_type": "equation",
+      "paper_assertion": "The microscopic spin-orbit interaction is V_SO=ℏ[4m^2c^2]^−1 s·(∇V×p).",
+      "scientific_object": "Pauli spin-orbit operator obtained to order 1/c^2.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R085",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R086",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, paragraph after Eq. (7)",
+      "scientific_basis": "Evaluate the degenerate matrix of V_SO in the four valley-sublattice states before diagonalization.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The intrinsic spin-orbit gap is estimated using first-order degenerate perturbation theory.",
+      "scientific_object": "First-order V_SO matrix and its eigenvalue splitting in the low-energy degenerate subspace.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R086",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R087",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, paragraph after Eq. (7)",
+      "scientific_basis": "Repeat the perturbative matrix-element evaluation with the envelope ψ(r) held spatially constant.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The microscopic estimate treats the slowly varying envelope ψ(r) as constant inside the Bloch-state matrix element.",
+      "scientific_object": "Perturbative matrix element under the constant-envelope approximation.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R087",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R088",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, first-star approximation paragraph",
+      "scientific_basis": "Construct the normalized equal-amplitude sum of the three reciprocal-space plane waves in each valley star.",
+      "claim_type": "equation",
+      "paper_assertion": "The first-star Bloch approximation is u_(K,K′),(A,B)(r)=Σ_p exp[iK_p·(r−d)]/sqrt(3).",
+      "scientific_object": "Normalized first-star Bloch functions on A/B sites at K/K′.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R088",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R089",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, first-star approximation paragraph",
+      "scientific_basis": "Enumerate the wavevectors related to K or K′ by reciprocal lattice translations in the first star.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The first-star sum contains the three Brillouin-zone corners equivalent to each of K and K′.",
+      "scientific_object": "Set and count of the three K_p wavevectors for each valley.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R089",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R090",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, first-star approximation paragraph",
+      "scientific_basis": "Evaluate all first-order V_SO matrix elements in the first-star basis and decompose the result into σ, τ, and s matrices.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The microscopic first-star matrix elements have precisely the σ_z τ_z s_z structure of Eq. (3).",
+      "scientific_object": "Coefficient decomposition of the perturbative 8×8 spin-valley-sublattice matrix.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R090",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R091",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, first-star approximation paragraph",
+      "scientific_basis": "Use the unscreened Coulomb potential in the microscopic spin-orbit matrix element.",
+      "claim_type": "equation",
+      "paper_assertion": "The crude intrinsic-gap estimate assumes V(r)=e^2/r.",
+      "scientific_object": "Radial potential and gradient used in the perturbative integral.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R091",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R092",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, intrinsic-gap estimate",
+      "scientific_basis": "Analytically evaluate the first-star matrix element of Eq. (7) with V(r)=e^2/r.",
+      "claim_type": "equation",
+      "paper_assertion": "The first-star Coulomb estimate gives 2Δ_so=4π^2 e^2ℏ^2/(3m^2c^2a^3).",
+      "scientific_object": "Closed-form intrinsic spin-orbit splitting from the stated microscopic approximations.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R092",
+      "claim_refs": [
+        "CLM_T010_BARE_GAP"
+      ]
+    },
+    {
+      "item_id": "R093",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, intrinsic-gap estimate",
+      "scientific_basis": "Insert the physical constants and the graphene lattice length convention used by the paper into the R092 formula.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The bare intrinsic spin-orbit splitting is estimated as 2Δ_so≈2.4 K.",
+      "scientific_object": "Numerical evaluation of 2Δ_so/k_B in kelvin from the analytic formula.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "The analytic first-star formula is supported, but the paper omits the numerical lattice-length convention; the frozen calculation gives 2.203 K for a=2.46 Å, so the exact provenance of the rounded 2.4 K remains inconclusive.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R093",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T020.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R093"
+      ]
+    },
+    {
+      "item_id": "R094",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, sentence after the 2.4 K estimate",
+      "scientific_basis": "Extract the graphite spin-orbit splittings from the cited literature using the same energy convention and compare them with 2.4 K.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The crude 2.4 K estimate is comparable to spin-orbit splittings reported for graphite.",
+      "scientific_object": "Common-unit comparison between the paper's bare splitting and cited graphite splitting values.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T021"
+      ],
+      "reason": "The permitted bundle does not include the cited graphite splitting values, so 'comparable' cannot be evaluated on a common energy convention.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R094",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T021.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R094"
+      ]
+    },
+    {
+      "item_id": "R095",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, Rashba electric-field estimate paragraph",
+      "scientific_basis": "Evaluate the Pauli spin-orbit operator for a uniform perpendicular electric field and project it onto the graphene Dirac basis.",
+      "claim_type": "equation",
+      "paper_assertion": "A perpendicular field gives λ_R=ℏv_F eE_z/(4mc^2).",
+      "scientific_object": "Continuum Rashba coefficient as a function of E_z.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R095",
+      "claim_refs": [
+        "CLM_T011_FIELD_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R096",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, Rashba electric-field estimate paragraph",
+      "scientific_basis": "Use the stated voltage drop and separation as the electric-field input to Eq. R095.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The illustrative perpendicular field is E_z≈50 V/300 nm.",
+      "scientific_object": "Electric-field magnitude obtained from the quoted voltage and distance.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R096",
+      "claim_refs": [
+        "CLM_T011_FIELD_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R097",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, Rashba electric-field estimate paragraph",
+      "scientific_basis": "Insert the paper's E_z and graphene v_F into λ_R=ℏv_F eE_z/(4mc^2), then convert to kelvin.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "For E_z≈50 V/300 nm, the Rashba coupling is λ_R≈0.5 mK.",
+      "scientific_object": "Numerical λ_R/k_B in millikelvin for the stated field.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T022"
+      ],
+      "reason": "The Rashba formula is supported and gives 0.623 mK for v_F=10^6 m/s, but the paper does not print its v_F input, so the exact 0.5 mK rounding is not uniquely reproducible.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R097",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T022.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R097"
+      ]
+    },
+    {
+      "item_id": "R098",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, Rashba electric-field estimate paragraph",
+      "scientific_basis": "Compare the independently evaluated λ_R from R097 with Δ_so=1.2 K implied by the paper's bare 2Δ_so estimate.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The electric-field-induced λ_R is smaller than Δ_so for the stated estimates.",
+      "scientific_object": "Ratio λ_R/Δ_so using the paper's two bare-coupling estimates.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R098",
+      "claim_refs": [
+        "CLM_T011_FIELD_RASHBA"
+      ]
+    },
+    {
+      "item_id": "R099",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, final sentence of Rashba estimate paragraph",
+      "scientific_basis": "Estimate or bound the substrate-induced Rashba matrix element for a specified substrate interaction and compare it with Δ_so.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The substrate-induced Rashba coupling is expected to be smaller than Δ_so.",
+      "scientific_object": "Substrate-specific upper bound or first-principles λ_R/Δ_so ratio.",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T023"
+      ],
+      "reason": "No substrate, interaction strength, or substrate-induced Rashba calculation is specified, so the claimed ordering λ_R<Δ_so cannot be tested.",
+      "review_assessment": "inconclusive",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R099",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T023.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_R099"
+      ]
+    },
+    {
+      "item_id": "R101",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, paragraph following Fig. 3",
+      "scientific_basis": "Evaluate the leading Coulomb correction represented by Figure 3 and project it onto the σ_z τ_z s_z operator.",
+      "claim_type": "method_claim",
+      "paper_assertion": "To leading order, the Figure 3 diagram renormalizes the spin-orbit potential through the exchange potential induced by Δ_so.",
+      "scientific_object": "One-loop correction to the coefficient of σ_z τ_z s_z.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R101",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R102",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, paragraph following Fig. 3",
+      "scientific_basis": "Evaluate the infrared dependence of the one-loop correction to Δ_so for an unscreened long-range Coulomb kernel.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The Coulomb correction to Δ_so is logarithmically divergent.",
+      "scientific_object": "Coefficient and cutoff dependence of the logarithmic correction to Δ_so.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R102",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R103",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, paragraph following Fig. 3",
+      "scientific_basis": "Compute the static screened interaction of charge-neutral graphene at long wavelength.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The effective Coulomb interaction retains a long-range 1/r form in graphene even after screening.",
+      "scientific_object": "Small-q screened interaction and its real-space asymptotic power law.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R103",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R104",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, RG paragraph before Eq. (8)",
+      "scientific_basis": "Form the dimensionless ratio of Coulomb energy scale to Dirac kinetic energy scale.",
+      "claim_type": "equation",
+      "paper_assertion": "The dimensionless Coulomb interaction is g=e^2/(ℏv_F).",
+      "scientific_object": "Dimensionless coupling g in the unit convention used by the paper.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R104",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R105",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, RG paragraph before Eq. (8)",
+      "scientific_basis": "Implement a Wilson momentum/energy-shell step with logarithmic flow parameter ℓ.",
+      "claim_type": "method_claim",
+      "paper_assertion": "The RG step integrates out degrees of freedom with energies between Λ and Λe^−ℓ.",
+      "scientific_object": "Explicit shell domain and rescaling map for one RG step.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R105",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R106",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, first equation in Eq. (8)",
+      "scientific_basis": "Compute the leading one-loop renormalization of the dimensionless Coulomb coupling.",
+      "claim_type": "equation",
+      "paper_assertion": "To leading order in g, dg/dℓ=−g^2/4.",
+      "scientific_object": "One-loop beta function for g, including its coefficient and sign.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R106",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R107",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, second equation in Eq. (8)",
+      "scientific_basis": "Compute the leading anomalous scaling of the intrinsic spin-orbit mass under the same RG step.",
+      "claim_type": "equation",
+      "paper_assertion": "To leading order in g, dΔ_so/dℓ=gΔ_so/2.",
+      "scientific_object": "One-loop beta function for Δ_so, including its coefficient and sign.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R107",
+      "claim_refs": [
+        "CLM_T012_RG_FLOW"
+      ]
+    },
+    {
+      "item_id": "R108",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, integrated RG expression after Eq. (8)",
+      "scientific_basis": "Solve the coupled differential equations in R106-R107 with initial values g^0 and Δ_so^0 at Λ^0.",
+      "claim_type": "equation",
+      "paper_assertion": "At scale ε, Δ_so(ε)=Δ_so^0[1+(g^0/4)log(Λ^0/ε)]^2.",
+      "scientific_object": "Closed-form RG trajectory Δ_so(ε) and direct residuals against both flow equations.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012",
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R108",
+      "claim_refs": [
+        "CLM_R108"
+      ]
+    },
+    {
+      "item_id": "R109",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, sentence after the integrated RG expression",
+      "scientific_basis": "Stop the RG flow when the running mass equals the running energy scale and solve the resulting fixed-point equation.",
+      "claim_type": "equation",
+      "paper_assertion": "The renormalized mass obeys the self-consistency relation Δ_so^R≈Δ_so(Δ_so^R).",
+      "scientific_object": "Positive solution of the implicit gap equation for specified bare parameters.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T012",
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R109",
+      "claim_refs": [
+        "CLM_R109"
+      ]
+    },
+    {
+      "item_id": "R110",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, numerical inputs to the renormalized-gap estimate",
+      "scientific_basis": "Trace the cited effective interaction to its definition and reproduce its evaluation in the paper's unit convention.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The renormalized-gap estimate uses bare effective interaction g^0=0.74.",
+      "scientific_object": "Independent value of g^0 from the cited graphene parameters.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R110",
+      "claim_refs": [
+        "CLM_T013_RG_GAP"
+      ]
+    },
+    {
+      "item_id": "R111",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, numerical inputs to the renormalized-gap estimate",
+      "scientific_basis": "Identify the ultraviolet bandwidth/cutoff convention and verify the stated energy scale.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The renormalized-gap estimate uses ultraviolet cutoff Λ^0≈2 eV.",
+      "scientific_object": "Graphene continuum-model cutoff in eV under the paper's stated convention.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R111",
+      "claim_refs": [
+        "CLM_T013_RG_GAP"
+      ]
+    },
+    {
+      "item_id": "R112",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "source_ref": "paper p. 4, final sentence of RG paragraph",
+      "scientific_basis": "Solve the self-consistent RG gap equation using the paper's bare 2Δ_so≈2.4 K, g^0=0.74, and Λ^0≈2 eV, with explicit unit conversion.",
+      "claim_type": "quantitative_statement",
+      "paper_assertion": "The Coulomb-renormalized spin-orbit splitting is 2Δ_so^R≈15 K.",
+      "scientific_object": "Numerical self-consistent value of 2Δ_so^R/k_B in kelvin from the stated inputs.",
+      "decision": "target",
+      "denominator_role": "primary",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_clean_room",
+      "reason": "The atomic proposition survived an independent paper-first rederivation or feature check and agrees with the frozen, hash-bound v11 evidence at the declared parameter boundary.",
+      "review_assessment": "paper_supported",
+      "review_evidence_ref": "outputs/review/reviewer_submission_v18.json#claim_reviews.R112",
+      "claim_refs": [
+        "CLM_T013_RG_GAP"
+      ]
+    }
+  ]
+}

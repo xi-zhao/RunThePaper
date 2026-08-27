@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "run_id": "10.1038-s41586-026-10720-3-discriminating-code-check-v2",
+  "paper_id": "10.1038-s41586-026-10720-3",
+  "target_ids": [
+    "T_F2A",
+    "T_F2B",
+    "T_F2C"
+  ],
+  "command": [
+    "python",
+    "scripts/run_discriminating_checks.py",
+    "--config",
+    "config/discriminating_code_checks.json",
+    "--output",
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "inputs": [
+    "src/optical_hawking/__init__.py",
+    "src/optical_hawking/analysis.py",
+    "src/optical_hawking/model.py",
+    "src/optical_hawking/physical_dispersion.py",
+    "src/optical_hawking/solver.py",
+    "src/optical_hawking/theory.py",
+    "src/optical_hawking/discriminating_checks.py",
+    "scripts/run_discriminating_checks.py",
+    "config/discriminating_code_checks.json"
+  ],
+  "parameter_file": "config/discriminating_code_checks.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "T_F2A": {
+      "geometry": {
+        "pitch_um": 1.079,
+        "hole_diameter_um": 0.763,
+        "effective_core_radius_um": 1.079,
+        "mode_root": 2.404825557695773
+      },
+      "wavelengths_um": [
+        0.25,
+        0.4,
+        0.8,
+        1.55
+      ],
+      "backend_tolerance": 1e-11
+    },
+    "T_F2B": {
+      "geometry": {
+        "pitch_um": 1.079,
+        "hole_diameter_um": 0.763,
+        "effective_core_radius_um": 1.079,
+        "mode_root": 2.404825557695773
+      },
+      "pump_wavelength_nm": 800.0,
+      "omega_derivative_step": 1e-05,
+      "velocity_tolerance": 1e-12,
+      "stationarity_tolerance": 1e-05
+    },
+    "T_F2C": {
+      "geometry": {
+        "pitch_um": 1.079,
+        "hole_diameter_um": 0.763,
+        "effective_core_radius_um": 1.079,
+        "mode_root": 2.404825557695773
+      },
+      "minimum_wavelengths_um": [
+        0.205,
+        0.21,
+        0.215
+      ],
+      "omega_step": 1e-05,
+      "evaluation_offset_rad_fs": 0.2,
+      "continuity_tolerance": 1e-05,
+      "sensitivity_span_maximum": 2.0
+    }
+  },
+  "expected_outputs": [
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "outputs": [
+    "outputs/checks/discriminating_code_checks.json"
+  ],
+  "timeout_seconds": 120,
+  "resource_contract": {
+    "cpu_cores": 1,
+    "memory_gib": 2,
+    "gpu_required": false
+  },
+  "scientific_boundary": "Formula-surrogate implementation checks only; unpublished measured fibre dispersion and dataset-specific fits remain the paper-exact blocker."
+}

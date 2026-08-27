@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "target_id": "T001",
+  "status": "passed",
+  "generated_data_provenance": "independent_numerics",
+  "data_path": "outputs/data/fig2_energy_contributions.csv",
+  "data_sha256": "739bff6f3073e1af7a75e54eb6870f4eb772e58129d3d95a3c8ea6a667b38e4d",
+  "paper_parameters": {
+    "m0_values": [
+      0.0,
+      0.5,
+      1.0,
+      1.5
+    ],
+    "alpha0_left_axis": [
+      0.0,
+      30.0
+    ],
+    "alpha0_right_axis": [
+      0.0,
+      12.0
+    ]
+  },
+  "assertions": [
+    {
+      "assertion_id": "T001_FINITE_NEGATIVE",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "Every generated energy value is finite and negative.",
+      "evidence": "fig2_energy_contributions.csv"
+    },
+    {
+      "assertion_id": "T001_ALPHA_SUPPRESSION",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "Both negative contributions move monotonically toward zero as alpha0 increases.",
+      "evidence": "fig2_energy_contributions.csv"
+    },
+    {
+      "assertion_id": "T001_MASS_ORDERING",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "At fixed alpha0, increasing m0 suppresses the magnitude in both panels.",
+      "evidence": "fig2_energy_contributions.csv"
+    },
+    {
+      "assertion_id": "T001_STANDARD_CASIMIR_LIMIT",
+      "tier": "analytic",
+      "essential": true,
+      "status": "passed",
+      "claim": "The alpha0=0 Landau endpoint equals the exact massive Dirichlet limit; the massless value is -pi^4/180.",
+      "evidence": {
+        "relative_errors": {
+          "m0_0": 0.0,
+          "m0_0.5": 0.0,
+          "m0_1": 0.0,
+          "m0_1.5": 0.0
+        }
+      }
+    },
+    {
+      "assertion_id": "T001_INDEPENDENT_REPRESENTATIONS",
+      "tier": "numeric",
+      "essential": true,
+      "status": "passed",
+      "claim": "Log-proper-time quadrature agrees with independent positive Bessel sums.",
+      "evidence": [
+        {
+          "sector": "landau",
+          "alpha0": 1.0,
+          "m0": 0.5,
+          "quadrature": -0.37289868086344213,
+          "bessel": -0.3728986808592741,
+          "relative_error": 1.117744578915623e-11
+        },
+        {
+          "sector": "correction",
+          "alpha0": 1.0,
+          "m0": 0.5,
+          "quadrature": -1.374778852577776,
+          "bessel": -1.3747788525490776,
+          "relative_error": 2.0874904319578213e-11
+        },
+        {
+          "sector": "landau",
+          "alpha0": 5.0,
+          "m0": 1.0,
+          "quadrature": -0.11832199188084505,
+          "bessel": -0.11832199188083385,
+          "relative_error": 9.465167533846524e-14
+        },
+        {
+          "sector": "correction",
+          "alpha0": 5.0,
+          "m0": 1.0,
+          "quadrature": -0.07238774222106646,
+          "bessel": -0.07238774222065505,
+          "relative_error": 5.6833796294717264e-12
+        }
+      ]
+    },
+    {
+      "assertion_id": "T001_PAPER_FORMULA_DISCREPANCIES",
+      "tier": "analytic",
+      "essential": true,
+      "status": "passed",
+      "claim": "Independent algebra and numerics confirm the factor-two, K3, and square-root-exponent corrections documented in the derivation.",
+      "evidence": {
+        "radial_ground_state": {
+          "alpha": 1.0,
+          "direct_operator_eigenvalue": 2.0,
+          "paper_eq11_value": 1.0,
+          "factor": 2.0,
+          "status": "confirmed"
+        },
+        "weak_coupling_additional": {
+          "alpha0": 0.1,
+          "m0": 1.0,
+          "actual": -12.763790936917843,
+          "correct_K3_leading": -13.024333349841353,
+          "paper_K2_leading": -5.166212573888979,
+          "correct_relative_error": 0.020004280136663062,
+          "paper_relative_error": 0.5952446573732038,
+          "status": "confirmed"
+        },
+        "strong_coupling_landau": {
+          "alpha0": 30.0,
+          "m0": 0.0,
+          "actual": -0.0022487697724787713,
+          "correct_sqrt_exponent": -0.002175298287642993,
+          "paper_linear_exponent": -3.606640889208012e-24,
+          "correct_relative_error": 0.03267185717939996,
+          "paper_relative_error": 1.0,
+          "status": "confirmed"
+        }
+      }
+    }
+  ],
+  "summary": {
+    "assertions_total": 6,
+    "assertions_passed": 6,
+    "panels": [
+      "FIG002A",
+      "FIG002B"
+    ],
+    "series_per_panel": 4
+  },
+  "execution": {
+    "schema_version": 1,
+    "target_id": "T001",
+    "phase": "check",
+    "guarded_stage": "final_reproduction",
+    "elapsed_seconds": 0.033616,
+    "environment": {
+      "python": "3.13.2"
+    }
+  }
+}

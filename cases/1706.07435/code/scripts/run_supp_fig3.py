@@ -3,23 +3,23 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import sys
 import time
 from pathlib import Path
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", str(WORKSPACE / ".cache" / "matplotlib"))
 
-import matplotlib
+import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from nonhermitian_topology import (  # noqa: E402
     cylinder_blocks,
@@ -30,18 +30,29 @@ from nonhermitian_topology import (  # noqa: E402
 
 
 TARGET_ID = "T005"
-SITES = 40
-MASS = -0.5
-DELTA = 0.0
-KY_SAMPLES = 241
-CASES = {
-    "a": {"kappa_x": 0.1, "kappa_y": 0.0},
-    "b": {"kappa_x": 0.0, "kappa_y": 0.1},
-}
 
 
-def diagonalize_case(ky_values: np.ndarray, *, kappa_x: float, kappa_y: float) -> dict[str, np.ndarray]:
-    dimension = 2 * SITES
+def require_guard() -> None:
+    isolated_root = os.environ.get("PRAGENT_RUN_ROOT")
+    if isolated_root and Path(isolated_root).resolve() == WORKSPACE.resolve():
+        return
+    if os.environ.get("PRAGENT_GUARDED_TARGET_ID", "") != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
+
+
+def diagonalize_case(
+    ky_values: np.ndarray,
+    *,
+    sites: int,
+    mass: float,
+    delta: float,
+    edge_sites: int,
+    kappa_x: float,
+    kappa_y: float,
+) -> dict[str, np.ndarray]:
+    dimension = 2 * sites
     eigenvalues = np.empty((ky_values.size, dimension), dtype=np.complex128)
     left_weights = np.empty((ky_values.size, dimension), dtype=np.float64)
     right_weights = np.empty((ky_values.size, dimension), dtype=np.float64)
@@ -49,19 +60,19 @@ def diagonalize_case(ky_values: np.ndarray, *, kappa_x: float, kappa_y: float) -
 
     for index, ky in enumerate(ky_values):
         matrix = cylinder_hamiltonian(
-            SITES,
+            sites,
             float(ky),
             kappa_x=kappa_x,
             kappa_y=kappa_y,
-            mass=MASS,
-            delta=DELTA,
+            mass=mass,
+            delta=delta,
         )
         values, vectors = np.linalg.eig(matrix)
         order = np.lexsort((values.imag, values.real))
         values = values[order]
         vectors = vectors[:, order]
         eigenvalues[index] = values
-        left, right = cylinder_boundary_weights(vectors, sites=SITES, edge_sites=4)
+        left, right = cylinder_boundary_weights(vectors, sites=sites, edge_sites=edge_sites)
         left_weights[index] = left
         right_weights[index] = right
         numerator = np.linalg.norm(matrix @ vectors - vectors * values[np.newaxis, :], axis=0)
@@ -81,8 +92,13 @@ def matched_edge_states(
     case: dict[str, np.ndarray],
     *,
     kappa_y: float,
+    abs_ky_minimum: float,
+    abs_ky_maximum: float,
 ) -> dict[str, np.ndarray]:
-    selected = np.flatnonzero((np.abs(ky_values) >= 0.12) & (np.abs(ky_values) <= 0.82))
+    selected = np.flatnonzero(
+        (np.abs(ky_values) >= abs_ky_minimum)
+        & (np.abs(ky_values) <= abs_ky_maximum)
+    )
     matched_values = np.empty((selected.size, 2), dtype=np.complex128)
     matched_weights = np.empty((selected.size, 2), dtype=np.float64)
     matched_sides = np.empty((selected.size, 2), dtype=np.int8)
@@ -113,9 +129,19 @@ def matched_edge_states(
     }
 
 
-def scientific_checks(ky_values: np.ndarray, spectra: dict[str, dict[str, np.ndarray]]) -> dict[str, object]:
+def scientific_checks(
+    ky_values: np.ndarray,
+    spectra: dict[str, dict[str, np.ndarray]],
+    *,
+    sites: int,
+    mass: float,
+    delta: float,
+    cases: dict[str, dict[str, float]],
+    abs_ky_minimum: float,
+    abs_ky_maximum: float,
+) -> dict[str, object]:
     kx_test, ky_test = 0.37, -0.81
-    parameters = {"kappa_x": 0.13, "kappa_y": -0.07, "mass": MASS, "delta": 0.04}
+    parameters = {"kappa_x": 0.13, "kappa_y": -0.07, "mass": mass, "delta": 0.04}
     onsite, forward, reverse = cylinder_blocks(ky_test, **parameters)
     reconstructed = onsite + forward * np.exp(1.0j * kx_test) + reverse * np.exp(-1.0j * kx_test)
     fourier_error = float(
@@ -123,23 +149,25 @@ def scientific_checks(ky_values: np.ndarray, spectra: dict[str, dict[str, np.nda
     )
 
     hermitian_matrix = cylinder_hamiltonian(
-        SITES,
+        sites,
         0.29,
         kappa_x=0.0,
         kappa_y=0.0,
-        mass=MASS,
-        delta=0.0,
+        mass=mass,
+        delta=delta,
     )
     hermiticity_error = float(np.linalg.norm(hermitian_matrix - hermitian_matrix.conj().T))
 
     edge_metrics: dict[str, object] = {}
     all_edge_errors = []
     all_edge_weights = []
-    for label, parameters_case in CASES.items():
+    for label, parameters_case in cases.items():
         matched = matched_edge_states(
             ky_values,
             spectra[label],
             kappa_y=parameters_case["kappa_y"],
+            abs_ky_minimum=abs_ky_minimum,
+            abs_ky_maximum=abs_ky_maximum,
         )
         selected_ky = ky_values[matched["ky_indices"]]
         predictions = np.stack(
@@ -166,7 +194,7 @@ def scientific_checks(ky_values: np.ndarray, spectra: dict[str, dict[str, np.nda
         max(np.max(case["max_eigenpair_residual_by_ky"]) for case in spectra.values())
     )
     metrics = {
-        "matrix_dimension": 2 * SITES,
+        "matrix_dimension": 2 * sites,
         "ky_samples": int(ky_values.size),
         "block_fourier_identity_error": fourier_error,
         "hermiticity_limit_error": hermiticity_error,
@@ -195,10 +223,10 @@ def scientific_checks(ky_values: np.ndarray, spectra: dict[str, dict[str, np.nda
         "generated_data_provenance": "independent_numerics",
         "source_pixels_used_in_generation": False,
         "paper_parameters": {
-            "sites": SITES,
-            "mass": MASS,
-            "delta": DELTA,
-            "cases": CASES,
+            "sites": sites,
+            "mass": mass,
+            "delta": delta,
+            "cases": cases,
         },
         "metrics": metrics,
         "criteria": criteria,
@@ -239,17 +267,46 @@ def render_figure(path: Path, ky_values: np.ndarray, spectra: dict[str, dict[str
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=Path, required=True)
+    arguments = parser.parse_args()
+    require_guard()
     started = time.perf_counter()
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    payload = json.loads(arguments.config.read_text(encoding="utf-8"))
+    parameters = payload["parameters"]
+    sites = int(parameters["sites"])
+    mass = float(parameters["mass"])
+    delta = float(parameters["delta"])
+    edge_sites = int(parameters["edge_sites"])
+    cases = {
+        label: {
+            "kappa_x": float(values["kappa_x"]),
+            "kappa_y": float(values["kappa_y"]),
+        }
+        for label, values in parameters["cases"].items()
+    }
+    matching = parameters["edge_matching_abs_ky"]
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
-    ky_values = np.linspace(-np.pi, np.pi, KY_SAMPLES)
+    ky_values = np.linspace(
+        float(parameters["ky_minimum"]),
+        float(parameters["ky_maximum"]),
+        int(parameters["ky_samples"]),
+    )
     spectra = {
-        label: diagonalize_case(ky_values, **parameters)
-        for label, parameters in CASES.items()
+        label: diagonalize_case(
+            ky_values,
+            sites=sites,
+            mass=mass,
+            delta=delta,
+            edge_sites=edge_sites,
+            **case_parameters,
+        )
+        for label, case_parameters in cases.items()
     }
 
     data_path = data_dir / "supp_fig3_cylinder_spectra.npz"
@@ -266,7 +323,16 @@ def main() -> int:
         right_weights_b=spectra["b"]["right_weights"],
     )
 
-    checks = scientific_checks(ky_values, spectra)
+    checks = scientific_checks(
+        ky_values,
+        spectra,
+        sites=sites,
+        mass=mass,
+        delta=delta,
+        cases=cases,
+        abs_ky_minimum=float(matching["minimum"]),
+        abs_ky_maximum=float(matching["maximum"]),
+    )
     checks["runtime_seconds"] = time.perf_counter() - started
     check_path.write_text(json.dumps(checks, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if checks["status"] != "passed":
@@ -281,9 +347,9 @@ def main() -> int:
                 "target_id": TARGET_ID,
                 "runtime_seconds": time.perf_counter() - started,
                 "outputs": [
-                    str(data_path.relative_to(CASE)),
-                    str(check_path.relative_to(CASE)),
-                    str(figure_path.relative_to(CASE)),
+                    str(data_path.relative_to(WORKSPACE)),
+                    str(check_path.relative_to(WORKSPACE)),
+                    str(figure_path.relative_to(WORKSPACE)),
                 ],
             },
             indent=2,

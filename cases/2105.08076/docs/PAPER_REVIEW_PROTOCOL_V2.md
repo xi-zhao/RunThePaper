@@ -23,6 +23,7 @@ fail-closed.
 
 The initial audit leads are `DISC_WICK_SIGN`,
 `DISC_RELEVANCE_INEQUALITY`, and `DISC_PHASE_LABEL_SWAP`.  All are currently
-`inconclusive`.  T003 and T007 are separately classified as reproduction-side
-scientific failures at reduced scale; they are not evidence for or against any
-of the three source discrepancies.
+`inconclusive`.  T007 is separately classified as an attempted-but-unreproduced
+scientific target at reduced scale; it is not evidence for or against any of
+the three source discrepancies.  T003 now follows the paper's printed mixed-fit
+observable and passes its feature-level gate.

@@ -1,19 +1,25 @@
 # 2510.12880: Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain
 
-Preprint: [arXiv:2510.12880 — Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain](https://arxiv.org/abs/2510.12880)
+Preprint: [arXiv:2510.12880 — The Kitaev-AKLT model](https://arxiv.org/abs/2510.12880)
 
 Published as: [Exact Fractionalized Ground States in an Extended Spin-1 Kitaev Chain](https://doi.org/10.1103/fy4t-6bh8)
 
-Formal citation: Physical Review Letters 137, 046701 (2026) · DOI `10.1103/fy4t-6bh8` · Locator `046701`
+Formal citation: Phys. Rev. Lett. 137, 046701 (2026) · DOI `10.1103/fy4t-6bh8` · Locator `046701`
 
 Public status: **Partial scientific reproduction** · Audit score: **95.00/100**
 
-Publishes the independently generated numerical artifacts retained by the historical case: 4 public generated data files, 2 public generated figures, and 4 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
+The two Main Fig. 5 panels and two central periodic analytic families are independently covered, while a full-paper audit exposes five supplemental claim families without accepted implementations. The legacy two-panel similarity score remains 95; whole-paper coverage and reproduction degree are derived separately.
 
 ## Start Here / 从这里开始
 
 - [中文复现 Note](note/reproduction-note.zh-CN.md)
 - [English reproduction note](note/reproduction-note.en.md)
+- [Equation-level derivation](docs/DERIVATION.md)
+- [Numerical methods](docs/NUMERICAL_METHODS.md)
+- [Public evidence index](docs/EVIDENCE_INDEX.md)
+- [Comparison policy](docs/COMPARISON_POLICY.md)
+- [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -21,20 +27,17 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
-## Main Reproduced Results
+## Paper Reference vs Independent Reproduction
 
-| Paper item | Reproduced result | Figure | Check |
-| --- | --- | --- | --- |
-| FIG005A | Squared fidelity of the uniform-positive-w fractionalized MPS with the exact ground state. | [PNG](outputs/figures/ground_state_overlaps.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG005B | Squared fidelity of a one-w-flip MPS with the exact first-excited manifold. | [PNG](outputs/figures/first_excited_overlaps.png) | [JSON](outputs/checks/similarity_scorecard.json) |
+Each board contains only the minimum paper excerpt needed for validation and places it beside an independently generated result. Visual agreement is a scientific-region diagnostic, not author-data-level equivalence.
 
-### FIG005A: Squared fidelity of the uniform-positive-w fractionalized MPS with the exact ground state.
+### fig5a source vs reproduction comparison
 
-![FIG005A reproduction](outputs/figures/ground_state_overlaps.png)
+![fig5a source vs reproduction paper reference versus independent reproduction](docs/comparisons/fig5a_source_vs_reproduction.png)
 
-### FIG005B: Squared fidelity of a one-w-flip MPS with the exact first-excited manifold.
+### fig5b source vs reproduction comparison
 
-![FIG005B reproduction](outputs/figures/first_excited_overlaps.png)
+![fig5b source vs reproduction paper reference versus independent reproduction](docs/comparisons/fig5b_source_vs_reproduction.png)
 
 ## Quick Run
 
@@ -43,15 +46,21 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2510.12880/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --target T001
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 2 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Frozen non-final target states: V001=evidence_compared, V002=evidence_compared, T001=evidence_compared, T002=evidence_compared. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Remaining limitation: All 25 first-excited values agree with the digitized source within 0.0015. The ground-state panel has one retained 0.00364 discrepancy at theta=10 degrees, N=12; the remaining 24 values agree within 0.0015. The paper omits eigensolver and tolerance details, so the two rendered overlap artifacts remain exploratory despite their strong numerical agreement. The full-paper item audit finds 9 eligible scientific items: 4 covered and 5 uncovered, for 44.44% coverage and reproduction degree 40.90. V003-V007 expose three open-chain results, one parity-selection rule, and one perturbative-sector claim that still lack independent implementations.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
+
+## Generated Figures
+
+![first excited overlaps](outputs/figures/first_excited_overlaps.png)
+
+![ground state overlaps](outputs/figures/ground_state_overlaps.png)

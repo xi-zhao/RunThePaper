@@ -11,8 +11,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from sabre import Gate, Operation, compute_depth, random_layout, route_sabre, tokyo_20_graph
 
@@ -125,7 +125,7 @@ def main() -> None:
     ]
     checks = {
         "target": "T003",
-        "source": "decay heuristic section and Fig. 9 operating-point idea",
+        "source": "decay heuristic section and Fig. 8 operating-point idea",
         "benchmark_note": "Seeded local random-interaction circuit, not the paper's hidden benchmark corpus.",
         "logical_qubits": n_qubits,
         "two_qubit_gates": n_gates,

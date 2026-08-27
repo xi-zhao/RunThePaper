@@ -1,12 +1,12 @@
 # Similarity scorecard
 
-This scorecard is intentionally conservative. The case now has an A100 paper-geometry GNN short probe and paper-scale P2WGS, but it has not completed million-sample training or the GPU decoder.
+This scorecard is intentionally conservative. The case has started a two-stage reproduction and now treats Fig. 3 as a retrained model artifact, but it has not reached paper-scale.
 
 | Target | Current level | Main cap |
 | --- | --- | --- |
-| T001 / Fig. 3 | Paper-geometry short-probe reproduction | val64 only, failed metric-contract gate, no GPU decoder |
-| T002 / Fig. 4 | Paper-scale parameter reproduction | three stochastic samples, no exact Zhuifeng trajectory protocol |
+| T001 / Fig. 3 | Reduced retrained-model reproduction | small lattices, small dataset, CPU decoder only |
+| T002 / Fig. 4 | Reduced numeric reproduction | small grid, few stochastic samples, no Zhuifeng source |
 | T003 / Fig. 5 | Timing model reproduction | analytic model only, no GPU timing campaign |
 | T004 / Fig. 3-5 interface | Software assembly reproduction plus sweep | reduced scale, local timing only |
 
-The normalized scorecard lives at `../outputs/checks/similarity_scorecard.json`.
+The normalized scorecard lives at `outputs/checks/similarity_scorecard.json`.

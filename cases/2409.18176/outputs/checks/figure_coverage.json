@@ -1,0 +1,745 @@
+{
+  "schema_version": 2,
+  "paper_id": "2409.18176",
+  "implementations": {
+    "blind_transport_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/feature.json"
+      ],
+      "code_refs": [
+        "src/bose_fermi_transport/thermodynamics.py",
+        "src/bose_fermi_transport/kinetic.py",
+        "src/bose_fermi_transport/collocation.py",
+        "src/bose_fermi_transport/kubo.py",
+        "src/bose_fermi_transport/hydrodynamic.py",
+        "src/bose_fermi_transport/reproduction.py",
+        "src/bose_fermi_transport/rendering.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/feature.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/T001_scattering_amplitude.csv",
+        "outputs/data/T002_hole_resistivity.csv",
+        "outputs/data/T003_exciton_drag.csv",
+        "outputs/data/T004_temperature_resistivity.csv",
+        "outputs/data/T005_total_resistivity.csv",
+        "outputs/data/T006_ac_hole.csv",
+        "outputs/data/T007_ac_exciton.csv",
+        "outputs/data/T008_ac_trion.csv",
+        "outputs/data/T009_kubo_difference.csv",
+        "outputs/data/T010_trion_drag.csv",
+        "outputs/checks/target_checks.json",
+        "outputs/checks/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All ten historical target datasets and figures are generated without reading raw/, references/, Zenodo, author code, author arrays, or source-image pixels.",
+        "The printed free-exciton density inversion and chemical-equilibrium residual remain below the configured tolerance, with the conserved-total interpretation kept as a separate sensitivity lane.",
+        "The zero-coupling limit recovers the Drude hole response and zero neutral drag.",
+        "The interaction rate peaks near the independently derived Delta_star and the exciton drag changes sign across it.",
+        "The direct three-fluid matrix solution agrees with the dimensionally corrected closed solution; the literal printed form remains an explicit falsification lane.",
+        "Every covered target retains its declared paper_exact, paper_subset, reconstructed_model, or proxy_model parameter status."
+      ]
+    },
+    "paper_scale_convergence": {
+      "status": "ready",
+      "target_ids": [
+        "T002",
+        "T003",
+        "T004",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json"
+      ],
+      "code_refs": [
+        "src/bose_fermi_transport/kinetic.py",
+        "src/bose_fermi_transport/collocation.py",
+        "src/bose_fermi_transport/kubo.py",
+        "src/bose_fermi_transport/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale/manifest.json",
+        "outputs/paper_scale/convergence.json",
+        "outputs/paper_scale/target_acceptance.json"
+      ],
+      "acceptance_criteria": [
+        "Every configured parameter point is checkpointed with config and implementation hashes and can be resumed without recomputation.",
+        "Radial-grid doubling and cutoff expansion change all declared primary observables by less than two percent.",
+        "Analytic-delta and narrow-Gaussian regularizations agree within the declared convergence envelope.",
+        "Direct and trion-eliminated collocation agree to floating-point tolerance, proving that the effective g^4 Q terms are retained.",
+        "Missing paper discretization metadata remains labelled reconstructed rather than promoted to paper-exact."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M1a",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 1(a)",
+      "scientific_object": "Proposed trilayer TMD device and contact geometry.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Device schematic without an independently adjudicable numerical observable."
+    },
+    {
+      "item_id": "M1b-L",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 1(b), left",
+      "scientific_object": "Qualitative exciton-hole and trion energy-level sketch under electric-field tuning.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Unscaled potential and energy-level sketch."
+    },
+    {
+      "item_id": "M1b-R.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1(b), right",
+      "scientific_object": "Magnitude of the exciton-hole scattering amplitude |f(E)| across the Feshbach resonance.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "critical": false,
+      "reason": "The independently generated convention lanes in T001 contain the displayed resonant-amplitude observable; W2 must adjudicate the unique convention.",
+      "claim_refs": [
+        "CLM_RESONANT_RESISTIVITY"
+      ]
+    },
+    {
+      "item_id": "M1c-U1",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), top left",
+      "scientific_object": "Fermi-sea illustration for detuning below the resonance scale.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative Fermi-sea illustration without numerical axes."
+    },
+    {
+      "item_id": "M1c-U2",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), top middle",
+      "scientific_object": "Fermi-sea illustration near the resonance scale.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative Fermi-sea illustration without numerical axes."
+    },
+    {
+      "item_id": "M1c-U3",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), top right",
+      "scientific_object": "Fermi-sea illustration for detuning above the resonance scale.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative Fermi-sea illustration without numerical axes."
+    },
+    {
+      "item_id": "M1c-L.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), lower axes, t=0.5 meV and n_x=1e11 cm^-2",
+      "scientific_object": "Hole resistivity versus detuning for the first tunneling-density parameter pair.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "blind_transport_campaign",
+      "critical": true,
+      "reason": "Bound to the matching tunnel_mev and exciton_density_cm2 lane in T002_hole_resistivity.csv.",
+      "claim_refs": [
+        "CLM_RESONANT_RESISTIVITY"
+      ]
+    },
+    {
+      "item_id": "M1c-L.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), lower axes, t=0.5 meV and n_x=2e11 cm^-2",
+      "scientific_object": "Hole resistivity versus detuning for the second tunneling-density parameter pair.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "blind_transport_campaign",
+      "critical": true,
+      "reason": "Bound to the matching tunnel_mev and exciton_density_cm2 lane in T002_hole_resistivity.csv.",
+      "claim_refs": [
+        "CLM_RESONANT_RESISTIVITY"
+      ]
+    },
+    {
+      "item_id": "M1c-L.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), lower axes, t=1.0 meV and n_x=1e11 cm^-2",
+      "scientific_object": "Hole resistivity versus detuning for the third tunneling-density parameter pair.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "blind_transport_campaign",
+      "critical": true,
+      "reason": "Bound to the matching tunnel_mev and exciton_density_cm2 lane in T002_hole_resistivity.csv.",
+      "claim_refs": [
+        "CLM_RESONANT_RESISTIVITY"
+      ]
+    },
+    {
+      "item_id": "M1c-L.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 2, Fig. 1(c), lower axes, t=1.0 meV and n_x=2e11 cm^-2",
+      "scientific_object": "Hole resistivity versus detuning for the fourth tunneling-density parameter pair.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "blind_transport_campaign",
+      "critical": true,
+      "reason": "Bound to the matching tunnel_mev and exciton_density_cm2 lane in T002_hole_resistivity.csv.",
+      "claim_refs": [
+        "CLM_RESONANT_RESISTIVITY"
+      ]
+    },
+    {
+      "item_id": "M2-U1",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 3, Fig. 2(i), upper row",
+      "scientific_object": "Exciton absorption and momentum-distribution sketch below the sign-change point.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative scattering-process illustration."
+    },
+    {
+      "item_id": "M2-U2",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 3, Fig. 2(ii), upper row",
+      "scientific_object": "Small-momentum exciton scattering sketch near the sign-change point.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative scattering-process illustration."
+    },
+    {
+      "item_id": "M2-U3",
+      "item_type": "figure_panel",
+      "source_ref": "Main PDF p. 3, Fig. 2(iii), upper row",
+      "scientific_object": "Exciton absorption and momentum-distribution sketch above the sign-change point.",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Qualitative scattering-process illustration."
+    },
+    {
+      "item_id": "M2-L.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2, lower axes, t=0.2 meV",
+      "scientific_object": "Exciton drag conductivity versus detuning at t=0.2 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Bound to the tunnel_mev=0.2 lane in T003_exciton_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    },
+    {
+      "item_id": "M2-L.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2, lower axes, t=0.5 meV",
+      "scientific_object": "Exciton drag conductivity versus detuning at t=0.5 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Bound to the tunnel_mev=0.5 lane in T003_exciton_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    },
+    {
+      "item_id": "M2-L.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 3, Fig. 2, lower axes, t=1.0 meV",
+      "scientific_object": "Exciton drag conductivity versus detuning at t=1.0 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Bound to the tunnel_mev=1.0 lane in T003_exciton_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    },
+    {
+      "item_id": "M3-BAR",
+      "item_type": "figure_annotation",
+      "source_ref": "Main PDF p. 4, Fig. 3, top regime ribbon",
+      "scientific_object": "Qualitative many-body to phonon crossover ribbon and T_BG marker.",
+      "kind": "non_numeric",
+      "scientific_role": "qualitative_annotation",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Supporting annotation rather than an independently plotted numerical series."
+    },
+    {
+      "item_id": "M3-M.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, main axes, Delta/E_F^h=0.5",
+      "scientific_object": "Many-body hole-resistivity contribution versus temperature at detuning ratio 0.5.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Bound to the detuning_over_ef=0.5 lane in T004_temperature_resistivity.csv.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "M3-M.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, main axes, Delta/E_F^h=0.7",
+      "scientific_object": "Many-body hole-resistivity contribution versus temperature at detuning ratio 0.7.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Bound to the detuning_over_ef=0.7 lane in T004_temperature_resistivity.csv.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "M3-M.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3, main axes, Delta/E_F^h=0.8",
+      "scientific_object": "Many-body hole-resistivity contribution versus temperature at detuning ratio 0.8.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Bound to the detuning_over_ef=0.8 lane in T004_temperature_resistivity.csv.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "M3-I.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3 inset, solid curve Delta approximately Delta_star",
+      "scientific_object": "Near-resonant total hole resistivity including acoustic-phonon scattering.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Bound to the contribution=total lane in T005_total_resistivity.csv at Delta/E_F^h=0.7.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "M3-I.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 4, Fig. 3 inset, dash-dot curve Delta much greater than Delta_star",
+      "scientific_object": "Far-detuned total hole resistivity including acoustic-phonon scattering.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "critical": false,
+      "paper_level_role": "supporting",
+      "reason": "Covered by the independently generated asymptotic limit rho_total/rho0 = 1 + rho_ph/rho0. The absolute phonon calibration remains an explicit proxy because the paper delegates it to external references.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "M4a.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(a), solid dark curve",
+      "scientific_object": "Real part of the kinetic hole ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic real-part lane in T006_ac_hole.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4a.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(a), solid light curve",
+      "scientific_object": "Imaginary part of the kinetic hole ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic imaginary-part lane in T006_ac_hole.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4a.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(a), dashed real-part fit",
+      "scientific_object": "Real part of the fitted three-fluid hole ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit real-part lane in T006_ac_hole.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4a.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(a), dashed imaginary-part fit",
+      "scientific_object": "Imaginary part of the fitted three-fluid hole ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit imaginary-part lane in T006_ac_hole.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4b.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(b), solid dark curve",
+      "scientific_object": "Real part of the kinetic exciton ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic real-part lane in T007_ac_exciton.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4b.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(b), solid light curve",
+      "scientific_object": "Imaginary part of the kinetic exciton ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic imaginary-part lane in T007_ac_exciton.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4b.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(b), dashed real-part fit",
+      "scientific_object": "Real part of the fitted three-fluid exciton ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit real-part lane in T007_ac_exciton.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4b.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(b), dashed imaginary-part fit",
+      "scientific_object": "Imaginary part of the fitted three-fluid exciton ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit imaginary-part lane in T007_ac_exciton.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4c.S1",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(c), solid dark curve",
+      "scientific_object": "Real part of the kinetic trion ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic real-part lane in T008_ac_trion.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4c.S2",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(c), solid light curve",
+      "scientific_object": "Imaginary part of the kinetic trion ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "critical": true,
+      "reason": "Bound to the kinetic imaginary-part lane in T008_ac_trion.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4c.S3",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(c), dashed real-part fit",
+      "scientific_object": "Real part of the fitted three-fluid trion ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit real-part lane in T008_ac_trion.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "M4c.S4",
+      "item_type": "figure_series",
+      "source_ref": "Main PDF p. 5, Fig. 4(c), dashed imaginary-part fit",
+      "scientific_object": "Imaginary part of the fitted three-fluid trion ac conductivity.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "critical": true,
+      "reason": "Bound to the hydrodynamic-fit imaginary-part lane in T008_ac_trion.csv.",
+      "claim_refs": [
+        "CLM_AC_THREE_FLUID"
+      ]
+    },
+    {
+      "item_id": "S5a",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 9, Fig. 5(a)",
+      "scientific_object": "Effective exciton-hole-trion T-matrix diagram.",
+      "kind": "non_numeric",
+      "scientific_role": "diagrammatic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Diagrammatic derivation without a numerical observable."
+    },
+    {
+      "item_id": "S5b",
+      "item_type": "figure_panel",
+      "source_ref": "Supplement PDF p. 9, Fig. 5(b)",
+      "scientific_object": "Microscopic Bethe-Salpeter T-matrix diagram.",
+      "kind": "non_numeric",
+      "scientific_role": "diagrammatic_context",
+      "decision": "excluded",
+      "critical": false,
+      "reason": "Diagrammatic derivation without a numerical observable."
+    },
+    {
+      "item_id": "S6.S1",
+      "item_type": "figure_series",
+      "source_ref": "Supplement PDF p. 12, Fig. 6, n_x=1e11 cm^-2",
+      "scientific_object": "Kubo-minus-Boltzmann hole-resistivity difference at the lower exciton density.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_convergence",
+      "critical": true,
+      "reason": "Bound to the exciton_density_cm2=1e11 lane in T009_kubo_difference.csv.",
+      "claim_refs": [
+        "CLM_KUBO_PARITY"
+      ]
+    },
+    {
+      "item_id": "S6.S2",
+      "item_type": "figure_series",
+      "source_ref": "Supplement PDF p. 12, Fig. 6, n_x=2e11 cm^-2",
+      "scientific_object": "Kubo-minus-Boltzmann hole-resistivity difference at the higher exciton density.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_convergence",
+      "critical": true,
+      "reason": "Bound to the exciton_density_cm2=2e11 lane in T009_kubo_difference.csv.",
+      "claim_refs": [
+        "CLM_KUBO_PARITY"
+      ]
+    },
+    {
+      "item_id": "S7.S1",
+      "item_type": "figure_series",
+      "source_ref": "Supplement PDF p. 13, Fig. 7, t=0.2 meV",
+      "scientific_object": "Trion drag conductivity versus detuning at t=0.2 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "critical": false,
+      "reason": "Bound to the tunnel_mev=0.2 lane in T010_trion_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    },
+    {
+      "item_id": "S7.S2",
+      "item_type": "figure_series",
+      "source_ref": "Supplement PDF p. 13, Fig. 7, t=0.5 meV",
+      "scientific_object": "Trion drag conductivity versus detuning at t=0.5 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "critical": false,
+      "reason": "Bound to the tunnel_mev=0.5 lane in T010_trion_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    },
+    {
+      "item_id": "S7.S3",
+      "item_type": "figure_series",
+      "source_ref": "Supplement PDF p. 13, Fig. 7, t=1.0 meV",
+      "scientific_object": "Trion drag conductivity versus detuning at t=1.0 meV.",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "critical": false,
+      "reason": "Bound to the tunnel_mev=1.0 lane in T010_trion_drag.csv.",
+      "claim_refs": [
+        "CLM_DRAG_SIGN"
+      ]
+    }
+  ],
+  "quantitative_claims": []
+}

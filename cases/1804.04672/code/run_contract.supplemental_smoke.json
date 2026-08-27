@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "run_id": "1804.04672-supplemental-smoke-v2",
+  "target_ids": [
+    "T007",
+    "T008",
+    "T009",
+    "T010",
+    "T011"
+  ],
+  "command": [
+    "python",
+    "scripts/run_supplemental_campaign.py",
+    "--config",
+    "config/supplemental_paper_scale.json",
+    "--profile",
+    "smoke",
+    "--output-root",
+    "outputs/data/supplemental_smoke_v2"
+  ],
+  "inputs": [
+    "src/nonhermitian_chern.py",
+    "src/supplemental_campaign.py",
+    "scripts/run_supplemental_campaign.py",
+    "config/supplemental_paper_scale.json"
+  ],
+  "parameter_file": "config/supplemental_paper_scale.json",
+  "parameter_selector": "profiles.smoke",
+  "expected_parameters": {
+    "gamma_values": [
+      0.0,
+      0.2,
+      0.4
+    ],
+    "s4_scan_gamma_values": [
+      0.2
+    ],
+    "s4_sizes": [
+      4,
+      5
+    ],
+    "s4_m_offsets": [
+      -0.05,
+      0.0,
+      0.05
+    ],
+    "skin_square_size": 6,
+    "skin_disk_radius": 4,
+    "skin_state_shifts": [
+      [
+        -0.5,
+        0.0
+      ],
+      [
+        0.5,
+        0.0
+      ]
+    ],
+    "exact_cylinder_length_y": 8,
+    "exact_cylinder_kx_points": 16
+  },
+  "outputs": [
+    "outputs/data/supplemental_smoke_v2/data/phase_diagrams.json",
+    "outputs/data/supplemental_smoke_v2/data/skin_profiles.npz",
+    "outputs/data/supplemental_smoke_v2/data/skin_profiles_summary.json",
+    "outputs/data/supplemental_smoke_v2/data/exact_cylinder_spectrum.npz",
+    "outputs/data/supplemental_smoke_v2/checks/science.json",
+    "outputs/data/supplemental_smoke_v2/manifest.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {},
+  "resource_request": {
+    "accelerator": "none",
+    "cpu_cores": 2,
+    "memory_gb": 2,
+    "checkpoint_storage_gb": 1
+  },
+  "resume_policy": "No hidden state; the isolated smoke is run in a fresh staging directory.",
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "allowed_runtime_inputs": [
+      "config/supplemental_paper_scale.json",
+      "src/nonhermitian_chern.py",
+      "src/supplemental_campaign.py"
+    ]
+  }
+}

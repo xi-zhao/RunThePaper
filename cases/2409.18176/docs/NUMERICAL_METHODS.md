@@ -7,9 +7,13 @@
 2. Build radial `l=1` collision operators from Supplement Eqs. (17)--(19).
    The angular delta function is integrated analytically; no artificial
    linewidth is needed in the Boltzmann lane.
-3. Solve the complex sparse linear system for holes, excitons, and trions.
+3. Solve the complex system both directly and after explicit trion-block
+   elimination. Their equality proves retention of the effective `g^4 Q`
+   feedback in Supplement Eqs. (21)--(32).
 4. Integrate velocity-weighted departures to obtain the three conductivities.
-5. Evaluate the Kubo self-energy on an independent quadrature grid.
+5. Evaluate the Kubo self-energy on an independent broadened quadrature grid
+   and compare it with an analytic-delta leading-order rate before comparing
+   either lane with the full Boltzmann result.
 6. Solve the printed three-fluid equations directly as a complex `3x3`
    system and compare with their closed form.
 7. Write CSV/NPZ numerical arrays before rendering any plot.
@@ -34,7 +38,9 @@
 - exciton-drag sign change across `Delta_star`;
 - high- and low-detuning return toward background transport;
 - Kubo/Boltzmann agreement through leading order in `g^2`;
-- direct `3x3` and printed closed-form three-fluid parity;
+- direct `3x3` and dimensionally corrected closed-form three-fluid parity;
+- direct and trion-eliminated Boltzmann parity (effective `g^4 Q` retention);
+- broadened and analytic-delta leading-order self-energy convergence;
 - radial-grid/cutoff convergence and checkpoint-resume identity.
 
 ## Source boundary

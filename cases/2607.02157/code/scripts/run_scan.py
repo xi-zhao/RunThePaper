@@ -20,9 +20,7 @@ from pathlib import Path
 
 import numpy as np
 
-from runtime_layout import CASE_ROOT, SOURCE_DIR
-
-sys.path.insert(0, str(SOURCE_DIR))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mackey_glass import generate_mg_sequences  # noqa: E402
 from qrc_engine import cluster_hamiltonian, simulate_ensemble, tfim_hamiltonian  # noqa: E402
 
@@ -71,7 +69,7 @@ def main() -> int:
             jobs.append((args.model, p, r, args.n_seq, 1000 * i + r + 1))
 
     out_path = Path(args.out) if args.out else (
-        CASE_ROOT / "outputs" / "data" / f"fig2_{args.model}_scan.csv"
+        Path(__file__).resolve().parents[1] / "outputs" / "data" / f"fig2_{args.model}_scan.csv"
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
 

@@ -7,9 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2607.08212/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Frozen non-final target states: FIG3C_NATIVE=evidence_compared, FIG3A_ZAP=evidence_compared, ROUTING_PROXY=evidence_compared, ROUTING_PROXY_SCALING=evidence_compared, ROUTING_PROXY_SENSITIVITY=partially_reproduced. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Boundary: Bounded pass reproduces the algebra and Fig. 3 gate accounting; routed benchmark metadata remains incomplete. User-approved proxy campaign expanded on 2026-07-10 to every locally feasible target: Figs. 4/5/8 eight-family matrix, Fig. 6 scaling, and Fig. 7 sensitivity. The Fig. 7 proxy preserves a genuine mismatch: no paper-like break-even contours appear within the declared 0-20% grid. Exact Figs. 4-8 remain blocked by author generators, route state, timing environment, and ZX configuration.

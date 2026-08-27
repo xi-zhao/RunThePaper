@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "run_id": "2409.18176-ac-closure-audit-v1-20260825",
+  "target_ids": [
+    "T006",
+    "T007",
+    "T008"
+  ],
+  "command": [
+    "python",
+    "scripts/run_ac_closure_audit.py",
+    "--config",
+    "config/ac_closure_audit.json",
+    "--output",
+    "outputs/checks/causal_resolution/ac_closure_audit.json"
+  ],
+  "inputs": [
+    "src/bose_fermi_transport/__init__.py",
+    "src/bose_fermi_transport/thermodynamics.py",
+    "src/bose_fermi_transport/kinetic.py",
+    "src/bose_fermi_transport/hydrodynamic.py",
+    "src/bose_fermi_transport/ac_adjudication.py",
+    "scripts/run_ac_closure_audit.py",
+    "config/ac_closure_audit.json"
+  ],
+  "parameter_file": "config/ac_closure_audit.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "model": {
+      "fermi_energy_mev": 5.0,
+      "trion_binding_mev": -10.0,
+      "hole_mass_me": 0.5,
+      "exciton_mass_ratio_to_hole": 2.0,
+      "exciton_density_cm2": 200000000000.0,
+      "relaxation_time_ps": 10.0
+    },
+    "temperature_k": 5.8,
+    "detuning_ratio": 0.5,
+    "tunnel_mev": 1.0,
+    "closures": [
+      "fixed_free",
+      "conserved"
+    ],
+    "frequency_min_mev": -0.8,
+    "frequency_max_mev": 0.8,
+    "frequency_points": 81,
+    "grid": {
+      "hole_points": 36,
+      "exciton_points": 36,
+      "trion_points": 56,
+      "hole_max_pf": 3.5,
+      "exciton_max_pf": 4.5,
+      "trion_max_pf": 6.5,
+      "angular_boundary_epsilon": 0.0002
+    },
+    "hydrodynamic": {
+      "tau_h_ps": 9.4,
+      "tau_x_ps": 10.0,
+      "tau_t_ps": 2.9,
+      "alpha_th": 0.64,
+      "alpha_xh": -0.48,
+      "alpha_tx": 0.5,
+      "density_unit_cm2": 1000000000000.0,
+      "mass_unit_me": 0.25,
+      "time_unit_ps": 10.0
+    },
+    "acceptance": {
+      "kinetic_hydro_max_abs": 0.1,
+      "direct_corrected_max_abs": 1e-12
+    }
+  },
+  "outputs": [
+    "outputs/checks/causal_resolution/ac_closure_audit.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

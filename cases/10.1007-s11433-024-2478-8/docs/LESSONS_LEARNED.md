@@ -24,7 +24,7 @@
 ## Pitfalls / pain points
 
 - **`cd` inside a compound Bash command moved the persistent working directory**
-  and later relative paths failed. Use absolute paths or avoid `cd` in
+  and later `agent/...` paths failed. Use absolute paths or avoid `cd` in
   compound commands.
 - **Figure numbering mismatch in the source text.** The prose says "Fig. 3(c)"
   for what the figure caption labels panel (d). Recorded the mapping in PAPER_MAP
@@ -51,15 +51,14 @@
   digitization artifact, not a physics mismatch, and report RMS with jump columns
   flagged.
 - **`cd` inside a compound Bash command** silently moved the persistent working
-  directory and broke later relative paths.
+  directory and broke later relative `agent/...` paths.
 
 ## Reusable Checks Or Tools
 
-- A raster-figure digitizer (axis-frame + tick detection -> linear pixel→data
-  calibration -> colour-segmentation curve extraction, with twin-axis support)
-  was used internally to quantify figure agreement. It is a reusable,
-  domain-neutral tool; the digitizer and its source-derived point sets are not
-  part of this public case.
+- `src/digitize.py` — raster-figure digitizer: axis-frame + tick detection ->
+  linear pixel→data calibration -> colour-segmentation curve extraction, with
+  twin-axis support. Domain-neutral core is proposed for promotion into
+  `PRAgent-workflow/` (see HARNESS_BACKLOG).
 - Product-basis vs verbatim Morris–Shore cross-validation
   (`tests/test_product_and_bright_sector11_agree`) as a pattern for verifying a
   symmetry-reduced Hamiltonian.

@@ -15,7 +15,7 @@ def evaluate_scientific_match(workspace: Path) -> dict[str, Any]:
     """Evaluate paper-scale physical agreement separately from image styling."""
 
     workspace = workspace.resolve()
-    data_dir = workspace / "outputs" / "data"
+    data_dir = workspace / "outputs" / "paper_exact" / "data"
     checks_dir = workspace / "outputs" / "checks"
     config = load_paper_config(workspace)
     thresholds = config["scientific_qa"]

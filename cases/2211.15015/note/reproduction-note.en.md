@@ -2,7 +2,7 @@
 
 ## Result
 
-All 17 numerical targets have independent code and exploratory artifacts, but none has completed the long-time N=100 paper-scale campaign.
+The complete paper contains 135 eligible atomic items. Two analytic force claims are reproduced, 131 items are objectively compute-blocked, and two convergence claims reached an evidenced system capability limit; no item remains pending.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, science=failed, execution=failed, pixel=not_applicable, independent_review=missing, paper_assessment=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=attempted_not_reproduced, science=failed, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 

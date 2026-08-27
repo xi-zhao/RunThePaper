@@ -5,134 +5,134 @@
 Equation-level derivation for **2607.15070**, generated from the reproduction's equation cards (7 equations). Each block is an equation the reproduction depends on, transcribed from the paper with its source location and tagged by derivation status. For the narrative walk-through see `DERIVATION_TRACE.md` (or `METHOD_TRACE.md`).
 
 ## Equations
-### EQC001 — Confined scalar spectrum
+### EQC001 — Radial oscillator eigenvalue and factor-two diagnostic
 
-*Defines the discrete modes underlying the vacuum-energy sums.*
+*Checks whether the spectrum used upstream of the plotted vacuum-energy formulas follows from the stated Klein-Gordon operator.*
 
 $$
-\omega_{jnl}=\sqrt{(j\pi/L)^2+m^2+\alpha(2n+|l|+1)}
+\left[-\rho^{-1}\partial_\rho(\rho\partial_\rho)+\frac{l^2}{\rho^2}+\alpha^2\rho^2\right]R=\lambda R,\qquad \lambda=2\alpha(2n+|l|+1)
 $$
 
-status: `verified` · source: tex_label: eff_mass, KDE, integer_energy, energyS (paper Eqs. 2, 9-15)
+status: `verified` · source: paper_equations: Eqs. (4)-(11), TeX labels KGCompleta, KDE, integer_energy
 
 Numerical form:
 
 ```
-Dimensionless spectrum uses m0=mL and alpha0=alpha L^2; j>=1, n>=0, l integer.
+radial_ground_eigenvalue(alpha) = 2*alpha; the paper value alpha is retained only as a documented source discrepancy.
 ```
 
-Code: `code/scripts/casimir_model.py`
+Code: `src/casimir_effective_mass.py::radial_ground_eigenvalue`
 
 
-### EQC002 — Landau-like renormalized energy
+### EQC002 — Dimensionless Landau-like boundary energy
 
-*Defines the normalized observable in Figure 2(a).*
+*Defines the independently evaluated numerical object in paper Fig. 2(a), conditional on the paper's stated subtraction prescription.*
 
 $$
-Y_L=-\alpha_0\sum_{j=1}^{\infty}\int_0^{\infty}\!d\tau\,\frac{\tau^{-3}e^{-m_0^2\tau^2-j^2/\tau^2}}{\sinh(\alpha_0\tau^2)}
+\mathcal E_L(m_0,\alpha_0)\equiv\frac{8\pi^2L^3E_L^{\rm ren}}{A}=-\alpha_0\sum_{j=1}^{\infty}\int_0^{\infty}\frac{\tau^{-3}e^{-m_0^2\tau^2-j^2/\tau^2}}{\sinh(\alpha_0\tau^2)}\,d\tau
 $$
 
-status: `verified` · derived from: `EQC001` · source: tex_label: LLS_ren (paper Eq. 36)
+status: `verified` · source: paper_equation: Eq. (25), TeX label LLS_ren
 
 Numerical form:
 
 ```
-Y_L=8*pi^2*L^3*E_L^ren/A; evaluate as the positive Bessel series S_L=-Y_L.
+Evaluate on u=log(tau), sum j with the Jacobi/Poisson identity, and integrate the smooth vector integrand with adaptive Gauss-Kronrod quadrature.
 ```
 
-Code: `code/scripts/casimir_model.py::landau_magnitude`
+Code: `src/casimir_effective_mass.py::dimensionless_landau_energy`
 
 
-### EQC003 — Additional renormalized energy
+### EQC003 — Dimensionless additional boundary energy
 
-*Defines the normalized observable in Figure 2(b).*
+*Defines the independently evaluated numerical object in paper Fig. 2(b), conditional on the paper's stated subtraction prescription.*
 
 $$
-Y_c=-2\alpha_0\sum_{j=1}^{\infty}\int_0^{\infty}\!d\tau\,\frac{\tau^{-3}e^{-m_0^2\tau^2-j^2/\tau^2}}{\sinh(\alpha_0\tau^2)(e^{\alpha_0\tau^2}-1)}
+\mathcal E_c(m_0,\alpha_0)\equiv\frac{8\pi^2L^3E_c^{\rm ren}}{A}=-2\alpha_0\sum_{j=1}^{\infty}\int_0^{\infty}\frac{\tau^{-3}e^{-m_0^2\tau^2-j^2/\tau^2}}{\sinh(\alpha_0\tau^2)(e^{\alpha_0\tau^2}-1)}\,d\tau
 $$
 
-status: `verified` · derived from: `EQC001` · source: tex_label: AC_ren (paper Eq. 37)
+status: `verified` · source: paper_equation: Eq. (27), TeX label AC_ren
 
 Numerical form:
 
 ```
-Y_c=8*pi^2*L^3*E_c^ren/A; both denominator factors use dimensionless alpha0 after tau -> L*tau.
+Use a stable reciprocal 4*alpha0*exp(-2*x)/[(1-exp(-2*x))*(1-exp(-x))], x=alpha0*tau^2, inside the log-tau quadrature.
 ```
 
-Code: `code/scripts/casimir_model.py::correction_magnitude`
+Code: `src/casimir_effective_mass.py::dimensionless_correction_energy`
 
 
-### EQC004 — Positive Bessel-series representation
+### EQC004 — Independent positive Bessel-series representation
 
-*Provides the fast, independently derived numerical form for both energy sectors.*
+*Provides a numerically independent cross-check of both proper-time quadratures.*
 
 $$
-S_L=2\alpha_0\sum_{j,r}\frac{q_r}{j}K_1(2jq_r),\quad S_c=4\alpha_0\sum_{j,k\ge2}\left\lfloor\frac{k}{2}\right\rfloor\frac{q_k}{j}K_1(2jq_k)
+\mathcal E_L=-2\alpha_0\sum_{n\ge0}\sum_{j\ge1}\frac{\sqrt{m_0^2+(2n+1)\alpha_0}}{j}K_1\!\left(2j\sqrt{m_0^2+(2n+1)\alpha_0}\right),\quad \mathcal E_c=-4\alpha_0\sum_{r\ge2}\left\lfloor\frac r2\right\rfloor\sum_{j\ge1}\frac{\sqrt{m_0^2+r\alpha_0}}{j}K_1\!\left(2j\sqrt{m_0^2+r\alpha_0}\right)
 $$
 
-status: `verified` · derived from: `EQC002`, `EQC003` · source: derived_from_paper: Paper Eqs. 36-37 plus geometric-series and Bessel-K integral identities
+status: `verified` · derived from: `EQC002`, `EQC003` · source: derived_from_paper: Independent expansion of paper Eqs. (25) and (27)
 
 Numerical form:
 
 ```
-q_r^2=m0^2+(2r+1)alpha0; q_k^2=m0^2+k alpha0; truncate positive terms by Bessel argument.
+Directly sum positive K1 terms at selected alpha0,m0 points and compare against the Poisson-resummed quadrature.
 ```
 
-Code: `code/scripts/casimir_model.py::landau_magnitude`, `code/scripts/casimir_model.py::correction_magnitude`
+Code: `src/casimir_effective_mass.py::landau_energy_bessel`, `src/casimir_effective_mass.py::correction_energy_bessel`
 
 
-### EQC005 — Small-coupling limits
+### EQC005 — Correct small-coupling limits
 
-*Supplies analytic checks for the finite Landau limit and singular correction sector.*
+*Checks the standard Casimir limit of the Landau sector and the singular power of the additional sector.*
 
 $$
-S_L\to\sum_j\frac{m_0^2K_2(2jm_0)}{j^2},\quad S_c\sim\frac{2}{\alpha_0}\sum_j\frac{m_0^3K_3(2jm_0)}{j^3}
+\mathcal E_L\xrightarrow[\alpha_0\to0]{}-\sum_{j\ge1}\frac{m_0^2}{j^2}K_2(2jm_0),\qquad \mathcal E_c\sim-\frac{2}{\alpha_0}\sum_{j\ge1}\frac{m_0^3}{j^3}K_3(2jm_0)
 $$
 
-status: `verified` · derived from: `EQC002`, `EQC003` · source: tex_label: alphaS_R, alphaS_C (paper Eqs. 41-42), independently re-expanded from Eqs. 36-37
+status: `verified` · derived from: `EQC002`, `EQC003` · source: paper_equations: Eqs. (32)-(36), TeX labels alphaS through alphaS_C
 
 Numerical form:
 
 ```
-Use continuous m0=0 limits S_L=zeta(4)/2 and alpha0*S_c=2*zeta(6). Paper Eq. 42's K2 expression is not used.
+standard_landau_limit(m0) and correction_small_alpha_leading(alpha0,m0)
 ```
 
-Code: `code/scripts/casimir_model.py::landau_zero_coupling`, `code/scripts/casimir_model.py::correction_small_coupling_coefficient`
+Code: `src/casimir_effective_mass.py::standard_landau_limit`, `src/casimir_effective_mass.py::correction_small_alpha_leading`
 
 
-### EQC006 — Large-coupling asymptotics
+### EQC006 — Correct strong-coupling asymptotic
 
-*Checks exponential suppression and Landau-sector dominance.*
+*Verifies exponential suppression and the correct square-root exponent for both energy sectors.*
 
 $$
-S_f\sim\frac{2f\alpha_0\sqrt{m_0^2+f\alpha_0}}{j}K_1\!\left(2j\sqrt{m_0^2+f\alpha_0}\right)
+\mathcal I_f(j)\sim \frac{\sqrt\pi\,f\alpha_0\,[m_0^2+f\alpha_0]^{1/4}}{j^{3/2}}\exp\!\left[-2j\sqrt{m_0^2+f\alpha_0}\right],\quad f=1,2
 $$
 
-status: `verified` · derived from: `EQC004` · source: tex_label: alphaB (paper Eq. 39), corrected from its exact K1 line
+status: `verified` · derived from: `EQC004` · source: paper_equation: Eq. (31), TeX label alphaB
 
 Numerical form:
 
 ```
-Use f=1 for Landau and f=2 for correction, with j=1 dominant and exponent exp[-2j*sqrt(m0^2+f*alpha0)].
+strong_coupling_leading(alpha0,m0,f,j=1)
 ```
 
-Code: `code/scripts/casimir_model.py::large_coupling_leading`
+Code: `src/casimir_effective_mass.py::strong_coupling_leading`
 
 
-### EQC007 — Total-to-Landau ratio
+### EQC007 — Total-to-Landau energy ratio
 
-*Defines the observable plotted in paper Figure 3.*
+*Defines paper Fig. 3 and makes the additional sector's relative contribution explicit.*
 
 $$
-R=\frac{E_0^{\rm ren}}{E_L^{\rm ren}}=1+\frac{S_c}{S_L}
+\frac{E_0^{\rm ren}}{E_L^{\rm ren}}=1+\frac{\mathcal E_c}{\mathcal E_L}
 $$
 
-status: `verified` · derived from: `EQC002`, `EQC003` · source: figure_and_equations: Paper Eqs. 36-38 and Figure 3 caption
+status: `verified` · derived from: `EQC002`, `EQC003` · source: paper_equation_and_figure: Eq. (28) and paper Fig. 3
 
 Numerical form:
 
 ```
-Recompute S_L and S_c under the T002 authorization, then form 1+S_c/S_L pointwise.
+ratio = 1 + correction_energy / landau_energy, evaluated from two independently generated arrays.
 ```
 
-Code: `code/scripts/casimir_model.py::energy_ratio`
+Code: `src/casimir_effective_mass.py::energy_ratio`

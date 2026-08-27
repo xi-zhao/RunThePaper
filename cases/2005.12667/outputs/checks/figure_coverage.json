@@ -1,0 +1,2529 @@
+{
+  "schema_version": 2,
+  "paper_id": "2005.12667",
+  "source": "arXiv:2005.12667v1 / Rev. Mod. Phys. 93, 025005 (2021)",
+  "scope": "full_review",
+  "implementations": {
+    "completion_repairs": {
+      "status": "ready",
+      "code_refs": [
+        "src/completion_repairs.py",
+        "scripts/run_completion_repairs.py"
+      ],
+      "config_ref": "config/completion_repairs.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_completion_repairs.py",
+        "--config",
+        "config/completion_repairs.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig1_lc_harmonic_reference.csv",
+        "outputs/data/fig1_damped_response.csv",
+        "outputs/data/fig18_quadrature_marginals.csv",
+        "outputs/data/fig5_harmonic_comparator.csv",
+        "outputs/data/fig20_low_damping_trajectories.csv",
+        "outputs/data/fig25b_strong_dispersive_spectrum.csv",
+        "outputs/data/t033_claim_checks.csv",
+        "outputs/data/t034_claim_checks.csv",
+        "outputs/data/t035_claim_checks.csv",
+        "outputs/data/t036_claim_checks.csv",
+        "outputs/data/t037_claim_checks.csv",
+        "outputs/data/t038_claim_checks.csv",
+        "outputs/data/t039_claim_checks.csv"
+      ],
+      "acceptance_criteria": [
+        "Each target writes independent data and a target-specific invariant check; scientific acceptance remains a separate Harness gate."
+      ]
+    },
+    "implementation_closure_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T030",
+        "T032",
+        "T042"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_campaign.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--profile",
+        "attestation",
+        "--output-root",
+        "outputs/data/implementation_closure"
+      ],
+      "code_refs": [
+        "src/__init__.py",
+        "src/cqed_reproduction.py",
+        "src/full_rmp_reproduction.py",
+        "src/completion_repairs.py",
+        "src/implementation_campaign.py",
+        "scripts/run_implementation_campaign.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/implementation_closure/T003.json",
+        "outputs/data/implementation_closure/T004.json",
+        "outputs/data/implementation_closure/T005.json",
+        "outputs/data/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T007.json",
+        "outputs/data/implementation_closure/T008.json",
+        "outputs/data/implementation_closure/T009.json",
+        "outputs/data/implementation_closure/T010.json",
+        "outputs/data/implementation_closure/T011.json",
+        "outputs/data/implementation_closure/T012.json",
+        "outputs/data/implementation_closure/T013.json",
+        "outputs/data/implementation_closure/T014.json",
+        "outputs/data/implementation_closure/T015.json",
+        "outputs/data/implementation_closure/T016.json",
+        "outputs/data/implementation_closure/T017.json",
+        "outputs/data/implementation_closure/T018.json",
+        "outputs/data/implementation_closure/T019.json",
+        "outputs/data/implementation_closure/T020.json",
+        "outputs/data/implementation_closure/T030.json",
+        "outputs/data/implementation_closure/T032.json",
+        "outputs/data/implementation_closure/T042.json",
+        "outputs/data/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "The campaign executes from the frozen JSON profile without reading raw/, author code or arrays, reference pixels, or legacy outputs.",
+        "Every fixed-denominator item is mapped exactly once to a declared target output or an explicit indispensable-input blocked artifact.",
+        "Reduced-scale attestation proves the code path only and does not change scientific coverage or claim paper-scale agreement."
+      ],
+      "acceptance_ref": "config/implementation_closure.json",
+      "compute_status": "reduced_scale_implementation_attestation_declared"
+    },
+    "final_disposition_campaign": {
+      "status": "attested",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T032",
+        "T033",
+        "T034",
+        "T035",
+        "T036",
+        "T037",
+        "T038",
+        "T039",
+        "T040",
+        "T041",
+        "T042",
+        "T043"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_final_disposition_campaign.py",
+        "--config",
+        "config/final_disposition.json",
+        "--output-root",
+        "outputs/data/final_disposition"
+      ],
+      "code_refs": [
+        "scripts/run_final_disposition_campaign.py",
+        "src/implementation_campaign.py",
+        "src/completion_repairs.py"
+      ],
+      "config_ref": "config/final_disposition.json",
+      "run_contract_ref": "run_contract.final_disposition.json",
+      "attestation_ref": "outputs/runs/2005.12667-final-disposition-paper-v1-20260825/run_attestation.json",
+      "acceptance_criteria": [
+        "All 36 targets execute in one raw/reference-free isolated campaign.",
+        "Target-specific physical checks pass before scorecard adjudication.",
+        "T015, T016, and T030 remain zero-credit external boundaries because indispensable target-paper inputs are absent."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "M-F01-L",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, left display",
+      "scientific_object": "LC harmonic potential and equally spaced oscillator levels",
+      "decision": "target",
+      "target_ids": [
+        "T028"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F01-I",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 1, inset",
+      "scientific_object": "Lumped-element LC circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F01-R",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 1, right display",
+      "scientific_object": "Normalized damped-oscillator response",
+      "decision": "target",
+      "target_ids": [
+        "T029"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F02-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 2(a)",
+      "scientific_object": "Coplanar-waveguide layout and illustrated second mode",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F02-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 2(b)",
+      "scientific_object": "CPW cross-section with schematic electric and magnetic fields",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F02-c",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 2(c)",
+      "scientific_object": "First three overcoupled CPW transmission resonances",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F03",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 3",
+      "scientific_object": "Open-ended telegrapher-model circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F04-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "photo_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 4(a)",
+      "scientific_object": "Rectangular superconducting-cavity photograph",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F04-b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 4(b)",
+      "scientific_object": "COMSOL TE110 cavity-field intensity",
+      "decision": "target",
+      "target_ids": [
+        "T030"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F04-c",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 4(c)",
+      "scientific_object": "COMSOL TE210 cavity-field intensity",
+      "decision": "target",
+      "target_ids": [
+        "T030"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F04-d",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 4(d)",
+      "scientific_object": "COMSOL TE120 cavity-field intensity",
+      "decision": "target",
+      "target_ids": [
+        "T030"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F04-e",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 4(e)",
+      "scientific_object": "COMSOL TE220 cavity-field intensity",
+      "decision": "target",
+      "target_ids": [
+        "T030"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F04-f",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 4(f)",
+      "scientific_object": "Coaxial quarter-wave cavity field schematic",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F05a-COS",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 5(a), cosine curve",
+      "scientific_object": "Transmon cosine potential",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F05a-LEVELS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 5(a), energy levels",
+      "scientific_object": "Low transmon eigenenergies and wavefunctions",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F05a-HARM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 5(a), dashed curve",
+      "scientific_object": "Quadratic harmonic comparator",
+      "decision": "target",
+      "target_ids": [
+        "T040"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F05b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 5(b)",
+      "scientific_object": "Fixed-frequency transmon circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F05c",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 5(c)",
+      "scientific_object": "SQUID-tunable transmon circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F06-R02-L0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=2 L0",
+      "scientific_object": "Transmon L0 energy versus offset charge at E_J/E_C=2",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R02-L1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=2 L1",
+      "scientific_object": "Transmon L1 energy versus offset charge at E_J/E_C=2",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R02-L2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=2 L2",
+      "scientific_object": "Transmon L2 energy versus offset charge at E_J/E_C=2",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R10-L0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=10 L0",
+      "scientific_object": "Transmon L0 energy versus offset charge at E_J/E_C=10",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R10-L1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=10 L1",
+      "scientific_object": "Transmon L1 energy versus offset charge at E_J/E_C=10",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R10-L2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=10 L2",
+      "scientific_object": "Transmon L2 energy versus offset charge at E_J/E_C=10",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R50-L0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=50 L0",
+      "scientific_object": "Transmon L0 energy versus offset charge at E_J/E_C=50",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R50-L1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=50 L1",
+      "scientific_object": "Transmon L1 energy versus offset charge at E_J/E_C=50",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F06-R50-L2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 6, E_J/E_C=50 L2",
+      "scientific_object": "Transmon L2 energy versus offset charge at E_J/E_C=50",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F07-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 7(a)",
+      "scientific_object": "transmon coupled to 1D resonator",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F07-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 7(b)",
+      "scientific_object": "transmon coupled to lumped LC circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F07-c",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 7(c)",
+      "scientific_object": "transmon coupled to 3D cavity",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F08-BARE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 8, bare branches",
+      "scientific_object": "Bare resonator-qubit excitation branches",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "M-F08-DRESSED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 8, dressed branches",
+      "scientific_object": "Jaynes-Cummings dressed spectrum and square-root splitting",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "M-F08-FLEVEL",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 8, flat transmon level",
+      "scientific_object": "Bare transmon reference level",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Supporting duplicate of a separately counted target; retained for traceability and not counted twice.",
+      "claim_refs": [
+        "CLM_SECII"
+      ]
+    },
+    {
+      "item_id": "M-F09-BARE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 9, bare branches",
+      "scientific_object": "Bare multilevel dispersive spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "M-F09-DRESSED",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 9, dressed branches",
+      "scientific_object": "Dressed dispersive spectrum and cavity pull",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "M-F10-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 10(a)",
+      "scientific_object": "transmon coupled to arbitrary impedance",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F10-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 10(b)",
+      "scientific_object": "linearized junction decomposition",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F10-c",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 10(c)",
+      "scientific_object": "normal-mode LC decomposition",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F11",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 11",
+      "scientific_object": "Input-output port circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F12",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 12",
+      "scientific_object": "Qubit relaxation and dephasing ports",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F13-CIRCUIT",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 13, circuit",
+      "scientific_object": "Purcell-filter circuit",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F13-DOS",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 13, bare density",
+      "scientific_object": "Qualitative bare environmental density of states",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F13-FILTERDOS",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 13, filtered density",
+      "scientific_object": "Qualitative filtered density of states",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F14",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 14",
+      "scientific_object": "Microwave measurement chain",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F15-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 15(a)",
+      "scientific_object": "Two-amplifier efficiency chain",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F15-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 15(b)",
+      "scientific_object": "Equivalent lossy-amplifier model",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F16",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 16",
+      "scientific_object": "IQ mixer schematic",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F17",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 17",
+      "scientific_object": "Pictorial coherent-state phase-space marginal",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F18a-AG-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(a), AG trajectory",
+      "scientific_object": "Dispersive pointer-state AG trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18a-AE-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(a), AE trajectory",
+      "scientific_object": "Dispersive pointer-state AE trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18b-AG-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(b), AG trajectory",
+      "scientific_object": "Dispersive pointer-state AG trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18b-AE-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(b), AE trajectory",
+      "scientific_object": "Dispersive pointer-state AE trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18c-AG-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(c), AG trajectory",
+      "scientific_object": "Dispersive pointer-state AG trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18c-AE-TRAJ",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(c), AE trajectory",
+      "scientific_object": "Dispersive pointer-state AE trajectory",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18d-SNR-T10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(d), T10",
+      "scientific_object": "Finite-time SNR curve for T10",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18d-SNR-T200",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(d), T200",
+      "scientific_object": "Finite-time SNR curve for T200",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18a-PG",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(a), lower PG",
+      "scientific_object": "Normalized x-quadrature marginal PG",
+      "decision": "target",
+      "target_ids": [
+        "T031"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F18a-PE",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 18(a), lower PE",
+      "scientific_object": "Normalized x-quadrature marginal PE",
+      "decision": "target",
+      "target_ids": [
+        "T031"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F19-AMP-G",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 19, amp G",
+      "scientific_object": "State-G cavity amp response",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F19-AMP-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 19, amp E",
+      "scientific_object": "State-E cavity amp response",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F19-PHASE-G",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 19, phase G",
+      "scientific_object": "State-G cavity phase response",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F19-PHASE-E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 19, phase E",
+      "scientific_object": "State-E cavity phase response",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "M-F20a-PE-0E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(a)",
+      "scientific_object": "bad-cavity qubit population from |0,e>",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20a-PE-1G",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(a)",
+      "scientific_object": "bad-cavity qubit population from |1,g>",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20b-A2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(b)",
+      "scientific_object": "bad-cavity steady-state response",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20c-N-0E",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(c)",
+      "scientific_object": "bad-qubit photon number from |0,e>",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20c-N-1G",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(c)",
+      "scientific_object": "bad-qubit photon number from |1,g>",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20d-A2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(d)",
+      "scientific_object": "bad-qubit steady-state response",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20e-PE-0E-K1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(e)",
+      "scientific_object": "strong-coupling population from |0,e>, kappa=gamma=1",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20e-PE-1G-K1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(e)",
+      "scientific_object": "strong-coupling population from |1,g>, kappa=gamma=1",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20f-A2-N0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(f)",
+      "scientific_object": "vacuum-Rabi spectrum at thermal occupation 0",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20f-A2-N035",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(f)",
+      "scientific_object": "vacuum-Rabi spectrum at thermal occupation 0.35",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20e-PE-0E-K01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(e), dashed low-damping series",
+      "scientific_object": "Strong-coupling population from |0E>, kappa=gamma=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T041"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F20e-PE-1G-K01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 20(e), dashed low-damping series",
+      "scientific_object": "Strong-coupling population from |1G>, kappa=gamma=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T041"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F21a-THEORY",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 21(a), red curve",
+      "scientific_object": "Calculated charge-qubit vacuum-Rabi transmission",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F21a-MEAS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 21(a), on-resonance blue curve",
+      "scientific_object": "Measured charge-qubit transmission",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F21a-DETUNED-MEAS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 21(a), detuned blue curve",
+      "scientific_object": "Measured detuned charge-qubit transmission",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F21b-MEAS",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 21(b)",
+      "scientific_object": "Measured transmon vacuum-Rabi transmission",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F22-MAP",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 22",
+      "scientific_object": "Numerical cavity-transmission avoided-crossing map",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F23",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 23",
+      "scientific_object": "Jaynes-Cummings transition ladder",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F24a-PE-O01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "qubit population at Omega/gamma=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24a-PE-O05",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "qubit population at Omega/gamma=0.5",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24a-PE-O10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "qubit population at Omega/gamma=1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24a-PHI-O01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "phase at Omega/gamma=0.1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24a-PHI-O05",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "phase at Omega/gamma=0.5",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24a-PHI-O10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(a)",
+      "scientific_object": "phase at Omega/gamma=1",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24b-PE-ANA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(b)",
+      "scientific_object": "analytic on-resonance saturation",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24c-FWHM-ANA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(c)",
+      "scientific_object": "analytic power-broadened linewidth",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24b-PE-NUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(b)",
+      "scientific_object": "master-equation saturation",
+      "decision": "target",
+      "target_ids": [
+        "T042"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24b-PHI-NUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(b)",
+      "scientific_object": "master-equation phase sweep",
+      "decision": "target",
+      "target_ids": [
+        "T042"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24b-PHI-ANA",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(b)",
+      "scientific_object": "analytic phase sweep",
+      "decision": "target",
+      "target_ids": [
+        "T042"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F24c-FWHM-NUM",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 24(c)",
+      "scientific_object": "master-equation linewidth",
+      "decision": "target",
+      "target_ids": [
+        "T042"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F25a-EPS0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 25(a), epsilon=0",
+      "scientific_object": "Weak-dispersive AC-Stark spectrum at epsilon=0",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F25a-EPS02",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 25(a), epsilon=02",
+      "scientific_object": "Weak-dispersive AC-Stark spectrum at epsilon=02",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F25a-EPS04",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 25(a), epsilon=04",
+      "scientific_object": "Weak-dispersive AC-Stark spectrum at epsilon=04",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F25b-EPS01",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 25(b), epsilon=0.1",
+      "scientific_object": "Strong-dispersive photon-number-resolved spectrum",
+      "decision": "target",
+      "target_ids": [
+        "T043"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "implementation_ref": "completion_repairs",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26a-S0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(a), S0",
+      "scientific_object": "Drive-power-dependent cavity pull S0 in panel a",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26a-S1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(a), S1",
+      "scientific_object": "Drive-power-dependent cavity pull S1 in panel a",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26b-S0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(b), S0",
+      "scientific_object": "Drive-power-dependent cavity pull S0 in panel b",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26b-S1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(b), S1",
+      "scientific_object": "Drive-power-dependent cavity pull S1 in panel b",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26b-S2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(b), S2",
+      "scientific_object": "Drive-power-dependent cavity pull S2 in panel b",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26c-S0",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(c), S0",
+      "scientific_object": "Drive-power-dependent cavity pull S0 in panel c",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26c-S1",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(c), S1",
+      "scientific_object": "Drive-power-dependent cavity pull S1 in panel c",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F26c-S2",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 26(c), S2",
+      "scientific_object": "Drive-power-dependent cavity pull S2 in panel c",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVI"
+      ]
+    },
+    {
+      "item_id": "M-F27",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "photo_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 27",
+      "scientific_object": "Four-transmon device micrograph",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F28-SIM-3L",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 28, dashed theory line",
+      "scientific_object": "Three-level Gaussian-pulse gate-error simulation",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F28-SIM-2L",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 28, solid theory line",
+      "scientific_object": "Two-level DRAG-consistent gate-error simulation",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F28-EXP-GAUSS",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 28, red squares",
+      "scientific_object": "Measured Gaussian-pulse randomized-benchmarking error",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F28-EXP-DRAG",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 28, blue circles",
+      "scientific_object": "Measured DRAG randomized-benchmarking error",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F29-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 29(a)",
+      "scientific_object": "direct capacitive exchange gate",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F29-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 29(b)",
+      "scientific_object": "resonator-mediated exchange gate",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F29-c",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 29(c)",
+      "scientific_object": "all-microwave gate",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F29-d",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 29(d)",
+      "scientific_object": "parametric gate",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F30-a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 30(a)",
+      "scientific_object": "Two-excitation spectrum and 11-02 anticrossing",
+      "decision": "target",
+      "target_ids": [
+        "T032"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F30-b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "Main Fig. 30(b)",
+      "scientific_object": "One-excitation spectrum with 2g and 2J anticrossings",
+      "decision": "target",
+      "target_ids": [
+        "T032"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-T01",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Table I",
+      "scientific_object": "Amplitude-damping code comparison",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F31-a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 31(a)",
+      "scientific_object": "Four-component cat-state Wigner function",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F31-b",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 31(b)",
+      "scientific_object": "Two-component cat-state Wigner function",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVII"
+      ]
+    },
+    {
+      "item_id": "M-F32-TH-P0",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 32, theory phase=0",
+      "scientific_object": "Theoretical Wigner function at phase 0",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F32-TH-P18",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 32, theory phase=pi/8",
+      "scientific_object": "Theoretical Wigner function at phase pi/8",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F32-TH-P14",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 32, theory phase=pi/4",
+      "scientific_object": "Theoretical Wigner function at phase pi/4",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F32-TH-P38",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 32, theory phase=3pi/8",
+      "scientific_object": "Theoretical Wigner function at phase 3pi/8",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F32-TH-P12",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 32, theory phase=pi/2",
+      "scientific_object": "Theoretical Wigner function at phase pi/2",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F32-EXP-P0",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 32, experiment phase=0",
+      "scientific_object": "Measured cavity Wigner tomography at phase 0",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F32-EXP-P18",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 32, experiment phase=pi/8",
+      "scientific_object": "Measured cavity Wigner tomography at phase pi/8",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F32-EXP-P14",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 32, experiment phase=pi/4",
+      "scientific_object": "Measured cavity Wigner tomography at phase pi/4",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F32-EXP-P38",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 32, experiment phase=3pi/8",
+      "scientific_object": "Measured cavity Wigner tomography at phase 3pi/8",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F32-EXP-P12",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 32, experiment phase=pi/2",
+      "scientific_object": "Measured cavity Wigner tomography at phase pi/2",
+      "decision": "excluded",
+      "reason": "Measured author data are retained as scientific context but are not outputs of the formula/model numerical runner."
+    },
+    {
+      "item_id": "M-F33-a",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 33(a)",
+      "scientific_object": "Squeezed-vacuum Wigner function",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F33b-R05",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 33(b), r=05",
+      "scientific_object": "Quadrature squeezing versus phase at r=05",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F33b-R10",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 33(b), r=10",
+      "scientific_object": "Quadrature squeezing versus phase at r=10",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F33b-R15",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Main Fig. 33(b), r=15",
+      "scientific_object": "Quadrature squeezing versus phase at r=15",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "reason": "Formula-, Hamiltonian-, or field-equation-driven scientific output; source-figure pixels are not numerical input.",
+      "claim_refs": [
+        "CLM_SECVIII"
+      ]
+    },
+    {
+      "item_id": "M-F33-c",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 33(c)",
+      "scientific_object": "Squeezed-vacuum preparation schematic",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F34-a",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 34(a) / Appendix A",
+      "scientific_object": "Voltage-biased transmon branch schematic",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    },
+    {
+      "item_id": "M-F34-b",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "paper_level_role": "context",
+      "source_ref": "Main Fig. 34(b) / Appendix A",
+      "scientific_object": "Transmon-to-LC coupling schematic",
+      "decision": "excluded",
+      "reason": "Photograph or explanatory schematic without an independently judged numerical result."
+    }
+  ],
+  "scope_mode": "whole_paper_scientific_items",
+  "formula_numericalization_required": true,
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (82 pages), raw/published-rmp.pdf, and paper-source/CircuitQED_RMP.tex",
+    "known_items": [
+      "Main Figs. 1-33",
+      "Main Table I",
+      "Appendix Fig. 34",
+      "sixteen no-display formula claims"
+    ],
+    "unknown_remainder": false,
+    "reason": "The archived preprint, formal paper, captions, sections, table, and appendices were read end to end. The source archive contains TeX and rendered figure PDFs but no author numerical code or arrays. Source figures were used only to enumerate displays and read printed labels, never to trace curves, fit untabulated parameters, or generate scientific data."
+  },
+  "quantitative_claims": [
+    {
+      "item_id": "Q-EQ029_034",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. III, Eqs. 29-34",
+      "scientific_object": "Transmon-resonator coupling identities",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "Q-EQ045_051",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. III, Eqs. 45-51",
+      "scientific_object": "Normal-mode and inherited-Kerr identities",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "Q-EQ052_058",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. III, Eqs. 52-58",
+      "scientific_object": "Black-box participation identities",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "Q-EQ059_062",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. III, Eqs. 59-62",
+      "scientific_object": "Generic multilevel dispersive shifts",
+      "decision": "target",
+      "target_ids": [
+        "T033"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "Q-EQ063",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. III, Eq. 63",
+      "scientific_object": "Longitudinal-coupling completed-square identity",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIII"
+      ]
+    },
+    {
+      "item_id": "Q-EQ064_065",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eqs. 64-65",
+      "scientific_object": "Continuum bath normalization and commutator",
+      "decision": "target",
+      "target_ids": [
+        "T034"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ066",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eq. 66",
+      "scientific_object": "Microscopic bath-Hamiltonian Hermiticity",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ067",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eq. 67; formal version Eq. 69",
+      "scientific_object": "Rotating-wave system-bath coupling and sign correction",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ068_069",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eqs. 68-69",
+      "scientific_object": "Thermal Lindblad trace, positivity, and relaxation",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ070_071",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eqs. 70-71",
+      "scientific_object": "Boundary-current and field normalization",
+      "decision": "target",
+      "target_ids": [
+        "T035"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ072",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eq. 72",
+      "scientific_object": "Input-output path and passive port relation",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ073_074",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eqs. 73-74",
+      "scientific_object": "Time-mode delta commutator",
+      "decision": "target",
+      "target_ids": [
+        "T036"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ075",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eq. 75",
+      "scientific_object": "Passive one-port unit reflection",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ076_086",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. IV, Eqs. 76-86",
+      "scientific_object": "T1/T2, Purcell, displacement, and drive identities",
+      "decision": "target",
+      "target_ids": [
+        "T037"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECIV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ087_099",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. V, Eqs. 87-99",
+      "scientific_object": "Amplifier noise, efficiency, and IQ identities",
+      "decision": "target",
+      "target_ids": [
+        "T038"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    },
+    {
+      "item_id": "Q-EQ100_106",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "supporting",
+      "source_ref": "Sec. V, Eqs. 100-106",
+      "scientific_object": "Displaced parity, marginals, and Q function",
+      "decision": "target",
+      "target_ids": [
+        "T039"
+      ],
+      "implementation_ref": "completion_repairs",
+      "reason": "Independent formula claim without a counted display carrier.",
+      "claim_refs": [
+        "CLM_SECV"
+      ]
+    }
+  ]
+}

@@ -2,16 +2,21 @@
 
 Preprint: [arXiv:2607.15070v1 — Casimir effect for a massive scalar field confined between parallel plates with a spatially varying effective mass](https://arxiv.org/abs/2607.15070v1)
 
-Formal publication: **Not recorded as of 2026-08-04**
+Formal publication: **Not recorded as of 2026-07-29**
 
-Public status: **Scientific reproduction — invalid** · Audit score: **90.00/100**
+Public status: **Scientific reproduction — independent review pending** · Audit score: **90.00/100**
 
-Publishes the independently generated numerical artifacts retained by the historical case: 2 public generated data files, 3 public generated figures, and 2 declared numerical targets. The package preserves failed, partial, proxy, and unresolved outcomes instead of upgrading them to completion.
+Case scaffolded from framework/templates/paper_case.
 
 ## Start Here / 从这里开始
 
 - [中文复现 Note](note/reproduction-note.zh-CN.md)
 - [English reproduction note](note/reproduction-note.en.md)
+- [Equation-level derivation](docs/DERIVATION.md)
+- [Numerical methods](docs/NUMERICAL_METHODS.md)
+- [Public evidence index](docs/EVIDENCE_INDEX.md)
+- [Comparison policy](docs/COMPARISON_POLICY.md)
+- [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -19,25 +24,21 @@ Publishes the independently generated numerical artifacts retained by the histor
 - [Numerical methods](docs/NUMERICAL_METHODS.md)
 - [Lessons learned](docs/LESSONS_LEARNED.md)
 
-## Main Reproduced Results
+## Paper Reference vs Independent Reproduction
 
-| Paper item | Reproduced result | Figure | Check |
-| --- | --- | --- | --- |
-| FIG002 | Normalized Landau-like and additional renormalized vacuum-energy contributions. | [PNG](outputs/figures/fig2_landau.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG002 | Normalized Landau-like and additional renormalized vacuum-energy contributions. | [PNG](outputs/figures/fig2_correction.png) | [JSON](outputs/checks/similarity_scorecard.json) |
-| FIG003 | Ratio of total renormalized energy to the Landau-like contribution. | [PNG](outputs/figures/fig3_ratio.png) | [JSON](outputs/checks/similarity_scorecard.json) |
+Each board contains only the minimum paper excerpt needed for validation and places it beside an independently generated result. Visual agreement is a scientific-region diagnostic, not author-data-level equivalence.
 
-### FIG002: Normalized Landau-like and additional renormalized vacuum-energy contributions.
+### fig2 left comparison comparison
 
-![FIG002 reproduction](outputs/figures/fig2_landau.png)
+![fig2 left comparison paper reference versus independent reproduction](docs/comparisons/fig2_left_comparison.png)
 
-### FIG002: Normalized Landau-like and additional renormalized vacuum-energy contributions.
+### fig2 right comparison comparison
 
-![FIG002 reproduction](outputs/figures/fig2_correction.png)
+![fig2 right comparison paper reference versus independent reproduction](docs/comparisons/fig2_right_comparison.png)
 
-### FIG003: Ratio of total renormalized energy to the Landau-like contribution.
+### fig3 comparison comparison
 
-![FIG003 reproduction](outputs/figures/fig3_ratio.png)
+![fig3 comparison paper reference versus independent reproduction](docs/comparisons/fig3_comparison.png)
 
 ## Quick Run
 
@@ -46,15 +47,23 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2607.15070/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 3 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Remaining limitation: Raw inputs frozen for baseline-fast-2026-07-29; keep case in mapping_pending until its isolated trial starts.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
+
+## Generated Figures
+
+![fig2 left](outputs/figures/fig2_left.png)
+
+![fig2 right](outputs/figures/fig2_right.png)
+
+![fig3 ratio](outputs/figures/fig3_ratio.png)

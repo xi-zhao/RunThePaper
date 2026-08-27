@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "run_id": "2401.08523-formula-implementation-v3-20260824",
+  "target_ids": [
+    "T001",
+    "T002"
+  ],
+  "command": [
+    "python",
+    "scripts/run_formula_numerics.py",
+    "--config",
+    "config/paper_exact.json"
+  ],
+  "inputs": [
+    "scripts/run_formula_numerics.py",
+    "src/__init__.py",
+    "src/fermionic_phase_space.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "scientific_grid",
+  "expected_parameters": {
+    "fermi_x_min": -6.0,
+    "fermi_x_max": 6.0,
+    "fermi_points": 1201,
+    "occupation_points": 2001,
+    "singularity_offset": 0.0001,
+    "renyi_orders": [
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      4.0
+    ]
+  },
+  "outputs": [
+    "outputs/data/figure_1_fermi_dirac.csv",
+    "outputs/data/figure_2_moments.csv",
+    "outputs/data/figure_2_entropies.csv",
+    "outputs/checks/formula_implementation_validation.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

@@ -1,0 +1,387 @@
+{
+  "schema_version": 1,
+  "paper_id": "2606.30255",
+  "cards": [
+    {
+      "id": "EQC-MEASUREMENT",
+      "title": "Polarization measurement state",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (7), TeX label measurement directions as Kets"
+        }
+      ],
+      "latex": "|\\theta\\rangle=\\sin\\theta|H\\rangle+\\cos\\theta|V\\rangle,\\quad \\Pi_\\theta=|\\theta\\rangle\\langle\\theta|",
+      "role": "Defines the transmitted polarization projector used in every Born probability.",
+      "derived_from": [],
+      "assumptions": [
+        "|H> and |V> are an orthonormal basis",
+        "angles are converted from degrees to radians before trigonometric evaluation"
+      ],
+      "symbols": {
+        "theta": "polarizer angle",
+        "Pi_theta": "rank-one plus-outcome projector"
+      },
+      "derivation_steps": [
+        "The paper supplies the ket in Eq. (7).",
+        "Its norm is sin(theta)^2+cos(theta)^2=1.",
+        "The plus-outcome measurement operator is the outer product of the normalized ket."
+      ],
+      "numerical_form": "q(theta) = [sin(theta), cos(theta)] in the [H,V] basis; projector = outer(q, q.conj()).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-MEASUREMENT",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The ket is transcribed from frozen Eq. (7)."
+        },
+        {
+          "id": "NORM-EQC-MEASUREMENT",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "SymPy reduces sin(theta)^2+cos(theta)^2 to one."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::measurement_ket"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-SOURCE-STATE",
+      "title": "Fitted two-photon source state",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (18), TeX label eq:sagnacstate"
+        }
+      ],
+      "latex": "|\\Psi(w,\\xi)\\rangle=\\sqrt w|HV\\rangle+e^{i\\xi}\\sqrt{1-w}|VH\\rangle",
+      "role": "Defines the pure component of the fitted source model.",
+      "derived_from": [],
+      "assumptions": [
+        "0 <= w <= 1",
+        "the fit fixes xi=pi"
+      ],
+      "symbols": {
+        "w": "population weight of |HV>",
+        "xi": "relative phase between |HV> and |VH>"
+      },
+      "derivation_steps": [
+        "The two counter-propagating source amplitudes occupy orthogonal |HV> and |VH> basis states.",
+        "Their squared amplitudes sum to w+(1-w)=1.",
+        "At w=1/2 and xi=pi the state is the singlet."
+      ],
+      "numerical_form": "psi = [0, sqrt(w), exp(1j*xi)*sqrt(1-w), 0] in the [HH,HV,VH,VV] basis.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-SOURCE-STATE",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The state is transcribed from frozen Eq. (18)."
+        },
+        {
+          "id": "NORM-EQC-SOURCE-STATE",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The orthogonal component probabilities sum identically to one."
+        },
+        {
+          "id": "LIMIT-EQC-SOURCE-STATE",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Substituting w=1/2 and xi=pi yields (|HV>-|VH>)/sqrt(2)."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::source_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-DENSITY",
+      "title": "Isotropic-noise density matrix",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (20), TeX label eq:modelstate"
+        }
+      ],
+      "latex": "\\rho(w,v,\\xi)=v|\\Psi\\rangle\\langle\\Psi|+\\frac{1-v}{4}I_4",
+      "role": "Defines the fitted mixed state whose probabilities form every generated model curve.",
+      "derived_from": [
+        "EQC-SOURCE-STATE"
+      ],
+      "assumptions": [
+        "0 <= v <= 1",
+        "I_4 is the identity on the two-qubit Hilbert space"
+      ],
+      "symbols": {
+        "v": "visibility or pure-state weight",
+        "I_4": "four-dimensional identity"
+      },
+      "derivation_steps": [
+        "A normalized rank-one projector has trace one.",
+        "The isotropic component I_4/4 also has trace one.",
+        "The eigenvalues are (1+3v)/4 along |Psi> and (1-v)/4 in each orthogonal direction.",
+        "For 0<=v<=1 the matrix is Hermitian, positive semidefinite, and trace one."
+      ],
+      "numerical_form": "rho = v*outer(psi, psi.conj()) + (1-v)*eye(4)/4.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-DENSITY",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The density operator is transcribed from frozen Eq. (20)."
+        },
+        {
+          "id": "TRACE-EQC-DENSITY",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The analytic eigenvalues sum to one."
+        },
+        {
+          "id": "PSD-EQC-DENSITY",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The analytic eigenvalues are non-negative over the stated parameter domain."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::density_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-BORN",
+      "title": "Density-matrix Born probability",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eqs. (8)-(9) and Born-rule text"
+        }
+      ],
+      "latex": "P_{++}(\\alpha,\\beta)=\\mathrm{Tr}\\!\\left[\\rho\\left(\\Pi_\\alpha\\otimes\\Pi_\\beta\\right)\\right]",
+      "role": "Evaluates each of the three plus-plus probabilities for the fitted mixed state.",
+      "derived_from": [
+        "EQC-MEASUREMENT",
+        "EQC-DENSITY"
+      ],
+      "assumptions": [
+        "Alice and Bob use local rank-one projectors",
+        "the white-noise component is isotropic"
+      ],
+      "symbols": {
+        "alpha": "Alice measurement angle",
+        "beta": "Bob measurement angle"
+      },
+      "derivation_steps": [
+        "The joint plus-plus ket is |alpha> tensor |beta>.",
+        "Born's rule gives <alpha,beta|rho|alpha,beta>.",
+        "For xi=pi the pure-state amplitude is sqrt(w) sin(alpha) cos(beta) - sqrt(1-w) cos(alpha) sin(beta).",
+        "The normalized white-noise term contributes exactly (1-v)/4.",
+        "For w=1/2 this reduces to v sin(alpha-beta)^2/2+(1-v)/4."
+      ],
+      "numerical_form": "p = real(vdot(kron(q_alpha,q_beta), rho @ kron(q_alpha,q_beta))).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-BORN",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The singlet form is transcribed from Eq. (9); the trace form is its standard density-matrix extension used by Eq. (20)."
+        },
+        {
+          "id": "IDENTITY-EQC-BORN",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "SymPy verifies sin(alpha)cos(beta)-cos(alpha)sin(beta)=sin(alpha-beta)."
+        },
+        {
+          "id": "RANGE-EQC-BORN",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A positive unit-trace density matrix evaluated on a projector yields a probability in [0,1]."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::born_probability"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-WIGNER",
+      "title": "Wigner value",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (5), TeX label Wigner_value"
+        }
+      ],
+      "latex": "\\mathcal W=P_{++}^{\\hat a\\hat b'}+P_{++}^{\\hat b\\hat c'}-P_{++}^{\\hat a\\hat c'}",
+      "role": "Combines the three generated probability curves into the main plotted observable.",
+      "derived_from": [
+        "EQC-BORN"
+      ],
+      "assumptions": [
+        "the three probabilities use the same density matrix and target scan coordinate"
+      ],
+      "symbols": {
+        "W": "Wigner value"
+      },
+      "derivation_steps": [
+        "The set-theoretic identities in Eqs. (1)-(3) give W=p3+p6 for the LHV model.",
+        "Non-negative hidden-set probabilities imply W>=0.",
+        "The same linear combination is evaluated with quantum Born probabilities for each target."
+      ],
+      "numerical_form": "W = p_ab + p_bc - p_ac, evaluated pointwise on the common angle grid.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-WIGNER",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The linear combination is transcribed from frozen Eq. (5)."
+        },
+        {
+          "id": "LHV-EQC-WIGNER",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution of Eqs. (1)-(3) reduces W to p3+p6."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::wigner_components"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-SINGLET-LIMIT",
+      "title": "Singlet analytic Wigner limits",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eqs. (9)-(13)"
+        }
+      ],
+      "latex": "\\mathcal W=\\frac12\\left(\\sin^2\\Delta_{ab'}+\\sin^2\\Delta_{bc'}-\\sin^2\\Delta_{ac'}\\right)",
+      "role": "Provides model-independent analytic checks for symmetric and asymmetric target geometries.",
+      "derived_from": [
+        "EQC-BORN",
+        "EQC-WIGNER"
+      ],
+      "assumptions": [
+        "w=1/2",
+        "v=1",
+        "xi=pi"
+      ],
+      "symbols": {
+        "Delta_xy": "relative angle between the two indicated projectors"
+      },
+      "derivation_steps": [
+        "Insert the singlet Born probability into the Wigner combination.",
+        "For symmetric spacings (phi,phi,2phi), W=sin(phi)^2-sin(2phi)^2/2.",
+        "At phi=pi/6 this equals -1/8.",
+        "For asymmetric separations (pi/12,pi/12,pi/4), W=(1-sqrt(3))/4."
+      ],
+      "numerical_form": "symmetric_limit = -0.125; asymmetric_limit = (1-sqrt(3))/4.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-SINGLET-LIMIT",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The formula and angle choices are transcribed from Eqs. (9)-(13)."
+        },
+        {
+          "id": "SYM-EQC-SINGLET-LIMIT",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Symbolic substitution at pi/6 returns exactly -1/8."
+        },
+        {
+          "id": "ASYM-EQC-SINGLET-LIMIT",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Symbolic substitution of 15,15,45 degrees returns (1-sqrt(3))/4."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::ideal_violation_limit"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC-FIDELITY",
+      "title": "Fidelity to the singlet",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "Eq. (21) and Sections V.A-V.C"
+        }
+      ],
+      "latex": "F_{\\psi^-}=\\langle\\psi^-|\\rho|\\psi^-\\rangle=v\\left(\\frac12+\\sqrt{w(1-w)}\\right)+\\frac{1-v}{4}",
+      "role": "Checks the fitted state against the paper's reported singlet fidelities.",
+      "derived_from": [
+        "EQC-SOURCE-STATE",
+        "EQC-DENSITY"
+      ],
+      "assumptions": [
+        "xi=pi",
+        "the pure comparison target in the results paragraph is the singlet"
+      ],
+      "symbols": {
+        "F": "pure-target fidelity"
+      },
+      "derivation_steps": [
+        "For a pure target, Eq. (21) reduces to the expectation value of rho.",
+        "The squared overlap between the singlet and |Psi(w,pi)> is 1/2+sqrt(w(1-w)).",
+        "The isotropic component contributes 1/4.",
+        "Rounded w and v values can shift the recomputed fidelity by a few 1e-3 relative to the reported fitted value."
+      ],
+      "numerical_form": "F = v*(0.5 + sqrt(w*(1-w))) + (1-v)/4.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "SRC-EQC-FIDELITY",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The pure-target trace formula is transcribed from Eq. (21); the surrounding text identifies the singlet comparison."
+        },
+        {
+          "id": "IDENTITY-EQC-FIDELITY",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct overlap expansion gives 1/2+sqrt(w(1-w))."
+        },
+        {
+          "id": "FIG3-EQC-FIDELITY",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "w=0.5 and v=0.98 give F=0.985 exactly, matching the paper."
+        }
+      ],
+      "code_refs": [
+        "scripts/verify_formulas.py",
+        "src/wigner_model.py::singlet_fidelity"
+      ],
+      "open_questions": []
+    }
+  ]
+}

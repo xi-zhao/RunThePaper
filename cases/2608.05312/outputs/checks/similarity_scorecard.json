@@ -1,8 +1,8 @@
 {
   "paper_id": "2608.05312",
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_figure_evaluation",
-  "summary": "Ten independent numerical targets reproduce the paper's central size-scaling, valve-dynamics, temperature, and robustness features; exact author seeds/grids and the QCLE benchmark remain unavailable.",
+  "summary": "Eleven independent numerical targets reproduce the paper's central features; only the four T011 QCLE benchmark series remain uncovered because indispensable operating parameters are not published.",
   "targets": [
     {
       "components": {
@@ -33,17 +33,107 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "reference_comparison": "analytic_reference"
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T001 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the mean hopping, author seeds, and exact rate-optimization grid.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the mean hopping, author seeds, and exact rate-optimization grid.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T001: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T001 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T001 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T001.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure 1(c) optimized size scaling is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T001"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T001_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/fig1c_size_scaling.png",
         "outputs/data/size_scaling.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T001"
+        "outputs/checks/numerical_feature_checks.json#targets/T001",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/size_scaling.csv"
       ],
       "figure_refs": [
         "Figure 1(c)"
@@ -64,7 +154,7 @@
           "assertion_id": "t001_paper_feature_contract",
           "claim": "Rescue remains above 0.998 and its advantage grows monotonically from N=3 to 96.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T001",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T001",
           "status": "passed",
           "tier": "numeric"
         }
@@ -76,15 +166,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 90.0,
+      "score_aggregation": "included",
       "component_total": 99.0,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -118,17 +212,107 @@
           "EQ006",
           "EQ007"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T002 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and exact trajectory ensemble.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and exact trajectory ensemble.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T002: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T002 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T002 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T002.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure 2(a,b) size-resolved transport dynamics is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T002"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T002_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/fig2_reproduction.png",
         "outputs/data/fig2_dynamics.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T002"
+        "outputs/checks/numerical_feature_checks.json#targets/T002",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/fig2_dynamics.csv"
       ],
       "figure_refs": [
         "Figure 2(a,b)"
@@ -154,7 +338,7 @@
           "assertion_id": "t002_paper_feature_contract",
           "claim": "The rescue curves reach unit efficiency at every N while dephasing efficiency decreases monotonically with N.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T002",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T002",
           "status": "passed",
           "tier": "numeric"
         }
@@ -166,15 +350,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 93.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -208,17 +396,107 @@
           "EQ006",
           "EQ007"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T003 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and the unprinted source-state convention.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and the unprinted source-state convention.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T003: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T003 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T003 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T003.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure 2(c,d) manifold-resolved valve dynamics is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T003"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T003_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/fig2_reproduction.png",
         "outputs/data/fig2_dynamics.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T003"
+        "outputs/checks/numerical_feature_checks.json#targets/T003",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/fig2_dynamics.csv"
       ],
       "figure_refs": [
         "Figure 2(c,d)"
@@ -244,7 +522,7 @@
           "assertion_id": "t003_paper_feature_contract",
           "claim": "Pure rescue produces the claimed transient bright peak; pure dephasing leaves dark population above 0.15 and sink efficiency near 0.8.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T003",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T003",
           "status": "passed",
           "tier": "numeric"
         }
@@ -256,15 +534,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 97.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -296,18 +578,109 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T004 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and exact finite-temperature grid.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and exact finite-temperature grid.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T004: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T004 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T004 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T004.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure 3(a-c) finite-temperature competition is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T004"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T004_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/fig3_temperature.png",
         "outputs/data/temperature_map_n6.csv",
         "outputs/data/temperature_lines.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T004"
+        "outputs/checks/numerical_feature_checks.json#targets/T004",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/temperature_lines.csv",
+        "outputs/data/final_disposition/temperature_map_n6.csv"
       ],
       "figure_refs": [
         "Figure 3(a-c)"
@@ -338,7 +711,7 @@
           "assertion_id": "t004_paper_feature_contract",
           "claim": "Detailed balance shifts the N=6 zero boundary from about 0.08 to 0.16 and the fixed-rate ranking reverses between N=6 and N=64.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T004",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T004",
           "status": "passed",
           "tier": "numeric"
         }
@@ -350,15 +723,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 98.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -389,17 +766,107 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T005 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and exact site-N optimization grid.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and exact site-N optimization grid.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T005: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T005 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T005 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T005.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure S1(a,b) site-N drain sweep is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T005"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T005_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/figS1_site_n_sweep.png",
         "outputs/data/site_n_sweep.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T005"
+        "outputs/checks/numerical_feature_checks.json#targets/T005",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/site_n_sweep.csv"
       ],
       "figure_refs": [
         "Figure S1(a,b)"
@@ -425,7 +892,7 @@
           "assertion_id": "t005_paper_feature_contract",
           "claim": "The site-N geometry reverses the main verdict: optimized dephasing outperforms optimized rescue.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T005",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T005",
           "status": "passed",
           "tier": "numeric"
         }
@@ -437,15 +904,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 88.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -476,17 +947,107 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "reference_comparison": "table_exact"
+        "reference_comparison": "table_exact",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T006 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and full optimizer tie-breaking convention.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and full optimizer tie-breaking convention.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T006: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T006 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T006 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T006.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Table S1 seven transport regimes is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T006"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T006_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/table_s1_regimes.csv",
         "outputs/checks/numerical_feature_checks.json",
-        "outputs/checks/numerical_feature_checks.json#targets/T006"
+        "outputs/checks/numerical_feature_checks.json#targets/T006",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/table_s1_regimes.csv"
       ],
       "figure_refs": [
         "Table S1"
@@ -507,7 +1068,7 @@
           "assertion_id": "t006_paper_feature_contract",
           "claim": "All seven paper regime verdicts, including the drain-geometry reversal, are reproduced.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T006",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T006",
           "status": "passed",
           "tier": "numeric"
         }
@@ -519,15 +1080,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 100.0,
+      "score_aggregation": "included",
       "component_total": 95.0,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -558,17 +1123,107 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "reference_comparison": "table_exact"
+        "reference_comparison": "table_exact",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T007 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds used for the printed detuning averages.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds used for the printed detuning averages.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T007: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T007 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T007 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T007.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Table S2 coherent-detuning robustness is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T007"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T007_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/data/table_s2_detuning.csv",
         "outputs/checks/numerical_feature_checks.json",
-        "outputs/checks/numerical_feature_checks.json#targets/T007"
+        "outputs/checks/numerical_feature_checks.json#targets/T007",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/table_s2_detuning.csv"
       ],
       "figure_refs": [
         "Table S2"
@@ -589,7 +1244,7 @@
           "assertion_id": "t007_paper_feature_contract",
           "claim": "Rescue remains near unity while dephasing decreases monotonically at all four printed detunings.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T007",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T007",
           "status": "passed",
           "tier": "numeric"
         }
@@ -601,15 +1256,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 100.0,
+      "score_aggregation": "included",
       "component_total": 99.0,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -641,17 +1300,108 @@
           "EQ004",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "reference_comparison": "analytic_reference"
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T008 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and full asymptotic fit-window selection rule.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and full asymptotic fit-window selection rule.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T008: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T008 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T008 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T008.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure S2(a,b) scaling-law fits is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T008"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T008_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/figS2_scaling_laws.png",
         "outputs/checks/scaling_fits.json",
-        "outputs/checks/numerical_feature_checks.json#targets/T008"
+        "outputs/checks/numerical_feature_checks.json#targets/T008",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/checks/final_disposition/scaling_fits.json",
+        "outputs/data/final_disposition/size_scaling.csv"
       ],
       "figure_refs": [
         "Figure S2(a,b)"
@@ -677,7 +1427,7 @@
           "assertion_id": "t008_paper_feature_contract",
           "claim": "The finite-window logarithmic law and the large-N power-law crossover are both recovered.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T008",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T008",
           "status": "passed",
           "tier": "numeric"
         }
@@ -689,15 +1439,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 90.0,
+      "score_aggregation": "included",
       "component_total": 99.0,
       "score": 89.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -729,17 +1483,107 @@
           "EQ006",
           "EQ007"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "method_validation",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T009 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds and unprinted source-state convention.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds and unprinted source-state convention.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T009: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T009 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T009 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T009.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure S3(a,b) site-N manifold dynamics is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T009"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T009_paper_exact.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/figS3_site_n_dynamics.png",
         "outputs/data/site_n_dynamics.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T009"
+        "outputs/checks/numerical_feature_checks.json#targets/T009",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/site_n_dynamics.csv"
       ],
       "figure_refs": [
         "Figure S3(a,b)"
@@ -765,7 +1609,7 @@
           "assertion_id": "t009_paper_feature_contract",
           "claim": "Without rescue the dark manifold remains trapped; rescue empties it and creates the claimed large transient bright population.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T009",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T009",
           "status": "passed",
           "tier": "numeric"
         }
@@ -777,15 +1621,19 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 92.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "components": {
@@ -817,17 +1665,97 @@
           "EQ003",
           "EQ006"
         ],
-        "formula_gate": "source_only",
+        "formula_gate": "verified",
         "generated_data_provenance": "independent_numerics",
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "paper_subset",
-        "reference_comparison": "visual_feature_contract"
+        "reference_comparison": "visual_feature_contract",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "target_scope_incomplete",
+            "statement": "T010 reproduces the declared N=64 temperature-map feature, but the frozen campaign uses 5 realizations on a 9x9 grid rather than the publication's 15-realization dense map.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "scope_definition_gap",
+            "statement": "The current contract deliberately fixes a paper-subset map; no resource benchmark or source audit proves an accepted external blocker for the omitted paper-scale density.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "config/reproduction.json",
+              "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No implementation defect was found: the N=64 boundary and dominance feature pass, and the source-blind isolated campaign completed at its declared paper-subset scale.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "The N=64 zero-boundary and rescue-dominance assertions pass.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T010 completed in the isolated paper-subset campaign.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Independent feature assertions and the isolated execution pass.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "No paper-scale resource benchmark was run, so compute capacity cannot be claimed as the cause of the reduced map.",
+              "evidence": [
+                "config/reproduction.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure S4 N=64 temperature map is feature-reproduced; ensemble and grid density remain below the paper-scale rendering contract.",
+            "items": [
+              "T010"
+            ],
+            "completion": "1/1 scientific feature reproduced; 0/1 paper-scale dense maps run"
+          },
+          "next_discriminating_test": {
+            "action": "Run the same clean-room implementation with 15 realizations and a predeclared dense grid, then compare boundary stability without using source pixels as numerical input.",
+            "expected_resolution": "A converged dense-map run closes the internal scope gap; failure would expose a numerical or resource limitation.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T010_dense_map.json"
+            ]
+          }
+        }
       },
       "evidence": [
         "outputs/figures/figS4_temperature_n64.png",
         "outputs/data/temperature_map_n64.csv",
-        "outputs/checks/numerical_feature_checks.json#targets/T010"
+        "outputs/checks/numerical_feature_checks.json#targets/T010",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/temperature_map_n64.csv"
       ],
       "figure_refs": [
         "Figure S4"
@@ -848,7 +1776,7 @@
           "assertion_id": "t010_paper_feature_contract",
           "claim": "The N=64 zero boundary is an order of magnitude below N=6 and rescue dominates nearly the full rate window.",
           "essential": true,
-          "evidence": "outputs/checks/numerical_feature_checks.json#targets/T010",
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T010",
           "status": "passed",
           "tier": "numeric"
         }
@@ -860,62 +1788,404 @@
       "final_reproduction_eligible": false,
       "final_reproduction_gate": "exploratory_only",
       "physics_status": "passed",
-      "formula_score_cap": 89.0,
+      "formula_score_cap": 100.0,
       "generated_data_provenance_score_cap": 100.0,
       "evidence_tier": "physics_reproduction",
       "physics_score_cap": 100.0,
       "parameter_score_cap": 89.0,
       "reference_score_cap": 80.0,
+      "score_aggregation": "included",
       "component_total": 92.0,
       "score": 80.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "components": {
+        "feature_match": {
+          "reason": "All four benchmark series remain uncovered because the paper omits indispensable QCLE operating parameters; source pixels and author numerical implementation are not accepted as substitutes.",
+          "score": 0.0,
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "reason": "No independently generated paper-comparable array exists.",
+          "score": 0.0,
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "reason": "The paper items are enumerated but not scientifically covered.",
+          "score": 0.0,
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": false,
+        "artifact_stage": "exploratory",
+        "critical": false,
+        "data_backed": false,
+        "failure_type": "missing_parameters",
+        "formula_dependencies": [],
+        "formula_gate": "blocked",
+        "generated_data_provenance": "unknown",
+        "manual_interventions": 0,
+        "paper_level_role": "method_validation",
+        "parameter_match": "unknown",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "No accepted scientific array exists for rendering comparison.",
+        "reference_comparison": "source_figure_only",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The four Figure S5 benchmark series cannot be generated independently because the paper omits the QCLE chemical potentials, temperature, lead-coupling matrix, initial state, and dimensional conventions.",
+            "evidence": [
+              "figure_coverage.json",
+              "physics_reproduction_project.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "A complete audit of the frozen main text and supplement found the formal QCLE equation but not the numerical benchmark parameter card needed to define the displayed calculation.",
+            "confidence": "confirmed",
+            "evidence": [
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "figure_coverage.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_applicable",
+            "statement": "The scientific calculation is underdetermined before any executable implementation can be judged; author code and plotted pixels are deliberately not used to fill the missing inputs.",
+            "checks": [
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The main text and complete supplement were searched for every benchmark input named by the QCLE definition and Figure S5 caption.",
+                "evidence": [
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "scope_definition_gap",
+              "status": "ruled_out",
+              "statement": "All four Figure S5 series are explicitly enumerated, so the missing result is not hidden by an incomplete inventory.",
+              "evidence": [
+                "figure_coverage.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All four scientific series in Supplement Figure S5 are uncovered.",
+            "items": [
+              "T011",
+              "supp_figs5a_phenomenological_time_trace",
+              "supp_figs5a_qcle_time_trace",
+              "supp_figs5b_phenomenological_coupling_curve",
+              "supp_figs5b_qcle_coupling_curve"
+            ],
+            "completion": "0/4 Figure S5 scientific series covered"
+          },
+          "next_discriminating_test": {
+            "action": "Acquire a citable QCLE benchmark parameter card, freeze it, independently implement the calculation, and compare only after the generated arrays pass physics checks.",
+            "expected_resolution": "The parameter card either makes all four series well-defined or proves that the publication boundary remains terminal.",
+            "evidence_to_produce": [
+              "references/qcle_parameter_card.json",
+              "outputs/data/qcle_benchmark.csv",
+              "outputs/checks/qcle_benchmark_checks.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "TARGET_LEDGER.md#T011",
+        "figure_coverage.json"
+      ],
+      "figure_refs": [
+        "Figure S5(a,b)"
+      ],
+      "label": "Figure S5(a,b) QCLE versus phenomenological benchmark",
+      "panel_coverage": {
+        "panels": [
+          {
+            "evidence": "TARGET_LEDGER.md#T011",
+            "panel_id": "a",
+            "status": "not_reproduced"
+          },
+          {
+            "evidence": "TARGET_LEDGER.md#T011",
+            "panel_id": "b",
+            "status": "not_reproduced"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t011_paper_feature_contract",
+          "claim": "All four benchmark series remain uncovered because the paper omits indispensable QCLE operating parameters; source pixels and author numerical implementation are not accepted as substitutes.",
+          "essential": true,
+          "evidence": "TARGET_LEDGER.md#T011",
+          "status": "blocked",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "All four benchmark series remain uncovered because the paper omits indispensable QCLE operating parameters; source pixels and author numerical implementation are not accepted as substitutes.",
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No generated primary metric exists; the uncovered items receive zero in reproduction degree but do not rewrite the historical aggregate.",
+      "target_id": "T011",
+      "weight": 0.0,
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 55.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 70.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
+    },
+    {
+      "components": {
+        "feature_match": {
+          "reason": "The independently generated zero-rescue, zero-dephasing Site-N observable supplies the baseline omitted by the historical grouped target.",
+          "score": 50.0,
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "reason": "The 15-realization baseline is 0.5536 +/- 0.0548, with absolute error 0.0964 from the paper's 0.65.",
+          "score": 24.0,
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "reason": "The complete no-dissipation series is now generated and rendered as the Figure S1(b) horizontal baseline.",
+          "score": 15.0,
+          "max_score": 15.0
+        }
+      },
+      "evaluation": {
+        "artifact_pass": true,
+        "artifact_stage": "exploratory",
+        "critical": false,
+        "data_backed": true,
+        "failure_type": "none",
+        "formula_dependencies": [
+          "EQ001",
+          "EQ006"
+        ],
+        "formula_gate": "verified",
+        "generated_data_provenance": "independent_numerics",
+        "manual_interventions": 0,
+        "paper_level_role": "supporting",
+        "parameter_match": "paper_subset",
+        "reference_comparison": "analytic_reference",
+        "assessment_subject": "paper",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "T012 reproduces its declared paper feature at the frozen paper-subset scale; paper-exact replay still lacks the author seeds used for the printed no-dissipation average.",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "outputs/checks/final_disposition/numerical_feature_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "The frozen main text and supplement define the Hamiltonian, dissipators, observables, sizes, and published comparison values, but do not publish the author seeds used for the printed no-dissipation average.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/final_disposition/discriminating_checks.json",
+              "paper-source/main_PRL_v2_PNEdited.tex",
+              "PAPER_MAP.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No reproduction-code defect was found for T012: the paper-facing feature check and source-blind isolated execution both pass.",
+            "checks": [
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All paper-facing feature assertions for T012 pass on the isolated paper-subset arrays.",
+                "evidence": [
+                  "outputs/checks/final_disposition/numerical_feature_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "T012 was generated at profiles.paper_subset in the isolated runner.",
+                "evidence": [
+                  "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The frozen publication was searched for the exact missing parameter set of T012.",
+                "evidence": [
+                  "outputs/checks/final_disposition/discriminating_checks.json",
+                  "paper-source/main_PRL_v2_PNEdited.tex",
+                  "PAPER_MAP.md"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Target-specific paper features, density-matrix invariants, and the isolated run all pass; no contrary code-level evidence remains.",
+              "evidence": [
+                "outputs/checks/final_disposition/numerical_feature_checks.json",
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The declared paper-subset campaign completed locally; the remaining paper-exact boundary is missing metadata rather than compute failure.",
+              "evidence": [
+                "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "Figure S1(b) no-dissipation baseline is scientifically feature-reproduced; only author-exact metadata remains unavailable.",
+            "items": [
+              "T012"
+            ],
+            "completion": "1/1 scientific target reproduced; 0/1 author parameter manifests published"
+          },
+          "next_discriminating_test": {
+            "action": "If the missing author metadata becomes available, freeze it and rerun the existing clean-room implementation without changing the equations.",
+            "expected_resolution": "The rerun either promotes the target to paper-exact fidelity or reveals a genuine discrepancy while preserving the current feature result.",
+            "evidence_to_produce": [
+              "outputs/checks/final_disposition/T012_paper_exact.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "outputs/data/implementation_probe/site_n_no_dissipation_baseline.csv",
+        "outputs/checks/implementation_probe/site_n_baseline_check.json",
+        "outputs/checks/numerical_feature_checks.json#targets/T012",
+        "outputs/checks/final_disposition/numerical_feature_checks.json",
+        "outputs/runs/2608.05312-final-disposition-paper-subset-v1-20260825/run_attestation.json",
+        "outputs/data/final_disposition/site_n_no_dissipation_baseline.csv"
+      ],
+      "figure_refs": [
+        "Figure S1(b)"
+      ],
+      "label": "Figure S1(b) no-dissipation baseline",
+      "panel_coverage": {
+        "panels": [
+          {
+            "evidence": "outputs/data/implementation_probe/site_n_no_dissipation_baseline.csv",
+            "panel_id": "b",
+            "status": "reproduced"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "t012_paper_feature_contract",
+          "claim": "The independently generated zero-rescue, zero-dephasing Site-N observable supplies the baseline omitted by the historical grouped target.",
+          "essential": true,
+          "evidence": "outputs/checks/final_disposition/numerical_feature_checks.json#targets/T012",
+          "status": "passed",
+          "tier": "numeric"
+        }
+      ],
+      "remaining_gap": "The paper does not publish its disorder seeds; the independently generated mean therefore retains a declared sampling uncertainty.",
+      "target_id": "T012",
+      "weight": 0.25,
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 89.0,
+      "reference_score_cap": 90.0,
+      "score_aggregation": "included",
+      "component_total": 89.0,
+      "score": 89.0,
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
-  "overall_score": 83.4,
+  "overall_score": 83.52,
   "similarity_level": "numerical_feature_reproduction",
   "evaluation_summary": {
-    "scored_items": 10,
+    "scored_items": 12,
     "critical_items": 4,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "artifact_pass_rate": 0.92,
+    "data_backed_rate": 0.92,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "none": 9,
-      "partial_target_coverage": 1
+      "none": 10,
+      "partial_target_coverage": 1,
+      "missing_parameters": 1
     },
     "parameter_match_counts": {
-      "paper_subset": 10
+      "paper_subset": 11,
+      "unknown": 1
     },
     "reference_comparison_counts": {
-      "analytic_reference": 2,
+      "analytic_reference": 3,
       "visual_feature_contract": 6,
-      "table_exact": 2
+      "table_exact": 2,
+      "source_figure_only": 1
     },
     "generated_data_provenance_counts": {
-      "independent_numerics": 10
+      "independent_numerics": 11,
+      "unknown": 1
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 10
+      "physics_reproduction": 11,
+      "unknown": 1
     },
     "formula_gate_counts": {
-      "source_only": 10
+      "verified": 11,
+      "blocked": 1
     },
     "paper_level_role_counts": {
       "main_claim": 4,
-      "supporting": 5,
-      "method_validation": 1
+      "supporting": 6,
+      "method_validation": 2
     },
     "physics_status_counts": {
-      "passed": 10
+      "passed": 11,
+      "pending": 1
     },
     "physics_assertion_status_counts": {
-      "passed": 10
+      "passed": 11,
+      "blocked": 1
     },
     "essential_physics_failures": [],
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
@@ -926,8 +2196,77 @@
       "T007",
       "T008",
       "T009",
+      "T010",
+      "T011",
+      "T012"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T012"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T011"
+    ],
+    "causal_diagnosis_status_counts": {
+      "complete": 12
+    },
+    "causal_diagnosis_disposition_counts": {
+      "terminal_blocker": 11,
+      "react_loop_required": 1
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T010",
+      "T011",
+      "T012"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008",
+      "T009",
+      "T011",
+      "T012"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
       "T010"
-    ]
+    ],
+    "direct_cause_counts": {
+      "parameter_values_unavailable": 11,
+      "target_scope_incomplete": 1
+    },
+    "root_cause_counts": {
+      "publication_underspecified": 11,
+      "scope_definition_gap": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 11,
+      "not_applicable": 1
+    }
   },
   "status": "passed"
 }

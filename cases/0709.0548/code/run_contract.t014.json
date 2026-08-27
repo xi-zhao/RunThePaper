@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "run_id": "0709.0548-t014-discord-signature-v4-20260825",
+  "target_ids": [
+    "T014"
+  ],
+  "command": [
+    "python",
+    "scripts/run_t014_discord_signature.py",
+    "--config",
+    "config/t014_discord_signature.json"
+  ],
+  "inputs": [
+    "src/dqc1_discord/__init__.py",
+    "src/dqc1_discord/model.py",
+    "src/dqc1_discord/claim_boundaries.py",
+    "src/dqc1_discord/symmetric_extension.py",
+    "scripts/run_t014_discord_signature.py",
+    "config/t014_discord_signature.json"
+  ],
+  "parameter_file": "config/t014_discord_signature.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "seed_partitions": 70552,
+    "partition_qubits": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "partition_instances": 3,
+    "alpha_values": [
+      0.25,
+      0.5
+    ],
+    "alpha_cutoff": 0.5,
+    "symmetric_extension": {
+      "enabled": true,
+      "seed": 70553,
+      "partition_qubits": [
+        2,
+        3
+      ],
+      "instances": 1,
+      "alpha_values": [
+        0.25,
+        0.5
+      ],
+      "solver": "SCS",
+      "solver_epsilon": 1e-06,
+      "acceptance_tolerance": 5e-05,
+      "max_iterations": 20000
+    }
+  },
+  "forbidden_read_roots": [
+    "../raw",
+    "references"
+  ],
+  "network_policy": "blocked",
+  "subprocess_policy": "blocked",
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPYCACHEPREFIX": "outputs/.pycache"
+  },
+  "outputs": [
+    "outputs/data/t014_discord_signature_boundary.csv",
+    "outputs/data/t014_symmetric_extension.csv",
+    "outputs/checks/t014_discord_signature_boundary.json",
+    "outputs/checks/t014_run_summary.json"
+  ]
+}

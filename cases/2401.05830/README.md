@@ -6,7 +6,7 @@ Published as: [Inverse Mpemba Effect Demonstrated on a Single Trapped Ion Qubit]
 
 Formal citation: Physical Review Letters 133, 010403 (2024) · DOI `10.1103/PhysRevLett.133.010403` · Locator `Vol. 133, Issue 1, article 010403`
 
-Public status: **Partial scientific reproduction** · Audit score: **90.00/100**
+Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **90.00/100**
 
 The arXiv v2 PDF contains the accepted manuscript and Supplemental Material.
 
@@ -19,6 +19,7 @@ The arXiv v2 PDF contains the accepted manuscript and Supplemental Material.
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -80,7 +81,7 @@ cd cases/2401.05830/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

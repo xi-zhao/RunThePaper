@@ -134,11 +134,11 @@ def enforce_accelerator_contract(
     require_a100: bool,
     require_idle_gpu: bool,
 ) -> dict[str, Any]:
-    profile = nvidia_profile()
     if backend != "cupy":
         if require_a100 or require_idle_gpu:
             raise RuntimeError("A100/idle checks require backend='cupy'")
-        return profile
+        return {"available": False, "query_skipped": "cpu_backend"}
+    profile = nvidia_profile()
     if require_a100:
         names = [str(item["name"]) for item in profile.get("gpus", [])]
         if not any("A100" in name for name in names):
@@ -687,7 +687,7 @@ def main() -> int:
         "completed_shards": shard_checks,
         "last_run": {
             "backend": args.backend,
-            "platform": platform.platform(),
+            "platform": f"{platform.system()}-{platform.release()}-{platform.machine()}",
             "accelerator": accelerator,
             "boundary": args.boundary,
             "lengths": args.lengths,

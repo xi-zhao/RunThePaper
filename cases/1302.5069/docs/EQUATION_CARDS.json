@@ -196,13 +196,17 @@
           "id": "EQ005-N",
           "type": "normalization",
           "status": "passed",
-          "reason": "For diagonal dot(rho), the HS norm is sqrt(2) times the operator norm."
+          "reason": "Independent qubit and qutrit pure-state runs give ||dot(rho)||_hs=sqrt(2)*DeltaE/hbar; this exposes the normalization omitted in the sentence after Eq. (20)."
         }
       ],
       "code_refs": [
-        "src/open_qsl/model.py::averaged_norms"
+        "src/open_qsl/model.py::averaged_norms",
+        "src/open_qsl/model.py::pure_state_unitary_speed",
+        "outputs/data/unitary_speed_audit.csv"
       ],
-      "open_questions": []
+      "open_questions": [
+        "The paper calls Lambda_hs the time-averaged energy variance, but the printed definition has dimensions of inverse time and the exact pure-state identity is sqrt(2)*DeltaE/hbar."
+      ]
     },
     {
       "id": "EQ006",
@@ -235,12 +239,22 @@
           "type": "numeric_sanity",
           "status": "passed",
           "reason": "Every gamma-grid row obeys tau_op >= tau_hs >= tau_tr."
+        },
+        {
+          "id": "EQ006-U",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A frozen closed two-level trajectory compares all Eq. (21) branches with standard MT/ML values at nonorthogonal endpoints and first orthogonalization."
         }
       ],
       "code_refs": [
-        "src/open_qsl/model.py::qsl_bounds"
+        "src/open_qsl/model.py::qsl_bounds",
+        "src/open_qsl/model.py::closed_two_level_qsl_audit",
+        "outputs/data/closed_unitary_qsl_audit.csv"
       ],
-      "open_questions": []
+      "open_questions": [
+        "At first orthogonalization the sharpest Eq. (21) branch is 2/omega, whereas the standard MT and ML bounds are pi/omega; fresh review must classify the paper's extension/reduction wording."
+      ]
     },
     {
       "id": "EQ007",
@@ -271,13 +285,22 @@
           "type": "normalization",
           "status": "passed",
           "reason": "The standard ladders (sigma_x +/- i sigma_y)/2 yield the printed survival solution; the literal printed ladders multiply the dissipator by four."
+        },
+        {
+          "id": "EQ007-J",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The literal Eq. (24) integrates to gamma_0/2, while Eqs. (25)-(26) require gamma_0*lambda/2 under the same Fourier convention."
         }
       ],
       "code_refs": [
-        "src/open_qsl/model.py::pseudomode_survival_amplitude"
+        "src/open_qsl/model.py::pseudomode_survival_amplitude",
+        "src/open_qsl/model.py::lorentzian_spectral_density",
+        "outputs/data/lorentzian_kernel_audit.csv"
       ],
       "open_questions": [
-        "The source defines sigma_pm without the conventional factor 1/2 although the solution uses the conventional normalization."
+        "The source defines sigma_pm without the conventional factor 1/2 although the solution uses the conventional normalization.",
+        "The numerator in literal Eq. (24) is missing one power of lambda relative to the memory kernel required by Eqs. (25)-(26)."
       ]
     },
     {
@@ -400,13 +423,23 @@
           "type": "numeric_sanity",
           "status": "passed",
           "reason": "Strong coupling produces total variation above the monotonic Markov reference and lowers the operator QSL."
+        },
+        {
+          "id": "EQ010-BLP",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A converged optimization over the complete qubit state-pair domain finds equatorial antipodes, not the excited/ground pair, on every active row of the printed coupling sweep."
         }
       ],
       "code_refs": [
         "src/open_qsl/model.py::markovian_averaged_norms",
-        "scripts/run_reproduction.py"
+        "src/open_qsl/model.py::optimize_blp_state_pair",
+        "scripts/run_reproduction.py",
+        "outputs/data/blp_state_pair_optimization.csv"
       ],
-      "open_questions": []
+      "open_questions": [
+        "The maximum-pair statement in footnote [48] is contradicted by the frozen full-domain BLP optimization and requires independent adjudication."
+      ]
     }
   ]
 }

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "run_id": "1805.00931-final-resolution-v2-20260825",
+  "target_ids": [
+    "T003-T10",
+    "T003-T11",
+    "T003-T12",
+    "T003-T13",
+    "T003-T14",
+    "T003-T15",
+    "T006"
+  ],
+  "command": [
+    "python",
+    "scripts/run_final_resolution_checks.py",
+    "--config",
+    "config/final_resolution.json",
+    "--output-root",
+    "outputs/checks/final_resolution"
+  ],
+  "inputs": [
+    "src/kicked_ising/__init__.py",
+    "src/kicked_ising/model.py",
+    "src/kicked_ising/iid_universality.py",
+    "src/kicked_ising/paper_scale.py",
+    "scripts/run_final_resolution_checks.py",
+    "config/final_resolution.json",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/final_resolution.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "h_mean": 0.37,
+    "generic_standard_deviation": 0.4,
+    "resonant_standard_deviation": 1.5707963267948966,
+    "times": [
+      2,
+      3,
+      4
+    ],
+    "distribution": "symmetric_binary",
+    "paper_scale_config": "config/paper_scale.json",
+    "required_accelerator": "CUDA",
+    "required_accelerator_memory_gib": 80.0
+  },
+  "outputs": [
+    "outputs/checks/final_resolution/iid_resonant_counterexample.json",
+    "outputs/checks/final_resolution/resource_benchmark.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "historical_outputs_read_by_runner": false
+  }
+}

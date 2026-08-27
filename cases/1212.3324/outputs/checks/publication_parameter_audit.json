@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "paper_id": "1212.3324",
+  "status": "passed",
+  "scope": [
+    "R008",
+    "R042",
+    "T005",
+    "T007",
+    "T008"
+  ],
+  "sources_audited": [
+    {
+      "path": "raw/paper.pdf",
+      "scope": "Main Figure 6 caption and weak-drive numerical discussion"
+    },
+    {
+      "path": "paper-source/Winding_AcceptedVersion.tex",
+      "scope": "active Fig. 6 caption, Eqs. (18)-(21), the delta_AB definition and Bloch Hamiltonian, and the equal-segment evolution product in Sec. III.D"
+    },
+    {
+      "path": "paper-source_inventory.json",
+      "scope": "complete arXiv source-archive inventory"
+    }
+  ],
+  "source_expression_audits": {
+    "R008_delta_ab_convention": {
+      "result": "publication_underspecified",
+      "definition": "delta_AB = epsilon_A - epsilon_B",
+      "displayed_hamiltonian": "+ delta_AB sigma_z",
+      "exact_conflict": "With sigma_z=diag(1,-1), the displayed coefficient produces onsite-energy difference 2 delta_AB.",
+      "source_refs": [
+        "paper-source/Winding_AcceptedVersion.tex:399",
+        "paper-source/Winding_AcceptedVersion.tex:408"
+      ]
+    },
+    "R042_fifth_segment_duration": {
+      "result": "source_level_error_candidate",
+      "protocol_statement": "All five piecewise-constant intervals have duration T/5.",
+      "printed_expression": "exp(-i H5 T/t) ... exp(-i H1 T/5)",
+      "independent_result": "Chronological integration and an independent scipy.linalg.expm product both require exp(-i H5 T/5).",
+      "fault_exclusion": "The implementation uses five equal T/5 steps; analytic two-level exponentials and a separate general matrix-exponential product agree at three momenta.",
+      "source_refs": [
+        "paper-source/Winding_AcceptedVersion.tex:694-702",
+        "DERIVATION.md",
+        "tests/test_floquet_winding.py::test_equal_segment_product_matches_independent_matrix_exponentials"
+      ]
+    }
+  },
+  "published_parameters": {
+    "hamiltonian": "specified in Eqs. (18)-(21)",
+    "physical_values": "J/mu=b/mu=1.5, a/mu=4, Delta0/mu=1, Delta0/omega=0.07",
+    "floquet_replica_truncation": "m=-1,0,1 (M=1)",
+    "geometry": "periodic x and open y"
+  },
+  "indispensable_exact_render_parameters_not_published": [
+    "finite cylinder width in the open y direction",
+    "momentum sampling used for the plotted spectra",
+    "edge-localization display or coloring threshold"
+  ],
+  "archive_findings": {
+    "author_computational_code_present": false,
+    "author_numerical_arrays_present": false,
+    "recoverable_run_metadata_present": false
+  },
+  "direct_cause": "T005 has a source-level factor-two convention conflict; T007/T008 cannot be assigned the paper's exact finite plotting discretization because three claim-relevant rendering inputs are absent; R042 prints a dimensionally invalid T/t duration despite declaring five T/5 intervals.",
+  "root_cause": "The publication is internally inconsistent for delta_AB and the fifth-segment factor, and its complete source archive omits the finite-system and plotting choices for Fig. 6.",
+  "code_fault_assessment": "No implementation defect was found after unit, Hermiticity, topology, independent partial-Fourier and isolated-run checks.",
+  "boundary": "The delta_AB conflict and missing Fig. 6 discretization block paper-exact status for T005, T007 and T008 without invalidating their independent feature reproduction. The T/t expression is separately submitted to fresh review as a localized paper-error candidate; the implementation follows the independently rederived T/5 protocol."
+}

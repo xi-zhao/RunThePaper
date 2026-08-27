@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "campaign_id": "paper-scale-figure-geometry-bem-v2",
+  "output_root": "outputs/data/paper_scale_bem",
+  "execution_scope": "paper-scale representative of the rounding/discretization equivalence class declared by the paper",
+  "machine": {
+    "recommended_cpu_cores": 2,
+    "recommended_ram_gib": 16,
+    "accelerator": "none_required",
+    "recommended_scratch_gib": 20,
+    "wall_time_hours": 3,
+    "software": "Python 3.11+, NumPy, SciPy, Matplotlib with threaded BLAS/LAPACK"
+  },
+  "parameters": {
+    "n_inside": 1.466,
+    "n_outside": 1.0,
+    "incidence_angle_degrees": 15.0,
+    "hexagon_side_R": 1.0,
+    "center_displacement_R": [
+      1.8,
+      -0.5
+    ],
+    "corner_radius_R": 0.0205,
+    "total_boundary_elements": 1600,
+    "side_element_counts": [
+      122,
+      121,
+      121,
+      122,
+      121,
+      121,
+      122,
+      121,
+      121,
+      122,
+      121,
+      121
+    ],
+    "corner_element_counts": [
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12
+    ],
+    "quadrature_order": 12,
+    "scan": {
+      "segments": [
+        {
+          "start": 20.0,
+          "stop": 25.0,
+          "count": 151
+        },
+        {
+          "start": 22.94444,
+          "stop": 22.94444,
+          "count": 1
+        },
+        {
+          "start": 23.25,
+          "stop": 23.25,
+          "count": 1
+        }
+      ],
+      "angular_samples": 720
+    },
+    "resonance": {
+      "reported_kR": [
+        22.94444,
+        -0.09696
+      ],
+      "convergence_meshes": [
+        {
+          "total_boundary_elements": 400,
+          "corner_elements_per_corner": 3
+        },
+        {
+          "total_boundary_elements": 800,
+          "corner_elements_per_corner": 6
+        },
+        {
+          "total_boundary_elements": 1200,
+          "corner_elements_per_corner": 9
+        },
+        {
+          "total_boundary_elements": 1600,
+          "corner_elements_per_corner": 12
+        }
+      ]
+    },
+    "near_field": {
+      "x_min": -3.0,
+      "x_max": 3.0,
+      "x_count": 401,
+      "y_min": -3.0,
+      "y_max": 3.0,
+      "y_count": 401
+    },
+    "far_field_angular_samples": 1440
+  },
+  "sharding": {
+    "in_process_workers": 2,
+    "scan_shards": 16,
+    "near_field_row_shards": 16,
+    "checkpoint_resume": true,
+    "instructions": [
+      "Run --stage scan with shard-index 0..15 and shard-count 16.",
+      "Run --stage resonance once after or concurrently with scan shards.",
+      "Run --stage near-field with shard-index 0..15 and shard-count 16 after resonance completes.",
+      "Run --stage far-field once, then --stage aggregate once. Existing matching checkpoints are reused."
+    ]
+  },
+  "acceptance": {
+    "linear_residual_max": 1e-09,
+    "scan_max_spacing_max": 0.034,
+    "reported_resonance_grid_distance_max": 0.0025,
+    "resolution_b_min": 16.0,
+    "rho_over_delta_target": 11.2,
+    "rho_over_lambda_target": 0.11,
+    "rounding_relative_tolerance": 0.08,
+    "optical_relative_error_median_max": 0.03,
+    "resonance_relative_residual_max": 0.0005,
+    "far_field_pi_symmetry_max": 0.0001
+  },
+  "observable_contract": {
+    "T001": {
+      "observable": "dimensionless total scattering cross section sigma/R",
+      "estimator": "optical_theorem",
+      "paper_source": "Eq. (22), Sec. 7 and Fig. 5"
+    },
+    "T002": {
+      "observable": "near-field intensity |psi(r)|^2",
+      "estimator": "boundary_state_reconstruction",
+      "paper_source": "Eq. (12) and Fig. 6"
+    },
+    "T003": {
+      "observable": "far-field intensity |psi(r,theta)|^2",
+      "estimator": "boundary_integral_far_field",
+      "paper_source": "Eq. (21) and Fig. 7"
+    }
+  },
+  "parameter_contract": {
+    "kind": "declared_equivalence_class",
+    "equivalence_scope": [
+      "corner_rounding",
+      "boundary_discretization"
+    ],
+    "paper_statement": "Section Treatment of corners states that results do not depend on the particular selected rounding and discretization, so explicit formulae are not given.",
+    "published_constraints": [
+      "the rounded boundary must remain locally smooth: rho is much larger than the discretization spacing",
+      "rounding must not affect the physics: rho is much smaller than wavelength lambda",
+      "the coupled-cavity example uses N=1600 physical boundary elements and a 2N=3200 matrix",
+      "rho/lambda is approximately 0.11",
+      "rho/Delta s is approximately 11.2"
+    ],
+    "independent_representative": {
+      "rounding": "circular fillet derived without source-image fitting",
+      "corner_radius_R": 0.0205,
+      "total_boundary_elements": 1600,
+      "side_element_counts": [
+        122,
+        121,
+        121,
+        122,
+        121,
+        121,
+        122,
+        121,
+        121,
+        122,
+        121,
+        121
+      ],
+      "corner_element_counts": [
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12,
+        12
+      ]
+    },
+    "author_private_mesh_identity_claimed": false,
+    "source_pixels_used_to_select_representative": false
+  },
+  "publication_parameter_resolution": {
+    "status": "source_discrepancy",
+    "parameter": "parameters.center_displacement_R",
+    "prose_value_R": [
+      1.8,
+      0.5
+    ],
+    "figure_value_R": [
+      1.8,
+      -0.5
+    ],
+    "selected_value_R": [
+      1.8,
+      -0.5
+    ],
+    "selected_basis": "Figure 4's coordinate axes and cavity placement define the geometry used by Figures 5-7; the prose sign is retained as an unresolved publication discrepancy.",
+    "paper_sources": [
+      "paper-source/obem.tex lines 814-816",
+      "paper-source/para.eps (Figure 4)"
+    ],
+    "source_pixels_used_to_fit_parameters": false,
+    "paper_exact_claim_allowed": false
+  },
+  "parameter_sources": {
+    "n_inside_n_outside": "paper Sec. 7 example paragraph",
+    "incidence_angle_degrees": "paper Fig. 4 caption and Fig. 5 caption",
+    "hexagon_side_and_displacement": "paper Sec. 7 example paragraph and Fig. 4",
+    "scan_interval": "paper Sec. 7 example paragraph",
+    "total_boundary_elements": "paper Sec. 7: 2N=3200, hence N=1600 boundary elements and a 3200-dimensional matrix",
+    "corner_radius_R": "independent derivation from paper rho/lambda approximately 0.11 at n=1.466 and Re(kR)=22.94444",
+    "corner_element_counts": "independent discretization satisfying paper rho/Delta s approximately 11.2; exact author mesh is unpublished",
+    "reported_resonance": "paper paragraph preceding Figs. 6 and 7",
+    "scan_grid_and_field_grids": "declared convergence choices because the paper does not publish these grids; the full-range grid has max spacing 1/30 and adds the reported resonance plus spurious-solution anchors"
+  },
+  "input_attestation": {
+    "source_pixels_used_as_numeric_input": false,
+    "author_numerical_arrays_used": false,
+    "author_code_used": false,
+    "source_pixels_used_to_select_representative": false,
+    "scientific_config_frozen_before_rendering": true
+  }
+}

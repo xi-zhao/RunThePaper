@@ -1,57 +1,47 @@
+#!/usr/bin/env python3
+"""Portable public entrypoint for the independently implemented reproduction."""
 from __future__ import annotations
 
-import argparse
-import json
-import sys
+import os
 from pathlib import Path
+import shutil
+import subprocess
+import sys
+
+CASE_ROOT = Path(__file__).resolve().parents[2]
+CODE_ROOT = CASE_ROOT / "code"
+IMPLEMENTATION = CODE_ROOT / "scripts" / "run_reproduction_impl.py"
 
 
-CODE_ROOT = Path(__file__).resolve().parents[1]
-CASE_ROOT = CODE_ROOT.parent if CODE_ROOT.name == "code" else CODE_ROOT
-sys.path.insert(0, str(CODE_ROOT / "src"))
-
-from cavity_transport.experiments import RunContext, TARGET_RUNNERS, run_targets  # noqa: E402
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Reproduce numerical targets from arXiv:2608.05312."
-    )
-    parser.add_argument(
-        "--profile",
-        choices=("quick", "paper_subset"),
-        default="quick",
-        help="Quick smoke run or the declared paper-parameter subset.",
-    )
-    parser.add_argument(
-        "--targets",
-        default="checks,dynamics,detuning",
-        help=(
-            "Comma-separated targets. Available: "
-            + ",".join(TARGET_RUNNERS)
-            + ". Use 'all' for every implemented target."
-        ),
-    )
-    parser.add_argument(
-        "--output-root",
-        type=Path,
-        default=CASE_ROOT / "outputs",
-        help="Output directory containing data/, figures/, comparisons/, checks/.",
-    )
-    return parser.parse_args()
+def sync_generated_outputs() -> None:
+    for group in ("data", "figures", "checks"):
+        source = CODE_ROOT / "outputs" / group
+        destination = CASE_ROOT / "outputs" / group
+        if not source.is_dir():
+            continue
+        for path in source.rglob("*"):
+            if not path.is_file():
+                continue
+            target = destination / path.relative_to(source)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, target)
 
 
 def main() -> int:
-    args = parse_args()
-    targets = (
-        list(TARGET_RUNNERS)
-        if args.targets.strip() == "all"
-        else [value.strip() for value in args.targets.split(",") if value.strip()]
+    environment = os.environ.copy()
+    python_path = [str(CODE_ROOT), str(CODE_ROOT / "src")]
+    if environment.get("PYTHONPATH"):
+        python_path.append(environment["PYTHONPATH"])
+    environment["PYTHONPATH"] = os.pathsep.join(python_path)
+    completed = subprocess.run(
+        [sys.executable, str(IMPLEMENTATION), *sys.argv[1:]],
+        cwd=CODE_ROOT,
+        env=environment,
+        check=False,
     )
-    context = RunContext.create(CODE_ROOT, args.output_root, args.profile)
-    manifest = run_targets(context, targets)
-    print(json.dumps(manifest, indent=2, ensure_ascii=False))
-    return 0
+    if completed.returncode == 0:
+        sync_generated_outputs()
+    return completed.returncode
 
 
 if __name__ == "__main__":

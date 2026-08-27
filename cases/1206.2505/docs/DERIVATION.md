@@ -67,11 +67,13 @@ separations; the first oscillation minimum is unchanged on this grid.
 
 ## 5. General ramps
 
-For a declared `g(t)`, every mode is propagated by midpoint exponentials of
-`h_k(g(t))`. Endpoint occupations are continuous from one at `k=0` to zero at
-`k=pi` for the across-critical protocols, so a half-occupied mode occurs. The
-paper does not publish a specific ramp, hence linear and smoothstep results are
-reconstructed evidence rather than paper-exact curves.
+For any continuous across-critical `g(t)`, the endpoint occupations retain
+opposite sides of one half at `k=0` and `k=pi`. Continuity in momentum then
+guarantees at least one `k*` with `n(k*)=1/2`; this is the paper's arbitrary-ramp
+claim and does not require a privileged ramp function. For falsification, every
+mode is also propagated by midpoint exponentials of `h_k(g(t))`. The paper does
+not publish a specific ramp, so the linear and smoothstep curves are declared
+reconstructions, not paper-exact figures.
 
 ## 6. Supplemental normalization audit
 

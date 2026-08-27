@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "schema_version": 1,
+  "paper_id": "2607.08767",
+  "target_id": "F5A_PROXY",
+  "scope": "proxy_model",
+  "generated_data_provenance": "independent_numerics",
+  "parameters": {
+    "theta": 0.05,
+    "distance": 3,
+    "rounds": 3,
+    "single_qubit_pauli_x_probability": 0.024270800923008887,
+    "single_qubit_pauli_z_probability": 0.024270800923008887,
+    "seed": 260708767
+  },
+  "proxy_assumptions": [
+    "Three data qubits encode logical |+> as a GHZ state.",
+    "Two ideal ancillas measure adjacent ZZ stabilizers for three rounds.",
+    "Equation (9) is inserted on data qubits at the start of every round.",
+    "All syndrome extraction, reset, and final measurement operations are ideal.",
+    "Final logical-X failure is the odd parity of the three X-basis data measurements.",
+    "The unpublished Plaquette circuit-location and decoder conventions are not reconstructed."
+  ],
+  "paper_reference": {
+    "full_state": 0.387,
+    "clifford": 0.181
+  },
+  "proxy_results": [
+    {
+      "backend": "full_state_proxy",
+      "shots": 5000,
+      "logical_errors": 4526,
+      "logical_error_probability": 0.9052,
+      "confidence_interval_95": [
+        0.8967420233231349,
+        0.9131813906219143
+      ],
+      "runtime_seconds": 0.10012824996374547
+    },
+    {
+      "backend": "pauli_twirl_proxy",
+      "shots": 200000,
+      "logical_errors": 35958,
+      "logical_error_probability": 0.17979,
+      "confidence_interval_95": [
+        0.1781091716396372,
+        0.18148011440827821
+      ],
+      "runtime_seconds": 1.1414433750323951
+    }
+  ],
+  "comparisons": {
+    "paper_clifford_absolute_error": 0.0012099999999999889,
+    "paper_full_state_absolute_error": 0.5182,
+    "proxy_coherent_minus_twirl": 0.72541,
+    "paper_coherent_minus_twirl": 0.20600000000000002
+  },
+  "checks": {
+    "eq10_probability_matches_0_0243": true,
+    "proxy_reproduces_twirl_underestimate_direction": true,
+    "clifford_reference_within_0_01": true,
+    "full_state_reference_within_0_05": false
+  },
+  "decision": {
+    "status": "paper_metric_verdict_stop",
+    "next_action": "attribute_full_state_circuit_contract_mismatch_before_expansion",
+    "reason": "The Clifford branch matches the paper, while the coherent branch misses by more than the declared 0.05 tolerance. Reconstruct circuit-location, frame, and decoder semantics before adding a sector-aware backend or opening Fig. 8."
+  },
+  "verdict": "partial_proxy_boundary_detected",
+  "boundary": "The public parameters reproduce the Clifford result and the direction of the coherent-vs-twirled gap, but not the paper full-state value. Exact paper-level reproduction requires the unpublished circuit-location, frame, and decoder conventions."
+}

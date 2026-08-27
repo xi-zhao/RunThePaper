@@ -1,44 +1,326 @@
 {
-  "schema_version": 1,
-  "contract": "runthepaper_public_scorecard_v1",
+  "schema_version": 4,
   "paper_id": "2401.08523",
-  "overall_score": 90.0,
-  "source_score_model": "rra_similarity_v1_with_terminal_pixel_closeness",
-  "source_status": "passed",
-  "similarity_level": "complete_reproduction",
-  "scientific_scope": {
-    "declared_numeric_targets": 2,
-    "target_status_counts": {
-      "evidence_compared": 2
-    },
-    "published_generated_datasets": 3,
-    "published_generated_figures": 2
-  },
-  "independence_boundary": {
-    "numerical_implementation": "legacy_not_formally_attested",
-    "public_author_code": false,
-    "author_data_reanalysis": false,
-    "source_pixels_used_as_numeric_input": false,
-    "source_images_or_comparison_boards_published": false,
-    "note": "Legacy cases without a formal attestation are labeled as such; this public projection does not upgrade their historical evidence state."
-  },
+  "score_model": "rra_similarity_v1_with_terminal_pixel_closeness",
   "targets": [
     {
       "target_id": "T001",
-      "figure_id": "FIG001",
-      "meaning": "Occupation of the physical single-mode thermal state across positive and negative temperature branches.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Figure 1 Fermi-Dirac occupation",
+      "weight": 1.0,
+      "figure_refs": [
+        "Main Fig. 1"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "max_score": 50.0,
+          "reason": "The positive/negative temperature branches, midpoint, asymptotes, and monotonic occupation are all generated from EQ001."
+        },
+        "numeric_closeness": {
+          "score": 30.96,
+          "max_score": 35.0,
+          "reason": "Terminal full-canvas SSIM is 0.884565; the curve values themselves satisfy the exact analytic Fermi-Dirac reference to floating-point precision."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "The complete figure and both temperature branches are covered at the paper's displayed domain."
+        }
+      },
+      "evidence": [
+        "outputs/data/figure_1_fermi_dirac.csv",
+        "outputs/figures/figure_1_fermi_dirac.png",
+        "outputs/checks/scientific_validation.json",
+        "outputs/checks/pixel_evidence.json",
+        "outputs/checks/pixel_ssim.json",
+        "docs/comparisons/figure_1_pixel_difference.png"
+      ],
+      "remaining_gap": "Wolfram/MathematicaSans and Matplotlib/Arial rasterize text and math differently; no scientific curve gap remains.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ001"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T001_FIG1_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_FIG1_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T001_particle_hole",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T001_midpoint_limits",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "tests/test_fermionic_phase_space.py"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "FIG001A",
+            "status": "reproduced",
+            "note": "complete Fermi-Dirac curve",
+            "evidence": "outputs/figures/figure_1_fermi_dirac.png"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 95.96,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
-      "figure_id": "FIG002",
-      "meaning": "Exact disorder measures and uncertainty bounds of P, W, and Q over the complete physical occupation interval.",
-      "status": "evidence_compared",
-      "formula_gate": "verified",
-      "parameter_match": "paper_exact"
+      "label": "Main Figure 2 moment and entropy panels",
+      "weight": 3.0,
+      "figure_refs": [
+        "Main Fig. 2(a-c)"
+      ],
+      "components": {
+        "feature_match": {
+          "score": 50.0,
+          "max_score": 50.0,
+          "reason": "Every P/W/Q branch, five Rényi orders, exact singularity, uncertainty bound, crossing, and temperature region is present with the correct scientific semantics."
+        },
+        "numeric_closeness": {
+          "score": 27.34,
+          "max_score": 35.0,
+          "reason": "Terminal full-canvas SSIM is 0.781102; all curve values, bounds, and crossing coordinates equal the paper's analytic formulas to floating-point precision."
+        },
+        "paper_scope_coverage": {
+          "score": 15.0,
+          "max_score": 15.0,
+          "reason": "All three numerical subpanels and every visible branch are independently generated."
+        }
+      },
+      "evidence": [
+        "outputs/data/figure_2_moments.csv",
+        "outputs/data/figure_2_entropies.csv",
+        "outputs/figures/figure_2_uncertainty_relations.png",
+        "outputs/checks/scientific_validation.json",
+        "outputs/checks/pixel_evidence.json",
+        "outputs/checks/pixel_ssim.json",
+        "docs/comparisons/figure_2_pixel_difference.png"
+      ],
+      "remaining_gap": "The author figure uses Wolfram/cairo and MathematicaSans; the independent Matplotlib renderer leaves text, title, and anti-aliasing pixel differences.",
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "artifact_pass": true,
+        "data_backed": true,
+        "manual_interventions": 1,
+        "failure_type": "none",
+        "parameter_match": "paper_exact",
+        "reference_comparison": "analytic_reference",
+        "generated_data_provenance": "independent_numerics",
+        "formula_gate": "verified",
+        "formula_dependencies": [
+          "EQ002",
+          "EQ003",
+          "EQ004",
+          "EQ005",
+          "EQ006",
+          "EQ007"
+        ],
+        "artifact_stage": "final_reproduction",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T002_FIG2_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_FIG2_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
+      },
+      "physics_assertions": [
+        {
+          "assertion_id": "T002_covariance_bounds",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T002_crossings",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T002_renyi_monotonicity",
+          "tier": "numeric",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        },
+        {
+          "assertion_id": "T002_thermal_channel",
+          "tier": "analytic",
+          "essential": true,
+          "status": "passed",
+          "evidence": "outputs/checks/scientific_validation.json"
+        }
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "FIG002A",
+            "status": "reproduced",
+            "note": "all covariance determinants",
+            "evidence": "outputs/data/figure_2_moments.csv"
+          },
+          {
+            "panel_id": "FIG002B",
+            "status": "reproduced",
+            "note": "all P/W/Q Shannon branches",
+            "evidence": "outputs/data/figure_2_entropies.csv"
+          },
+          {
+            "panel_id": "FIG002C",
+            "status": "reproduced",
+            "note": "all five Wigner Rényi branches",
+            "evidence": "outputs/data/figure_2_entropies.csv"
+          }
+        ],
+        "panel_scope_cap": 15.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": true,
+      "final_reproduction_gate": "passed",
+      "physics_status": "passed",
+      "formula_score_cap": 100.0,
+      "generated_data_provenance_score_cap": 100.0,
+      "evidence_tier": "physics_reproduction",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 92.34,
+      "score": 90.0,
+      "similarity_level": "complete_reproduction",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     }
   ],
-  "source_scorecard_sha256": "5391acb5e95e35a159e16a72171e7f29153767e5752b49f55570089189bce64d"
+  "overall_score": 90.0,
+  "similarity_level": "complete_reproduction",
+  "evaluation_summary": {
+    "scored_items": 2,
+    "critical_items": 2,
+    "artifact_pass_rate": 1.0,
+    "data_backed_rate": 1.0,
+    "manual_interventions_total": 2,
+    "manual_interventions_per_item": 1.0,
+    "failure_type_counts": {
+      "none": 2
+    },
+    "parameter_match_counts": {
+      "paper_exact": 2
+    },
+    "reference_comparison_counts": {
+      "analytic_reference": 2
+    },
+    "generated_data_provenance_counts": {
+      "independent_numerics": 2
+    },
+    "evidence_tier_counts": {
+      "physics_reproduction": 2
+    },
+    "formula_gate_counts": {
+      "verified": 2
+    },
+    "paper_level_role_counts": {
+      "main_claim": 2
+    },
+    "physics_status_counts": {
+      "passed": 2
+    },
+    "physics_assertion_status_counts": {
+      "passed": 6
+    },
+    "essential_physics_failures": [],
+    "final_reproduction_ready": true,
+    "final_reproduction_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "not_required": 2
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 2
+    },
+    "causal_diagnosis_required_target_ids": [],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {},
+    "root_cause_counts": {},
+    "code_fault_status_counts": {}
+  },
+  "status": "passed"
 }

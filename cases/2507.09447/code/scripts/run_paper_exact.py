@@ -7,8 +7,8 @@ from pathlib import Path
 import sys
 
 
-CASE_ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(CASE_ROOT / "code" / "src"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from paper_exact_reproduction import (  # noqa: E402
     recompute_paper_scaling,
@@ -40,16 +40,16 @@ def main() -> None:
     args = parse_args()
     results: dict[str, object] = {}
     if args.stage in {"ed", "all"}:
-        results["ed"] = run_paper_ed(CASE_ROOT, args.config, max_batches=args.max_batches)
+        results["ed"] = run_paper_ed(WORKSPACE, args.config, max_batches=args.max_batches)
         if args.stage == "all" and results["ed"]["status"] != "passed":  # type: ignore[index]
             print(json.dumps(results, indent=2), flush=True)
             raise SystemExit("ED stage is checkpointed but incomplete; rerun before downstream paper export")
     if args.stage == "scaling":
-        results["scaling"] = recompute_paper_scaling(CASE_ROOT, args.config)
+        results["scaling"] = recompute_paper_scaling(WORKSPACE, args.config)
     if args.stage in {"profiles", "all"}:
-        results["profiles"] = run_paper_profiles(CASE_ROOT, args.config)
+        results["profiles"] = run_paper_profiles(WORKSPACE, args.config)
     if args.stage in {"theory", "all"}:
-        results["theory"] = run_paper_theory(CASE_ROOT, args.config)
+        results["theory"] = run_paper_theory(WORKSPACE, args.config)
     print(json.dumps(results, indent=2), flush=True)
 
 

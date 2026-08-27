@@ -86,9 +86,9 @@ near `+/- 1.20185`, not by the Bloch gap-closing points.
 The initial derivation pass recorded that no digitized reference data had been
 extracted yet. That statement is now superseded by the current evidence files:
 
-- internal digitized-curve checks (not redistributed)
-- internal pixel-evidence checks (not redistributed)
-- internal digitized-reference checks (not redistributed)
+- `outputs/checks/all_digitized_curves.json`
+- `outputs/checks/pixel_evidence.json`
+- `internal-reference-curves/*.csv`
 
 The current boundary is narrower and more precise:
 

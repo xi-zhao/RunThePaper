@@ -1,6 +1,6 @@
 {
   "paper_id": "1910.00020",
-  "schema_version": 3,
+  "schema_version": 4,
   "status": "passed",
   "score_model": "rra_similarity_v3_scientific_crop_pixel_primary",
   "summary": "All numerical panels are independently generated with an exact partial-record channel; reduced scale and unpublished sampling metadata prevent paper-exact status.",
@@ -52,13 +52,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T001"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T001"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T001_*",
-        "outputs/figures/T001_*",
+        "outputs/data/T001_main_fig1b_transition.npz",
+        "outputs/figures/T001_main_fig1b_transition.png",
         "outputs/checks/target_checks.json#T001",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T001"
       ],
@@ -67,7 +199,7 @@
           {
             "panel_id": "Main Fig. 1(b) transition and inset",
             "status": "reproduced",
-            "evidence": "outputs/figures/T001_*"
+            "evidence": "outputs/figures/T001_main_fig1b_transition.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -104,7 +236,10 @@
       "reference_score_cap": 70.0,
       "component_total": 79.29,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T002",
@@ -146,13 +281,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T002"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T002"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T002_*",
-        "outputs/figures/T002_*",
+        "outputs/data/T002_main_fig2a_lightcone.npz",
+        "outputs/figures/T002_main_fig2a_lightcone.png",
         "outputs/checks/target_checks.json#T002",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T002"
       ],
@@ -161,7 +428,7 @@
           {
             "panel_id": "Main Fig. 2(a) decoding light cone",
             "status": "reproduced",
-            "evidence": "outputs/figures/T002_*"
+            "evidence": "outputs/figures/T002_main_fig2a_lightcone.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -198,7 +465,10 @@
       "reference_score_cap": 70.0,
       "component_total": 84.34,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T003",
@@ -240,13 +510,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T003"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T003"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T003_*",
-        "outputs/figures/T003_*",
+        "outputs/data/T003_main_fig2b_cutoff_decoder.npz",
+        "outputs/figures/T003_main_fig2b_cutoff_decoder.png",
         "outputs/checks/target_checks.json#T003",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T003"
       ],
@@ -255,7 +657,7 @@
           {
             "panel_id": "Main Fig. 2(b) finite-record locality",
             "status": "reproduced",
-            "evidence": "outputs/figures/T003_*"
+            "evidence": "outputs/figures/T003_main_fig2b_cutoff_decoder.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -292,7 +694,10 @@
       "reference_score_cap": 70.0,
       "component_total": 70.33,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T004",
@@ -334,13 +739,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T004"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T004"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T004_*",
-        "outputs/figures/T004_*",
+        "outputs/data/T004_main_fig3a_surface_order.npz",
+        "outputs/figures/T004_main_fig3a_surface_order.png",
         "outputs/checks/target_checks.json#T004",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T004"
       ],
@@ -349,7 +886,7 @@
           {
             "panel_id": "Main Fig. 3(a) surface order",
             "status": "reproduced",
-            "evidence": "outputs/figures/T004_*"
+            "evidence": "outputs/figures/T004_main_fig3a_surface_order.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -386,7 +923,10 @@
       "reference_score_cap": 70.0,
       "component_total": 71.74,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T005",
@@ -427,13 +967,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T005"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T005"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T005_*",
-        "outputs/figures/T005_*",
+        "outputs/data/T005_main_fig3b_cylinder.npz",
+        "outputs/figures/T005_main_fig3b_cylinder.png",
         "outputs/checks/target_checks.json#T005",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T005"
       ],
@@ -442,7 +1114,7 @@
           {
             "panel_id": "Main Fig. 3(b) cylinder correlations",
             "status": "reproduced",
-            "evidence": "outputs/figures/T005_*"
+            "evidence": "outputs/figures/T005_main_fig3b_cylinder.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -479,7 +1151,10 @@
       "reference_score_cap": 70.0,
       "component_total": 67.19,
       "score": 67.19,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T006",
@@ -520,13 +1195,145 @@
         "manual_interventions": 0,
         "paper_level_role": "main_claim",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T006"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T006"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T006_*",
-        "outputs/figures/T006_*",
+        "outputs/data/T006_main_fig3c_strip.npz",
+        "outputs/figures/T006_main_fig3c_strip.png",
         "outputs/checks/target_checks.json#T006",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T006"
       ],
@@ -535,7 +1342,7 @@
           {
             "panel_id": "Main Fig. 3(c) strip correlations",
             "status": "reproduced",
-            "evidence": "outputs/figures/T006_*"
+            "evidence": "outputs/figures/T006_main_fig3c_strip.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -572,7 +1379,10 @@
       "reference_score_cap": 70.0,
       "component_total": 67.56,
       "score": 67.56,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T007",
@@ -614,13 +1424,145 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T007"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T007"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T007_*",
-        "outputs/figures/T007_*",
+        "outputs/data/T007_supp_figS1_lightcones.npz",
+        "outputs/figures/T007_supp_figS1_lightcones.png",
         "outputs/checks/target_checks.json#T007",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T007"
       ],
@@ -629,7 +1571,7 @@
           {
             "panel_id": "Supplement Fig. S1(a,b) light cones",
             "status": "reproduced",
-            "evidence": "outputs/figures/T007_*"
+            "evidence": "outputs/figures/T007_supp_figS1_lightcones.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -666,7 +1608,10 @@
       "reference_score_cap": 70.0,
       "component_total": 74.75,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T008",
@@ -708,13 +1653,145 @@
         "manual_interventions": 0,
         "paper_level_role": "supporting",
         "parameter_match": "reduced_scale",
-        "pixel_status": "measured_post_freeze_scientific_region",
-        "pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
-        "reference_comparison": "source_figure_only"
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "reference_comparison": "source_figure_only",
+        "pixel_migration": {
+          "legacy_pixel_status": "measured_post_freeze_scientific_region",
+          "legacy_pixel_status_reason": "Source panels entered only after NPZ hashes were frozen; they never entered the numerical runner.",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PIXEL_T008"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PIXEL_T008"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "paper_scale_execution_not_run",
+            "statement": "All eight target families have attested independent reduced-scale data and runnable paper-scale contracts, but the full paper-size Monte Carlo campaign has not been executed.",
+            "evidence": [
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "run_contract.paper_scale.json",
+              "config/paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "The accepted feature-level observables are closed by current numerical and attestation evidence. The remaining strict-lifecycle gap is an unexecuted paper-scale campaign, not a demonstrated code defect or a proven external compute blocker.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/target_checks.json",
+              "outputs/checks/convergence.json",
+              "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json",
+              "PLANNED_LARGE_SCALE_RUNS.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "No defect was found in the accepted feature-level implementation after exact stabilizer checks, target-specific invariants, repeatable isolated execution, and output-hash comparison with the previous accepted campaign.",
+            "checks": [
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Focused tests cover GF(2) rank, Clifford group size, Bell purification, the exact mixed-stabilizer partial-record channel, shared-randomness ordering, and paper-scale shard mechanics.",
+                "evidence": [
+                  "tests/test_stabilizer.py",
+                  "tests/test_paper_scale.py",
+                  "tests/test_final_disposition_evidence.py"
+                ]
+              },
+              {
+                "kind": "invariant",
+                "result": "passed",
+                "statement": "All eight target checks pass their declared probability, causality, ordering, monotonicity, non-negativity, and decay invariants.",
+                "evidence": [
+                  "outputs/checks/target_checks.json",
+                  "outputs/checks/scientific_formula_checks.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The v5 isolated run read every declared input, generated the exact scientific outputs cited by the scorecard, and recorded no forbidden source or pixel access.",
+                "evidence": [
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The current deterministic campaign reproduces all eight accepted NPZ hashes from v4 exactly and preserves the independently declared feature checks.",
+                "evidence": [
+                  "outputs/checks/convergence.json",
+                  "outputs/runs/1910.00020-independent-v4/run_attestation.json",
+                  "outputs/runs/1910.00020-independent-v5-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "open",
+              "statement": "The full L up to 512 campaign may exceed a convenient local time budget, but no measured failed paper-scale attempt or resource benchmark currently proves an objective capacity blocker.",
+              "evidence": [
+                "COMPUTE_BUDGET.md",
+                "run_contract.paper_scale.json"
+              ]
+            },
+            {
+              "category": "publication_underspecified",
+              "status": "open",
+              "statement": "The paper omits trajectory counts, seeds, exact sampling weights, and some fit windows; those omissions may limit paper-exact fidelity but did not prevent independent reproduction of the declared scientific features.",
+              "evidence": [
+                "parameter_provenance.json",
+                "PAPER_MAP.md"
+              ]
+            },
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The earlier T003 method and sampling defects were repaired; the exact mixed-stabilizer channel, paired data-processing order, focused tests, and repeated isolated hashes now pass.",
+              "evidence": [
+                "DERIVATION.md",
+                "outputs/checks/target_checks.json",
+                "tests/test_stabilizer.py"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eleven eligible numerical panels/insets are scientifically reproduced at the declared feature scale; only their paper-scale lifecycle campaign remains unexecuted.",
+            "items": [
+              "T001",
+              "T002",
+              "T003",
+              "T004",
+              "T005",
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "11/11 eligible items feature-reproduced and attested; 0/8 paper-scale target campaigns executed"
+          },
+          "next_discriminating_test": {
+            "action": "Benchmark one frozen paper-scale shard per target on the institute high-CPU profile, then run or resume the unchanged sharded campaign only if the measured resource envelope is acceptable.",
+            "expected_resolution": "The staged benchmark will either support a paper-scale run, prove an objective compute boundary, or localize a target-specific implementation or scientific failure without changing the frozen model.",
+            "evidence_to_produce": [
+              "outputs/data/paper_scale/resource_benchmark.json",
+              "outputs/runs/1910.00020-paper-scale-sharded-v1/run_attestation.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "evidence": [
-        "outputs/data/T008_*",
-        "outputs/figures/T008_*",
+        "outputs/data/T008_supp_figS2_purification.npz",
+        "outputs/figures/T008_supp_figS2_purification.png",
         "outputs/checks/target_checks.json#T008",
         "outputs/checks/scientific_pixel_metrics.json#PIXEL_T008"
       ],
@@ -723,7 +1800,7 @@
           {
             "panel_id": "Supplement Fig. S2(a,b) purification",
             "status": "reproduced",
-            "evidence": "outputs/figures/T008_*"
+            "evidence": "outputs/figures/T008_supp_figS2_purification.png"
           }
         ],
         "panel_scope_cap": 15.0
@@ -760,7 +1837,10 @@
       "reference_score_cap": 70.0,
       "component_total": 74.27,
       "score": 70.0,
-      "similarity_level": "numerical_feature_reproduction"
+      "similarity_level": "numerical_feature_reproduction",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
   "overall_score": 69.34,
@@ -804,6 +1884,7 @@
     "final_reproduction_ready": false,
     "final_reproduction_target_ids": [],
     "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
     "exploratory_target_ids": [
       "T001",
       "T002",
@@ -824,6 +1905,44 @@
       "T007",
       "T008"
     ],
-    "aggregate_excluded_target_ids": []
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 8
+    },
+    "causal_diagnosis_disposition_counts": {
+      "react_loop_required": 8
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "direct_cause_counts": {
+      "paper_scale_execution_not_run": 8
+    },
+    "root_cause_counts": {
+      "review_or_evidence_process_gap": 8
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 8
+    }
   }
 }

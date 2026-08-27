@@ -2,8 +2,8 @@
 """Symmetry-resolved PXP sector run for T003 (scar tower) and T004 (level stats).
 
 Diagonalizes the k=0, inversion-even PXP sector at the largest locally
-feasible size (L=28, sector dimension 13201; one dense float64 matrix for the
-paper's L=32 sector is about 47GB before eigensolver workspace) and extracts:
+feasible size (L=28, sector dimension 13201; the paper's L=32 sector needs
+~47GB dense workspace and is recorded as a remote rerun) and extracts:
 
 - T003: the |<Z2|E>|^2 scar tower - the paper's L/2+1 special states with
   approximately equal energy spacing;
@@ -14,16 +14,22 @@ paper's L=32 sector is about 47GB before eigensolver workspace) and extracts:
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
 import time
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
+
+import matplotlib.pyplot as plt
 import numpy as np
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "code/src"))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from pxp_scars import (  # noqa: E402
     build_symmetric_hamiltonian,
@@ -33,14 +39,62 @@ from pxp_scars import (  # noqa: E402
     symmetrized_state_vector,
     unfolded_spacings,
 )
-from plot_symmetry_resolved_sector import plot_sector_outputs  # noqa: E402
 
-L = 28
+DEFAULT_L = 28
 GOE_R = 0.5307
 POISSON_R = 0.3863
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", help="Workspace-relative JSON configuration.")
+    parser.add_argument("--output-root", default="outputs", help="Workspace-relative output directory.")
+    parser.add_argument("--dry-run", action="store_true", help="Validate and print the resolved run without allocating the Hamiltonian.")
+    return parser.parse_args()
+
+
+def load_config(config_ref: str | None) -> dict:
+    if not config_ref:
+        return {}
+    path = Path(config_ref)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError("--config must be a safe workspace-relative path")
+    payload = json.loads((ROOT / path).read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("configuration must be a JSON object")
+    return payload
+
+
 def main() -> int:
+    args = parse_args()
+    config = load_config(args.config)
+    output_ref = Path(args.output_root)
+    if output_ref.is_absolute() or ".." in output_ref.parts or output_ref.parts[:1] != ("outputs",):
+        raise ValueError("--output-root must be workspace-relative under outputs/")
+    output_root = ROOT / output_ref
+    L = int(config.get("system_size", DEFAULT_L))
+    if L < 6 or L % 2:
+        raise ValueError("system_size must be an even integer >= 6")
+    spacing_separation = float(config.get("tower_energy_separation", 1.8))
+    window_quantiles = config.get("level_window_quantiles", [0.1, 0.9])
+    if (
+        not isinstance(window_quantiles, list)
+        or len(window_quantiles) != 2
+        or not 0.0 < float(window_quantiles[0]) < float(window_quantiles[1]) < 1.0
+    ):
+        raise ValueError("level_window_quantiles must contain two increasing values inside (0, 1)")
+    resolved = {
+        "system_size": L,
+        "momentum": 0,
+        "inversion": "+1",
+        "tower_energy_separation": spacing_separation,
+        "level_window_quantiles": [float(value) for value in window_quantiles],
+        "output_root": output_ref.as_posix(),
+    }
+    if args.dry_run:
+        print(json.dumps({"status": "ready", "resolved_run": resolved}, indent=2))
+        return 0
+
     t0 = time.time()
     sector = build_symmetric_sector(L)
     dim = len(sector["representatives"])
@@ -58,7 +112,7 @@ def main() -> int:
     # dominant state per tower and rejects same-tower satellites.
     top = []
     for index in np.argsort(overlaps)[::-1]:
-        if all(abs(energies[index] - energies[j]) > 1.8 for j in top):
+        if all(abs(energies[index] - energies[j]) > spacing_separation for j in top):
             top.append(int(index))
         if len(top) == tower_count:
             break
@@ -70,7 +124,7 @@ def main() -> int:
 
     # --- T004: level statistics (zero modes excluded, central window) ---
     nonzero = energies[np.abs(energies) > 1e-10]
-    lo, hi = np.quantile(nonzero, [0.1, 0.9])
+    lo, hi = np.quantile(nonzero, window_quantiles)
     window = nonzero[(nonzero >= lo) & (nonzero <= hi)]
     r_mean = mean_level_spacing_ratio(window)
     spacings = unfolded_spacings(window)
@@ -81,6 +135,8 @@ def main() -> int:
     poisson = np.exp(-centers)
     l1_wigner = float(np.trapezoid(np.abs(hist - wigner), centers))
     l1_poisson = float(np.trapezoid(np.abs(hist - poisson), centers))
+    density_hist, density_edges = np.histogram(energies, bins=80, density=True)
+    density_centers = 0.5 * (density_edges[1:] + density_edges[:-1])
 
     gate_flags = {
         "scar_tower_has_half_L_plus_one_states": bool(np.all(overlaps[top] > 1e-8)),
@@ -89,7 +145,11 @@ def main() -> int:
         "spacing_distribution_wigner_not_poisson": l1_wigner < l1_poisson,
     }
 
-    data_dir = ROOT / "outputs/data"
+    data_dir = output_root / "data"
+    check_dir = output_root / "checks"
+    fig_dir = output_root / "figures"
+    for directory in (data_dir, check_dir, fig_dir):
+        directory.mkdir(parents=True, exist_ok=True)
     with (data_dir / "sector_scar_tower.csv").open("w", newline="") as handle:
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["energy", "z2_overlap_sq", "is_tower_state"])
@@ -100,11 +160,18 @@ def main() -> int:
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["unfolded_spacing"])
         writer.writerows([[f"{s:.8f}"] for s in spacings])
+    with (data_dir / "sector_density_of_states.csv").open("w", newline="") as handle:
+        writer = csv.writer(handle, lineterminator="\n")
+        writer.writerow(["energy", "density"])
+        writer.writerows(
+            [[f"{energy:.10f}", f"{density:.10f}"] for energy, density in zip(density_centers, density_hist)]
+        )
 
     checks = {
         "targets": ["T003", "T004"],
         "status": "physically_consistent" if all(gate_flags.values()) else "partial",
         "sector": {"L": L, "momentum": 0, "inversion": "+1", "dimension": dim},
+        "resolved_run": resolved,
         "elapsed_seconds": round(elapsed, 1),
         "scar_tower": {
             "expected_states": tower_count,
@@ -125,20 +192,51 @@ def main() -> int:
         "gate_flags": gate_flags,
         "remote_rerun": {
             "L": 32,
-            "reason": "The L=32 sector (~77k) needs about 47GB for one dense float64 matrix before eigensolver workspace, beyond the current single 40GB A100 path.",
+            "reason": "L=32 sector (~77k) needs ~47GB dense eigh workspace; local memory is 18GB.",
             "constraint_class": "external_required",
         },
-        "difference_reasons": {
-            "sector_figures": "Same k=0, I=+1 sector at L=28; the paper uses L=32, whose dense matrix alone is about 47GB before eigensolver workspace.",
-            "entanglement_dynamics": "Finite-size exact evolution at L=16; the paper uses thermodynamic-limit iTEBD with bond dimension around 400."
-        },
-        "data": ["outputs/data/sector_scar_tower.csv", "outputs/data/sector_level_spacings.csv"],
-        "figures": ["outputs/figures/sector_scar_tower.png", "outputs/figures/sector_level_statistics.png"],
+        "data": [
+            f"{output_ref.as_posix()}/data/sector_scar_tower.csv",
+            f"{output_ref.as_posix()}/data/sector_level_spacings.csv",
+            f"{output_ref.as_posix()}/data/sector_density_of_states.csv",
+        ],
+        "figures": [
+            f"{output_ref.as_posix()}/figures/sector_scar_tower.png",
+            f"{output_ref.as_posix()}/figures/sector_level_statistics.png",
+        ],
     }
-    (ROOT / "outputs/checks/symmetry_resolved_sector.json").write_text(
+    (check_dir / "symmetry_resolved_sector.json").write_text(
         json.dumps(checks, indent=2) + "\n"
     )
-    plot_sector_outputs(ROOT)
+
+    fig, ax = plt.subplots(figsize=(6.4, 4.4))
+    ax.semilogy(energies, np.maximum(overlaps, 1e-16), ".", markersize=2, color="0.6")
+    ax.semilogy(energies[top], overlaps[top], "o", markersize=5, color="tab:red",
+                label=f"top {tower_count} tower states")
+    ax.set_xlabel("E")
+    ax.set_ylabel(r"$|\langle Z_2|E\rangle|^2$")
+    ax.set_ylim(1e-10, 1.0)
+    ax.set_title(f"PXP L={L}, k=0, I=+1 sector (dim {dim})", fontsize=10)
+    ax.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(fig_dir / "sector_scar_tower.png", dpi=150)
+    plt.close(fig)
+
+    fig, ax = plt.subplots(figsize=(6.0, 4.2))
+    ax.bar(centers, hist, width=centers[1] - centers[0], color="#9fc5e8", label="unfolded spacings")
+    ax.plot(centers, wigner, "-", color="tab:red", label="Wigner surmise (GOE)")
+    ax.plot(centers, poisson, "--", color="0.4", label="Poisson")
+    ax.set_xlabel("s")
+    ax.set_ylabel("P(s)")
+    ax.set_title(f"<r> = {r_mean:.4f}  (GOE {GOE_R}, Poisson {POISSON_R})", fontsize=10)
+    ax.legend(fontsize=8)
+    inset = ax.inset_axes([0.58, 0.52, 0.38, 0.38])
+    inset.plot(density_centers, density_hist, color="tab:blue", linewidth=1.2)
+    inset.set_title("density of states", fontsize=8)
+    inset.tick_params(labelsize=7)
+    fig.tight_layout()
+    fig.savefig(fig_dir / "sector_level_statistics.png", dpi=150)
+    plt.close(fig)
 
     print(json.dumps({"status": checks["status"], "gate_flags": gate_flags,
                       "r_mean": r_mean, "dim": dim,

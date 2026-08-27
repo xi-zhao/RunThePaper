@@ -1,0 +1,337 @@
+{
+  "schema_version": 1,
+  "paper_id": "1706.07435",
+  "cards": [
+    {
+      "id": "EQC001",
+      "title": "Biorthogonal normalization and equality of four Chern numbers",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "paper-source/nonHermitian.tex:65-83; main Eqs. (1)-(3)"
+        },
+        {
+          "type": "supplement_sections",
+          "value": "raw/supplementary/supplement.pdf, Sections I-III"
+        }
+      ],
+      "latex": "N_n^{LL}=N_n^{LR}=N_n^{RL}=N_n^{RR},\\qquad N_n^{\\alpha\\beta}=\\frac{1}{2\\pi}\\int_{BZ}\\epsilon_{ij}B_{n,ij}^{\\alpha\\beta}d^2k",
+      "role": "Defines the two-dimensional topological invariant and proves it is independent of left/right Berry-connection choice.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The four curvatures, normalization convention, and equality statement are explicit in the main text; the patch proof is explicit in Supplement II."
+        },
+        {
+          "id": "EQC001_patch",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The LR and RR patch transformations share i grad(f); the extra grad(log r) has zero integral around a closed patch boundary, and the same argument closes LL/RL."
+        },
+        {
+          "id": "EQC001_symmetry",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For a complex-symmetric Hamiltonian left and right states coincide up to conjugation, reproducing the stated zero-curvature limit."
+        }
+      ],
+      "numerical_form": "Analytic proof; optional lattice discretization of biorthogonal links is supporting evidence only.",
+      "code_refs": [],
+      "open_questions": []
+    },
+    {
+      "id": "EQC002",
+      "title": "Generalized non-Hermitian Dirac spectrum and exceptional-point positions",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "paper-source/nonHermitian.tex:87-99; main Eq. (4) and dispersion"
+        },
+        {
+          "type": "paper_equation",
+          "value": "paper-source/nonHermitian.tex:196-201; exceptional-point positions"
+        }
+      ],
+      "latex": "E_\\pm=\\pm\\sqrt{k^2-\\kappa^2+m^2-\\delta^2+2i(\\mathbf{k}\\cdot\\boldsymbol{\\kappa}+m\\delta)}",
+      "role": "Generates the continuum bulk spectra, separability boundary, phase diagram, and exceptional-point trajectories.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Hamiltonian, spectrum, separable condition, and EP position formula are explicit in the main TeX."
+        },
+        {
+          "id": "EQC002_pauli",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Pauli algebra gives (d dot sigma)^2=(d dot d)I and expansion of d dot d reproduces every real and imaginary term."
+        },
+        {
+          "id": "EQC002_boundary",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The perpendicular EP displacement is real only for |m|<kappa and vanishes at |m|=kappa, reproducing EP-pair and hybrid-point boundaries."
+        }
+      ],
+      "numerical_form": "Vectorized complex radicand and its two square-root sheets; closed-form EP coordinates.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::dirac_eigenvalues",
+        "src/nonhermitian_topology.py::exceptional_points",
+        "src/nonhermitian_topology.py::exceptional_trajectory",
+        "scripts/run_main_fig3.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC003",
+      "title": "Continuum domain-wall determinant and spinor matching",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "paper-source/nonHermitian.tex:100-129; main Eqs. (5)-(7)"
+        },
+        {
+          "type": "supplement_equations",
+          "value": "raw/supplementary/supplement.pdf p.3; Eqs. (10)-(12)"
+        }
+      ],
+      "latex": "E^2=(m_i+i\\delta_i)^2+(k_y+i\\kappa_{i,y})^2-(\\lambda_i^{-1}-\\kappa_{i,x})^2",
+      "role": "Defines the independently solvable domain-wall edge spectrum used by Main Fig. 1 and Supplement Fig. 2.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The exponential ansatz, common-energy equation, spinor ratio, and localization inequalities are printed in the paper and supplement."
+        },
+        {
+          "id": "EQC003_substitution",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Replacing -i partial_x by -i/lambda in each half-space and taking the 2x2 determinant yields the stated squared-energy equation; component division yields the continuity ratio."
+        },
+        {
+          "id": "EQC003_hermitian",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At kappa_y=delta=0 with opposite masses the equations reduce to the real chiral edge dispersion E=s_2 k_y and the printed localization lengths."
+        },
+        {
+          "id": "EQC003_common_spinor",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The algebraic solution satisfies the common-spinor determinant, both half-space characteristic equations, and localization signs; Supplement Fig. 2 points agree with independent nonlinear roots to 6.20e-16."
+        }
+      ],
+      "numerical_form": "Solve the common-spinor condition algebraically for both inverse localization lengths and the shared energy, select the branch by localization signs, and independently cross-check representative points with a nonlinear root solve.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::domain_ansatz_hamiltonian",
+        "src/nonhermitian_topology.py::solve_domain_wall_edge",
+        "src/nonhermitian_topology.py::symmetric_domain_wall_energy",
+        "scripts/run_main_fig1.py",
+        "scripts/run_supp_fig2.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC004",
+      "title": "Energy-difference vorticity and canonical exceptional-point dispersion",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "paper-source/nonHermitian.tex:140-169; main Eqs. (8)-(10) and Fig. 2 caption"
+        },
+        {
+          "type": "paper_equations",
+          "value": "paper-source/nonHermitian.tex:179-191; main Eqs. (11)-(12)"
+        }
+      ],
+      "latex": "\\nu_{mn}(\\Gamma)=-\\frac{1}{2\\pi}\\oint_\\Gamma\\nabla_k\\arg(E_m-E_n)\\cdot d\\mathbf{k},\\qquad E_\\pm=\\pm\\sqrt{c_xk_x+c_yk_y}",
+      "role": "Generates all Main Fig. 2 panels and tests eigenvalue swapping and half-integer exceptional-point charge.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The vorticity definition, canonical Hamiltonian, loop, cut, and leading square-root dispersion are explicit in the main text."
+        },
+        {
+          "id": "EQC004_characteristic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "With sigma_+=sigma_x+i sigma_y, det(EI-H)=E^2-[kx^2+ky^2+2kx+2i ky]."
+        },
+        {
+          "id": "EQC004_winding",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "On k=(cos theta,sin theta), the radicand 1+2 exp(i theta) winds once around zero, so its continuous square root changes sign and has half winding magnitude."
+        }
+      ],
+      "numerical_form": "Evaluate analytic sheets on loop/surface/cut grids, unwrap the loop phase, and cross-check sampled points against direct 2x2 eigendecomposition.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::exceptional_point_hamiltonian",
+        "src/nonhermitian_topology.py::tracked_exceptional_loop"
+      ],
+      "open_questions": [
+        "Vorticity sign is orientation-dependent; the case reports the loop orientation and tests the invariant magnitude."
+      ]
+    },
+    {
+      "id": "EQC005",
+      "title": "Square-lattice non-Hermitian cylinder Hamiltonian",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "raw/supplementary/supplement.pdf p.3; Eq. (13)"
+        },
+        {
+          "type": "supplement_figure",
+          "value": "raw/supplementary/supplement.pdf p.4; Fig. 3 caption"
+        }
+      ],
+      "latex": "H(\\mathbf{k})=(\\sin k_x+i\\kappa_x)\\sigma_x+(\\sin k_y+i\\kappa_y)\\sigma_y+(\\cos k_x+\\cos k_y+m+i\\delta)\\sigma_z",
+      "role": "Defines the open-x, periodic-y cylinder spectra and chiral edge branches in Supplement Fig. 3.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The lattice Hamiltonian and all n=40 caption parameters are explicit in Supplement IV."
+        },
+        {
+          "id": "EQC005_fourier",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Forward/reverse blocks sigma_z/2 plus/minus sigma_x/(2i) Fourier transform to cos(kx)sigma_z+sin(kx)sigma_x."
+        },
+        {
+          "id": "EQC005_hermitian",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At kappa=delta=0 the model is Hermitian and the stated |m|=2 gap closings follow at high-symmetry momenta."
+        }
+      ],
+      "numerical_form": "Build a 2n-by-2n block-tridiagonal complex matrix for each k_y and diagonalize values/eigenvectors.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::lattice_bloch_hamiltonian",
+        "src/nonhermitian_topology.py::cylinder_blocks",
+        "src/nonhermitian_topology.py::cylinder_hamiltonian",
+        "src/nonhermitian_topology.py::cylinder_boundary_weights",
+        "scripts/run_supp_fig3.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQC006",
+      "title": "Hybrid-point dispersion from two merging exceptional points",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "paper-source/nonHermitian.tex:210-218; hybrid-point expansion"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "raw/supplementary/supplement.pdf p.5; Eq. (20) and Fig. 4"
+        }
+      ],
+      "latex": "E_\\pm=\\pm\\sqrt{k_x^2+k_y^2+2ik_xm}\\quad(m=\\delta)",
+      "role": "Generates the hybrid-point surfaces and demonstrates square-root versus linear directional scaling.",
+      "derived_from": [
+        "EQC002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The merging condition, m=delta=1 parameters, loop radius, and two cuts are explicit in the main text and supplement."
+        },
+        {
+          "id": "EQC006_expansion",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Squaring H=(kx+i delta)sigma_x+ky sigma_y+m sigma_z and setting m=delta cancels the constant terms and gives the printed radicand."
+        },
+        {
+          "id": "EQC006_anisotropy",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At ky=0 the leading magnitude is proportional to |kx|^(1/2); at kx=0 the exact result is |E|=|ky|."
+        }
+      ],
+      "numerical_form": "Vectorized complex square-root sheets plus log-log exponent fits on the two symmetry cuts.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::hybrid_eigenvalues",
+        "src/nonhermitian_topology.py::hybrid_hamiltonian",
+        "src/nonhermitian_topology.py::tracked_hybrid_loop",
+        "scripts/run_supp_fig4.py"
+      ],
+      "open_questions": [
+        "The 3D view is not numerically specified; camera mismatch is a pixel-fidelity issue only."
+      ]
+    },
+    {
+      "id": "EQC007",
+      "title": "Codimension-two degeneracy and generic defectiveness",
+      "source_refs": [
+        {
+          "type": "supplement_equations",
+          "value": "raw/supplementary/supplement.pdf p.4; Eqs. (14)-(17)"
+        }
+      ],
+      "latex": "\\mathbf b_0^2=\\mathbf b_1^2,\\qquad \\mathbf b_0\\cdot\\mathbf b_1=0,\\qquad H_0=aI+b\\sigma_+",
+      "role": "Explains why generic non-Hermitian degeneracies occur in two dimensions and why the Fig. 2 origin is exceptional.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQC007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The general 2x2 form, two degeneracy equations, and nilpotent normal form are explicit in Supplement V."
+        },
+        {
+          "id": "EQC007_real_imag",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Separating real and imaginary parts of (b0+i b1)^2=0 yields exactly two real scalar constraints."
+        },
+        {
+          "id": "EQC007_rank",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For b nonzero, b sigma_+ is rank one and nilpotent, so its algebraic multiplicity two has geometric multiplicity one."
+        }
+      ],
+      "numerical_form": "Rank, nilpotency, and eigenvector-nullity checks on the canonical 2x2 matrix.",
+      "code_refs": [
+        "src/nonhermitian_topology.py::exceptional_point_hamiltonian"
+      ],
+      "open_questions": []
+    }
+  ]
+}

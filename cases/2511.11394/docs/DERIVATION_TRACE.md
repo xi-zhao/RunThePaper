@@ -49,7 +49,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   \(\operatorname{tr}(\sigma_a\sigma_b)=2\delta_{ab}\).
 - Numerical form: a dot product of two unit vectors, clipped only at floating
   point roundoff.
-- Code pointer: `code/src/chern_jump_geometry.py:projector_mismatch`.
+- Code pointer: `src/chern_jump_geometry.py:projector_mismatch`.
 - Status: verified algebraically.
 
 ### EQC002 — Small-\(\mathbf q\) metric limit
@@ -66,7 +66,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   \(q_iq_j\partial_i\mathbf n\cdot\partial_j\mathbf n/4\).
 - Numerical form: use the symmetric \(\pm\mathbf q\) average to cancel odd
   finite-\(q\) corrections.
-- Code pointer: `code/src/chern_jump_geometry.py:directional_mismatch`.
+- Code pointer: `src/chern_jump_geometry.py:directional_mismatch`.
 - Status: verified.
 
 ### EQC003 — Isotropic jump second moment
@@ -84,7 +84,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   \(q^2\operatorname{tr}g/2+O(q^4)\).
 - Numerical form: evaluate shifts by periodic interpolation so \(q\) is not
   restricted to an integer grid step.
-- Code pointer: `code/src/chern_jump_geometry.py:jump_metric_estimator`.
+- Code pointer: `src/chern_jump_geometry.py:jump_metric_estimator`.
 - Status: verified for the explicitly fixed probe.
 
 ### EQC004 — Topological bound and normalization
@@ -104,7 +104,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   displayed factor \(1/4\) yields \(E_D=K/2\). The later prose factor
   \(E_D=(1/4)\int\operatorname{tr}g\) cannot yield its stated bound and is
   treated as a factor-of-two typo.
-- Code pointer: `code/src/chern_jump_geometry.py:geometry_observables`.
+- Code pointer: `src/chern_jump_geometry.py:geometry_observables`.
 - Status: normalization verified.
 
 ### EQC005 — Chern number on a periodic grid
@@ -121,7 +121,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
 - Steps: split each periodic momentum plaquette into two oriented spherical
   triangles and sum their signed solid angles. This is gauge-free for the
   \(\mathbf n\) texture and integer-stable away from singular plaquettes.
-- Code pointer: `code/src/chern_jump_geometry.py:chern_number_solid_angle`.
+- Code pointer: `src/chern_jump_geometry.py:chern_number_solid_angle`.
 - Status: independent discretization; checked against the paper's \(C=1\)
   sector.
 
@@ -148,8 +148,8 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   \(d|\mathbf n|^2/dt=0\) in the continuum.
 - Numerical form: periodic second-order Laplacian, RK4 time stepping, and
   pointwise normalization after each complete step.
-- Code pointer: `code/src/chern_jump_geometry.py:llg_rhs` and
-  `code/src/chern_jump_geometry.py:rk4_step`.
+- Code pointer: `src/chern_jump_geometry.py:llg_rhs` and
+  `src/chern_jump_geometry.py:rk4_step`.
 - Status: verified from the projector equation and Pauli algebra.
 
 ### EQC007 — Lyapunov check
@@ -165,7 +165,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   tangent projection. Multiplying by \(-\gamma\) proves the inequality.
 - Role: acceptance rule for the discretized flow. The executable check allows
   only a small integrator tolerance and separately tracks \(C\).
-- Code pointer: `code/scripts/run_validation.py`.
+- Code pointer: `scripts/run_validation.py`.
 - Status: verified.
 
 ### EQC008 — The published bath has no momentum-transfer form factor
@@ -187,7 +187,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
   a density-transfer detector necessarily carries two different fermion
   momenta.
 - Code pointer:
-  `code/src/detector_sum_rule.py:paper_bath_complete_vertex_strength`.
+  `src/detector_sum_rule.py:paper_bath_complete_vertex_strength`.
 - Status: verified.
 
 ### EQC009 — Ohmic matrix-space bath is damping, not a click model
@@ -233,7 +233,7 @@ coordinates, hence \(E_D\ge\pi|C|\) is equivalent to \(K\ge2\pi|C|\).
 - Steps: insert
   \(c_{\mathbf k,i}=\sum_nu_{n,i}(\mathbf k)\gamma_{n,\mathbf k}\)
   into \(\rho_{\mathbf q}\) and sum over orbital \(i\).
-- Code pointer: `code/src/detector_sum_rule.py:density_probe_weight`.
+- Code pointer: `src/detector_sum_rule.py:density_probe_weight`.
 - Status: algebraically verified.
 
 ### EQC011 — What a calibrated record actually measures
@@ -258,7 +258,7 @@ frequency window removes information rather than being repaired by a global
 normalization.
 
 - Code pointer:
-  `code/src/detector_sum_rule.py:calibrated_density_response`.
+  `src/detector_sum_rule.py:calibrated_density_response`.
 - Status: derived and normalization-checked.
 
 ### EQC012 — The conditional no-dark theorem
@@ -274,7 +274,7 @@ momenta, spectral resolution, a nonzero calibrated kernel, and the
 \(q\rightarrow0\) extrapolation. It is not a lower bound on raw total counts.
 
 - Code pointer:
-  `code/src/detector_sum_rule.py:density_probe_metric_estimator`.
+  `src/detector_sum_rule.py:density_probe_metric_estimator`.
 - Status: verified by composition of the previous cards.
 
 ### EQC013 — The paper bath's isotropic vertex ensemble is geometry-blind
@@ -294,7 +294,7 @@ Hence the published bath's complete same-\(k\) orbital response is
 texture-blind rather than bounded by quantum geometry.
 
 - Code pointer:
-  `code/src/detector_sum_rule.py:paper_bath_complete_vertex_strength`.
+  `src/detector_sum_rule.py:paper_bath_complete_vertex_strength`.
 - Status: algebraically verified.
 
 ### EQC014 — Raw-rate and vertex no-go limits
@@ -312,8 +312,8 @@ At \(q=0\), the scalar vertex vanishes because \(P(1-P)=0\), but a generic
 \(M\) produces a nonzero constant term. Its small-\(q\) coefficient is
 therefore not the standard quantum metric.
 
-- Code pointers: `code/src/detector_sum_rule.py:raw_absorption_rate` and
-  `code/src/detector_sum_rule.py:orbital_vertex_weight`.
+- Code pointers: `src/detector_sum_rule.py:raw_absorption_rate` and
+  `src/detector_sum_rule.py:orbital_vertex_weight`.
 - Status: limiting cases and projector algebra verified.
 
 ### EQC015 — Exact extended-Hubbard field
@@ -352,8 +352,8 @@ therefore not the standard quantum metric.
   periodic convolution on a small even grid; for a constant texture the
   interaction field is parallel to \(\mathbf n\) and produces no torque.
 - Code pointers:
-  `code/src/chern_jump_geometry.py:extended_hubbard_convolution` and
-  `code/src/chern_jump_geometry.py:exact_extended_hubbard_rhs`.
+  `src/chern_jump_geometry.py:extended_hubbard_convolution` and
+  `src/chern_jump_geometry.py:exact_extended_hubbard_rhs`.
 - Status: verified.
 
 ### EQC016 — Extended-Hubbard small-\(q\) coupling
@@ -372,7 +372,7 @@ therefore not the standard quantum metric.
   \((U,V,Q)=(8,0.75,\pi/2)\) gives
   \(\lambda_D=1.1828772769\ldots\), agreeing with the reported \(1.183\).
 - Code pointer:
-  `code/src/chern_jump_geometry.py:extended_hubbard_lambda_d`.
+  `src/chern_jump_geometry.py:extended_hubbard_lambda_d`.
 - Status: verified.
 
 ### EQC017 — Trace-condition deviation
@@ -402,7 +402,7 @@ therefore not the standard quantum metric.
   differences and the solid-angle Chern number are retained as independent
   resolution diagnostics.
 - Code pointer:
-  `code/src/chern_jump_geometry.py:local_geometry`.
+  `src/chern_jump_geometry.py:local_geometry`.
 - Status: verified.
 
 ## Resolved Physical Bridge

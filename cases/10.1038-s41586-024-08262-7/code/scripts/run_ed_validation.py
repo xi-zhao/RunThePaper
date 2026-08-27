@@ -7,6 +7,7 @@ function z_R(x)=1+m x that Fig. 2 rests on.  Writes a JSON check.
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -22,14 +23,34 @@ from spin_model_1d import (  # noqa: E402
     single_particle_matrix,
 )
 
-OUT = Path(__file__).resolve().parents[2] / "outputs" / "checks"
+OUT = Path(__file__).resolve().parents[1] / "outputs" / "checks"
 
 
-def run_case(N: int, m: int, seed: int) -> dict:
+def _parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path(__file__).resolve().parents[1] / "config" / "paper_exact.json",
+        help="Path to the case-local paper-exact configuration.",
+    )
+    return parser.parse_args()
+
+
+def _load_ed_config(path: Path) -> dict:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    parameters = payload.get("parameters", {})
+    ed = parameters.get("ed_validation", {})
+    if not isinstance(ed, dict):
+        raise ValueError("config.parameters.ed_validation must be an object")
+    return ed
+
+
+def run_case(N: int, m: int, seed: int, *, j_low: float, j_high: float, mu_low: float, mu_high: float) -> dict:
     rng = np.random.default_rng(seed)
-    J = rng.uniform(0.5, 1.5, size=N)
+    J = rng.uniform(j_low, j_high, size=N)
     J[-1] = 0.0  # open boundary
-    mu = rng.uniform(-1.0, 1.0, size=N)
+    mu = rng.uniform(mu_low, mu_high, size=N)
 
     H = build_hamiltonian(J, mu, m)
     Nop = number_operator(m, N)
@@ -56,10 +77,28 @@ def run_case(N: int, m: int, seed: int) -> dict:
 
 
 def main() -> int:
+    args = _parse_args()
+    ed_config = _load_ed_config(args.config)
+    j_range = ed_config.get("j_uniform", [0.5, 1.5])
+    mu_range = ed_config.get("mu_uniform", [-1.0, 1.0])
     cases = [
-        run_case(N=4, m=2, seed=1),
-        run_case(N=5, m=2, seed=7),
-        run_case(N=4, m=3, seed=3),
+        run_case(
+            N=int(case["N"]),
+            m=int(case["m"]),
+            seed=int(case["seed"]),
+            j_low=float(j_range[0]),
+            j_high=float(j_range[1]),
+            mu_low=float(mu_range[0]),
+            mu_high=float(mu_range[1]),
+        )
+        for case in ed_config.get(
+            "cases",
+            [
+                {"N": 4, "m": 2, "seed": 1},
+                {"N": 5, "m": 2, "seed": 7},
+                {"N": 4, "m": 3, "seed": 3},
+            ],
+        )
     ]
     result = {
         "target": "ed_validation_1d_solvable_model",

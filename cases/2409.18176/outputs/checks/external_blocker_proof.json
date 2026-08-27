@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "paper_id": "2409.18176",
+  "audit_kind": "source_trace",
+  "result": "mixed",
+  "audited_publication_inputs": [
+    {
+      "path": "raw/paper.pdf",
+      "sha256": "404c376dc1a7ffd3f968afca7315ca91deb75e971c3b43cf2b6cb6aa2b13b358"
+    },
+    {
+      "path": "raw/arxiv-source.tar",
+      "sha256": "2ddf848cba9387d44e8466fd81c92fbf801515fbb642d629c15fac120a94173e"
+    },
+    {
+      "path": "raw/tex/prlv2.tex",
+      "sha256": "b641e510f291b42d1913e4809d77aa5c631fa58f529a7e22478dac0a5d468b08"
+    }
+  ],
+  "author_artifact_boundary": "The Zenodo author code/data locator was not opened; source figures and numerical arrays were not used as scientific inputs.",
+  "conclusion": "Publication omission is proven for T001's finite scattering-amplitude rendering and T005's absolute phonon contribution. It is not proven for T006-T008: the source prints the global density parameters, equilibrium constraint, masses, operating point, analytic three-fluid equations, and all six fitted coefficients; per-species densities are model-derived quantities rather than indispensable unpublished inputs.",
+  "target_findings": [
+    {
+      "target_id": "T001",
+      "affected_items": [
+        "M1b-R.S1"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "The Supplemental equations specify an i0+ resonance pole but no finite linewidth or numerical regularization used to draw the finite |f(E)| peak; the displayed curve is not uniquely defined by the printed expression.",
+      "root_cause": "No value or rule for replacing i0+ with the plotted finite-width convention appears in the PDF or TeX source.",
+      "scope": "Only the right-hand scattering-amplitude series of Main Fig. 1(b).",
+      "resolution_input": "A citable linewidth/regularization convention and its parameter value."
+    },
+    {
+      "target_id": "T005",
+      "affected_items": [
+        "M3-I.S1"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "The manuscript states that rho_ph is estimated from Refs. Lavasani2019 and Huang2024 but prints neither the acoustic-phonon relaxation-time function nor its material calibration used in the inset.",
+      "root_cause": "The absolute phonon curve is delegated to external literature without a source-to-curve parameter mapping, so the total-resistivity inset cannot be uniquely regenerated from the publication package.",
+      "scope": "Only the near-resonant total-resistivity inset series; the independently implemented many-body contribution is outside this blocker.",
+      "resolution_input": "The material-specific tau_ph(T) calibration and normalization used for the plotted inset."
+    },
+    {
+      "target_id": "T011",
+      "affected_items": [
+        "M3-I.S2"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "The independently implemented far-detuned Drude-plus-phonon limit still requires the same absolute acoustic-phonon relaxation-time calibration, which the manuscript only delegates to Refs. Lavasani2019 and Huang2024.",
+      "root_cause": "No tau_ph(T) function, material constants, or source-to-curve normalization is printed in the PDF or TeX source, so the absolute far-detuned total-resistivity curve is not uniquely fixed.",
+      "scope": "Only the far-detuned total-resistivity inset series; its implemented asymptotic many-body/Drude contribution remains valid evidence.",
+      "resolution_input": "The material-specific tau_ph(T) calibration and normalization used for the plotted inset."
+    },
+    {
+      "target_ids": [
+        "T006",
+        "T007",
+        "T008"
+      ],
+      "affected_items": [
+        "M4a.S1",
+        "M4a.S2",
+        "M4a.S3",
+        "M4a.S4",
+        "M4b.S1",
+        "M4b.S2",
+        "M4b.S3",
+        "M4b.S4",
+        "M4c.S1",
+        "M4c.S2",
+        "M4c.S3",
+        "M4c.S4"
+      ],
+      "proof_result": "disproved",
+      "contrary_publication_evidence": [
+        "Main parameter paragraph: EFh=5 meV, nx=2e11 cm^-2, masses and tau0",
+        "Main Fig. 4 caption: Delta/EFh=0.5 and T=5.8 K",
+        "Supplement hydrodynamic section: printed equations and all six fitted tau/alpha coefficients",
+        "Printed chemical-equilibrium condition mu_h+mu_x=mu_t"
+      ],
+      "reason": "The species densities used by the three-fluid model can be reconstructed from the printed equilibrium model. The remaining mismatch must be tested as a density-convention/model/evidence issue, not closed as an external publication blocker.",
+      "deciding_test": "Independently solve both plausible free-density and conserved-total-density closures at the printed operating point, evaluate the analytic and direct-matrix three-fluid forms, and adjudicate the curves against the frozen kinetic output."
+    }
+  ]
+}

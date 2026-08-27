@@ -1,50 +1,21 @@
-# Wigner 负性如何证明真正多体纠缠
+# Sufficient Wigner Negativity Implies Genuine Multipartite Entanglement：科学复现讲义
 
-论文：*Sufficient Wigner Negativity Implies Genuine Multipartite
-Entanglement*，Physical Review Letters 137, 040202 (2026)。
+## 结论
 
-## 复现结论
+Main Fig. 2 is exactly reproduced from closed-form fields and finite witnesses. The numerical fields behind Main Fig. 1 are independently regenerated and pass all state-derived invariants, while its 3D rendering is feature-level and the source-printed theorem-1 threshold is internally inconsistent with the source-printed state.
 
-这项复现先推导相空间见证，再执行数值计算。论文的 W 态结果可以由闭式公式完整
-重建：有限圆盘见证的临界半径是
-\(r_{\mathrm{crit}}=0.6991953293\)，论文使用的 \(r=0.7\) 给出负性体积
-0.3541354750，超过真正多体纠缠阈值 0.3535533906。七个特征函数采样点产生
-19 个不同的差分，只需要十个独立测量；对应矩阵的负本征值给出见证
-0.01758037565，与论文的 0.0176 一致。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-![W 态 Wigner 函数与特征函数见证](../outputs/figures/w_state_wigner_characteristic.png)
+## 我们复现的是什么
 
-## 为什么必须先推导
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-三模等坐标切片只激发中心质心模，两个相对模固定在原点。W 态因此等价于一个
-质心模单光子态乘以相对模真空宇称。这个变换直接给出 Wigner 函数、圆盘积分和
-特征函数矩阵，避免通过拟合原图反推公式。
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=missing, causal_resolution=repair_required, science=pending, execution=failed, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`。
 
-同一推导还发现 Fig. 1 的一个内部不一致。论文打印的六个 Fock 振幅给出相对
-宇称 \(-13/25\)，代入定理后阈值分子应为 52；End Matter 却打印为 56。独立
-积分得到负性体积 0.2636995707，它超过由打印量子态推出的阈值
-0.2634433620，却没有超过打印的 0.2701100286。这里同时保留两个阈值，没有
-调网格或改参数去追随其中一个数字。
+## 运行
 
-![Fig. 1 数值场与两种阈值](../outputs/figures/overview_numeric_surfaces.png)
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-第二个 Fig. 1 见证不受该矛盾影响。质心模 Wigner 函数经过论文指定的高斯平滑
-后，原点值精确等于 \(-7/(16\pi)\)，数值卷积误差约
-\(2.8\times10^{-15}\)。
+## 论文审查边界
 
-## 复现程度
-
-- Main Fig. 2：解析参考级完整复现，90/100。
-- Main Fig. 1：数值场和不变量通过，但三维等值面参数与相机未公开，且存在上述
-  源内阈值矛盾，80/100。
-- 综合评分：85/100，属于数值特征复现。
-
-评分衡量物理对象、参数、数值接近度和证据来源，不把字体、配色或相机角度当成
-物理正确率。完整推导见 [DERIVATION.md](../docs/DERIVATION.md)，运行方式见
-[代码说明](../code/README.md)。
-
-## 边界
-
-公开 Case 提供独立代码、生成数据、生成图和机器检查，不包含论文 PDF、作者
-源码或单独原图。两张对照图仅保留验证复现结论所需的论文片段，并不表示获得了
-作者原始数据。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：The numerical fields behind Main Fig. 1 are reproduced at feature level; the source does not disclose its isosurface rendering parameters. The printed Fig. 1 state implies (75*sqrt(2)+52)/600, while the End Matter prints (75*sqrt(2)+56)/600. The state-derived negative volume is 0.26369957: above the corrected bound and below the printed bound.

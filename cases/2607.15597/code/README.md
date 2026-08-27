@@ -12,4 +12,4 @@ python scripts/run_reproduction.py
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Author curve points and optimized Fig. 3 schedules are unavailable; the thermal and circular figures use labelled analytic feature models rather than the full QuTiP/Lindblad workflow; MQDT and qLDPC Monte Carlo require unpublished scientific inputs and run metadata. Pixel registration reaches best SSIM 0.8297 and 0 of 8 images meet the strict 0.95 threshold.
+Boundary: Local feature reproduction scored 75.21/100; exact author-run equivalence remains blocked by missing MQDT, qLDPC, and open-system inputs.

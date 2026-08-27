@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 122, 220603 (2019) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **66.65/100**
 
-All numerical panels are independently generated at reduced scale; SU(2), revival and exact-toy features reproduce, while long-time and entropy scaling remain partial.
+Historical T001-T009 scores are unchanged. The 17 review-localized implementation defects are repaired; their exact printed-scale adjudication remains externally compute-blocked and is not promoted to reproduced.
 
 ## Start Here / 从这里开始
 
@@ -19,6 +19,7 @@ All numerical panels are independently generated at reduced scale; SU(2), reviva
 - [Public evidence index](docs/EVIDENCE_INDEX.md)
 - [Comparison policy](docs/COMPARISON_POLICY.md)
 - [Scientific consistency report](docs/CONSISTENCY_REPORT.md)
+- [Independent paper assessment](docs/PAPER_ASSESSMENT.md)
 - [Code and run commands](code/README.md)
 - [Machine-readable scorecard](outputs/checks/similarity_scorecard.json)
 - [Machine-readable completion boundary](outputs/checks/completion_assessment.json)
@@ -76,7 +77,7 @@ cd cases/1812.05561/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

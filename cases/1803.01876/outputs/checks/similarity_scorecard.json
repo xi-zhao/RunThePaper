@@ -1,11 +1,14 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "score_model": "rra_similarity_v3_figure_evaluation",
   "paper_id": "1803.01876",
   "summary": "所有评分 target 已加入原文图源 digitization：Fig. 2、Fig. 3、Fig. 4、Fig. 5 和补充图均有 EPS/PNG reference CSV 与 generated data 对照。Fig. 2/Fig. 3 共用的开链实空间方程和补充图使用的开边界 bulk spectrum 均已升级为 source_and_symbolic 公式门禁；剩余边界是：这些仍不是作者原始 plotting data。",
   "targets": [
     {
       "target_id": "T001",
+      "execution_output_refs": [
+        "outputs/data/implementation_closure/T001.json"
+      ],
       "label": "Fig. 2 open-boundary spectrum",
       "weight": 1.0,
       "components": {
@@ -21,7 +24,7 @@
         },
         "paper_scope_coverage": {
           "score": 13.0,
-          "reason": "Fig. 2(a-c,d) 均已完成内部 EPS/PNG digitized reference 检查；仍低于作者原始 plotting data。",
+          "reason": "Fig. 2(a-c,d) 均已有 EPS/PNG digitized reference CSV，并接入 all_digitized_curves.json；仍低于作者原始 plotting data。",
           "max_score": 15.0
         }
       },
@@ -30,7 +33,11 @@
       "evidence": [
         "outputs/checks/fig2_open_spectrum.json",
         "outputs/checks/fig2_boundary_perturbation.json",
-        "internal digitized source validation (not redistributed)"
+        "outputs/checks/all_digitized_curves.json",
+        "internal-reference-curves/fig2_abssmall_digitized.csv",
+        "internal-reference-curves/fig2_realsmall_digitized.csv",
+        "internal-reference-curves/fig2_imaginesmall_digitized.csv",
+        "internal-reference-curves/fig2_absdisorder_digitized.csv"
       ],
       "remaining_gap": "已达到 digitized-curve 级对照；未达到 author-data 级对照。",
       "component_total": 97.0,
@@ -52,7 +59,28 @@
           "EQC003",
           "EQC005"
         ],
-        "reference_comparison": "digitized_curve"
+        "reference_comparison": "digitized_curve",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T001_FIG2_ABS_LAYOUT",
+            "PXT_T001_FIG2_IMAG_LAYOUT",
+            "PXT_T001_FIG2_REAL_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T001_FIG2_ABS_LAYOUT",
+          "PXT_T001_FIG2_IMAG_LAYOUT",
+          "PXT_T001_FIG2_REAL_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "assessment_subject": "paper"
       },
       "critical": true,
       "parameter_score_cap": 100.0,
@@ -126,10 +154,17 @@
         "panel_scope_cap": 15.0
       },
       "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed"
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": false,
+      "causal_diagnosis_status": "not_required",
+      "causal_diagnosis_disposition": "not_required"
     },
     {
       "target_id": "T002",
+      "execution_output_refs": [
+        "outputs/data/implementation_closure/T002.json"
+      ],
       "label": "Fig. 3 GBZ and skin localization",
       "weight": 1.0,
       "components": {
@@ -153,7 +188,10 @@
       "cap_reason": "使用 digitized EPS/PNG curve/reference；仍非作者原始 plotting data。",
       "evidence": [
         "outputs/checks/fig3_beta_skin.json",
-        "internal digitized source validation (not redistributed)"
+        "outputs/checks/all_digitized_curves.json",
+        "internal-reference-curves/fig3_absbeta_digitized.csv",
+        "internal-reference-curves/fig3_cbeta_digitized.csv",
+        "internal-reference-curves/fig3_profile_digitized.csv"
       ],
       "remaining_gap": "已达到 digitized-curve 级对照；未达到 author-data 级对照。",
       "component_total": 95.0,
@@ -175,7 +213,102 @@
           "EQC006",
           "EQC007"
         ],
-        "reference_comparison": "digitized_curve"
+        "reference_comparison": "digitized_curve",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T002_FIG3_ABSBETA_LAYOUT",
+            "PXT_T002_FIG3_CBETA_LAYOUT",
+            "PXT_T002_FIG3_PROFILE_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T002_FIG3_ABSBETA_LAYOUT",
+          "PXT_T002_FIG3_CBETA_LAYOUT",
+          "PXT_T002_FIG3_PROFILE_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The historical targets already had accepted scientific outputs, but their code-fault attribution and isolated execution binding had not been closed under the current Harness.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json",
+              "outputs/data/implementation_closure/T002.json",
+              "outputs/data/implementation_closure/T003.json",
+              "outputs/data/implementation_closure/T004.json",
+              "outputs/data/implementation_closure/T005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "A clean-room campaign now independently exercises the GBZ equal-modulus condition, non-Bloch winding transition, nonzero-t3 quartic roots, and supplemental spectra; the remaining historical gap was evidence binding rather than missing science or compute.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula-derived implementations reproduce the target invariants and the isolated campaign reads every declared input with no forbidden access.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The campaign independently checks equal-modulus beta roots and skin localization, the analytic winding plateau, quartic-root GBZ structure, and three supplemental parameter families.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T002.json",
+                  "outputs/data/implementation_closure/T003.json",
+                  "outputs/data/implementation_closure/T004.json",
+                  "outputs/data/implementation_closure/T005.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All four target paths ran in one minimal source-blind bundle with 4/4 declared inputs read and zero denied accesses.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No reproduction defect survived the independent invariant, limiting-case, and isolated-execution checks.",
+              "evidence": [
+                "outputs/data/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The attribution closes the four previously unresolved main/supplement numerical targets without changing their frozen item denominator or similarity score.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005"
+            ],
+            "completion": "4/4 target-level code-fault attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Submit the frozen whole-paper package to fresh-context review so a separate reviewer can still attempt to falsify every atomic item.",
+            "expected_resolution": "Fresh review either supports the reproduced items or identifies a concrete paper discrepancy or reproduction defect without reopening already attested wiring.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": true,
       "parameter_score_cap": 100.0,
@@ -209,7 +342,11 @@
         "panel_scope_cap": 15.0
       },
       "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed"
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T003",
@@ -236,7 +373,10 @@
       "cap_reason": "使用 digitized EPS curve/reference；仍非作者原始 plotting data。",
       "evidence": [
         "outputs/checks/fig4_winding.json",
-        "internal digitized source validation (not redistributed)"
+        "outputs/checks/fig4_digitized_curve.json",
+        "outputs/checks/all_digitized_curves.json",
+        "internal-reference-curves/fig4_winding_digitized_markers.csv",
+        "internal-reference-curves/fig4_winding_digitized_step_vertices.csv"
       ],
       "remaining_gap": "已达到 digitized-curve 级对照；未达到 author-data 级对照。",
       "component_total": 96.0,
@@ -258,7 +398,98 @@
           "EQC007",
           "EQC009"
         ],
-        "reference_comparison": "digitized_curve"
+        "reference_comparison": "digitized_curve",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T003_FIG4_WINDING_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T003_FIG4_WINDING_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The historical targets already had accepted scientific outputs, but their code-fault attribution and isolated execution binding had not been closed under the current Harness.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json",
+              "outputs/data/implementation_closure/T002.json",
+              "outputs/data/implementation_closure/T003.json",
+              "outputs/data/implementation_closure/T004.json",
+              "outputs/data/implementation_closure/T005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "A clean-room campaign now independently exercises the GBZ equal-modulus condition, non-Bloch winding transition, nonzero-t3 quartic roots, and supplemental spectra; the remaining historical gap was evidence binding rather than missing science or compute.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula-derived implementations reproduce the target invariants and the isolated campaign reads every declared input with no forbidden access.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The campaign independently checks equal-modulus beta roots and skin localization, the analytic winding plateau, quartic-root GBZ structure, and three supplemental parameter families.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T002.json",
+                  "outputs/data/implementation_closure/T003.json",
+                  "outputs/data/implementation_closure/T004.json",
+                  "outputs/data/implementation_closure/T005.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All four target paths ran in one minimal source-blind bundle with 4/4 declared inputs read and zero denied accesses.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No reproduction defect survived the independent invariant, limiting-case, and isolated-execution checks.",
+              "evidence": [
+                "outputs/data/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The attribution closes the four previously unresolved main/supplement numerical targets without changing their frozen item denominator or similarity score.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005"
+            ],
+            "completion": "4/4 target-level code-fault attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Submit the frozen whole-paper package to fresh-context review so a separate reviewer can still attempt to falsify every atomic item.",
+            "expected_resolution": "Fresh review either supports the reproduced items or identifies a concrete paper discrepancy or reproduction defect without reopening already attested wiring.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": true,
       "parameter_score_cap": 100.0,
@@ -282,10 +513,17 @@
         "panel_scope_cap": 15.0
       },
       "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed"
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T004",
+      "execution_output_refs": [
+        "outputs/data/implementation_closure/T004.json"
+      ],
       "label": "Fig. 5 nonzero t3 topology",
       "weight": 1.0,
       "components": {
@@ -309,7 +547,10 @@
       "cap_reason": "使用 digitized EPS curve/reference；仍非作者原始 plotting data。",
       "evidence": [
         "outputs/checks/fig5_t3.json",
-        "internal digitized source validation (not redistributed)"
+        "outputs/checks/all_digitized_curves.json",
+        "internal-reference-curves/fig5_t3_spectrum_digitized.csv",
+        "internal-reference-curves/fig5_t3_winding_digitized.csv",
+        "internal-reference-curves/fig5_t3_cbeta_digitized.csv"
       ],
       "remaining_gap": "已达到 paper-parameter、high-precision、digitized-curve 级对照；未达到 author-data 级对照。",
       "component_total": 93.0,
@@ -331,7 +572,98 @@
           "EQC009",
           "EQC010"
         ],
-        "reference_comparison": "digitized_curve"
+        "reference_comparison": "digitized_curve",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "scientific_region_contract_declared",
+          "pixel_target_refs": [
+            "PXT_T004_FIG5_LAYOUT"
+          ]
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_contract_refs": [
+          "PXT_T004_FIG5_LAYOUT"
+        ],
+        "pixel_status": "scientific_region_contract_declared",
+        "pixel_status_reason": "Lifecycle render status is derived independently for every pre-existing scientific crop under scientific_region_v1.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The historical targets already had accepted scientific outputs, but their code-fault attribution and isolated execution binding had not been closed under the current Harness.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json",
+              "outputs/data/implementation_closure/T002.json",
+              "outputs/data/implementation_closure/T003.json",
+              "outputs/data/implementation_closure/T004.json",
+              "outputs/data/implementation_closure/T005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "A clean-room campaign now independently exercises the GBZ equal-modulus condition, non-Bloch winding transition, nonzero-t3 quartic roots, and supplemental spectra; the remaining historical gap was evidence binding rather than missing science or compute.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula-derived implementations reproduce the target invariants and the isolated campaign reads every declared input with no forbidden access.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The campaign independently checks equal-modulus beta roots and skin localization, the analytic winding plateau, quartic-root GBZ structure, and three supplemental parameter families.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T002.json",
+                  "outputs/data/implementation_closure/T003.json",
+                  "outputs/data/implementation_closure/T004.json",
+                  "outputs/data/implementation_closure/T005.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All four target paths ran in one minimal source-blind bundle with 4/4 declared inputs read and zero denied accesses.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No reproduction defect survived the independent invariant, limiting-case, and isolated-execution checks.",
+              "evidence": [
+                "outputs/data/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The attribution closes the four previously unresolved main/supplement numerical targets without changing their frozen item denominator or similarity score.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005"
+            ],
+            "completion": "4/4 target-level code-fault attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Submit the frozen whole-paper package to fresh-context review so a separate reviewer can still attempt to falsify every atomic item.",
+            "expected_resolution": "Fresh review either supports the reproduced items or identifies a concrete paper discrepancy or reproduction defect without reopening already attested wiring.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": true,
       "parameter_score_cap": 100.0,
@@ -362,10 +694,17 @@
         "panel_scope_cap": 15.0
       },
       "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed"
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     },
     {
       "target_id": "T005",
+      "execution_output_refs": [
+        "outputs/data/implementation_closure/T005.json"
+      ],
       "label": "Supplemental spectra",
       "weight": 0.5,
       "components": {
@@ -390,7 +729,11 @@
       "evidence": [
         "outputs/checks/supplemental_fig1_complex_spectra.json",
         "outputs/checks/supplemental_fig2_gamma24.json",
-        "internal digitized source validation (not redistributed)"
+        "outputs/checks/all_digitized_curves.json",
+        "internal-reference-curves/supplemental_fig1_theory_complex_digitized.csv",
+        "internal-reference-curves/supplemental_fig1_open_complex_digitized.csv",
+        "internal-reference-curves/supplemental_fig2_spectrum_digitized.csv",
+        "internal-reference-curves/supplemental_fig2_winding_digitized.csv"
       ],
       "remaining_gap": "已达到 digitized-curve 级对照；未达到 author-data 级对照。",
       "component_total": 90.0,
@@ -415,7 +758,93 @@
           "EQC008",
           "EQC009"
         ],
-        "reference_comparison": "digitized_curve"
+        "reference_comparison": "digitized_curve",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The historical targets already had accepted scientific outputs, but their code-fault attribution and isolated execution binding had not been closed under the current Harness.",
+            "evidence": [
+              "outputs/checks/similarity_scorecard.json",
+              "outputs/data/implementation_closure/T002.json",
+              "outputs/data/implementation_closure/T003.json",
+              "outputs/data/implementation_closure/T004.json",
+              "outputs/data/implementation_closure/T005.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "A clean-room campaign now independently exercises the GBZ equal-modulus condition, non-Bloch winding transition, nonzero-t3 quartic roots, and supplemental spectra; the remaining historical gap was evidence binding rather than missing science or compute.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Independent formula-derived implementations reproduce the target invariants and the isolated campaign reads every declared input with no forbidden access.",
+            "checks": [
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The campaign independently checks equal-modulus beta roots and skin localization, the analytic winding plateau, quartic-root GBZ structure, and three supplemental parameter families.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T002.json",
+                  "outputs/data/implementation_closure/T003.json",
+                  "outputs/data/implementation_closure/T004.json",
+                  "outputs/data/implementation_closure/T005.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All four target paths ran in one minimal source-blind bundle with 4/4 declared inputs read and zero denied accesses.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "No reproduction defect survived the independent invariant, limiting-case, and isolated-execution checks.",
+              "evidence": [
+                "outputs/data/implementation_closure/campaign_summary.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The attribution closes the four previously unresolved main/supplement numerical targets without changing their frozen item denominator or similarity score.",
+            "items": [
+              "T002",
+              "T003",
+              "T004",
+              "T005"
+            ],
+            "completion": "4/4 target-level code-fault attributions resolved"
+          },
+          "next_discriminating_test": {
+            "action": "Submit the frozen whole-paper package to fresh-context review so a separate reviewer can still attempt to falsify every atomic item.",
+            "expected_resolution": "Fresh review either supports the reproduced items or identifies a concrete paper discrepancy or reproduction defect without reopening already attested wiring.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "critical": false,
       "parameter_score_cap": 100.0,
@@ -448,58 +877,629 @@
           {
             "panel_id": "S2b",
             "status": "reproduced",
-            "evidence": "internal digitized source validation (not redistributed)"
+            "evidence": "internal-reference-curves/supplemental_fig2_winding_digitized.csv"
           }
         ],
         "panel_scope_cap": 15.0
       },
       "final_reproduction_eligible": true,
-      "final_reproduction_gate": "passed"
+      "final_reproduction_gate": "passed",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T006",
+      "label": "Text claim — zero-mode endpoint migration",
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No claim-specific artifact exists; the item remains uncovered and does not rewrite the historical five-target aggregate.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No artifact checks the two-zero-mode endpoint allocation over all three printed t1 intervals.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No endpoint-resolved localization table is registered.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The independent no-display claim was absent from the earlier figure-centered scope.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific artifact exists, so no fidelity score is assigned.",
+      "primary_metric": {
+        "kind": "not_available",
+        "score": 0.0,
+        "pixel_target_ids": [],
+        "comparison_role": "not_available",
+        "evidence": [
+          "TARGET_LEDGER.md#T006"
+        ]
+      },
+      "evaluation": {
+        "critical": true,
+        "paper_level_role": "main_claim",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC008",
+          "EQC009"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a no-display analytic claim.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "TARGET_LEDGER.md#T006",
+          "figure_coverage.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The three no-display claims now have executable analytic witnesses, including an independently traced Ref. 49 boundary, but they have not yet received fresh-context claim adjudication.",
+            "evidence": [
+              "outputs/data/implementation_closure/T006.json",
+              "outputs/data/implementation_closure/T007.json",
+              "outputs/data/implementation_closure/T008.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "Implementation and source tracing are complete; only independent scientific review separates paper support from a possible claim discrepancy.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "parameter_provenance.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The endpoint-migration, block-additive winding, and cited-boundary checks all pass in the clean-room campaign; no implementation defect was found.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The code evaluates the two zero-mode beta roots, determinant-winding product, and corrected Ref. 49 interval directly from the printed equations.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T006.json",
+                  "outputs/data/implementation_closure/T007.json",
+                  "outputs/data/implementation_closure/T008.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The cited Ref. 49 DOI, arXiv version, parameter map, figure, and finite-chain scaling checks are recorded without digitizing source pixels.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T008.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All three analytic witnesses were regenerated inside the source-blind isolated runner.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "statement": "A fresh reviewer must still decide whether the current paper's textual corrections and multiband statements are fully supported by the equations.",
+              "evidence": [
+                "DERIVATION_TRACE.md",
+                "outputs/data/implementation_closure/T008.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The remaining review scope is exactly three quantitative text claims; no figure or source-pixel fitting is involved.",
+            "items": [
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "3/3 claims implemented and attested; 0/3 independently adjudicated"
+          },
+          "next_discriminating_test": {
+            "action": "Run the two-phase fresh-context falsification review over all three analytic claims and the full figure inventory.",
+            "expected_resolution": "Each claim receives paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with an atomic evidence trail.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "No endpoint-resolved claim check is registered.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t006_endpoint_migration_gate",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T006",
+          "claim": "The two zero modes migrate from both-left to split ends to both-right over the three exact t1 intervals."
+        }
+      ],
+      "figure_refs": [
+        "Text claim"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "T006",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T006"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": true,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T007",
+      "label": "Text claim — multiband winding sum",
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "No claim-specific artifact exists; the item remains uncovered and does not rewrite the historical five-target aggregate.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "No independent multiband construction verifies W=sum_l W^(l).",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "No block-diagonal multiband invariant table is registered.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The no-display method claim was absent from the earlier figure-centered scope.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "No claim-specific artifact exists, so no fidelity score is assigned.",
+      "primary_metric": {
+        "kind": "not_available",
+        "score": 0.0,
+        "pixel_target_ids": [],
+        "comparison_role": "not_available",
+        "evidence": [
+          "TARGET_LEDGER.md#T007"
+        ]
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "paper_exact",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "source_only",
+        "formula_dependencies": [
+          "EQC009"
+        ],
+        "reference_comparison": "analytic_reference",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a no-display analytic method claim.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "TARGET_LEDGER.md#T007",
+          "figure_coverage.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The three no-display claims now have executable analytic witnesses, including an independently traced Ref. 49 boundary, but they have not yet received fresh-context claim adjudication.",
+            "evidence": [
+              "outputs/data/implementation_closure/T006.json",
+              "outputs/data/implementation_closure/T007.json",
+              "outputs/data/implementation_closure/T008.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "Implementation and source tracing are complete; only independent scientific review separates paper support from a possible claim discrepancy.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "parameter_provenance.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The endpoint-migration, block-additive winding, and cited-boundary checks all pass in the clean-room campaign; no implementation defect was found.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The code evaluates the two zero-mode beta roots, determinant-winding product, and corrected Ref. 49 interval directly from the printed equations.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T006.json",
+                  "outputs/data/implementation_closure/T007.json",
+                  "outputs/data/implementation_closure/T008.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The cited Ref. 49 DOI, arXiv version, parameter map, figure, and finite-chain scaling checks are recorded without digitizing source pixels.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T008.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All three analytic witnesses were regenerated inside the source-blind isolated runner.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "statement": "A fresh reviewer must still decide whether the current paper's textual corrections and multiband statements are fully supported by the equations.",
+              "evidence": [
+                "DERIVATION_TRACE.md",
+                "outputs/data/implementation_closure/T008.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The remaining review scope is exactly three quantitative text claims; no figure or source-pixel fitting is involved.",
+            "items": [
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "3/3 claims implemented and attested; 0/3 independently adjudicated"
+          },
+          "next_discriminating_test": {
+            "action": "Run the two-phase fresh-context falsification review over all three analytic claims and the full figure inventory.",
+            "expected_resolution": "Each claim receives paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with an atomic evidence trail.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "No multiband additivity check is registered.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t007_multiband_sum_gate",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T007",
+          "claim": "The multiband invariant equals the sum of paired-band windings."
+        }
+      ],
+      "figure_refs": [
+        "Text claim"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "T007",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T007"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 89.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 100.0,
+      "reference_score_cap": 90.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
+    },
+    {
+      "target_id": "T008",
+      "label": "Text claim — correction to Ref. 49 zero-mode interval",
+      "weight": 0.0,
+      "score_aggregation": "excluded",
+      "score_exclusion_reason": "The cited source context is not yet frozen; the item remains uncovered and does not rewrite the historical five-target aggregate.",
+      "components": {
+        "feature_match": {
+          "score": 0.0,
+          "reason": "The claimed correction to Ref. 49 has not been independently adjudicated.",
+          "max_score": 50.0
+        },
+        "numeric_closeness": {
+          "score": 0.0,
+          "reason": "The cited model convention and a clean-room result are not registered.",
+          "max_score": 35.0
+        },
+        "paper_scope_coverage": {
+          "score": 0.0,
+          "reason": "The correction claim is declared but source-blocked.",
+          "max_score": 15.0
+        }
+      },
+      "score_cap": 0.0,
+      "cap_reason": "The cited scientific source context is missing, so no fidelity score is assigned.",
+      "primary_metric": {
+        "kind": "not_available",
+        "score": 0.0,
+        "pixel_target_ids": [],
+        "comparison_role": "not_available",
+        "evidence": [
+          "TARGET_LEDGER.md#T008"
+        ]
+      },
+      "evaluation": {
+        "critical": false,
+        "paper_level_role": "supporting",
+        "assessment_subject": "paper",
+        "artifact_pass": false,
+        "data_backed": false,
+        "manual_interventions": 0,
+        "failure_type": "data_not_backed",
+        "parameter_match": "unknown",
+        "artifact_stage": "exploratory",
+        "generated_data_provenance": "unknown",
+        "formula_gate": "unknown",
+        "formula_dependencies": [],
+        "reference_comparison": "not_available",
+        "pixel_status": "not_comparable",
+        "pixel_status_reason": "This is a cross-paper quantitative correction, not a displayed panel.",
+        "pixel_policy_version": "not_applicable",
+        "pixel_contract_refs": [],
+        "pixel_alternative_evidence": [
+          "TARGET_LEDGER.md#T008",
+          "figure_coverage.json"
+        ],
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "evidence_chain_incomplete",
+            "statement": "The three no-display claims now have executable analytic witnesses, including an independently traced Ref. 49 boundary, but they have not yet received fresh-context claim adjudication.",
+            "evidence": [
+              "outputs/data/implementation_closure/T006.json",
+              "outputs/data/implementation_closure/T007.json",
+              "outputs/data/implementation_closure/T008.json"
+            ]
+          },
+          "root_cause": {
+            "category": "review_or_evidence_process_gap",
+            "statement": "Implementation and source tracing are complete; only independent scientific review separates paper support from a possible claim discrepancy.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/implementation_closure.json",
+              "parameter_provenance.json",
+              "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The endpoint-migration, block-additive winding, and cited-boundary checks all pass in the clean-room campaign; no implementation defect was found.",
+            "checks": [
+              {
+                "kind": "exact_rederivation",
+                "result": "passed",
+                "statement": "The code evaluates the two zero-mode beta roots, determinant-winding product, and corrected Ref. 49 interval directly from the printed equations.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T006.json",
+                  "outputs/data/implementation_closure/T007.json",
+                  "outputs/data/implementation_closure/T008.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The cited Ref. 49 DOI, arXiv version, parameter map, figure, and finite-chain scaling checks are recorded without digitizing source pixels.",
+                "evidence": [
+                  "outputs/data/implementation_closure/T008.json",
+                  "parameter_provenance.json"
+                ]
+              },
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All three analytic witnesses were regenerated inside the source-blind isolated runner.",
+                "evidence": [
+                  "outputs/runs/1803.01876-implementation-closure-v2-20260825/run_attestation.json"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "paper_claim_discrepancy",
+              "status": "open",
+              "statement": "A fresh reviewer must still decide whether the current paper's textual corrections and multiband statements are fully supported by the equations.",
+              "evidence": [
+                "DERIVATION_TRACE.md",
+                "outputs/data/implementation_closure/T008.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The remaining review scope is exactly three quantitative text claims; no figure or source-pixel fitting is involved.",
+            "items": [
+              "T006",
+              "T007",
+              "T008"
+            ],
+            "completion": "3/3 claims implemented and attested; 0/3 independently adjudicated"
+          },
+          "next_discriminating_test": {
+            "action": "Run the two-phase fresh-context falsification review over all three analytic claims and the full figure inventory.",
+            "expected_resolution": "Each claim receives paper_supported, paper_error_candidate, reproduction_defect, or inconclusive with an atomic evidence trail.",
+            "evidence_to_produce": [
+              "outputs/checks/independent_review.json"
+            ]
+          }
+        }
+      },
+      "evidence": [
+        "PAPER_MAP.md",
+        "TARGET_LEDGER.md",
+        "figure_coverage.json"
+      ],
+      "remaining_gap": "Ref. 49 source context and an independent reconstruction are missing.",
+      "physics_assertions": [
+        {
+          "assertion_id": "t008_ref49_correction_gate",
+          "tier": "analytic",
+          "essential": true,
+          "status": "blocked",
+          "evidence": "TARGET_LEDGER.md#T008",
+          "claim": "The corrected zero-mode line spans the full interval [-1/sqrt(2), 1/sqrt(2)]."
+        }
+      ],
+      "figure_refs": [
+        "Text claim"
+      ],
+      "panel_coverage": {
+        "panels": [
+          {
+            "panel_id": "T008",
+            "status": "not_reproduced",
+            "evidence": "TARGET_LEDGER.md#T008"
+          }
+        ],
+        "panel_scope_cap": 0.0
+      },
+      "critical": false,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "physics_status": "pending",
+      "formula_score_cap": 60.0,
+      "generated_data_provenance_score_cap": 60.0,
+      "evidence_tier": "unknown",
+      "physics_score_cap": 100.0,
+      "parameter_score_cap": 50.0,
+      "reference_score_cap": 60.0,
+      "component_total": 0.0,
+      "score": 0.0,
+      "similarity_level": "feature_not_accepted",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "react_loop_required"
     }
   ],
   "overall_score": 94.0,
   "similarity_level": "complete_reproduction",
   "evaluation_summary": {
-    "scored_items": 5,
-    "critical_items": 4,
-    "artifact_pass_rate": 1.0,
-    "data_backed_rate": 1.0,
+    "scored_items": 8,
+    "critical_items": 5,
+    "artifact_pass_rate": 0.62,
+    "data_backed_rate": 0.62,
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "none": 5
+      "none": 5,
+      "data_not_backed": 3
     },
     "parameter_match_counts": {
-      "paper_exact": 5
+      "paper_exact": 7,
+      "unknown": 1
     },
     "reference_comparison_counts": {
-      "digitized_curve": 5
+      "digitized_curve": 5,
+      "analytic_reference": 2,
+      "not_available": 1
     },
     "generated_data_provenance_counts": {
       "independent_numerics": 4,
-      "analytic_reference": 1
+      "analytic_reference": 1,
+      "unknown": 3
     },
     "evidence_tier_counts": {
-      "physics_reproduction": 5
+      "physics_reproduction": 5,
+      "unknown": 3
     },
     "formula_gate_counts": {
-      "verified": 5
+      "verified": 5,
+      "source_only": 2,
+      "unknown": 1
     },
     "paper_level_role_counts": {
-      "main_claim": 3,
-      "supporting": 1,
+      "main_claim": 4,
+      "supporting": 3,
       "auxiliary": 1
     },
     "physics_status_counts": {
       "passed": 1,
-      "undeclared": 4
+      "undeclared": 4,
+      "pending": 3
     },
     "physics_assertion_status_counts": {
       "passed": 3,
-      "source_figure_artifact": 1
+      "source_figure_artifact": 1,
+      "blocked": 3
     },
     "essential_physics_failures": [],
-    "final_reproduction_ready": true,
+    "final_reproduction_ready": false,
     "final_reproduction_target_ids": [
       "T001",
       "T002",
@@ -507,8 +1507,81 @@
       "T004",
       "T005"
     ],
-    "final_reproduction_blocked_target_ids": [],
-    "exploratory_target_ids": []
+    "final_reproduction_blocked_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "final_reproduction_block_reasons": {
+      "T002": [
+        "science_checks_not_passed"
+      ],
+      "T003": [
+        "science_checks_not_passed"
+      ],
+      "T004": [
+        "science_checks_not_passed"
+      ],
+      "T005": [
+        "science_checks_not_passed"
+      ]
+    },
+    "exploratory_target_ids": [
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "aggregate_excluded_target_ids": [
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "causal_diagnosis_status_counts": {
+      "not_required": 1,
+      "complete": 7
+    },
+    "causal_diagnosis_disposition_counts": {
+      "not_required": 1,
+      "react_loop_required": 7
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [],
+    "causal_diagnosis_react_loop_target_ids": [
+      "T002",
+      "T003",
+      "T004",
+      "T005",
+      "T006",
+      "T007",
+      "T008"
+    ],
+    "direct_cause_counts": {
+      "evidence_chain_incomplete": 7
+    },
+    "root_cause_counts": {
+      "review_or_evidence_process_gap": 7
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 7
+    }
   },
   "status": "passed"
 }

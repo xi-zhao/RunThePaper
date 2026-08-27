@@ -1,16 +1,33 @@
-# Formula verification
+# Formula Verification
 
-Seven equation cards were followed and independently checked.
+This document explains which formulas are allowed to feed numerical reproduction.
 
-| Formula object | Verification |
-| --- | --- |
-| Biorthogonal Chern numbers | analytic equality of the four integrated curvatures |
-| Generalized Dirac spectrum | closed form matched sampled direct eigendecompositions |
-| Domain-wall determinant | both half-space characteristic equations and common-spinor residuals passed |
-| Exceptional-point vorticity | continuous loop tracking produced sheet exchange and charge magnitude $1/2$ |
-| Lattice cylinder | real-space blocks reconstructed the Bloch Hamiltonian and recovered the Hermitian limit |
-| Hybrid dispersion | orthogonal-cut fits returned exponents $1/2$ and $1$ |
-| Defectiveness | the canonical exceptional-point matrix is nonzero, rank one, and nilpotent |
+Machine-readable result:
 
-The runners write structured numerical arrays before rendering. None of the
-equation checks or generated arrays accepts a paper image as an input.
+```text
+outputs/checks/formula_verification.json
+```
+
+Run:
+
+```bash
+python PRAgent-workflow/scripts/check_formula_gate.py case/<paper-id> --write
+```
+
+## Gate Summary
+
+| Formula | Role | Gate | Reason |
+| --- | --- | --- | --- |
+| EQC001 | Chern equality | open | Patch transformation and closed-loop `grad log r` integral derived. |
+| EQC002 | Dirac spectrum/EP positions | open | Pauli-square identity and real/imaginary degeneracy equations checked. |
+| EQC003 | Domain-wall matching | open | Exponential ansatz reproduces determinant and continuity conditions. |
+| EQC004 | EP dispersion/vorticity | open | Matrix characteristic polynomial and loop winding independently checked. |
+| EQC005 | Cylinder Hamiltonian | open | Fourier transform of block hoppings returns Supp. Eq. (13). |
+| EQC006 | Hybrid dispersion | open | Orthogonal limiting exponents derived. |
+| EQC007 | Codimension/defectiveness | open | Two real constraints and rank-one normal form derived. |
+
+## Closed Or Unclear Formulas
+
+| Formula | Reason | Numerical consequence |
+| --- | --- | --- |
+| — | No formula dependency is closed. | T002 is authorized; methods MTH002/MTH003 retain their own pre-execution gates. |

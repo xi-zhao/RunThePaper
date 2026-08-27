@@ -1,66 +1,21 @@
-# Reproduction Report
+# Simulating the Sycamore quantum supremacy circuits: scientific reproduction note
 
-## Scope
+## Result
 
-This case reproduces the numerical behavior of arXiv:2103.03074 at feature level.
+All 17 targets have a v6 clean-room author baseline from exact public circuit definitions, analytic rederivations, and a resource-guarded isolated run. T005/T009 now have complete publication-input audits, and T012/T013 have executable formula checks. No independent-review verdict is authored.
 
-Similarity score: `70.0/100` (`numerical_feature_reproduction`).
+The public status is **Scientific reproduction — paper-error candidates identified**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-Completed:
+## What is reproduced
 
-- arXiv PDF and TeX source ingested.
-- All figures classified.
-- Core formulas traced before numerical work.
-- Local code implemented for batch probability extraction.
-- Structured data generated before plots.
-- Fig. 2, Fig. 5, and Fig. 6 numerical features reproduced.
-- Complexity tables transcribed and checked.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Not completed:
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=mixed`.
 
-- Exact 53-qubit Sycamore contractions.
-- Exact recomputation of Table III example amplitudes.
+## Run
 
-## Commands
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-Run the case from the project root:
+## Paper-review boundary
 
-```bash
-python3 cases/2103.03074/code/scripts/run_reproduction.py
-python3 cases/2103.03074/code/scripts/plot_reproduction.py
-```
-
-The machine-readable stop decision is recorded in `../outputs/checks/completion_assessment.json`.
-
-## Code
-
-- `code/src/big_batch_feature_sim.py`: local random-circuit simulation, batch extraction, XEB checks, table data.
-- `code/scripts/run_reproduction.py`: generates CSV and JSON checks.
-- `code/scripts/plot_reproduction.py`: generates figures from CSV.
-
-## Main Results
-
-| Target | Result |
-| --- | --- |
-| Formula gate | Passed |
-| Big-batch extraction vs direct amplitude lookup | Max error `0.0` |
-| Depth 20 full-batch XEB | `0.00494` |
-| Depth 14 full-batch XEB | `-0.00252` |
-| Conditional probability normalization | Passed |
-| Post-selection XEB monotonicity | Passed |
-| Table complexity consistency | Partial, table values checked but full contraction not rerun |
-
-## Interpretation
-
-The local reproduction shows that the mathematical mechanism in the paper is working:
-
-- fixing `s1` and enumerating `s2` produces a correlated batch;
-- the batch probabilities have the same Porter-Thomas feature as the original figures;
-- post-selecting high-probability bitstrings raises XEB;
-- conditional probabilities remain Porter-Thomas-like after normalization.
-
-The remaining gap is scale. The original claim relies on a carefully optimized 53-qubit tensor-network contraction. This local case validates the formula and observable behavior, but it does not validate the original large-scale engineering result.
-
-The exact 53-qubit targets are classified as `memory_impossible` for direct statevector simulation and `external_required` for tensor-network rerun. A complex128 statevector would require 128 PiB; the paper-reported tensor-network estimate is 149 days on one A100. The current case also lacks a runnable circuit/path/slicing/validation asset bundle, so no large campaign is launched.
-
-Difference reason shown on the figures: generated probability panels use an 18-qubit random-circuit feature check, while the table panel contains paper-reported estimates rather than a measured 53-qubit rerun.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Canonical source switched to arXiv because it includes TeX source and original figure assets. Local reproduction validates formulas and numerical features, not the full 53-qubit GPU-scale contraction.

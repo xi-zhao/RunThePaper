@@ -8,15 +8,19 @@ the next paper.
 
 - Paper: Plaquette hardware-aware FTQC design platform
 - PaperID: `2607.08767`
-- Final status: partial proxy; feature not accepted
-- Main reproduced targets: Eq. (9), Eq. (10), Fig. 5(a) Clifford value and gap direction
-- Main blockers: unpublished circuit-location, frame, and decoder conventions
+- Final status: public-target feature reproduction; lifecycle incomplete
+- Main reproduced targets: Table III and Fig. 10 paper-exact; Fig. 5(a) proxy
+- Main blockers: six targets require unpublished circuit, frame, decoder, scan, or sample inputs
 
 ## What Worked
 
 - Formula-first reconstruction isolated the Pauli branch cleanly.
 - Fixed paper shot counts and a fixed seed made the smoke result auditable.
 - Refusing to tune the proxy preserved the missing-method signal.
+- Full-paper inventory recovered two publicly closed targets that the original
+  single-panel pass had missed.
+- Deriving Table III exposed that the printed `p_err|tr` values are joint
+  weights even though the header calls them conditional probabilities.
 
 ## What Was Difficult
 
@@ -30,6 +34,8 @@ the next paper.
 | --- | --- | --- |
 | Treat generated-circuit semantics as an input artifact | Hardware-aware papers may publish channels but omit their circuit binding | Require a circuit-location contract before exact claims |
 | Compare approximation branches separately | One branch can match while the central branch fails | Store per-backend verdicts instead of one batch score |
+| Do not let a blocked flagship panel hide simpler exact targets | A commercial pipeline can coexist with closed-form public tables | Inventory every numerical item before selecting targets |
+| Check probability labels by normalization | Printed numbers may be correct while their semantic header is wrong | Store joint and conditional forms and test both sum rules |
 
 ## Common Pitfalls And Pain Points
 
@@ -55,6 +61,7 @@ the next paper.
 | Candidate | Why it is reusable | Suggested destination |
 | --- | --- | --- |
 | circuit-location contract checker | Separates channel formulas from where channels act | future harness backlog after a second case confirms reuse |
+| probability-semantics checker | Detects joint/conditional label mismatches without source pixels | harness backlog |
 
 ## Efficient Reproduction Implementations
 
@@ -65,15 +72,16 @@ the next paper.
 ## Harness Backlog Items
 
 Abstract cross-paper lessons should be copied to
-`private validation harness/REPRODUCTION_EXPERIENCE.md`.
+`PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`.
 
 Concrete tool, checker, template, field, or workflow changes should be copied to
-`private validation harness/HARNESS_BACKLOG.md`.
+`PRAgent-workflow/HARNESS_BACKLOG.md`.
 
 | Priority | Improvement | Evidence from this case | Status |
 | --- | --- | --- | --- |
 | P1 | Add a circuit-location manifest field to method cards | public formula reproduced one backend but not coherent semantics | candidate, not promoted yet |
 | P0 | Add a stage-domain compatibility guard | QEC adapter was routed to a 2604 distance-specific failure-attribution handler | required before confirming this case's stage |
+| P1 | Add probability normalization semantics to table contracts | Table III values sum to `p_tr`, not one | promoted to harness backlog |
 
 ## Prompt Or Workflow Changes
 

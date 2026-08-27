@@ -1,67 +1,74 @@
-# Lessons Learned
+# Lessons Learned — PRB 91, 085420 (2015)
 
-Durable, forward-looking lessons from reproducing the CDHM interband-coherence
-pumping paper. These are written as guidance for the next driven-lattice /
-transport reproduction, not as a log of this case.
+## Pitfalls and how they were resolved
 
-## Method lessons
+1. **Position expectation of a spreading packet.** The wave packet spreads
+   ballistically (~2T sites) while its center moves only a few sites, so a
+   real-space FFT of <x> = sum_l l|psi|^2 is swamped by wrap-around/cancellation.
+   *Fix*: compute <x> in the gauge-free k-space form i.int dk sum_j phi_j* d_k phi_j
+   + sum_j j|phi_j|^2 (spectral k-derivative). It gives the mean directly and
+   stays well-conditioned even when width >> <x>. Required Nk ~ 2T to resolve
+   phi(k); verified by convergence (T=6144 converged at Nk=12288).
 
-1. **Measure the packet center in k-space, not real space.** During a pumping
-   cycle the wave packet spreads ballistically (~2T sites) while its center moves
-   only a few sites. The robust observable is the gauge-free k-space mean position
-   `<x> = i integral dk sum_j phi_j* d_k phi_j + sum_j j |phi_j|^2` (spectral
-   k-derivative by FFT). It equals sum_l l |<l|Psi>|^2 exactly and stays
-   well-conditioned when the packet width far exceeds the displacement. Resolve
-   phi(k) with Nk ~ 2T and confirm by convergence (T=6144 converges at Nk=12288).
+2. **Piecewise-constant adiabatic protocol = product of Floquet operators.** The
+   paper introduces each beta step at an integer number of driving periods, so the
+   whole cycle is the ordered product of T one-period 3x3 operators. Recognising
+   this turned a naively expensive time-integration into a minutes-long laptop job
+   and is what makes T=1024..6144 and a 61-point J-scan feasible.
 
-2. **A piecewise-constant adiabatic protocol is a product of Floquet operators.**
-   Because beta is held fixed for each driving period, one cycle is the ordered
-   product of T one-period 3x3 operators. Using this structure turns the dynamics
-   into a minutes-long laptop job and makes T=1024..6144 and a 61-point J-scan
-   feasible.
+3. **Fast propagator via operator splitting.** H = A(k) + c(t) V(beta) with only
+   the diagonal V time-dependent. A Strang split precomputes exp(-i A dt) once per
+   k (independent of beta and t), so each period is a few cheap batched matvecs.
+   ~30x speedup; validated against the exact eigendecomposition propagator.
 
-3. **Split the propagator when only part of H is time-dependent.** With
-   H = A(k) + c(t) V(beta) and only the diagonal V time-dependent, a Strang split
-   precomputes exp(-i A dt) once per k (independent of beta and t), so each period
-   is a few cheap batched matrix-vector products (~30x speedup over rebuilding U).
+4. **Rapidly-accumulated dynamical phase in Eq. (8).** The W(1) term carries
+   exp(-i(Omega_n-Omega_m)) with Omega ~ 10^2 rad at T=1024. Using the large-T
+   integral T*E instead of the exact discrete sum sum_j omega(beta_j) scrambles
+   it. *Fix*: accumulate Omega on the exact protocol; and the overall omega-sign
+   convention (Phi uses -(Omega_n-Omega_m)) must be fixed against the exact
+   dynamics. Even so, Fig. 2 is intrinsically feature-level (correlation ~0.9),
+   not pixel.
 
-4. **Accumulate the dynamical phase on the exact discrete protocol.** The W(1)
-   term in Eq. (8) carries exp(-i(Omega_n - Omega_m)) with Omega ~ 10^2 rad at
-   T=1024, so Delta rho is intrinsically phase-sensitive and reproduces at
-   feature level (correlation ~0.9), not pixel. Evaluate Omega_n(1) as the exact
-   discrete sum sum_j omega_n(beta_j) rather than the large-T integral T E, and
-   keep the phase convention Phi_{nm} = (gamma_n - gamma_m) - (Omega_n - Omega_m)
-   consistent with the exp(-i omega) eigenphase convention used everywhere.
+5. **W(0) via a single diagonalization.** <psi_n|d_beta psi_m> for n!=m is best
+   computed as <psi_n|d_beta U|psi_m>/(lam_m-lam_n) (from d_beta of the eigen-
+   equation and <psi_n|U=lam_n<psi_n| for unitary U). This avoids any beta-gauge
+   fixing; the physical combination C*_n C_m W_{nm} is gauge-invariant.
 
-5. **Compute interband matrix elements from a single diagonalization.** For n != m,
-   `<psi_n | d_beta psi_m> = <psi_n | d_beta U | psi_m> / (lam_m - lam_n)` (from
-   d_beta of the eigen-equation and <psi_n| U = lam_n <psi_n| for unitary U). This
-   avoids beta-gauge fixing; only the gauge-invariant combination
-   C*_n C_m W_{nm} enters the physics.
-
-6. **Gate the model with topological invariants before trusting dynamics.** The
-   Fukui-Hatsugai-Suzuki Chern numbers are (2,-4,2) at J=K=3 and jump
-   (4,-8,4) -> (-8,16,-8) across J=K ~ 5.14 (up to an overall orientation sign).
-   The transition location and jump magnitude validate the Bloch and gauge
-   conventions independently of any figure.
+6. **Topological invariant as a model check.** The Chern numbers came out (2,-4,2)
+   at J=K=3 but (4,-8,4)->(-8,16,-8) across J=K~5.14, matching the paper (up to an
+   overall orientation sign). The transition location and jump magnitude validated
+   the Bloch/gauge conventions before any dynamics was trusted.
 
 ## What worked well
 
-- Deriving and gating the physics first (Floquet spectrum, Chern numbers,
-  k-reflection symmetry, undriven analytic limit) before writing figure code keeps
-  convention choices cheap to verify.
-- Cross-validating the analytic theory (Eq. 13) against the exact dynamics -- not
-  just against the paper figure -- gives an internal, unit-independent correctness
-  check (theory total 3.08 versus dynamics 3.10).
+- Deriving/gating the physics first (Floquet spectrum, Chern numbers, k-reflection
+  symmetry, undriven analytic limit) before writing any figure code caught the
+  convention issues cheaply.
+- Cross-validating the analytic theory (Eq. 13) against the *exact* dynamics — not
+  just against the paper figure — gave an internal, unit-independent correctness
+  check (theory total 3.08 vs dynamics 3.10).
 
-## Reusable checks and tools
+## New Failure Modes
 
-- Gauge-free k-space mean-position estimator for any k-conserving lattice
-  evolution (`code/src/observables.py`, `x_expectation`).
-- Strang-split fast Floquet evolver for H = A(k) + c(t) V with only the diagonal
-  part time-dependent (`code/src/observables.py`, `evolve_fast`).
-- Fukui-Hatsugai-Suzuki plaquette Chern / Berry-flux on a (k, parameter) torus as a
-  model-convention gate (`code/src/theory.py`, `berry_flux_strips`).
-- A standalone consistency suite covering unitarity, the undriven limit,
-  conservation, symmetry, Chern integers, evolver agreement, and the central
-  theory-vs-dynamics claim (`code/scripts/qa_cdhm.py`).
+- **Real-space `<x>` of a spreading pumped packet is a false artifact.** The center
+  displacement (a few sites) is a tiny first moment of a distribution whose width
+  grows ~2T sites; real-space wrap-around/cancellation gives non-converging,
+  meaningless `<x>`. Diagnose by checking that the reported width grows with the
+  box size (a sign the packet is unresolved), and switch to the k-space spectral
+  form.
+- **Silent phase-convention flip in perturbative population theory.** Eq. (8) uses
+  an accumulated dynamical phase whose sign depends on the e^{-i.omega} vs
+  e^{+i.omega} eigenphase convention. A wrong sign yields correct *magnitude* but
+  scrambled *k-structure* (correlation ~0.3 instead of ~0.9), which looks like a
+  modelling bug. Fix the sign against the exact dynamics, not by inspection.
+
+## Reusable Checks Or Tools
+
+- Gauge-free k-space mean-position `<x> = i.int dk sum_j phi_j* d_k phi_j + sum_j j|phi_j|^2`
+  for any k-conserving lattice evolution (see `src/observables.py::x_expectation`).
+  Candidate to promote once a second pumping/transport case needs it.
+- Strang-split fast Floquet evolver for `H = A(k) + c(t)V` (only diagonal part
+  time-dependent): precompute exp(-i A dt) once per k (`src/observables.py::evolve_fast`).
+- Fukui-Hatsugai-Suzuki plaquette Chern/Berry-flux on a (k, parameter) torus as a
+  model-convention gate before trusting any dynamics
+  (`src/theory.py::berry_flux_strips`).

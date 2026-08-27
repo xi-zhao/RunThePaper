@@ -1,0 +1,149 @@
+{
+  "schema_version": 2,
+  "paper_id": "quant-ph-0403025",
+  "implementations": {
+    "magic_state_distillation": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "working_directory": "workspace",
+      "code_refs": [
+        "src/magic_distillation/model.py",
+        "scripts/run_reproduction.py",
+        "scripts/render_figures.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "run_contract_ref": "run_contract.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/t_type_curves.csv",
+        "outputs/data/h_type_curves.csv",
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every plotted point is generated from the printed distillation equations without source pixels, digitized curves, author code, or author numerical arrays.",
+        "The T-type closed forms agree with an explicit 32-dimensional stabilizer-projector enumeration over the declared audit grid.",
+        "The H-type closed forms agree with an independent Reed-Muller codeword-weight enumeration over the declared audit grid.",
+        "Fixed points, endpoints, monotonicity, asymptotic coefficients, fidelities, polarizations, yields and resource exponents pass machine-readable tolerances."
+      ]
+    },
+    "gf4_code_threshold_audit": {
+      "status": "ready",
+      "target_ids": [
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "code_refs": [
+        "src/magic_distillation/gf4_codes.py",
+        "scripts/run_gf4_campaign.py"
+      ],
+      "config_ref": "config/gf4_threshold_campaign.json",
+      "run_contract_ref": "run_contract.gf4.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_gf4_campaign.py",
+        "--config",
+        "config/gf4_threshold_campaign.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/checks/gf4_campaign_plan.json",
+        "outputs/data/gf4_threshold_campaign.json"
+      ],
+      "acceptance_criteria": [
+        "The supplied n=11 and n=17 codes pass stabilizer independence, commutation and logical-frame checks.",
+        "Threshold curves are generated from signed stabilizer and logical-coset weight enumerators without dense 2^n projectors.",
+        "No paper comparison is promoted until the exact author-tested generator matrices or a uniquely specified search are available."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Figure 1",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Bloch-sphere and stabilizer-octahedron schematic."
+    },
+    {
+      "item_id": "Main Figure 2 (upper panel)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "magic_state_distillation",
+      "reason": "Eq. (23) and the independently projected five-qubit code determine the complete output-error curve.",
+      "claim_refs": [
+        "CLM_T_DISTILLATION"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2 (lower panel)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "magic_state_distillation",
+      "reason": "Eq. (22) and the independent projector calculation determine the complete syndrome-success curve.",
+      "claim_refs": [
+        "CLM_T_DISTILLATION"
+      ]
+    },
+    {
+      "item_id": "Main Figure 3",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "magic_state_distillation",
+      "reason": "Eq. (36) and independent Reed-Muller codeword enumeration determine the complete H-type curve.",
+      "claim_refs": [
+        "CLM_H_DISTILLATION"
+      ]
+    },
+    {
+      "item_id": "Section VII n=11/n=17 numerical-simulation claim",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "gf4_code_threshold_audit",
+      "coverage_status": "uncovered",
+      "reason": "The generic clean-room stabilizer enumerator, fail-closed input schema, and isolated runner are executable. The manuscript still gives no GF(4) generators or unique search definition, so the paper-specific trend remains input-blocked rather than guessed.",
+      "claim_refs": [
+        "CLM_GF4_LENGTH_TREND"
+      ]
+    }
+  ]
+}

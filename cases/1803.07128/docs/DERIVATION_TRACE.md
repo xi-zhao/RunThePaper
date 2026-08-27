@@ -26,7 +26,22 @@ An independent 120-even-term Fock sum agrees with the closed form to `8.77e-13`;
 
 ## From the feature state to the perceptron
 
-For a two-dimensional input, two compact even-Fock vectors are tensor multiplied. Fig. 6 explicitly restricts the perceptron to the real subspace, so T003 trains on `Re[|(c,x1)> tensor |(c,x2)>]`. Fourteen even terms per mode give 196 real coordinates. The paper's analytic appendix proves linear independence in the infinite-dimensional limit; the numerical check asks whether the declared finite truncation reaches unit training accuracy.
+For a two-dimensional input, two compact even-Fock vectors are tensor multiplied. Fig. 6 explicitly restricts the perceptron to the real subspace, so T003 trains on `Re[|(c,x1)> tensor |(c,x2)>]`. Fourteen even terms per mode give 196 real coordinates. The finite training check is not reused as evidence for the Appendix theorem.
+
+## Independent adjudication of the Appendix theorem
+
+For one mode, after removing nonzero coefficient weights, the feature matrix is
+a Vandermonde matrix in `z_m = exp(i phi_m)`. It has full column rank when the
+physical phases are distinct modulo `2*pi`. For multiple modes, the probe does
+not use the paper's invalid implication “nonzero pairwise overlap implies
+linear independence”; it compares an explicit tensor-Fock Gram matrix against
+the independently evaluated closed-form overlap Gram and checks positivity.
+
+At 120 even terms per mode, the two Gram paths differ by `9.77e-12`, the
+six-state minimum analytic-Gram eigenvalue is `0.6732`, and all 64 binary
+labellings interpolate with worst residual `9.33e-15`. Two exact checks expose
+the source boundary: `phi` and `phi+2*pi` are the same state, and the points
+`(1,1),(2,1),(3,1)` with labels `(+1,-1,+1)` falsify Proposition 1 as written.
 
 ## From printed gates to the variational classifier
 
@@ -51,3 +66,4 @@ The caption fixes four repetitions and 32 parameters, which implies eight real p
 | EQ006 | Fig. 6/Appendix B | Fock perceptron | `reproduction.py::_run_perceptron` |
 | EQ007 | Fig. 7(c) gate equations | variational unitary | `reproduction.py::_run_variational` |
 | EQ008 | output-normalization display | class probabilities/loss | `reproduction.py::_run_variational` |
+| EQ009 | Appendices B-D | rank, arbitrary-label interpolation and counterexamples | `separability.py` |

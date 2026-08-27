@@ -228,12 +228,12 @@ def first_symmetric_extension_contract(
     first_dimension: int,
     second_dimension: int,
 ) -> dict[str, int | str]:
-    """Describe the first Doherty symmetric-extension SDP without solving it.
+    """Describe the first Doherty symmetric-extension SDP contract.
 
-    The paper cites an external unpublished calculation but supplies neither a
-    solver nor certificates.  This contract fixes the exact matrix dimensions
-    and constraints needed by an independent SDP implementation, while keeping
-    the current evidence honest when no PSD-cone solver is installed.
+    The paper cites an unpublished calculation without its tested state list,
+    solver settings, or certificates.  This helper fixes the dimensions and
+    constraints; the independent executable implementation lives in
+    :mod:`dqc1_discord.symmetric_extension`.
     """
 
     if first_dimension < 2 or second_dimension < 2:
@@ -248,7 +248,7 @@ def first_symmetric_extension_contract(
             "find X>=0 on A tensor B tensor B' with swap_BB'(X)=X "
             "and Tr_B'(X)=rho_AB"
         ),
-        "status": "code_ready_solver_unavailable",
+        "status": "contract_only_independent_solver_available",
     }
 
 

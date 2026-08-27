@@ -20,7 +20,7 @@ object is a method rather than a formula.
   5. Compute Clopper-Pearson 95% intervals.
   6. Compare with Fig. 5(a) paper values without tuning the circuit.
 - Parameters: `theta=0.05`, `distance=3`, `rounds=3`, `5000/200000` shots.
-- Code pointer: `code/scripts/run_fig5a_proxy.py`.
+- Code pointer: `scripts/run_fig5a_proxy.py`.
 - Checks: Eq. (9) unitarity, Eq. (10) normalization, deterministic seed,
   coherent logical error greater than twirled logical error.
 - Status: proxy executed; method direction reproduced, full-state paper value not reproduced.
@@ -30,7 +30,7 @@ object is a method rather than a formula.
 
 ### Agent state adapter
 
-`code/repro_adapter.json` maps the durable Fig. 5(a) verdict into the
+`repro_adapter.json` maps the durable Fig. 5(a) verdict into the
 generic `RunState` interface.  A failed full-state metric emits
 `paper_metric_verdict_stop`, allowing the active lesson to require failure
 attribution before any larger simulation.  The existing reusable

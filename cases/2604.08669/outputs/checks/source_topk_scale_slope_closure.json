@@ -1,0 +1,96 @@
+{
+  "artifact_type": "source_topk_scale_slope_closure",
+  "schema_version": 1,
+  "status": "completed",
+  "experiment_id": "paper_gnn_target_stage13_source_topk_scale_slope_train128_val32_u0512",
+  "single_changed_business_variable": "training data scale: shard32 to first128 of train256",
+  "evidence_scope": "verified summary of the authoritative remote result",
+  "authoritative_remote_result": "remote-system/projects/RRAgent-2604-a100-training/case/2604.08669/outputs/checks/paper_gnn_target_stage13_source_topk_scale_slope_train128_val32_u0512/source_topk_scale_slope_result.json",
+  "verification_date": "2026-07-15",
+  "training": {
+    "train_samples": 128,
+    "validation_samples": 32,
+    "target_updates": 512,
+    "loss_initial": 0.6380023956298828,
+    "loss_final": 0.6202074885368347,
+    "updates_per_second": 0.08881343914264513
+  },
+  "summary": {
+    "rank1_rate": 0.7763240123517303,
+    "mean_positive_rank": 1.3084869130477403,
+    "average_distance_gap": 0.00332711823284626,
+    "max_distance_gap": 0.24661023542284966,
+    "geometry_or_near_tie_fraction": 0.917386838320893,
+    "far_large_margin_fraction": 0.0,
+    "val32": {
+      "mean_average_distance_gap": 0.0032641738653182983,
+      "mean_max_distance_gap": 0.39278439804911613,
+      "mean_predicted_average_distance": null,
+      "mean_predicted_max_distance": null,
+      "mean_optimal_average_distance": null,
+      "mean_optimal_max_distance": null
+    }
+  },
+  "gate": {
+    "status": "geometry_ceiling_confirmed_stop_scaling_line",
+    "passed": false,
+    "failed_checks": [
+      "rank1_rate",
+      "geometry_or_near_tie_fraction"
+    ],
+    "checks": {
+      "rank1_rate": false,
+      "mean_positive_rank": true,
+      "average_distance_gap": true,
+      "geometry_or_near_tie_fraction": false,
+      "far_large_margin_fraction": true
+    },
+    "observed": {
+      "rank1_rate": 0.7763240123517303,
+      "mean_positive_rank": 1.3084869130477403,
+      "average_distance_gap": 0.00332711823284626,
+      "geometry_or_near_tie_fraction": 0.917386838320893,
+      "far_large_margin_fraction": 0.0
+    },
+    "thresholds": {
+      "rank1_rate_gte": 0.7789986847694671,
+      "mean_positive_rank_lte": 1.3092291666666667,
+      "average_distance_gap_lte": 0.004548786666666667,
+      "geometry_or_near_tie_fraction_lte": 0.9160088786808661,
+      "far_large_margin_fraction_lte": 0.1
+    },
+    "reference": {
+      "rank1_rate_mean": 0.7779986847694671,
+      "rank1_rate_range": 0.00023588373688843145,
+      "mean_positive_rank_mean": 1.3062291666666668,
+      "average_distance_gap_mean": 0.0025487866666666667,
+      "geometry_or_near_tie_fraction_mean": 0.9360088786808661,
+      "far_large_margin_fraction_max": 0.0,
+      "source": "stage13 source_topk seed-variance plus plateau-attribution audit"
+    },
+    "deltas_vs_reference": {
+      "rank1_rate": -0.0016746724177367778,
+      "mean_positive_rank": 0.0022577463810735665,
+      "average_distance_gap": 0.0007783315661795934,
+      "geometry_or_near_tie_fraction": -0.01862204035997317,
+      "far_large_margin_fraction": 0.0
+    }
+  },
+  "paper_metric_observation": {
+    "sample_count": 32,
+    "average_target": null,
+    "max_target": null,
+    "average_observed": null,
+    "max_observed": null,
+    "beats_both_on_val32": false,
+    "paper_claim_ready": false,
+    "reason": "val32 is a bounded scale-slope probe, not the paper-scale evaluation split"
+  },
+  "decision": {
+    "status": "geometry_ceiling_confirmed_stop_scaling_line",
+    "promote_to_train256_val64": false,
+    "auto_relaunch": false,
+    "close_current_scaling_line": true,
+    "case_disposition": "diagnostic_reproduction_complete_paper_scale_claim_open"
+  }
+}

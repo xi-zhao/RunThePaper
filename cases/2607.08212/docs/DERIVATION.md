@@ -21,7 +21,7 @@ Numerical form:
 zeta_reconstruct(coefficients, variables)
 ```
 
-Code: `code/src/mobius_compiler.py:zeta_reconstruct`
+Code: `src/mobius_compiler.py:zeta_reconstruct`
 
 
 ### MOB002 — Subset-lattice Möbius inverse
@@ -40,7 +40,7 @@ Numerical form:
 mobius_inversion(phase_table, variables)
 ```
 
-Code: `code/src/mobius_compiler.py:mobius_inversion`
+Code: `src/mobius_compiler.py:mobius_inversion`
 
 
 ### MOB003 — 3-SAT violating-pattern projector
@@ -59,7 +59,7 @@ Numerical form:
 clause_phase_table(...) followed by mobius_inversion(...)
 ```
 
-Code: `code/src/mobius_compiler.py:clause_phase_table`, `code/scripts/run_feature_reproduction.py:exhaustive_clause_polarities`
+Code: `src/mobius_compiler.py:clause_phase_table`, `scripts/run_feature_reproduction.py:exhaustive_clause_polarities`
 
 
 ### MOB004 — Routed no-fault fidelity roll-up
@@ -78,4 +78,4 @@ Numerical form:
 route_gate_stream(...).log_no_fault
 ```
 
-Code: `code/src/proxy_router.py:route_gate_stream`, `code/src/proxy_router.py:log_no_fault_with_native_fidelities`, `code/tests/test_proxy_router.py:test_single_qubit_limiting_case_matches_table_i_factor`
+Code: `src/proxy_router.py:route_gate_stream`, `src/proxy_router.py:log_no_fault_with_native_fidelities`, `tests/test_proxy_router.py:test_single_qubit_limiting_case_matches_table_i_factor`

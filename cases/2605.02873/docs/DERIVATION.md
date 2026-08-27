@@ -5,153 +5,153 @@
 Equation-level derivation for **2605.02873**, generated from the reproduction's equation cards (8 equations). Each block is an equation the reproduction depends on, transcribed from the paper with its source location and tagged by derivation status. For the narrative walk-through see `DERIVATION_TRACE.md` (or `METHOD_TRACE.md`).
 
 ## Equations
-### EQ001 — Finite-width double-slit Fresnel field
+### EQC001 — Finite double-slit support
 
-*Defines the exact physical field and response used by every frozen target.*
+*Defines the exact finite aperture over which every generated Fresnel integral is evaluated.*
 
 $$
-E(y\mid\theta_t,\theta_f)=\sum_{s=\pm1}\int_{sd/2-a/2}^{sd/2+a/2}\!\exp\!\left[\frac{ik(x-y)^2}{2L_1}+\frac{ik(X_D-x)^2}{2L_2}+i\theta_t\frac{x}{W}+i\theta_f\left(\frac{x}{W}\right)^2\right]dx,\quad R=|E|^2.
+T(x)=\operatorname{rect}\!\left(\frac{x+d/2}{a}\right)+\operatorname{rect}\!\left(\frac{x-d/2}{a}\right),\qquad \int T(x)F(x)\,dx=\sum_{s=\pm1}\int_{sd/2-a/2}^{sd/2+a/2}F(x)\,dx.
 $$
 
-status: `verified` · source: paper_equations: Main Eqs. (1)-(4); Supplement Eqs. (S1)-(S4)
+status: `verified` · source: main_equation: main.tex Eq. (1), slit transmission; supplement_equation: supplement.tex Eq. (S23), finite-slit integral decomposition
 
 Numerical form:
 
 ```
-Evaluate both finite slit intervals with fixed-order Gauss-Legendre quadrature; vectorize the phase over source samples y.
+Use independent Gauss--Legendre nodes on each interval [s*d/2-a/2, s*d/2+a/2] and concatenate the weighted sums; never integrate over source-image data.
 ```
 
-Code: `code/src/try_model.py::compute_response`
+Code: `src/try_fresnel.py::slit_quadrature`
 
 
-### EQ002 — Field derivative under the finite integral
+### EQC002 — Fresnel field and baseline TRY response
 
-*Connects the physical perturbation generators to independently evaluable weighted Fresnel moments.*
+*Defines the independently evaluated complex field, its zero-aberration limit, and the Fig. 1(a) observable.*
 
 $$
-\left.\frac{\partial E}{\partial\theta_\mu}\right|_0=iM_\mu(y),\qquad M_\mu(y)=\int K(x,y)q_\mu(x)\,dx.
+E(y|\theta_t,\theta_f)=\int T(x)\exp\!\left[\frac{ik(x-y)^2}{2L_1}+\frac{ik(X_D-x)^2}{2L_2}+i\theta_t\frac{x}{W}+i\theta_f\left(\frac{x}{W}\right)^2\right]dx,\quad E_0(y)=E(y|0,0),\quad R_0(y)=|E_0(y)|^2.
 $$
 
-status: `verified` · derived from: `EQ001` · source: paper_equations: Supplement Eqs. (S5)-(S9)
+status: `verified` · derived from: `EQC001` · source: main_equations: main.tex Eqs. (2)-(4); supplement_equations: supplement.tex Eqs. (S1)-(S5)
 
 Numerical form:
 
 ```
-Evaluate E0, Mt, and Mf with the same quadrature nodes and weights; verify against central finite differences of the full perturbed field.
+Evaluate the complex exponential at all y samples and finite-slit quadrature nodes; multiply by the quadrature weights to obtain E0, then compute R0=real(E0*conj(E0)).
 ```
 
-Code: `code/src/try_model.py::compute_response`, `code/src/try_model.py::finite_difference_scores`
+Code: `src/try_fresnel.py::fresnel_observables`
 
 
-### EQ003 — Exact local tilt and defocus scores
+### EQC003 — Weighted moments and exact local intensity derivatives
 
-*Defines the two observable response functions plotted in FIG001B and used by all Fisher calculations.*
+*Connects the physical Fresnel field to the tilt and defocus response functions plotted in Fig. 1(b).*
 
 $$
-g_\mu(y)=\left.\partial_{\theta_\mu}R\right|_0=-2\operatorname{Im}\!\left[E_0^*(y)M_\mu(y)\right],\qquad \mu\in\{t,f\}.
+M_\mu(y)=\int K(x,y)q_\mu(x)\,dx,\quad q_t=x/W,\quad q_f=(x/W)^2,\quad \left.\partial_{\theta_\mu}E\right|_0=iM_\mu,\quad g_\mu(y)=\left.\partial_{\theta_\mu}|E|^2\right|_0=-2\operatorname{Im}[E_0^*(y)M_\mu(y)].
 $$
 
-status: `verified` · derived from: `EQ001`, `EQ002` · source: paper_equations: Main Eqs. (6)-(9); Supplement Eqs. (S10)-(S18)
+status: `verified` · derived from: `EQC001`, `EQC002` · source: main_equations: main.tex Eqs. (5)-(9); supplement_equations: supplement.tex Eqs. (S6)-(S19)
 
 Numerical form:
 
 ```
-Form real arrays gt=-2*imag(conj(E0)*Mt) and gf=-2*imag(conj(E0)*Mf) from shared quadrature outputs.
+Reuse the baseline phase matrix and evaluate weighted sums for q_t and q_f. Compute g_t and g_f from the complex cross-products, without finite differencing the plotted curves.
 ```
 
-Code: `code/src/try_model.py::compute_response`
+Code: `src/try_fresnel.py::fresnel_observables`
 
 
-### EQ004 — Noise weight and full source-resolved Fisher matrix
+### EQC004 — Noise weight and full source-resolved Fisher matrix
 
-*Defines the information benchmark for the full source-resolved record.*
+*Defines the information benchmark used by Fig. 1(d) and Fig. S1.*
 
 $$
-N(y)=R_0(y)+\beta\max_yR_0(y),\quad \beta=0.02,\qquad F_{\mu\nu}^{\rm full}=\int\frac{g_\mu(y)g_\nu(y)}{N(y)}\,dy.
+N(y)=R_0(y)+B,\quad B=0.02\max_yR_0(y),\qquad F^{\mathrm{full}}_{\mu\nu}=\int\frac{g_\mu(y)g_\nu(y)}{N(y)}\,dy=\left\langle\frac{g_\mu}{N},\frac{g_\nu}{N}\right\rangle_N.
 $$
 
-status: `verified` · derived from: `EQ003` · source: paper_equations: Main Eqs. (11)-(12); Supplement Eqs. (S29), (S43)
+status: `verified` · derived from: `EQC002`, `EQC003` · source: main_equations: main.tex Eqs. (11)-(12); supplement_equations: supplement.tex Eqs. (S25), (S40)-(S41)
 
 Numerical form:
 
 ```
-Use the trapezoidal rule on a uniform full-window y grid; symmetrize only for diagnostics, not to alter generated data.
+Use the same trapezoidal y weights for every full/coded inner product. Assemble the symmetric 2x2 matrix from g_t, g_f, and positive N.
 ```
 
-Code: `code/src/try_model.py::full_fisher`
+Code: `src/try_fresnel.py::full_fisher`
 
 
-### EQ005 — Noise-metric nuisance-orthogonal source codes
+### EQC005 — Matched filters and nuisance-orthogonal source codes
 
-*Constructs the optimized upstream codes while rejecting the constant nuisance mode and inter-channel overlap.*
+*Defines the optimized code pair plotted in Fig. 1(c).*
 
 $$
-s_\mu=g_\mu/N,\quad \widetilde w_t=s_t-\frac{\langle s_t,1\rangle_N}{\langle1,1\rangle_N},\quad \widetilde w_f=s_f-\frac{\langle s_f,1\rangle_N}{\langle1,1\rangle_N}-\frac{\langle s_f,\widetilde w_t\rangle_N}{\langle\widetilde w_t,\widetilde w_t\rangle_N}\widetilde w_t.
+w_t^{\mathrm{raw}}=g_t/N,\quad w_f^{\mathrm{raw}}=g_f/N,\quad \widetilde w_t=w_t^{\mathrm{raw}}-\frac{\langle w_t^{\mathrm{raw}},1\rangle_N}{\langle1,1\rangle_N},\quad \widetilde w_f=w_f^{\mathrm{raw}}-\frac{\langle w_f^{\mathrm{raw}},1\rangle_N}{\langle1,1\rangle_N}-\frac{\langle w_f^{\mathrm{raw}},\widetilde w_t\rangle_N}{\langle\widetilde w_t,\widetilde w_t\rangle_N}\widetilde w_t,\quad w_\mu=\widetilde w_\mu/\|\widetilde w_\mu\|_N.
 $$
 
-status: `verified` · derived from: `EQ003`, `EQ004` · source: paper_equations: Main Eqs. (14)-(15); Supplement Eqs. (S30)-(S38)
+status: `verified` · derived from: `EQC003`, `EQC004` · source: main_equations: main.tex Eqs. (14)-(15); supplement_equations: supplement.tex Eqs. (S26)-(S39)
 
 Numerical form:
 
 ```
-Apply weighted Gram-Schmidt with the same trapezoidal inner product used for Fisher integration, then normalize both codes to unit N norm.
+Compute weighted projections with the common y integration weights; normalize only after subtracting the nuisance and preceding-code components. Record residual inner products as checks.
 ```
 
-Code: `code/src/try_model.py::optimized_codes`
+Code: `src/try_fresnel.py::optimized_codes`, `src/try_fresnel.py::noise_inner`
 
 
-### EQ006 — Coded Fisher matrix and principal retention
+### EQC006 — Coded Fisher matrix and basis-independent retention
 
-*Quantifies how much information the two scalar coded channels retain.*
+*Defines the optimized and toy principal information fractions plotted in Fig. 1(d).*
 
 $$
-G_{m\mu}=\int w_mg_\mu\,dy,\quad \Sigma_{mn}=\int Nw_mw_n\,dy,\quad F^{\rm code}=G^{\mathsf T}\Sigma^{-1}G,\quad \mathcal R=(F^{\rm full})^{-1/2}F^{\rm code}(F^{\rm full})^{-1/2}.
+G_{m\mu}=\int w_mg_\mu\,dy,\quad \Sigma_{mn}=\int Nw_mw_n\,dy,\quad F^{\mathrm{code}}=G^{\mathsf T}\Sigma^{-1}G,\quad \mathcal R=(F^{\mathrm{full}})^{-1/2}F^{\mathrm{code}}(F^{\mathrm{full}})^{-1/2}.
 $$
 
-status: `verified` · derived from: `EQ004`, `EQ005` · source: paper_equations: Main Eqs. (16)-(18); Supplement Eqs. (S44)-(S56)
+status: `verified` · derived from: `EQC004`, `EQC005` · source: main_equations: main.tex Eqs. (16)-(18); supplement_equations: supplement.tex Eqs. (S42)-(S51)
 
 Numerical form:
 
 ```
-Build G and Sigma by the shared y quadrature, solve rather than explicitly invert Sigma, and whiten Ffull with its symmetric eigendecomposition.
+Assemble G and Sigma with common y weights, solve linear systems rather than explicitly inverting Sigma, whiten F_code with the symmetric eigendecomposition of F_full, and sort retention eigenvalues ascending.
 ```
 
-Code: `code/src/try_model.py::coded_fisher`, `code/src/try_model.py::retention_eigenvalues`
+Code: `src/try_fresnel.py::coded_fisher`, `src/try_fresnel.py::retention_eigenvalues`
 
 
-### EQ007 — Gaussian toy-code basis
+### EQC007 — Gaussian toy-code basis
 
-*Defines the smooth odd/even comparison basis used in FIG001C and FIG001D.*
+*Defines the fair parity-only comparator in Fig. 1(c,d), using the same physical response and noise metric.*
 
 $$
-\xi=(y-\bar y)/\sigma_y,\quad h_t^{(0)}=\xi,\quad h_f^{(0)}=(\xi^2-1)/\sqrt2,\quad \bar y=\frac{\int yR_0dy}{\int R_0dy}.
+\bar y=\frac{\int yR_0dy}{\int R_0dy},\quad \sigma_y^2=\frac{\int(y-\bar y)^2R_0dy}{\int R_0dy},\quad \xi=(y-\bar y)/\sigma_y,\quad h_t^{(0)}=\xi,\quad h_f^{(0)}=(\xi^2-1)/\sqrt2,
 $$
 
-status: `verified` · derived from: `EQ001`, `EQ005`, `EQ006` · source: paper_equations: Supplement Eqs. (S57)-(S68)
+status: `verified` · derived from: `EQC002`, `EQC004`, `EQC005`, `EQC006` · source: supplement_equations: supplement.tex Eqs. (S52)-(S70)
 
 Numerical form:
 
 ```
-Compute centroid and variance from generated R0, then apply the identical weighted nuisance projection and normalization used for optimized codes.
+Compute ybar and sigma from independently generated R0, build the two raw templates, pass them through the same noise-metric Gram--Schmidt helper, and evaluate their Fisher retention with EQC006.
 ```
 
-Code: `code/src/try_model.py::toy_codes`
+Code: `src/try_fresnel.py::toy_codes`
 
 
-### EQ008 — Finite-width origin of defocus sensitivity
+### EQC008 — Finite-width defocus visibility and width-scan ratio
 
-*Explains and quantifies the growth of first-order defocus information with slit width.*
+*Defines the Fig. S1 quantity and its analytically verified narrow-slit limit.*
 
 $$
-x=sW+u\Rightarrow q_f(x)=1+2s\frac{u}{W}+\left(\frac{u}{W}\right)^2,\qquad \rho(a)=\frac{F_{ff}^{\rm full}(a)}{F_{tt}^{\rm full}(a)}.
+x=sW+u\Rightarrow q_f(sW+u)=1+2s\frac{u}{W}+\left(\frac{u}{W}\right)^2,\qquad \rho(a)=\frac{F^{\mathrm{full}}_{ff}(a)}{F^{\mathrm{full}}_{tt}(a)}.
 $$
 
-status: `verified` · derived from: `EQ001`, `EQ003`, `EQ004` · source: paper_equations: Supplement Eqs. (S69)-(S84), Table S1, and Figure S1
+status: `verified` · derived from: `EQC001`, `EQC002`, `EQC003`, `EQC004` · source: supplement_equations: supplement.tex Eqs. (S71)-(S84), Table S1, and Fig. S1
 
 Numerical form:
 
 ```
-Repeat the complete response and full-Fisher computation for a in [20,40,80,150,250] micrometres and record rho for each width.
+For every paper width in [20,40,80,150,250] micrometres, rebuild the finite-slit quadrature, E0, scores, N, and F_full; write rho=F_ff/F_tt without using Table S1 as an input.
 ```
 
-Code: `code/src/try_model.py::width_scan`
+Code: `src/try_fresnel.py::width_scan`

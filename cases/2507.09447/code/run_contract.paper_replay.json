@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "run_id": "2507.09447-paper-frozen-state-v2-20260825",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003"
+  ],
+  "command": [
+    "python",
+    "scripts/run_attested_paper_replay.py"
+  ],
+  "inputs": [
+    "scripts/run_attested_paper_replay.py",
+    "scripts/run_paper_exact.py",
+    "src/lyapunov_band.py",
+    "src/paper_exact_reproduction.py",
+    "config/paper_exact_run.json",
+    "frozen_inputs/paper_exact_checkpoint_manifest.json",
+    "frozen_inputs/paper_exact_checkpoint_state"
+  ],
+  "parameter_file": "config/paper_exact_run.json",
+  "parameter_selector": "model",
+  "expected_parameters": {
+    "M": 2,
+    "t_minus_2": 1.0,
+    "t_minus_1": 1.0,
+    "t_1": 1.5,
+    "t_2": 0.5
+  },
+  "outputs": [
+    "outputs/data/paper_ed_histograms.npz",
+    "outputs/data/paper_scaling.csv",
+    "outputs/data/paper_profiles.npz",
+    "outputs/data/paper_fig34_theory.npz",
+    "outputs/data/paper_fig5_contours.npz",
+    "outputs/data/paper_alpha.csv",
+    "outputs/checks/paper_replay_attested.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false,
+    "git_tracked_frozen_state_allowed": true,
+    "ignored_runtime_cache_allowed": false
+  }
+}

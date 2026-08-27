@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.00718",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Squeezing-dependent nonreciprocal coupling",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:95-123; main-text Eqs. (3)-(4)"
+        }
+      ],
+      "latex": "G=\\left|\\cosh r_a\\cosh r_b-e^{i\\Delta\\theta}\\sinh r_a\\sinh r_b\\right|",
+      "role": "Defines Figure 1(c) and the symmetry-breaking design rule.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The effective coupling and G are explicit in the author TeX."
+        },
+        {
+          "id": "EQ001_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Equal phase/equal amplitude gives G=1; Delta theta=pi or one-mode squeezing gives G=cosh(2r)."
+        }
+      ],
+      "numerical_form": "Evaluate the complex amplitude on Delta theta and Delta r grids with r_a=r+Delta r/2 and r_b=r-Delta r/2.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:effective_enhancement"
+      ],
+      "open_questions": [
+        "Figure 1(c) leaves the absolute value of r symbolic; the plotted reproduction uses r=1 while testing identities for arbitrary r."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Steady-state battery energies",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:137-149; main-text Eq. (5)"
+        }
+      ],
+      "latex": "E_a^{ss}=E^{ss}+\\frac{8J^2\\kappa\\sinh^2r}{(2J+\\kappa)^3},\\quad E_b^{ss}=E^{ss}+\\frac{2J(4J^2+\\kappa^2)\\sinh^2r}{(2J+\\kappa)^3},\\quad E_c^{ss}=E^{ss}+\\frac{2J\\sinh^2r}{2J+\\kappa}",
+      "role": "Generates Figure 2(c), Figure 3, and Figure S3.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three energies and E^ss are explicit in the author TeX."
+        },
+        {
+          "id": "EQ002_identity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Putting the three terms over (2J+kappa)^3 proves E_a+E_b-E=E_c exactly."
+        },
+        {
+          "id": "EQ002_s3_normalization",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At r=0 every formula-derived enhancement E_i^ss/E^ss equals one, while the three absolute baselines are unequal; this identifies Figure S3's visible curves as normalized despite its printed absolute-energy label."
+        }
+      ],
+      "numerical_form": "Vectorize the three rational functions over J and r; retain E^ss as a separate baseline and derive E_i^ss/E^ss without using source pixels as numerical inputs.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:steady_state_energy",
+        "src/squeezing_nonreciprocity.py:steady_state_energy_enhancement"
+      ],
+      "open_questions": [
+        "Figure S3 is printed with the axis E_i^ss/omega_b, but its three panels all start at one and their visible endpoints agree with E_i^ss/E^ss; author confirmation or the underlying arrays would be needed to resolve the publication error directly."
+      ]
+    },
+    {
+      "id": "EQ003",
+      "title": "Coupling derivatives of the steady-state energies",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:451-457; supplemental derivative equations"
+        }
+      ],
+      "latex": "\\partial_J E_i^{ss}=\\frac{N_i(J,\\kappa,\\epsilon,\\sinh^2r)}{(2J+\\kappa)^5}",
+      "role": "Locates the optimal-coupling branches and threshold squeezing in Figures 3 and S2.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The three derivative numerators are printed in the supplement."
+        },
+        {
+          "id": "EQ003_derivative",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct differentiation of EQ002 reproduces the three printed rational derivatives; centered finite differences are reserved as a code test."
+        }
+      ],
+      "numerical_form": "Evaluate the analytic derivatives on the same J-r grid and interpolate positive-to-negative zero crossings in log J.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:steady_state_energy_derivative"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Normal-plus-anomalous forward transmission",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:515-601; supplemental scattering matrix"
+        }
+      ],
+      "latex": "T_{ba}=\\frac{64J^2\\kappa_a\\kappa_b}{\\Lambda_b^2+(2\\omega+\\omega_s)^2}\\left[\\frac{|g_N|^2}{\\Lambda_a^2+(2\\omega+\\omega_s)^2}+\\frac{|g_A|^2}{\\Lambda_a^2+(-2\\omega+\\omega_s)^2}\\right]",
+      "role": "Defines both panels of Figure 4 and separates normal from counter-rotating transmission.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The full scattering matrix and two-channel T_ba are explicit in the supplemental TeX."
+        },
+        {
+          "id": "EQ004_reduction",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "At omega_s=0, |g_N|^2+|g_A|^2 reduces to cosh(2r_a)cosh(2r_b)-cos(Delta theta)sinh(2r_a)sinh(2r_b)."
+        },
+        {
+          "id": "EQ004_optimum",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating the zero-frequency prefactor under Gamma=2J yields J'_op=sqrt(kappa_a kappa_b)/2."
+        }
+      ],
+      "numerical_form": "Evaluate the two rational channels on normalized omega/Gamma and omega_s/Gamma grids; cross-check the omega_s=0 closed form.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:forward_transmission"
+      ],
+      "open_questions": [
+        "The main-text TeX has a brace typo in the cosine term; the unambiguous supplemental matrix fixes the intended expression."
+      ]
+    },
+    {
+      "id": "EQ005",
+      "title": "Affine closure of first and second Gaussian moments",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:315-381; supplemental Eq. oe"
+        }
+      ],
+      "latex": "\\dot{\\mathbf m}=A\\mathbf m+\\mathbf c",
+      "role": "Defines the shared time-domain object for Figure 2(a-b) and Figure S1.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The supplement lists the closed first- and second-order operator equations."
+        },
+        {
+          "id": "EQ005_closure",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A quadratic Hamiltonian with Lindblad operators linear in a,b maps every first/second moment to an affine combination of moments of order at most two."
+        }
+      ],
+      "numerical_form": "Assemble the constant drift matrix A and source c, then propagate with a matrix exponential or a checked linear ODE solver.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:gaussian_battery_energy_dynamics",
+        "src/squeezing_nonreciprocity.py:gaussian_master_equation_energy_dynamics"
+      ],
+      "open_questions": [
+        "Figure S1 does not disclose the finite-Hilbert cutoff used for the published surface; the cutoff-free Gaussian result is retained as the scientific reference."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Gaussian passive energy and ergotropy",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/Manuscript.tex:488-513; supplemental Eq. S31"
+        }
+      ],
+      "latex": "\\widetilde E=\\omega_b(\\sqrt{\\mathcal J}-1)/2,\\quad \\mathcal J=(1+2\\langle n\\rangle-2|\\langle b\\rangle|^2)^2-4|\\langle bb\\rangle-\\langle b\\rangle^2|^2",
+      "role": "Maps the Gaussian battery covariance to passive energy and ergotropy.",
+      "derived_from": [
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The invariant and passive-energy expression are explicit in the supplement."
+        },
+        {
+          "id": "EQ006_vacuum",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Vacuum moments give Jcal=1 and zero passive energy; a coherent displacement leaves Jcal invariant."
+        }
+      ],
+      "numerical_form": "Compute centered second moments, evaluate the symplectic invariant, subtract passive energy from stored energy.",
+      "code_refs": [
+        "src/squeezing_nonreciprocity.py:gaussian_invariant",
+        "src/squeezing_nonreciprocity.py:passive_state_energy",
+        "src/squeezing_nonreciprocity.py:steady_state_ergotropy"
+      ],
+      "open_questions": []
+    }
+  ]
+}

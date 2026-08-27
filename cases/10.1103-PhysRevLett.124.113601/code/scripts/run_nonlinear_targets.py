@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Generate nonlinear Fig. 4(a), Fig. S1, and finite-size diagnostics."""
+"""Generate source-independent Fig. 4(a) and finite-size diagnostics.
+
+Supplement Fig. S1 omits its pump samples and finite-chain convention.  The
+old source-calibrated diagnostic is available only behind an explicit flag and
+is never part of the default scientific run.
+"""
 
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import os
@@ -32,7 +38,8 @@ from src.ldsi_model import (  # noqa: E402
 )
 
 
-CONFIG_PATH = CODE_ROOT / "config" / "paper_exact.json"
+SCIENTIFIC_CONFIG_PATH = CODE_ROOT / "config" / "scientific_targets.json"
+REFERENCE_DIAGNOSTIC_CONFIG_PATH = CODE_ROOT / "config" / "paper_exact.json"
 DATA_DIR = OUTPUT_ROOT / "outputs" / "data"
 FIGURE_DIR = OUTPUT_ROOT / "outputs" / "figures"
 CHECK_DIR = OUTPUT_ROOT / "outputs" / "checks"
@@ -64,8 +71,8 @@ mpl.rcParams.update(
 )
 
 
-def load_config() -> dict:
-    return json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+def load_config(path: Path = SCIENTIFIC_CONFIG_PATH) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, object]]) -> None:
@@ -233,7 +240,8 @@ def generate_fig4(config: dict) -> dict:
         "convention": {
             "cavity_shift_factor": 1.0,
             "reason": "literal published Eq. (3) reproduces the published nonlinear onset and endpoint scale",
-            "linear_panel_b_shift_factor": 2.0,
+            "linear_panel_b_shift_factor": 1.0,
+            "linear_panel_b_note": "the same literal Eq. (3) convention is used; its disagreement with the plotted Fig. 4(b) curve is retained as source-discrepancy evidence",
         },
         "metrics": {
             "converged_fraction_by_chi": convergence,
@@ -247,6 +255,7 @@ def generate_fig4(config: dict) -> dict:
 
 
 def generate_figs1(config: dict) -> dict:
+    """Generate the non-scoring, source-calibrated supplement diagnostic."""
     global_cfg = config["global"]
     fig_cfg = config["figs1"]
     length = int(global_cfg["L"])
@@ -389,7 +398,7 @@ def generate_figs1(config: dict) -> dict:
         "status": "passed" if all(acceptance.values()) else "failed",
         "target_id": "T004",
         "parameter_match": "paper_subset",
-        "generated_data_provenance": "independent_numerics",
+        "generated_data_provenance": "mixed_independent_and_source_reference",
         "formula_gate": "reconstructed",
         "reconstruction_policy": {
             "reason": "Supplement Fig. S1 omits pump samples and solver details.",
@@ -512,17 +521,32 @@ def generate_finite_size_diagnostic(config: dict) -> dict:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--include-deferred-reference-output",
+        action="store_true",
+        help="also generate the non-scoring Fig. S1 source-calibrated diagnostic",
+    )
+    args = parser.parse_args()
     started = time.perf_counter()
     config = load_config()
-    fig4 = generate_fig4(config)
-    figs1 = generate_figs1(config)
-    diagnostic = generate_finite_size_diagnostic(config)
+    checks = {
+        "fig4a": generate_fig4(config),
+        "finite_size_and_trap": generate_finite_size_diagnostic(config),
+    }
+    if args.include_deferred_reference_output:
+        checks["figs1_reference_diagnostic"] = generate_figs1(
+            load_config(REFERENCE_DIAGNOSTIC_CONFIG_PATH)
+        )
     summary = {
-        "status": "passed" if all(item["status"] == "passed" for item in (fig4, figs1, diagnostic)) else "failed",
+        "status": "passed" if all(item["status"] == "passed" for item in checks.values()) else "failed",
         "runtime_seconds": time.perf_counter() - started,
         "backend": "numpy-scipy-matplotlib",
         "machine_scope": "local_m4",
-        "checks": {"fig4a": fig4["status"], "figs1": figs1["status"], "finite_size_and_trap": diagnostic["status"]},
+        "checks": {key: value["status"] for key, value in checks.items()},
+        "scientific_target_ids": ["T003", "D001"],
+        "deferred_reference_target_ids": ["T004"] if args.include_deferred_reference_output else [],
+        "source_calibrated_inputs_in_scientific_targets": False,
     }
     write_json(CHECK_DIR / "nonlinear_targets_summary.json", summary)
     print(json.dumps(summary, indent=2))

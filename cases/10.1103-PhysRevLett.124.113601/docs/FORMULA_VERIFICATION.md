@@ -12,15 +12,15 @@ All eight cards are numerically open; no target ran before this gate passed.
 | EQ002 | GAA corrections | verified | open | source parameters and Hermiticity |
 | EQ003 | steady cavity amplitude | verified | open | zero-pump and positivity limits |
 | EQ004 | susceptibility channels | verified | open | positivity and completeness sum rule |
-| EQ005 | critical pump | reconstructed | open | clean source-curve intercept `0.2768J` |
+| EQ005 | critical pump | verified | open | direct Eq. (7), sine-basis, analytic-limit and finite-size checks |
 | EQ006 | localized self-channel | verified | open | IPR classifier and deep-localized limit |
 | EQ007 | momentum/channel indices | verified | open | Parseval scale and indices `151,137,27` |
 | EQ008 | nonlinear mean field | reconstructed | open | zero-field limit and normalization |
 
 ## Disclosed Formula Ambiguities
 
-- EQ005: arXiv v1/source Fig. 3 uses a two-factor detuning shift; the literal published expression suggests one factor. The source curve selects two for linear targets.
-- EQ008/EQ003: the literal published one-factor cavity denominator reproduces nonlinear Fig. 4(a), so nonlinear and linear conventions remain target-local.
+- EQ005: the published one-factor Eq. (7) is the sole scientific convention. Its stable disagreement with Fig. 3(a) and Fig. 4(b) is preserved for fresh review; the factor-two branch is a post-generation falsification hypothesis only.
+- EQ008/EQ003: the literal published one-factor cavity denominator also reproduces the nonlinear Fig. 4(a) onset and passes a second solver schedule.
 - S1: the equations are explicit, but pump samples and solver initialization are missing.
 
-These uncertainties cap the similarity score at feature level; they are not hidden as implementation defaults.
+The Fig. 3(a)/Fig. 4(b) discrepancy is not hidden as an implementation default or tuned away. Fig. S1 remains externally blocked by unpublished inputs.

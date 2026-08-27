@@ -1,0 +1,1625 @@
+{
+  "schema_version": 1,
+  "paper_id": "2005.12667",
+  "numbering_note": "Card IDs use arXiv v1 equation numbers requested by the user. The 2021 RMP publication renumbered Sec. IV equations; both anchors are recorded.",
+  "cards": [
+    {
+      "id": "EQ001_006",
+      "title": "LC resonator canonical quantization",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (1)-(6), Sec. II.A"
+        },
+        {
+          "type": "paper_figure",
+          "value": "Fig. 1 and its linewidth convention"
+        }
+      ],
+      "latex": "H_{LC}=Q^2/(2C)+\\Phi^2/(2L),\\ [\\hat\\Phi,\\hat Q]=i\\hbar,\\ \\hat\\Phi=\\sqrt{\\hbar Z_r/2}(a^\\dagger+a),\\ \\hat Q=i\\sqrt{\\hbar/(2Z_r)}(a^\\dagger-a),\\ H_{LC}=\\hbar\\omega_r(a^\\dagger a+1/2),\\ \\omega_r=(LC)^{-1/2}.",
+      "role": "Establishes flux and charge as a canonical pair and fixes all oscillator zero-point normalizations used later.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The energy, commutator, zero-point fields, and oscillator Hamiltonian are explicit in Sec. II.A."
+        },
+        {
+          "id": "EQ004_commutator",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The printed zero-point amplitudes obey 2 Phi_zpf Q_zpf=hbar and therefore reproduce [Phi,Q]=i hbar."
+        },
+        {
+          "id": "EQ005_frequency",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substitution cancels a^2 and a-dagger^2 and leaves hbar/sqrt(LC)(n+1/2)."
+        },
+        {
+          "id": "EQ006_classical",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Heisenberg equations give ddot(Phi)+Phi/(LC)=0."
+        }
+      ],
+      "numerical_form": "Use dimensionless hbar=1 oscillator matrices; verify the first spacings are constant and the canonical commutator holds away from the truncation edge.",
+      "code_refs": [
+        "src/cqed_reproduction.py::annihilation",
+        "tests/test_cqed_reproduction.py::test_jc_block_matches_eq38"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007_019",
+      "title": "Distributed transmission-line and cavity normal modes",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (7)-(19), Sec. II.B-D"
+        },
+        {
+          "type": "paper_figure",
+          "value": "Figs. 2-4; Fig. 4(b-e) requires the unavailable COMSOL project"
+        }
+      ],
+      "latex": "H=\\int_0^d dx[Q(x)^2/(2c_0)+(\\partial_x\\Phi)^2/(2l_0)],\\quad \\partial_t^2\\Phi=v_0^2\\partial_x^2\\Phi,\\quad u_m(x)=\\sqrt2\\cos(k_mx),\\ k_m=(m+1)\\pi/d,\\ \\omega_m=v_0k_m,\\quad H=\\sum_m\\hbar\\omega_m(a_m^\\dagger a_m+1/2),\\quad \\omega_{mnl}=c[(m\\pi/a)^2+(n\\pi/b)^2+(l\\pi/d)^2]^{1/2},\\quad L_J(\\Phi)=\\Phi_0/[2\\pi I_c\\cos(2\\pi\\Phi/\\Phi_0)].",
+      "role": "Derives CPW and 3D-cavity spectra from continuum circuit fields and boundary conditions, then introduces the nonlinear Josephson inductance.",
+      "derived_from": [
+        "EQ001_006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_019_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The telegrapher Hamiltonian, wave equation, mode expansion, quantization, rectangular-cavity spectrum, and Josephson relations are explicit in Sec. II."
+        },
+        {
+          "id": "EQ008_wave",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Hamilton equations with Q=c0 dot(Phi) give the wave equation with v0=1/sqrt(l0 c0)."
+        },
+        {
+          "id": "EQ010_boundary",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Open-end current conditions impose partial_x Phi=0 and select orthonormal cosine modes."
+        },
+        {
+          "id": "EQ015_harmonics",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A lambda/2 open-open line gives f_m=(m+1)v0/(2d), matching Fig. 2."
+        },
+        {
+          "id": "EQ018_inductance",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Differentiating I=Ic sin(2pi Phi/Phi0) and inverting gives the printed Josephson inductance."
+        }
+      ],
+      "numerical_form": "Generate the first CPW resonances at f_m=(m+1)f0 with kappa_m/2pi=f_m/Q and a passive Lorentzian transmission envelope; compute rectangular-mode frequencies only when geometry is supplied.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::cpw_transmission",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t005"
+      ],
+      "open_questions": [
+        "Fig. 4(b-e) cannot be regenerated without the original 3D geometry, material, boundary, and meshing files."
+      ]
+    },
+    {
+      "id": "EQ020_028",
+      "title": "Transmon Hamiltonian, Duffing limit, and SQUID tunability",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (20)-(28), Sec. II.D-E"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 5-6 and captions"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "Appendix A derives the voltage-biased circuit Hamiltonian"
+        }
+      ],
+      "latex": "H_T=4E_C(\\hat n-n_g)^2-E_J\\cos\\hat\\varphi,\\quad \\langle n|H_T|m\\rangle=4E_C(n-n_g)^2\\delta_{nm}-E_J(\\delta_{n,m+1}+\\delta_{n,m-1})/2,\\quad H_q\\simeq\\hbar\\omega_q b^\\dagger b-(E_C/2)b^{\\dagger2}b^2,\\ \\hbar\\omega_q=\\sqrt{8E_CE_J}-E_C,\\quad E_J(\\Phi_x)=E_{J\\Sigma}\\cos(\\pi\\Phi_x/\\Phi_0)\\sqrt{1+d^2\\tan^2(\\pi\\Phi_x/\\Phi_0)}.",
+      "role": "Defines the exact compact-phase transmon model, its controlled weak-anharmonic Duffing approximation, and flux tunability.",
+      "derived_from": [
+        "EQ001_006",
+        "EQ007_019"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ020_028_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Exact Hamiltonian, quartic expansion, ladder-operator map, Duffing Hamiltonian, and asymmetric-SQUID energy are explicit in Eqs. (20)-(28)."
+        },
+        {
+          "id": "EQ020_charge_basis",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "cos(phi)=(exp(i phi)+exp(-i phi))/2 shifts Cooper-pair charge by plus or minus one, giving a real tridiagonal matrix."
+        },
+        {
+          "id": "EQ025_anharmonicity",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "First-order quartic perturbation gives omega_01=sqrt(8EC EJ)/hbar-EC/hbar and omega_12-omega_01=-EC/hbar."
+        },
+        {
+          "id": "EQ028_symmetric",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For junction asymmetry d=0, EJ(Phi)=EJsum cos(pi Phi/Phi0) up to expansion about the nearest potential minimum."
+        },
+        {
+          "id": "EQ020_periodicity",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The charge-basis spectrum is one-Cooper-pair periodic in ng after relabeling n."
+        }
+      ],
+      "numerical_form": "Diagonalize the finite charge-basis tridiagonal Hamiltonian with a convergence check in charge cutoff; for Fig. 6 choose EC and EJ at fixed plasma frequency sqrt(8EC EJ)/h=5 GHz.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::transmon_charge_hamiltonian",
+        "src/full_rmp_reproduction.py::transmon_phase_wavefunctions",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t006",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t007"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ029_034",
+      "title": "Transmon-resonator coupling and Jaynes-Cummings reduction",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (29)-(34), Sec. III.A; Eq. (29) prints a minus sign before the resonator energy"
+        },
+        {
+          "type": "formal_publication_correction",
+          "value": "Rev. Mod. Phys. 93, 025005 (2021), Eq. (31), restores the physically required plus sign before the resonator energy"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix A, Eqs. (A9)-(A10), circuit derivation beyond Cg << CΣ,Cr"
+        }
+      ],
+      "latex": "\\begin{aligned}H&=4E_C(\\hat n+\\hat n_r)^2-E_J\\cos\\hat\\varphi+\\sum_m\\hbar\\omega_m a_m^\\dagger a_m,\\qquad \\hat n_r=\\sum_m(C_g/C_m)\\hat Q_m/(2e),\\\\H_{\\rm RWA}&=\\hbar\\omega_r a^\\dagger a+\\hbar\\omega_q b^\\dagger b-\\frac{E_C}{2}b^{\\dagger2}b^2+\\hbar g(b^\\dagger a+ba^\\dagger),\\\\g&=\\omega_r\\frac{C_g}{C_\\Sigma}\\left(\\frac{E_J}{2E_C}\\right)^{1/4}\\sqrt{\\frac{\\pi Z_r}{R_K}}=\\omega_r\\frac{C_g}{C_\\Sigma}\\left(\\frac{E_J}{2E_C}\\right)^{1/4}\\sqrt{\\frac{Z_r}{Z_{\\rm vac}}}\\sqrt{2\\pi\\alpha},\\\\H_{\\rm JC}&=\\hbar\\omega_ra^\\dagger a+\\frac{\\hbar\\omega_q}{2}\\sigma_z+\\hbar g(a^\\dagger\\sigma_-+a\\sigma_+).\\end{aligned}",
+      "role": "Derives the core closed-system model of Sec. III from capacitive circuit coupling, then reduces it to the two-level Jaynes-Cummings Hamiltonian.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ029_034_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The arXiv source, Appendix A, and formal publication were cross-compared. The case follows formal Eq. (31): the uncoupled resonator term is positive; the minus sign in arXiv Eq. (29) is a corrected source typo."
+        },
+        {
+          "id": "EQ029_positive_oscillator",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At Cg=0 the Hamiltonian must reduce to a transmon plus a positive-energy harmonic bath. A negative resonator term would make the spectrum unbounded below and contradict both Sec. II quantization and formal Eq. (31)."
+        },
+        {
+          "id": "EQ031_EQ033_identity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Using alpha=Zvac/(2RK) makes Eqs. (31) and (33) algebraically identical; the case test agrees to machine precision."
+        },
+        {
+          "id": "EQ032_rwa",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For |g| much smaller than omega_r and omega_q, terms a b and a† b† oscillate at omega_r+omega_q and average away."
+        }
+      ],
+      "numerical_form": "Use hbar=1. Build truncated a,b matrices. Eq. (32) is omega_r n_a + omega_q n_b - (EC/2)b†²b² + g(b†a+ba†); Eq. (34) replaces b by sigma_minus in the two-level sector.",
+      "code_refs": [
+        "src/cqed_reproduction.py::transmon_coupling",
+        "src/cqed_reproduction.py::transmon_coupling_via_alpha",
+        "src/cqed_reproduction.py::duffing_jc_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ035_039",
+      "title": "Exact Jaynes-Cummings diagonalization",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (35)-(39), Sec. III.B"
+        },
+        {
+          "type": "paper_figure",
+          "value": "arXiv v1 Fig. 8 and caption"
+        }
+      ],
+      "latex": "\\begin{aligned}U&=\\exp\\{\\Lambda(N_T)(a^\\dagger\\sigma_- -a\\sigma_+)\\},\\quad \\Lambda(N_T)=\\frac{\\arctan(2(g/\\Delta)\\sqrt{N_T})}{2\\sqrt{N_T}},\\\\E_{\\overline{g,n}/\\overline{e,n-1}}&=\\hbar n\\omega_r\\mp\\frac{\\hbar}{2}\\sqrt{\\Delta^2+4g^2n},\\quad \\theta_n=\\arctan\\frac{2g\\sqrt n}{\\Delta},\\\\|\\overline{g,n}\\rangle&=\\cos(\\theta_n/2)|g,n\\rangle-\\sin(\\theta_n/2)|e,n-1\\rangle,\\\\|\\overline{e,n-1}\\rangle&=\\sin(\\theta_n/2)|g,n\\rangle+\\cos(\\theta_n/2)|e,n-1\\rangle.\\end{aligned}",
+      "role": "Provides the exact invariant-subspace solution behind Fig. 8 and the characteristic resonant square-root splitting.",
+      "derived_from": [
+        "EQ029_034"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ035_039_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Transformation, eigenenergies, and eigenvectors are explicit in Eqs. (35)-(39)."
+        },
+        {
+          "id": "EQ038_block",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The conserved N_T=n sector is a 2x2 matrix centered at n omega_r with diagonal detuning ±Delta/2 and off-diagonal g sqrt(n); its characteristic polynomial gives Eq. (38)."
+        },
+        {
+          "id": "EQ038_resonance",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At Delta=0 the doublet splitting reduces exactly to 2g sqrt(n), which the independent eigensolver reproduces."
+        }
+      ],
+      "numerical_form": "For each n>=1 diagonalize [[n*omega_r-Delta/2, g*sqrt(n)],[g*sqrt(n), n*omega_r+Delta/2]] and compare with Eq. (38).",
+      "code_refs": [
+        "src/cqed_reproduction.py::jc_block",
+        "src/cqed_reproduction.py::jc_analytic_energies",
+        "scripts/run_reproduction.py::reproduce_figure_8"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ040_044",
+      "title": "Schrieffer-Wolff dispersive Hamiltonian and critical photon number",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (40)-(44), Sec. III.C.1"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix B.1-B.2, perturbative derivation"
+        },
+        {
+          "type": "paper_figure",
+          "value": "arXiv v1 Fig. 9 and caption"
+        }
+      ],
+      "latex": "\\begin{aligned}H_{\\rm disp}&\\simeq\\hbar\\omega_ra^\\dagger a+\\hbar\\omega_qb^\\dagger b-\\frac{E_C}{2}b^{\\dagger2}b^2+\\sum_j\\hbar(\\Lambda_j+\\chi_ja^\\dagger a)|j\\rangle\\langle j|,\\\\\\Lambda_j&=\\chi_{j-1,j},\\quad\\chi_j=\\chi_{j-1,j}-\\chi_{j,j+1},\\quad\\chi_{j-1,j}=\\frac{jg^2}{\\Delta-(j-1)E_C/\\hbar},\\\\H_{\\rm disp}^{(2)}&=\\hbar\\omega_r'a^\\dagger a+\\frac{\\hbar\\omega_q'}2\\sigma_z+\\hbar\\chi a^\\dagger a\\sigma_z,\\quad \\chi=-\\frac{g^2E_C/\\hbar}{\\Delta(\\Delta-E_C/\\hbar)},\\\\n_{\\rm crit}^{(j)}&=\\frac{1}{2j+1}\\left(\\frac{|\\Delta-jE_C/\\hbar|^2}{4g^2}-j\\right).\\end{aligned}",
+      "role": "Derives the virtual-transition energy shifts, the qubit-state-dependent cavity pull, and the occupation bound for perturbation theory.",
+      "derived_from": [
+        "EQ029_034"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ040_044_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The effective Hamiltonian, shifts, two-level reduction, and ncrit are explicit in Eqs. (40)-(44)."
+        },
+        {
+          "id": "EQ040_second_order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Choosing S so [H0,S]=-V removes exchange at first order; H_eff=H0+[V,S]/2 produces the printed denominators and adjacent-level difference chi_j."
+        },
+        {
+          "id": "EQ043_harmonic_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "chi tends to zero as EC tends to zero, as required because two coupled harmonic oscillators cannot produce a state-dependent pull."
+        },
+        {
+          "id": "EQ040_numeric",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At |g/Delta|=0.03 and n<=3, Eq. (40) agrees with independent four-level Duffing-JC diagonalization within 3e-6 in the configured units."
+        }
+      ],
+      "numerical_form": "Compute each bare-state energy E(j,n)=n*omega_r+j*omega_q-EC*j(j-1)/2+Lambda_j+n*chi_j, then match it to exact eigenstates by maximum bare-basis overlap.",
+      "code_refs": [
+        "src/cqed_reproduction.py::transmon_dispersive_shifts",
+        "src/cqed_reproduction.py::transmon_dispersive_energy",
+        "src/cqed_reproduction.py::critical_photon_number",
+        "scripts/run_reproduction.py::reproduce_figure_9"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ045_051",
+      "title": "Bogoliubov normal modes and inherited Kerr nonlinearities",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (45)-(51), Sec. III.C.2; Eq. (51) prints K_a with an extra factor 1/2"
+        },
+        {
+          "type": "formal_publication_correction",
+          "value": "Rev. Mod. Phys. 93, 025005 (2021), Eq. (53), gives K_a=-(E_C/hbar)(g/Delta)^4"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix B.3, Eqs. (B26)-(B32)"
+        }
+      ],
+      "latex": "\\begin{aligned}H_L&=\\hbar\\omega_ra^\\dagger a+\\hbar\\omega_qb^\\dagger b+\\hbar g(b^\\dagger a+ba^\\dagger),\\quad H_{NL}=-\\frac{E_C}{2}b^{\\dagger2}b^2,\\\\U_{\\rm disp}&=e^{\\Lambda(a^\\dagger b-ab^\\dagger)},\\quad \\widetilde\\omega_{r/q}=\\tfrac12(\\omega_r+\\omega_q\\mp\\sqrt{\\Delta^2+4g^2}),\\\\H_{\\rm disp}&\\simeq\\hbar\\widetilde\\omega_ra^\\dagger a+\\hbar\\widetilde\\omega_qb^\\dagger b+\\frac{\\hbar K_a}{2}a^{\\dagger2}a^2+\\frac{\\hbar K_b}{2}b^{\\dagger2}b^2+\\hbar\\chi_{ab}a^\\dagger ab^\\dagger b,\\\\K_a&\\simeq-\\frac{E_C}{\\hbar}(g/\\Delta)^4,\\quad K_b\\simeq-E_C/\\hbar,\\quad\\chi_{ab}\\simeq-\\frac{2g^2E_C/\\hbar}{\\Delta(\\Delta-E_C/\\hbar)}.\\end{aligned}",
+      "role": "Gives an exact normal-mode diagonalization of the linear sector and shows how the transmon quartic term distributes self- and cross-Kerr nonlinearities over the dressed modes.",
+      "derived_from": [
+        "EQ029_034",
+        "EQ040_044"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ045_051_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The arXiv and formal versions were cross-compared. The case uses formal Eq. (53), which removes the spurious factor 1/2 from arXiv Eq. (51) for K_a."
+        },
+        {
+          "id": "EQ049_matrix",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The eigenvalues of [[omega_r,g],[g,omega_q]] are exactly Eqs. (49a)-(49b)."
+        },
+        {
+          "id": "EQ051_quartic",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The transformed quartic contains -(E_C/2) sin(Lambda)^4 a†²a². Comparing it with (hbar K_a/2)a†²a² gives K_a=-(E_C/hbar)sin(Lambda)^4, hence the formal-publication coefficient at leading order."
+        },
+        {
+          "id": "EQ051_crosscheck",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The printed cross-Kerr obeys chi_ab=2 chi with chi from Eq. (43); the implementation checks this identity."
+        }
+      ],
+      "numerical_form": "Diagonalize the 2x2 linear frequency matrix exactly; evaluate the leading Kerr expressions only away from Delta=0 and Delta=EC/hbar.",
+      "code_refs": [
+        "src/cqed_reproduction.py::linear_dressed_frequencies",
+        "src/cqed_reproduction.py::bogoliubov_kerrs"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ052_058",
+      "title": "Black-box quantization of a multimode electromagnetic environment",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (52)-(58), Sec. III.D"
+        },
+        {
+          "type": "paper_figure",
+          "value": "arXiv v1 Fig. 10, equivalent impedance and normal-mode schematic"
+        }
+      ],
+      "latex": "\\begin{aligned}H_{NL}&=-E_J(\\cos\\hat\\varphi+\\hat\\varphi^2/2),\\quad\\hat\\varphi=\\sum_m(\\varphi_ma_m+\\mathrm{H.c.}),\\\\H_{NL}^{\\rm RWA}&\\simeq\\sum_m\\hbar\\Delta_m n_m+\\frac12\\sum_m\\hbar K_m a_m^{\\dagger2}a_m^2+\\sum_{m>n}\\hbar\\chi_{mn}n_mn_n,\\\\\\hbar\\chi_{mn}&=-E_J\\varphi_m^2\\varphi_n^2,\\quad K_m=\\chi_{mm}/2,\\quad\\Delta_m=\\tfrac12\\sum_n\\chi_{mn},\\\\p_m&=(2E_J/\\hbar\\omega_m)\\varphi_m^2,\\quad\\chi_{mn}=-\\frac{\\hbar\\omega_m\\omega_n}{4E_J}p_mp_n.\\end{aligned}",
+      "role": "Generalizes the single transmon-resonator model to arbitrary linear mode geometries and converts classical mode participation into quantum Kerr coefficients.",
+      "derived_from": [
+        "EQ045_051"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ052_058_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The nonlinear element, phase-mode expansion, RWA Hamiltonian, Kerr matrix, and participation form are explicit in Eqs. (52)-(58)."
+        },
+        {
+          "id": "EQ056_combinatorics",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding -EJ phi^4/24 and retaining number-conserving terms gives 6 a†²a² for a single mode and 24 n_m n_n for each mode pair, yielding Eqs. (56)-(57)."
+        },
+        {
+          "id": "EQ058_identity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Random positive mode frequencies and phase amplitudes give identical chi matrices from Eqs. (57) and (58) to machine precision."
+        }
+      ],
+      "numerical_form": "For vectors omega and phi, form chi=-EJ/hbar * outer(phi^2,phi^2), K=diag(chi)/2, Delta=rowsum(chi)/2, and p=2(EJ/hbar)phi^2/omega.",
+      "code_refs": [
+        "src/cqed_reproduction.py::black_box_kerr"
+      ],
+      "open_questions": [
+        "A geometry-specific finite-element impedance Z(omega) is outside the user-selected scope; the universal quantization map itself is reproduced."
+      ]
+    },
+    {
+      "id": "EQ059_062",
+      "title": "Arbitrary multilevel artificial atom in the dispersive regime",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (59)-(62), Sec. III.E"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix B.2, multilevel Schrieffer-Wolff transformation"
+        }
+      ],
+      "latex": "\\begin{aligned}H&=\\sum_j\\hbar\\omega_j|j\\rangle\\langle j|+\\hbar\\omega_ra^\\dagger a+i\\sum_{ij}\\hbar g_{ij}|i\\rangle\\langle j|(a^\\dagger-a),\\\\H_{\\rm disp}&\\simeq\\sum_j\\hbar(\\omega_j+\\Lambda_j)|j\\rangle\\langle j|+\\hbar\\omega_ra^\\dagger a+\\sum_j\\hbar\\chi_ja^\\dagger a|j\\rangle\\langle j|,\\\\\\Lambda_j&=\\sum_i\\frac{|g_{ij}|^2}{\\omega_j-\\omega_i-\\omega_r},\\quad\\chi_j=\\sum_i\\left(\\frac{|g_{ij}|^2}{\\omega_j-\\omega_i-\\omega_r}-\\frac{|g_{ij}|^2}{\\omega_i-\\omega_j-\\omega_r}\\right).\\end{aligned}",
+      "role": "Removes the Duffing approximation by using exact artificial-atom eigenstates and matrix elements, while retaining a universal second-order dispersive structure.",
+      "derived_from": [
+        "EQ040_044"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ059_062_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "General multilevel Hamiltonian and shifts are explicit in Eqs. (59)-(62)."
+        },
+        {
+          "id": "EQ062_second_order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Each denominator is the energy cost of a virtual state connected by a photon creation or annihilation process; the photon-number difference of the two channels gives chi_j."
+        },
+        {
+          "id": "EQ062_finite",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "A three-level nearest-neighbor test away from resonance produces finite real Lamb and dispersive shifts."
+        }
+      ],
+      "numerical_form": "Given exact level frequencies and complex gij, sum |gij|^2 over all connected levels with the two printed denominators; reject resonant denominators rather than silently regularizing them.",
+      "code_refs": [
+        "src/cqed_reproduction.py::generic_multilevel_shifts"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ063",
+      "title": "Longitudinal light-matter coupling",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "arXiv v1 Eq. (63), Sec. III.F"
+        }
+      ],
+      "latex": "H_z=\\hbar\\omega_ra^\\dagger a+\\frac{\\hbar\\omega_q}{2}\\sigma_z+\\hbar g_z(a^\\dagger+a)\\sigma_z=\\hbar\\omega_r\\left(a^\\dagger+\\frac{g_z}{\\omega_r}\\sigma_z\\right)\\left(a+\\frac{g_z}{\\omega_r}\\sigma_z\\right)+\\frac{\\hbar\\omega_q}{2}\\sigma_z-\\frac{\\hbar g_z^2}{\\omega_r}.",
+      "role": "Shows that longitudinal coupling displaces the resonator conditionally without mixing the qubit eigenstates.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ063_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The longitudinal Hamiltonian is explicit in Eq. (63)."
+        },
+        {
+          "id": "EQ063_square",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Completing the oscillator square gives E(n,s)=n omega_r+s omega_q/2-gz^2/omega_r and proves [H,sigma_z]=0."
+        },
+        {
+          "id": "EQ063_numeric",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The first five levels in both sigma_z sectors agree with the completed-square spectrum to 8e-15."
+        }
+      ],
+      "numerical_form": "Diagonalize one displaced-oscillator block per sigma_z=+/-1 and compare its low spectrum with n*omega_r+sigma_z*omega_q/2-gz^2/omega_r.",
+      "code_refs": [
+        "src/cqed_reproduction.py::longitudinal_block",
+        "src/cqed_reproduction.py::longitudinal_analytic_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ064_065",
+      "title": "Continuum transmission-line bath and canonical fields",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (64)-(65); formal RMP Eqs. (66)-(67)"
+        }
+      ],
+      "latex": "\\begin{aligned}H_{\\rm tml}&=\\int_0^\\infty d\\omega\\,\\hbar\\omega b_\\omega^\\dagger b_\\omega,\\quad[b_\\omega,b_{\\omega'}^\\dagger]=\\delta(\\omega-\\omega'),\\\\\\Phi_{\\rm tml}(x)&=\\int_0^\\infty d\\omega\\sqrt{\\frac{\\hbar}{\\pi\\omega cv}}\\cos(\\omega x/v)(b_\\omega^\\dagger+b_\\omega),\\\\Q_{\\rm tml}(x)&=i\\int_0^\\infty d\\omega\\sqrt{\\frac{\\hbar\\omega c}{\\pi v}}\\cos(\\omega x/v)(b_\\omega^\\dagger-b_\\omega).\\end{aligned}",
+      "role": "Supplies the continuum bath normalization needed to derive the microscopic system-bath Hamiltonian and the temporal input/output fields.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ064_065_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Bath Hamiltonian and fields are explicit in both the arXiv and formal versions."
+        },
+        {
+          "id": "EQ065_canonical",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The sqrt(1/omega) and sqrt(omega) prefactors, together with the delta-normalized modes, give the canonical equal-time field commutator and Q=c dot(Phi)."
+        },
+        {
+          "id": "EQ065_dimension",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Phi has flux units, Q has charge per unit length in the continuum convention, and H_tml has energy units."
+        }
+      ],
+      "numerical_form": "No finite bath grid is used for physical claims. A single discretized bath mode is used only for the Hermiticity sanity check of Eqs. (66)-(67).",
+      "code_refs": [
+        "src/cqed_reproduction.py::discretized_bath_hamiltonians"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ066",
+      "title": "Microscopic oscillator-bath Hamiltonian",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "arXiv v1 Eq. (66); formal RMP Eq. (68)"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "Appendix C Eq. (C2), capacitive interaction Qr Qtml(0)"
+        }
+      ],
+      "latex": "H=H_S+H_{\\rm tml}-\\hbar\\int_0^\\infty d\\omega\\,\\lambda(\\omega)(b_\\omega^\\dagger-b_\\omega)(a^\\dagger-a),\\quad\\lambda(\\omega)=\\frac{C_\\kappa}{\\sqrt{cC_r}}\\sqrt{\\frac{\\omega_r\\omega}{2\\pi v}}.",
+      "role": "Connects the circuit capacitance to a continuum system-bath coupling before the Markov and rotating-wave approximations.",
+      "derived_from": [
+        "EQ064_065"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ066_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian and lambda(omega) are explicit; Appendix C gives the underlying Qr Qtml coupling."
+        },
+        {
+          "id": "EQ066_hermitian",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Both (b†-b) and (a†-a) are anti-Hermitian and commute across subsystems, so their product is Hermitian; the finite-mode test has zero residual."
+        },
+        {
+          "id": "EQ066_dimension",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Continuum b_omega has inverse-square-root-frequency units, so lambda carries the complementary normalization and the integral has energy units."
+        }
+      ],
+      "numerical_form": "Tensor a and b operators for a finite-mode Hermiticity audit only; open-system dynamics starts from the Markovian generator after the bath is traced out.",
+      "code_refs": [
+        "src/cqed_reproduction.py::discretized_bath_hamiltonians"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ067",
+      "title": "Narrow-band rotating-wave system-bath coupling and source correction",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "arXiv v1 Eq. (67), printed as a b† - a† b"
+        },
+        {
+          "type": "formal_publication_correction",
+          "value": "Rev. Mod. Phys. 93, 025005 (2021), Eq. (69), printed as a b† + a† b"
+        }
+      ],
+      "latex": "H_{\\rm RWA}=H_S+H_{\\rm tml}+\\hbar\\int_0^\\infty d\\omega\\,\\lambda(\\omega_r)(ab_\\omega^\\dagger+a^\\dagger b_\\omega).",
+      "role": "Applies the high-Q narrow-band and rotating-wave approximations; the formal publication repairs an arXiv-v1 sign that would make the interaction anti-Hermitian.",
+      "derived_from": [
+        "EQ066"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ067_sources",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The arXiv and formal versions were both checked. The formal Eq. (69) uses the Hermitian plus form."
+        },
+        {
+          "id": "EQ067_expansion",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding Eq. (66) and dropping ab and a†b† leaves ab†+a†b, exactly the formal-publication expression."
+        },
+        {
+          "id": "EQ067_hermitian",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The arXiv literal form has Hermiticity residual 0.594 in the test grid, while the formal plus form has residual zero."
+        }
+      ],
+      "numerical_form": "Use the formal-publication Hermitian coupling. Preserve the arXiv literal operator only as a negative regression test.",
+      "code_refs": [
+        "src/cqed_reproduction.py::discretized_bath_hamiltonians"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ068_069",
+      "title": "Born-Markov thermal Lindblad master equation",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (68)-(69); formal RMP Eqs. (70)-(71)"
+        }
+      ],
+      "latex": "\\dot\\rho=-\\frac{i}{\\hbar}[H_S,\\rho]+\\kappa(\\bar n_\\kappa+1)\\mathcal D[a]\\rho+\\kappa\\bar n_\\kappa\\mathcal D[a^\\dagger]\\rho,\\quad\\mathcal D[O]\\rho=O\\rho O^\\dagger-\\tfrac12\\{O^\\dagger O,\\rho\\},\\quad\\kappa=2\\pi\\lambda(\\omega_r)^2.",
+      "role": "Eliminates the bath under weak-coupling, stationary thermal, Born, Markov, and secular assumptions to obtain completely positive oscillator damping and heating.",
+      "derived_from": [
+        "EQ067"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ068_069_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Master equation, rate, Bose occupation, and dissipator are explicit in both versions."
+        },
+        {
+          "id": "EQ068_trace",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Tr D[O]rho=0 by cyclicity; the integration preserves trace within 7e-16 and density-matrix positivity."
+        },
+        {
+          "id": "EQ068_mean_n",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The adjoint generator gives d<n>/dt=-kappa(<n>-nbar), hence <n(t)>=nbar+(n0-nbar)e^{-kappa t}; numerics agree within 5e-11."
+        },
+        {
+          "id": "EQ068_units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The code sets hbar=1. Restoring units requires -i[HS,rho]/hbar; the arXiv display omits the explicit 1/hbar."
+        }
+      ],
+      "numerical_form": "Use collapse operators sqrt(kappa(nbar+1))*a and sqrt(kappa*nbar)*a† in a finite Fock basis; integrate the vectorized density matrix with tight tolerances.",
+      "code_refs": [
+        "src/cqed_reproduction.py::dissipator",
+        "src/cqed_reproduction.py::lindblad_rhs",
+        "src/cqed_reproduction.py::thermal_oscillator_evolution"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ070_071",
+      "title": "Traveling-wave voltage and Kirchhoff boundary condition",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (70)-(71); formal RMP Eqs. (72)-(73)"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "Appendix C Eqs. (C5)-(C10), wave equation and boundary integration"
+        }
+      ],
+      "latex": "\\begin{aligned}V_{\\rm in/out}(t)&=i\\int_0^\\infty d\\omega\\sqrt{\\frac{\\hbar\\omega}{4\\pi cv}}e^{i\\omega t}b_{L/R,\\omega}^\\dagger+\\mathrm{H.c.},\\\\I(t)&=\\frac{V_{\\rm out}(t)-V_{\\rm in}(t)}{Z_{\\rm tml}},\\qquad I(t)=\\frac{C_\\kappa}{C_r}\\dot Q_r(t).\\end{aligned}",
+      "role": "Turns the semi-infinite line into incoming and outgoing traveling fields linked at x=0 by current conservation.",
+      "derived_from": [
+        "EQ064_065",
+        "EQ066"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ070_071_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Voltage decomposition and boundary current are explicit; Appendix C derives them from the wave equation."
+        },
+        {
+          "id": "EQ071_kirchhoff",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "Voltage difference divided by line impedance has current units and equals the current injected through the coupling capacitance."
+        },
+        {
+          "id": "EQ071_mirror",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For zero injected current, Vout=Vin, so the terminated line acts as a perfect mirror."
+        }
+      ],
+      "numerical_form": "These boundary equations are derived analytically. The executable response begins after the narrow-band envelope definitions in Eqs. (73)-(74).",
+      "code_refs": [
+        "src/cqed_reproduction.py::passive_one_port_response"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ072",
+      "title": "Input-output boundary relation",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "arXiv v1 Eq. (72); formal RMP Eq. (74)"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "Appendix C Eqs. (C11)-(C14)"
+        }
+      ],
+      "latex": "b_{\\rm out}(t)-b_{\\rm in}(t)=\\sqrt\\kappa\\,a(t),\\qquad\\kappa=Z_{\\rm tml}C_\\kappa^2\\omega_r^2/C_r.",
+      "role": "Relates the measurable outgoing field to the incoming field and the field radiated by the resonator.",
+      "derived_from": [
+        "EQ070_071"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ072_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The boundary relation and kappa are explicit in the main text and Appendix C."
+        },
+        {
+          "id": "EQ072_rate",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting lambda(omega_r) from Eq. (66) into 2pi lambda^2 reproduces Ztml Ckappa^2 omega_r^2/Cr."
+        },
+        {
+          "id": "EQ072_empty_port",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "When the resonator amplitude vanishes, the output reduces to the directly reflected input, subject to the chosen port phase."
+        }
+      ],
+      "numerical_form": "The code uses the equivalent passive convention bout=bin-sqrt(kappa)*a. Changing the resonator or port phase flips the displayed sign but not observables; the relative sign with Eq. (75) is fixed by passivity.",
+      "code_refs": [
+        "src/cqed_reproduction.py::passive_one_port_response"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ073_074",
+      "title": "Narrow-band temporal input and output fields",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (73)-(74); formal RMP Eqs. (75)-(76)"
+        }
+      ],
+      "latex": "b_{\\rm in/out}(t)=\\frac{-i}{\\sqrt{2\\pi}}\\int_{-\\infty}^{\\infty}d\\omega\\,b_{L/R,\\omega}e^{-i(\\omega-\\omega_r)t},\\qquad[b_{\\rm in/out}(t),b_{\\rm in/out}^\\dagger(t')]=\\delta(t-t').",
+      "role": "Defines slowly varying time-domain quantum-noise fields with flux normalization appropriate for input-output theory.",
+      "derived_from": [
+        "EQ064_065",
+        "EQ070_071"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ073_074_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both envelope definitions and their delta commutators are explicit in the arXiv main text."
+        },
+        {
+          "id": "EQ073_fourier",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The 1/sqrt(2pi) Fourier normalization and [b_omega,b_omega'†]=delta(omega-omega') yield delta(t-t')."
+        },
+        {
+          "id": "EQ073_extension",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Extending 0<omega<infinity to the full real line is valid for a narrow envelope centered far from zero at omega_r."
+        }
+      ],
+      "numerical_form": "The steady-state response is evaluated directly in detuning space; no artificial finite-time delta approximation is used for acceptance claims.",
+      "code_refs": [
+        "src/cqed_reproduction.py::passive_one_port_response"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ075",
+      "title": "Quantum Langevin equation and passive sign convention",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "arXiv v1 Eq. (75); formal RMP Eq. (77)"
+        },
+        {
+          "type": "paper_appendix",
+          "value": "Appendix C Eqs. (C15)-(C20), slowly varying envelope derivation"
+        }
+      ],
+      "latex": "\\dot a=i[H_S,a]-\\frac{\\kappa}{2}a+\\sqrt\\kappa\\,b_{\\rm in}\\quad(\\hbar=1),\\qquad\\text{passive equivalent used numerically: }\\dot a=-(i\\Delta+\\kappa/2)a+\\sqrt\\kappa b_{\\rm in},\\;b_{\\rm out}=b_{\\rm in}-\\sqrt\\kappa a.",
+      "role": "Combines unitary system dynamics, radiative damping, and incident quantum noise; together with the boundary relation it determines measurable response.",
+      "derived_from": [
+        "EQ072",
+        "EQ073_074",
+        "EQ068_069"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ075_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Langevin equation is explicit and Appendix C supplies the slow-envelope derivation."
+        },
+        {
+          "id": "EQ075_damping",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "With zero input, a(t)=a(0)exp[-(i omega_r+kappa/2)t], so energy decays at rate kappa, consistent with Eq. (68)."
+        },
+        {
+          "id": "EQ075_passivity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The self-consistent passive port convention gives |bout/bin|=1 for a lossless one-port resonator to 4e-16 over -5<=Delta/kappa<=5."
+        },
+        {
+          "id": "EQ075_sign_note",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "A port or resonator phase can flip an individual coupling sign. The executable pair fixes the relative sign by energy conservation; the two plus signs displayed in arXiv Eqs. (72),(75) are not used together for scattering amplitudes."
+        }
+      ],
+      "numerical_form": "For a coherent input beta in the rotating frame, alpha_ss=sqrt(kappa) beta/(i Delta+kappa/2) and r=bout/bin=(i Delta-kappa/2)/(i Delta+kappa/2), hence |r|=1.",
+      "code_refs": [
+        "src/cqed_reproduction.py::passive_one_port_response"
+      ],
+      "open_questions": [
+        "The paper does not explicitly discuss the relative input-output sign as a scattering-unitarity convention; the case therefore labels this card reconstructed while preserving all observable checks."
+      ]
+    },
+    {
+      "id": "EQ076_086",
+      "title": "Traveling voltage, transmon decoherence, dispersive dissipation, and coherent drive",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (76)-(86), Sec. IV.B-F"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 12-13 provide relaxation, dephasing, Purcell, and inverse-Purcell channel context"
+        }
+      ],
+      "latex": "V_{\\rm tml}(x,t)\\simeq V_{\\rm in}(t-x/v)+V_{\\rm out}(t+x/v),\\quad \\dot\\rho=-i[H_q,\\rho]+\\gamma(\\bar n+1)D[b]\\rho+\\gamma\\bar nD[b^\\dagger]\\rho+2\\gamma_\\varphi D[b^\\dagger b]\\rho,\\quad T_1^{-1}=\\gamma_\\downarrow+\\gamma_\\uparrow,\\ T_2^{-1}=T_1^{-1}/2+\\gamma_\\varphi,\\quad \\gamma_\\kappa=(g/\\Delta)^2\\kappa,\\ \\kappa_\\gamma=(g/\\Delta)^2\\gamma,\\ \\gamma_\\Delta=2(g/\\Delta)^2\\gamma_\\varphi,\\quad H_d=\\hbar[\\varepsilon(t)a^\\dagger e^{-i\\omega_dt-i\\phi_d}+\\mathrm{H.c.}],\\quad |\\alpha\\rangle=D(\\alpha)|0\\rangle.",
+      "role": "Extends the bath model to qubit T1/T2, exposes mixing-induced Purcell channels, and connects coherent incoming fields to displacement control.",
+      "derived_from": [
+        "EQ068_069",
+        "EQ072",
+        "EQ075",
+        "EQ040_044"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ076_086_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All voltage, master-equation, rate, drive, coherent-state, and displacement relations are explicit in Sec. IV."
+        },
+        {
+          "id": "EQ080_T2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The off-diagonal two-level density-matrix equation is dot(rho_ge)=-(gamma1/2+gamma_phi)rho_ge."
+        },
+        {
+          "id": "EQ083_purcell",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The transformed collapse operator a maps to a-(g/Delta)b at first order, yielding a qubit decay probability (g/Delta)^2 through the cavity port."
+        },
+        {
+          "id": "EQ085_coherent_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The Fock expansion sums to exp(-|alpha|^2) exp(|alpha|^2)=1 and has mean photon number |alpha|^2."
+        },
+        {
+          "id": "EQ086_displacement",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "BCH gives D-dagger(alpha) a D(alpha)=a+alpha."
+        }
+      ],
+      "numerical_form": "Integrate finite-dimensional Lindblad equations and compare population/coherence to exp(-t/T1) and exp(-t/T2); verify transformed collapse-channel rates and coherent-state normalization.",
+      "code_refs": [
+        "src/cqed_reproduction.py::thermal_oscillator_evolution",
+        "src/full_rmp_reproduction.py::one_excitation_dynamics",
+        "tests/test_full_rmp_reproduction.py::test_pointer_trajectory_reaches_analytic_unit_population"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ087_099",
+      "title": "Filtered microwave detection, quantum-limited amplification, and IQ quadratures",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (87)-(99), Sec. V.A"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 14-16 define the measurement chain, noise cascade, and IQ mixer"
+        }
+      ],
+      "latex": "b_{\\rm out}[f]=\\int dt\\,f(t)b_{\\rm out}(t),\\ \\int dt|f(t)|^2=1,\\quad b_{\\rm out}^{(1)}[f]=\\sqrt G b_{\\rm out}[f]+\\sqrt{G-1}h^\\dagger[f],\\quad N_{\\rm sys}=N_1+N_2/G_1+\\cdots,\\quad \\eta=[1+2N_{\\rm sys}]^{-1},\\quad V_{IF}(t)=I(t)\\cos(\\omega_{IF}t)+Q(t)\\sin(\\omega_{IF}t),\\quad X_\\phi=(ae^{-i\\phi}+a^\\dagger e^{i\\phi})/\\sqrt2.",
+      "role": "Fixes the single-mode filter normalization, shows why a phase-preserving amplifier requires an idler mode and at least half a quantum of added noise, and maps mixer voltages to field quadratures.",
+      "derived_from": [
+        "EQ073_074",
+        "EQ076_086"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ087_099_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Filter, amplifier input-output map, cascaded noise, efficiency, mixer, IQ, and homodyne equations are explicit in Sec. V.A."
+        },
+        {
+          "id": "EQ087_filter",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Unit L2 filter norm and the time-field delta commutator give [b[f],b-dagger[f]]=1."
+        },
+        {
+          "id": "EQ088_commutator",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "G[b,b-dagger]+(G-1)[h-dagger,h]=1; omitting the idler would violate the bosonic commutator."
+        },
+        {
+          "id": "EQ092_quantum_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For a vacuum idler and large gain the input-referred added noise approaches one half quantum."
+        },
+        {
+          "id": "EQ096_IQ",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Low-pass filtering the products of the signal and a quadrature-shifted local oscillator removes the sum-frequency components and retains I and Q."
+        }
+      ],
+      "numerical_form": "Propagate Gaussian signal and independent idler variances through a gain cascade; confirm commutator preservation, the half-quantum limit, and eta=1/(1+2Nsys).",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::phase_preserving_amplifier_metrics",
+        "tests/test_full_rmp_reproduction.py::test_phase_preserving_amplifier_preserves_commutator_and_adds_half_quantum"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ100_106",
+      "title": "Wigner, characteristic, marginal, and Husimi-Q representations",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (100)-(106), Sec. V.B"
+        },
+        {
+          "type": "paper_figure",
+          "value": "Fig. 17 illustrates quadrature marginals"
+        }
+      ],
+      "latex": "W_\\rho(x,p)=2\\int dx'dp'\\,C_\\rho(x',p')e^{2i(px'-xp')},\\quad C_\\rho(x,p)=\\mathrm{Tr}[\\rho D(x+ip)],\\quad W_\\rho(\\alpha)=\\frac{2}{\\pi}\\mathrm{Tr}[D^\\dagger(\\alpha)\\rho D(\\alpha)P],\\quad W_{|\\beta\\rangle}(\\alpha)=\\frac{2}{\\pi}e^{-2|\\alpha-\\beta|^2},\\quad Q(\\alpha)=\\pi^{-1}\\langle\\alpha|\\rho|\\alpha\\rangle.",
+      "role": "Provides the phase-space machinery used for tomography, cat-code plots, Fock superpositions, and squeezed states.",
+      "derived_from": [
+        "EQ085",
+        "EQ086",
+        "EQ087_099"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ100_106_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Wigner, characteristic, displaced-parity, coherent-state, marginal, and Q-function relations are explicit in Sec. V.B."
+        },
+        {
+          "id": "EQ103_wigner_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The coherent-state Wigner Gaussian integrates to one over the complex plane."
+        },
+        {
+          "id": "EQ104_marginal",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integrating W over one conjugate coordinate inserts a Fourier delta and returns the corresponding quadrature probability density."
+        },
+        {
+          "id": "EQ105_Q_positive",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Q is a diagonal density-matrix expectation in a normalized coherent state and is therefore nonnegative."
+        },
+        {
+          "id": "EQ102_parity",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Finite Fock-basis displaced parity reproduces W_|0>(0)=2/pi and W_|1>(0)=-2/pi."
+        }
+      ],
+      "numerical_form": "Evaluate Wigner functions from analytic Fock-basis matrix elements or displaced parity on a converged grid; require realness, unit integral, and parity bounds.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::fock_state_wigner",
+        "tests/test_full_rmp_reproduction.py::test_fock_wigner_normalizes_and_has_odd_parity_at_origin"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ107_120",
+      "title": "Dispersive pointer states, measurement SNR, efficiency, and longitudinal readout",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (107)-(120), Sec. V.C"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 18-19 and their parameter annotations"
+        }
+      ],
+      "latex": "H_{disp}\\simeq\\hbar(\\omega_r+\\chi\\sigma_z)a^\\dagger a+\\hbar\\omega_q\\sigma_z/2,\\quad |\\psi(t)\\rangle=c_g|g,\\alpha_g(t)\\rangle+c_e|e,\\alpha_e(t)\\rangle,\\quad \\dot\\alpha_{e/g}=-i\\varepsilon-[i(\\delta_r\\pm\\chi)+\\kappa/2]\\alpha_{e/g},\\quad \\alpha_{e/g}^{ss}=-i\\varepsilon/[i(\\delta_r\\pm\\chi)+\\kappa/2],\\quad \\mathrm{SNR}^2=2\\eta\\kappa\\int_0^\\tau dt|\\alpha_e-\\alpha_g|^2,\\quad F=\\tfrac12[1+\\mathrm{erf}(\\mathrm{SNR}/2)],\\quad \\eta=\\Gamma_{meas}/(2\\Gamma_\\varphi),\\quad H_z(t)=\\hbar\\tilde g_z(t)(a+a^\\dagger)\\sigma_z.",
+      "role": "Turns the dispersive Hamiltonian into a quantitative readout model and separates pointer-state distance, integrated information, backaction, and chain efficiency.",
+      "derived_from": [
+        "EQ040_044",
+        "EQ075",
+        "EQ087_099"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ107_120_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Pointer ODEs, steady states, response quadratures, SNR, fidelity, efficiency, and longitudinal schemes are explicit in Sec. V.C."
+        },
+        {
+          "id": "EQ109_steady",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Setting dot(alpha)=0 in the linear Langevin equation gives Eq. (110)."
+        },
+        {
+          "id": "EQ117_optimum",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At resonant drive and fixed intracavity population the long-time signal is maximized at 2|chi|/kappa=1."
+        },
+        {
+          "id": "EQ116_gaussian",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Two equal-variance Gaussian outcomes separated by the defined SNR give the printed error-function assignment fidelity."
+        },
+        {
+          "id": "EQ118_efficiency",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "An ideal quantum-limited chain has eta=1; lost information reduces Gamma_meas but not total measurement-induced dephasing."
+        }
+      ],
+      "numerical_form": "Integrate the two complex pointer ODEs for finite pulses, compute phase-space distance and SNR, and compare the long-time result to the analytic steady-state formula.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::dispersive_pointer_trajectory",
+        "src/full_rmp_reproduction.py::integrated_pointer_snr",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t008",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t009"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ121_125",
+      "title": "Resonant coupling regimes, Maxwell-Bloch response, and Purcell interpolation",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (121)-(125), Sec. VI.A"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 20-22; captions supply the simulation rates"
+        }
+      ],
+      "latex": "E_{n,\\pm}=n\\hbar\\omega_r\\pm\\hbar g\\sqrt n,\\quad \\dot{\\langle a\\rangle}=-i\\delta_r\\langle a\\rangle-ig\\langle\\sigma_-\\rangle-\\kappa\\langle a\\rangle/2-i\\varepsilon,\\quad \\dot{\\langle\\sigma_-\\rangle}=-(i\\delta_q+\\gamma_2)\\langle\\sigma_-\\rangle+ig\\langle a\\sigma_z\\rangle,\\quad \\langle a\\rangle_{ss}=-i\\varepsilon/[i\\delta_r+\\kappa/2+g^2/(i\\delta_q+\\gamma_2)],\\quad \\gamma_\\kappa=\\frac{(g/\\Delta)^2\\kappa}{1+(\\kappa/2\\Delta)^2}.",
+      "role": "Connects the resonant JC spectrum to measurable transmission in bad-cavity, bad-qubit, and strong-coupling regimes.",
+      "derived_from": [
+        "EQ035_039",
+        "EQ075",
+        "EQ076_086"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ121_125_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Resonant doublets, expectation-value equations, weak-drive transmission, and bad-cavity Purcell expression are explicit in Sec. VI.A."
+        },
+        {
+          "id": "EQ124_linear",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "In the weak-drive ground-state limit, factorizing <a sigma_z> approximately as -<a> closes the two linear equations and gives Eq. (124)."
+        },
+        {
+          "id": "EQ124_empty",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For g=0 the response reduces to the standard damped cavity susceptibility."
+        },
+        {
+          "id": "EQ125_dispersive",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For |Delta| much larger than kappa, the interpolation reduces to (g/Delta)^2 kappa."
+        },
+        {
+          "id": "EQ121_split",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At resonance the weak-drive poles are split by 2g when damping is small."
+        }
+      ],
+      "numerical_form": "Use both the analytic weak-drive susceptibility and a finite JC Lindblad steady state/time evolution; cross-check peak locations, linewidth limits, positivity, and trace preservation.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::linear_cqed_response",
+        "src/full_rmp_reproduction.py::one_excitation_dynamics",
+        "src/full_rmp_reproduction.py::thermal_jc_spectrum",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t010"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ126_128",
+      "title": "Dispersive spectroscopy, ac-Stark response, and measurement-induced dephasing",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (126)-(128), Sec. VI.B"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 24-26 and captions"
+        }
+      ],
+      "latex": "H_{disp}\\simeq\\hbar\\omega_r a^\\dagger a+\\frac{\\hbar}{2}[\\omega_q+2\\chi a^\\dagger a+\\chi]\\sigma_z,\\quad \\langle\\sigma_z\\rangle_{ss}=-1+[1+(\\delta_q/\\gamma_2)^2+\\Omega_R^2/(\\gamma_1\\gamma_2)]^{-1}\\Omega_R^2/(\\gamma_1\\gamma_2),\\quad \\Gamma_\\varphi=2\\kappa|\\alpha_e-\\alpha_g|^2/4=\\kappa|\\alpha_e-\\alpha_g|^2/2.",
+      "role": "Relates cavity photons to qubit frequency shift, power broadening, number splitting, and readout backaction.",
+      "derived_from": [
+        "EQ040_044",
+        "EQ107_120",
+        "EQ121_125"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ126_128_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The ac-Stark Hamiltonian, driven Bloch steady state, and pointer-state dephasing rate are explicit in Sec. VI.B."
+        },
+        {
+          "id": "EQ127_weak",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "As Omega_R tends to zero, the qubit remains in the ground state and the response is Lorentzian with half-width gamma2."
+        },
+        {
+          "id": "EQ127_power",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Solving the steady optical Bloch equations yields saturation parameter Omega_R^2/(gamma1 gamma2) and power broadening."
+        },
+        {
+          "id": "EQ128_zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "If chi=0 the two pointer states coincide and measurement-induced dephasing vanishes."
+        }
+      ],
+      "numerical_form": "Evaluate the Bloch formula and compare it to a two-level Lindblad steady state; for photon-number splitting sum number-conditioned responses with a normalized Poisson distribution.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::bloch_excited_population",
+        "src/full_rmp_reproduction.py::photon_number_split_spectrum",
+        "src/full_rmp_reproduction.py::duffing_cavity_pull",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t013"
+      ],
+      "open_questions": [
+        "Fig. 26 does not fully specify the conversion from applied drive amplitude to intracavity occupation, so only the dressed-energy feature is a final claim."
+      ]
+    },
+    {
+      "id": "EQ129_153",
+      "title": "Single-qubit control and two-qubit gate Hamiltonians",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (129)-(153), Sec. VII.A-B"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 28-30; only an independent DRAG simulation is reproducible without external calibration data"
+        }
+      ],
+      "latex": "H'(t)=H'_q+\\hbar\\varepsilon(t)(b^\\dagger e^{-i\\phi_d}+be^{i\\phi_d}),\\quad H'_{TLS}=\\hbar\\delta_q\\sigma_z/2+\\hbar\\Omega_R(t)[\\cos\\phi_d\\sigma_x+\\sin\\phi_d\\sigma_y]/2,\\quad H_{swap}=\\hbar J(\\sigma_+^{(1)}\\sigma_-^{(2)}+\\mathrm{H.c.}),\\quad J=g_1g_2(1/\\Delta_1+1/\\Delta_2)/2,\\quad H_{CZ}=\\hbar J_{11,02}(|11\\rangle\\langle02|+\\mathrm{H.c.}),\\quad H_{CR}\\supset-\\hbar\\varepsilon J E_{C1}(\\hbar\\Delta_{12})^{-1}\\sigma_z^{(1)}\\sigma_x^{(2)},\\quad H_{para}\\simeq\\tilde J(\\sigma_+^{(1)}\\sigma_-^{(2)}+\\mathrm{H.c.})/2.",
+      "role": "Organizes microwave and flux control as rotating-frame resonance selection, with leakage, virtual exchange, conditional phase, and parametric sidebands as variations of the same model.",
+      "derived_from": [
+        "EQ020_028",
+        "EQ040_044",
+        "APPB001_B032"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ129_153_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Drive, rotating-frame, exchange, resonator-mediated, CZ, RIP, CR, modulated coupling, and Bessel-sideband equations are explicit in Sec. VII."
+        },
+        {
+          "id": "EQ131_axis",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At zero detuning, drive phases 0 and pi/2 generate X and Y rotations respectively."
+        },
+        {
+          "id": "EQ136_exchange",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Second-order elimination of a detuned bus gives the symmetric exchange coefficient g1 g2(1/Delta1+1/Delta2)/2."
+        },
+        {
+          "id": "EQ150_resonance",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Choosing modulation frequency omega_m=omega_q1-omega_q2 makes only the exchange term stationary under RWA."
+        },
+        {
+          "id": "EQ153_bessel",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The Jacobi-Anger expansion resolves a sinusoidal frequency modulation into integer sidebands with amplitudes J_n(epsilon/omega_m)."
+        }
+      ],
+      "numerical_form": "Propagate a three-level driven transmon under Gaussian and derivative quadratures, then compare leakage and gate error; verify analytic exchange and parametric resonance against small matrix evolutions.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::drag_pi_pulse",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t016"
+      ],
+      "open_questions": [
+        "Fig. 28 experimental randomized-benchmarking data and calibration pulses are unavailable; the independent DRAG model is feature-level."
+      ]
+    },
+    {
+      "id": "EQ154_157",
+      "title": "Bosonic amplitude-damping codes and cat-code basis states",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (154)-(157), Sec. VII.C"
+        },
+        {
+          "type": "paper_table",
+          "value": "Table I compares uncorrected, four-qubit, and bosonic encodings"
+        },
+        {
+          "type": "paper_figure",
+          "value": "Fig. 31 uses alpha=4"
+        }
+      ],
+      "latex": "|0_L\\rangle=(|0\\rangle+|4\\rangle)/\\sqrt2,\\ |1_L\\rangle=|2\\rangle,\\quad |0_L\\rangle_{4q}=(|0000\\rangle+|1111\\rangle)/\\sqrt2,\\ |1_L\\rangle_{4q}=(|0011\\rangle+|1100\\rangle)/\\sqrt2,\\quad |0_L\\rangle_{cat}\\propto|\\alpha\\rangle+|i\\alpha\\rangle+|-\\alpha\\rangle+|-i\\alpha\\rangle,\\quad |1_L\\rangle_{cat}\\propto|\\alpha\\rangle-|i\\alpha\\rangle+|-\\alpha\\rangle-|-i\\alpha\\rangle.",
+      "role": "Shows how oscillator parity and separated loss spaces preserve an encoded qubit against one amplitude-damping event.",
+      "derived_from": [
+        "EQ085",
+        "EQ100_106"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ154_157_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Binomial, four-qubit, four-leg cat, and two-leg cat logical states are explicit in Sec. VII.C."
+        },
+        {
+          "id": "EQ154_equal_loss",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Both binomial codewords have mean photon number two, and a maps them to orthogonal odd-parity states without revealing logical amplitudes."
+        },
+        {
+          "id": "EQ154_KL",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Within the logical subspace, P a-dagger a P=2P and P a P=0, satisfying the first-order Knill-Laflamme conditions for {I,a}."
+        },
+        {
+          "id": "EQ156_parity",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The four-leg logical codewords occupy photon numbers 0 mod 4 and 2 mod 4; one loss maps both to odd parity."
+        }
+      ],
+      "numerical_form": "Construct normalized truncated-Fock codewords, compute Gram matrices of the I and a error spaces, photon-number moments, parity, and analytic Wigner functions.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::binomial_code_metrics",
+        "src/full_rmp_reproduction.py::cat_state_coefficients",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t017",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t018"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ158_164",
+      "title": "Degenerate parametric amplification, squeezing, and remote parity interaction",
+      "source_refs": [
+        {
+          "type": "paper_equations",
+          "value": "arXiv v1 Eqs. (158)-(164), Sec. VIII"
+        },
+        {
+          "type": "paper_figures",
+          "value": "Figs. 32-33; theory panels have complete state parameters"
+        }
+      ],
+      "latex": "H=\\hbar\\omega_0a^\\dagger a+(\\hbar K/2)a^{\\dagger2}a^2+\\hbar\\varepsilon_p(a^\\dagger e^{-i\\omega_pt}+ae^{i\\omega_pt}),\\quad D^\\dagger(\\alpha)HD(\\alpha)=\\hbar\\delta a^\\dagger a+(\\hbar/2)(\\varepsilon_2a^{\\dagger2}+\\varepsilon_2^*a^2)+H_{corr},\\ \\varepsilon_2=K\\alpha^2,\\quad S(\\xi)=\\exp[(\\xi^*a^2-\\xi a^{\\dagger2})/2],\\quad \\Delta X_{\\theta/2}^2=e^{-2r}/2,\\ \\Delta X_{\\theta/2+\\pi/2}^2=e^{2r}/2,\\quad H_{parity}=\\hbar\\chi(\\sigma_z^{(1)}+\\sigma_z^{(2)})a^\\dagger a.",
+      "role": "Derives the quadratic engine of quantum-limited amplification and squeezing and the dispersive interaction used for remote parity measurement.",
+      "derived_from": [
+        "EQ045_051",
+        "EQ100_106",
+        "EQ107_120"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ158_164_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Pumped Kerr, rotating-frame DPA, squeezing transformations and variances, two-mode extension, and remote-parity Hamiltonian are explicit in Sec. VIII."
+        },
+        {
+          "id": "EQ159_displacement",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Using D-dagger(alpha) a D(alpha)=a+alpha and choosing alpha to cancel the linear pump produces the quadratic pair term epsilon2=K alpha^2 and the shifted detuning."
+        },
+        {
+          "id": "EQ_squeeze_commutator",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The Bogoliubov map a -> a cosh r - exp(i theta)a-dagger sinh r preserves [a,a-dagger]=1."
+        },
+        {
+          "id": "EQ_variance_product",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The two principal variances multiply to 1/4 and return to vacuum variance 1/2 at r=0."
+        },
+        {
+          "id": "EQ164_parity",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Odd-parity two-qubit states have sigma_z1+sigma_z2=0 while even states produce opposite cavity pulls, enabling parity-sensitive scattering."
+        }
+      ],
+      "numerical_form": "Generate squeezed-vacuum covariance and Wigner grids; verify normalization, principal variances, minimum uncertainty, and the caption's dB curves. Generate Fock-superposition Wigner functions separately from experimental tomography.",
+      "code_refs": [
+        "src/full_rmp_reproduction.py::squeezed_vacuum_wigner",
+        "src/full_rmp_reproduction.py::squeezed_quadrature_variance",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t019",
+        "scripts/run_full_rmp_reproduction.py::reproduce_t020"
+      ],
+      "open_questions": [
+        "Fig. 32 experimental tomography values are unavailable; only the specified theoretical states are independently reproduced."
+      ]
+    },
+    {
+      "id": "APPA001_A010",
+      "title": "Appendix A: voltage-biased transmon and capacitive oscillator coupling",
+      "source_refs": [
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix A, Eqs. (A1)-(A10)"
+        }
+      ],
+      "latex": "L=\\tfrac12\\dot{\\boldsymbol\\Phi}^{T}C\\dot{\\boldsymbol\\Phi}+E_J\\cos(2\\pi\\Phi_A/\\Phi_0)-V_g C_g\\dot\\Phi_A,\\quad H=\\tfrac12(\\mathbf Q-\\mathbf Q_g)^TC^{-1}(\\mathbf Q-\\mathbf Q_g)-E_J\\cos(2\\pi\\Phi_A/\\Phi_0),\\quad H\\simeq4E_C(n-n_g+n_r)^2-E_J\\cos\\varphi+\\hbar\\omega_ra^\\dagger a.",
+      "role": "Closes the circuit-to-Hamiltonian chain used for transmon gate charge and resonator coupling without assuming the interaction by inspection.",
+      "derived_from": [
+        "EQ001_006",
+        "EQ020_028",
+        "EQ029_034"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "APPA_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The node fluxes, capacitance matrix, conjugate charges, Legendre transform, and weak-coupling expansion are explicit in Appendix A."
+        },
+        {
+          "id": "APPA_legendre",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Q=partial L/partial dot(Phi) and H=Q dot(Phi)-L give the inverse-capacitance quadratic form."
+        },
+        {
+          "id": "APPA_positive",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For Cg=0 the capacitance matrix is diagonal and the Hamiltonian reduces to independent positive-energy transmon and LC sectors."
+        }
+      ],
+      "numerical_form": "Compare the exact inverse-capacitance Hamiltonian with its small-Cg expansion over a dimensionless coupling sweep.",
+      "code_refs": [
+        "src/cqed_reproduction.py::transmon_coupling",
+        "src/cqed_reproduction.py::duffing_jc_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "APPB001_B032",
+      "title": "Appendix B: BCH, Schrieffer-Wolff, Bogoliubov, and off-resonant drive",
+      "source_refs": [
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix B, Eqs. (B1)-(B32) and following driven-transmon equations"
+        }
+      ],
+      "latex": "H_U=U^\\dagger HU-i\\hbar U^\\dagger\\dot U,\\quad e^SHe^{-S}=H+[S,H]+[S,[S,H]]/2+\\cdots,\\quad [H_0,S^{(1)}]=-V,\\quad H_{eff}^{(2)}=H_0+[S^{(1)},V]/2,\\quad U_\\Lambda=e^{\\Lambda(a^\\dagger b-ab^\\dagger)},\\ \\tan(2\\Lambda)=2g/\\Delta.",
+      "role": "Provides the controlled unitary-transform calculus underlying dispersive shifts, multilevel couplings, inherited Kerr terms, and driven-gate reductions.",
+      "derived_from": [
+        "EQ029_034",
+        "EQ040_044",
+        "EQ045_051",
+        "EQ129_153"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "APPB_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The time-dependent frame, BCH series, order-by-order SW equations, multilevel generator, normal-mode rotation, and driven-transmon application are explicit in Appendix B."
+        },
+        {
+          "id": "APPB_SW",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Choosing the first-order generator to cancel V leaves one half of its commutator with V at second order."
+        },
+        {
+          "id": "APPB_bogoliubov",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The beam-splitter rotation preserves both bosonic commutators and total excitation number."
+        },
+        {
+          "id": "APPB_small",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For g/Delta tending to zero, Lambda tends to g/Delta and all dispersive corrections vanish at least quadratically."
+        }
+      ],
+      "numerical_form": "Compare exact finite-matrix unitary transforms against second-order SW and exact 2x2 normal-mode eigenvalues across a controlled small parameter sweep.",
+      "code_refs": [
+        "src/cqed_reproduction.py::transmon_dispersive_shifts",
+        "src/cqed_reproduction.py::linear_dressed_frequencies",
+        "tests/test_cqed_reproduction.py::test_bogoliubov_frequencies_match_matrix_diagonalization"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "APPC001_C020",
+      "title": "Appendix C: transmission-line boundary derivation of input-output theory",
+      "source_refs": [
+        {
+          "type": "paper_appendix",
+          "value": "arXiv v1 Appendix C, Eqs. (C1)-(C20)"
+        }
+      ],
+      "latex": "H_{tml}=\\int dx\\,\\theta(x)[Q(x)^2/(2c)+(\\partial_x\\Phi)^2/(2l)],\\quad \\partial_t^2\\Phi=v^2\\partial_x^2\\Phi,\\quad V_{out}-V_{in}=Z_{tml}C_\\kappa\\ddot\\Phi_A,\\quad b_{out}-b_{in}=\\sqrt\\kappa a,\\quad \\dot a=i[H_S,a]-\\kappa a/2+\\sqrt\\kappa b_{in}.",
+      "role": "Derives rather than postulates the boundary condition, temporal field normalization, damping kernel, and Langevin drive used throughout measurement theory.",
+      "derived_from": [
+        "EQ064_065",
+        "EQ066",
+        "EQ070_071",
+        "EQ072",
+        "EQ073_074",
+        "EQ075"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "APPC_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The half-line Hamiltonian, wave equation, boundary integration, traveling fields, Ohm law, input-output map, and Langevin equation are explicit in Appendix C."
+        },
+        {
+          "id": "APPC_boundary",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integrating the wave equation across x=0 converts the derivative discontinuity into the coupling-capacitor current."
+        },
+        {
+          "id": "APPC_fourier",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The slowly varying Fourier envelopes inherit delta-function commutators from the continuum modes."
+        },
+        {
+          "id": "APPC_passive",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Using a self-consistent port phase yields unit-modulus one-port reflection in the lossless limit."
+        }
+      ],
+      "numerical_form": "Reuse the continuum-normalization, Hermiticity, passive-reflection, and energy-decay tests associated with Eqs. (64)-(75).",
+      "code_refs": [
+        "src/cqed_reproduction.py::passive_one_port_response"
+      ],
+      "open_questions": [
+        "The arXiv main-text input-output signs require a consistent port phase choice; observables and Appendix boundary conditions fix the executable convention."
+      ]
+    }
+  ]
+}

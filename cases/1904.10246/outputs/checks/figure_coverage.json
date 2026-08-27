@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "paper_id": "1904.10246",
+  "_howto": [
+    "One item per paper figure/table (or panel group). This file is the machine-readable coverage contract:",
+    "kind: numeric | non_numeric.",
+    "decision for numeric items: target (with target_ids) | deferred_blocked (with blocker).",
+    "decision for non_numeric items: excluded | target.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', or 'similar to another figure' are NOT blockers: reproduce the item instead.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If compute or data is genuinely insufficient, deferred_blocked with an honest reason is the correct final state; do not fake coverage.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "fig2_query_error_runner": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/reproduce.py"
+      ],
+      "config_ref": "config/implementation.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/reproduce.py",
+        "--target",
+        "T_FIG2",
+        "--config",
+        "config/implementation.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig2_query_error.csv",
+        "outputs/checks/fig2_scientific_check.json",
+        "outputs/figures/fig2_query_error.png"
+      ],
+      "acceptance_criteria": [
+        "All six independently simulated RMSE panels are present, schedule/MLE sanity checks pass, and reported asymptotic slopes remain within their frozen tolerances."
+      ]
+    },
+    "figa_percentile_runner": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/reproduce.py"
+      ],
+      "config_ref": "config/implementation.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/reproduce.py",
+        "--target",
+        "T_FIGA",
+        "--config",
+        "config/implementation.json"
+      ],
+      "expected_outputs": [
+        "outputs/data/figa_percentile_comparison.csv",
+        "outputs/checks/figa_scientific_check.json",
+        "outputs/figures/figa_percentile_comparison.png"
+      ],
+      "acceptance_criteria": [
+        "The 8/pi^2 percentile comparison contains all four independently generated series and passes convergence and cross-series consistency checks."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "FIG001",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 1",
+      "reason": "Schematic workflow/likelihood diagram with no numerical paper result."
+    },
+    {
+      "item_id": "FIG002_A",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(a)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=2/3.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG002_B",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(b)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=1/12.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG002_C",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(c)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=1/3.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG002_D",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(d)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=1/24.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG002_E",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(e)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=1/6.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG002_F",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. 2(f)",
+      "target_ids": [
+        "T_FIG2"
+      ],
+      "implementation_ref": "fig2_query_error_runner",
+      "reason": "Independent classical/LIS/EIS RMSE-versus-query panel for target probability a=1/48, including the reported slope comparison.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "FIG003",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 3",
+      "reason": "Generic amplitude-amplification circuit schematic."
+    },
+    {
+      "item_id": "FIG004",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 4",
+      "reason": "Generic conventional amplitude-estimation circuit schematic."
+    },
+    {
+      "item_id": "FIG005",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 5",
+      "reason": "Controlled-rotation circuit schematic."
+    },
+    {
+      "item_id": "FIG006",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 6",
+      "reason": "Explicit proposed n=2 circuit schematic; its resource numbers are targeted in Table 2."
+    },
+    {
+      "item_id": "FIG007",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "source_ref": "Fig. 7",
+      "reason": "Explicit conventional n=2 circuit schematic; its resource numbers are targeted in Table 2."
+    },
+    {
+      "item_id": "TAB001",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Table 1",
+      "target_ids": [
+        "T_TABLE1"
+      ],
+      "claim_refs": [
+        "CLM003"
+      ],
+      "reason": "Analytic query and post-processing complexity table."
+    },
+    {
+      "item_id": "TAB002",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Table 2",
+      "target_ids": [
+        "T_TABLE2"
+      ],
+      "reason": "CNOT and qubit resource counts under the paper's circuit/decomposition assumptions.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "FIGA",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "source_ref": "Fig. A",
+      "target_ids": [
+        "T_FIGA"
+      ],
+      "implementation_ref": "figa_percentile_runner",
+      "reason": "Independent 81-percentile EIS/classical simulation and analytic conventional-AE comparator.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    }
+  ]
+}

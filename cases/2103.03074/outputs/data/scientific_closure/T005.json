@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "paper_id": "2103.03074",
+  "target_id": "T005",
+  "clean_room_boundary": {
+    "paper_pdf_read_by_runner": false,
+    "paper_source_read_by_runner": false,
+    "source_pixels_used": false,
+    "author_numeric_arrays_used": false,
+    "author_code_used": false,
+    "dryad_measurements_used": false,
+    "dryad_amplitudes_used": false,
+    "dryad_python_used": false,
+    "public_qsim_parameter_files_only": true,
+    "paper_reported_values_used_for_comparison_and_consistency_only": true
+  },
+  "claims": [
+    "C01-HEAD-TAIL-FACTOR",
+    "C02-BATCH-REUSE-SCALING",
+    "C03-20C-PARTITION"
+  ],
+  "publication_source_audit": {
+    "search_scope": [
+      "canonical arXiv v1 main method and results, paper-source/extracted/main.tex:106-175",
+      "canonical arXiv v1 appendix algorithm and computation details, paper-source/extracted/main.tex:288-375",
+      "rendered canonical text, raw/paper.txt:88-176 and 338-445"
+    ],
+    "disclosed": [
+      "psi(s1,s2)=v_head(s1) dot v_tail(s2)",
+      "the head vector is contracted once and reused over 2^n2 tail assignments",
+      "m20 simplifies to 381 nodes with reported 345/36 sizes",
+      "the 21 open-qubit ids and the 32 closed-bit assignment",
+      "the hierarchical partition stopping size of 60 tensors",
+      "2^23 slices, 2^30 per-subtask space, and printed head/tail costs"
+    ],
+    "not_disclosed": [
+      "tensor-to-345/36 partition membership",
+      "first-cut edge list and bottleneck edge count for m20",
+      "partition-search seed, full objective weights, and tie-breaking rule",
+      "pairwise contraction order and slice-index list"
+    ],
+    "atomic_input_status": {
+      "C01-HEAD-TAIL-FACTOR": "sufficient_for_independent_reduced_public_circuit_check",
+      "C02-BATCH-REUSE-SCALING": "sufficient_for_symbolic_and_printed_cost_check",
+      "C03-20C-PARTITION": "node_total_and_open_qubits_sufficient_exact_partition_membership_publication_underspecified"
+    },
+    "root_cause": "publication_underspecified",
+    "audit_complete": true
+  },
+  "factorization": {
+    "subsystem_qubits": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "retained_gate_count": 224,
+    "cut_dimension": 64,
+    "shared_head_contractions": 1,
+    "tail_rows_contracted": 4,
+    "amplitudes": [
+      {
+        "output_index": 0,
+        "direct_amplitude": [
+          0.042498494260379986,
+          -0.05746992323599589
+        ],
+        "factorized_amplitude": [
+          0.04249849426037998,
+          -0.05746992323599577
+        ],
+        "absolute_error": 1.1816510524180758e-16
+      },
+      {
+        "output_index": 11,
+        "direct_amplitude": [
+          0.0014804210282148705,
+          -0.028509330886865074
+        ],
+        "factorized_amplitude": [
+          0.0014804210282148393,
+          -0.028509330886865136
+        ],
+        "absolute_error": 6.982127306007956e-17
+      },
+      {
+        "output_index": 42,
+        "direct_amplitude": [
+          -0.07690149239638404,
+          -0.1133872733898437
+        ],
+        "factorized_amplitude": [
+          -0.07690149239638414,
+          -0.11338727338984364
+        ],
+        "absolute_error": 1.1188630228279524e-16
+      },
+      {
+        "output_index": 63,
+        "direct_amplitude": [
+          0.0751541567482722,
+          -0.17833998379590674
+        ],
+        "factorized_amplitude": [
+          0.07515415674827225,
+          -0.17833998379590674
+        ],
+        "absolute_error": 5.551115123125783e-17
+      }
+    ],
+    "maximum_absolute_error": 1.1816510524180758e-16,
+    "scope": "exact_multi_amplitude_identity_on_official_gate_reduced_subsystem"
+  },
+  "reuse_cost_model": {
+    "without_shared_head": "L*T_head+T_tail_total",
+    "with_shared_head": "T_head+T_tail_total",
+    "paper_batch_size": 2097152,
+    "paper_head_total_cost": 4.51e+18,
+    "paper_tail_total_cost": 2870000000000000.0,
+    "head_dominance_ratio_from_table": 1571.4285714285713,
+    "reuse_total_over_head": 1.0006363636363635,
+    "tail_fraction_of_reused_total": 0.0006359589352230399,
+    "no_reuse_total_cost": 9.45815552287e+24,
+    "reuse_total_cost": 4.51287e+18,
+    "symbolic_speedup": 2095818.298083038
+  },
+  "partition_node_count": {
+    "independently_simplified": 381,
+    "paper_total_nodes": 381,
+    "paper_head_nodes": 345,
+    "paper_tail_nodes": 36,
+    "paper_head_plus_tail": 381,
+    "published_open_qubit_count": 21,
+    "published_open_qubit_ids": [
+      11,
+      12,
+      13,
+      19,
+      20,
+      21,
+      22,
+      23,
+      28,
+      29,
+      30,
+      31,
+      32,
+      37,
+      38,
+      39,
+      40,
+      41,
+      44,
+      45,
+      46
+    ],
+    "specific_assignment_reproduced": false,
+    "reason": "the publication gives sizes and open-qubit ids but not the tensor-to-partition membership, first-cut edges, partition seed, or unique objective/tie-breaking contract"
+  },
+  "scientific_checks": [
+    {
+      "claim_id": "C01-HEAD-TAIL-FACTOR",
+      "status": "passed",
+      "check": "shared-head multi-amplitude factorization"
+    },
+    {
+      "claim_id": "C02-BATCH-REUSE-SCALING",
+      "status": "passed",
+      "check": "symbolic reuse law and printed cost dominance arithmetic"
+    },
+    {
+      "claim_id": "C03-20C-PARTITION",
+      "status": "blocked",
+      "check": "381-node total independently derived; exact 345/36 membership is not published",
+      "root_cause": "publication_underspecified"
+    }
+  ],
+  "publication_input_status": "partially_sufficient_exact_partition_membership_underspecified",
+  "scientific_status": "factorization_reuse_and_node_total_executed_partition_membership_publication_underspecified"
+}

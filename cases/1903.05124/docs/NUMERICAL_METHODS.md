@@ -49,6 +49,6 @@
 - Shared-observable optimization: one evolved trajectory now supplies both half-chain entropy and the seven subsystem entropies entering `I3`; T001/T004/T005 do not rerun identical circuits for each observable.
 - Complexity or scaling: polynomial in qubit count per Clifford/measurement operation; no `2^(Lm)` state vector appears in production runs.
 - Performance bottleneck removed: MTH002 replaces a `2^22 x 2^22` trace with a `44 x 44` binary kernel problem.
-- Reusable workflow candidate: a generic source-pixel guard and checkpointed Monte Carlo ledger; the scientific stabilizer implementation remains case code until independently reused.
-- Case-specific parts remain local: qubit-block layout, observables, paper parameter grids, and acceptance thresholds.
+- Optional harness promotion candidate: generic source-pixel guard and checkpointed Monte Carlo ledger; scientific stabilizer logic remains case/domain code until reused.
+- Case-specific parts that should not enter the harness: qubit-block layout, observables, paper parameter grids, and acceptance thresholds.
 - Performance evidence: T002 smoke took `0.66 s`; feature scale took `18.46 s` serial and `3.56 s` with eight workers; the paper-exact 50,000-sample run took `179.30 s` with eight workers.

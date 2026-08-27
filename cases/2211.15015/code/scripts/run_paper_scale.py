@@ -170,6 +170,7 @@ def main() -> int:
                 figures_root=layout.figures_root,
                 checks_root=layout.checks_root,
                 profile=config["profile"],
+                target_selectors=config["target_selectors"],
             )
         summary = campaign_summary(config, conditions, results)
         atomic_json(layout.checks_root / "campaign_summary.json", summary)

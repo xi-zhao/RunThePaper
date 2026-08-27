@@ -6,9 +6,9 @@ Published as: [Measurement-Induced Dark State Phase Transitions in Long-Ranged F
 
 Formal citation: Phys. Rev. Lett. 128, 010605 (2022) · DOI `10.1103/PhysRevLett.128.010605` · Locator `010605`
 
-Public status: **Partial scientific reproduction** · Audit score: **60.15/100**
+Public status: **Partial scientific reproduction** · Audit score: **62.76/100**
 
-All nine numerical panels are independently generated; T003 and T007 retain explicit finite-size slope failures, and the paper-scale A100 campaign remains unrun.
+All nine numerical panels are independently generated; failed targets are reported from their declared paper-defined scientific checks, and the paper-scale A100 campaign remains unrun.
 
 ## Start Here / 从这里开始
 
@@ -77,7 +77,7 @@ cd cases/2105.08076/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

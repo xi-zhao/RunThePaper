@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "run_id": "paper-scale-figure-geometry-bem-v2",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale.py",
+    "--config",
+    "config/paper_scale.json",
+    "--stage",
+    "all",
+    "--no-render"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/bem.py",
+    "src/paper_scale.py",
+    "scripts/run_paper_scale.py",
+    "config/paper_scale.json"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "n_inside": 1.466,
+    "n_outside": 1.0,
+    "incidence_angle_degrees": 15.0,
+    "hexagon_side_R": 1.0,
+    "center_displacement_R": [
+      1.8,
+      -0.5
+    ],
+    "corner_radius_R": 0.0205,
+    "total_boundary_elements": 1600,
+    "side_element_counts": [
+      122,
+      121,
+      121,
+      122,
+      121,
+      121,
+      122,
+      121,
+      121,
+      122,
+      121,
+      121
+    ],
+    "corner_element_counts": [
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12,
+      12
+    ],
+    "quadrature_order": 12,
+    "scan": {
+      "segments": [
+        {
+          "start": 20.0,
+          "stop": 25.0,
+          "count": 151
+        },
+        {
+          "start": 22.94444,
+          "stop": 22.94444,
+          "count": 1
+        },
+        {
+          "start": 23.25,
+          "stop": 23.25,
+          "count": 1
+        }
+      ],
+      "angular_samples": 720
+    },
+    "resonance": {
+      "reported_kR": [
+        22.94444,
+        -0.09696
+      ],
+      "convergence_meshes": [
+        {
+          "total_boundary_elements": 400,
+          "corner_elements_per_corner": 3
+        },
+        {
+          "total_boundary_elements": 800,
+          "corner_elements_per_corner": 6
+        },
+        {
+          "total_boundary_elements": 1200,
+          "corner_elements_per_corner": 9
+        },
+        {
+          "total_boundary_elements": 1600,
+          "corner_elements_per_corner": 12
+        }
+      ]
+    },
+    "near_field": {
+      "x_min": -3.0,
+      "x_max": 3.0,
+      "x_count": 401,
+      "y_min": -3.0,
+      "y_max": 3.0,
+      "y_count": 401
+    },
+    "far_field_angular_samples": 1440
+  },
+  "outputs": [
+    "outputs/data/paper_scale_bem/data/bem_paper_scale.npz",
+    "outputs/data/paper_scale_bem/data/bem_paper_scale_summary.json",
+    "outputs/data/paper_scale_bem/checks/acceptance.json",
+    "outputs/data/paper_scale_bem/checks/manifest.json",
+    "outputs/data/paper_scale_bem/checks/campaign_state.json"
+  ],
+  "timeout_seconds": 172800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "execution_boundary": {
+    "paper_exact_basis": "declared_equivalence_class",
+    "paper_exact_condition": "Unavailable while prose and Figure 4 disagree on the displacement sign; the run may prove the figure-defined publication variant and the paper-declared discretization class, but not an unqualified paper-exact state.",
+    "publication_source_discrepancy": "Prose gives (1.8R,+0.5R), while Figure 4 shows (1.8R,-0.5R); the figure-defined geometry is selected for reproducing Figures 5-7.",
+    "author_private_mesh_identity_claimed": false,
+    "source_pixels_used_to_select_representative": false,
+    "resume": "Every scan point, convergence mesh, near-field row, and far-field array is fingerprinted and reused only when the config hash matches.",
+    "sharding": "Use the stage/shard commands in config/paper_scale.json for a batch campaign; stage=all is the serial entry point."
+  }
+}

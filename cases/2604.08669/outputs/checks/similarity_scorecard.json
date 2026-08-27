@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 4,
   "paper_id": "2604.08669",
-  "summary": "The case now includes an A100 paper-geometry GNN short probe and paper-scale P2WGS. Full million-sample training, the GPU-parallel decoder, and measured hardware timing remain outside the completed scope.",
+  "summary": "Reduced-scale two-stage reproduction has started. It now treats Fig. 3 as a retrained model artifact with checkpoint, training history, and evaluation metrics; P2WGS continuity and pipelined timing remain reduced-scale/model targets.",
   "targets": [
     {
       "target_id": "T001",
@@ -10,43 +10,145 @@
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "artifact_stage": "exploratory",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "insufficient_compute",
-        "parameter_match": "paper_subset",
+        "failure_type": "capability_limit",
+        "parameter_match": "reduced_scale",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_dependencies": [],
-        "formula_gate": "not_applicable"
+        "formula_gate": "not_applicable",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "scientific_result_mismatch",
+            "statement": "Repeated clean-room GNN training and decoder probes did not reach the paper-facing rank/geometry gates at the declared evaluation boundary.",
+            "evidence": [
+              "outputs/checks/source_topk_scale_slope_closure.json",
+              "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "system_capability_limit",
+            "statement": "The scaling line plateaued under measured A100 training: enlarging the bounded dataset did not clear the rank-1 or geometry/near-tie gates, so the current reproducer cannot deliver the paper-scale claim.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/source_topk_scale_slope_closure.json",
+              "A100_TRAINING_RECOVERY.md"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "Clean-room decoders, geometry invariants, repeated training probes, and isolated execution pass; the observed plateau remains after code-path checks.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The GNN and both assignment decoders execute in the isolated closure campaign.",
+                "evidence": [
+                  "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "convergence",
+                "result": "passed",
+                "statement": "The 128/32/512 scale-slope probe and prior seed-variance line establish the measured plateau.",
+                "evidence": [
+                  "outputs/checks/source_topk_scale_slope_closure.json"
+                ]
+              },
+              {
+                "kind": "independent_implementation",
+                "result": "passed",
+                "statement": "The implementation is case-authored from the paper model and contains no author code or arrays as numerical inputs.",
+                "evidence": [
+                  "config/implementation_closure.json",
+                  "src/implementation_closure.py"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Training, assignment, geometry, and target-output tests pass.",
+                "evidence": [
+                  "tests/test_implementation_closure.py",
+                  "tests/test_2604_matching_training_objective.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused invariants and independent decoder comparisons found no defect explaining the plateau.",
+              "evidence": [
+                "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json",
+                "tests/test_2604_atom_path_planner.py"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The decision is not based solely on an unrun large job; measured scaling and seed probes already failed the scientific gates.",
+              "evidence": [
+                "outputs/checks/source_topk_scale_slope_closure.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All four Fig. 3 movement-distance series were attempted; the current GNN training line did not reproduce the paper-facing claim.",
+            "items": [
+              "T001"
+            ],
+            "completion": "Every mapped item has executable code and a final evidence-based disposition."
+          },
+          "next_discriminating_test": {
+            "action": "A future stronger model or objective may start a new capability attempt, without relabelling this exhausted line as success.",
+            "expected_resolution": "A genuinely new method either clears the frozen paper gates or records another explicit failed attempt.",
+            "evidence_to_produce": [
+              "outputs/checks/t001_new_method_gate.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "components": {
         "feature_match": {
           "score": 35.0,
-          "reason": "The chain includes a reloadable reduced checkpoint plus A100-SXM4-80GB data generation and short training probes at the paper's 127x127 to 101x101 geometry.",
+          "reason": "The reduced chain includes stochastic loading, Hungarian labels, candidate graph construction, 6-pass GNN edge scoring, checkpoint output, reloadable model state, decoding, and distance metrics.",
           "max_score": 50.0
         },
         "numeric_closeness": {
           "score": 20.0,
-          "reason": "On 64 paper-geometry validation instances, the best probe reaches average/max distances 0.51798/1.94310 versus paper references 0.512/1.93; the strict gate is close but not passed.",
+          "reason": "The reduced retrained checkpoint produces small assignment-distance gaps on four eval instances, but it is not the 1024-instance paper benchmark.",
           "max_score": 35.0
         },
         "paper_scope_coverage": {
           "score": 8.0,
-          "reason": "Paper geometry is covered, but million-sample training, the 1024-instance final evaluation, and the author's GPU-parallel modified-auction decoder are not.",
+          "reason": "The run is small-scale and still uses probability-weighted Hungarian decoding rather than the modified auction decoder.",
           "max_score": 15.0
         }
       },
       "score_cap": 70.0,
-      "cap_reason": "A paper-geometry short probe with a CPU decoder cannot support a full-training or GPU-decoder Fig. 3 claim.",
+      "cap_reason": "Reduced-scale retraining with decoder substitution cannot support a paper-scale Fig. 3 claim.",
       "evidence": [
         "outputs/checks/retrained_gnn_model/model_state.pt",
         "outputs/checks/retrained_gnn_model/training_history.json",
         "outputs/checks/retrained_gnn_model/metrics.json",
-        "outputs/checks/a100_paper_geometry_campaign.json",
-        "outputs/checks/stage13_metric_contract_decision.json",
-        "outputs/data/fig3_a100_paper_geometry_summary.csv",
-        "outputs/figures/fig3_a100_paper_geometry_gap.png"
+        "outputs/figures/fig3_reduced_gnn_metrics.png"
       ],
       "critical": true,
       "formula_score_cap": 100.0,
@@ -65,37 +167,149 @@
           {
             "panel_id": "a",
             "status": "reproduced",
-            "note": "paper-geometry max-distance aggregate generated from the val64 A100 probe",
-            "evidence": "outputs/figures/fig3_a100_paper_geometry_gap.png"
+            "note": "max-distance distribution generated (scale via parameter axis)",
+            "evidence": "outputs/figures/fig3_reduced_gnn_metrics.png"
           },
           {
             "panel_id": "b",
             "status": "reproduced",
-            "note": "paper-geometry average-distance aggregate generated from the val64 A100 probe",
-            "evidence": "outputs/figures/fig3_a100_paper_geometry_gap.png"
+            "note": "average-distance distribution generated",
+            "evidence": "outputs/figures/fig3_reduced_gnn_metrics.png"
           }
         ],
         "panel_scope_cap": 15.0
       },
       "physics_status": "undeclared",
-      "physics_score_cap": 100.0
+      "physics_score_cap": 100.0,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "attempted_not_reproduced"
     },
     {
       "target_id": "T002",
-      "label": "Fig. 4 paper-scale P2WGS continuity benchmark",
+      "label": "Fig. 4 reduced P2WGS continuity benchmark",
       "weight": 1.0,
       "evaluation": {
         "critical": true,
         "paper_level_role": "main_claim",
+        "artifact_stage": "exploratory",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "partial_target_coverage",
+        "failure_type": "missing_parameters",
         "parameter_match": "paper_subset",
         "reference_comparison": "source_figure_only",
         "generated_data_provenance": "independent_numerics",
         "formula_dependencies": [],
-        "formula_gate": "not_applicable"
+        "formula_gate": "not_applicable",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "parameter_values_unavailable",
+            "statement": "The paper does not publish the exact frame trajectory and redundant-atom perturbation/normalization protocol needed to determine the Fig. 4 intensity-continuity series.",
+            "evidence": [
+              "METHOD_TRACE.md",
+              "outputs/checks/p2wgs_paper_scale.json"
+            ]
+          },
+          "root_cause": {
+            "category": "publication_underspecified",
+            "statement": "A paper-scale clean-room run reproduces phase continuity but leaves intensity flat within noise; the indispensable unpublished trajectory protocol prevents a unique paper-exact intensity reconstruction.",
+            "confidence": "confirmed",
+            "evidence": [
+              "outputs/checks/p2wgs_paper_scale.json",
+              "METHOD_TRACE.md",
+              "config/p2wgs_paper_scale.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "All iteration paths run, phase behavior is reproduced, and independent invariants find no indexing or normalization defect within the declared clean-room method.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "All phase and intensity paths execute in the isolated campaign.",
+                "evidence": [
+                  "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The method trace separates printed P2WGS equations from the unpublished frame/perturbation protocol.",
+                "evidence": [
+                  "METHOD_TRACE.md",
+                  "config/p2wgs_paper_scale.json"
+                ]
+              },
+              {
+                "kind": "parameter_audit",
+                "result": "passed",
+                "statement": "N=10201, T=101, and iteration counts are paper matched; only the indispensable trajectory details remain absent.",
+                "evidence": [
+                  "outputs/checks/p2wgs_paper_scale.json"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "Amplitude, continuity, iteration coverage, and output contracts pass.",
+                "evidence": [
+                  "tests/test_2604_p2wgs_potential.py",
+                  "tests/test_implementation_closure.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "Focused tests and phase agreement do not support an execution or indexing defect.",
+              "evidence": [
+                "tests/test_2604_p2wgs_potential.py",
+                "outputs/runs/2604.08669-implementation-closure-v1/run_attestation.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "The paper-scale geometry was actually evaluated for all four iteration counts; more of the same compute cannot supply an unpublished protocol.",
+              "evidence": [
+                "outputs/checks/p2wgs_paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "All eight Fig. 4 series ran; four phase series agree and four intensity series remain blocked by the unpublished scientific definition.",
+            "items": [
+              "T002"
+            ],
+            "completion": "Every mapped item has executable code and a final evidence-based disposition."
+          },
+          "next_discriminating_test": {
+            "action": "Obtain the authors' exact frame-trajectory and perturbation protocol, then rerun the frozen clean-room comparison.",
+            "expected_resolution": "The disclosed protocol either closes the intensity mismatch or exposes a paper discrepancy.",
+            "evidence_to_produce": [
+              "outputs/checks/t002_disclosed_protocol_comparison.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "components": {
         "feature_match": {
@@ -116,7 +330,10 @@
       },
       "evidence": [
         "outputs/checks/p2wgs_paper_scale.json",
-        "outputs/figures/fig4_paper_scale_p2wgs_summary.png"
+        "outputs/checks/p2wgs_paper_scale_iter3/metrics.json",
+        "outputs/checks/p2wgs_paper_scale_iter5/metrics.json",
+        "outputs/checks/p2wgs_paper_scale_iter8/metrics.json",
+        "outputs/checks/p2wgs_paper_scale_iter10/metrics.json"
       ],
       "critical": true,
       "formula_score_cap": 100.0,
@@ -166,7 +383,13 @@
           "evidence": "outputs/checks/p2wgs_paper_scale.json#gate_flags",
           "claim": "The paper's significant 3->5 intensity-continuity improvement; ours is flat within noise - recorded openly (trajectory-protocol difference suspected)."
         }
-      ]
+      ],
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     },
     {
       "target_id": "T003",
@@ -175,15 +398,113 @@
       "evaluation": {
         "critical": true,
         "paper_level_role": "supporting",
+        "artifact_stage": "exploratory",
         "artifact_pass": true,
         "data_backed": true,
         "manual_interventions": 0,
-        "failure_type": "insufficient_compute",
+        "failure_type": "missing_benchmark_metadata",
         "parameter_match": "proxy_model",
         "reference_comparison": "analytic_reference",
         "generated_data_provenance": "analytic_reference",
         "formula_dependencies": [],
-        "formula_gate": "not_applicable"
+        "formula_gate": "not_applicable",
+        "pixel_migration": {
+          "legacy_pixel_status": "missing",
+          "legacy_pixel_status_reason": "",
+          "schema_version": 1,
+          "policy_version": "scientific_region_v1",
+          "disposition": "pending_scientific_region_contract",
+          "reason_code": "no_safe_automatic_scientific_region"
+        },
+        "pixel_policy_version": "scientific_region_v1",
+        "pixel_status": "pending_render_contract",
+        "pixel_status_reason": "No score-independent scientific crop or intrinsically non-comparable declaration can be proven automatically; author a region contract or evidence-backed exception.",
+        "causal_diagnosis": {
+          "direct_cause": {
+            "category": "external_resource_unavailable",
+            "statement": "Fig. 5(a) reports wall-clock measurements on the paper's RTX 5090 hardware/software stack, which is not the available A100 or local M4 environment.",
+            "evidence": [
+              "config/timing_model_paper_scale.json",
+              "METHOD_TRACE.md",
+              "outputs/runs/2604.08669-timing-model-v1-20260825/run_attestation.json"
+            ]
+          },
+          "root_cause": {
+            "category": "external_dependency_unavailable",
+            "statement": "The analytic Fig. 5(b) timing model runs, but paper-exact Fig. 5(a) values require the authors' hardware-class benchmark environment; substituting A100 timings would change the claim.",
+            "confidence": "confirmed",
+            "evidence": [
+              "config/timing_model_paper_scale.json",
+              "outputs/checks/timing_model.json"
+            ]
+          },
+          "code_fault_assessment": {
+            "status": "not_found_after_checks",
+            "statement": "The timing formula and every declared Fig. 5(b) curve run in isolation; only hardware-specific empirical rows remain external.",
+            "checks": [
+              {
+                "kind": "execution_attestation",
+                "result": "passed",
+                "statement": "The no-render numerical timing lane completed with declared inputs and no forbidden reads.",
+                "evidence": [
+                  "outputs/runs/2604.08669-timing-model-v1-20260825/run_attestation.json"
+                ]
+              },
+              {
+                "kind": "source_trace",
+                "result": "passed",
+                "statement": "The contract explicitly separates analytic timing curves from RTX 5090 measurements.",
+                "evidence": [
+                  "config/timing_model_paper_scale.json",
+                  "METHOD_TRACE.md"
+                ]
+              },
+              {
+                "kind": "unit_test",
+                "result": "passed",
+                "statement": "The pipeline timing formula and final-resolution evidence pass focused tests.",
+                "evidence": [
+                  "tests/test_2604_p2wgs_potential.py",
+                  "tests/test_final_resolution.py"
+                ]
+              }
+            ]
+          },
+          "alternative_hypotheses": [
+            {
+              "category": "reproduction_code_defect",
+              "status": "ruled_out",
+              "statement": "The analytic timing output is deterministic, formula checked, and isolated-run attested.",
+              "evidence": [
+                "outputs/runs/2604.08669-timing-model-v1-20260825/run_attestation.json",
+                "outputs/checks/timing_model.json"
+              ]
+            },
+            {
+              "category": "compute_capacity_shortfall",
+              "status": "ruled_out",
+              "statement": "This is a hardware identity dependency, not merely insufficient FLOPs; A100 runtime is not paper-exact RTX 5090 evidence.",
+              "evidence": [
+                "config/timing_model_paper_scale.json"
+              ]
+            }
+          ],
+          "affected_scope": {
+            "summary": "The analytic timing curves are executable; the four paper-specific hardware timing series remain externally blocked.",
+            "items": [
+              "T003"
+            ],
+            "completion": "Every mapped item has executable code and a final evidence-based disposition."
+          },
+          "next_discriminating_test": {
+            "action": "Run the frozen benchmark on a matching RTX 5090 software/hardware environment.",
+            "expected_resolution": "Measured wall-clock rows can then be compared without changing the benchmark subject.",
+            "evidence_to_produce": [
+              "outputs/checks/t003_rtx5090_benchmark.json"
+            ]
+          }
+        },
+        "assessment_subject": "paper"
       },
       "components": {
         "feature_match": {
@@ -232,7 +553,13 @@
         "panel_scope_cap": 15.0
       },
       "physics_status": "undeclared",
-      "physics_score_cap": 100.0
+      "physics_score_cap": 100.0,
+      "final_reproduction_eligible": false,
+      "final_reproduction_gate": "exploratory_only",
+      "score_aggregation": "included",
+      "causal_diagnosis_required": true,
+      "causal_diagnosis_status": "complete",
+      "causal_diagnosis_disposition": "terminal_blocker"
     }
   ],
   "overall_score": 61.6,
@@ -245,8 +572,9 @@
     "manual_interventions_total": 0,
     "manual_interventions_per_item": 0.0,
     "failure_type_counts": {
-      "insufficient_compute": 2,
-      "partial_target_coverage": 1
+      "capability_limit": 1,
+      "missing_parameters": 1,
+      "missing_benchmark_metadata": 1
     },
     "parameter_match_counts": {
       "reduced_scale": 1,
@@ -279,7 +607,56 @@
       "passed": 1,
       "failed": 1
     },
-    "essential_physics_failures": []
+    "essential_physics_failures": [],
+    "final_reproduction_ready": false,
+    "final_reproduction_target_ids": [],
+    "final_reproduction_blocked_target_ids": [],
+    "final_reproduction_block_reasons": {},
+    "exploratory_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "aggregate_included_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "aggregate_excluded_target_ids": [],
+    "causal_diagnosis_status_counts": {
+      "complete": 3
+    },
+    "causal_diagnosis_disposition_counts": {
+      "attempted_not_reproduced": 1,
+      "terminal_blocker": 2
+    },
+    "causal_diagnosis_required_target_ids": [
+      "T001",
+      "T002",
+      "T003"
+    ],
+    "causal_diagnosis_incomplete_target_ids": [],
+    "causal_diagnosis_terminal_blocker_target_ids": [
+      "T002",
+      "T003"
+    ],
+    "causal_diagnosis_attempted_not_reproduced_target_ids": [
+      "T001"
+    ],
+    "causal_diagnosis_react_loop_target_ids": [],
+    "direct_cause_counts": {
+      "scientific_result_mismatch": 1,
+      "parameter_values_unavailable": 1,
+      "external_resource_unavailable": 1
+    },
+    "root_cause_counts": {
+      "system_capability_limit": 1,
+      "publication_underspecified": 1,
+      "external_dependency_unavailable": 1
+    },
+    "code_fault_status_counts": {
+      "not_found_after_checks": 3
+    }
   },
   "status": "passed",
   "score_model": "rra_similarity_v1"

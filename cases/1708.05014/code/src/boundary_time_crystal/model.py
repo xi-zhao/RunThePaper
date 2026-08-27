@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
-from math import comb
+from math import comb, sqrt
 
 import numpy as np
 from scipy.integrate import solve_ivp
@@ -83,7 +83,7 @@ def spin_x_coherent_density(number_spins: int) -> np.ndarray:
     """Density matrix for all spins polarized along +x in the symmetric basis."""
 
     amplitudes = np.asarray(
-        [np.sqrt(comb(number_spins, index)) for index in range(number_spins + 1)],
+        [sqrt(comb(number_spins, index)) for index in range(number_spins + 1)],
         dtype=np.complex128,
     )
     amplitudes /= 2.0 ** (number_spins / 2.0)

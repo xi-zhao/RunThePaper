@@ -6,7 +6,7 @@ Published as: [Quantum Discord and the Power of One Qubit](https://doi.org/10.11
 
 Formal citation: Phys. Rev. Lett. 100, 050502 (2008) · DOI `10.1103/PhysRevLett.100.050502` · Locator `050502`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **82.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **78.85/100**
 
 Whole-paper scientific numerics implemented independently; fresh review pending.
 
@@ -45,13 +45,13 @@ cd cases/0709.0548/code
 python scripts/run_reproduction.py --config config/paper_scale.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
 This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and 1 limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, numerical_scope=incomplete, parameters=mixed, causal_resolution=repair_required, science=pending, pixel=needs_repair, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=pending, execution=failed, pixel=needs_repair, independent_review=stale, review_scope=stale, paper_assessment=mixed.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

@@ -2,7 +2,7 @@
 
 ## Result
 
-All 31 numerical axes are independently generated and physically checked at L<=96; paper-scale finite-size and trajectory statistics remain outstanding.
+All 31 displayed numerical axes have attested reduced-scale feature evidence; four no-display analytic claims are independently checked. The atomic denominator resolves to 120 reproduced and one publication-underspecified external blocker, while paper-scale lifecycle evidence remains outstanding.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, science=failed, execution=attested, pixel=not_applicable, independent_review=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=repair_required, science=pending, execution=attested, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`.
 
 ## Run
 

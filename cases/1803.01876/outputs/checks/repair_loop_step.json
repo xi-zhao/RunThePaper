@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "paper_id": "1803.01876",
+  "case_path": "case/1803.01876",
+  "status": "passed",
+  "mode": "execute",
+  "handler": "refresh-evidence",
+  "selected_work_item": {
+    "work_item_id": "WORK_FRONTIER_AUTHOR_DATA_001",
+    "source": "frontier",
+    "source_ref": "FRONTIER_AUTHOR_DATA_001",
+    "target_ids": [
+      "T001",
+      "T002",
+      "T003",
+      "T004",
+      "T005"
+    ],
+    "failure_or_frontier_class": "author_data_missing",
+    "priority": "medium",
+    "hypothesis": "The case is complete under current target repairs, but it cannot support author-data or 100% reproduction claims without released author data, official plotting data, or an equivalent exact reference.",
+    "proposed_actions": [
+      "Search for released author data, official plotting data, or equivalent exact references.",
+      "If unavailable, keep the author-data boundary explicit in reports and product claims."
+    ],
+    "allowed_file_scopes": [
+      "references/",
+      "REPRODUCTION_REPORT.md",
+      "CONSISTENCY_REPORT.md"
+    ],
+    "evidence_to_refresh": [
+      "repair_plan.json",
+      "harness_case_audit.json"
+    ],
+    "stop_conditions": [
+      "author_data_or_official_plotting_data_recorded",
+      "evidence_boundary_recorded_if_unavailable"
+    ],
+    "one_repair_per_iteration": false,
+    "target_id": null,
+    "metric": {
+      "name": "author_data_availability",
+      "observed": "missing",
+      "threshold": "available_or_boundary_recorded",
+      "direction": "resolved_by_evidence_or_boundary"
+    },
+    "hypothesis_template": "The case is complete under current target repairs, but it cannot support author-data or 100% reproduction claims without released author data, official plotting data, or an equivalent exact reference.",
+    "forbidden_changes": [
+      "Do not change numerical outputs or rendered figures while resolving author-data availability.",
+      "Do not relabel digitized source references as author data or official plotting data.",
+      "Do not claim author-data reproduction without a real released author-data or official plotting artifact."
+    ],
+    "acceptance_conditions": [
+      "author_data_or_official_plotting_data_recorded",
+      "evidence_boundary_recorded_if_unavailable"
+    ]
+  },
+  "planned_actions": [
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "repair_plan.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/plan_repairs.py case/1803.01876 --write",
+      "status": "planned"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "harness_case_audit.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/audit_case.py case/1803.01876 --write",
+      "status": "planned"
+    }
+  ],
+  "executed_actions": [
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "repair_plan.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/plan_repairs.py case/1803.01876 --write",
+      "status": "passed",
+      "output_path": "outputs/checks/repair_plan.json"
+    },
+    {
+      "action_type": "refresh_evidence",
+      "evidence_name": "harness_case_audit.json",
+      "command": "PYTHONPATH=PRAgent-workflow python PRAgent-workflow/scripts/audit_case.py case/1803.01876 --write",
+      "status": "passed",
+      "output_path": "outputs/checks/harness_case_audit.json"
+    }
+  ],
+  "findings": [],
+  "allowed_file_scopes": [
+    "references/",
+    "REPRODUCTION_REPORT.md",
+    "CONSISTENCY_REPORT.md"
+  ],
+  "forbidden_changes": [
+    "Do not change numerical outputs or rendered figures while resolving author-data availability.",
+    "Do not relabel digitized source references as author data or official plotting data.",
+    "Do not claim author-data reproduction without a real released author-data or official plotting artifact."
+  ],
+  "acceptance_conditions": [
+    "author_data_or_official_plotting_data_recorded",
+    "evidence_boundary_recorded_if_unavailable"
+  ],
+  "session_id": "20260623T032907233835Z",
+  "session_artifact_path": "outputs/kernel/sessions/20260623T032907233835Z/repair_loop_step.json"
+}

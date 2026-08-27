@@ -20,8 +20,8 @@ object is a method rather than a formula.
   4. integrate the mismatch and fit the leading \(q^2\) error.
 - Parameters: topological \(M=-0.5\); trivial negative control \(M=-3\);
   multiple \(N\) and \(q\) values.
-- Code pointer: `code/src/chern_jump_geometry.py` and
-  `code/scripts/run_validation.py`.
+- Code pointer: `src/chern_jump_geometry.py` and
+  `scripts/run_validation.py`.
 - Checks: topological integer, Chern bound, zero constant-texture response,
   finite-\(q\) convergence, and trivial control.
 - Status: equations verified; numerical protocol reconstructed because the
@@ -40,7 +40,7 @@ object is a method rather than a formula.
   diagnostic snapshots.
 - Parameters:
   \((M,\gamma,\lambda_D,\lambda_T)=(-0.5,1.5,1.25,0.025)\).
-- Code pointer: `code/src/chern_jump_geometry.py:integrate_llg`.
+- Code pointer: `src/chern_jump_geometry.py:integrate_llg`.
 - Checks: norm preservation, energy monotonicity within tolerance, Chern-sector
   preservation, and estimator correlation.
 - Status: specification ready.
@@ -66,8 +66,8 @@ object is a method rather than a formula.
   5. calibrate before spectral integration and sweep window, temperature, and
      coupling;
   6. compare Chern and constant-projector negative controls.
-- Code pointer: `code/src/detector_sum_rule.py` and
-  `code/scripts/run_detector_validation.py`.
+- Code pointer: `src/detector_sum_rule.py` and
+  `scripts/run_detector_validation.py`.
 - Checks: nine preregistered detector-level checks in
   `outputs/checks/detector_sum_rule_validation.json`.
 - Status: verified; outcome is `pivot`.
@@ -108,8 +108,8 @@ object is a method rather than a formula.
   trace-condition deviation up to derivative tolerance, and agreement of
   \(\lambda_D\) with the supplement.
 - Code pointers:
-  `code/src/chern_jump_geometry.py:integrate_extended_hubbard_comparison`
-  and `code/scripts/run_paper_target.py`.
+  `src/chern_jump_geometry.py:integrate_extended_hubbard_comparison`
+  and `scripts/run_paper_target.py`.
 - Status: source equations verified and numerical protocol reconstructed. The
   reproduced \(N=141\), half-cell-shifted
   trajectory gives \(E_D(4.32)=3.1452\), \(C_{\rm num}(4.32)=0.9965\),

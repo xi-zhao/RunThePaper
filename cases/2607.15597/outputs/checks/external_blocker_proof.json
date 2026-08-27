@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.15597",
+  "audit_kind": "source_trace",
+  "result": "passed",
+  "audited_publication_inputs": [
+    {
+      "path": "raw/paper.pdf",
+      "sha256": "e5ce1428852a215050f2e8ae731cdef88c56039464462aaea6d9c8d54d39cf52"
+    },
+    {
+      "path": "paper-source.tar.gz",
+      "sha256": "df80608ea6ffd1acca028c399fe05a3acc931788a7d3339a98bcd1f1eab6896f"
+    },
+    {
+      "path": "paper-source/main.tex",
+      "sha256": "55200250dcccbb1bee58f9fe96faa46b83a31a3a8979c03431d6395533733d30"
+    }
+  ],
+  "author_artifact_boundary": {
+    "source_pixels_used_as_numeric_input": false,
+    "author_numerical_arrays_used": false,
+    "author_source_code_used": false,
+    "allowed_inputs": "Printed prose, equations, tables, captions, and independently implemented scientific models only."
+  },
+  "conclusion": "Publication underspecification is accepted only for T010, T016, and T017. Targets T018/T020-T024/T027/T028 are reported as attempted capability failures, not external blockers.",
+  "target_findings": [
+    {
+      "target_id": "T016",
+      "affected_items": [
+        "TS03-GATE-ERROR-BUDGET"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "Only the decay row is derivable from printed inputs; seven aggregate error-budget rows lack their apparatus spectra, stochastic models, transition data, or simulation contracts.",
+      "root_cause": "The complete Table S3 total depends on experiment-specific estimates whose defining row-level input records are absent from the complete publication package.",
+      "resolution_input": "Citable row-level apparatus and model records for every non-derivable Table S3 contribution."
+    },
+    {
+      "target_id": "T017",
+      "affected_items": [
+        "TS04-MULTIION-TOGGLE-SCALING"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "For N=10, Table S4 prints 17 segments while Sec. S5 and Fig. S1 require 2N+5=25; the independent solver gives residual 0.298 for 17 and 1.06e-14 for 25.",
+      "root_cause": "The publication defines two incompatible schedules for the same Table S4 row and supplies no hidden timing contract that could make the 17-segment value unique.",
+      "resolution_input": "An erratum or author-supplied scientific definition identifying the intended Table S4 schedule for every ion count."
+    },
+    {
+      "target_id": "T031",
+      "affected_items": [
+        "TS11-FOWLER-PROJECTION"
+      ],
+      "proof_result": "passed",
+      "direct_cause": "Direct substitution of the displayed Fowler formula, A_BB, thresholds, physical rates, and distances differs from Table S11 by factors of about 2-8; no single printed calibration convention defines the table values.",
+      "root_cause": "The frozen PDF and source archive omit the empirical calibration or alternate convention needed to reconcile Table S11 with the displayed formula, so the table cannot be computed without inventing a rule.",
+      "resolution_input": "Author clarification or an erratum specifying the Table S11 calibration and rounding convention."
+    }
+  ]
+}

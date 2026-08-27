@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "profile": "paper_scale",
+  "run_id": "2412.14271-quantum-main-paper-scale-v1",
+  "parameters": {
+    "physical": {
+      "omega_c": 1.0,
+      "omega_a": 1.0,
+      "kappa1": 0.4,
+      "kappa2": 0.2
+    },
+    "trajectory_count": 3000,
+    "snapshot_counts": [
+      500,
+      3000
+    ],
+    "wigner_axis": [
+      -16.0,
+      16.0,
+      161
+    ],
+    "solver_options": {
+      "progress_bar": "",
+      "method": "vern9",
+      "nsteps": 20000,
+      "atol": 1e-07,
+      "rtol": 1e-06,
+      "norm_steps": 100,
+      "norm_tol": 0.05,
+      "norm_t_tol": 0.0001
+    },
+    "jobs": [
+      {
+        "label": "N15_l062",
+        "N": 15,
+        "M": 100,
+        "lambda": 0.62,
+        "final_time": 40.0,
+        "seed_base": 241214271,
+        "wigner": true
+      },
+      {
+        "label": "N15_l068",
+        "N": 15,
+        "M": 130,
+        "lambda": 0.68,
+        "final_time": 35.0,
+        "seed_base": 241224271,
+        "wigner": false
+      },
+      {
+        "label": "N15_l070",
+        "N": 15,
+        "M": 150,
+        "lambda": 0.7,
+        "final_time": 35.0,
+        "seed_base": 241234271,
+        "wigner": false
+      },
+      {
+        "label": "N15_l079",
+        "N": 15,
+        "M": 180,
+        "lambda": 0.79,
+        "final_time": 40.0,
+        "seed_base": 241244271,
+        "wigner": true
+      },
+      {
+        "label": "N15_l090",
+        "N": 15,
+        "M": 210,
+        "lambda": 0.9,
+        "final_time": 35.0,
+        "seed_base": 241254271,
+        "wigner": false
+      },
+      {
+        "label": "N15_l110",
+        "N": 15,
+        "M": 240,
+        "lambda": 1.1,
+        "final_time": 40.0,
+        "seed_base": 241264271,
+        "wigner": true
+      }
+    ]
+  },
+  "smoke_parameters": {
+    "physical": {
+      "omega_c": 1.0,
+      "omega_a": 1.0,
+      "kappa1": 0.4,
+      "kappa2": 0.2
+    },
+    "trajectory_count": 2,
+    "snapshot_counts": [
+      1,
+      2
+    ],
+    "wigner_axis": [
+      -4.0,
+      4.0,
+      21
+    ],
+    "solver_options": {
+      "progress_bar": "",
+      "method": "vern9",
+      "nsteps": 2000,
+      "atol": 1e-07,
+      "rtol": 1e-06,
+      "norm_steps": 100,
+      "norm_tol": 0.05,
+      "norm_t_tol": 0.0001
+    },
+    "jobs": [
+      {
+        "label": "smoke_N2_l062",
+        "N": 2,
+        "M": 12,
+        "lambda": 0.62,
+        "final_time": 0.05,
+        "seed_base": 241299001,
+        "wigner": true
+      }
+    ]
+  },
+  "execution": {
+    "default_shard_count": 60,
+    "smoke_shard_count": 2,
+    "checkpoint_every": 5,
+    "output_root": "outputs",
+    "smoke_output_root": "outputs",
+    "resume_semantics": "Each shard checkpoint is atomically replaced and bound to effective-config and implementation digests.",
+    "merge_semantics": "Aggregation fails closed unless trajectory indices 0 through 2999 occur exactly once for every job.",
+    "parallelism": "Run one job/shard pair per scheduler task; aggregate only after all 360 paper-scale work units finish."
+  },
+  "acceptance": {
+    "maximum_trace_error": 1e-10,
+    "maximum_hermiticity_error": 1e-10,
+    "density_eigenvalue_tolerance": 1e-10,
+    "maximum_cutoff_tail": 1e-06,
+    "maximum_wigner_integral_error": 0.001,
+    "required_snapshot_counts": [
+      500,
+      3000
+    ],
+    "required_initial_state_policy": "independent random draw for every trajectory"
+  },
+  "smoke_acceptance": {
+    "maximum_trace_error": 1e-10,
+    "maximum_hermiticity_error": 1e-10,
+    "density_eigenvalue_tolerance": 1e-10,
+    "maximum_cutoff_tail": 1.0,
+    "maximum_wigner_integral_error": 1.0,
+    "required_snapshot_counts": [
+      1,
+      2
+    ],
+    "required_initial_state_policy": "independent random draw for every trajectory"
+  },
+  "input_boundary": {
+    "allowed": [
+      "printed Hamiltonian and Lindblad equations",
+      "paper-text and caption parameters",
+      "independently declared deterministic seeds"
+    ],
+    "forbidden": [
+      "author code",
+      "author numerical arrays",
+      "digitized source curves",
+      "source-figure pixels",
+      "PDF pixels"
+    ],
+    "numeric_runner_reads_reference_assets": false
+  }
+}

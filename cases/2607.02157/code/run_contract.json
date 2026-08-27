@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.02157-implementation-probe-v2-20260827",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_probe.py",
+    "--config",
+    "config/implementation_probe.json"
+  ],
+  "inputs": [
+    "config/implementation_probe.json",
+    "scripts/run_implementation_probe.py",
+    "scripts/run_scan.py",
+    "scripts/run_nmse.py",
+    "scripts/run_figS1.py",
+    "scripts/mackey_glass.py",
+    "scripts/qrc_engine.py"
+  ],
+  "parameter_file": "config/implementation_probe.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "implementation_probe",
+    "capacity": {
+      "n_wash": 4,
+      "n_eval": 8,
+      "n_seq": 2,
+      "jobs": [
+        {
+          "model": "cluster",
+          "parameter": 0.5,
+          "realization": 0,
+          "seed": 11
+        },
+        {
+          "model": "tfim",
+          "parameter": 1.0,
+          "realization": 0,
+          "seed": 12
+        }
+      ]
+    },
+    "nmse": {
+      "n_wash": 4,
+      "n_train": 10,
+      "n_test": 8,
+      "n_seq": 1,
+      "jobs": [
+        {
+          "model": "cluster",
+          "parameter": 0.5,
+          "realization": 0,
+          "seed": 21
+        },
+        {
+          "model": "tfim",
+          "parameter": 1.0,
+          "realization": 0,
+          "seed": 22
+        }
+      ]
+    },
+    "spectral": {
+      "n_seq": 8,
+      "n_samples": 80,
+      "omega_points": 9,
+      "tfim_realizations": 2,
+      "j_points": 3,
+      "alpha_points": 9,
+      "seed": 42
+    },
+    "identity_tolerance": 1e-09
+  },
+  "outputs": [
+    "outputs/checks/implementation_probe/implementation_probe_summary.json",
+    "outputs/data/implementation_probe/capacity_smoke.csv",
+    "outputs/data/implementation_probe/nmse_smoke.csv",
+    "outputs/data/implementation_probe/spectral_smoke.csv"
+  ],
+  "timeout_seconds": 600,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

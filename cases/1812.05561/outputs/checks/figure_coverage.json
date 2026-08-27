@@ -1,0 +1,1495 @@
+{
+  "schema_version": 1,
+  "paper_id": "1812.05561",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (17 pages; six-page main paper and eleven-page embedded Supplemental Material)",
+    "unknown_remainder": false,
+    "reason": "The full PDF was audited through Supplement Fig. S6 and the final references; it contains no tables or external supplement remainder."
+  },
+  "implementations": {
+    "paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_scale.json",
+        "--targets",
+        "T001,T002,T003,T004,T005,T006,T007,T008,T009",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/scar_reproduction.py",
+        "src/mps_dmrg.py",
+        "src/paper_scale.py",
+        "scripts/run_reproduction.py",
+        "src/atomic_closure.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/paper_scale/data/T001_main_figure_1.npz",
+        "outputs/paper_scale/data/T002_main_figure_2.npz",
+        "outputs/paper_scale/data/T003_main_figure_3.npz",
+        "outputs/paper_scale/data/T004_supp_figure_s1.npz",
+        "outputs/paper_scale/data/T005_supp_figure_s2.npz",
+        "outputs/paper_scale/data/T006_supp_figure_s3.npz",
+        "outputs/paper_scale/data/T007_supp_figure_s4.npz",
+        "outputs/paper_scale/data/T008_supp_figure_s5.npz",
+        "outputs/paper_scale/data/T009_supp_figure_s6.npz",
+        "outputs/paper_scale/checks/target_checks.json",
+        "outputs/paper_scale/checks/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "Every target runs at the paper-declared size, time horizon, sector and boundary condition recorded in config/paper_scale.json; T005's inferred N=20,R=10 and T009's missing author seed remain explicitly qualified.",
+        "All target-specific convergence and physics assertions in config/paper_scale.json pass, including N=60 DMRG convergence, N=30/32 full-sector eigensystems, m=1000 local revival maxima and N=14 toy-model ensemble invariants.",
+        "All 59 work units complete with config-matched checkpoints and the final unsharded --resume merge writes the nine aggregate arrays and paper-scale checks.",
+        "Any stable numerical difference follows the ordered four-way attribution protocol and is never assigned to the paper/source by default.",
+        "The generated-data manifest records no use of author code, author arrays, digitized curves, source pixels or PDF pixels as numerical inputs."
+      ],
+      "acceptance_ref": "config/paper_scale.json",
+      "compute_status": "not_run_requires_high_memory_cpu_campaign"
+    },
+    "analytic_closure": {
+      "status": "ready",
+      "target_ids": [
+        "T010"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/reduced_scale.json"
+      ],
+      "code_refs": [
+        "src/atomic_closure.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/reduced_scale.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/checks/T010_perfect_revival_lemma.json"
+      ],
+      "acceptance_criteria": [
+        "Phase-lattice, bandwidth-count and normalization assertions all pass."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1a_h0_fidelity",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(a), main axes, PDF p. 2",
+      "scientific_object": "Unperturbed PXP fidelity g(t)",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1a_optimized_fidelity",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(a), main axes, PDF p. 2",
+      "scientific_object": "Optimally deformed fidelity g(t)",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1a_h0_log_infidelity_inset",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(a), log-infidelity inset, black H0 series, PDF p. 2",
+      "scientific_object": "High-resolution unperturbed infidelity 1-g_H0(t) near the first revival",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "The repaired runner freezes both inset branches and the reduced isolated check passes; the printed N=32 branch remains pending the declared paper-scale campaign.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_H0_LOG_INFIDELITY_INSET"
+      ]
+    },
+    {
+      "item_id": "main_fig1a_optimized_log_infidelity_inset",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(a), log-infidelity inset, green optimized series, PDF p. 2",
+      "scientific_object": "High-resolution optimized infidelity 1-g_opt(t) near the first revival",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1b_h0_entropy",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(b), main axes, PDF p. 2",
+      "scientific_object": "Unperturbed half-chain entanglement entropy",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1b_optimized_entropy",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(b), main axes, PDF p. 2",
+      "scientific_object": "Optimally deformed half-chain entanglement entropy",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1b_schmidt_family",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(b), entanglement-spectrum inset, PDF p. 2",
+      "scientific_object": "Optimized half-chain Schmidt-probability family p_mu(t)",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_ansatz_couplings",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Analytic ansatz coupling strengths h_d",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_optimized_couplings",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Numerically optimized coupling strengths h_d",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_asymptotic_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Asymptotic decay reference proportional to phi^(-2d)",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_spectral_overlap_cloud",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Neel-state spectral-weight cloud and highlighted scar band",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_spacing_distribution_k0_even",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), k=0, inversion-even P(s) series, PDF p. 3",
+      "scientific_object": "Unfolded level-spacing distribution in the k=0, inversion-even sector",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The repaired runner freezes one histogram per symmetry sector and the reduced isolated check passes; the printed N=32 sector curves remain pending the declared paper-scale campaign.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SECTOR_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_spacing_distribution_kpi_odd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), k=pi, inversion-odd P(s) series, PDF p. 3",
+      "scientific_object": "Unfolded level-spacing distribution in the k=pi, inversion-odd sector",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "reason": "The repaired runner freezes one histogram per symmetry sector and the reduced isolated check passes; the printed N=32 sector curves remain pending the declared paper-scale campaign.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SECTOR_LEVEL_STATISTICS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_poisson_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), main axes, PDF p. 3",
+      "scientific_object": "Poisson level-spacing reference distribution",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_wigner_dyson_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), main axes, PDF p. 3",
+      "scientific_object": "GOE Wigner-Dyson level-spacing reference distribution",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rflow_k0_even",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), adjacent-gap-ratio inset, PDF p. 3",
+      "scientific_object": "Adjacent-gap-ratio flow for k=0, inversion-even",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rflow_kpi_odd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), adjacent-gap-ratio inset, PDF p. 3",
+      "scientific_object": "Adjacent-gap-ratio flow for k=pi, inversion-odd",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rflow_poisson_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), adjacent-gap-ratio inset, PDF p. 3",
+      "scientific_object": "Poisson adjacent-gap-ratio reference",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rflow_wigner_dyson_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), adjacent-gap-ratio inset, PDF p. 3",
+      "scientific_object": "GOE adjacent-gap-ratio reference",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "main_fig3_fsa_raising",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), data, PDF p. 4",
+      "scientific_object": "FSA raising-operator matrix elements",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "main_fig3_su2_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), solid reference, PDF p. 4",
+      "scientific_object": "Spin-N/2 SU(2) square-root law",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "main_fig3_hz_expectation",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), optimized data, PDF p. 4",
+      "scientific_object": "FSA-basis H-z expectation values",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "main_fig3_hz_linear_reference",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), fit, PDF p. 4",
+      "scientific_object": "Harmonic H-z spacing reference",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "main_fig3_hz_spacing_residual",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), inset, PDF p. 4",
+      "scientific_object": "Spacing residuals with H-z variance error bars",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "main_claim",
+      "critical": true,
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_optimized_revival",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 11",
+      "scientific_object": "Couplings optimized for first-revival fidelity",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_optimized_fsa",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 11",
+      "scientific_object": "Couplings optimized for first nontrivial FSA error",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_optimized_trvar",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 11",
+      "scientific_object": "Couplings optimized for subspace variance",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_optimized_rvals",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 11",
+      "scientific_object": "Couplings optimized for Ritz-value anharmonicity",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_ansatz",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 11",
+      "scientific_object": "Analytic coupling ansatz",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_cross_costs_fid",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), fid solution family, PDF p. 11",
+      "scientific_object": "Cross-evaluated cost family for the fid-optimized couplings",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_cross_costs_fsa",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), fsa solution family, PDF p. 11",
+      "scientific_object": "Cross-evaluated cost family for the fsa-optimized couplings",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_cross_costs_trvar",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), trvar solution family, PDF p. 11",
+      "scientific_object": "Cross-evaluated cost family for the trvar-optimized couplings",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_cross_costs_rvals",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), rvals solution family, PDF p. 11",
+      "scientific_object": "Cross-evaluated cost family for the rvals-optimized couplings",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs2_ground_schmidt_tail",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(a), PDF p. 13",
+      "scientific_object": "Ground-state weight outside the two dominant Schmidt values",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs2_first_excited_schmidt_tail",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(a), PDF p. 13",
+      "scientific_object": "First-excited-state weight outside the four dominant Schmidt values",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs2_special_gap_error",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(b), PDF p. 13",
+      "scientific_object": "Error of the first-special-state gap relative to the SU(2) prediction",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SU2"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n22",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=22, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=22",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n22",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=22, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=22",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n22",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=22, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=22",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=22 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n22",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=22, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=22",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=22, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n24",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=24, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=24",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n24",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=24, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=24",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n24",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=24, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=24",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=24 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n24",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=24, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=24",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=24, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n26",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=26, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=26",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n26",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=26, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=26",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n26",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=26, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=26",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=26 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n26",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=26, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=26",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=26, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n28",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=28, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=28",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n28",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=28, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=28",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n28",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=28, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=28",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=28 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n28",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=28, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=28",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=28, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n30",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=30, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=30",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n30",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=30, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=30",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n30",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=30, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=30",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=30 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n30",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=30, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=30",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=30, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_normalized_infidelity_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), N=32, PDF p. 14",
+      "scientific_object": "Per-site normalized revival infidelity family represented by N=32",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_gamma_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=32, PDF p. 14",
+      "scientific_object": "Average local thermalization rate Gamma(m) family represented by N=32",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_short_fit_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=32, 5<=m<=60 fit, PDF p. 14",
+      "scientific_object": "Frozen short-window log-log fit used to extract m_c for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "reason": "The repaired reduced and paper-scale schemas freeze coefficients, grids and curves; the printed N=32 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SHORT_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_long_fit_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), N=32, 200<=m<=1000 fit, PDF p. 14",
+      "scientific_object": "Frozen long-window log-log fit used to extract m_c for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "reason": "The repaired schemas freeze the long-window evidence, but the reduced run stops at m=80; the printed N=32, m=200..1000 branch remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_LONG_WINDOW_REVIVAL_FITS"
+      ]
+    },
+    {
+      "item_id": "supp_figs3c_turning_points",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(c), simulation points, PDF p. 14",
+      "scientific_object": "Turning-point m_c versus system size",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL"
+      ]
+    },
+    {
+      "item_id": "supp_figs3c_power_law_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(c), dotted power-law fit, PDF p. 14",
+      "scientific_object": "Power-law fit m_c proportional to N^1.302",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "reason": "The scientific runner now freezes the exponent, curve and residual before rendering; the printed N=22..32 power law remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_REVIVAL_SCALE_POWER_LAW"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_overlap_pxp",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, top row, unperturbed PXP panel, PDF p. 15",
+      "scientific_object": "unperturbed PXP eigenstate overlap cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_overlap_h2",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, top row, range-4 h2=0.02 panel, PDF p. 15",
+      "scientific_object": "range-4 h2=0.02 eigenstate overlap cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_overlap_ansatz",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, top row, long-range ansatz panel, PDF p. 15",
+      "scientific_object": "long-range ansatz eigenstate overlap cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_entropy_pxp",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, bottom row, unperturbed PXP panel, PDF p. 15",
+      "scientific_object": "unperturbed PXP eigenstate entropy cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_entropy_h2",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, bottom row, range-4 h2=0.02 panel, PDF p. 15",
+      "scientific_object": "range-4 h2=0.02 eigenstate entropy cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_entropy_ansatz",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, bottom row, long-range ansatz panel, PDF p. 15",
+      "scientific_object": "long-range ansatz eigenstate entropy cloud",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs5_first_scar_entropy",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5, data points, PDF p. 16",
+      "scientific_object": "First central scar-state entropy data",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs5_second_scar_entropy",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5, data points, PDF p. 16",
+      "scientific_object": "Second central scar-state entropy data",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs5_second_scar_linear_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5, red dashed linear fit to second series, PDF p. 16",
+      "scientific_object": "Linear-in-N fit to the second central scar-state entropy series",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "reason": "The scientific runner now freezes both linear and logarithmic fits to the second-scar series; the printed paper-size fit remains pending paper-scale execution.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SECOND_SCAR_ENTROPY_FIT"
+      ]
+    },
+    {
+      "item_id": "supp_figs5_second_scar_log_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5, blue dotted logarithmic fit to second series, PDF p. 16",
+      "scientific_object": "Logarithmic-in-N fit to the second central scar-state entropy series",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_SCARS"
+      ]
+    },
+    {
+      "item_id": "supp_figs6a_toy_model",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S6(a), PDF p. 17",
+      "scientific_object": "Toy-model polarized-state spectral overlaps",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_TOY"
+      ]
+    },
+    {
+      "item_id": "supp_figs6b_toy_model",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S6(b), PDF p. 17",
+      "scientific_object": "Toy-model perfect-period Loschmidt echo",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_TOY"
+      ]
+    },
+    {
+      "item_id": "supp_figs6c_toy_model",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S6(c), PDF p. 17",
+      "scientific_object": "Toy-model eigenstate entanglement-entropy cloud",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Existing independently generated reduced-scale arrays contain this observable. Reduced size or horizon limits fidelity, not binary item coverage.",
+      "paper_level_role": "supporting",
+      "implementation_ref": "paper_scale",
+      "claim_refs": [
+        "CLM_TOY"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_perfect_revival_overlap_bound",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main-text Lemma, PDF p. 3, and Supplement Sec. S7 proof, PDF p. 16",
+      "scientific_object": "For an extensive Hamiltonian, a size-independent perfect revival occupies at most O(N) distinct energies, so at least one squared eigenstate overlap is bounded below by order 1/N",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "implementation_ref": "analytic_closure",
+      "reason": "The paper proof is independently rederived in EQ010 and checked by the T010 analytic closure artifact.",
+      "claim_refs": [
+        "CLM_PERFECT_REVIVAL_OVERLAP_BOUND"
+      ]
+    }
+  ]
+}

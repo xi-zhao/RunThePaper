@@ -1,31 +1,40 @@
 # Formula Verification
 
-Machine-readable gate: `outputs/checks/formula_verification.json`.
-
 ## Gate Summary
 
-| Formula | Role | Gate | Independent reason |
-| --- | --- | --- | --- |
-| EQ001 | Finite-width field | verified | Dimensionless phase and quadrature convergence |
-| EQ002 | Field derivatives | verified | Differentiation under a bounded finite integral and central-difference check |
-| EQ003 | Exact local scores | verified | Product rule, \(\operatorname{Re}(iz)=-\operatorname{Im}z\), and point-slit limit |
-| EQ004 | Full Fisher matrix | verified | Positive-semidefinite Gram representation |
-| EQ005 | Optimized codes | verified | Cauchy--Schwarz optimum and Gram--Schmidt orthogonality |
-| EQ006 | Coded Fisher/retention | verified | Projection theorem and basis invariance |
-| EQ007 | Toy-code baseline | verified | Same nuisance metric and normalization as optimized codes |
-| EQ008 | Width scan | verified | Slit-local expansion and vanishing narrow-slit limit |
+Machine-readable evidence:
+`outputs/checks/formula_verification.json`.
 
-## Numerical Consequences
+- Status: `passed`
+- Cards: 8
+- Trusted/open for numerics: 8
+- Closed or blocked: 0
+- Policy: source trace plus independent symbolic/limiting verification
 
-- All five targets use verified formulas and may run at
-  `final_reproduction`.
-- A target fails scientifically if the finite-difference score check,
-  quadrature convergence, Fisher positivity, code orthogonality, retention
-  bounds, or width-scan trend fails.
-- The paper's printed Fisher matrices, retention eigenvalues, and width-scan
-  values are analytic references used only in checks; they do not feed the
-  generated arrays.
+| Formula card | Role | Source gate | Independent checks | Numeric gate |
+| --- | --- | --- | --- | --- |
+| `EQC001` | finite double-slit support | verified | exact interval decomposition and support normalization | open |
+| `EQC002` | Fresnel field and baseline response | verified | symmetry, zero-aberration, and normalization limits | open |
+| `EQC003` | weighted moments and local derivatives | verified | analytic field derivatives versus central finite differences | open |
+| `EQC004` | noise weight and full Fisher matrix | verified | positivity, symmetry, and direct quadrature construction | open |
+| `EQC005` | matched filters and nuisance-orthogonal codes | verified | zero mean, unit norm, and Gram--Schmidt orthogonality | open |
+| `EQC006` | coded Fisher matrix and retention | verified | basis invariance and eigenvalue bounds in \([0,1]\) | open |
+| `EQC007` | Gaussian toy-code basis | verified | parity structure, zero mean, unit norm, orthogonality | open |
+| `EQC008` | finite-width defocus visibility | verified | point-slit suppression and independent five-width scan | open |
+
+## Dependency Coverage
+
+- Fig. 1(a): `EQC001`, `EQC002`
+- Fig. 1(b): `EQC001`--`EQC003`
+- Fig. 1(c): `EQC002`--`EQC005`, `EQC007`
+- Fig. 1(d): `EQC003`--`EQC007`
+- Fig. S1: `EQC001`--`EQC004`, `EQC008`
+
+Every final target therefore has only trusted formula dependencies. Full
+source locations, assumptions, derivations, units, and code references remain
+in `EQUATION_CARDS.json` and `DERIVATION_TRACE.md`; `DERIVATION.md` is the
+harness-generated readable projection.
 
 ## Closed Or Unclear Formulas
 
-None in the frozen scope.
+None.

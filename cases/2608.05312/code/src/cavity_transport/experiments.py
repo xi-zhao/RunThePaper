@@ -43,6 +43,7 @@ class RunContext:
     profile_name: str
     profile: dict[str, Any]
     paths: dict[str, Path]
+    allow_reference_comparisons: bool = True
 
     @classmethod
     def create(
@@ -50,6 +51,8 @@ class RunContext:
         workspace: Path,
         output_root: Path,
         profile_name: str,
+        output_namespace: str | None = None,
+        allow_reference_comparisons: bool = True,
     ) -> "RunContext":
         config_path = workspace / "config" / "reproduction.json"
         config = json.loads(config_path.read_text(encoding="utf-8"))
@@ -61,7 +64,8 @@ class RunContext:
             config=config,
             profile_name=profile_name,
             profile=config["profiles"][profile_name],
-            paths=ensure_output_tree(output_root),
+            paths=ensure_output_tree(output_root, output_namespace),
+            allow_reference_comparisons=allow_reference_comparisons,
         )
 
     def model(self, n_sites: int, **overrides: Any) -> TransportModel:
@@ -104,6 +108,8 @@ def _render_reference_comparison(
     separately as limited validation excerpts.
     """
 
+    if not context.allow_reference_comparisons:
+        return None
     reference = context.reference(reference_name)
     if not reference.is_file():
         return None
@@ -772,7 +778,63 @@ def run_site_n(context: RunContext) -> dict[str, Any]:
                     "artifact_stage": "exploratory",
                 }
             )
+    baseline_samples = int(context.profile["site_n_baseline_samples"])
+    baseline_ensemble = prepare_ensemble(
+        context.model(6, drain="site_n"), context.seeds(baseline_samples)
+    )
+    baseline_mean, baseline_sem, _ = _eta(
+        baseline_ensemble,
+        ChannelRates(gamma_lead=target["gamma_lead_sweep"]),
+        target["final_time"],
+    )
+    paper_eta = float(target["baseline_paper_eta"])
+    tolerance = float(target["baseline_abs_tolerance"])
+    baseline_row = {
+        "target_id": "T012",
+        "record_kind": "baseline",
+        "mechanism": "baseline",
+        "gamma_rec": 0.0,
+        "gamma_deph": 0.0,
+        "rate": "",
+        "eta_mean": baseline_mean,
+        "eta_sem": baseline_sem,
+        "paper_eta": paper_eta,
+        "absolute_error": abs(baseline_mean - paper_eta),
+        "samples": baseline_samples,
+        "parameter_match": "paper_subset",
+        "artifact_stage": "exploratory",
+    }
+    rows.append(baseline_row)
     sweep_path = write_csv(context.paths["data"] / "site_n_sweep.csv", rows)
+    baseline_path = write_csv(
+        context.paths["data"] / "site_n_no_dissipation_baseline.csv",
+        [baseline_row],
+    )
+    baseline_check = {
+        "schema_version": 1,
+        "target_id": "T012",
+        "status": (
+            "passed"
+            if 0.0 <= baseline_mean <= 1.0
+            and abs(baseline_mean - paper_eta) <= tolerance
+            else "failed"
+        ),
+        "observable": "site-N sink efficiency at zero rescue and dephasing",
+        "generated_eta": baseline_mean,
+        "generated_sem": baseline_sem,
+        "paper_eta": paper_eta,
+        "absolute_error": abs(baseline_mean - paper_eta),
+        "absolute_tolerance": tolerance,
+        "samples": baseline_samples,
+        "parameter_match": "paper_subset",
+        "generated_data_provenance": "independent_numerics",
+    }
+    baseline_check_path = write_json(
+        context.paths["checks"] / "site_n_baseline_check.json",
+        baseline_check,
+    )
+    if baseline_check["status"] != "passed":
+        raise RuntimeError("T012 site-N no-dissipation baseline check failed")
     sweep_figure = context.paths["figures"] / "figS1_site_n_sweep.png"
     sweep_files = plot_site_n_sweep(sweep_path, sweep_figure)
 
@@ -887,8 +949,14 @@ def run_site_n(context: RunContext) -> dict[str, Any]:
     )
     return {
         "status": "completed",
-        "targets": ["T005", "T006", "T009"],
-        "data": [str(sweep_path), str(table_path), str(dynamics_path)],
+        "targets": ["T005", "T006", "T009", "T012"],
+        "data": [
+            str(sweep_path),
+            str(baseline_path),
+            str(table_path),
+            str(dynamics_path),
+        ],
+        "checks": [str(baseline_check_path)],
         "figures": {"figS1": sweep_files, "figS3": dynamics_files},
         "comparisons": [
             value for value in (comparison, dynamics_comparison) if value

@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 120, 235301 (2018) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **61.32/100**
 
-All independently recoverable baseline targets are generated; Fig. 3(b) has an inconclusive method-equivalence gap, Supplement Fig. S2 is a declared proxy with a code-ready 3D rerun, and unpublished experimental arrays/curve-specific atom numbers remain deferred.
+Whole-paper atomic audit: 25 eligible scientific items, 18 backed by existing independent artifacts, and 7 explicitly uncovered.
 
 ## Start Here / 从这里开始
 
@@ -68,7 +68,7 @@ cd cases/1710.10890/code
 python scripts/run_reproduction.py
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

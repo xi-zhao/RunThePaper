@@ -34,14 +34,27 @@ def _params(proto, t):
     }
 
 
-def _evolve_sector(proto, sector, n_out, tau):
-    spec = h2.SECTORS[sector]
-    n = spec["n"]
+def _evolve(
+    proto,
+    roles,
+    adjacency,
+    n_out,
+    tau,
+    *,
+    pair_energy_shifts=None,
+):
+    n = len(roles)
     dim = h2.D ** n
     i0 = h2.init_index(n)
 
     def rhs(t, y):
-        H = h2.build_sector(n, spec["roles"], spec["adjacency"], _params(proto, t))
+        H = h2.build_sector(
+            n,
+            roles,
+            adjacency,
+            _params(proto, t),
+            pair_energy_shifts=pair_energy_shifts,
+        )
         psi = y[:dim] + 1j * y[dim:]
         d = -1j * (H @ psi)
         return np.concatenate([d.real, d.imag])
@@ -59,9 +72,86 @@ def _evolve_sector(proto, sector, n_out, tau):
     return SectorResult(pop, phase, complex(amp[-1]))
 
 
+def _evolve_sector(proto, sector, n_out, tau):
+    spec = h2.SECTORS[sector]
+    return _evolve(
+        proto,
+        spec["roles"],
+        spec["adjacency"],
+        n_out,
+        tau,
+    )
+
+
 def run_protocol(proto, n_out: int = 401, tau: float = TAU_US):
     return {
         "00": _evolve_sector(proto, "00", n_out, tau),
         "01": _evolve_sector(proto, "01", n_out, tau),
         "11": _evolve_sector(proto, "11", n_out, tau),
     }
+
+
+def run_protocol_with_end_coupling(
+    proto,
+    *,
+    end_coupling_ratio: float,
+    n_out: int = 401,
+    tau: float = TAU_US,
+):
+    """Run a CZ protocol with the published residual end-qubit interaction.
+
+    Only the all-active ``11`` sector contains both end qubits.  The other
+    sectors are identical to :func:`run_protocol`.
+    """
+
+    shift = TWO_PI * proto.B_mhz * end_coupling_ratio
+    return {
+        "00": _evolve_sector(proto, "00", n_out, tau),
+        "01": _evolve_sector(proto, "01", n_out, tau),
+        "11": _evolve(
+            proto,
+            ["qubit", "buffer", "qubit"],
+            [(0, 1), (1, 2)],
+            n_out,
+            tau,
+            pair_energy_shifts={(0, 2): shift},
+        ),
+    }
+
+
+def run_three_qubit_active_patterns(
+    proto,
+    *,
+    n_out: int = 401,
+    tau: float = TAU_US,
+):
+    """Generate every computational branch of the three-atom Fig. 6 gate.
+
+    Inactive ``|0>`` atoms are dark and may be removed from the active
+    Hamiltonian.  Active atoms retain their physical roles and nearest-neighbor
+    edges in the ``qubit-buffer-qubit`` chain.  This yields all eight diagonal
+    amplitudes without introducing a four-atom model.
+    """
+
+    physical_roles = ("qubit", "buffer", "qubit")
+    physical_edges = ((0, 1), (1, 2))
+    time = np.linspace(0.0, tau, n_out)
+    results = {
+        "000": SectorResult(
+            population=np.ones(n_out),
+            phase=np.zeros(n_out),
+            amp_final=1.0 + 0.0j,
+        )
+    }
+    for value in range(1, 8):
+        bits = f"{value:03b}"
+        active = [index for index, bit in enumerate(bits) if bit == "1"]
+        compact_index = {physical: compact for compact, physical in enumerate(active)}
+        roles = [physical_roles[index] for index in active]
+        adjacency = [
+            (compact_index[left], compact_index[right])
+            for left, right in physical_edges
+            if left in compact_index and right in compact_index
+        ]
+        results[bits] = _evolve(proto, roles, adjacency, n_out, tau)
+    return time, results

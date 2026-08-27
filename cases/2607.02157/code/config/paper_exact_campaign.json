@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.02157",
+  "backend": "cupy_eig",
+  "stages": [
+    {
+      "stage_id": "cluster_capacity",
+      "mode": "scan",
+      "model": "cluster",
+      "sequences": 5000,
+      "points": 21,
+      "realizations": 1,
+      "pack": 1,
+      "output": "outputs/data/paper_exact/fig2_cluster.csv"
+    },
+    {
+      "stage_id": "tfim_capacity",
+      "mode": "scan",
+      "model": "tfim",
+      "sequences": 5000,
+      "points": 25,
+      "realizations": 100,
+      "pack": 10,
+      "output": "outputs/data/paper_exact/fig2_tfim.csv"
+    },
+    {
+      "stage_id": "cluster_nmse",
+      "mode": "nmse",
+      "model": "cluster",
+      "sequences": 500,
+      "points": 21,
+      "realizations": 1,
+      "chunk": 50,
+      "output": "outputs/data/paper_exact/nmse_cluster.csv"
+    },
+    {
+      "stage_id": "tfim_nmse",
+      "mode": "nmse",
+      "model": "tfim",
+      "sequences": 500,
+      "points": 25,
+      "realizations": 4,
+      "chunk": 50,
+      "output": "outputs/data/paper_exact/nmse_tfim.csv"
+    },
+    {
+      "stage_id": "figs1_spectral",
+      "mode": "spectral",
+      "sequences": 5000,
+      "samples": 2500,
+      "omega_points": 90,
+      "tfim_realizations": 10000,
+      "j_points": 40,
+      "alpha_points": 101,
+      "output_dir": "outputs/data/paper_exact",
+      "check_output": "outputs/checks/paper_exact/figS1_features.json",
+      "outputs": [
+        "outputs/data/paper_exact/figS1a_g_factor.csv",
+        "outputs/data/paper_exact/figS1a_mg_spectrum.csv",
+        "outputs/data/paper_exact/figS1a_insets.csv",
+        "outputs/data/paper_exact/figS1b_tfim_spectrum.csv",
+        "outputs/data/paper_exact/figS1c_cluster_spectrum.csv",
+        "outputs/checks/paper_exact/figS1_features.json"
+      ]
+    }
+  ]
+}

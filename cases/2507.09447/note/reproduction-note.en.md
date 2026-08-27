@@ -1,81 +1,21 @@
-# arXiv:2507.09447 reproduction note
+# Lyapunov formulation of band theory for disordered non-Hermitian systems: scientific reproduction note
 
-## Paper identity
+## Result
 
-- Preprint: [*Lyapunov formulation of band theory for disordered non-Hermitian systems*](https://arxiv.org/abs/2507.09447), arXiv:2507.09447.
-- Formal publication: [*Universal Thouless relations for disordered non–Hermitian systems in one dimension*](https://doi.org/10.1016/j.scib.2026.05.055), *Science Bulletin* (2026), online ahead of print.
-- DOI: `10.1016/j.scib.2026.05.055`; PII: `S2095-9273(26)00583-9`.
+Figs. 3-5 remain paper-scale scientific reproductions.  Corrected S1/S2 targets pass isolated scientific checks; the one-way density identity is exact; Fig. S3 is code-ready but compute-blocked at paper scale; and Fig. S4 preserves a robust 18-protocol non-match for fresh-context scientific adjudication.
 
-The figure-level target remains Figs. 3–5 of arXiv v1. The formal supplement is
-used only to cross-check the numerical method.
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-## Scientific object
+## What is reproduced
 
-When disorder removes translation symmetry, ordinary Bloch bands no longer
-provide the right real-space description. The paper replaces them with four
-Lyapunov exponents of a site transfer matrix. The signs of the two central
-exponents distinguish Anderson-localized, unidirectional-critical, and skin
-states; the number of positive exponents also fixes the spectral winding.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-This case reproduces the executable relationships rather than copying the
-authors' artwork: finite OBC/PBC spectra, thermodynamic Lyapunov densities,
-state classifications, winding sectors, and the disorder-driven skin–Anderson
-transition.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=passed_with_not_comparable, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
-## Reproduced results
+## Run
 
-- Figs. 3 and 4 use an `L=1000`, 3200-realization deterministic disorder
-  ensemble.
-- High-resolution Lyapunov grids use periodic QR stabilization.
-- Ten ALM profiles, one near-critical profile, and one skin profile are computed
-  from independent right eigenvectors.
-- Mobility contours are evaluated at `W=0.4,0.8,1.2,1.6,2.0`, and the localized
-  fraction is scanned on `W∈[0,3]`.
-- All nine scientific gates pass, including recovery of `W_c=2.1`.
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-![Fig. 3 independent reproduction](../outputs/figures/fig3_paper_exact.png)
+## Paper-review boundary
 
-**Difference reason:** the authors did not publish disorder seeds or eigenstate
-selection windows. The reproduction uses an independent deterministic ensemble,
-so spectral microstructure and profile pixels are not uniquely recoverable.
-
-![Fig. 4 independent reproduction](../outputs/figures/fig4_paper_exact.png)
-
-**Difference reason:** transfer length, QR interval, and final artwork are
-unpublished. Winding sectors and spectral support agree, while local density
-texture and layout differ.
-
-![Fig. 5 independent reproduction](../outputs/figures/fig5_paper_exact.png)
-
-**Difference reason:** the Fig. 5 quadrature grid details and Illustrator source
-are unpublished. The transition `W_c=2.1` agrees; remaining differences come
-from grid interpolation and plotting post-processing.
-
-## Run the public package
-
-From the repository root:
-
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/2507.09447/code
-python scripts/plot_paper_exact.py
-python scripts/qa_paper_exact.py
-```
-
-These quick commands regenerate the figures and scientific checks from the
-published independently generated arrays. The complete `L=1000 × 3200` run is
-available through `python scripts/run_paper_exact.py`, but it is computationally
-expensive and creates local checkpoints that are intentionally not committed.
-
-## Reproduction boundary
-
-The authors did not publish random seeds, state-selection windows, transfer
-length, QR interval, Fig. 5 quadrature details, or the final Illustrator project.
-We therefore claim paper-scale scientific and geometric reproduction, not pixel
-identity. Export-time full-image SSIM values are `0.7721`, `0.7735`, and `0.8521`
-for Figs. 3, 4, and 5. These values document the visual gap; they are not the
-scientific acceptance criterion. The paper-scale data are complete; the residual
-is an author-protocol and artwork boundary rather than a compute shortage, so no
-additional large campaign is scheduled.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: Paper-scale L=1000 x 3200-realization OBC/PBC diagonalization completed locally. All nine scientific gates pass; strict source-pixel SSIM >=0.95 does not pass. Formal Science Bulletin supplementary material is method evidence only; reproduction targets remain arXiv v1.

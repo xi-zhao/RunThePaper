@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "run_id": "1807.02414-full-ghd-smoke-v1-20260825",
+  "target_ids": [
+    "T001-DIFFUSIVE"
+  ],
+  "command": [
+    "python",
+    "scripts/run_full_ghd.py",
+    "--config",
+    "config/full_ghd_smoke.json",
+    "--profile",
+    "smoke"
+  ],
+  "inputs": [
+    "src/xxz_diffusion/__init__.py",
+    "src/xxz_diffusion/backend.py",
+    "src/xxz_diffusion/tba.py",
+    "src/xxz_diffusion/full_ghd.py",
+    "scripts/run_full_ghd.py",
+    "config/full_ghd_smoke.json"
+  ],
+  "parameter_file": "config/full_ghd_smoke.json",
+  "parameter_selector": "paper_parameters",
+  "expected_parameters": {
+    "ell": 3,
+    "delta": 0.5000000000000001,
+    "domain_wall_mu": 0.05,
+    "times": [
+      0.1,
+      0.2
+    ],
+    "equation": "linearized full spectral diffusion",
+    "initial_response": "weak domain wall"
+  },
+  "outputs": [
+    "outputs/data/T001_full_ghd_smoke_smoke_r32_x64_dt01.npz",
+    "outputs/checks/T001_full_ghd_smoke_checks.json",
+    "outputs/checks/T001_full_ghd_smoke_manifest.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

@@ -7,9 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2504.08598/code
-python scripts/verify_public_artifacts.py
+python scripts/run_reproduction.py --config config/clean_room_reproduction.json --output-root outputs/public_quick_run
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Frozen non-final target states: T001=evidence_compared, T002=evidence_compared, T003A=partially_reproduced, T003B=partially_reproduced. The legacy case has no machine-verifiable author-code isolation attestation. No source-image comparison panel or digitized source curve is published in this projection.
+Boundary: Figure 8 curve E/F and distribution E, and Figure 9 distribution H remain named mismatches. Pasqal/Pulser qubit validation is not applicable to the multilevel qudit Hamiltonian; no real hardware or advantage claim.

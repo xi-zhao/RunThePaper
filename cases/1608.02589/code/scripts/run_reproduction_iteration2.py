@@ -8,8 +8,8 @@ import sys
 import numpy as np
 
 
-WORKSPACE = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(WORKSPACE / "code/src"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from dtc_feature_sim import (  # noqa: E402
     autocorrelation_trace,

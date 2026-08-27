@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "run_id": "cond-mat-0509490-paper-exact-v5",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005"
+  ],
+  "command": [
+    "python",
+    "scripts/run_reproduction.py",
+    "--config",
+    "config/paper_exact.json",
+    "--output-root",
+    "outputs"
+  ],
+  "inputs": [
+    "src/dziarmaga_ising/__init__.py",
+    "src/dziarmaga_ising/model.py",
+    "scripts/run_reproduction.py",
+    "config/paper_exact.json"
+  ],
+  "parameter_file": "config/paper_exact.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "coupling_j": 1.0,
+    "hbar": 1.0,
+    "lattice_spacing": 1.0,
+    "field_initial": 8.0,
+    "dispersion_chain_length": 256,
+    "dispersion_fields": [
+      0.0,
+      0.5,
+      1.0,
+      1.5,
+      2.0
+    ],
+    "bdg_chain_length": 128,
+    "bdg_mode_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "bdg_quench_times": [
+      8.0,
+      16.0,
+      32.0
+    ],
+    "reverse_chain_length": 32,
+    "reverse_quench_times": [
+      8.0,
+      16.0,
+      32.0
+    ],
+    "density_chain_length": 4096,
+    "density_tau_min": 1.0,
+    "density_tau_max": 10000.0,
+    "density_tau_points": 81,
+    "density_fit_tau_min": 10.0,
+    "density_fit_tau_max": 1000.0,
+    "ground_state_chain_lengths": [
+      32,
+      64,
+      128,
+      256
+    ],
+    "ground_state_scaled_tau_min": 0.001,
+    "ground_state_scaled_tau_max": 0.2,
+    "ground_state_scaled_tau_points": 45,
+    "solver_rtol": 2e-10,
+    "solver_atol": 2e-12
+  },
+  "outputs": [
+    "outputs/data/dispersion.csv",
+    "outputs/data/excitation_probability.csv",
+    "outputs/data/defect_density.csv",
+    "outputs/data/ground_state_probability.csv",
+    "outputs/data/reverse_quench_density.csv",
+    "outputs/data/reverse_quench_modes.csv",
+    "outputs/checks/science_checks.json",
+    "outputs/checks/generated_data_manifest.json",
+    "outputs/checks/run_summary.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  }
+}

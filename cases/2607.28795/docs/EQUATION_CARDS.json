@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "paper_id": "2607.28795",
+  "cards": [
+    {
+      "id": "Q001",
+      "title": "Mitten-code lifted-product check matrices",
+      "statement": "Expand A=[a0,a1] and B=[b0,b1] over F2[G] through L(g)|h>=|gh> and R(g)|h>=|h g^{-1}>; assemble H_X and H_Z as Eq. (2).",
+      "source_refs": [
+        "main Eqs. (1)-(2)",
+        "Appendix Eqs. (A10)-(A23)",
+        "Appendix Eq. (J1)",
+        "Table XIII"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/group_algebra.py",
+        "src/mitten_codes.py"
+      ],
+      "checks": [
+        {
+          "id": "Q001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The PDF specifies the group IDs, four three-term ring supports, regular-representation conventions, and complete H_X/H_Z block layout."
+        },
+        {
+          "id": "Q001-css",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "L(a)R(b)=R(b)L(a) and L(a*)=L(a)^T, R(b*)=R(b)^T make the two terms of H_X H_Z^T equal; they cancel over F2."
+        },
+        {
+          "id": "Q001-weight",
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "Each check row meets three ring entries of weight three, hence has check weight nine before any accidental cancellation; the printed supports contain distinct elements."
+        }
+      ],
+      "open_questions": [
+        "Table XIII uses zero-based positions in GAP Elements(G), inferred from the presence of index 0. With the paper-cited GAP 4.16.0 and SmallGrp 1.5.4, this literal interpretation makes the (60,11) pivot blocks singular and therefore exposes a paper/input-consistency question rather than closing every target invariant."
+      ]
+    },
+    {
+      "id": "Q002",
+      "title": "Canonical logical basis from square invertibility",
+      "statement": "For e_g, solve R(b1)u_g=R(b0)e_g and L(a1)v_g=L(a0)e_g over F2; X_g=(e_g,u_g,0,0,0), Z_g=(e_g,0,v_g,0,0).",
+      "source_refs": [
+        "main Eqs. (3)-(4)",
+        "Theorem 1",
+        "Appendix Definition 16",
+        "Appendix Theorem 4"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/mitten_codes.py::canonical_logicals"
+      ],
+      "checks": [
+        {
+          "id": "Q002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The paper prints both linear systems and identifies a1,b1 as the invertible pivot entries."
+        },
+        {
+          "id": "Q002-kernel",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Substitution gives H_Z X_g^T=0 and H_X Z_g^T=0; minus equals plus over F2."
+        },
+        {
+          "id": "Q002-pairing",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "X_g and Z_h overlap only on D1, so their binary symplectic pairing is delta_g,h."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "Q003",
+      "title": "Block length, dimension, and 20 percent rate",
+      "statement": "For r1=r2=1,c1=c2=2, n=5|G| and k=n-rank(H_X)-rank(H_Z)=|G| when both two-row-block check matrices have rank 2|G|.",
+      "source_refs": [
+        "Appendix Eqs. (A24)-(A26)",
+        "Appendix Eq. (F1)",
+        "Definition 4"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/gf2.py",
+        "src/mitten_codes.py::analyze_code"
+      ],
+      "checks": [
+        {
+          "id": "Q003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The block-count and rank formulas are explicit."
+        },
+        {
+          "id": "Q003-count",
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "The five data blocks give n=5|G|; four independent check blocks give k=|G| and k/n=1/5."
+        }
+      ],
+      "open_questions": [
+        "Full check-matrix ranks are independently recomputed rather than assumed from the claimed parameters."
+      ]
+    },
+    {
+      "id": "Q004",
+      "title": "Parallel magic-injection resource counts",
+      "statement": "n=(2 d_rep^2+2 d_rep+5)|G| and N_X=N_Z=(d_rep^2+d_rep+2)|G|.",
+      "source_refs": [
+        "Appendix Eq. (E15)",
+        "Table V",
+        "Theorem 7"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/closed_form.py::magic_injection_counts"
+      ],
+      "checks": [
+        {
+          "id": "Q004-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Eq. (E15) prints all three closed forms and Table V gives the evaluation grid."
+        },
+        {
+          "id": "Q004-logicals",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "n-N_X-N_Z=|G|, matching the number of injected logical qubits."
+        },
+        {
+          "id": "Q004-positive",
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "All counts are integer multiples of the group order and remain positive for d_rep>=1."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "Q005",
+      "title": "sQetch random sketched information-set decoding",
+      "statement": "Sample kappa null-space basis rows with replacement, randomly permute columns, RREF the sketch, and retain the lightest nontrivial logical row as Algorithm 1 prescribes.",
+      "source_refs": [
+        "Appendix Eqs. (H1)-(H8)",
+        "Appendix Algorithm 1"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/sqetch.py"
+      ],
+      "checks": [
+        {
+          "id": "Q005-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The PDF provides the inputs, sampling law, column permutation, RREF loop, logical test, and candidate selection."
+        },
+        {
+          "id": "Q005-rref",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Row operations preserve the sampled null-space span, and undoing the column permutation returns every candidate to the original coordinates."
+        },
+        {
+          "id": "Q005-steane",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "The implementation must recover distance three on the [[7,1,3]] Steane CSS code before any mitten-code benchmark is accepted."
+        }
+      ],
+      "open_questions": [
+        "The paper does not publish exact benchmark candidate matrices, sketch sizes for Fig. 8, CPU model, or random seeds, so T003 is explicitly reduced-scale rather than paper-exact."
+      ]
+    },
+    {
+      "id": "Q006",
+      "title": "sQetch hit-probability model",
+      "statement": "P_sketch follows inclusion-exclusion (H9), while Eqs. (H11)-(H13) estimate the conditional RREF exposure and total hit probability.",
+      "source_refs": [
+        "Appendix Eqs. (H9)-(H13)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/sqetch.py::sketch_inclusion_probability",
+        "src/sqetch.py::approximate_hit_probability"
+      ],
+      "checks": [
+        {
+          "id": "Q006-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The exact inclusion-exclusion expression and stated approximations are printed."
+        },
+        {
+          "id": "Q006-bound",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "The exact P_sketch lies in [0,1], vanishes for kappa=0 when j*>0, and reaches one as repeated sampling covers every required basis row."
+        }
+      ],
+      "open_questions": [
+        "H11-H13 rely on the paper's generic pivot-set assumptions and are treated as a model check, not an exact theorem for every matrix."
+      ]
+    },
+    {
+      "id": "Q007",
+      "title": "Real-time decoder utilization and reaction time",
+      "statement": "rho_i=f_i t_i/T_cyc and mean reaction time t_bar=sum_i f_i t_i, using the mean rather than worst S4 time in t_bar.",
+      "source_refs": [
+        "Appendix Eq. (I1)",
+        "Appendix Table X"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/closed_form.py::realtime_decoder_metrics"
+      ],
+      "checks": [
+        {
+          "id": "Q007-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Eq. (I1), T_cyc=1 ms, the stage fractions, and stage times are printed."
+        },
+        {
+          "id": "Q007-units",
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "f is dimensionless, rho is dimensionless, and f*t sums to a time."
+        },
+        {
+          "id": "Q007-rounding",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Recomputation from rounded table inputs should agree with printed rho and t_bar within disclosed rounding tolerance, not exactly at hidden precision."
+        }
+      ],
+      "open_questions": [
+        "The printed f and t values are rounded, so their direct sum need not equal the reported t_bar in the last digit."
+      ]
+    }
+  ]
+}

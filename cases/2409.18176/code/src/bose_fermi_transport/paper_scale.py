@@ -15,9 +15,11 @@ from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
 
-from .collocation import solve_collocation
+import numpy as np
+
+from .collocation import solve_collocation, solve_collocation_eliminated
 from .kinetic import GridSpec, solve_transport
-from .kubo import kubo_resistivity
+from .kubo import kubo_resistivity, leading_order_boltzmann_resistivity
 from .thermodynamics import ModelParameters, solve_equilibrium
 
 
@@ -140,6 +142,17 @@ def _complex(value: complex) -> dict[str, float]:
     return {"real": float(value.real), "imag": float(value.imag)}
 
 
+def _transport_payload(result: Any) -> dict[str, Any]:
+    return {
+        "sigma_h": _complex(result.sigma_h),
+        "sigma_x": _complex(result.sigma_x),
+        "sigma_t": _complex(result.sigma_t),
+        "momentum_residual": result.collision_momentum_residual,
+        "minimum_collision_eigenvalue": result.collision_min_eigenvalue,
+        "condition_number": result.condition_number,
+    }
+
+
 def execute_unit(
     unit: WorkUnit, model: ModelParameters, closure: str
 ) -> dict[str, Any]:
@@ -164,23 +177,34 @@ def execute_unit(
         unit.frequency_mev,
         unit.grid,
     )
+    eliminated = solve_collocation_eliminated(
+        local_model,
+        equilibrium,
+        unit.tunnel_mev,
+        unit.frequency_mev,
+        unit.grid,
+    )
+    direct_values = np.array(
+        [collocation.sigma_h, collocation.sigma_x, collocation.sigma_t]
+    )
+    eliminated_values = np.array(
+        [eliminated.sigma_h, eliminated.sigma_x, eliminated.sigma_t]
+    )
     result: dict[str, Any] = {
         "unit": asdict(unit),
         "equilibrium": asdict(equilibrium),
-        "galerkin": {
-            "sigma_h": _complex(galerkin.sigma_h),
-            "sigma_x": _complex(galerkin.sigma_x),
-            "sigma_t": _complex(galerkin.sigma_t),
-            "momentum_residual": galerkin.collision_momentum_residual,
-            "minimum_collision_eigenvalue": galerkin.collision_min_eigenvalue,
-            "condition_number": galerkin.condition_number,
-        },
-        "collocation": {
-            "sigma_h": _complex(collocation.sigma_h),
-            "sigma_x": _complex(collocation.sigma_x),
-            "sigma_t": _complex(collocation.sigma_t),
-            "common_drift_residual": collocation.collision_momentum_residual,
-            "condition_number": collocation.condition_number,
+        "galerkin": _transport_payload(galerkin),
+        "collocation": _transport_payload(collocation),
+        "collocation_eliminated": _transport_payload(eliminated),
+        "algebraic_checks": {
+            "direct_vs_eliminated_max_abs": float(
+                np.max(np.abs(direct_values - eliminated_values))
+            ),
+            "effective_g4_q_terms_retained": True,
+            "reason": (
+                "The eliminated lane evaluates the trion Schur complement "
+                "B D^-1 C corresponding to Supplement Eqs. (21)-(32)."
+            ),
         },
     }
     if unit.family == "kubo":
@@ -194,7 +218,17 @@ def execute_unit(
             exciton_max_pf=unit.grid.exciton_max_pf,
             angle_points=max(96, unit.grid.exciton_points * 2),
         )
-        result["boltzmann_rho"] = 1.0 / galerkin.sigma_h.real
+        result["boltzmann_lo_analytic_delta_rho"] = leading_order_boltzmann_resistivity(
+            local_model,
+            equilibrium,
+            unit.tunnel_mev,
+            hole_points=unit.grid.hole_points,
+            hole_max_pf=unit.grid.hole_max_pf,
+            exciton_points=unit.grid.exciton_points,
+            exciton_max_pf=unit.grid.exciton_max_pf,
+        )
+        result["boltzmann_full_galerkin_rho"] = 1.0 / galerkin.sigma_h.real
+        result["boltzmann_full_collocation_rho"] = 1.0 / collocation.sigma_h.real
     return result
 
 
@@ -299,8 +333,14 @@ def run_campaign(
         "paper_id": "2409.18176",
         "paper_scale_complete": len(available) == len(units),
         "convergence_passed": convergence["passed"],
+        "trion_elimination_passed": convergence["trion_elimination"]["passed"],
         "paper_exact_promoted": False,
-        "reason": "Paper discretization metadata remains unavailable even if numerical convergence passes.",
+        "paper_discrepancy_status": "pending_production_and_fresh_review",
+        "reason": (
+            "Paper discretization metadata and fitted ac operating densities remain "
+            "unavailable. The full campaign and fresh-context review are required "
+            "before attributing any stable gap to the paper."
+        ),
     }
     _atomic_json(output_root / "target_acceptance.json", target_acceptance)
     return manifest
@@ -326,10 +366,23 @@ def aggregate_convergence(checkpoints: list[Path], tolerance: float) -> dict[str
         if "g96" not in by_grid or "cutoff" not in by_grid:
             continue
         changes: dict[str, float] = {}
-        for species in ("h", "x", "t"):
-            fine = complex(**by_grid["g96"]["galerkin"][f"sigma_{species}"])
-            cutoff = complex(**by_grid["cutoff"]["galerkin"][f"sigma_{species}"])
-            changes[species] = float(abs(cutoff - fine) / max(abs(fine), 1.0e-12))
+        for method in ("galerkin", "collocation"):
+            for species in ("h", "x", "t"):
+                fine = complex(**by_grid["g96"][method][f"sigma_{species}"])
+                cutoff = complex(**by_grid["cutoff"][method][f"sigma_{species}"])
+                changes[f"{method}_{species}"] = float(
+                    abs(cutoff - fine) / max(abs(fine), 1.0e-12)
+                )
+        if key[0] == "kubo":
+            for observable in (
+                "kubo_rho",
+                "boltzmann_lo_analytic_delta_rho",
+                "boltzmann_full_galerkin_rho",
+                "boltzmann_full_collocation_rho",
+            ):
+                fine = float(by_grid["g96"][observable])
+                cutoff = float(by_grid["cutoff"][observable])
+                changes[observable] = abs(cutoff - fine) / max(abs(fine), 1.0e-12)
         comparisons.append(
             {
                 "condition": list(key),
@@ -337,9 +390,41 @@ def aggregate_convergence(checkpoints: list[Path], tolerance: float) -> dict[str
                 "passed": max(changes.values()) <= tolerance,
             }
         )
+    algebraic_gaps = [
+        float(row["algebraic_checks"]["direct_vs_eliminated_max_abs"]) for row in rows
+    ]
+    lo_regularization = [
+        {
+            "unit_id": row["unit"]["unit_id"],
+            "relative_gap": abs(
+                float(row["kubo_rho"]) - float(row["boltzmann_lo_analytic_delta_rho"])
+            )
+            / max(abs(float(row["boltzmann_lo_analytic_delta_rho"])), 1.0e-12),
+        }
+        for row in rows
+        if row["unit"]["family"] == "kubo"
+    ]
     return {
         "schema_version": 1,
         "tolerance": tolerance,
         "comparisons": comparisons,
         "passed": bool(comparisons) and all(row["passed"] for row in comparisons),
+        "trion_elimination": {
+            "maximum_direct_vs_eliminated_abs": max(algebraic_gaps, default=None),
+            "passed": bool(algebraic_gaps) and max(algebraic_gaps) <= 1.0e-10,
+            "interpretation": (
+                "Passing proves that the simultaneous three-species solve retains "
+                "the effective g^4 Q terms generated by eliminating trions."
+            ),
+        },
+        "leading_order_regularization": {
+            "comparisons": lo_regularization,
+            "maximum_relative_gap": max(
+                (row["relative_gap"] for row in lo_regularization), default=None
+            ),
+            "interpretation": (
+                "This compares broadened Kubo and analytic-delta leading-order "
+                "rates only; it is not the full Boltzmann comparison in the paper."
+            ),
+        },
     }

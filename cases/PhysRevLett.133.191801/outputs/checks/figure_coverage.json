@@ -1,0 +1,423 @@
+{
+  "schema_version": 2,
+  "paper_id": "PhysRevLett.133.191801",
+  "implementations": {
+    "independent_main_feature": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/feature.json"
+      ],
+      "code_refs": [
+        "src/axion_spin/signals.py",
+        "src/axion_spin/transfer.py",
+        "src/axion_spin/filtering.py",
+        "src/axion_spin/statistics.py",
+        "src/axion_spin/axion.py",
+        "src/axion_spin/campaign.py",
+        "src/axion_spin/rendering.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/feature.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/feature/response_curves.csv",
+        "outputs/data/feature/filter_diagnostics.csv",
+        "outputs/data/feature/constraint_curve.csv",
+        "outputs/checks/feature/target_checks.json",
+        "outputs/checks/feature/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "All seven declared scientific targets are independently generated from equations and printed parameters without raw/reference/author-code/author-array/source-pixel inputs.",
+        "Closed-form and ODE responses, direct and FFT matched filters, uncertainty propagation, and axion-kernel limits pass independent parity checks.",
+        "Synthetic demonstrations remain explicitly synthetic and cannot promote experimental panels to paper exact."
+      ]
+    },
+    "paper_scale_experimental_reanalysis": {
+      "status": "ready",
+      "target_ids": [
+        "T004",
+        "T005",
+        "T006",
+        "T007"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--resume"
+      ],
+      "code_refs": [
+        "src/axion_spin/experimental.py",
+        "src/axion_spin/filtering.py",
+        "src/axion_spin/axion.py",
+        "src/axion_spin/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/paper_scale/input_inventory.json",
+        "outputs/data/paper_scale/calibration_summary.csv",
+        "outputs/data/paper_scale/dataset_estimates.csv",
+        "outputs/data/paper_scale/constraint_curve.csv",
+        "outputs/checks/paper_scale/target_acceptance.json"
+      ],
+      "acceptance_criteria": [
+        "Fail closed until the supplemental inventory, calibration traces, 60-second sensor records, finite cell geometry, and prior-constraint tables are supplied with hashes.",
+        "When inputs exist, fit calibration decays, apply the PSD-weighted filter to every segment, aggregate all 36 datasets, integrate the finite-volume axion kernel, and preserve checkpoint/resume records.",
+        "No source image or digitized curve is accepted as a substitute for an experimental array."
+      ]
+    },
+    "formula_input_boundary": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T006"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/axion_spin/signals.py",
+        "src/axion_spin/transfer.py",
+        "src/axion_spin/statistics.py",
+        "src/axion_spin/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json",
+        "outputs/checks/implementation_closure/T001.json",
+        "outputs/checks/implementation_closure/T002.json",
+        "outputs/checks/implementation_closure/T003.json",
+        "outputs/checks/implementation_closure/T006.json",
+        "outputs/data/implementation_closure/T001.json",
+        "outputs/data/implementation_closure/T002.json",
+        "outputs/data/implementation_closure/T003.json",
+        "outputs/data/implementation_closure/T006.json"
+      ],
+      "acceptance_criteria": [
+        "All formula-level checks pass using printed quantities or explicitly declared non-paper-exact probes.",
+        "Experimental arrays and calibration inputs are hash-bound before full-panel reanalysis.",
+        "A finite formula attestation never promotes synthetic data to paper-exact scientific coverage."
+      ]
+    }
+  },
+  "inventory_boundary": {
+    "status": "source_blocked",
+    "source_ref": "APS formal Supplemental Material for DOI 10.1103/PhysRevLett.133.191801",
+    "known_items": [],
+    "unknown_remainder": true,
+    "blocker": "missing_source_input",
+    "reason": "The complete eight-page version of record was audited through Main Figure 4, but the APS page still reports Supplemental Material as subscription required. Its figures, tables, and independent quantitative claims cannot be enumerated without guessing.",
+    "next_action": "Acquire the formal supplement through a legitimate institutional or author-provided manuscript route, freeze its hash, and replace this scope blocker with an atomic supplemental inventory."
+  },
+  "items": [
+    {
+      "item_id": "main_fig1a_apparatus_layout",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), PDF p. 2",
+      "scientific_object": "Three-dimensional apparatus and magnetic-shield layout",
+      "decision": "excluded",
+      "reason": "Apparatus schematic without an independent numerical observable."
+    },
+    {
+      "item_id": "main_fig1b_source_spin_cartoon",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(b), PDF p. 2",
+      "scientific_object": "Source-cell spin and pump-beam cartoon",
+      "decision": "excluded",
+      "reason": "Qualitative experimental context."
+    },
+    {
+      "item_id": "main_fig1c_sensor_spin_cartoon",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Sensor-cell spin and probe-beam cartoon",
+      "decision": "excluded",
+      "reason": "Qualitative experimental context."
+    },
+    {
+      "item_id": "main_fig2a_theoretical_response_component",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Equation-derived free-decay, Gaussian-drive, and chirp-drive response fits",
+      "decision": "target",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003"
+      ],
+      "implementation_ref": "formula_input_boundary",
+      "paper_level_role": "main_claim",
+      "reason": "The three red theoretical responses are one panel-level scientific component; all three clean-room target checks must pass for the panel to count as covered.",
+      "claim_refs": [
+        "CLM_AMPLIFIED_RESPONSE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_experimental_envelopes",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Measured free-decay, Gaussian-drive, and chirp-drive response envelopes",
+      "decision": "excluded",
+      "reason": "Experimental traces are inventory context; they are not regenerated from pixels or replaced by synthetic data."
+    },
+    {
+      "item_id": "main_fig2b_injected_experimental_trace",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(b), upper axis, PDF p. 3",
+      "scientific_object": "Measured sensor record containing an injected signal",
+      "decision": "excluded",
+      "reason": "The raw experimental record is not published and is outside theory/method reproduction coverage."
+    },
+    {
+      "item_id": "main_fig2b_matched_filter_component",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "method_numerical",
+      "source_ref": "Main Fig. 2(b), lower axis, PDF p. 3",
+      "scientific_object": "Template-filter recovery of injected amplitude and arrival time",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "independent_main_feature",
+      "paper_level_role": "main_claim",
+      "reason": "The matched-filter method is independently checked on a declared deterministic synthetic injection; this covers the method component, not the unpublished trace.",
+      "claim_refs": [
+        "CLM_TEMPLATE_FILTER"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_noise_experimental_trace",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 2(c), upper axis, PDF p. 3",
+      "scientific_object": "Measured sensor record without an injected signal",
+      "decision": "excluded",
+      "reason": "The raw experimental noise record is not published and is outside theory/method reproduction coverage."
+    },
+    {
+      "item_id": "main_fig2c_filter_sensitivity_component",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "method_numerical",
+      "source_ref": "Main Fig. 2(c), lower axis, PDF p. 3",
+      "scientific_object": "Template-filter sensitivity and noise-variance calculation",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "independent_main_feature",
+      "reason": "The filter-variance method is independently checked on declared synthetic noise; this does not claim the unpublished measured trace.",
+      "claim_refs": [
+        "CLM_TEMPLATE_FILTER"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_temperature_calibration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "Measured source polarization and coherence time versus temperature",
+      "decision": "excluded",
+      "reason": "Experimental calibration panel; no independent theory-only curve is displayed."
+    },
+    {
+      "item_id": "main_fig3b_temperature_amplitude_scan",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(b), PDF p. 4",
+      "scientific_object": "Effective-field amplitude derived from measured temperature calibration",
+      "decision": "excluded",
+      "reason": "The curve depends on unpublished experimental calibration arrays and is not an independent theory-only target."
+    },
+    {
+      "item_id": "main_fig3c_power_calibration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(c), PDF p. 4",
+      "scientific_object": "Measured source polarization and coherence time versus pump power",
+      "decision": "excluded",
+      "reason": "Experimental calibration panel; no independent theory-only curve is displayed."
+    },
+    {
+      "item_id": "main_fig3d_power_amplitude_scan",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 3(d), PDF p. 4",
+      "scientific_object": "Effective-field amplitude derived from measured pump-power calibration",
+      "decision": "excluded",
+      "reason": "The curve depends on unpublished experimental calibration arrays and is not an independent theory-only target."
+    },
+    {
+      "item_id": "main_fig4a_experimental_estimates_and_histogram",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4(a), PDF p. 5",
+      "scientific_object": "Thirty-six experimental field estimates and one 20-hour histogram",
+      "decision": "excluded",
+      "reason": "Experimental measurements remain visible in the inventory but are not regenerated from figure pixels."
+    },
+    {
+      "item_id": "main_fig4a_gaussian_uncertainty_component",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "method_numerical",
+      "source_ref": "Main Fig. 4(a) inset and error discussion, PDF p. 5",
+      "scientific_object": "Printed Gaussian/statistical model and uncertainty combination",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "formula_input_boundary",
+      "paper_level_role": "main_claim",
+      "reason": "The printed 30 fT, 140 aT, and 45 aT anchors are independently recomputed without recreating the 36 measurements.",
+      "claim_refs": [
+        "CLM_NULL_CONSTRAINT"
+      ]
+    },
+    {
+      "item_id": "main_fig4b_prior_experimental_constraints",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main Fig. 4(b), black curves, PDF p. 5",
+      "scientific_object": "Prior Ramsey, Glenday, and Vasilakis experimental constraints",
+      "decision": "excluded",
+      "reason": "External experimental comparison curves are context and are not reconstructed from source pixels."
+    },
+    {
+      "item_id": "main_fig4b_new_constraint_component",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(b), red curve, PDF p. 5",
+      "scientific_object": "Axion-mass dependence of the new pseudoscalar-coupling constraint",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "independent_main_feature",
+      "paper_level_role": "main_claim",
+      "reason": "The independent point-source kernel and printed 4.94 micro-eV anchor cover the scientific shape; missing finite geometry limits fidelity rather than hiding the item.",
+      "claim_refs": [
+        "CLM_NULL_CONSTRAINT"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_amplification_factor_145",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main text around Eqs. (3)-(4)",
+      "scientific_object": "Resonant magnetic amplification reaches approximately 145",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T001"
+      ],
+      "reason": "Retained as supporting evidence for the displayed Fig. 2(a) response without double counting.",
+      "claim_refs": [
+        "CLM_AMPLIFIED_RESPONSE"
+      ]
+    },
+    {
+      "item_id": "claim_template_filter_sensitivity_30ft",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "method_claim",
+      "source_ref": "Main text after Eq. (5)",
+      "scientific_object": "Template filtering reduces the single-shot equivalent sensitivity to approximately 30 fT",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T004",
+        "T005"
+      ],
+      "reason": "Represented by the Fig. 2(b,c) method components and retained only as supporting evidence.",
+      "claim_refs": [
+        "CLM_TEMPLATE_FILTER"
+      ]
+    },
+    {
+      "item_id": "claim_combined_systematic_uncertainty",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "method_claim",
+      "source_ref": "Main Fig. 4(a) discussion",
+      "scientific_object": "The 140 aT statistical and 45 aT systematic terms imply the printed aggregate uncertainty",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Directly represented by the Fig. 4(a) statistical component and not counted again.",
+      "claim_refs": [
+        "CLM_NULL_CONSTRAINT"
+      ]
+    },
+    {
+      "item_id": "claim_constraint_improvement_factors",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 4(b) caption and discussion",
+      "scientific_object": "The new constraint improves prior limits by about 118 at 6.04 micro-eV and 50 at 10 micro-eV",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Represented by the displayed constraint component and retained as supporting claim evidence.",
+      "claim_refs": [
+        "CLM_NULL_CONSTRAINT"
+      ]
+    }
+  ]
+}

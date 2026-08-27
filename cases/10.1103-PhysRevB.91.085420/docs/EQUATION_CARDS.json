@@ -1,0 +1,248 @@
+{
+  "schema_version": 1,
+  "paper_id": "10.1103-PhysRevB.91.085420",
+  "cards": [
+    {
+      "id": "cdhm_hamiltonian",
+      "title": "Continuously driven Harper model H(k,t;beta) (Eq. 14)",
+      "statement": "H = sum_l (J/2)(a_l^dag a_{l+1}+h.c.) + K cos(2 pi t/tau) sum_l cos(2 pi alpha l + beta) a_l^dag a_l, alpha=1/3, tau=2. Bloch 3x3: h_hop(k) with intra-cell hops J/2 and inter-cell hop (J/2)exp(i 3k); onsite diag K cos(2 pi t/tau) diag(cos beta, cos(2pi/3+beta), cos(4pi/3+beta)). k in [-pi/3,pi/3].",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq14",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eq. (14), Sec. IV; alpha=M/N=1/3, tau=2, J=K used in Figs. 1-4."
+        },
+        {
+          "id": "undriven_band",
+          "type": "limiting_case",
+          "status": "passed",
+          "note": "K=0 -> U=exp(-i h_hop(k) tau); Floquet eigenphases = eps(k)*tau mod 2pi match analytic hopping bands; test_undriven_analytic_band."
+        },
+        {
+          "id": "hop_unitary",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "One-period propagator U^dag U = I to 1e-10; test_floquet_unitary."
+        }
+      ],
+      "code_refs": [
+        "src/cdhm.py::CDHM.hamiltonian",
+        "src/cdhm.py::CDHM.h_hop",
+        "src/cdhm.py::CDHM.floquet_operator"
+      ],
+      "open_questions": [
+        "Overall orientation sign of the (k,beta) torus is a gauge choice: my Chern numbers are the paper's (4,-8,4)->(-8,16,-8) up to a global sign; the physical Delta<x> comes out with the paper's positive sign, fixed against the exact dynamics."
+      ]
+    },
+    {
+      "id": "floquet_eigenphases",
+      "title": "Floquet operator eigen-equation and eigenphases omega_{n,k}(beta) (Eqs. 1, A1)",
+      "statement": "U(beta)|psi_{n,k}(beta)> = exp(-i omega_{n,k}(beta))|psi_{n,k}(beta)>. Three gapped Floquet bands for alpha=1/3. Parallel-transport phase convention <psi|d psi/d beta>=0.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq1",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eq. (1); eigenphases omega_{n,k}(beta) define the extended Floquet band."
+        },
+        {
+          "id": "spectrum_shape",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "J=K=3: three separated bands, omega/pi in [-0.95,0.95], reproduces Fig. 1(a); checks/fig1.json."
+        }
+      ],
+      "code_refs": [
+        "src/cdhm.py::floquet_bands",
+        "src/theory.py::_floquet_eig"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "initial_populations",
+      "title": "Initial band populations rho_{n,k}(0)=|C_{n,k}(0)|^2 (Fig. 1b)",
+      "statement": "C_{n,k}(0) = <psi_{n,k}(beta=0)|e_0>, with e_0=(1,0,0) the k-component of the site-0 initial state. rho_{n,k}(0)=|C_{n,k}(0)|^2, sum_n rho_{n,k}(0)=1.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_fig1b",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Sec. IV and Fig. 1(b): initial state exclusively at site l=0, populations on three bands."
+        },
+        {
+          "id": "pops_normalized",
+          "type": "normalization",
+          "status": "passed",
+          "note": "sum_n rho_{n,k}(0)=1 to 1e-10 over the BZ; test_initial_populations_sum_to_one."
+        },
+        {
+          "id": "k_reflection",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "rho_{n,-k}=rho_{n,k}, omega_{n,-k}=omega_{n,k} (Eq. 10 symmetry assumption); test_k_reflection_symmetry."
+        }
+      ],
+      "code_refs": [
+        "src/cdhm.py::initial_populations",
+        "src/theory.py::initial_amplitudes"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "transition_amplitude_W",
+      "title": "First-order amplitude C_{n,k}(1) and kernel W_{nm,k}(s) (Eqs. 4-6, A4-A11)",
+      "statement": "dC_{n,k}/ds = -sum_{m!=n} exp(i(Omega_n-Omega_m)) C_{m,k} <psi_n|d psi_m/ds>. Integrating by parts: C_{n,k}(1)=C_{n,k}(0)+(1/T) sum_{m!=n} C_{m,k}(0)[W_{nm,k}(s)]_0^1, W_{nm,k}(s)=<psi_n|d psi_m/ds>/(1-exp(i(omega_n-omega_m))) exp(i(Omega_n(s)-Omega_m(s))). At s=0: W(0)=2pi<psi_n|d_beta psi_m>/(1-exp(i(omega_n-omega_m))), with <psi_n|d_beta psi_m>=<psi_n|d_beta U|psi_m>/(lam_m-lam_n).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq5_6",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eqs. (5),(6); appendix Eqs. (A4),(A10),(A11)."
+        },
+        {
+          "id": "pt_identity",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "<psi_n|d_beta psi_m>=<psi_n|d_beta U|psi_m>/(lam_m-lam_n) derived from d_beta(U|psi_m>=lam_m|psi_m>) and <psi_n|U=lam_n<psi_n| (U unitary/normal); gauge-invariant combination C*_n C_m W_{nm}."
+        },
+        {
+          "id": "W_drives_IBC",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "W(0) feeds the IBC term of Eq. (13); it supplies the -1.24 correction that makes theory total (3.08) match the exact dynamics (3.10-3.15) at J=K=4; test_theory_matches_dynamics_dx, checks/fig3.json."
+        }
+      ],
+      "code_refs": [
+        "src/theory.py::W0_kernel"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "population_change_delta_rho",
+      "title": "Population change Delta rho_{n,k} after one cycle (Eq. 8, Fig. 2)",
+      "statement": "Delta rho_{n,k} = (2/T) Re[ sum_{m!=n} C*_n(0) C_m(0) (W_{nm,k}|_0^1) ], with W_{nm}|_0^1=W_{nm}(0)[exp(i Phi_{nm})-1], Phi_{nm}=(gamma_n-gamma_m)-(Omega_n(1)-Omega_m(1)), Omega_n(1)=sum_j omega_n(beta_j) exact discrete accumulated phase. Scales as 1/T for a general (multi-band) initial state (IBC), vs 1/T^2 for a single-band initial state.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq7_8",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eqs. (7),(8); Fig. 2 (J=K=3, T=1024, bottom band)."
+        },
+        {
+          "id": "conservation",
+          "type": "normalization",
+          "status": "passed",
+          "note": "sum_n Delta rho_{n,k}=0 to 1e-9 (probability conservation) for both actual and theory; checks/fig2.json."
+        },
+        {
+          "id": "theory_tracks_actual",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Eq. (8) reproduces the exact one-cycle Delta rho_{n,k} structure: correlation 0.83/0.91/0.90 (bands) and matching +-5e-3 envelope at T=1024; test_delta_rho_theory_tracks_actual, checks/fig2.json. Residual is inherent Omega~10^2 rad phase sensitivity."
+        }
+      ],
+      "code_refs": [
+        "src/theory.py::delta_rho_theory",
+        "src/theory.py::accumulated_Omega",
+        "src/theory.py::berry_phase"
+      ],
+      "open_questions": [
+        "Omega-sign convention: Phi uses -(Omega_n-Omega_m) matching this code's exp(-i omega) eigenphase convention (fixed against exact dynamics); an equivalent exp(+i omega) convention would flip it."
+      ]
+    },
+    {
+      "id": "berry_curvature",
+      "title": "Berry curvature B_n(beta,k) and dgamma/dk (Eq. 11)",
+      "statement": "B_n(beta,k)=i[<d_k psi_n|d_beta psi_n> - <d_beta psi_n|d_k psi_n>]; dgamma_{n,k}/dk = int_0^{2pi} dbeta B_n(beta,k). int_int B_n dk dbeta = 2 pi C_n (Chern number). Computed gauge-invariantly by the Fukui-Hatsugai-Suzuki plaquette method on the (k,beta) torus.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq11",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eq. (11) and the 'rewrite dgamma/dk as int dbeta B_n' statement."
+        },
+        {
+          "id": "chern_integer",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "Fukui Chern numbers are integers summing to zero; magnitudes (4,8,4) near J=K=4 and jump to (8,16,8) above J=K~5.14-5.18 (paper: (4,-8,4)->(-8,16,-8) at ~5.14); test_chern_sum_zero_and_magnitude."
+        }
+      ],
+      "code_refs": [
+        "src/theory.py::berry_flux_strips"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "avg_quasienergy",
+      "title": "Average quasienergy E_{n,k} along the pumping cycle (Eq. 12)",
+      "statement": "E_{n,k} = (1/T) Omega_{n,k}(1) = int_0^1 omega_{n,k}[beta(s)] ds = (1/2pi) int_0^{2pi} omega_{n,k}(beta) dbeta. dE_{n,k}/dk enters the IBC correction of Eq. (13).",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq12",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eq. (12)."
+        },
+        {
+          "id": "dEdk_odd",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "note": "E_{n,k} even in k (from omega_{n,-k}=omega_{n,k}), so dE/dk is odd; this makes the T*dE/dk*rho(0) piece of Eq. (9) integrate to zero, leaving only the IBC term (Eq. 13). k-reflection verified in test_k_reflection_symmetry."
+        }
+      ],
+      "code_refs": [
+        "src/theory.py::avg_quasienergy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "displacement_delta_x",
+      "title": "One-cycle displacement Delta<x> = Berry integral + IBC correction (Eqs. 9-13, A26)",
+      "statement": "Delta<x> = sum_n int dk int dbeta B_n(beta,k) rho_{n,k}(0)  -  2 sum_{m!=n} int dk Re[C*_n(0) C_m(0) (dE_{n,k}/dk) W_{nm,k}(0)]. Both terms independent of T; the second (IBC) survives the adiabatic limit. Units: atomic spacing; a filled band gives Delta x=a C_n (a=N=3), fixing the a/(2 pi) prefactor on both terms.",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "checks": [
+        {
+          "id": "src_eq13",
+          "type": "source_trace",
+          "status": "passed",
+          "note": "Main text Eqs. (9)-(13); appendix Eqs. (A19)-(A26). Central result, Figs. 3-4."
+        },
+        {
+          "id": "thouless_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "note": "Filled single band (rho=1): term1 -> a*C_n (Thouless pumped charge x lattice constant); reproduces the a/(2pi) prefactor; berry_bands in delta_x_theory."
+        },
+        {
+          "id": "theory_equals_dynamics",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "note": "J=K=4: Berry-only=4.32, IBC=-1.24, total=3.08; exact dynamics <x>(end)=3.10 (T-independent, T=1024..6144). Berry-only alone is far from the dynamics -> IBC correction is essential; test_theory_matches_dynamics_dx, checks/fig3.json."
+        }
+      ],
+      "code_refs": [
+        "src/theory.py::delta_x_theory",
+        "src/observables.py::x_expectation",
+        "src/observables.py::evolve_fast"
+      ],
+      "open_questions": []
+    }
+  ]
+}

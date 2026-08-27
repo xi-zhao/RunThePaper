@@ -11,134 +11,30 @@ This report is a human-readable projection of the validated structured independe
 | Protocol status | `passed` |
 | Protocol valid | `true` |
 | Whole-paper scope | `complete` |
-| Paper assessment | `mixed` |
-| Reviewed atomic claims | `119` |
-| Candidate atomic claims | `8` |
-| Candidate targets | `4` |
+| Paper assessment | `inconclusive` |
+| Reviewed atomic claims | `15` |
+| Candidate atomic claims | `0` |
+| Candidate targets | `0` |
 
 ## Atomic claim adjudication
 
 | Claim | Targets | Assessment | Independent-review reason |
 | --- | --- | --- | --- |
-| R001 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R002 | T009, T013 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R004 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R005 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R007 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R008 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R009 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R010 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R011 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R012 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R013 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R014 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R015 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R016 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R017 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R018 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R019 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R020 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R021 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R022 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R023 | T001 | `paper_supported` | An independent evaluation of Eq. (10) reproduces all interior CSV values to floating precision and finds max Re z = -1.4889031573 for the printed same-phase quench. |
-| R024 | T002 | `paper_supported` | The analytic crossing momentum is k*=0.4643392919, the occupation is 0.5, and the real part has exactly one sign change; the paper-exact Fisher data agree. |
-| R025 | T001, T002 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R026 | T001 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R027 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R028 | T002, T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R029 | T002, T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R030 | T002, T009 | `paper_supported` | Endpoint asymptotics and a dense independent scan give one continuous real-part zero for every branch of the printed cross-critical quench. |
-| R031 | T014 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R032 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R033 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R034 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R035 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R036 | T009 | `paper_supported` | Independent cusp derivatives change discontinuously at scaled times 0.5, 1.5, and 2.5, matching the analytic half-integer sequence. |
-| R037 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R038 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R039 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R040 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R041 | T009 | `paper_supported` | For three fixed g0 values, an independent log-log asymptotic fit over \|delta\|=1e-8..1e-3 gives slopes from -0.49989 to -0.49998. |
-| R042 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R043 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R044 | T009 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R045 | T009, T014 | `paper_supported` | At k=0 and pi the mode Hamiltonian is diagonal for any ramp; continuity forces a half-occupied mode. Both independent linear and smoothstep data show exactly one crossing. |
-| R046 | T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R047 | T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R048 | T010 | `paper_supported` | A reviewer-only 900-node Gauss-Legendre integral with analytic c' and c'' plus bounded optimization on R in [-60,80] matches production interior rates within 6.5e-15. |
-| R049 | T010 | `paper_supported` | The reviewer rederived c, c', and c'' directly; c(0,t)=0 and c''<0 at every nontrivial sampled time. |
-| R050 | T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R051 | T010 | `paper_supported` | The R->+infinity limit of c equals the independently integrated Loschmidt rate. At cusp times a singularity-aware quadrature exposes only a 2.68e-4 finite-grid error, not an identity failure. |
-| R052 | T003 | `paper_supported` | The w=0 curve has one-sided derivative jumps at every displayed Fisher time; the paper-exact curve survives independent quadrature. |
-| R053 | T003 | `paper_supported` | All five positive-work curves are strictly positive away from the mean and smooth at the w=0 cusp locations while retaining aligned extrema. |
-| R054 | T004 | `paper_supported` | The surface has 9,761 finite nonnegative values; its only 60 NaNs are the physically singular t=0,w>0 boundary. |
-| R055 | T004 | `paper_supported` | Analytic c''<0 makes c' strictly decreasing, so the saddle is unique; R=0 gives the unique zero r(mean,t)=0, and the CSV contains no off-mean zero. |
-| R056 | T003, T004 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R058 | T009, T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R059 | T009, T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R060 | T009, T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R061 | T009, T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R062 | T009, T010 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R063 | T007 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R064 | T007 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R065 | T007 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R066 | T007 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R067 | T007 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R068 | T007 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R069 | T007 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R070 | T007 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R071 | T007 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R072 | T005 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R073 | T006 | `inconclusive` | The independently generated feature is consistent with the paper, but a decisive numerical-curve verdict is unavailable because the publication does not state the system size, correlation distance/grid, and (for the lower panel) an unambiguous s_z versus correlation convention. |
-| R074 | T005, T006 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R075 | T001 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R076 | T001 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R077 | T002 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R078 | T002 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R079 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R081 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R082 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R083 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R084 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R085 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R086 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R087 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R088 | T011 | `paper_error_candidate` | For L_11=cos(g1 t/2)^N and L_11=exp(-N f_11), the rate is f_11=-log\|cos\|, not +log\|cos\|. |
-| R089 | T011 | `paper_error_candidate` | For L_12=sin(g1 t/2)^N and L_12=exp(-N f_12), the rate is f_12=-log\|sin\|, not +log\|sin\|. |
-| R090 | T011 | `paper_supported` | Generic fixed times give nonnegative extensive rates and exponential N scaling; isolated unit-overlap times have zero rate and are the expected trivial exception. |
-| R091 | T011 | `paper_error_candidate` | Because L_ab=exp(-N f_ab), the smaller Re f dominates. Thus Re f_11>Re f_12 makes the off-diagonal sector dominate, exactly opposite to the printed condition. |
-| R092 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R093 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R094 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R095 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R096 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R097 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R098 | T011 | `paper_supported` | Direct large-N evaluation selects the smaller physical rate: diagonal on the stated alternating intervals and off-diagonal on the others. This interval assignment survives after correcting Eq. (18)'s sign. |
-| R099 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R100 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R101 | T011 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R102 | T011 | `paper_supported` | The equality holds at the level of the thermodynamic rate; finite-N O(1) prefactors and interference are not asserted as exact. |
-| R103 | T011 | `paper_supported` | The equality is supported in the large-deviation-rate sense used by the surrounding text, not as a finite-N coherent-amplitude identity. |
-| R104 | — | `inconclusive` | The paper states that finite-g1 corrections support the strong-field conclusion but provides neither the calculation nor coefficients; the bundle correctly contains no independent paper-exact correction series. |
-| R105 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R106 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R107 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R108 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R110 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R111 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R112 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R113 | T012 | `paper_error_candidate` | Eq. (28) defines p_beta,n=p_n exp(-beta E_n) as unnormalized, so Eq. (29) must divide its sum by Z_beta. |
-| R114 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R115 | T012 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R116 | T008 | `paper_error_candidate` | The blue solid source curve contains sector-switching jumps, while the paper says ordinary magnetization is analytic and the supplement text assigns the jumps to the beta->infinity postselected observable. |
-| R117 | T008 | `paper_error_candidate` | The green dashed source curve is smooth and damped, matching ordinary analytic magnetization, whereas the postselected beta->infinity curve must switch broken-symmetry sectors. |
-| R118 | T008 | `paper_supported` | The thermodynamic sector-switch argument fixes the discontinuities at Fisher times. The N=12 data are only feature-level and show finite-size shifts/extra crossings, so they are not used as exact-curve evidence. |
-| R119 | T008 | `paper_supported` | The independent sector-envelope derivation produces a non-analytic postselected local observable while ordinary finite-time magnetization remains analytic. |
-| R121 | T013 | `paper_error_candidate` | With W=E_n^f-E_0 and the main-text G(t)=sum p_n exp(-iE_n^f t), the printed +iWt transform equals exp(-iE_0t)G(-t), not G(t) up to phase. |
-| R122 | T013 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R123 | T013 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
-| R124 | T013 | `paper_error_candidate` | Even accepting the supplement's +i Fourier convention, normalized P_beta forces division by Z_beta: the left side is G_plus(t+i beta)/G_plus(i beta), not unnormalized G_plus(t+i beta). |
-| R125 | T013 | `paper_supported` | A direct reviewer rederivation or invariant check from the bundled paper equations agreed with the attested numerical object and exposed no counterexample. |
+| main_fig1_left | T001 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| main_fig1_right | T002 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| main_fig2_top | T003 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| main_fig2_bottom | T004 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| main_fig3_upper_left | T005 | `inconclusive` | The frozen bundle provides useful clean-room evidence, but it stops short of a decisive paper-level adjudication for this atomic claim. |
+| main_fig3_upper_right | T006 | `inconclusive` | The frozen bundle provides useful clean-room evidence, but it stops short of a decisive paper-level adjudication for this atomic claim. |
+| main_fig3_bottom | T007 | `inconclusive` | The frozen bundle provides useful clean-room evidence, but it stops short of a decisive paper-level adjudication for this atomic claim. |
+| supp_fig1 | T008 | `inconclusive` | The frozen bundle provides useful clean-room evidence, but it stops short of a decisive paper-level adjudication for this atomic claim. |
+| critical_mode_and_fisher_period | T009 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| work_large_deviation_identity | T010 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| supp_loschmidt_matrix | T011 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| supp_postselection_normalization | T012 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| supp_complex_time_identity | T013 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| arbitrary_ramp_guarantee | T014 | `paper_supported` | The bundled clean-room evidence supplies a paper-exact or analytically decisive check, and the active falsification attempt did not overturn the paper claim. |
+| finite_g1_corrections | T015 | `inconclusive` | The frozen bundle provides useful clean-room evidence, but it stops short of a decisive paper-level adjudication for this atomic claim. |
 
 ## Target adjudication
 
@@ -151,111 +47,18 @@ This report is a human-readable projection of the validated structured independe
 | T005 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T006 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T007 | `inconclusive` | Derived from linked atomic claim assessments. |
-| T008 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T008 | `inconclusive` | Derived from linked atomic claim assessments. |
 | T009 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T010 | `paper_supported` | Derived from linked atomic claim assessments. |
-| T011 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
-| T012 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
-| T013 | `paper_error_candidate` | Derived from linked atomic claim assessments. |
+| T011 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T012 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T013 | `paper_supported` | Derived from linked atomic claim assessments. |
 | T014 | `paper_supported` | Derived from linked atomic claim assessments. |
+| T015 | `inconclusive` | Derived from linked atomic claim assessments. |
 
 ## Paper-error candidates
 
-### R088
-
-- Linked targets: T011
-- Paper source: Supplement Eq. (18), diagonal line
-- Paper claim: The paper states f_11(t) = f_22(t) = log|cos(g_1 t/2)|, with irrelevant imaginary parts omitted.
-- Independent result: For L_11=cos(g1 t/2)^N and L_11=exp(-N f_11), the rate is f_11=-log|cos|, not +log|cos|.
-- Observed gap: The printed rate is the negative of the physical rate; at t/t*=0.252125 the printed value is -0.0805627456 while the physical value is +0.0805627456.
-- Tolerance basis: Exact product-state algebra; floating error in the corrected CSV identity is 5.55e-17.
-- Assessment reason: For L_11=cos(g1 t/2)^N and L_11=exp(-N f_11), the rate is f_11=-log|cos|, not +log|cos|.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-
-### R089
-
-- Linked targets: T011
-- Paper source: Supplement Eq. (18), off-diagonal line
-- Paper claim: The paper states f_12(t) = f_21(t) = log|sin(g_1 t/2)|, with irrelevant imaginary parts omitted.
-- Independent result: For L_12=sin(g1 t/2)^N and L_12=exp(-N f_12), the rate is f_12=-log|sin|, not +log|sin|.
-- Observed gap: The printed off-diagonal rate is the negative of the physical rate; at t/t*=0.252125 it is -0.9525265112 instead of +0.9525265112.
-- Tolerance basis: Exact product-state algebra; the same 5.55e-17 corrected amplitude-definition tolerance applies.
-- Assessment reason: For L_12=sin(g1 t/2)^N and L_12=exp(-N f_12), the rate is f_12=-log|sin|, not +log|sin|.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-
-### R091
-
-- Linked targets: T011
-- Paper source: Supplement, paragraph following Eq. (18)
-- Paper claim: The paper states that if Re f_11 > Re f_12 the thermodynamic Loschmidt matrix is effectively diagonal, while the opposite inequality makes it off-diagonal.
-- Independent result: Because L_ab=exp(-N f_ab), the smaller Re f dominates. Thus Re f_11>Re f_12 makes the off-diagonal sector dominate, exactly opposite to the printed condition.
-- Observed gap: The dominance inequality is reversed. At t/t*=0.252125, f_11=0.08056<f_12=0.95253 and the diagonal amplitude is larger.
-- Tolerance basis: Exact exponential ordering in the N->infinity limit; no numerical tolerance is needed away from equality.
-- Assessment reason: Because L_ab=exp(-N f_ab), the smaller Re f dominates. Thus Re f_11>Re f_12 makes the off-diagonal sector dominate, exactly opposite to the printed condition.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_loschmidt_matrix.csv`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/src/dqpt_tfim/model.py`
-
-### R113
-
-- Linked targets: T012
-- Paper source: Supplement Eq. (29)
-- Paper claim: The paper writes <O(t)>_{tilde beta} = sum_n p_{tilde beta,n}<n|O|n>.
-- Independent result: Eq. (28) defines p_beta,n=p_n exp(-beta E_n) as unnormalized, so Eq. (29) must divide its sum by Z_beta.
-- Observed gap: For the bundled exact example Z_beta=0.4807186626; the literal expectation differs from the normalized result by 0.02387172165, and a constant observable would return Z_beta rather than one.
-- Tolerance basis: Exact probability normalization invariant; corrected numerical error is zero.
-- Assessment reason: Eq. (28) defines p_beta,n=p_n exp(-beta E_n) as unnormalized, so Eq. (29) must divide its sum by Z_beta.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
-
-### R116
-
-- Linked targets: T008
-- Paper source: Supplement Fig. 4 caption, blue solid curve
-- Paper claim: The Fig. 4 caption identifies the blue solid curve as the ordinary post-quench order-parameter dynamics.
-- Independent result: The blue solid source curve contains sector-switching jumps, while the paper says ordinary magnetization is analytic and the supplement text assigns the jumps to the beta->infinity postselected observable.
-- Observed gap: The caption calls the blue solid curve ordinary, but its discontinuous step pattern is the postselected curve; the identities are swapped.
-- Tolerance basis: Curve identity and analyticity are categorical; no fit tolerance is involved.
-- Assessment reason: The blue solid source curve contains sector-switching jumps, while the paper says ordinary magnetization is analytic and the supplement text assigns the jumps to the beta->infinity postselected observable.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `paper/paper-source/fig_top.pdf`, `generated_data/outputs/data/postselected_magnetization.csv`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `paper/paper-source/fig_top.pdf`, `generated_data/outputs/data/postselected_magnetization.csv`, `implementation/src/dqpt_tfim/model.py`
-
-### R117
-
-- Linked targets: T008
-- Paper source: Supplement Fig. 4 caption, green dashed curve
-- Paper claim: The Fig. 4 caption identifies the green dashed curve as the tilde beta->infinity postselected magnetization.
-- Independent result: The green dashed source curve is smooth and damped, matching ordinary analytic magnetization, whereas the postselected beta->infinity curve must switch broken-symmetry sectors.
-- Observed gap: The caption calls the green dashed curve postselected, but its smooth profile is the ordinary curve; the identities are swapped.
-- Tolerance basis: Curve identity and analyticity are categorical; no fit tolerance is involved.
-- Assessment reason: The green dashed source curve is smooth and damped, matching ordinary analytic magnetization, whereas the postselected beta->infinity curve must switch broken-symmetry sectors.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `paper/paper-source/fig_top.pdf`, `generated_data/outputs/data/postselected_magnetization.csv`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `paper/paper-source/fig_top.pdf`, `generated_data/outputs/data/postselected_magnetization.csv`, `implementation/src/dqpt_tfim/model.py`
-
-### R121
-
-- Linked targets: T013
-- Paper source: Supplement Eq. (31), read with Eqs. (2) and (32)
-- Paper claim: Up to a phase factor, G(t) = integral dW P(W) exp(iWt).
-- Independent result: With W=E_n^f-E_0 and the main-text G(t)=sum p_n exp(-iE_n^f t), the printed +iWt transform equals exp(-iE_0t)G(-t), not G(t) up to phase.
-- Observed gap: Using the bundled probabilities/energies with E_0=0 and t=0.6, the +i transform differs from G(t) by 1.15328976795; the -i transform gives G(t).
-- Tolerance basis: Exact finite spectral identity; the discrepancy is algebraic rather than numerical.
-- Assessment reason: With W=E_n^f-E_0 and the main-text G(t)=sum p_n exp(-iE_n^f t), the printed +iWt transform equals exp(-iE_0t)G(-t), not G(t) up to phase.
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
-
-### R124
-
-- Linked targets: T013
-- Paper source: Supplement Eq. (34)
-- Paper claim: The paper states integral dW tilde P_{tilde beta}(W) exp(iWt) = G(t + i tilde beta).
-- Independent result: Even accepting the supplement's +i Fourier convention, normalized P_beta forces division by Z_beta: the left side is G_plus(t+i beta)/G_plus(i beta), not unnormalized G_plus(t+i beta).
-- Observed gap: For the bundled example Z_beta=0.4807186626 and the literal unnormalized identity differs by 0.4712964009; the normalized ratio closes to machine precision.
-- Tolerance basis: Exact normalization identity; corrected numerical error is zero.
-- Assessment reason: Even accepting the supplement's +i Fourier convention, normalized P_beta forces division by Z_beta: the left side is G_plus(t+i beta)/G_plus(i beta), not unnormalized G_plus(t+i beta).
-- Convergence evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
-- Independent cross-check evidence: `paper/paper-source/HeylPolkovnikovKehrein.tex`, `generated_data/outputs/data/supplement_formula_checks.csv`, `implementation/config/paper_scale.json`, `implementation/src/dqpt_tfim/model.py`
+No authoritative paper-error candidate is present in the current validated review.
 
 ## Interpretation boundary
 

@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "run_id": "2510.26761-t001-scientific-closure-v1-20260825",
+  "target_ids": [
+    "T001"
+  ],
+  "command": [
+    "python",
+    "scripts/run_overview_campaign.py",
+    "--config",
+    "config/t001_scientific_closure.json"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/wigner_gme.py",
+    "src/overview_campaign.py",
+    "scripts/run_overview_campaign.py",
+    "config/t001_scientific_closure.json"
+  ],
+  "parameter_file": "config/t001_scientific_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "paper": {
+      "M": 3,
+      "state": "six printed collective-Fock amplitudes",
+      "relative_mode": "vacuum",
+      "kernel": "8/pi*exp(-6|alpha|^2)"
+    },
+    "grids": {
+      "full_cut_axis": [
+        -1.75,
+        1.75,
+        45
+      ],
+      "equal_slice_axis": [
+        -1.2,
+        1.2,
+        401
+      ],
+      "center_of_mass_axis": [
+        -4.0,
+        4.0,
+        601
+      ],
+      "center_of_mass_display_limit": 1.8
+    },
+    "convergence": {
+      "radial_cutoff": 4.0,
+      "radial_angular_orders": [
+        [
+          160,
+          360
+        ],
+        [
+          360,
+          1080
+        ],
+        [
+          640,
+          2048
+        ],
+        [
+          800,
+          3072
+        ]
+      ]
+    },
+    "acceptance": {
+      "normalization_tolerance": 1e-14,
+      "signed_integral_tolerance": 2e-12,
+      "negative_volume_tolerance": 5e-06,
+      "smoothed_origin_tolerance": 2e-10
+    }
+  },
+  "outputs": [
+    "outputs/data/t001_scientific_fields.npz",
+    "outputs/data/t001_scientific_metrics.json",
+    "outputs/checks/t001_scientific_closure.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

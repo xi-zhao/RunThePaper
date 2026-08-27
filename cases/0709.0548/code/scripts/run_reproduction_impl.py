@@ -485,9 +485,10 @@ def main() -> None:
         "schema_version": 1,
         "paper_id": "0709.0548",
         "claim_boundary": (
-            "The cited first-level Doherty test is not rerun: the paper gives "
-            "no solver, tolerance, seed, or certificate and this environment "
-            "has no PSD-cone solver. The SDP itself is specified exactly."
+            "This artifact specifies the cited first-level Doherty contract but "
+            "cannot reconstruct the unpublished author state list, settings, or "
+            "certificate. The dedicated T014 runner independently executes the "
+            "same formulation on a frozen clean-room campaign."
         ),
         "contracts": [
             first_symmetric_extension_contract(
@@ -643,7 +644,7 @@ def main() -> None:
             "long_table_rows": len(long_rows),
             "phase_table_rows": len(phase_rows),
             "paper_generator_status": "publication_underspecified",
-            "doherty_level_one_status": "code_ready_solver_unavailable",
+            "doherty_level_one_status": "author_certificate_unavailable_independent_solver_available",
             "foundational_information_audit": foundational,
             "sampling_complexity_rows": len(sampling),
             "sampling_maximum_overhead": max(
@@ -653,7 +654,7 @@ def main() -> None:
         "scientific_boundaries": [
             "The independent brickwork circuit is a convergence probe, not the unpublished author ensemble.",
             "Zero PPT negativity or realignment norm <=1 is not interpreted as a separability proof.",
-            "The first symmetric-extension SDP is specified but not solved without a PSD-cone solver or author certificate.",
+            "The author symmetric-extension state list and certificate are unavailable; the dedicated T014 runner separately executes an independent solver campaign.",
             "Finite root grids are not continuously phi invariant; only their continuum limit is.",
             "The fixed-accuracy sampling bound follows from bounded control-readout variance and does not assert a classical lower bound.",
         ],

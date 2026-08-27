@@ -4,7 +4,7 @@
 
 | 类别 | 数量 | 含义 |
 | --- | ---: | --- |
-| paper-exact scientific pass | 8 | T001–T007、T011 的公式、参数和科学检查通过 |
+| paper-exact local scientific pass | 9 | T001–T007、T011–T012 的公式、参数和科学检查通过；T012 待 fresh review |
 | reconstructed feature pass | 2 | T008、T009 的相变特征通过，但两个参数来自后续同作者论文 |
 | reconstructed partial | 1 | T010 相结构通过，稳态第二峰权重明显偏弱 |
 | failed | 0 | 没有科学断言失败 |
@@ -25,5 +25,6 @@
 | T009 | Fig. 3(C) micromaser | reconstructed feature pass | 93.9314 | 不能证明曲线权重 paper-exact | 原文缺 `N_ex`、热占据数 |
 | T010 | Fig. 3(D) distributions | reconstructed partial | 96.5188 | 第二峰/主峰仅 `0.007065` | 原文缺参数；另有标签疑点 |
 | T011 | Doob mapping | paper-exact pass | N/A | trace residual `6.31e-15` | — |
+| T012 | three-level inactive Doob realization | paper-exact local pass; review pending | N/A | generator residual `1.53e-13`，emission ratio `0.0196` | — |
 
-所有像素比较都发生在数值冻结之后。`outputs/checks/pixel_evidence.json` 是渲染证据，`outputs/checks/science_checks.json` 才记录可证伪的物理量。
+所有像素比较都发生在数值冻结之后。`outputs/checks/pixel_evidence.json` 是渲染证据；`outputs/checks/science_checks.json` 与 `outputs/checks/T012_three_level_doob_mapping.json` 记录可证伪的物理量。

@@ -1,65 +1,21 @@
-# 2604.08669 复现说明
+# An Algorithm for Fast Assembling Large-Scale Defect-Free Atom Arrays：科学复现讲义
 
-## 一句话结果
+## 结论
 
-这个 case 已经从“小尺寸 proxy”推进到论文几何的部分复现：GNN 数据与短训练探针在 A100-SXM4-80GB 上使用 `127×127 → 101×101` 几何；P2WGS 使用论文尺度 `N=10201` 和 `1024×1024` 网格。完整 million-scale GNN 训练、GPU-parallel auction decoder 和硬件实测时延仍未完成。
+Reduced-scale two-stage reproduction has started. It now treats Fig. 3 as a retrained model artifact with checkpoint, training history, and evaluation metrics; P2WGS continuity and pipelined timing remain reduced-scale/model targets.
 
-当前公开状态：**paper-geometry partial reproduction**。审计分数：**61.60/100**。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-## 核心模型
+## 我们复现的是什么
 
-论文的产品流程由三个对象串起来：
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-1. GNN 为原子—目标边打分并生成一对一分配；
-2. P2WGS 根据移动轨迹生成连续全息帧；
-3. pipeline timing model 估算路径规划、帧生成、SLM 刷新和传输延迟的总装配时间。
+当前权威维度：`artifact_integrity=artifact_valid, numerical_scope=incomplete, parameters=mixed, parameter_provenance=missing, causal_resolution=attempted_not_reproduced, science=failed, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
-公开实现保留这条主链，但缺失目标不计为完成。
+## 运行
 
-## Fig. 3：A100 论文几何 GNN 探针
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-A100 campaign 已生成 256 个训练池样本和 64 个独立验证样本，几何参数为 `initial_side=127`、`target_side=101`、`k=128`。最佳 `val64` 短探针得到：
+## 论文审查边界
 
-- 平均移动距离 `0.51798`，论文参考 `0.512`，差 `+0.00598`；
-- 最大移动距离 `1.94310`，论文参考 `1.93`，差 `+0.01310`；
-- `rank1_rate=0.7763`。
-
-![Fig. 3 A100 paper-geometry comparison](../outputs/figures/fig3_a100_paper_geometry_gap.png)
-
-差异原因：这是 64-instance 的论文几何短探针，不是论文的 million-sample 训练和 1024-instance 评测；当前 squared-distance 标签在平均距离 gate 上失败，而 Euclidean 标签会恶化最大距离尾部，所以先停止扩训。
-
-## Fig. 4：paper-scale P2WGS
-
-P2WGS 已按 `N=10201`、目标边长 `101`、`1024×1024` 网格、`3/5/8/10` 次迭代和 3 个随机装载实例运行。phase continuity 始终低于 `2% × 2π` 并随迭代改善，这一主特征通过；论文中 3→5 次迭代的 intensity improvement 没有在误差内分辨出来。
-
-![Fig. 4 paper-scale P2WGS](../outputs/figures/fig4_paper_scale_p2wgs_summary.png)
-
-差异原因：公开 arXiv 材料没有给出 Zhuifeng 的精确 frame-trajectory 协议；独立重建可以复现 phase 约束，但不足以复刻 intensity 的 3→5 细节。
-
-## Fig. 5：pipeline timing
-
-![Fig. 5 timing model](../outputs/figures/fig5_reduced_timing_model.png)
-
-差异原因：这张图是透明的 analytic pipeline model，不是论文 RTX 5090 或当前 A100 上的硬件实测。A100 测量也不能冒充 RTX 5090 benchmark。
-
-## 为什么停止
-
-- 完整 GNN 训练：论文报告 4 张 A40、288 GPU-hours；当前 metric-contract gate 尚未通过，继续扩到百万样本缺少可靠验收信号，因此不硬跑。
-- GPU decoder：作者的 GPU-parallel kernel 不在公开材料中。CPU modified-auction 只验证分配逻辑，不能支持 GPU timing claim。
-- P2WGS intensity 细节：缺少作者的轨迹/帧协议，不是增加样本就能唯一解决。
-- 硬件 timing：目标硬件是 RTX 5090；A100 不是同一 benchmark。
-
-机器可读边界见 `../outputs/checks/completion_assessment.json`。A100 汇总见 `../outputs/checks/a100_paper_geometry_campaign.json`。
-
-## 可运行命令
-
-```bash
-cd cases/2604.08669/code
-python scripts/run_reduced_pilot.py
-python scripts/run_reduced_p2wgs_pilot.py
-python scripts/plot_reduced_outputs.py
-python scripts/plot_completion_summary.py
-python scripts/run_paper_scale_gnn_training.py --profile paper_target --dry-run
-```
-
-最后一条只写出配置，不会启动 million-sample training。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: numerical_scope=incomplete, parameters=mixed, parameter_provenance=missing, causal_resolution=attempted_not_reproduced, science=failed, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing.

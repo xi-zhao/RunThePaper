@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "paper_id": "1807.01815",
+  "targets": [
+    "T_FIGS2A",
+    "T_FIGS2B"
+  ],
+  "scientific_input_boundary": {
+    "author_code_used": false,
+    "author_arrays_used": false,
+    "source_pixels_used": false,
+    "inputs": [
+      "paper-source/Quantum_ManybodyScar_Supplemental_Info_Resubmit_v4.tex",
+      "outputs/data/T_FIGS2.npz",
+      "src/scar_tdvp/constrained.py",
+      "src/scar_tdvp/tdvp.py"
+    ]
+  },
+  "input_hashes": {
+    "source": "e5dadeaf4986500dfaa336c9f255faf4d6014a449ec27bcfc0f8293e4f8287e6",
+    "generated_data": "12985378825d63a0c663f5a6fd29a553d37337dca40760ede73024f7d160fbe1"
+  },
+  "observed_result": {
+    "ring_lengths": [
+      10,
+      12,
+      14
+    ],
+    "convergence_max_abs": 1.393523357262616e-07,
+    "generated_error_minimum_h_over_omega": 0.07,
+    "generated_fluctuation_minimum_h_over_omega": 0.08,
+    "paper_fluctuation_minimum_h_over_omega": 0.045,
+    "paper_claim_reproduced": false
+  },
+  "checks": [
+    {
+      "kind": "independent_implementation",
+      "result": "passed",
+      "statement": "A direct product-basis implementation of the printed Hamiltonian equals the case implementation evaluated with the publication-literal sign.",
+      "value": 0.0,
+      "threshold": 1e-12
+    },
+    {
+      "kind": "exact_rederivation",
+      "result": "passed",
+      "statement": "Under the paper's S^z+s occupation convention, the literal +h Hamiltonian projects to the -h flow, while the printed +h flow projects from the opposite Hamiltonian sign.",
+      "literal_to_printed_plus_flow_max_abs": [
+        0.0526533532629025,
+        0.04855727475581667,
+        0.06519343015258466
+      ],
+      "literal_to_opposite_flow_max_abs": [
+        0.0004694899463107069,
+        2.5287216193214945e-07,
+        5.015869386504335e-10
+      ],
+      "implemented_to_printed_plus_flow_max_abs": [
+        0.00038058096479663336,
+        1.553052151326284e-07,
+        7.255305245479349e-10
+      ]
+    },
+    {
+      "kind": "invariant",
+      "result": "passed",
+      "statement": "The deformed flow reduces to the undeformed s=1/2 TDVP flow at h=0.",
+      "value": 1.1102230246251565e-16,
+      "threshold": 1e-12
+    },
+    {
+      "kind": "convergence",
+      "result": "passed",
+      "statement": "The independently generated S2 arrays converge from the last two finite rings.",
+      "value": 1.393523357262616e-07,
+      "threshold": 1e-06
+    },
+    {
+      "kind": "source_trace",
+      "result": "passed",
+      "statement": "The publication source pins the occupation convention, +h Hamiltonian, +h flow, gamma-squared integral, and h/Omega approximately 0.045 claim.",
+      "source_checks": {
+        "occupation_convention": true,
+        "printed_hamiltonian_plus_sign": true,
+        "printed_flow_plus_sign": true,
+        "fluctuation_definition": true,
+        "printed_minimum_claim": true
+      }
+    }
+  ],
+  "code_fault_assessment": {
+    "status": "not_found_after_checks",
+    "statement": "Independent operator construction, exact sign rederivation, h=0 invariant, finite-ring convergence, and source tracing found no implementation defect that explains the mismatch."
+  },
+  "scientific_conclusion": "The generated S2 claim remains different after convergence.  The publication's literal +h Hamiltonian and printed +h TDVP flow use opposite signs under its stated occupation convention, so a fresh claim-level review must adjudicate the discrepancy; no source pixels are used to force agreement."
+}

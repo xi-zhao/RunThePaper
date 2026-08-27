@@ -1,12 +1,24 @@
-# Formula verification
+# Formula Verification
 
-The machine-readable result is
-[`../outputs/checks/formula_verification.json`](../outputs/checks/formula_verification.json).
+Machine-readable result:
 
-| Formula | Role | Status | Evidence |
+```text
+outputs/checks/formula_verification.json
+```
+
+Run:
+
+```bash
+python PRAgent-workflow/scripts/check_formula_gate.py case/2608.03987 --write
+```
+
+## Gate Summary
+
+| Formula | Role | Gate | Reason |
 | --- | --- | --- | --- |
-| `o = 1 + 2m + r` | Figure 8 overhead and analytic band | verified | Integer pass/ride/merge audit and 67-circuit numerical residual |
-| `g = abs(o_conv-o_full)/o_full` | Figure 9 transfer metric | verified | Direct implementation of the caption metric and both thresholds |
+| EQ001 | Figure 8 overhead and band | open | Source trace and symbolic volume-weighted identity both pass. |
+| EQ002 | Figure 9 relative pipeline gap | open | The metric and both thresholds are stated directly in the caption. |
 
-The exact identity is also covered by the tiny-network dynamic-programming
-oracle in `code/tests/test_clean_room_core.py`.
+## Closed Or Unclear Formulas
+
+None for the current Figure 8/9 scope.

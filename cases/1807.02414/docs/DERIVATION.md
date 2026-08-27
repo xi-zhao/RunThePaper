@@ -120,3 +120,22 @@ $$
 status: `verified` · derived from: `EQ002`, `EQ003`, `EQ005` · source: equation: Main text after Eq. (9): D=(1-nT)^-1 rho_s D_tilde rho_s^-1 (1-nT); equation: Main text kernel formula: rho_s(theta)^2 D_tilde(theta,alpha)=w(theta)delta(theta-alpha…; equation: Main text Eq. (13): partial_t n+v_eff partial_x n=(1/2)D_tilde partial_x^2 n
 
 Code: `src/xxz_diffusion/full_ghd.py::spectral_diffusion_operator`, `src/xxz_diffusion/full_ghd.py::evolve_linearized_full_ghd`, `scripts/run_full_ghd.py`
+
+
+### EQ010 — Hard-rod limiting reduction
+
+`T(theta,alpha)=constant` and `f=1` are stated to reduce the general diffusion
+kernel to the known hard-rod operator. The source trace is closed, but the
+independent reduction is not implemented; T004 therefore remains uncovered.
+
+### EQ011 — Free-model zero-diffusion limit
+
+The paper states `T=0`, hence `T^dr=0`, `W=0`, and `D=0`. The source trace is
+closed, but no independent invariant artifact exists; T005 remains uncovered.
+
+### EQ012 — Entropy-production positivity
+
+The main text and supplement give
+`partial_t S = integral dx (sigma, D C sigma)/2 >= 0`. The source trace is
+closed, but the derivation has not been independently reconstructed or tested;
+T006 remains uncovered.

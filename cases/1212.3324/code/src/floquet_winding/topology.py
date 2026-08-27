@@ -115,6 +115,39 @@ def _effective_hamiltonian(
     return 0.5 * (result + result.conjugate().T)
 
 
+def _gauge_periodic_centered_difference(
+    values: np.ndarray,
+    *,
+    axis: int,
+    spacing: float,
+    seam_gauge: np.ndarray,
+) -> np.ndarray:
+    """Differentiate a matrix field across a gauge-periodic torus seam.
+
+    The square-lattice Bloch basis changes by ``seam_gauge`` after either
+    primitive reciprocal coordinate advances by ``2*pi``.  Consequently a
+    matrix sampled on the opposite edge must be transported into the local
+    basis before a finite difference is formed.  Treating the array as simply
+    periodic compares matrices written in different bases and produces a
+    spurious boundary contribution to the winding integral.
+    """
+
+    forward = np.roll(values, -1, axis=axis).copy()
+    backward = np.roll(values, 1, axis=axis).copy()
+    high = [slice(None)] * values.ndim
+    low = [slice(None)] * values.ndim
+    high[axis] = -1
+    low[axis] = 0
+    gauge_dagger = seam_gauge.conjugate().T
+    forward[tuple(high)] = (
+        seam_gauge @ forward[tuple(high)] @ gauge_dagger
+    )
+    backward[tuple(low)] = (
+        seam_gauge @ backward[tuple(low)] @ gauge_dagger
+    )
+    return (forward - backward) / (2.0 * spacing)
+
+
 def square_winding_number(
     hopping: float,
     sublattice: float,
@@ -164,8 +197,18 @@ def square_winding_number(
     dt = period / time_points
     dq = 2.0 * np.pi / momentum_points
     derivative_t = (np.roll(evolution, -1, axis=0) - np.roll(evolution, 1, axis=0)) / (2.0 * dt)
-    derivative_x = (np.roll(evolution, -1, axis=1) - np.roll(evolution, 1, axis=1)) / (2.0 * dq)
-    derivative_y = (np.roll(evolution, -1, axis=2) - np.roll(evolution, 1, axis=2)) / (2.0 * dq)
+    derivative_x = _gauge_periodic_centered_difference(
+        evolution,
+        axis=1,
+        spacing=dq,
+        seam_gauge=SIGMA_Z,
+    )
+    derivative_y = _gauge_periodic_centered_difference(
+        evolution,
+        axis=2,
+        spacing=dq,
+        seam_gauge=SIGMA_Z,
+    )
     inverse = evolution.conjugate().swapaxes(-1, -2)
     a_t = inverse @ derivative_t
     a_x = inverse @ derivative_x

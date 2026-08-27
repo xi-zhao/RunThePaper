@@ -21,7 +21,7 @@ Numerical form:
 Build a dense complex tridiagonal matrix and add or omit the two corner hoppings for periodic or open boundaries.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::aah_hamiltonian`
+Code: `src/nonhermitian_quasicrystal.py::aah_hamiltonian`
 
 
 ### EQ002 — Fourier-dual Hatano-Nelson representation
@@ -40,7 +40,7 @@ Numerical form:
 Construct the dual matrix independently for a small rational approximant and compare eigenvalue sets.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::dual_hatano_nelson_hamiltonian`
+Code: `src/nonhermitian_quasicrystal.py::dual_hatano_nelson_hamiltonian`
 
 
 ### EQ003 — Common localization and PT-breaking threshold
@@ -59,7 +59,7 @@ Numerical form:
 Evaluate log(2J/V) and check spectral-imaginary and IPR changes on both sides.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::critical_phase`
+Code: `src/nonhermitian_quasicrystal.py::critical_phase`
 
 
 ### EQ004 — Determinant winding and its large-L reduction
@@ -78,7 +78,7 @@ Numerical form:
 Use the stable scaled determinant circle and independently unwrap its phase on a theta grid.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::winding_number`
+Code: `src/nonhermitian_quasicrystal.py::winding_number`
 
 
 ### EQ005 — Inverse participation ratio and edge localization
@@ -97,7 +97,7 @@ Numerical form:
 Normalize every right eigenvector, compute IPR columnwise, and sum boundary-window probabilities for edge identity.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::inverse_participation_ratios`, `code/src/nonhermitian_quasicrystal.py::edge_state_counts`
+Code: `src/nonhermitian_quasicrystal.py::inverse_participation_ratios`, `src/nonhermitian_quasicrystal.py::edge_state_counts`
 
 
 ### EQ006 — Frequency-domain laser and saturated gain
@@ -116,7 +116,7 @@ Numerical form:
 Solve the stationary neutral-growth eigenmode and saturated intensity using all printed physical parameters.
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::stationary_laser_spectrum`
+Code: `src/nonhermitian_quasicrystal.py::stationary_laser_spectrum`
 
 
 ### EQ007 — Laser spectral bandwidth
@@ -135,7 +135,7 @@ Numerical form:
 Use the RMS axial-mode displacement from the gain-line center; this is the mode-locking bandwidth convention consistent with Figure 3(a).
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::spectral_bandwidth`
+Code: `src/nonhermitian_quasicrystal.py::spectral_bandwidth`
 
 
 ### EQ008 — Exact and first-order etalon transmission
@@ -154,4 +154,4 @@ Numerical form:
 Evaluate the complex exact and approximate functions on normalized frequency in [-2,2].
 ```
 
-Code: `code/src/nonhermitian_quasicrystal.py::etalon_transmission`
+Code: `src/nonhermitian_quasicrystal.py::etalon_transmission`

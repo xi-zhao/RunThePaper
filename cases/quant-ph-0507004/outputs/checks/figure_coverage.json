@@ -1,0 +1,345 @@
+{
+  "schema_version": 2,
+  "paper_id": "quant-ph-0507004",
+  "implementations": {
+    "whole_paper": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/lmg_scaling/model.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/fig1_spacing_scaling.csv",
+        "outputs/data/fig2_critical_spectrum.csv",
+        "outputs/data/super_scar_checks.csv",
+        "outputs/data/super_scar_localization_scaling.csv",
+        "outputs/data/normal_spacing_profile.csv",
+        "outputs/data/ordering_comparison.csv",
+        "outputs/data/exceptional_points.csv",
+        "outputs/data/exceptional_point_summary.csv",
+        "outputs/checks/science_checks.json"
+      ],
+      "acceptance_criteria": [
+        "The exact tridiagonal solver passes a dense cross-check.",
+        "The N=5000 merged critical spectrum fits k^(4/3) within one percent and displays k=8,16,... exactly.",
+        "Fig. 1 uses the strict 500<N<1500 caption window and freezes both parities, three selectors, and a larger-N convergence campaign.",
+        "The super-scar comparison integrates the two-lobe separatrix action, excludes the other member of the local minimal-gap pair from ordinary neighbors, and reports fixed-mass localization widths without assuming they shrink.",
+        "The normal-phase spacing claim uses every same-parity gap and reports lower and upper energy branches separately.",
+        "Exceptional points must satisfy scale-aware characteristic equations plus direct eigenvalue coalescence, energy-center agreement, and an eigenvector-conditioning certificate; sampled avoided crossings are not accepted as roots."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Main Fig. 1",
+      "reason": "All finite-N gaps and the analytic line are generated from Eq. (1); the unpublished point grid is explicitly reconstructed.",
+      "claim_refs": [
+        "CLM_T007"
+      ]
+    },
+    {
+      "item_id": "main_fig2",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Main Fig. 2",
+      "reason": "The complete first 500 levels at N=5000 are generated, with every eighth rendered.",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    },
+    {
+      "item_id": "finite_hamiltonian",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eq. (1) and parity paragraph",
+      "reason": "Both invariant blocks are implemented exactly.",
+      "claim_refs": [
+        "CLM_T001"
+      ]
+    },
+    {
+      "item_id": "classical_map",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (2)-(4)",
+      "reason": "Coordinate map, bracket, and saddle are independently derived.",
+      "claim_refs": [
+        "CLM_T002"
+      ]
+    },
+    {
+      "item_id": "ground_transition",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (5)-(7)",
+      "reason": "Minima and ground-energy asymptote are checked against exact N=5000 numerics.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "harmonic_spectra",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (7)-(8) and following text",
+      "reason": "Normal and deformed low-energy gaps are reproduced.",
+      "claim_refs": [
+        "CLM_T004"
+      ]
+    },
+    {
+      "item_id": "wkb_spacing",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (9)-(10)",
+      "reason": "Exact level spacings test the WKB density-of-states claim.",
+      "claim_refs": [
+        "CLM_T005"
+      ]
+    },
+    {
+      "item_id": "separatrix_logarithmic_spacing",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (11)-(12)",
+      "reason": "The saddle-energy logarithmic level-spacing law is computed independently.",
+      "claim_refs": [
+        "CLM_T006"
+      ]
+    },
+    {
+      "item_id": "separatrix_threshold_excitation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Threshold paragraph following Eqs. (11)-(12)",
+      "reason": "The excitation energy from the ground state to the separatrix threshold is evaluated independently.",
+      "claim_refs": [
+        "CLM_T016"
+      ]
+    },
+    {
+      "item_id": "critical_quartic_spectrum_scaling",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (13)-(14), excitation-index dependence",
+      "reason": "The critical k^(4/3) excitation-index exponent is fitted from independent exact spectra.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "critical_finite_size_scaling",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eqs. (13)-(14), particle-number dependence",
+      "reason": "The critical N^(-1/3) finite-size exponent is fitted from independent exact spectra.",
+      "claim_refs": [
+        "CLM_T010"
+      ]
+    },
+    {
+      "item_id": "tunneling",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Tunneling paragraph after Eq. (12)",
+      "reason": "Exact cross-parity splittings are tested for exponential N decay.",
+      "claim_refs": [
+        "CLM_T013"
+      ]
+    },
+    {
+      "item_id": "super_scar_localization",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Super-scarring paragraph before Fig. 2, localization statements",
+      "reason": "First-20 masses and 50/75/90/99% localization widths are computed independently.",
+      "claim_refs": [
+        "CLM_T011"
+      ]
+    },
+    {
+      "item_id": "super_scar_wkb_indices",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Super-scarring paragraph before Fig. 2, WKB transition statements",
+      "reason": "The separatrix action and all three quoted super-scar transition indices are computed independently.",
+      "claim_refs": [
+        "CLM_T012"
+      ]
+    },
+    {
+      "item_id": "normal_spacing_variation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Paragraph after Eq. (10)",
+      "reason": "Every same-parity gap is binned across both full bands, with the rising lower-energy branch separated from the returning upper branch.",
+      "claim_refs": [
+        "CLM_T014"
+      ]
+    },
+    {
+      "item_id": "alternative_wkb_wavefunction",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Eq. (16) and following paragraph",
+      "reason": "The printed operator identity is derived; no numerical wavefunction target is published.",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "ordering_error_scaling",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Ordering paragraph after Eq. (15)",
+      "reason": "Two explicit self-adjoint orderings are compared against Eq. (1) over six N values, both parity sectors, and four couplings; the missing author prescription stays explicit.",
+      "claim_refs": [
+        "CLM_T017"
+      ]
+    },
+    {
+      "item_id": "exceptional_point_accumulation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Exceptional-point item (i)",
+      "reason": "Complex characteristic double roots are solved at six increasing particle numbers and their distance to lambda=1 is frozen.",
+      "claim_refs": [
+        "CLM_T018"
+      ]
+    },
+    {
+      "item_id": "exceptional_point_separatrix_density",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Exceptional-point item (ii)",
+      "reason": "Near-real finite-N roots are stratified by distance to the symmetry-related separatrix energies.",
+      "claim_refs": [
+        "CLM_T019"
+      ]
+    },
+    {
+      "item_id": "exceptional_point_exclusion_regions",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "implementation_ref": "whole_paper",
+      "source_ref": "Exceptional-point item (iii)",
+      "reason": "The same root inventory reports near-real roots below lambda=1 and above lambda=1 away from the separatrix; no absence is inferred from a failed search.",
+      "claim_refs": [
+        "CLM_T020"
+      ]
+    }
+  ]
+}

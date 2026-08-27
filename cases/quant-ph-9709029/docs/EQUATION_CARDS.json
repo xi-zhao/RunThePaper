@@ -308,7 +308,7 @@
         "scripts/run_reproduction.py"
       ],
       "open_questions": [
-        "The cited external converse and achievability proofs are not bundled; finite typical-subspace numerics do not replace those theorems."
+        "Finite typical-subspace numerics alone do not prove the theorem; the independent achievability-and-converse closure is recorded separately in EQ011/T011."
       ]
     },
     {
@@ -428,6 +428,66 @@
       ],
       "open_questions": [
         "The cited external source is not bundled; the dimension derivation verifies the bound but not its attribution."
+      ]
+    },
+    {
+      "id": "EQ011",
+      "title": "Pure-state transmitted-qubit cost",
+      "role": "T011",
+      "latex": "q_n^{\\star}(\\epsilon)=\\min\\{q:M_n(2^q)\\ge 1-\\epsilon\\},\\quad q_n^{\\star}(\\epsilon_n)/n\\to H_2(p)",
+      "source_refs": [
+        {
+          "type": "paper_tex",
+          "value": "paper-source/9709029.tex:571-587"
+        }
+      ],
+      "derived_from": [
+        "Schmidt decomposition of n pure-state copies",
+        "rank growth by at most a factor of two per transmitted qubit",
+        "Ky Fan maximum-overlap bound",
+        "asymptotic equipartition of the Bernoulli Schmidt spectrum"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "numerical_form": "exact Hamming-type aggregation through 32768 copies; q passes and q-1 fails at each target fidelity",
+      "checks": [
+        {
+          "id": "EQ011-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paper explicitly states both the lower bound and asymptotically achievable transmitted-qubit rate."
+        },
+        {
+          "id": "EQ011-A",
+          "type": "constructive_achievability",
+          "status": "passed",
+          "reason": "The largest-Schmidt-coefficient compression protocol reaches the declared fidelity."
+        },
+        {
+          "id": "EQ011-C",
+          "type": "converse",
+          "status": "passed",
+          "reason": "The rank/Ky-Fan bound shows that one fewer transmitted qubit cannot reach the same fidelity."
+        },
+        {
+          "id": "EQ011-L",
+          "type": "asymptotic_limit",
+          "status": "passed",
+          "reason": "Vanishing-infidelity finite-block rates converge to H2(p) for all representative spectra."
+        },
+        {
+          "id": "EQ011-N",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "At every declared finite block, q reaches the fidelity threshold and q-1 fails it."
+        }
+      ],
+      "code_refs": [
+        "src/wootters/operational_rate.py::optimal_pure_state_communication",
+        "scripts/run_t011_operational_rate.py"
+      ],
+      "open_questions": [
+        "The paper's separate mixed-state additivity question remains explicitly excluded because the paper does not claim it is solved."
       ]
     }
   ]

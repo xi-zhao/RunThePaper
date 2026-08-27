@@ -21,7 +21,7 @@ Numerical form:
 Defines PSC checks for magic-state structure.
 ```
 
-Code: `code/src/magic_state_simulation.py::psc_formula_checks`
+Code: `src/magic_state_simulation.py::psc_formula_checks`
 
 
 ### MSC002 — Controlled-H Pauli propagation
@@ -40,7 +40,7 @@ Numerical form:
 Checks simplest controlled-H Clifford-error propagation identity.
 ```
 
-Code: `code/src/magic_state_simulation.py::psc_formula_checks`
+Code: `src/magic_state_simulation.py::psc_formula_checks`
 
 
 ### MSC003 — Pauli-rank fidelity expansion
@@ -59,7 +59,7 @@ Numerical form:
 Defines Pauli expectation route for magic-state fidelity.
 ```
 
-Code: `code/src/magic_state_simulation.py::pauli_basis`, `code/src/magic_state_simulation.py::psc_formula_checks`
+Code: `src/magic_state_simulation.py::pauli_basis`, `src/magic_state_simulation.py::psc_formula_checks`
 
 
 ### MSC004 — Toy benchmark acceptance model
@@ -78,7 +78,7 @@ Numerical form:
 Defines proxy acceptance model for local benchmark checks.
 ```
 
-Code: `code/src/magic_state_simulation.py::simulate_protocol`
+Code: `src/magic_state_simulation.py::simulate_protocol`
 
 
 ### MSC005 — Toy benchmark infidelity model
@@ -97,7 +97,7 @@ Numerical form:
 Defines proxy conditional logical infidelity model.
 ```
 
-Code: `code/src/magic_state_simulation.py::simulate_protocol`
+Code: `src/magic_state_simulation.py::simulate_protocol`
 
 
 ### MSC006 — Runtime and sampling proxy
@@ -116,4 +116,4 @@ Numerical form:
 Defines local proxy for average time per shot and sampling scaling.
 ```
 
-Code: `code/src/magic_state_simulation.py::runtime_proxy`, `code/src/magic_state_simulation.py::sampling_scaling`
+Code: `src/magic_state_simulation.py::runtime_proxy`, `src/magic_state_simulation.py::sampling_scaling`

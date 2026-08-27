@@ -54,9 +54,12 @@
 ## Efficiency And Reuse Plan
 
 - Baseline implementation: vectorized NumPy proxy; closed-form analytic targets.
-- Main bottleneck: unavailable scientific inputs, not local runtime.
+- Main bottleneck: the current clean-room system lacks the paper-scale
+  surface-code circuit and correlated-decoder capability; this is recorded as
+  an attempted capability limit, not an external-data blocker.
 - Complexity: proxy `O(shots * distance * rounds)`; other targets `O(grid)`.
 - Case-specific boundary: the repetition-code analogue remains case-local and
   must not enter the general harness as a surface-code substitute.
-- Reusable candidate: a generic author-data/code availability inventory that
-  distinguishes vector plot assets from raw numerical data.
+- Reusable candidate: a generic scientific-input inventory that distinguishes
+  vector plot assets from permissible formula/method inputs and independently
+  generated numerical data.

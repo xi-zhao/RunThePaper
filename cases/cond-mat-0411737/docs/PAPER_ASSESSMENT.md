@@ -8,13 +8,15 @@ This report is a human-readable projection of the validated structured independe
 
 | Dimension | Value |
 | --- | --- |
-| Protocol status | `passed` |
-| Protocol valid | `true` |
-| Whole-paper scope | `complete` |
+| Protocol status | `stale` |
+| Protocol valid | `false` |
+| Whole-paper scope | `stale` |
 | Paper assessment | `inconclusive` |
 | Reviewed atomic claims | `114` |
 | Candidate atomic claims | `0` |
 | Candidate targets | `0` |
+
+The review protocol is not currently valid, so no paper-error candidate in the submission is promoted by this report.
 
 ## Atomic claim adjudication
 

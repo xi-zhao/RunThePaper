@@ -1,0 +1,393 @@
+{
+  "schema_version": 2,
+  "paper_id": "1711.08863",
+  "implementations": {
+    "paper_scale_campaign": {
+      "status": "ready",
+      "code_refs": [
+        "scripts/run_paper_scale_campaign.py",
+        "src/giant_atoms/campaign.py",
+        "src/giant_atoms/model.py",
+        "src/giant_atoms/reproduction.py"
+      ],
+      "config_ref": "config/paper_scale_campaign.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale_campaign.py",
+        "--config",
+        "config/paper_scale_campaign.json"
+      ],
+      "run_contract_ref": "run_contract_paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/main_fig2_paper_scale_campaign.csv",
+        "outputs/checks/main_fig2_paper_scale_acceptance.json",
+        "outputs/checks/main_fig2_paper_scale_manifest.json",
+        "outputs/checks/main_fig2_paper_scale_state.json"
+      ],
+      "acceptance_criteria": [
+        "All eight fingerprinted phase shards cover the 1001-point paper interval exactly once.",
+        "General connection-point sums and Table-I closed forms agree with max absolute residual <= 1e-12.",
+        "The 2001-point refinement reproduces all 1001 shared grid values within 1e-12.",
+        "At phi=pi/2 the braided geometry has g/gamma=1 and all individual/collective decay coefficients vanish within 1e-12.",
+        "Every output is finite and the manifest records no author code, author arrays, or source pixels as numerical inputs."
+      ]
+    },
+    "analytic_claim_campaign": {
+      "status": "ready",
+      "target_ids": [
+        "T002",
+        "T003",
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_claim_implementation_campaign.py",
+        "--config",
+        "config/claim_implementation_campaign.json",
+        "--output-root",
+        "outputs/checks/claim_implementation_campaign"
+      ],
+      "code_refs": [
+        "src/giant_atoms/claim_campaign.py",
+        "scripts/run_claim_implementation_campaign.py"
+      ],
+      "config_ref": "config/claim_implementation_campaign.json",
+      "run_contract_ref": "run_contract_claim_implementation.json",
+      "expected_outputs": [
+        "outputs/checks/claim_implementation_campaign/T002.json",
+        "outputs/checks/claim_implementation_campaign/T003.json",
+        "outputs/checks/claim_implementation_campaign/T004.json",
+        "outputs/checks/claim_implementation_campaign/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every fixed-denominator analytic claim maps exactly once to a claim-specific executable check.",
+        "The reduced checks cover arbitrary connection counts, topology implications, protected-chain ranks, all-to-all control counting, and both printed N=3 constructions.",
+        "Scientific promotion requires every exact witness and numerical sanity check to pass in the isolated run; fresh review remains a separate lifecycle gate."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "Main Figure 1(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 1(a)",
+      "reason": "Open-waveguide small-atom topology sketch without computed data."
+    },
+    {
+      "item_id": "Main Figure 1(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 1(b)",
+      "reason": "Semi-infinite-waveguide small-atom topology sketch without computed data."
+    },
+    {
+      "item_id": "Main Figure 1(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 1(c)",
+      "reason": "Separate giant-atom connection-topology sketch."
+    },
+    {
+      "item_id": "Main Figure 1(d)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 1(d)",
+      "reason": "Braided giant-atom connection-topology sketch."
+    },
+    {
+      "item_id": "Main Figure 1(e)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 1(e)",
+      "reason": "Nested giant-atom connection-topology sketch."
+    },
+    {
+      "item_id": "Main Table I",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "scientific_role": "formula_source",
+      "decision": "excluded",
+      "source_ref": "Main Table I",
+      "reason": "Analytic coefficient table used as the source and cross-check for Main Fig. 2; counting it again would duplicate the same scientific object."
+    },
+    {
+      "item_id": "Main Figure 2 all 13 curves",
+      "item_type": "figure",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_campaign",
+      "source_ref": "Main Fig. 2",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "This is one shared-axis numerical figure: every exchange, individual-decay, and collective-decay series is generated from the master-equation coefficients; the reusable paper-scale campaign is checkpointed and resumable.",
+      "claim_refs": [
+        "CLM_DECOHERENCE_FREE_BRAIDED"
+      ]
+    },
+    {
+      "item_id": "Main Figure 3(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 3(a)",
+      "reason": "Protected-chain connection layout; the associated analytic tunability claim is counted separately."
+    },
+    {
+      "item_id": "Main Figure 3(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 3(b)",
+      "reason": "Effective nearest-neighbor-chain schematic without plotted numerical data."
+    },
+    {
+      "item_id": "Main Figure 3(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 3(c)",
+      "reason": "Proposed superconducting-circuit layout."
+    },
+    {
+      "item_id": "Main Figure 4(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 4(a)",
+      "reason": "Three-atom all-to-all connection layout; the associated analytic constraint claim is counted separately."
+    },
+    {
+      "item_id": "Main Figure 4(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 4(b)",
+      "reason": "Effective all-to-all coupling graph without plotted numerical data."
+    },
+    {
+      "item_id": "Main Figure 4(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Main Fig. 4(c)",
+      "reason": "Proposed superconducting-circuit layout."
+    },
+    {
+      "item_id": "Supplement Figure S1(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S1(a)",
+      "reason": "SLH series-product composition diagram."
+    },
+    {
+      "item_id": "Supplement Figure S1(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S1(b)",
+      "reason": "SLH concatenation-product composition diagram."
+    },
+    {
+      "item_id": "Supplement Figure S1(c)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S1(c)",
+      "reason": "SLH feedback-operation composition diagram."
+    },
+    {
+      "item_id": "Supplement Figure S2(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S2(a)",
+      "reason": "Open-waveguide small-atom parameter sketch."
+    },
+    {
+      "item_id": "Supplement Figure S2(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S2(b)",
+      "reason": "Corresponding SLH input-output-flow diagram."
+    },
+    {
+      "item_id": "Supplement Figure S3(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S3(a)",
+      "reason": "Small-atoms-plus-mirror parameter sketch."
+    },
+    {
+      "item_id": "Supplement Figure S3(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S3(b)",
+      "reason": "Corresponding SLH input-output-flow diagram."
+    },
+    {
+      "item_id": "Supplement Figure S4(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S4(a)",
+      "reason": "Separate giant-atoms parameter sketch."
+    },
+    {
+      "item_id": "Supplement Figure S4(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S4(b)",
+      "reason": "Corresponding SLH input-output-flow diagram."
+    },
+    {
+      "item_id": "Supplement Figure S5(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S5(a)",
+      "reason": "Braided giant-atoms parameter sketch."
+    },
+    {
+      "item_id": "Supplement Figure S5(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S5(b)",
+      "reason": "Corresponding SLH input-output-flow diagram."
+    },
+    {
+      "item_id": "Supplement Figure S6(a)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S6(a)",
+      "reason": "Nested giant-atoms parameter sketch."
+    },
+    {
+      "item_id": "Supplement Figure S6(b)",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S6(b)",
+      "reason": "Corresponding SLH input-output-flow diagram."
+    },
+    {
+      "item_id": "Supplement Figure S7",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S7",
+      "reason": "One-dimensional chain notation sketch; the analytic constraint claim is counted separately."
+    },
+    {
+      "item_id": "Supplement Figure S8",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "source_ref": "Supplement Fig. S8",
+      "reason": "Three-atom all-to-all notation sketch; the analytic constraint claim is counted separately."
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "Claim: arbitrary multi-point master equation and topology rule",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main Eq. (2) and Supplement section Multiple atoms, multiple connection points",
+      "scientific_object": "For arbitrary atoms and connection points, the pairwise coefficient sums give the master equation; zero individual decay forces zero collective decay, and only braided pairs may retain exchange.",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "analytic_claim_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "An all-size phasor factorization, unequal-rate direct-sum checks, and topology tests are independently implemented and isolated-run attested.",
+      "claim_refs": [
+        "CLM_GENERAL_MULTI_POINT_TOPOLOGY"
+      ]
+    },
+    {
+      "item_id": "Claim: protected 1D chain has independently tunable nearest-neighbor couplings",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text after Fig. 3 and Supplement section 1D chain with nearest-neighbor couplings",
+      "scientific_object": "For N two-point giant atoms, N zero-decay constraints leave N-1 phases that independently tune all nearest-neighbor coupling amplitudes and signs.",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "analytic_claim_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "An exact identity-minor proof establishes rank N and N-1 free controls for all N; constructive N=3,4,6 checks are isolated-run attested.",
+      "claim_refs": [
+        "CLM_PROTECTED_CHAIN_TUNABILITY"
+      ]
+    },
+    {
+      "item_id": "Claim: protected all-to-all coupling has N-1 free controls",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theoretical_numerical",
+      "decision": "target",
+      "source_ref": "Main text after Fig. 4 and Supplement section Pairwise coupling between all atoms",
+      "scientific_object": "After N zero-decay constraints, an all-to-all N-atom layout has N-1 free phase controls for N(N-1)/2 couplings; the N=3 equal-amplitude and sign patterns are constructive examples.",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "analytic_claim_campaign",
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "An exact unit-upper-triangular rank witness and both printed N=3 constructions are independently implemented and isolated-run attested.",
+      "claim_refs": [
+        "CLM_PROTECTED_ALL_TO_ALL_CONTROLS"
+      ]
+    }
+  ]
+}

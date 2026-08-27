@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "paper_id": "2412.14271",
+  "cards": [
+    {
+      "id": "DPT001",
+      "title": "Two-photon Dicke Hamiltonian and TD scaling",
+      "latex": "H=omega_c a^dagger a+(omega_a/2)J_z+(lambda/N)J_x(a^{dagger2}+a^2)",
+      "role": "finite-size and thermodynamic model",
+      "source_refs": [
+        "published Eqs. (1)-(2)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::operators",
+        "src/dicke.py::hamiltonian"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Hamiltonian, collective-spin convention, and N scaling are explicit in the version of record."
+        },
+        {
+          "type": "dimensional_check",
+          "status": "passed",
+          "detail": "All Hamiltonian terms have frequency units and the 1/N coupling is intensive after a->a/sqrt(N)."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DPT002",
+      "title": "Lindblad generator and photon losses",
+      "latex": "rho_dot=-i[H,rho]+sum_n D[L_n]rho; L1=sqrt(kappa1)a; L2=sqrt(kappa2/N)a^2",
+      "role": "open-system evolution",
+      "source_refs": [
+        "published Eqs. (3)-(5)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::collapse_operators"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Generator and both jumps are explicit in the version of record."
+        },
+        {
+          "type": "normalization",
+          "status": "passed",
+          "detail": "The anticommutator form preserves Tr rho."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DPT003",
+      "title": "One-photon fixed points and critical coupling",
+      "latex": "lambda_c=(1/4)sqrt(kappa1^2+4 omega_c^2); Jx=+-lambda_c/lambda",
+      "role": "Fig. 2 analytic branches",
+      "source_refs": [
+        "arXiv v1 SM Eqs. (7)-(22)",
+        "published Fig. 2 caption"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/dicke.py::one_photon_branches"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Fixed points are explicit in v1 SM; formal-main parameters take precedence."
+        },
+        {
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Formal parameters give lambda_c=0.50990, matching the published threshold near 0.51."
+        }
+      ],
+      "open_questions": [
+        "The formal Supplemental Material is inaccessible; equations are cross-version reconstructed."
+      ]
+    },
+    {
+      "id": "DPT004",
+      "title": "One-photon Bogoliubov stability",
+      "latex": "eta_dot=B(x_star) eta",
+      "role": "Fig. S1 stability spectra",
+      "source_refs": [
+        "arXiv v1 SM Eqs. (23)-(26)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::one_photon_jacobian"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Both normal and superradiant matrices are printed."
+        },
+        {
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "Normal spectrum contains -kappa1+-2i omega_c, -kappa1, +-2i omega_a, and the spin-length zero mode."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DPT005",
+      "title": "Second-order cumulant equations with both losses",
+      "latex": "partial_t(<a>,<a^2>,<n>,<J_i>)=F_CE2",
+      "role": "Fig. 3 thermodynamic branches",
+      "source_refs": [
+        "arXiv v1 SM Eqs. (27)-(50)",
+        "published Fig. 3 discussion"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/dicke.py::cumulant_rhs_complex",
+        "src/dicke.py::cumulant_rhs_real"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The cumulant closure and scaled equations are explicit in v1 SM."
+        },
+        {
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "Setting kappa2=0 recovers the one-photon equations for zero first moments."
+        }
+      ],
+      "open_questions": [
+        "Formal SM version differences cannot be ruled out."
+      ]
+    },
+    {
+      "id": "DPT006",
+      "title": "Both-loss fixed-point stability",
+      "latex": "B=partial F_CE2/partial x at x_star; dot(r)=2 kappa_2 r^3+O(r^5)",
+      "role": "Fig. S2 linear spectrum and nonlinear zero-mode stability",
+      "source_refs": [
+        "arXiv v1 SM Eqs. (51)-(53)"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/dicke.py::cumulant_real_jacobian",
+        "scripts/run_analytic.py::branch_discrepancy_audit"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Normal and superradiant stability matrices are printed in v1 SM."
+        },
+        {
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The physical-real Jacobian has no positive eigenvalue for the plotted squeezed-high root; its first-moment zero mode has positive cubic coefficient 2*kappa2."
+        }
+      ],
+      "open_questions": [
+        "Why the paper pairs the plotted squeezed-high branch with positive-eigenvalue Bogoliubov evidence remains unresolved.",
+        "Formal SM version differences cannot be ruled out."
+      ]
+    },
+    {
+      "id": "DPT007",
+      "title": "Quantum-trajectory ensemble density matrix",
+      "latex": "rho=(1/N_T)sum_i|psi_i><psi_i|",
+      "role": "large-N distributions and convergence",
+      "source_refs": [
+        "arXiv v1 SM Eq. (54)",
+        "published main Fig. 3 discussion"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::trajectory_density"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Initialization, ensemble density, and partial trace are described."
+        },
+        {
+          "type": "normalization",
+          "status": "passed",
+          "detail": "Normalized trajectories give Tr rho=1."
+        }
+      ],
+      "open_questions": [
+        "Published integration time and per-point seeds are not reported."
+      ]
+    },
+    {
+      "id": "DPT008",
+      "title": "Photonic Wigner function",
+      "latex": "W(alpha)=2/pi Tr[D(-alpha)rho D(alpha)(-1)^(a^dagger a)]",
+      "role": "Fig. 4 phase-space fields",
+      "source_refs": [
+        "published Fig. 4 discussion",
+        "standard displaced-parity identity"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::wigner_distribution"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Published text identifies Wigner of the reduced photonic density matrix."
+        },
+        {
+          "type": "normalization",
+          "status": "passed",
+          "detail": "Vacuum and numerical grids are checked for unit integral."
+        }
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "DPT009",
+      "title": "Pure two-photon parity-resolved Liouvillian",
+      "latex": "[L,P]=0; P=(-1)^(a^dagger a)",
+      "role": "supplemental Liouvillian kernel and parity distributions",
+      "source_refs": [
+        "arXiv v1 SM pure-two-photon section and Fig. 8"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/dicke.py::liouvillian_parity_check"
+      ],
+      "checks": [
+        {
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "v1 SM states the rank-two kernel and gives N=4,M=50,kappa2=0.05,lambda=0.85."
+        },
+        {
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "Hamiltonian and L2 contain only even photon-number changes."
+        }
+      ],
+      "open_questions": [
+        "Formal supplemental numbering is unavailable."
+      ]
+    }
+  ]
+}

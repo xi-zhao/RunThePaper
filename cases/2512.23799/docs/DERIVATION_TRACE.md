@@ -66,35 +66,33 @@ The reconstruction error is `2.78e-17`, so the Pauli-expectation route is intern
 
 For two logical qubits, the paper's toy example notes that `(|H><H|)^tensor 2` has eight nontrivial Pauli terms. That is why fidelity can be estimated through Pauli logical expectation values instead of a full non-Clifford state-vector simulation.
 
-## D004: Numerical Benchmark Model
+## D004: Clean-room Steane benchmark
 
-The paper's proof-of-principle benchmark uses a Steane-code `|Hbar>` preparation protocol under uniform circuit-level Pauli noise. It compares a propagated-error stabilizer route with a Cirq state-vector baseline.
-
-The arXiv source gives the final benchmark PNGs but not the arrays. For this case, the executable model keeps the paper-derived structure:
-
-```text
-M = 42 error locations
-p = physical error rate
-u = probability that an error remains undetected
-l = conditional logical-error probability per undetected error
-```
-
-The acceptance probability is:
+The proof-of-principle benchmark prepares the Steane-code `|Hbar>` state under
+uniform circuit-level Pauli noise. The clean-room implementation transcribes the
+public Fig. 9 gate columns and Appendix-A error channels, postselects on logical-H
+and stabilizer outcomes, ideally decodes accepted states, and estimates
 
 ```text
-A(p) = (1 - p + p u)^M
+A(p) = N_accepted / N_total
+I(p) = 1 - (sum fidelity over accepted shots) / N_accepted.
 ```
 
-The conditional logical infidelity is:
+The v5 configuration fixes full-lifetime idling, five independently selected
+physical-error probes, 2048 shots per probe, and a deterministic seed before any
+reference curve is read. The generated output hash is then frozen and a separate
+comparison process reads digitized curves.
 
-```text
-I(p) = 1 - (1 - p + p u (1-l))^M / A(p)
-```
-
-The original lightweight model remains a feature-level executable check, but it no longer supplies the main benchmark evidence. T001/T002 now use the reconstructed exact Steane circuit in `code/src/steane_h_prep.py`; its public 790,000-shot data are recorded in `outputs/data/steane_exact_benchmark.csv`.
+The attempt passes noiseless-state, stabilizer, decoder, boundedness, and trend
+checks, but does not reproduce the Fig. 10 numerical arrays. The earlier
+closed-form 42-location proxy remains useful only for mechanism intuition and
+runtime diagnostics; it is not the scientific input or target evidence for
+T001/T002.
 
 ## Verification
 
 - Formula gate: `outputs/checks/formula_verification.json`
-- Numerical feature gate: `outputs/checks/numerical_feature_checks.json`
-- Code pointer: `src/magic_state_simulation.py`
+- Isolated run: `outputs/runs/2512.23799-cleanroom-v5-20260825/run_attestation.json`
+- Scientific checks: `outputs/checks/attested_science_checks.json`
+- Frozen comparison: `outputs/checks/frozen_reference_comparison.json`
+- Code pointers: `src/steane_h_prep.py`, `scripts/run_attested_reproduction.py`

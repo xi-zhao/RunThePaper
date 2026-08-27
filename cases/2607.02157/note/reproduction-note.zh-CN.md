@@ -1,52 +1,21 @@
-# arXiv:2607.02157 复现笔记
+# Thermodynamics of Quantum Reservoir Computing：科学复现讲义
 
-## 论文身份
+## 结论
 
-- 预印本:[arXiv:2607.02157v1](https://arxiv.org/abs/2607.02157) —— *Thermodynamics of Quantum Reservoir Computing*(量子水库计算的热力学)。
-- 复现时未见期刊正式发表记录。
-- 仅凭手稿复现:未使用作者代码或数据。
+Case scaffolded from framework/templates/paper_case.
 
-## 科学对象
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-论文把"被驱动的开放量子水库"当作一台真实的非平衡物理计算机,追问信息处理在热力学上要付出什么代价。它定义两个条件操作态——记忆态(以当前输入为条件)和预测态(以下一时刻目标为条件)——并由此构造 Holevo 记忆容量与预测容量、把 Holevo 量拆成经典互信息与系综相干的相干分解 `chi = I + C`,以及注入/弛豫做功的账本,给出一个广义 Landauer 界。核心结论是:不可逆驱动功与量子信息耗散之间存在精确恒等式 `beta W^irr = chi^d`(式 13),且二者都在量子临界区达到峰值,而此处的预测误差(NMSE)同时取极小。
+## 我们复现的是什么
 
-论文研究两种水库:全连接的无序横场 Ising 模型(TFIM),以及跨越对称保护拓扑相变的增广 cluster 模型。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-## 复现结果
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=paper_exact, parameter_provenance=missing, causal_resolution=terminal_blocker, science=pending, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
-三张数值图都已独立计算，但证据等级不同：Fig. 2 和 Fig. S2 使用论文原口径 A100 数据（每参数点 5000 条序列；TFIM 100 个无序实现；NMSE 使用完整 `4^6-1` Pauli 读出），属于正式复现；Fig. S1 使用 400 条驱动序列、2500 个采样点和 400 个 TFIM 无序实现，只属于探索级。加权得分 **77.27/100**。
+## 运行
 
-- **Fig. 2(cluster 行):** 近乎定量。记忆容量峰 2.19 @ alpha=0.5(论文 ~2.25),两端 1.68 / 1.10,广义 Landauer 峰 0.499(论文 ~0.52),峰区预测相干高于记忆相干。
-- **Fig. 2(TFIM 行):** 单峰容量形状(100 个无序实现下峰 1.80 ± 0.11,J ~ 2 附近)、左端平台 1.335,以及 b1 签名——深顺磁区 `beta W^irr` 维持平台而 `chi^d` 塌缩形成的渐宽灰色鸿沟。
-- **核心恒等式:** `beta W^irr = chi^d` 在全部约 3000 组产出中以机器精度成立(最大残差 ≤ 5.7e-14)——这是该框架能给出的最强内部自洽证据。
-- **NMSE:** 两个模型的预测误差最小值都落在容量峰上(cluster 最小 6.5e-4 @ alpha=0.45;TFIM 最小 @ J=2.37)。
-- **Fig. S1（探索级）:** 共振峰位置 0.355 与论文约 0.36 一致，cluster 谱指纹也吻合；但统计系综小于论文，不能宣称按论文规模完成。
-- **保留的诊断差异:** Fig. 2b1 的 TFIM 不可逆功峰值为 0.396，而论文图上读数约 0.49。临界区位置、Landauer 界和大 J 平台均通过，因此记录为非关键幅值差异，没有靠放宽容差掩盖。
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-**差异归因(TFIM 峰 ~1.80 vs ~2.0):** 手稿未写明的系综聚合口径问题。我们在峰点直接裁决:按无序实现分别算容量再平均得 2.08(与论文一致),而把所有实现混成一个大系综再算熵得 15.6(物理上荒谬)。论文并未池化;我们全程用的"逐实现"口径才是对的,残余峰差在采样与读图误差之内。
+## 论文审查边界
 
-**超出论文分辨率的观测:** 深 MBL 尾部(J ≳ 10),论文曲线在此视觉简并,而多步记忆容量随延迟不降反升,且约 28% 的无序实现完全与驱动退耦。此现象在论文全系综下依然成立,排除了小样本假象。
-
-## 运行公开包
-
-```bash
-# 复现 Fig. 2 两个模型的扫描,再出图
-python code/scripts/run_scan.py --model cluster --n-seq 5000 --n-points 21
-python code/scripts/run_scan.py --model tfim --n-seq 5000 --n-points 25 --realizations 100
-python code/scripts/plot_figures.py
-
-# 校验公式/恒等式
-python code/scripts/verify_formulas.py
-
-# 裁决无序系综聚合口径
-python code/scripts/adjudicate_pooling.py
-```
-
-Fig. 2/Fig. S2 的论文原口径系综在单张 A100 级 GPU 上约两天跑完(`qrc_gpu.py --cupy-eig`)；Fig. S1 未包含在该任务中。后者若补到论文规模，仍需 5000×5000 的驱动统计和 10000 个 TFIM 无序实现。
-
-## 复现边界
-
-- 评分上限 80(特征级):论文不公开数值数据,因此对照的是已发表面板而非作者数据,且我们拒绝数字化其曲线(像素级吻合不算科学复现)。
-- Fig. S1 目前仅为探索级，不能与 Fig. 2/Fig. S2 一起宣称为正式复现。
-- 手稿未写明的三处约定已解决并作为向作者的问题记录:Mackey–Glass 仿射归一化、增广 cluster 链的开/周期边界(需开边界才能匹配非对称的 Fig. 2)、Fig. S1a 的 `F(omega)` 谱归一化。
-- 论文原文 PDF 与任何数字化参考曲线均刻意不在此转载。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, parameter_provenance=missing, causal_resolution=terminal_blocker, science=pending, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing.

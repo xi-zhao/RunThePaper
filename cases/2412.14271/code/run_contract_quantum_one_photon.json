@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "run_id": "quantum-one-photon-feature-v2",
+  "target_ids": [
+    "T001"
+  ],
+  "command": [
+    "python",
+    "scripts/run_quantum_one_photon.py",
+    "--config",
+    "config/quantum_one_photon.json"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/dicke.py",
+    "scripts/run_quantum_one_photon.py",
+    "config/quantum_one_photon.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/quantum_one_photon.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "N": 5,
+    "omega_c": 1.0,
+    "omega_a": 2.0,
+    "kappa1": 0.4,
+    "kappa2": 0.0,
+    "lambdas": [
+      0.2,
+      0.45,
+      0.55,
+      0.8,
+      1.25,
+      1.6,
+      2.0
+    ],
+    "cutoffs": [
+      60,
+      80,
+      100
+    ],
+    "trajectories": 10,
+    "final_time": 45.0,
+    "seed_base": 4100
+  },
+  "outputs": [
+    "outputs/data/fig2_quantum.npz",
+    "outputs/data/fig2_quantum_summary.json",
+    "outputs/checks/fig2_quantum_science.json"
+  ],
+  "timeout_seconds": 900,
+  "environment": {
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

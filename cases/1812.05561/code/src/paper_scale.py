@@ -44,6 +44,7 @@ from .scar_reproduction import (
     solve_h0,
     toy_hamiltonian_sparse,
 )
+from .atomic_closure import entropy_fit_evidence, revival_fit_evidence, turning_point_power_law
 
 
 TARGET_IDS = tuple(f"T{index:03d}" for index in range(1, 10))
@@ -247,20 +248,6 @@ def _initial_neel(family: HamiltonianFamily) -> tuple[np.ndarray, int]:
     vector = np.zeros(len(family.basis), dtype=np.complex128)
     vector[index] = 1.0
     return vector, index
-
-
-def _fit_turning_point(gamma: np.ndarray, short_fit: Sequence[int], long_fit: Sequence[int]) -> float:
-    short = np.arange(int(short_fit[0]), int(short_fit[1]) + 1)
-    long = np.arange(int(long_fit[0]), int(long_fit[1]) + 1)
-    selected = np.concatenate((short, long))
-    if np.any(~np.isfinite(gamma[selected])) or np.any(gamma[selected] <= 0.0):
-        return float("nan")
-    slope_short, intercept_short = np.polyfit(np.log(short), np.log(gamma[short]), 1)
-    slope_long, intercept_long = np.polyfit(np.log(long), np.log(gamma[long]), 1)
-    denominator = slope_short - slope_long
-    if abs(denominator) <= 1e-12:
-        return float("nan")
-    return float(math.exp((intercept_long - intercept_short) / denominator))
 
 
 def _stream_dynamics(
@@ -467,16 +454,18 @@ def run_t001(campaign: Campaign, unit: WorkUnit) -> dict[str, Any]:
         float(config["inset_time_window"][1]),
         int(config["inset_time_points"]),
     )
-    inset = _stream_dynamics(
-        matrices["deformed"],
-        family,
-        inset_times,
-        checkpoint_path=checkpoint_dir / "inset.npz",
-        resume=campaign.resume,
-        chunk_points=int(config["time_chunk_points"]),
-        entanglement_levels=1,
-        compute_entropy=False,
-    )
+    inset_payloads: dict[str, dict[str, np.ndarray]] = {}
+    for name, matrix in matrices.items():
+        inset_payloads[name] = _stream_dynamics(
+            matrix,
+            family,
+            inset_times,
+            checkpoint_path=checkpoint_dir / f"inset_{name}.npz",
+            resume=campaign.resume,
+            chunk_points=int(config["time_chunk_points"]),
+            entanglement_levels=1,
+            compute_entropy=False,
+        )
     return {
         "times": times,
         "fidelity_pxp": payloads["pxp"]["fidelity"],
@@ -485,7 +474,9 @@ def run_t001(campaign: Campaign, unit: WorkUnit) -> dict[str, Any]:
         "entropy_deformed": payloads["deformed"]["entropy"],
         "entanglement_spectrum": payloads["deformed"]["spectrum"],
         "inset_times": inset_times,
-        "inset_infidelity": 1.0 - inset["fidelity"],
+        "inset_infidelity": 1.0 - inset_payloads["deformed"]["fidelity"],
+        "inset_infidelity_pxp": 1.0 - inset_payloads["pxp"]["fidelity"],
+        "inset_infidelity_deformed": 1.0 - inset_payloads["deformed"]["fidelity"],
         "distances": optimization["distances"],
         "optimized_couplings": optimization["optimized"],
         "ansatz_couplings": optimization["ansatz"],
@@ -929,6 +920,19 @@ def run_t006(campaign: Campaign, unit: WorkUnit) -> dict[str, Any]:
     normalized_infidelity = 1.0 - g_tilde
     gamma = np.full_like(revival, np.nan)
     gamma[1:] = normalized_infidelity[1:] / revival[1:]
+    gamma_for_fit = gamma
+    if bool(campaign.config.get("smoke")):
+        # Exact tiny-system revivals can make Gamma identically zero.  The
+        # smoke lane exercises the fit/output path only; it never promotes
+        # these stabilized values to scientific evidence.
+        floor = np.finfo(np.float64).tiny * (1.0 + revival)
+        gamma_for_fit = np.where(np.isfinite(gamma), np.maximum(gamma, floor), gamma)
+    fits = revival_fit_evidence(
+        revival,
+        gamma_for_fit,
+        config["short_fit"],
+        config["long_fit"],
+    )
     return {
         "n_sites": n_sites,
         "basis_dimension": len(family.basis),
@@ -937,7 +941,15 @@ def run_t006(campaign: Campaign, unit: WorkUnit) -> dict[str, Any]:
         "fidelities": peaks["fidelities"],
         "normalized_infidelity": normalized_infidelity,
         "gamma": gamma,
-        "turning_point": _fit_turning_point(gamma, config["short_fit"], config["long_fit"]),
+        "turning_point": fits["turning_point"],
+        "short_fit_grid": fits["short"]["grid"],
+        "short_fit_curve": fits["short"]["curve"],
+        "short_fit_coefficients": fits["short"]["coefficients"],
+        "short_fit_log_rms": fits["short"]["log_rms_residual"],
+        "long_fit_grid": fits["long"]["grid"],
+        "long_fit_curve": fits["long"]["curve"],
+        "long_fit_coefficients": fits["long"]["coefficients"],
+        "long_fit_log_rms": fits["long"]["log_rms_residual"],
         "analytic_tau": tau,
         "maximum_peak_grid_spacing": float(
             2.0
@@ -1191,7 +1203,7 @@ def _aggregate_t002(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
     labels = [str(item["label"]) for item in config["sectors"]]
     sizes = [int(value) for value in config["flow_sizes"]]
     r_values = np.full((len(labels), len(sizes)), np.nan)
-    largest_unfolded: list[np.ndarray] = []
+    largest_unfolded: dict[str, np.ndarray] = {}
     largest_energies = np.asarray([])
     largest_overlaps = np.asarray([])
     dimensions = np.zeros((len(labels), len(sizes)), dtype=np.int64)
@@ -1202,12 +1214,17 @@ def _aggregate_t002(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
         r_values[label_index, size_index] = float(payload["mean_r"])
         dimensions[label_index, size_index] = int(payload["sector_dimension"])
         if int(meta["n_sites"]) == max(sizes):
-            largest_unfolded.append(np.asarray(payload["unfolded_spacings"]))
+            largest_unfolded[str(meta["label"])] = np.asarray(payload["unfolded_spacings"])
             if int(meta["momentum"]) == 0 and int(meta["inversion"]) == 1:
                 largest_energies = np.asarray(payload["energies"])
                 largest_overlaps = np.asarray(payload["overlaps"])
     bins = np.linspace(0.0, float(config["histogram_max"]), int(config["histogram_bins"]) + 1)
-    density, edges = np.histogram(np.concatenate(largest_unfolded), bins=bins, density=True)
+    sector_densities = np.asarray(
+        [np.histogram(largest_unfolded[label], bins=bins, density=True)[0] for label in labels]
+    )
+    density, edges = np.histogram(
+        np.concatenate([largest_unfolded[label] for label in labels]), bins=bins, density=True
+    )
     centers = 0.5 * (edges[:-1] + edges[1:])
     return {
         "flow_sizes": np.asarray(sizes),
@@ -1218,6 +1235,10 @@ def _aggregate_t002(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
         "overlaps": largest_overlaps,
         "spacing_centers": centers,
         "spacing_density": density,
+        "spacing_density_by_sector": sector_densities,
+        "spacing_density_k0_even": sector_densities[labels.index("k0_even")],
+        "spacing_density_kpi_odd": sector_densities[labels.index("kpi_odd")],
+        "spacing_density_pooled": density,
         "goe_density": (math.pi / 2.0) * centers * np.exp(-math.pi * centers**2 / 4.0),
         "poisson_density": np.exp(-centers),
     }
@@ -1297,8 +1318,11 @@ def _aggregate_t006(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
     rows = sorted(
         (campaign.load_unit(unit) for unit in units), key=lambda row: int(row["n_sites"])
     )
+    sizes = np.asarray([int(row["n_sites"]) for row in rows])
+    turning_points = np.asarray([float(row["turning_point"]) for row in rows])
+    scaling = turning_point_power_law(sizes, turning_points)
     return {
-        "sizes": np.asarray([int(row["n_sites"]) for row in rows]),
+        "sizes": sizes,
         "revival": rows[0]["revival"],
         "peak_times": np.asarray([row["peak_times"] for row in rows]),
         "fidelities": np.asarray([row["fidelities"] for row in rows]),
@@ -1306,7 +1330,22 @@ def _aggregate_t006(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
             [row["normalized_infidelity"] for row in rows]
         ),
         "gamma": np.asarray([row["gamma"] for row in rows]),
-        "turning_points": np.asarray([float(row["turning_point"]) for row in rows]),
+        "turning_points": turning_points,
+        "short_fit_grid": rows[0]["short_fit_grid"],
+        "short_fit_curves": np.asarray([row["short_fit_curve"] for row in rows]),
+        "short_fit_coefficients": np.asarray(
+            [row["short_fit_coefficients"] for row in rows]
+        ),
+        "short_fit_log_rms": np.asarray([float(row["short_fit_log_rms"]) for row in rows]),
+        "long_fit_grid": rows[0]["long_fit_grid"],
+        "long_fit_curves": np.asarray([row["long_fit_curve"] for row in rows]),
+        "long_fit_coefficients": np.asarray(
+            [row["long_fit_coefficients"] for row in rows]
+        ),
+        "long_fit_log_rms": np.asarray([float(row["long_fit_log_rms"]) for row in rows]),
+        "turning_point_power_law_coefficients": scaling["coefficients"],
+        "turning_point_power_law_curve": scaling["curve"],
+        "turning_point_power_law_log_rms": scaling["log_rms_residual"],
         "analytic_tau": float(rows[0]["analytic_tau"]),
         "maximum_peak_grid_spacing": max(
             float(row["maximum_peak_grid_spacing"]) for row in rows
@@ -1330,14 +1369,32 @@ def _aggregate_t008(campaign: Campaign, units: Sequence[WorkUnit]) -> dict[str, 
     rows = sorted(
         (campaign.load_unit(unit) for unit in units), key=lambda row: int(row["n_sites"])
     )
+    sizes = np.asarray([int(row["n_sites"]) for row in rows])
+    selected_entropies = np.asarray([row["selected_entropies"] for row in rows])
+    selected_momenta = np.asarray([row["selected_momenta"] for row in rows])
+    second_mask = selected_momenta[:, 1] == 0
+    if np.sum(second_mask) < 2 and bool(campaign.config.get("smoke")):
+        second_mask = np.ones(len(sizes), dtype=bool)
+    second_fits = entropy_fit_evidence(
+        sizes[second_mask], selected_entropies[second_mask, 1]
+    )
     return {
-        "sizes": np.asarray([int(row["n_sites"]) for row in rows]),
+        "sizes": sizes,
         "selected_energies": np.asarray([row["selected_energies"] for row in rows]),
         "selected_overlaps": np.asarray([row["selected_overlaps"] for row in rows]),
-        "selected_entropies": np.asarray([row["selected_entropies"] for row in rows]),
+        "selected_entropies": selected_entropies,
         "selected_residuals": np.asarray([row["selected_residuals"] for row in rows]),
-        "selected_momenta": np.asarray([row["selected_momenta"] for row in rows]),
+        "selected_momenta": selected_momenta,
         "selected_inversions": np.asarray([row["selected_inversions"] for row in rows]),
+        "second_fit_mask": second_mask,
+        "linear_fit_second": second_fits["linear_coefficients"],
+        "linear_fit_second_curve": np.polyval(
+            second_fits["linear_coefficients"], sizes
+        ),
+        "log_fit_second": second_fits["log_coefficients"],
+        "log_fit_second_curve": np.polyval(
+            second_fits["log_coefficients"], np.log(sizes)
+        ),
     }
 
 
@@ -1495,6 +1552,7 @@ def target_assertions(
             _assertion("T001-H", "Both generated Hamiltonians are Hermitian.", float(payload["hermiticity_error"]) <= acceptance["maximum_hermiticity_error"], float(payload["hermiticity_error"]), f"<= {acceptance['maximum_hermiticity_error']}"),
             _assertion("T001-R", "The optimized ansatz gives the paper-scale near-perfect first revival.", minimum_infidelity <= acceptance["maximum_first_revival_infidelity"], minimum_infidelity, f"minimum local infidelity <= {acceptance['maximum_first_revival_infidelity']}"),
             _assertion("T001-C", "Numerically optimized couplings follow the analytic ansatz.", correlation >= acceptance["minimum_ansatz_correlation"], correlation, f">= {acceptance['minimum_ansatz_correlation']}"),
+            _assertion("T001-INSET-BRANCHES", "Both printed inset branches are frozen separately.", payload["inset_infidelity_pxp"].shape == payload["inset_times"].shape == payload["inset_infidelity_deformed"].shape, [payload["inset_infidelity_pxp"].shape, payload["inset_infidelity_deformed"].shape], "both branches match inset_times"),
         ]
     if target_id == "T002":
         largest_index = int(np.argmax(payload["flow_sizes"]))
@@ -1506,6 +1564,7 @@ def target_assertions(
             _assertion("T002-SCALE", "The level-statistics flow and spectral-overlap panel reach N=32.", int(np.max(payload["flow_sizes"])) == 32, int(np.max(payload["flow_sizes"])), "largest N equals 32"),
             _assertion("T002-GOE", "Both resolved sectors are closer to GOE than Poisson at N=32.", closest_goe, largest_r, "|r-0.5307| < |r-0.3863| in both sectors"),
             _assertion("T002-SCAR", "A separated scar band dominates Neel spectral weight.", isolation >= acceptance["minimum_top_to_median_overlap"], isolation, f">= {acceptance['minimum_top_to_median_overlap']}"),
+            _assertion("T002-SECTOR-DENSITIES", "Both printed symmetry-sector spacing densities are frozen separately.", np.asarray(payload["spacing_density_by_sector"]).shape[0] == 2, np.asarray(payload["spacing_density_by_sector"]).shape, "two sector rows"),
         ]
     if target_id == "T003":
         return [
@@ -1547,6 +1606,7 @@ def target_assertions(
             _assertion("T006-PEAK", "Local revival maxima are resolved more finely than the declared time tolerance.", float(payload["maximum_peak_grid_spacing"]) <= acceptance["maximum_peak_time_spacing"], float(payload["maximum_peak_grid_spacing"]), f"<= {acceptance['maximum_peak_time_spacing']}"),
             _assertion("T006-C", "Early-time intensive rates collapse across system sizes.", relative_spread <= acceptance["maximum_early_gamma_relative_spread"], relative_spread, f"<= {acceptance['maximum_early_gamma_relative_spread']}"),
             _assertion("T006-MC", "Turning points are finite and increase with system size.", np.all(np.isfinite(turning)) and slope > acceptance["minimum_turning_point_slope"], [turning, slope], f"all finite and slope > {acceptance['minimum_turning_point_slope']}"),
+            _assertion("T006-FIT-EVIDENCE", "Every short/long branch and the turning-point power law are frozen by the scientific runner.", bool(np.all(np.isfinite(payload["short_fit_coefficients"])) and np.all(np.isfinite(payload["long_fit_coefficients"])) and np.all(np.isfinite(payload["turning_point_power_law_coefficients"]))), [payload["short_fit_coefficients"], payload["long_fit_coefficients"], payload["turning_point_power_law_coefficients"]], "all fit coefficients finite"),
         ]
     if target_id == "T007":
         ansatz_overlap = np.asarray(payload["overlaps_ansatz"])
@@ -1585,6 +1645,7 @@ def target_assertions(
             _assertion("T008-SCALE", "The exact-scar entropy series reaches N=32.", int(np.max(sizes)) == 32, int(np.max(sizes)), "largest N equals 32"),
             _assertion("T008-RES", "Every selected interior eigenpair meets the residual tolerance.", residual <= acceptance["maximum_eigenpair_residual"], residual, f"<= {acceptance['maximum_eigenpair_residual']}"),
             _assertion("T008-LOG", "Caption-filtered zero-momentum logarithmic fits are competitive with or better than volume-law fits for both scar series.", bool(np.all(np.asarray(zero_momentum_counts) >= 3) and np.all(log_r2 + acceptance["log_fit_r2_tolerance"] >= linear_r2)), [zero_momentum_counts, log_r2, linear_r2], f"at least 3 zero-momentum points per series and log R2 + {acceptance['log_fit_r2_tolerance']} >= linear R2"),
+            _assertion("T008-SECOND-FITS", "Linear and logarithmic guides for the second scar series are frozen from the same caption-filtered points.", bool(np.all(np.isfinite(payload["linear_fit_second"])) and np.all(np.isfinite(payload["log_fit_second"]))), [payload["linear_fit_second"], payload["log_fit_second"]], "both coefficient pairs finite"),
         ]
     if target_id == "T009":
         expected = int(payload["n_sites"]) + 1

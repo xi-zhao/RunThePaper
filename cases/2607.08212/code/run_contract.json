@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "run_id": "2607.08212-implementation-probe-v1-20260824",
+  "target_ids": [
+    "ALGEBRA_CORE",
+    "ROUTING_PROXY",
+    "ROUTING_PROXY_SCALING",
+    "ROUTING_PROXY_SENSITIVITY"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_probe.py",
+    "--config",
+    "config/implementation_probe.json"
+  ],
+  "inputs": [
+    "config/implementation_probe.json",
+    "config/routing_benchmark_contract.json",
+    "scripts/run_implementation_probe.py",
+    "src/mobius_compiler.py",
+    "src/proxy_router.py"
+  ],
+  "parameter_file": "config/implementation_probe.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "implementation_probe",
+    "algebra_variables": 3,
+    "routing": {
+      "families": [
+        "synthetic_3sat",
+        "qaoa_3local",
+        "p_spin_ising",
+        "hypergraph_4local",
+        "qram_oracle",
+        "multiplier_oracle",
+        "qft_pairs",
+        "ghz_chain"
+      ],
+      "qubits": 10,
+      "seed": 19,
+      "clauses_per_qubit": 2
+    },
+    "scaling": {
+      "families": [
+        "synthetic_3sat",
+        "p_spin_ising",
+        "qram_oracle"
+      ],
+      "qubit_counts": [
+        10,
+        20
+      ],
+      "seed": 19,
+      "repetitions": 2
+    },
+    "sensitivity": {
+      "families": [
+        "synthetic_3sat",
+        "p_spin_ising",
+        "qram_oracle"
+      ],
+      "qubits": 10,
+      "seed": 19,
+      "p3_values": [
+        0.0,
+        0.05,
+        0.2
+      ],
+      "p4_values": [
+        0.0,
+        0.05,
+        0.2
+      ]
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_probe/implementation_probe_summary.json",
+    "outputs/data/implementation_probe/algebra_smoke.csv",
+    "outputs/data/implementation_probe/routing_smoke.csv",
+    "outputs/data/implementation_probe/scaling_smoke.csv",
+    "outputs/data/implementation_probe/sensitivity_smoke.csv"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

@@ -1,32 +1,41 @@
 # Formula Verification
 
-All eleven formula cards passed both source tracing and an independent
-symbolic, normalization, limiting-case, or numerical check before numerical
-execution was allowed.
+The machine-readable result is
+`outputs/checks/formula_verification.json`. The derivation-first gate is
+allowed to open only when every card has both a source trace and an
+independent symbolic, normalization, limiting-case, or numerical sanity
+check.
 
-| Formula | Role | Independent check | Gate |
+| Formula | What it controls | Independent check | Gate |
 | --- | --- | --- | --- |
-| `EQC001` | GKSL generator | trace preservation and analytic damping | open |
-| `EQC002` | Choi reshuffling | identity Choi and program normalization | open |
+| `EQC001` | GKSL matrix and vectorization | trace preservation; analytic amplitude damping | open |
+| `EQC002` | Choi reshuffling and normalization | identity-channel Choi and program-state trace | open |
 | `EQC003` | SWAP-dephasing factorization | commutation, idempotence, endpoints | open |
-| `EQC004` | exact Fig. 2 overlap | Bell-basis derivation | open |
-| `EQC005` | fixed HPTP processor | Hermiticity, trace, programmed action | open |
-| `EQC006` | signed sampling | trace-weight identity and unbiased expectation | open |
-| `EQC007` | cost versus overhead | definition, axis, and script objective | open |
-| `EQC008` | programming-cost SDP | trace and epsilon-LMI reduction | open |
-| `EQC009` | program contraction | explicit index expansion | open |
-| `EQC010` | HP diamond norm | known identity and Pauli-channel norms | open |
-| `EQC011` | Fig. 3 models and grids | analytic channel and loop audit | open |
+| `EQC004` | exact Fig. 2 overlap | Bell-basis derivation and limits | open |
+| `EQC005` | fixed HPTP SWAP processor | Hermiticity, trace, exact programmed action | open |
+| `EQC006` | signed CPTP sampling | trace-weight identity and estimator expectation | open |
+| `EQC007` | \(\gamma_\epsilon\) versus \(2^{\gamma_\epsilon}\) | axis label and disclosed script objective | open |
+| `EQC008` | finite-grid cost SDP | trace constraints and epsilon LMI reduction | open |
+| `EQC009` | program-state Choi contraction | matrix-index expansion and TP inheritance | open |
+| `EQC010` | HP diamond norm | Watrous block symmetry and identity norm | open |
+| `EQC011` | Fig. 3 models and grids | analytic channel, Choi trace, loop audit | open |
 
-## Source findings
+## Source issues that do not close the gate
 
-The Supplemental displayed loss-term transpose placement conflicts with its
-own identity
-\(\operatorname{vec}(ABC)=(A\otimes C^T)\operatorname{vec}(B)\). Direct
-algebra supplies the implemented form. The target models have real diagonal
-\(L^\dagger L\), so the displayed inconsistency does not change either
-reproduced curve.
+Two source-level inconsistencies are isolated rather than propagated:
 
-The Fig. 3 scripts allocate the \(t=10\) endpoint but iterate only through
-\(t=9.99\). The source-exact loop is preserved and \(t=10\) is separately
-verified for every recovered solution.
+1. the Supplemental Liouville display places transposes on the loss terms
+   inconsistently with its own identity
+   \(\operatorname{vec}(ABC)=(A\otimes C^T)\operatorname{vec}(B)\);
+2. the Fig. 3 scripts allocate the \(t=10\) endpoint but loop over only the
+   first 1000 of 1001 values.
+
+The first is resolved by direct algebra and does not affect the paper's real
+diagonal \(L^\dagger L\). The second is preserved in the source-matching run
+and tested separately. Neither is hidden by fitting the figures.
+
+## Command
+
+```bash
+python PRAgent-workflow/scripts/check_formula_gate.py case/2512.08279 --write
+```

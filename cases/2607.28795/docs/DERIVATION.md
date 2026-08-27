@@ -13,7 +13,7 @@ $$
 
 status: `verified` · source: main Eqs. (1)-(2); Appendix Eqs. (A10)-(A23); Appendix Eq. (J1); Table XIII
 
-Code: `code/src/group_algebra.py`, `code/src/mitten_codes.py`
+Code: `src/group_algebra.py`, `src/mitten_codes.py`
 
 
 ### Q002 — Canonical logical basis from square invertibility
@@ -24,7 +24,7 @@ $$
 
 status: `verified` · source: main Eqs. (3)-(4); Theorem 1; Appendix Definition 16; Appendix Theorem 4
 
-Code: `code/src/mitten_codes.py::canonical_logicals`
+Code: `src/mitten_codes.py::canonical_logicals`
 
 
 ### Q003 — Block length, dimension, and 20 percent rate
@@ -35,7 +35,7 @@ $$
 
 status: `verified` · source: Appendix Eqs. (A24)-(A26); Appendix Eq. (F1); Definition 4
 
-Code: `code/src/gf2.py`, `code/src/mitten_codes.py::analyze_code`
+Code: `src/gf2.py`, `src/mitten_codes.py::analyze_code`
 
 
 ### Q004 — Parallel magic-injection resource counts
@@ -46,7 +46,7 @@ $$
 
 status: `verified` · source: Appendix Eq. (E15); Table V; Theorem 7
 
-Code: `code/src/closed_form.py::magic_injection_counts`
+Code: `src/closed_form.py::magic_injection_counts`
 
 
 ### Q005 — sQetch random sketched information-set decoding
@@ -57,7 +57,7 @@ $$
 
 status: `verified` · source: Appendix Eqs. (H1)-(H8); Appendix Algorithm 1
 
-Code: `code/src/sqetch.py`
+Code: `src/sqetch.py`
 
 
 ### Q006 — sQetch hit-probability model
@@ -68,7 +68,7 @@ $$
 
 status: `verified` · source: Appendix Eqs. (H9)-(H13)
 
-Code: `code/src/sqetch.py::sketch_inclusion_probability`, `code/src/sqetch.py::approximate_hit_probability`
+Code: `src/sqetch.py::sketch_inclusion_probability`, `src/sqetch.py::approximate_hit_probability`
 
 
 ### Q007 — Real-time decoder utilization and reaction time
@@ -79,4 +79,4 @@ $$
 
 status: `verified` · source: Appendix Eq. (I1); Appendix Table X
 
-Code: `code/src/closed_form.py::realtime_decoder_metrics`
+Code: `src/closed_form.py::realtime_decoder_metrics`

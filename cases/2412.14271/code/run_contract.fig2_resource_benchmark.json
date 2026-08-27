@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "run_id": "2412.14271-fig2-resource-benchmark-v1-20260824",
+  "target_ids": [
+    "T001"
+  ],
+  "command": [
+    "python",
+    "scripts/run_fig2_resource_benchmark.py",
+    "--config",
+    "config/fig2_resource_benchmark.json",
+    "--data-output",
+    "outputs/data/fig2_resource_benchmark.json",
+    "--check-output",
+    "outputs/checks/fig2_steady_state_ed_scaling.json"
+  ],
+  "inputs": [
+    "src/__init__.py",
+    "src/dicke.py",
+    "src/fig2_resource_benchmark.py",
+    "scripts/run_fig2_resource_benchmark.py",
+    "config/fig2_resource_benchmark.json"
+  ],
+  "parameter_file": "config/fig2_resource_benchmark.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "system_size": 5,
+    "coupling": 1.25,
+    "omega_c": 1.0,
+    "omega_a": 2.0,
+    "kappa1": 0.4,
+    "pilot_cutoffs": [
+      28,
+      44,
+      60
+    ],
+    "paper_cutoffs": [
+      60,
+      80,
+      100
+    ],
+    "acceptance_tolerances": {
+      "trace_error": 1e-10,
+      "hermiticity_error": 1e-10,
+      "positivity": 1e-08,
+      "liouvillian_residual": 1e-09
+    }
+  },
+  "outputs": [
+    "outputs/data/fig2_resource_benchmark.json",
+    "outputs/checks/fig2_steady_state_ed_scaling.json"
+  ],
+  "numerical_outputs": [
+    "outputs/data/fig2_resource_benchmark.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

@@ -461,6 +461,221 @@
         "src/laughlin_reproduction/model.py::gaussian_profile"
       ],
       "open_questions": []
+    },
+    {
+      "id": "EQ011",
+      "title": "Arbitrary-particle Laughlin wavefunction",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        }
+      ],
+      "latex": "psi_{1/m}(z_1,...,z_N)=prod_{i<j}(z_i-z_j)^m exp[-sum_i |z_i|^2/2]",
+      "role": "wavefunction",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ011-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) prints the arbitrary-N,m Jastrow polynomial and Gaussian factor."
+        },
+        {
+          "id": "EQ011-C1",
+          "type": "exchange_parity",
+          "status": "passed",
+          "reason": "Independent probes recover exchange parity (-1)^m for N=2,3,4 and m=1,2,3."
+        },
+        {
+          "id": "EQ011-C2",
+          "type": "homogeneity",
+          "status": "passed",
+          "reason": "The polynomial degree equals mN(N-1)/2 on every frozen probe."
+        }
+      ],
+      "numerical_form": "Evaluate the pairwise Jastrow product for arbitrary coordinate vectors and multiply by the Gaussian envelope.",
+      "code_refs": [
+        "src/laughlin_reproduction/claim_implementation_campaign.py::laughlin_polynomial",
+        "src/laughlin_reproduction/claim_implementation_campaign.py::laughlin_wavefunction"
+      ],
+      "open_questions": [
+        "Finite probes attest the general implementation but are not a formal proof for every N and m."
+      ]
+    },
+    {
+      "id": "EQ012",
+      "title": "Rotating-frame minimal-coupling identity",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (S1) and following paragraph"
+        }
+      ],
+      "latex": "H=p^2/(2M)+M omega^2 r^2/2-Omega L_z=(p-M Omega x r)^2/(2M)+M(omega^2-Omega^2)r^2/2; qB=2M Omega",
+      "role": "physical_model",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ012-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S1) prints both Hamiltonian forms and the text fixes qB=2M Omega."
+        },
+        {
+          "id": "EQ012-C1",
+          "type": "operator_identity",
+          "status": "passed",
+          "reason": "Expanding the square reproduces -Omega L_z and cancels the centrifugal term exactly."
+        },
+        {
+          "id": "EQ012-C2",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Both forms agree to floating-point precision on three independent phase-space probes."
+        }
+      ],
+      "numerical_form": "Evaluate both algebraically equivalent Hamiltonian forms at independent two-dimensional phase-space points.",
+      "code_refs": [
+        "src/laughlin_reproduction/claim_implementation_campaign.py::minimal_coupling_energy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ013",
+      "title": "General two-dimensional oscillator eigenfunctions",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eq. (S3)"
+        }
+      ],
+      "latex": "phi_{n,m}(r,phi)=sqrt[k!/(pi(k+|m|)!)] r^{|m|} e^{im phi} e^{-r^2/2} L_k^{|m|}(r^2), k=(n-|m|)/2",
+      "role": "wavefunction",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ013-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eq. (S3) prints the normalized Laguerre eigenfunctions and allowed quantum numbers."
+        },
+        {
+          "id": "EQ013-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Five frozen states across shells zero through four normalize within the declared quadrature tolerance."
+        },
+        {
+          "id": "EQ013-C2",
+          "type": "angular_phase",
+          "status": "passed",
+          "reason": "Independent phase probes recover exp(i m phi) to floating-point precision."
+        }
+      ],
+      "numerical_form": "Evaluate associated Laguerre polynomials for any allowed shell and angular momentum and integrate the radial norm.",
+      "code_refs": [
+        "src/laughlin_reproduction/claim_implementation_campaign.py::harmonic_wavefunction"
+      ],
+      "open_questions": [
+        "The frozen campaign samples representative allowed states rather than exhaustively enumerating all shells."
+      ]
+    },
+    {
+      "id": "EQ014",
+      "title": "General Laughlin relative-angle correlation",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Supplement Eqs. (S15)-(S16)"
+        }
+      ],
+      "latex": "G_{1/m}(phi)=(pi/2) sum_{k=0}^m sum_{q=0}^{m-k} C(m,k)C(m-k,q)(-2 cos phi)^k Gamma(1-k/2+m-q)Gamma(1+k/2+q); g=G/int G dphi",
+      "role": "observable",
+      "derived_from": [
+        "EQ011"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ014-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S15)-(S16) print the double-gamma sum and its normalization."
+        },
+        {
+          "id": "EQ014-C1",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Independent grids normalize m=1,2,3,4,6 to unity."
+        },
+        {
+          "id": "EQ014-C2",
+          "type": "special_case",
+          "status": "passed",
+          "reason": "The m=2 result agrees with the independently implemented main-text closed form to floating-point precision."
+        }
+      ],
+      "numerical_form": "Evaluate the finite double sum on a relative-angle grid and normalize by numerical quadrature.",
+      "code_refs": [
+        "src/laughlin_reproduction/claim_implementation_campaign.py::general_angle_correlation"
+      ],
+      "open_questions": [
+        "The frozen campaign samples five exponents; it does not claim exhaustive testing for every positive m."
+      ]
+    },
+    {
+      "id": "EQ015",
+      "title": "Deconfinement magnetic scales",
+      "source_refs": [
+        {
+          "type": "supplement",
+          "value": "Text following Supplement Eq. (S3)"
+        }
+      ],
+      "latex": "omega_B=2 omega; l_B=sqrt[hbar/(M omega_B)]=l_HO/sqrt(2); p_B=sqrt[hbar M omega_B]=sqrt(2)p_HO",
+      "role": "scale_identity",
+      "derived_from": [
+        "EQ012"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ015-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The paragraph after Supplement Eq. (S3) prints all three deconfinement identities."
+        },
+        {
+          "id": "EQ015-C1",
+          "type": "dimensional_identity",
+          "status": "passed",
+          "reason": "Substitution of omega_B=2 omega gives the printed length and momentum ratios exactly."
+        },
+        {
+          "id": "EQ015-C2",
+          "type": "canonical_scale",
+          "status": "passed",
+          "reason": "The independently evaluated scales satisfy l_B p_B=hbar."
+        }
+      ],
+      "numerical_form": "Evaluate the oscillator and magnetic scales from arbitrary positive hbar, mass and trap frequency and compare their exact ratios.",
+      "code_refs": [
+        "src/laughlin_reproduction/claim_implementation_campaign.py::_magnetic_scale_validation"
+      ],
+      "open_questions": []
     }
   ]
 }

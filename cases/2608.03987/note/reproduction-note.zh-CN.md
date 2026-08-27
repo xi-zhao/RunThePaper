@@ -1,64 +1,21 @@
-# arXiv:2608.03987 独立复现笔记
+# Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators：科学复现讲义
 
-## 论文与复现对象
+## 结论
 
-- 论文：[arXiv:2608.03987v2](https://arxiv.org/abs/2608.03987)，*Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators*。
-- 原始基准输入：[Zenodo 10.5281/zenodo.21791682](https://doi.org/10.5281/zenodo.21791682)，数据许可为 CC-BY-4.0。
-- 当前公开包复现论文的 Figure 8 和 Figure 9，共 67 个电路：12 个随机电路、24 个 Clifford+T、10 个 QAOA、21 个 VQE。
+Figure 8 passes independently at full scale; Figure 9 is fully computed but its paper-threshold feature differs on nine additional circuits.
 
-## 独立性边界
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-核心计算是我们从论文公式独立实现的 Python 张量网络模型，不是作者 Rust 代码的重跑、翻译或封装。主优化路径只从公开 ZIP 中读取 122 个原始输入载荷：12 个 qsim 电路、55 个结构化电路 JSON 和 55 个观测量文件。输入审计确认它没有读取作者的 Rust crate、收缩树、优化计划或结果 CSV。
+## 我们复现的是什么
 
-第三方 `cotengra==0.7.5` 只用于生成通用 FLOP 收缩树候选；张量网络降级、实化代价模型、pass/ride/merge 分类、NNI 模拟退火、树哈希和统计均由本公开包实现。作者结果只在独立结果生成完成后用于比较，不反馈给优化器。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-## 结果
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=missing, causal_resolution=terminal_blocker, science=pending, execution=missing, pixel=missing, independent_review=missing, review_scope=missing, paper_assessment=missing`。
 
-综合证据评分为 **72/100**，属于数值特征复现，而不是完全数值复现。
+## 运行
 
-- **Figure 8：通过。** 67/67 个电路满足精确关系
-  `o = 1 + 2m + r` 及解析区间 `[1+2m, 2+m]`，最大残差为
-  `4.44e-16`。与作者结果事后比较时，开销相关系数为 `0.9881`，
-  MAE 为 `0.0600`。
-- **Figure 9：部分复现。** 论文报告 66/67 个电路低于
-  `5e-4` 的迁移差距；独立优化器达到 57/67。阈值分类有 58/67
-  一致，差异主要出现在 Clifford+T 和 VQE。最大的真实代价差距为
-  `20.35%`。
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-因此，实化张量网络的精确算术规律得到独立验证；“骨架网络的最优收缩树几乎总能无损迁移到实化网络”这一经验结论，在不同优化器下仍然大体成立，但没有论文报告得那么强。差异被保留，而不是通过放宽阈值隐藏。
+## 论文审查边界
 
-## 快速运行
-
-从本案例目录运行：
-
-```bash
-# 下载并校验官方数据发布包
-python code/scripts/fetch_benchmark_inputs.py
-
-# 只跑 5-qubit 测试电路，验证独立主路径
-python code/scripts/run_independent_reimplementation.py \
-  --preset smoke --scope random --circuit test
-```
-
-完整 67 电路复现：
-
-```bash
-python code/scripts/run_independent_reimplementation.py \
-  --preset full \
-  --output-dir outputs/data/independent_python_full
-python code/scripts/run_reproduction.py
-```
-
-已有结果见 [Figure 8](../outputs/figures/fig8_cost_law.png)、
-[Figure 9](../outputs/figures/fig9_pipeline.png) 和
-[机器可读检查](../outputs/checks/numerical_feature_checks.json)。
-
-## 计算与边界
-
-完整配置固定 seed 42、10 个 cotengra 候选、每个目标 600,000 次 NNI
-退火和 60,000 次低温 polish。各电路记录的运行时间合计约 29.3 分钟；
-此前以三个本地进程并行时墙钟约 14 分钟。
-
-Figure 8/9 计算的是收缩树组合代价，并不执行大型张量收缩，所以 A100
-不是当前瓶颈。公开包也没有复现论文在 Ascend 910/A800 上的内核墙钟、精度
-和端到端加速表；这些属于另一个 GPU/NPU 执行层目标。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Author Rust code and contraction plans are excluded from primary evidence. Figure 8 passed; Figure 9 produced 57/67 circuits below the paper threshold versus 66/67 in the source.

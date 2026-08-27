@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "run_id": "2409.18176-t011-far-detuned-v1-20260824",
+  "target_ids": [
+    "T011"
+  ],
+  "command": [
+    "python",
+    "scripts/run_t011_far_detuned.py",
+    "--config",
+    "config/t011_far_detuned.json"
+  ],
+  "inputs": [
+    "src/bose_fermi_transport/__init__.py",
+    "src/bose_fermi_transport/thermodynamics.py",
+    "src/bose_fermi_transport/phonons.py",
+    "src/bose_fermi_transport/far_detuned.py",
+    "scripts/run_t011_far_detuned.py",
+    "config/t011_far_detuned.json",
+    "config/matplotlib"
+  ],
+  "parameter_file": "config/t011_far_detuned.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "temperature_min_k": 0.0,
+    "temperature_max_k": 25.0,
+    "temperature_points": 101,
+    "background_over_rho0": 1.0,
+    "far_detuning_definition": "Delta/Delta_star -> infinity",
+    "phonon": {
+      "bloch_gruneisen_k": 10.0,
+      "high_temperature_slope_per_k": 0.004,
+      "crossover_power": 4.0
+    }
+  },
+  "outputs": [
+    "outputs/data/T011_far_detuned_total_resistivity.csv",
+    "outputs/figures/T011_main_fig3_inset_far_detuned.png",
+    "outputs/checks/T011_far_detuned_total_resistivity.json"
+  ],
+  "timeout_seconds": 120,
+  "environment": {
+    "MPLBACKEND": "Agg",
+    "MPLCONFIGDIR": "config/matplotlib",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "PYTHONHASHSEED": "0"
+  }
+}

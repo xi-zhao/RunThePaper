@@ -1,0 +1,288 @@
+{
+  "schema_version": 1,
+  "paper_id": "2608.05312",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Single-excitation Tavis-Cummings-Hubbard Hamiltonian",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (1)"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:H"
+        }
+      ],
+      "latex": "H=\\omega_a a^\\dagger a+\\varepsilon\\sum_i\\sigma_i^\\dagger\\sigma_i+\\sum_i g(a^\\dagger\\sigma_i+\\mathrm{h.c.})+\\sum_i t_i(\\sigma_i^\\dagger\\sigma_{i+1}+\\mathrm{h.c.}),\\quad t_i=t+\\delta t X_i",
+      "role": "model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (1) and the surrounding paragraph explicitly define every matrix element and Gaussian hopping disorder."
+        },
+        {
+          "id": "EQ001-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The Hamiltonian is Hermitian and conserves total excitation in the stated single-excitation manifold."
+        }
+      ],
+      "numerical_form": "H[0,i]=H[i,0]=g; H[i,i+1]=H[i+1,i]=t_mean+delta_t*X[i]",
+      "code_refs": [
+        "src/cavity_transport/model.py::build_hamiltonian"
+      ],
+      "open_questions": [
+        "The source does not print t; the case reconstructs t=1 meV outside this formula gate."
+      ]
+    },
+    {
+      "id": "EQ002",
+      "title": "Non-Condon emission, absorption, and detailed balance",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (2), SM Eq. (S4), SM Eq. (S17)"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:rates"
+        }
+      ],
+      "latex": "\\gamma_{em}=2J(\\Delta)(1+n),\\quad \\gamma_{abs}=2J(\\Delta)n,\\quad \\gamma_{abs}/\\gamma_{em}=e^{-\\Delta/(k_BT)}",
+      "role": "rate_model",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The rates and detailed-balance ratio are stated in the main text and derived again in SM Appendix F."
+        },
+        {
+          "id": "EQ002-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "For n=(exp(beta Delta)-1)^-1, n/(1+n)=exp(-beta Delta); absorption vanishes at zero temperature."
+        }
+      ],
+      "numerical_form": "gamma_abs = gamma_rec * exp(-1.0 / thermal_ratio), with zero at thermal_ratio=0",
+      "code_refs": [
+        "src/cavity_transport/model.py::absorption_rate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Rescue, absorption, dephasing, and drain jumps",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (3), SM Eq. (S5)"
+        },
+        {
+          "type": "section",
+          "value": "Cavity-drain regime and SM site-N drain configuration"
+        }
+      ],
+      "latex": "L_{rec,i}=\\sqrt{\\gamma_{rec}}|cav\\rangle\\langle i|,\\;L_{abs,i}=\\sqrt{\\gamma_{abs}}|i\\rangle\\langle cav|,\\;L_{deph,i}=\\sqrt{\\gamma_{deph}}|i\\rangle\\langle i|",
+      "role": "open_system_model",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "All three bath jump families and both drain geometries are stated explicitly."
+        },
+        {
+          "id": "EQ003-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At zero temperature L_abs is absent, leaving a one-way site-to-cavity jump."
+        }
+      ],
+      "numerical_form": "sparse rank-one jump matrices in the basis [cavity, sites, sink]",
+      "code_refs": [
+        "src/cavity_transport/model.py::build_jumps"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Eigenstate rescue rate and photonic-weight sum rule",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (4)"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:rescue"
+        }
+      ],
+      "latex": "W^{rec}_{k\\leftarrow l}=\\gamma_{rec}w_k(1-w_l),\\quad \\sum_{k\\in B}W^{rec}_{k\\leftarrow l\\in D}=\\gamma_{rec}",
+      "role": "central_observable",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (4) and its following paragraph state both the factorized rate and the photonic-weight sum rule."
+        },
+        {
+          "id": "EQ004-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Completeness over emitter amplitudes yields 1-w_l, completeness over photonic weights yields sum_k w_k=1, and every dark destination has w_k=0."
+        }
+      ],
+      "numerical_form": "W = gamma_rec * outer(w, 1-w); sum bright rows for a dark column",
+      "code_refs": [
+        "src/cavity_transport/observables.py::rescue_rate_matrix"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Pure-rescue dark decay and two-exponential sink efficiency",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Main Eq. (5), SM Eqs. (S10)-(S16)"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:rate_eqs, eq:closed_form_eta"
+        }
+      ],
+      "latex": "p_D(t)=p_D(0)e^{-\\gamma_{rec}t},\\quad \\eta(t)=1-Ae^{-\\Gamma_Bt}-Be^{-\\gamma_{rec}t}",
+      "role": "sanity_reference",
+      "derived_from": [
+        "EQ003",
+        "EQ004"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The main text states the exponential; SM Appendix C gives the complete solution and coefficients."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For positive rescue and lead rates, eta tends to one and the dark population tends to zero."
+        }
+      ],
+      "numerical_form": "fit log(p_dark/p_dark0) versus time and compare slope with -gamma_rec",
+      "code_refs": [
+        "src/cavity_transport/checks.py::fit_dark_decay"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Column-vectorized Lindblad generator",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "SM Eq. (S19)"
+        },
+        {
+          "type": "section",
+          "value": "SM Appendix H"
+        }
+      ],
+      "latex": "\\mathcal{L}=-i(I\\otimes H-H^T\\otimes I)+\\sum_j[L_j^*\\otimes L_j-\\tfrac12(I\\otimes L_j^\\dagger L_j+(L_j^\\dagger L_j)^T\\otimes I)]",
+      "role": "numerical_method",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "SM Appendix H explicitly states the column-stacked superoperator and matrix-exponential propagation."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "vec(A rho B)=(B^T tensor A)vec(rho) produces the stated commutator and dissipator terms."
+        }
+      ],
+      "numerical_form": "scipy.sparse.kron construction followed by scipy.sparse.linalg.expm_multiply",
+      "code_refs": [
+        "src/cavity_transport/liouvillian.py::build_liouvillian",
+        "src/cavity_transport/liouvillian.py::propagate"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Bright and dark manifold projectors",
+      "source_refs": [
+        {
+          "type": "section",
+          "value": "SM Appendix E"
+        },
+        {
+          "type": "figure",
+          "value": "Main Figure 2(c,d)"
+        }
+      ],
+      "latex": "P_B=\\sum_{k\\in B}|\\psi_k\\rangle\\langle\\psi_k|,\\quad P_D=\\sum_{k\\in D}|\\psi_k\\rangle\\langle\\psi_k|",
+      "role": "observable",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C1",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "SM Appendix E defines the two largest photonic weights as bright and the remaining N-1 eigenstates as dark."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "P_B and P_D are orthogonal and sum to the system-space identity; adding the sink gives full trace decomposition."
+        }
+      ],
+      "numerical_form": "eigh(H_system), argsort(cavity_weight)[-2:], sum outer products",
+      "code_refs": [
+        "src/cavity_transport/observables.py::manifold_projectors"
+      ],
+      "open_questions": []
+    }
+  ]
+}

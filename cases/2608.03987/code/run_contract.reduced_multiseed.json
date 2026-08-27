@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "run_id": "2608.03987-reduced-multiseed-v2-20260825",
+  "target_ids": [
+    "T008",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_multiseed_campaign.py",
+    "--config",
+    "config/paper_scale.json",
+    "--output-dir",
+    "outputs/checks/reduced_multiseed_attestation",
+    "--smoke"
+  ],
+  "inputs": [
+    "src/benchmark_release.py",
+    "src/independent_tn.py",
+    "src/implementation_closure.py",
+    "scripts/run_independent_reimplementation.py",
+    "scripts/run_multiseed_campaign.py",
+    "config/paper_scale.json",
+    "inputs/clean_circuit_inputs.zip"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "smoke",
+  "expected_parameters": {
+    "circuits": [
+      "test"
+    ],
+    "seeds": [
+      260803987,
+      260803988
+    ],
+    "greedy_trials": 2,
+    "anneal_steps": 2000,
+    "polish_steps": 500
+  },
+  "outputs": [
+    "outputs/checks/reduced_multiseed_attestation/aggregate.json"
+  ],
+  "timeout_seconds": 300,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1"
+  }
+}

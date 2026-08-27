@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "paper_id": "2602.12212",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Convex-roof minimum of energy variance",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:family"
+        },
+        {
+          "type": "main_text",
+          "value": "QFI footnote following Eq. (2)"
+        }
+      ],
+      "latex": "\\min_{\\rho=\\sum_i p_i|\\varphi_i\\rangle\\langle\\varphi_i|}\\sum_i p_i\\operatorname{Var}_{\\varphi_i}(H)=\\tfrac14 F_Q(\\rho;H)",
+      "role": "Defines the physical variational object and the acceptance identity for the optimal ensemble.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (2) defines the minimization and the immediately following footnote states F_Q=4 times the optimal average variance."
+        },
+        {
+          "id": "EQ001_numeric",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The independently constructed minimum-variance ensemble reproduces the spectral QFI identity at paper scale; the complete 214-state dynamics shell gives an absolute QFI-versus-four-times-variance error of 2.53e-13."
+        }
+      ],
+      "numerical_form": "Compare 4*sum_i p_i*(<H^2>_i-<H>_i^2) with the spectral QFI formula.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:qfi_spectral"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Effective state Hamiltonian in the rho eigenbasis",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:Hrho"
+        }
+      ],
+      "latex": "\\tfrac12\\{H_\\rho,\\rho\\}=\\sqrt\\rho H\\sqrt\\rho,\\qquad (H_\\rho)_{mn}=\\frac{2\\sqrt{\\lambda_m\\lambda_n}}{\\lambda_m+\\lambda_n}H_{mn}",
+      "role": "Provides the stable numerical construction of H_rho for every target.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The defining Lyapunov equation is Eq. (3)."
+        },
+        {
+          "id": "EQ002_elements",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "In the rho eigenbasis the left side is (lambda_m+lambda_n)(H_rho)_mn/2 and the right side is sqrt(lambda_m lambda_n) H_mn."
+        },
+        {
+          "id": "EQ002_commuting",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "If [rho,H]=0, off-diagonal H_mn vanish between unequal rho eigenspaces and H_rho=H on the support, as stated by the paper."
+        }
+      ],
+      "numerical_form": "For rho proportional to exp(-beta H0), use factor sech(beta*(e_m-e_n)/2) in the H0 eigenbasis; this cancels the partition function and avoids underflow.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:effective_state_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Yu optimal ensemble reconstruction",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:Yu"
+        }
+      ],
+      "latex": "p_i|\\varphi_i\\rangle\\langle\\varphi_i|=\\sqrt\\rho|\\Psi_i\\rangle\\langle\\Psi_i|\\sqrt\\rho,\\quad p_i=\\langle\\Psi_i|\\rho|\\Psi_i\\rangle,\\quad \\langle\\varphi_i|H|\\varphi_i\\rangle=E_{\\rho,i}",
+      "role": "Maps eigenvectors of H_rho to normalized optimal representatives and their populations.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The projector identity and representative-energy identity are Eq. (4)."
+        },
+        {
+          "id": "EQ003_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Choosing |phi_i>=sqrt(rho)|Psi_i>/sqrt(p_i) gives unit norm by the definition of p_i."
+        },
+        {
+          "id": "EQ003_reconstruction",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Summing p_i|phi_i><phi_i| inserts the complete eigenbasis of H_rho and returns rho."
+        },
+        {
+          "id": "EQ003_energy",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Sandwiching Eq. (3) between an H_rho eigenvector gives <phi_i|H|phi_i>=E_rho,i."
+        }
+      ],
+      "numerical_form": "Diagonalize H_rho; p_i=sum_m lambda_m |Psi_mi|^2; Phi_mi=sqrt(lambda_m) Psi_mi/sqrt(p_i).",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:minimum_variance_ensemble"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Leaf-canonical ensemble",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:leaf-canonical"
+        }
+      ],
+      "latex": "\\rho_{\\beta|\\mathcal L_H(\\rho_0)}=\\frac{\\sqrt{\\rho_0}e^{-\\beta H_{\\rho_0}}\\sqrt{\\rho_0}}{\\operatorname{tr}[\\rho_0e^{-\\beta H_{\\rho_0}}]}",
+      "role": "Generates the canonical curve inside a fixed leaf and explains the black curves in Main Fig. 1.",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The density-matrix expression is Eq. (7)."
+        },
+        {
+          "id": "EQ004_gibbs_weights",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding the exponential in the H_rho0 eigenbasis gives p_i proportional to exp(-beta E_rho0,i), then EQ003 reconstructs the density matrix."
+        },
+        {
+          "id": "EQ004_trace",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The denominator is exactly the trace of the numerator."
+        }
+      ],
+      "numerical_form": "Evaluate the matrix exponential through the eigendecomposition of H_rho0 and normalize by sum_i exp(-beta E_i)<Psi_i|rho0|Psi_i>.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:leaf_canonical_state"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Leaf-typicality observable and outlier diagnostic",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:leaf_typicality"
+        },
+        {
+          "type": "main_text",
+          "value": "paragraph beginning To quantify typicality"
+        }
+      ],
+      "latex": "o_i=\\frac{\\langle\\Psi_i|\\sqrt\\rho O\\sqrt\\rho|\\Psi_i\\rangle}{\\langle\\Psi_i|\\rho|\\Psi_i\\rangle}=\\langle\\varphi_i|O|\\varphi_i\\rangle,\\quad N_\\Delta=\\#\\{i:|o_i-f_{O,\\mathcal L}(E_{\\rho,i})|>\\Delta\\}",
+      "role": "Defines all Main Fig. 2-left and Figs. S1-S4 curves.",
+      "derived_from": [
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Eq. (8) gives the ratio; the following numerical paragraph defines shells, shell averages, N_Delta, and log_d N_Delta."
+        },
+        {
+          "id": "EQ005_ratio",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Substituting the normalized representative from EQ003 turns the ratio into <phi_i|O|phi_i>."
+        },
+        {
+          "id": "EQ005_bounds",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "For Delta=0, 0<=N_Delta<=d; for Delta above the maximum residual, N_Delta=0. The plotted logarithm is therefore bounded by 0 and 1 when defined."
+        }
+      ],
+      "numerical_form": "Sort by E_rho, compute a local shell mean over consecutive levels, residuals abs(o_i-f_i), count residuals above each Delta, and report log(N_Delta)/log(d).",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:typicality_curve"
+      ],
+      "open_questions": [
+        "The paper states O(sqrt(d)) consecutive levels but omits the integer shell width, centred/blocked choice, and edge handling; these are parameter-reconstruction questions, not formula-gate failures."
+      ]
+    },
+    {
+      "id": "EQ006",
+      "title": "Spin-chain Hamiltonian",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:H"
+        },
+        {
+          "type": "supplement_label",
+          "value": "eq:H (S1)"
+        }
+      ],
+      "latex": "H=\\sum_\\ell[\\sigma_\\ell^x\\sigma_{\\ell+1}^x+\\vec h\\cdot\\vec\\sigma_\\ell+D(\\sigma_\\ell^z\\sigma_{\\ell+1}^y-\\sigma_\\ell^y\\sigma_{\\ell+1}^z)]",
+      "role": "Defines H and H0 for every many-body numerical target.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Hamiltonian appears in Main Eq. (9) and is repeated as Supplemental Eq. (S1); all coupling values are in figure captions."
+        },
+        {
+          "id": "EQ006_numeric",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Independent Pauli-string construction is Hermitian for both disclosed boundary choices, agrees with direct product-state Pauli actions, and supports the attested paper-scale spectral and conservation checks."
+        }
+      ],
+      "numerical_form": "Construct sparse Pauli strings; nonintegrable h=((sqrt(5)+5)/8,1/2,sqrt(5)/2), D=pi/20; H0 has h=(0,0,3/2) or (0,0,1/2), D=0.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:spin_chain_hamiltonian"
+      ],
+      "open_questions": [
+        "Boundary conditions are omitted. Open boundaries are the leading reconstruction because the text says the generic Hamiltonian has no obvious global symmetries, whereas periodic uniform couplings would retain translation symmetry."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Representative-state dynamics and delta selection",
+      "source_refs": [
+        {
+          "type": "main_figure_caption",
+          "value": "f:ETH right"
+        }
+      ],
+      "latex": "\\delta_i=\\frac{|E_{\\rho,i}-\\langle H\\rangle|}{\\sqrt{\\operatorname{Var}_{\\varphi_i}(H)+F_Q(\\rho;H)/4}}",
+      "role": "Selects the pure representative and its comparison shell for Main Fig. 2-right.",
+      "derived_from": [
+        "EQ001",
+        "EQ003",
+        "EQ006"
+      ],
+      "derivation_status": "source_only",
+      "numeric_gate_policy": "source_only",
+      "checks": [
+        {
+          "id": "EQ007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Main Fig. 2 caption states delta_i, the minimization rule, the delta-shell, L=12, beta=0.5, and confidence levels."
+        },
+        {
+          "id": "EQ007_denominator",
+          "type": "dimensional_check",
+          "status": "passed",
+          "reason": "The numerator has energy units and the square root of variance plus QFI/4 has the same energy units."
+        }
+      ],
+      "numerical_form": "Compute exact mixed-state dynamics under H; choose argmin delta_i; evolve that representative; use the stated normalized delta-shell and empirical 16/84 and 2.5/97.5 percentiles as the initial confidence-band reconstruction.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:representative_dynamics"
+      ],
+      "open_questions": [
+        "The exact conversion from outlier fraction to confidence bands is not further specified; empirical shell quantiles are a disclosed reconstruction."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Symmetric logarithmic derivative and QFI",
+      "source_refs": [
+        {
+          "type": "tex_label",
+          "value": "eq:Lyapunov"
+        },
+        {
+          "type": "tex_label",
+          "value": "eq:EVFO"
+        }
+      ],
+      "latex": "\\tfrac12\\{\\rho,L_\\rho^{(H)}\\}=i[\\rho,H],\\quad F_Q(\\rho;H)=i\\operatorname{tr}(\\rho[H,L_\\rho^{(H)}])",
+      "role": "Provides an independent spectral check of the QFI used in EQ001 and EQ007.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Both identities appear in the End Matter as Eqs. (10) and (14)."
+        },
+        {
+          "id": "EQ008_spectral",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Solving the SLD equation in the rho eigenbasis gives L_mn=2i(lambda_m-lambda_n)H_mn/(lambda_m+lambda_n), which yields the standard spectral QFI."
+        },
+        {
+          "id": "EQ008_commuting",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "If [rho,H]=0, L=0 and F_Q=0."
+        }
+      ],
+      "numerical_form": "F_Q=2*sum_mn ((lambda_m-lambda_n)^2/(lambda_m+lambda_n))*|H_mn|^2, omitting zero denominators.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:qfi_spectral"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ009",
+      "title": "Spectral-compression entropies",
+      "source_refs": [
+        {
+          "type": "supplement_section",
+          "value": "Spectral compression"
+        }
+      ],
+      "latex": "S_{\\rm diag}^{(H)}[|\\chi_i\\rangle]= -\\sum_\\Psi |\\langle\\Psi|\\chi_i\\rangle|^2\\log|\\langle\\Psi|\\chi_i\\rangle|^2,\\quad \\Delta s_{\\rm diag}=\\frac{\\overline S_{\\rm diag}^{\\rm eig}-\\overline S_{\\rm diag}^{\\rm mv}}{L}",
+      "role": "Defines Figs. S5-S6 and the claimed exponential compression.",
+      "derived_from": [
+        "EQ003",
+        "EQ006"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ009_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Supplemental spectral-compression section defines the dephased projector, diagonal entropy, weighted entropies, and Delta s_diag."
+        },
+        {
+          "id": "EQ009_probability",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "For a normalized representative and complete H eigenbasis, sum_Psi |<Psi|chi_i>|^2=1."
+        },
+        {
+          "id": "EQ009_bounds",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The participation number exp(S_diag) lies in [1,d], reaching 1 for an H eigenstate and d for a uniform energy distribution."
+        }
+      ],
+      "numerical_form": "Transform both the H0 eigenvectors and optimal representatives into the H eigenbasis; compute columnwise Shannon entropy and population-weighted means.",
+      "code_refs": [
+        "src/leaf_thermodynamics.py:spectral_compression"
+      ],
+      "open_questions": []
+    }
+  ]
+}

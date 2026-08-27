@@ -6,25 +6,10 @@ Run commands from the repository root unless a command below changes directory.
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-pip install qutip
 cd cases/2412.14271/code
-python scripts/run_analytic.py
-python scripts/render_figures.py
-```
-
-## Full reduced-ensemble rerun
-
-Regenerates all shipped analytic and quantum arrays with the declared public configurations. The quantum jobs take roughly ten-plus minutes on the reference CPU and remain reduced relative to the paper's trajectory counts.
-
-```bash
-cd cases/2412.14271/code
-python scripts/run_analytic.py
-python scripts/run_quantum_one_photon.py
-python scripts/run_quantum_main.py
-python scripts/run_quantum_parity.py
-python scripts/render_figures.py
+python scripts/run_reproduction.py --config config/analytic.json
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: Main quantum panels use reduced trajectory counts, formal supplemental Figs. S3–S4 remain blocked by unavailable defining parameters, and the Fig. 3(g)/Fig. S2 evidence discrepancy awaits independent review or author clarification.
+Boundary: Main quantum figures are feature-level because trajectory counts are reduced. Formal Supplement Fig. S3 is an explicit uncovered item because its panel inventory, observable, and parameters are unavailable. Formal Supplement Fig. S4 is an explicit uncovered item because its panel inventory, observable, and parameters are unavailable. Fig. 3(g)/Fig. S2 has a confirmed branch-to-spectrum evidence discrepancy: the plotted lower branch is nonlinearly unstable but has no positive Bogoliubov eigenvalue.

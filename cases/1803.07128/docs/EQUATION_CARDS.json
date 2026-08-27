@@ -294,6 +294,60 @@
         "src/qml_feature_space/reproduction.py::_run_variational",
         "src/qml_feature_space/variational_scale.py::FactorizedCVCircuit.probabilities"
       ]
+    },
+    {
+      "id": "EQ009",
+      "title": "Corrected finite-set phase-feature separability condition",
+      "source_refs": [
+        {
+          "type": "equation",
+          "value": "Appendices B-D, Propositions 1-2 and Eqs. (C1)-(C2)"
+        }
+      ],
+      "latex": "rank(Phi)=M implies for every y in {-1,+1}^M there exists w with Phi w=y; for one mode Phi is a weighted Vandermonde matrix in z_m=e^{i phi_m}",
+      "role": "finite_phase_feature_rank_and_binary_label_interpolation",
+      "derived_from": [
+        "EQ001",
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "open_questions": [
+        "The printed universal claim requires physical phases to be distinct modulo 2*pi.",
+        "Proposition 1 is false as written, and nonzero pairwise overlap alone does not prove multi-mode linear independence; both are paper-discrepancy candidates pending fresh-context review."
+      ],
+      "checks": [
+        {
+          "id": "EQ009-S",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendices B-D explicitly state the linear-independence and arbitrary-binary-separability propositions being adjudicated."
+        },
+        {
+          "id": "EQ009-V",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The single-mode feature matrix is a nonzero diagonal weighting of a Vandermonde matrix in distinct phase factors."
+        },
+        {
+          "id": "EQ009-G",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The explicit tensor-Fock Gram converges to the analytic Gram within 9.77e-12 and remains full rank on the declared multi-mode test set."
+        },
+        {
+          "id": "EQ009-C",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Exact periodic-input and three-point affine-rank counterexamples falsify the unqualified domain and Proposition 1 wording."
+        }
+      ],
+      "code_refs": [
+        "src/qml_feature_space/separability.py::multimode_fock_states",
+        "src/qml_feature_space/separability.py::analytic_multimode_gram",
+        "src/qml_feature_space/separability.py::all_binary_affine_interpolation",
+        "src/qml_feature_space/separability.py::strict_affine_separation_feasible"
+      ]
     }
   ]
 }

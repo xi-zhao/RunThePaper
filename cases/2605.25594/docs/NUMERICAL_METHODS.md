@@ -1,58 +1,26 @@
 # Numerical Methods
 
-## Model
+## Core numerical object
 
-We implement the single-particle 3D Anderson model on an `L x L x L` cubic lattice:
+对每个 `(L,W,realization)` 构造开边界稀疏 Anderson Hamiltonian，再用 float64 全对角化。只保留谱中心 20% 作为外层 `n` 状态，但 fidelity susceptibility 对内层 `m` 使用完整谱。
 
-```text
-H_A = - nearest-neighbor hopping + random onsite disorder
-```
+## Operator boundary
 
-- Boundary condition: open boundary.
-- Disorder: iid uniform `[-W/2, W/2]`.
-- Local correctness sizes: `L=4,5,6,7`.
-- A100 campaign sizes: `L=24,28,31`, totaling 605 disorder realizations.
-- Paper sizes: up to `L=38`.
+- `T_s`：使用论文给出的 next-nearest sublattice hopping，并单独加入 `[-0.15,0.15]` boundary disorder；
+- `T`：nearest-neighbor kinetic operator，不加 boundary disorder；
+- `n`：从一个 L=38 冻结随机场裁剪并去迹。论文未公布随机配置及裁剪规则，因此参数状态是 reconstructed，而不是 paper-exact。
 
-## Observable
+## Memory strategy
 
-The completed local and A100 runs focus on the sublattice kinetic-energy perturbation `T_s`. This is the operator that most clearly shows the weak-disorder crossover in the paper.
+Hamiltonian 以 sparse 形式构造，eigh 前转 dense。operator 以 sparse matrix 作用于 eigenvectors；随后按 central-state block 计算 `O_nm`，只保留 susceptibility、spectral bins、spacing、IPR 和 histogram sufficient statistics，不持久化本征矢。
 
-The code also keeps the model structure explicit enough to add `T` and randomized site occupation `n` in a larger rerun.
+## Scientific outputs
 
-## Frequency Cutoff
+- unregularized / regularized typical and average susceptibility；
+- rescaled quantities；
+- full/central spectrum spacing and gap ratio；
+- spectral-function weighted bins；
+- `log10 chi_n` histogram；
+- `T_s` 与 `n` 的强无序微扰基线。
 
-For the main disorder scan, we follow the paper's default cutoff:
-
-```text
-mu_star = 2 log(V) omega_av
-```
-
-For the localized-regime check, we run a small `mu` sweep:
-
-```text
-mu = 0.02, 0.05, 0.1, 0.2, 0.5
-```
-
-## Generated Data
-
-- `outputs/data/fidelity_vs_disorder_raw.csv`
-- `outputs/data/fidelity_vs_disorder_summary.csv`
-- `outputs/data/spectral_function_summary.csv`
-- `outputs/data/mu_sweep_summary.csv`
-- `outputs/data/perturbation_theory_summary.csv`
-- `outputs/data/remote/results_L24.jsonl`
-- `outputs/data/remote/results_L28.jsonl`
-- `outputs/data/remote/results_L31.jsonl`
-- `outputs/data/remote_campaign_summary.csv`
-
-## Acceptance Features
-
-The case checks whether:
-
-- weak-disorder sensitivity is visible in the largest local size;
-- gap ratio is higher in the chaotic/moderate-disorder window than at strong disorder;
-- IPR is much larger at high disorder;
-- `chi_av^r / chi_typ^r` grows in the localized regime.
-
-The A100 subset pins the gap-ratio crossing to `W=16.56-16.60`, resolves the GOE-to-Poisson crossover, and gives a transition spectral exponent near `0.48` versus the paper's `0.52`. The full `L=32-38` scaling ladder remains compute-limited on the available single-A100 dense-eigensolver path.
+数值 runner 明确禁止读取论文原图、作者代码或作者数值数组。

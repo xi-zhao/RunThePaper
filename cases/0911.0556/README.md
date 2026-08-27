@@ -6,7 +6,7 @@ Published as: [Thermodynamics of Quantum Jump Trajectories](https://doi.org/10.1
 
 Formal citation: 104, 160601 (2010) · DOI `10.1103/PhysRevLett.104.160601` · Locator `160601`
 
-Public status: **Partial scientific reproduction** · Audit score: **77.27/100**
+Public status: **Partial scientific reproduction** · Audit score: **78.33/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -38,11 +38,11 @@ cd cases/0911.0556/code
 python scripts/run_reproduction.py --config config/paper_reconstructed.json --output-root outputs/public_quick_run
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
 Remaining limitation: The official arXiv archive contains manuscript TeX and three figure PDFs only; no author computational code or numerical arrays were found. Original-paper micromaser values N_ex and nu are omitted; the later public arXiv:1103.0919 parameter set N_ex=100, nu=0.15 is isolated as reconstructed provenance.
 

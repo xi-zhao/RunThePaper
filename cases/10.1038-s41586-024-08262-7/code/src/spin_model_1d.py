@@ -1,4 +1,4 @@
-r"""1D exactly-solvable spin model of Wang & Hazzard, Eq. (Hamil1Dspin).
+"""1D exactly-solvable spin model of Wang & Hazzard, Eq. (Hamil1Dspin).
 
 For the Ex.3 R-matrix R^{ab}_{cd} = -delta_{ac} delta_{bd}, the paper gives an
 explicit nearest-neighbour spin chain on (m+1)-level sites with basis

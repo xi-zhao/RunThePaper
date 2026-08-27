@@ -8,7 +8,7 @@ Formal citation: Phys. Rev. Lett. 122, 086402 (2019) · DOI `10.1103/PhysRevLett
 
 Public status: **Partial scientific reproduction** · Audit score: **70.00/100**
 
-Eleven executable numerical regions are formula-derived; two external first-principles DFT panels remain explicitly deferred.
+Eleven executable targets cover fourteen atomic theory items; two external first-principles DFT panels remain explicitly deferred.
 
 ## Start Here / 从这里开始
 
@@ -84,7 +84,7 @@ cd cases/1807.03311/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 

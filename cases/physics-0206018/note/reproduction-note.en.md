@@ -1,57 +1,21 @@
-# Independent BEM reproduction of dielectric-microcavity resonances
+# Boundary element method for resonances in dielectric microcavities: scientific reproduction note
 
-This case accompanies Jan Wiersig's
-[arXiv:physics/0206018](https://arxiv.org/abs/physics/0206018) and
-[Journal of Optics A 5, 53–60 (2003)](https://doi.org/10.1088/1464-4258/5/1/308).
-It independently implements the Helmholtz Green function, boundary integral
-equations, singular diagonal terms, and resonance reconstruction. Author code,
-author arrays, digitized curves, and paper pixels are not numerical inputs.
+## Result
 
-## Reproduced scope
+All and only the paper's numerical figures (Figs. 5-7) were independently regenerated from the boundary-integral equations.
 
-Figs. 1–4 are geometry or method schematics and are intentionally not redrawn.
-All numerical figures are covered:
+The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
-- Fig. 5: total plane-wave scattering cross section and resonance sequence;
-- Fig. 6: near-field intensity reconstructed from a resonant boundary null state;
-- Fig. 7: far-field radiation from the same generated boundary state.
+## What is reproduced
 
-The three targets pass independent physical checks: the linear residual is below
-about $8\times10^{-15}$, the median optical-theorem relative error is about
-0.073, the resonance singular value converges with resolution, the near field
-has the expected interior/exterior contrast, and the far-field inversion
-residual is below about $2\times10^{-9}$.
+The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-## Numerical boundary
-
-The paper used roughly 1600 boundary elements but did not publish the exact
-corner-rounding curve or nonuniform element map. This case explicitly uses
-circular fillets and 432 constant elements. The feature run took about 159 s on
-the reference CPU. It is therefore a reduced-scale scientific reproduction,
-not a pointwise reconstruction of the paper's mesh.
-
-After the numerical arrays are frozen, a RenderContract may adjust only canvas,
-axes, typography, grayscale, line width, and interpolation. It cannot change
-material parameters, mesh, resonance position, or field arrays. The final
-foreground pixel score is 50.49/100 (raw comparable-target mean 58.16/100),
-with full-image SSIM 0.7151. Sparse narrow peaks make line plots particularly
-sensitive to small mesh-dependent shifts.
+Current authoritative dimensions: `artifact_integrity=artifact_valid, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=pending, execution=attested, pixel=needs_repair, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`.
 
 ## Run
 
-From the RunThePaper repository root:
+From `code`, run `python scripts/run_reproduction.py` with the arguments shown in the main README. Compute-heavy paper-scale runners and configurations remain available under `code/scripts` and `code/config`; code readiness is not reported as an executed production run.
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cd cases/physics-0206018/code
-python scripts/run_all.py
-python scripts/render_figures.py
-```
+## Paper-review boundary
 
-See [DERIVATION.md](../docs/DERIVATION.md) for the equation map and
-[NUMERICAL_METHODS.md](../docs/NUMERICAL_METHODS.md) for the evidence boundary.
-Per-figure physics checks and pixel diagnostics are under
-[`outputs/checks`](../outputs/checks/). The public package contains no paper PDF,
-original figure, or source-derived data points.
+Stable conflicts among equations, captions, conclusions, and independent numerics are recorded. They become paper-error candidates only after the falsification and independent-review requirements are met. Current limitation: The attested production run uses the published N=1600 scale and passes the paper-declared rounding/discretization equivalence contract. The prose and Figure 4 disagree on the vertical displacement sign, so the figure-defined publication variant is paper_subset pending fresh review. Original figures are used only after numerical artifacts are frozen, for RenderContract and diagnostic comparison.

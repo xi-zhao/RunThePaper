@@ -37,7 +37,6 @@ class PulseSpec:
     repetition_rate_hz: float = 80.0e6
     delay_fs: float = 0.0
     phase_rad: float = 0.0
-    chirp_fs2: float = 0.0
 
     @property
     def omega_rad_fs(self) -> float:
@@ -62,8 +61,6 @@ class PulseSpec:
             torch.as_tensor(self.peak_power_w, device=time_fs.device, dtype=time_fs.dtype)
         ) / torch.cosh(shifted / self.sech_width_fs)
         phase = self.omega_rad_fs * shifted + self.phase_rad
-        if self.chirp_fs2:
-            phase = phase + 0.5 * self.chirp_fs2 * shifted.square()
         return envelope.to(complex_dtype) * torch.exp(1j * phase.to(complex_dtype))
 
 
@@ -105,7 +102,7 @@ class PropagationConfig:
     length_mm: float
     step_mm: float
     integrator: str = "ifrk4"
-    gamma_spm_w_inv_mm: float = 1.36e-4
+    gamma_spm_w_inv_mm: float = 1.0e-4
     frame_velocity_over_c: float = 0.665
     precision: str = "complex64"
     compile_step: bool = False

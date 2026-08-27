@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 OUT_PATH = ROOT / "outputs/checks/core_derivations.json"
 
 
@@ -165,7 +165,7 @@ def check_expr(name: str, lhs: sp.Expr, rhs: sp.Expr) -> dict[str, object]:
 def check_open_chain_matrix_entries() -> dict[str, object]:
     import sys
 
-    src_path = str(ROOT / "code/src")
+    src_path = str(ROOT / "src")
     if src_path not in sys.path:
         sys.path.insert(0, src_path)
 
@@ -208,7 +208,7 @@ def check_open_chain_matrix_entries() -> dict[str, object]:
 def check_open_boundary_bulk_spectrum_formula() -> dict[str, object]:
     import sys
 
-    src_path = str(ROOT / "code/src")
+    src_path = str(ROOT / "src")
     if src_path not in sys.path:
         sys.path.insert(0, src_path)
 

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "run_id": "2608.03987-paper-scale-multiseed-v1",
+  "target_ids": [
+    "T008",
+    "T009",
+    "T010",
+    "T011",
+    "T012"
+  ],
+  "command": [
+    "python",
+    "scripts/run_multiseed_campaign.py",
+    "--config",
+    "config/paper_scale.json",
+    "--resume"
+  ],
+  "inputs": [
+    "src/independent_tn.py",
+    "src/benchmark_release.py",
+    "src/implementation_closure.py",
+    "scripts/run_independent_reimplementation.py",
+    "scripts/run_multiseed_campaign.py",
+    "config/paper_scale.json",
+    "inputs/clean_circuit_inputs.zip"
+  ],
+  "parameter_file": "config/paper_scale.json",
+  "parameter_selector": "paper_scale",
+  "expected_parameters": {
+    "circuits": "all",
+    "seeds": [
+      260803987,
+      260803988,
+      260803989,
+      260803990,
+      260803991,
+      260803992,
+      260803993,
+      260803994,
+      260803995,
+      260803996,
+      260803997,
+      260803998,
+      260803999,
+      260804000,
+      260804001,
+      260804002
+    ],
+    "greedy_trials": 10,
+    "anneal_steps": 600000,
+    "polish_steps": 60000
+  },
+  "expected_parameter_notes": {
+    "T008": "67 raw-circuit tensor networks, 16 independent seeds, exact cost-law check",
+    "T009": "67 raw-circuit tensor networks, 16 independent seeds, 600000 NNI steps per full lane"
+  },
+  "outputs": [
+    "outputs/data/paper_scale/aggregate.json",
+    "outputs/data/paper_scale/table1_paper_scale.csv",
+    "outputs/data/paper_scale/table5_paper_scale.csv"
+  ],
+  "timeout_seconds": 604800,
+  "scheduler": {
+    "work_units": 1072,
+    "recommended_shards": 32,
+    "shard_command": [
+      "python",
+      "scripts/run_multiseed_campaign.py",
+      "--config",
+      "config/paper_scale.json",
+      "--shard-index",
+      "${ARRAY_INDEX}",
+      "--shard-count",
+      "${ARRAY_COUNT}",
+      "--resume"
+    ],
+    "merge_rule": "After all shards finish, rerun the unsharded command with --resume to validate and aggregate all records."
+  },
+  "acceptance_criteria": [
+    "All 16 x 67 seed-circuit work units are present with matching configuration and topology hashes.",
+    "Every generated tree obeys o=1+2m+r within 1e-12.",
+    "The distribution of Figure-9 below-threshold counts is reported per seed; disagreement is retained rather than tuned against author results.",
+    "The numerical runner reads only the frozen clean circuit archive under inputs and never raw/, references/, author code, author plans, author result arrays, digitized curves, or source pixels."
+  ],
+  "compute_status": "not_run_code_ready_cpu_campaign"
+}

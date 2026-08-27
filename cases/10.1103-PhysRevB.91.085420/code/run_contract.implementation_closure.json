@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "run_id": "10.1103-PhysRevB.91.085420-implementation-closure-v1",
+  "target_ids": [
+    "T101",
+    "T201",
+    "T301",
+    "T401"
+  ],
+  "command": [
+    "python",
+    "scripts/run_implementation_closure.py",
+    "--config",
+    "config/implementation_closure.json",
+    "--output-root",
+    "outputs/checks/implementation_closure"
+  ],
+  "inputs": [
+    "src/cdhm.py",
+    "src/observables.py",
+    "src/theory.py",
+    "src/implementation_closure.py",
+    "scripts/run_implementation_closure.py",
+    "config/implementation_closure.json"
+  ],
+  "parameter_file": "config/implementation_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "reduced_implementation_attestation",
+    "common": {
+      "N": 3,
+      "tau": 2.0,
+      "n_sub": 8
+    },
+    "T101": {
+      "J": 3.0,
+      "K": 3.0,
+      "Nk": 9,
+      "Nbeta": 7,
+      "paper_target_boundary": {
+        "J": 3.0,
+        "K": 3.0,
+        "Nk": 61,
+        "Nbeta": 61,
+        "n_sub": 120
+      }
+    },
+    "T201": {
+      "J": 3.0,
+      "K": 3.0,
+      "T": 8,
+      "Nk": 9,
+      "Nbeta_geometric": 8,
+      "paper_target_boundary": {
+        "J": 3.0,
+        "K": 3.0,
+        "T": 1024,
+        "Nk": 401,
+        "n_sub": 160
+      }
+    },
+    "T301": {
+      "J": 4.0,
+      "K": 4.0,
+      "T_values": [
+        8,
+        16
+      ],
+      "Nk_dynamics": 15,
+      "Nk_theory": 9,
+      "Nbeta_berry": 8,
+      "Nbeta_energy": 8,
+      "paper_target_boundary": {
+        "T_values": [
+          1024,
+          2048,
+          3072,
+          4096,
+          5120,
+          6144
+        ],
+        "Nk_max": 12288,
+        "n_sub": 100
+      }
+    },
+    "T401": {
+      "J_values": [
+        5.0,
+        5.2
+      ],
+      "K": 4.0,
+      "T": 8,
+      "Nk_dynamics": 15,
+      "Nk_theory": 7,
+      "Nbeta_berry": 6,
+      "Nbeta_energy": 6,
+      "paper_target_boundary": {
+        "J_start": 5.0,
+        "J_stop": 5.3,
+        "J_points": 61,
+        "T": 2560,
+        "n_sub": 100
+      }
+    }
+  },
+  "outputs": [
+    "outputs/checks/implementation_closure/campaign_summary.json"
+  ],
+  "timeout_seconds": 180,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "numerical_input_boundary": {
+    "paper_pdf_or_tex_read_by_runner": false,
+    "author_code_or_arrays_read_by_runner": false,
+    "reference_pixels_read_by_runner": false
+  }
+}

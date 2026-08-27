@@ -10,9 +10,8 @@ import sys
 import time
 from pathlib import Path
 
-CODE = Path(__file__).resolve().parents[1]
-CASE = CODE.parent
-os.environ.setdefault("MPLCONFIGDIR", str(CASE / ".matplotlib-cache"))
+WORKSPACE = Path(__file__).resolve().parents[1]
+os.environ.setdefault("MPLCONFIGDIR", "/private/tmp/pragent-1706-matplotlib-cache")
 
 import matplotlib
 
@@ -21,7 +20,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
 
-sys.path.insert(0, str(CODE / "src"))
+sys.path.insert(0, str(WORKSPACE / "src"))
 
 from nonhermitian_topology import (  # noqa: E402
     energy_difference_vorticity,
@@ -34,6 +33,14 @@ from nonhermitian_topology import (  # noqa: E402
 
 
 TARGET_ID = "T002"
+
+
+def require_guard() -> None:
+    guarded_target = os.environ.get("PRAGENT_GUARDED_TARGET_ID", "")
+    if guarded_target != TARGET_ID:
+        raise RuntimeError(
+            "Run this target through PRAgent-workflow/scripts/run_target.py so the live formula gate is enforced."
+        )
 
 
 def write_loop_csv(path: Path, loop: dict[str, np.ndarray]) -> None:
@@ -217,11 +224,12 @@ def render_figure(
 
 
 def main() -> int:
+    require_guard()
     started = time.perf_counter()
 
-    data_dir = CASE / "outputs" / "data"
-    figure_dir = CASE / "outputs" / "figures"
-    check_dir = CASE / "outputs" / "checks"
+    data_dir = WORKSPACE / "outputs" / "data"
+    figure_dir = WORKSPACE / "outputs" / "figures"
+    check_dir = WORKSPACE / "outputs" / "checks"
     for directory in (data_dir, figure_dir, check_dir):
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -263,11 +271,11 @@ def main() -> int:
                 "target_id": TARGET_ID,
                 "runtime_seconds": elapsed,
                 "outputs": [
-                    str(loop_path.relative_to(CASE)),
-                    str(surface_path.relative_to(CASE)),
-                    str(cut_path.relative_to(CASE)),
-                    str(check_path.relative_to(CASE)),
-                    str(figure_path.relative_to(CASE)),
+                    str(loop_path.relative_to(WORKSPACE)),
+                    str(surface_path.relative_to(WORKSPACE)),
+                    str(cut_path.relative_to(WORKSPACE)),
+                    str(check_path.relative_to(WORKSPACE)),
+                    str(figure_path.relative_to(WORKSPACE)),
                 ],
             },
             indent=2,

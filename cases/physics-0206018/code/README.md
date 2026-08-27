@@ -7,10 +7,9 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/physics-0206018/code
-python scripts/run_all.py
-python scripts/render_figures.py
+python scripts/run_reproduction.py --config config/feature.json
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: The feature run uses 432 constant boundary elements rather than the paper's 1600 because the exact corner-rounding curve and nonuniform element map are not published; narrow resonance and far-field peaks therefore retain mesh-dependent shifts.
+Boundary: The attested production run uses the published N=1600 scale and passes the paper-declared rounding/discretization equivalence contract. The prose and Figure 4 disagree on the vertical displacement sign, so the figure-defined publication variant is paper_subset pending fresh review. Original figures are used only after numerical artifacts are frozen, for RenderContract and diagnostic comparison.

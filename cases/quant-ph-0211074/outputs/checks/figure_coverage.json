@@ -1,0 +1,1673 @@
+{
+  "schema_version": 2,
+  "paper_id": "quant-ph-0211074",
+  "_howto": [
+    "One item per paper figure/table (or panel group). This file is the machine-readable coverage contract:",
+    "kind: numeric | non_numeric.",
+    "decision for numeric items: target (with target_ids) | deferred_blocked (with blocker).",
+    "decision for non_numeric items: excluded | target.",
+    "Allowed blockers: missing_author_data, missing_benchmark_metadata, missing_source_input, insufficient_compute, requires_external_hardware, covered_by_target, user_descoped.",
+    "'Supporting', 'low priority', or 'similar to another figure' are NOT blockers: reproduce the item instead.",
+    "Coverage means scientific reproduction (independent numerics or analytic references). Digitized curves and copied source panels do not count as coverage.",
+    "If scientific input is missing, deferred_blocked with evidence is an honest partial state.",
+    "If execution is compute/hardware-limited or a mapped target is reduced_scale, add a code-ready implementation contract: status=ready, case-local code_refs, config config_ref, working_directory=workspace, argv-style entrypoint, expected_outputs, and acceptance_criteria.",
+    "Put reusable contracts in top-level implementations and reference them from items with implementation_ref; an inline implementation object is also accepted.",
+    "Compute may postpone execution; it may not postpone writing runnable code.",
+    "Validate with: python PRAgent-workflow/scripts/check_figure_coverage.py case/<paper-id> --write"
+  ],
+  "implementations": {
+    "all_numerical_figures": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T019",
+        "T020"
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/model.py",
+        "src/vidal_entanglement/xxx.py",
+        "scripts/run_reproduction.py",
+        "run_contract.json"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs",
+        "--resume"
+      ],
+      "expected_outputs": [
+        "outputs/data/fig1_ising_surface.csv",
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/data/majorization_checks.csv",
+        "outputs/data/quantitative_claim_checks.json",
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/formula_pipeline_reliability.csv",
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/data/rg_flow_proxy.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/data/odd_majorana_checks.csv",
+        "outputs/data/finite_n_covariance_convergence.csv",
+        "outputs/checks/T019_odd_majorana_check.json",
+        "outputs/checks/T020_finite_N_convergence.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every entropy point is generated from the printed covariance or Hamiltonian equations without author code, numeric arrays, or source pixels as scientific input.",
+        "Covariance, quadrature, CFT-slope, finite-chain residual, translation-symmetry, and majorization audit checks pass their declared tolerances.",
+        "The literal printed ferromagnetic XXX sign and caption-implied antiferromagnetic convention are computed separately and remain review evidence rather than a pixel-selected choice.",
+        "All 65 atomic paper-content items are classified: 24 primary eligible items (23 covered and R058 externally blocked), all 31 supporting items covered, and 10 definitions/external results excluded.",
+        "Targets with missing publication definitions remain inconclusive even when a declared proxy executes successfully."
+      ]
+    },
+    "higher_dimensional_area_law_boundary": {
+      "status": "ready",
+      "target_ids": [
+        "T018"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_area_law_boundary.py",
+        "--config",
+        "config/area_law_boundary.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/vidal_entanglement/area_law.py",
+        "scripts/run_area_law_boundary.py"
+      ],
+      "config_ref": "config/area_law_boundary.json",
+      "run_contract_ref": "run_contract.area_law.json",
+      "expected_outputs": [
+        "outputs/checks/T018_area_law_assessment.json"
+      ],
+      "acceptance_criteria": [
+        "Any supplied dataset must be independently generated and reject source pixels, author code, and author numerical arrays.",
+        "The runner fits S=kappa*sigma+intercept and reports tail convergence without inventing the publication's missing model, geometry, or coefficient."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "R037",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, Fig. 1 and caption",
+      "scientific_object": "A paper-parameter grid of independently computed S_L(L,a), including axis domains, the critical ridge, monotonic L slices, and off-critical plateaus.",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig1_ising_surface.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SATURATION"
+      ]
+    },
+    {
+      "item_id": "R046",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, Fig. 2, plus-symbol data and caption",
+      "scientific_object": "The full plotted Ising S_L series at the caption parameters, its visual data object, and slope/intercept residuals.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CRITICAL_LOG_SCALING"
+      ]
+    },
+    {
+      "item_id": "R047",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, Fig. 2, cross-symbol curve and caption",
+      "scientific_object": "The full plotted XX S_L series at the caption parameters, its visual data object, and slope/intercept residuals.",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CRITICAL_LOG_SCALING"
+      ]
+    },
+    {
+      "item_id": "R049",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, Fig. 2, star-symbol curve and caption",
+      "scientific_object": "The ten N=20 block entropies, their L<6 log-fit residuals, reflection symmetry about half-chain, and plateau/turnover behavior for L=6 through 10.",
+      "decision": "target",
+      "target_ids": [
+        "T002",
+        "T014"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FIG2_XXX_FINITE_CURVE"
+      ]
+    },
+    {
+      "item_id": "R050",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, Fig. 2 caption, fermion guide line",
+      "scientific_object": "The printed fermion guide-line values over the plotted L range and residuals from the Ising points.",
+      "decision": "target",
+      "target_ids": [
+        "T002",
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FIG2_FERMION_GUIDE"
+      ]
+    },
+    {
+      "item_id": "R051",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, Fig. 2 caption, boson guide line",
+      "scientific_object": "The printed boson guide-line values over the plotted L range and residuals from the XX and finite XXX points.",
+      "decision": "target",
+      "target_ids": [
+        "T002",
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FIG2_BOSON_GUIDE"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "R001",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, Eq. (1)",
+      "scientific_object": "The Schmidt coefficients of a supplied bipartite pure state and the resulting base-2 entropy computed from rho_A and rho_B.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R002",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, Eq. (2)",
+      "scientific_object": "The 2^N by 2^N matrix and low-energy spectrum produced by the printed Hamiltonian for selected finite N and parameters.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R003",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, paragraph following Eq. (3)",
+      "scientific_object": "The term-by-term Hamiltonian after gamma=1 substitution and its equivalence to a transverse-field Ising chain under the stated normalization.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R004",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, Eq. (3)",
+      "scientific_object": "The 2^N by 2^N matrix and low-energy spectrum produced by the printed Hamiltonian for selected finite N and parameters.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R005",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, paragraph following Eq. (3)",
+      "scientific_object": "The equality of the xx, yy, and zz exchange coefficients at Delta=1 and the corresponding finite-chain spectrum.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R006",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.1, paragraph following Eq. (3)",
+      "scientific_object": "A symbolic coefficient comparison of Eqs. (2) and (3) at gamma=Delta=0, with any required parameter or energy rescaling made explicit.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R007",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.2, Eq. (4)",
+      "scientific_object": "The reduced density matrix and block entropy for exact finite-chain ground states at specified L.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R008",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, first paragraph after Eq. (4)",
+      "scientific_object": "The transformed quadratic Hamiltonian, Bogoliubov mode energies, and agreement of its many-body spectrum with exact diagonalization.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/data/formula_pipeline_reliability.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R009",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, first paragraph after Eq. (4)",
+      "scientific_object": "Two-point Majorana covariance matrices and independently evaluated four- and higher-point correlators for finite-chain ground states.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/data/formula_pipeline_reliability.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R010",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "source_definition",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.2, Eq. (5)",
+      "scientific_object": "Finite-N Pauli-matrix representations of all c_m and their complete anticommutator table.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "Source/model/observable definition supports later tests but is not a standalone reproduced result."
+    },
+    {
+      "item_id": "R011",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, unnumbered displayed Hamiltonian immediately after Eq. (5)",
+      "scientific_object": "The coefficient-by-coefficient difference between the printed spin and Majorana Hamiltonian matrices in fixed parity sectors.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R012",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, paragraph preceding Eq. (6)",
+      "scientific_object": "All <c_m> values for finite chains in a parity eigenstate, plus the commutator of H_XY with the parity operator.",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "A target-specific dense Pauli construction verifies the Hamiltonian-parity commutator, Majorana-parity anticommutators, parity-eigenstate residual, and every single-Majorana expectation for three finite chains.",
+      "evidence_refs": [
+        "outputs/checks/T019_odd_majorana_check.json",
+        "outputs/data/odd_majorana_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ODD_MAJORANA_PARITY"
+      ]
+    },
+    {
+      "item_id": "R013",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (6) and following sentence",
+      "scientific_object": "The full covariance matrix from an exact ground state and residuals between direct higher-point correlators and their Wick contractions.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R014",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (7)",
+      "scientific_object": "Entrywise covariance blocks B_{jk} grouped by separation and their residual from the Pi_{j-k} prescription.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R015",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (8)",
+      "scientific_object": "High-precision quadrature values of g_l over declared l,a,gamma and their convergence from finite N.",
+      "decision": "target",
+      "target_ids": [
+        "T004",
+        "T006",
+        "T007"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_COVARIANCE_COEFFICIENT_QUADRATURE"
+      ]
+    },
+    {
+      "item_id": "R016",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.5, reference [13] note concerning Eqs. (7)-(9)",
+      "scientific_object": "The N-dependent norm difference of finite-chain B_L and S_L from their thermodynamic values at several fixed L.",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Explicit periodic/antiperiodic finite-momentum sums establish fixed-L convergence of both B_L and S_L to the thermodynamic construction across N=32..1024.",
+      "evidence_refs": [
+        "outputs/checks/T020_finite_N_convergence.json",
+        "outputs/data/finite_n_covariance_convergence.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FINITE_N_COVARIANCE_LIMIT"
+      ]
+    },
+    {
+      "item_id": "R017",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (9)",
+      "scientific_object": "The covariance computed from an explicit partial trace and the corresponding principal submatrix of the full covariance.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R018",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (10)",
+      "scientific_object": "An orthogonal canonical decomposition of B_L, its reconstruction residual, determinant of V, and the nonnegative nu_m spectrum.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R019",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (11)",
+      "scientific_object": "The full normal and anomalous correlation matrices of the canonical b modes, compared with the stated diagonal values.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R020",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (12)",
+      "scientific_object": "The transformed rho_L matrix and its trace-distance residual from the tensor product of single-mode density matrices.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R021",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (13)",
+      "scientific_object": "The entropy from the nu_m formula compared with direct diagonalization of rho_L for finite chains.",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FORMULA_PIPELINE"
+      ]
+    },
+    {
+      "item_id": "R022",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.2, paragraph following Eq. (13)",
+      "scientific_object": "Runtime, memory, conditioning, and cross-method entropy errors versus L through at least the stated several-tens range.",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/formula_pipeline_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/data/formula_pipeline_reliability.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_POLYNOMIAL_RELIABILITY"
+      ]
+    },
+    {
+      "item_id": "R023",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, paragraph preceding Eq. (14)",
+      "scientific_object": "Analytic or high-precision numerical Fourier coefficients g_l over multiple a and positive and negative l.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XX_SCALING"
+      ]
+    },
+    {
+      "item_id": "R024",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2, Eq. (14)",
+      "scientific_object": "S_L for L=1 through 100 at declared a values and fitted slope, uncertainty, fit window, and residuals against (1/3)log_2 L.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XX_SCALING"
+      ]
+    },
+    {
+      "item_id": "R025",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.2, Eq. (14)",
+      "scientific_object": "The large-L residual S_L-(1/3)log_2 L as a function of a and its stability with L.",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XX_SCALING"
+      ]
+    },
+    {
+      "item_id": "R026",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.2-p.3, paragraph preceding Eq. (15)",
+      "scientific_object": "Fourier coefficients from Eq. (8) for a symmetric range of integer l, with the paper's l and sign conventions fixed.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ISING_SCALING"
+      ]
+    },
+    {
+      "item_id": "R027",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Eq. (15)",
+      "scientific_object": "S_L for L=1 through 100 and fitted slope, uncertainty, fit window, and residuals against (1/6)log_2 L.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ISING_SCALING"
+      ]
+    },
+    {
+      "item_id": "R028",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Eq. (15)",
+      "scientific_object": "The extrapolated intercept S_L-(1/6)log_2 L, its finite-L drift, uncertainty, and numerical gap from pi/3.",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/coefficient_shortcut_audit.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ISING_SCALING"
+      ]
+    },
+    {
+      "item_id": "R029",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Eq. (16)",
+      "scientific_object": "Thermodynamic half-chain saturation entropies on both sides of a=1, with fitted slope, additive terms, range of validity, and convergence in block size.",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NEARCRITICAL_ISING"
+      ]
+    },
+    {
+      "item_id": "R030",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, paragraph preceding Eq. (16)",
+      "scientific_object": "The ratio between large-block interval entropy and one-cut half-chain entropy at matched a as the two boundaries become independent.",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NEARCRITICAL_ISING"
+      ]
+    },
+    {
+      "item_id": "R031",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, first paragraph after Eq. (16)",
+      "scientific_object": "N<=20 ground energies, states or sufficient reduced-state data from Bethe ansatz, with small-N exact-diagonalization residuals and all S_L^(20).",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XXZ_REGIME_DISCRIMINATION"
+      ]
+    },
+    {
+      "item_id": "R032",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, first paragraph after Eq. (16)",
+      "scientific_object": "Lowest energy levels and ground-energy derivatives across the claimed finite-N transition lines.",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XXZ_REGIME_DISCRIMINATION"
+      ]
+    },
+    {
+      "item_id": "R033",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, first paragraph after Eq. (16)",
+      "scientific_object": "The complete N=20 S_L curves for representative critical and noncritical parameter points and quantitative separation features.",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/xxz_regime_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_XXZ_REGIME_DISCRIMINATION"
+      ]
+    },
+    {
+      "item_id": "R034",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, 'Non-critical regime' paragraph",
+      "scientific_object": "Ground-state polarization, reduced-state spectra, and S_L over L in a rigorously identified polarized-field regime.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R035",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, 'Non-critical regime' paragraph",
+      "scientific_object": "Sequences S_L, increments S_{L+1}-S_L, and extrapolated saturation values over representative noncritical XY and XXZ parameters.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R036",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, 'Non-critical regime' paragraph",
+      "scientific_object": "Large-L plateau entropies versus a and their slope and residual gap relative to (1/6)log_2[1/|1-a|].",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R038",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Fig. 1 caption",
+      "scientific_object": "Entanglement and correlation length estimates versus a, their ratio or scaling exponent, and divergence behavior approaching a=1.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R039",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Fig. 1 caption",
+      "scientific_object": "Collapsed entropy data versus x=L|1-a|, an inferred scaling function f(x), and residuals across multiple L and a.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R040",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, 'Non-critical regime' paragraph and Fig. 1 caption",
+      "scientific_object": "For each sampled a, the smallest L achieving predeclared relative or absolute proximity to the extrapolated S_max.",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/noncritical_scaling_collapse.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_NONCRITICAL_SCALING_FUNCTION"
+      ]
+    },
+    {
+      "item_id": "R041",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, Eq. (17)",
+      "scientific_object": "Microscopic S_L sequences and fitted slopes for each critical chain compared with independently known c+cbar values.",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CENTRAL_CHARGE"
+      ]
+    },
+    {
+      "item_id": "R042",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.3, paragraph following Eq. (17)",
+      "scientific_object": "Central-charge extraction from finite-size ground-energy or entanglement scaling and the corresponding predicted S_L slope.",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CENTRAL_CHARGE"
+      ]
+    },
+    {
+      "item_id": "R043",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, paragraph following Eq. (17)",
+      "scientific_object": "A regime-by-regime list of critical parameter domains, extracted central charges, and S_L slopes, including the XX and XXX cases.",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CENTRAL_CHARGE"
+      ]
+    },
+    {
+      "item_id": "R044",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, paragraph preceding Eq. (18)",
+      "scientific_object": "S_L(L,gamma) over a predeclared gamma grid and fitted log slopes, uncertainties, and finite-L corrections.",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CENTRAL_CHARGE"
+      ]
+    },
+    {
+      "item_id": "R045",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3, Eq. (18)",
+      "scientific_object": "Large-L extrapolations of the entropy difference over multiple gamma, with residuals from -(1/6)log_2 gamma and behavior toward gamma=0.",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ANISOTROPY_OFFSET"
+      ]
+    },
+    {
+      "item_id": "R048",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.4, Fig. 2 caption",
+      "scientific_object": "The ratio of successive entropy increments versus L, its approach to two, and finite-L deviations.",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_INCREMENT_RATIO"
+      ]
+    },
+    {
+      "item_id": "R052",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.4, Fig. 2 caption, final sentence",
+      "scientific_object": "Per-series absolute and relative residuals, goodness-of-fit metrics, and a predeclared tolerance for the guide-line comparison.",
+      "decision": "target",
+      "target_ids": [
+        "T002",
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/fig2_critical_entropy.csv",
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_FIG2_GUIDE_RESIDUALS"
+      ]
+    },
+    {
+      "item_id": "R053",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3-p.4, paragraph after Fig. 2 discussion, noncritical-state paragraph",
+      "scientific_object": "The number of rho_L eigenvalues needed to retain fixed weights as L grows at representative noncritical parameters.",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_DMRG_EFFECTIVE_RANK"
+      ]
+    },
+    {
+      "item_id": "R054",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.3-p.4, same noncritical-state paragraph",
+      "scientific_object": "Trace-distance or entropy error versus boundary-buffer width for noncritical chains and several L.",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_DMRG_EFFECTIVE_RANK"
+      ]
+    },
+    {
+      "item_id": "R055",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, critical-state/DMRG paragraph",
+      "scientific_object": "Effective Schmidt rank versus L at several fixed discarded-weight thresholds, with bounded-versus-unbounded model comparison.",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_DMRG_EFFECTIVE_RANK"
+      ]
+    },
+    {
+      "item_id": "R056",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, critical-state/DMRG paragraph",
+      "scientific_object": "Approximation error versus L and kept-state count for critical chains, with the approximation norm and observable set declared.",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/effective_rank_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_DMRG_EFFECTIVE_RANK"
+      ]
+    },
+    {
+      "item_id": "R057",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "external_source_result",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.4, Eq. (19)",
+      "scientific_object": "Region entropies versus boundary measure for multiple sizes/geometries, fitted kappa, subleading terms, and size dependence.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "External theorem/reference context is not an independently asserted result of this paper."
+    },
+    {
+      "item_id": "R058",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, sentence following Eq. (19)",
+      "scientific_object": "Leading entropy scaling for specified critical lattice models and convergence of S_R/sigma(R) with region size.",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "implementation_ref": "higher_dimensional_area_law_boundary",
+      "denominator_role": "primary",
+      "coverage_status": "uncovered",
+      "reason": "The area-law extrapolation has no uniquely specified 2D/3D Hamiltonian, region family, discretization, boundary condition, or coefficient kappa to execute paper-exactly.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#T018",
+      "claim_refs": [
+        "CLM_HIGHER_DIM_AREA_LAW"
+      ]
+    },
+    {
+      "item_id": "R059",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.4, bracketed comparison following Eq. (19)",
+      "scientific_object": "S_L divided by two versus log L for critical 1D models, including fitted divergence coefficient.",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/critical_scaling_claims.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_CENTRAL_CHARGE"
+      ]
+    },
+    {
+      "item_id": "R060",
+      "item_type": "quantitative_claim",
+      "kind": "non_numeric",
+      "scientific_role": "external_source_result",
+      "paper_level_role": "auxiliary",
+      "source_ref": "p.4, c-theorem paragraph",
+      "scientific_object": "UV and IR central charges for explicit unitary flows and verification of the strict inequality, with fixed-point/equality cases distinguished.",
+      "decision": "excluded",
+      "denominator_role": "supporting",
+      "coverage_status": "excluded",
+      "reason": "External theorem/reference context is not an independently asserted result of this paper."
+    },
+    {
+      "item_id": "R061",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.4, c-theorem paragraph",
+      "scientific_object": "Endpoint central charges and universal entanglement slopes for specified flows, with nonuniversal constants and scale matching separated.",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/rg_flow_proxy.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_RG_MONOTONICITY"
+      ]
+    },
+    {
+      "item_id": "R062",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.5, Eq. (20)",
+      "scientific_object": "The complete sorted 2^L spectrum from the product formula, its normalization/positivity, and residual from direct diagonalization for tractable L.",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_COMPLETE_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "R063",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.5, paragraph following Eq. (20)",
+      "scientific_object": "All increments S_{L+1}-S_L across L for representative infinite XY ground states, with finite-size and symmetry exceptions isolated.",
+      "decision": "target",
+      "target_ids": [
+        "T003",
+        "T016"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/majorization_checks.csv",
+        "outputs/data/product_spectrum_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_ENTROPY_INCREMENT_SWEEP"
+      ]
+    },
+    {
+      "item_id": "R064",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "main_claim",
+      "source_ref": "p.5, Eq. (21)",
+      "scientific_object": "Padded, sorted spectra for L and L+2 over declared XY parameters and every cumulative-sum majorization margin.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "primary",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/majorization_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_MAJORISATION"
+      ]
+    },
+    {
+      "item_id": "R065",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_result",
+      "paper_level_role": "supporting",
+      "source_ref": "p.5, sentence following Eq. (21)",
+      "scientific_object": "The number of nontrivial cumulative inequalities versus L and their complete set of numerical margins.",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "denominator_role": "supporting",
+      "coverage_status": "covered",
+      "reason": "Existing frozen independent evidence directly addresses this atomic paper item; target fidelity and limits remain in the scorecard.",
+      "evidence_refs": [
+        "outputs/data/majorization_checks.csv",
+        "outputs/checks/science_checks.json",
+        "outputs/runs/quant-ph-0211074-whole-paper-v7-20260825/run_attestation.json"
+      ],
+      "implementation_ref": "all_numerical_figures",
+      "claim_refs": [
+        "CLM_MAJORISATION"
+      ]
+    }
+  ],
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf (5 pages); paper-source/paper.tex and the two EPS figure sources used only to enumerate formulas, captions, and independent plotted series",
+    "known_items": [
+      "Main Fig. 1: one entropy-surface panel",
+      "Main Fig. 2: five independent scientific series",
+      "59 equation/text quantitative or analytic statements",
+      "No tables and no supplement",
+      "No author numerical code or numerical arrays present in the source bundle"
+    ],
+    "unknown_remainder": false,
+    "reason": "The complete five-page paper, all captions, equations, references, and source text were read end to end. EPS files were used only to confirm display membership, never as scientific input or to infer parameters."
+  }
+}

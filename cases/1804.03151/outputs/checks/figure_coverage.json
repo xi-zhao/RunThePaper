@@ -1,0 +1,435 @@
+{
+  "schema_version": 2,
+  "paper_id": "1804.03151",
+  "implementations": {
+    "paper_scale": {
+      "status": "ready",
+      "target_ids": [
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T011",
+        "T012"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "run-all",
+        "--config",
+        "config/paper_scale.json",
+        "--workers",
+        "16"
+      ],
+      "code_refs": [
+        "src/moire_hubbard/model.py",
+        "src/moire_hubbard/paper_scale.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/data/paper_scale/plan.json",
+        "outputs/data/paper_scale/run_summary.json",
+        "outputs/data/paper_scale/aggregate_manifest.json",
+        "outputs/data/paper_scale/checks/scientific_assessment.json",
+        "outputs/data/paper_scale/checks/crosscheck.json",
+        "outputs/data/paper_scale/aggregates/T003_main_fig2b_dos.npz",
+        "outputs/data/paper_scale/aggregates/T004_main_fig2c_wannier.npz",
+        "outputs/data/paper_scale/aggregates/T005_main_fig2d_hopping.npz",
+        "outputs/data/paper_scale/aggregates/T006_main_fig3a_interactions.npz",
+        "outputs/data/paper_scale/aggregates/T007_main_fig3b_exchange.npz",
+        "outputs/data/paper_scale/aggregates/T008_main_fig4a_fermi_contour.npz",
+        "outputs/data/paper_scale/aggregates/T011_supp_fig5c_hopping.npz",
+        "outputs/data/paper_scale/aggregates/T012_supp_fig5d_interactions.npz"
+      ],
+      "acceptance_criteria": [
+        "Every immutable condition has a config-, implementation-, identity-, and output-hash verified checkpoint.",
+        "All eight aggregate targets are finite and satisfy their target-specific scientific checks.",
+        "NumPy and SciPy eigensolvers agree and cutoff-7/cutoff-8 anchor spectra meet declared tolerances.",
+        "Any stable mismatch remains inconclusive until the explicit paper-error candidate evidence gate is complete."
+      ]
+    },
+    "dft_displacement_input_boundary": {
+      "status": "ready",
+      "target_ids": [
+        "D001"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_dft_displacement_boundary.py",
+        "--config",
+        "config/dft_displacement_boundary.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/moire_hubbard/dft_displacement.py",
+        "scripts/run_dft_displacement_boundary.py"
+      ],
+      "config_ref": "config/dft_displacement_boundary.json",
+      "run_contract_ref": "run_contract.dft_boundary.json",
+      "expected_outputs": [
+        "outputs/checks/d001_dft_campaign_plan.json",
+        "outputs/data/D001_main_fig1c_dft_map.json"
+      ],
+      "acceptance_criteria": [
+        "The runner fails closed until the exact QE version, relativistic pseudopotentials, relaxed coordinates, cutoffs, k mesh, occupations, tolerances, and displacement grid are supplied.",
+        "Every assembled map sample must be a clean-room independent QE result; source pixels, author code, and author numerical arrays are rejected."
+      ]
+    }
+  },
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf",
+    "unknown_remainder": false,
+    "reason": "The complete seven-page arXiv v3 PDF was audited through the embedded Supplemental Material and Supplement Figure 5."
+  },
+  "items": [
+    {
+      "item_id": "main_fig1a_monolayer_band_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), PDF p. 1",
+      "scientific_object": "Schematic WSe2 spin-split valence and conduction bands",
+      "decision": "excluded",
+      "reason": "Qualitative band sketch without a numerical axis or independently computed observable."
+    },
+    {
+      "item_id": "main_fig1b_stacking_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(b), PDF p. 1",
+      "scientific_object": "AA-stacked heterobilayer displacement and twist geometry",
+      "decision": "excluded",
+      "reason": "Atomic stacking schematic."
+    },
+    {
+      "item_id": "main_fig1c_dft_displacement_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 1",
+      "scientific_object": "Fully relativistic LDA displacement-dependent WSe2 valence-band maximum for AA-stacked WSe2/MoSe2",
+      "decision": "target",
+      "implementation_ref": "dft_displacement_input_boundary",
+      "coverage_status": "uncovered",
+      "target_ids": [
+        "D001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "A fail-closed clean-room campaign boundary and independent-QE map assembler are executable, but the publication omits the exact first-principles inputs needed for a paper-exact map.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig1d_first_shell_potential",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(d), PDF p. 1",
+      "scientific_object": "First-shell continuum moire potential over one triangular unit cell",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated from Eq. (1) and the reported Fourier amplitude and phase.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_bands_and_tb_fit",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 2",
+      "scientific_object": "Two-degree continuum moire bands and third-neighbor triangular tight-binding fit",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "paper_level_role": "main_claim",
+      "reason": "Plane-wave bands and tight-binding overlay are independently generated from the disclosed continuum Hamiltonian.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_density_of_states",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 2",
+      "scientific_object": "Density of states versus hole filling and physical hole density",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "DOS and density mapping are generated from independently computed band eigenvalues.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_wannier_orbital",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), PDF p. 2",
+      "scientific_object": "Localized Wannier amplitude of the highest isolated moire band",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "Constructed from independently diagonalized isolated-band Bloch states with a declared phase gauge.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig2d_hopping_sweep",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(d), PDF p. 2",
+      "scientific_object": "First-, second-, and third-neighbor hopping versus moire period/twist angle",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "Hopping coefficients are independently fitted across the moire-period sweep.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_screened_interactions",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), PDF p. 3",
+      "scientific_object": "Screened Hubbard U0, U1, U2 and U0/t1 ratio versus moire period",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "Image-charge-screened Wannier projections and the inset ratio are independently evaluated.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_exchange_couplings",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), PDF p. 3",
+      "scientific_object": "Strong-coupling exchanges J1, J2, J3 and J2/J1 ratio versus moire period",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "Generated from the printed strong-coupling expansion and independently computed hopping/interactions.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig4a_energy_fermi_contours",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 4(a), PDF p. 4",
+      "scientific_object": "Top-band energy contours and three-quarter-hole Fermi contour",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "main_claim",
+      "reason": "The contour field is independently evaluated from the disclosed continuum band.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "main_fig4b_tetrahedral_order_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 4(b), PDF p. 4",
+      "scientific_object": "Four-sublattice tetrahedral antiferromagnetic order cartoon",
+      "decision": "excluded",
+      "reason": "Magnetic-order schematic without an independent numerical observable."
+    },
+    {
+      "item_id": "main_fig4c_spin_direction_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 4(c), PDF p. 4",
+      "scientific_object": "Spin directions for the four tetrahedral sublattices",
+      "decision": "excluded",
+      "reason": "Qualitative arrow diagram."
+    },
+    {
+      "item_id": "supp_fig5a_mismatch_potential",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(a), PDF p. 6",
+      "scientific_object": "Mismatch-system first-shell moire potential for aligned WSe2/MoS2",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "Independently generated from the supplement's mismatch geometry and fitted potential parameters.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "supp_fig5b_mismatch_bands",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(b), PDF p. 6",
+      "scientific_object": "Aligned WSe2/MoS2 continuum bands and tight-binding overlay",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "paper_level_role": "supporting",
+      "reason": "The supplement band panel is independently generated from Eq. (6).",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "supp_fig5c_mismatch_hopping_sweep",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(c), PDF p. 6",
+      "scientific_object": "Mismatch-system hopping parameters versus moire period/twist angle",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "supporting",
+      "reason": "The hopping sweep is independently generated from the mismatch-system bands.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "supp_fig5d_mismatch_interactions",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. 5(d), PDF p. 6",
+      "scientific_object": "Mismatch-system screened interactions versus moire period/twist angle",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "paper_scale",
+      "paper_level_role": "supporting",
+      "reason": "The interaction sweep is independently generated from mismatch-system Wannier functions.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_main_top_band_width",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main text around Fig. 2(a)",
+      "scientific_object": "The two-degree highest band has an approximately 11 meV bandwidth and is isolated",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T002"
+      ],
+      "reason": "Directly represented by Main Fig. 2(a) and retained as supporting evidence without double counting.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "claim_hole_density_conversion",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 2(b) axes",
+      "scientific_object": "At two degrees one full moire-band filling corresponds to approximately 2.55e12 cm^-2",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T003"
+      ],
+      "reason": "Represented by the dual axes in Main Fig. 2(b).",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "claim_exchange_ratio_threshold",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 3(b) discussion",
+      "scientific_object": "J2/J1 reaches the approximately 0.06 spin-liquid threshold near three degrees",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Directly represented by the Main Fig. 3(b) inset.",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    },
+    {
+      "item_id": "claim_supplement_top_band_width",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Supplement text around Fig. 5(b)",
+      "scientific_object": "The aligned WSe2/MoS2 highest band has an approximately 20 meV bandwidth",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Directly represented by Supplement Fig. 5(b).",
+      "claim_refs": [
+        "CLM_HUBBARD"
+      ]
+    }
+  ]
+}

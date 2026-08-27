@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "target_id": "T005",
+  "claim_verdict": "qualified_pass_with_proof_defect_candidates",
+  "scientific_conclusion": "The finite-set separability conclusion survives when encoded physical phase vectors are distinct modulo 2*pi: the mapped states are full rank and all tested binary labelings interpolate. Proposition 1 is false as written, the raw-input claim needs a periodic-domain qualification, and the paper's nonzero-overlap argument is not a proof of multimode independence.",
+  "checks": [
+    {
+      "name": "single-mode ranks follow the Vandermonde prediction",
+      "passed": true,
+      "evidence": {
+        "rows": [
+          {
+            "even_terms": 3,
+            "rank": 3,
+            "expected_vandermonde_rank": 3,
+            "minimum_singular_value": 0.7954216018877268
+          },
+          {
+            "even_terms": 4,
+            "rank": 4,
+            "expected_vandermonde_rank": 4,
+            "minimum_singular_value": 0.6518756450849896
+          },
+          {
+            "even_terms": 6,
+            "rank": 6,
+            "expected_vandermonde_rank": 6,
+            "minimum_singular_value": 0.44917279461837345
+          },
+          {
+            "even_terms": 10,
+            "rank": 6,
+            "expected_vandermonde_rank": 6,
+            "minimum_singular_value": 0.4880285333639823
+          },
+          {
+            "even_terms": 20,
+            "rank": 6,
+            "expected_vandermonde_rank": 6,
+            "minimum_singular_value": 0.5325194106240855
+          }
+        ]
+      }
+    },
+    {
+      "name": "distinct multimode phase vectors have full feature rank",
+      "passed": true,
+      "evidence": {
+        "rows": [
+          {
+            "even_terms_per_mode": 6,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.6431590617292626,
+            "analytic_gram_max_absolute_error": 0.24260499155329462
+          },
+          {
+            "even_terms_per_mode": 12,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.7849130159270334,
+            "analytic_gram_max_absolute_error": 0.059874472884343666
+          },
+          {
+            "even_terms_per_mode": 24,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.8179247343587683,
+            "analytic_gram_max_absolute_error": 0.004173850340657426
+          },
+          {
+            "even_terms_per_mode": 48,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.8204955895199431,
+            "analytic_gram_max_absolute_error": 2.5650710885116723e-05
+          },
+          {
+            "even_terms_per_mode": 96,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.8205114215694027,
+            "analytic_gram_max_absolute_error": 1.2966842044548343e-09
+          },
+          {
+            "even_terms_per_mode": 120,
+            "complex_rank": 6,
+            "realified_rank": 6,
+            "minimum_singular_value": 0.820511422409447,
+            "analytic_gram_max_absolute_error": 9.766742969929965e-12
+          }
+        ]
+      }
+    },
+    {
+      "name": "explicit Fock Gram converges to the independent analytic overlap",
+      "passed": true,
+      "evidence": {
+        "final_error": 9.766742969929965e-12,
+        "threshold": 2e-09
+      }
+    },
+    {
+      "name": "analytic multimode Gram is strictly positive on the test set",
+      "passed": true,
+      "evidence": {
+        "minimum_eigenvalue": 0.6732389943142182
+      }
+    },
+    {
+      "name": "every binary labelling is affinely interpolated for full-rank mapped states",
+      "passed": true,
+      "evidence": {
+        "labelings_tested": 64,
+        "design_rank": 6,
+        "worst_absolute_residual": 9.325873406851315e-15,
+        "worst_labels": [
+          -1,
+          1,
+          1,
+          -1,
+          -1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "periodic raw-input counterexample is reproduced",
+      "passed": true,
+      "evidence": {
+        "raw_inputs": [
+          0.37,
+          6.653185307179586
+        ],
+        "state_distance": 1.317687785483888e-15,
+        "state_rank": 1,
+        "interpretation": "Raw real inputs differing by 2*pi encode the same physical phase and state."
+      }
+    },
+    {
+      "name": "Proposition 1 affine counterexample is reproduced",
+      "passed": true,
+      "evidence": {
+        "points": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            2.0,
+            1.0
+          ],
+          [
+            3.0,
+            1.0
+          ]
+        ],
+        "labels": [
+          1.0,
+          -1.0,
+          1.0
+        ],
+        "rank_of_first_M_minus_1_vectors": 2,
+        "affine_design_rank": 2,
+        "augmented_with_labels_rank": 3,
+        "strict_affine_separator_exists": false,
+        "interpretation": "This falsifies Proposition 1 as written: M-1 linearly independent vectors do not guarantee shattering of all M points."
+      }
+    }
+  ],
+  "passed": true,
+  "fresh_review_required": true
+}

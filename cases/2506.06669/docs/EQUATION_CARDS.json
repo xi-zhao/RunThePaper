@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "paper_id": "2506.06669",
+  "cards": [
+    {
+      "id": "QS001",
+      "title": "XY Hamiltonian in the zero/single-excitation sector",
+      "statement": "H = sum_n omega_n |n><n| + sum_n J_n (|n><n+1| + |n+1><n|)",
+      "source_refs": [
+        "main Eq. (1)",
+        "Supplement Sec. 3"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::embed_vacuum",
+        "src/state_transfer.py::zigzag_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "QS001-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The onsite and nearest-neighbour coefficients are explicitly defined."
+        },
+        {
+          "id": "QS001-number",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "The XY exchange preserves excitation number, making the zero/single-excitation restriction exact."
+        }
+      ],
+      "open_questions": [
+        "Main Eq. (1) repeats a lowering term; Hermiticity fixes the conjugate exchange term."
+      ]
+    },
+    {
+      "id": "QS002",
+      "title": "Zig-zag PST onsite energies, couplings and spectrum",
+      "statement": "omega_n=2mJ on even n and 0 on odd n (parity-corrected Eq. 8); J_n=(J/2)sqrt[(n+2m mu_n)(N-n+2m mu_(n+1))] with the printed odd-site mu in Eq. 9",
+      "source_refs": [
+        "main Eqs. (2)-(11)",
+        "Supplement Secs. 3 and 5"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::zigzag_parameters",
+        "src/state_transfer.py::zigzag_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "QS002-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The target spectrum, Fig. 1, even-site suppression claim and Supplementary Schur elimination jointly fix the parity typo in Eq. (8)."
+        },
+        {
+          "id": "QS002-spectrum",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "With 2mJ on even sites and the printed Eq. (9) couplings, direct diagonalization exactly gives {...,-1,0,2m+1,...}J and the correct Hamiltonian trace."
+        },
+        {
+          "id": "QS002-transfer",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "At m=0 the Christandl chain and tau=pi/J give unit endpoint transfer."
+        }
+      ],
+      "open_questions": [
+        "Main Eq. (8) defines mu_n on odd sites, but every independent physical cross-check requires the onsite parity to be even; this is treated as a source typo and preserved as an explicit finding."
+      ]
+    },
+    {
+      "id": "QS003",
+      "title": "Closed-form three-site populations",
+      "statement": "P_Q3=(cos(Omega t/2)-cos(Delta t/2))^2/4 + ((Delta/Omega)sin(Omega t/2)-sin(Delta t/2))^2/4",
+      "source_refs": [
+        "main text after Eq. (9)",
+        "Supplement Sec. 6"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::three_site_populations"
+      ],
+      "checks": [
+        {
+          "id": "QS003-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "P_Q1, P_Q2 and P_Q3 are printed in closed form."
+        },
+        {
+          "id": "QS003-normalization",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "The three populations sum to one for arbitrary real Delta, J and t."
+        },
+        {
+          "id": "QS003-expm",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "The formula equals direct exponentiation of the printed 3x3 matrix."
+        }
+      ],
+      "open_questions": [
+        "The Supplement does not publish the chip's coupler-frequency-to-J transfer function used by Fig. S2."
+      ]
+    },
+    {
+      "id": "QS004",
+      "title": "Isospectral FST deformation",
+      "statement": "J_left -> (cos theta+sin theta)J_left; J_right -> (cos theta-sin theta)J_right",
+      "source_refs": [
+        "main Eq. (12)",
+        "Supplement Sec. 4"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::fst_hamiltonian"
+      ],
+      "checks": [
+        {
+          "id": "QS004-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The two central-coupling multipliers for odd N are explicit."
+        },
+        {
+          "id": "QS004-isospectral",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "The deformed and PST matrices have identical eigenvalues."
+        },
+        {
+          "id": "QS004-half",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "theta=pi/8 gives one-half population at both endpoints at tau=pi/J."
+        }
+      ],
+      "open_questions": [
+        "The printed endpoint plus sign and named Bell singlet differ by an unreported local phase gauge."
+      ]
+    },
+    {
+      "id": "QS005",
+      "title": "Separable two-dimensional FST extension",
+      "statement": "H_2D = H_x tensor I + I tensor H_y",
+      "source_refs": [
+        "main Fig. 4 discussion",
+        "main Eq. (13) W state"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/state_transfer.py::fst_hamiltonian_2d"
+      ],
+      "checks": [
+        {
+          "id": "QS005-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The source states that the one-dimensional FST condition is imposed along both dimensions."
+        },
+        {
+          "id": "QS005-factor",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "The Kronecker-sum propagator factorizes into the two one-dimensional propagators."
+        },
+        {
+          "id": "QS005-corners",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "At theta=pi/8 the four corner probabilities are each one quarter."
+        }
+      ],
+      "open_questions": [
+        "The main 3x3 experiment does not report m or a complete matrix, so the separable construction is explicit reconstruction."
+      ]
+    },
+    {
+      "id": "QS006",
+      "title": "Independent relaxation/dephasing Lindblad dynamics",
+      "statement": "rho_dot=-i[H,rho]+sum_n D[sqrt(1/T1)|0><n|]rho+sum_n D[sqrt(2/Tphi)|n><n|]rho",
+      "source_refs": [
+        "Supplement Sec. 10"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::collapse_operators",
+        "src/state_transfer.py::lindblad_trajectory"
+      ],
+      "checks": [
+        {
+          "id": "QS006-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "T1, T2/Tphi and collapse-operator forms are printed."
+        },
+        {
+          "id": "QS006-trace",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "The constructed Liouvillian preserves trace and Hermiticity."
+        },
+        {
+          "id": "QS006-zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "Infinite T1,Tphi reduces to unitary evolution."
+        }
+      ],
+      "open_questions": [
+        "The summation notation is interpreted as independent per-qubit collapse channels, not collective noise."
+      ]
+    },
+    {
+      "id": "QS007",
+      "title": "Static Gaussian parameter-noise ensemble",
+      "statement": "delta lambda_n sampled independently from Normal(0,sigma); report mean and standard deviation of F/F0",
+      "source_refs": [
+        "main Fig. 3(e)",
+        "Supplement Figs. S7-S8 and Sec. 9"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "source_only",
+      "code_refs": [
+        "src/state_transfer.py::sample_parameter_noise"
+      ],
+      "checks": [
+        {
+          "id": "QS007-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "Noise families, Gaussian law and sample counts 50/100 are explicit."
+        },
+        {
+          "id": "QS007-zero",
+          "type": "limiting_case",
+          "status": "passed",
+          "detail": "Zero noise gives F/F0=1 for every m."
+        }
+      ],
+      "open_questions": [
+        "The random seeds and exact scan arrays are not reported; deterministic replacements are declared in config."
+      ]
+    },
+    {
+      "id": "QS008",
+      "title": "Large-m elimination of even sites",
+      "statement": "J_eff=-(J/2)sqrt[n'((N+1)/2-n')], omega_eff=-J(N-1)/4 as m -> infinity",
+      "source_refs": [
+        "main Eqs. (10)-(11)",
+        "Supplement Sec. 5"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "code_refs": [
+        "src/state_transfer.py::even_site_population"
+      ],
+      "checks": [
+        {
+          "id": "QS008-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The final effective onsite energy and coupling are explicit."
+        },
+        {
+          "id": "QS008-schur",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "detail": "A Schur complement of the even subspace gives the printed large-m limit."
+        }
+      ],
+      "open_questions": [
+        "An intermediate Supplement equation has mismatched site indices; the final formulas are consistent."
+      ]
+    },
+    {
+      "id": "QS009",
+      "title": "Effective flattop-Gaussian pulse reconstruction",
+      "statement": "g(t)={erf[t/(sqrt(2)sigma)]-erf[(t-tau)/(sqrt(2)sigma)]}/2",
+      "source_refs": [
+        "Supplement Sec. 10"
+      ],
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "code_refs": [
+        "src/state_transfer.py::flattop_gaussian",
+        "src/state_transfer.py::pulsed_lindblad_final"
+      ],
+      "checks": [
+        {
+          "id": "QS009-source",
+          "type": "source_trace",
+          "status": "passed",
+          "detail": "The physical sigma and buffer values are printed, but the control-to-Hamiltonian transfer functions are absent."
+        },
+        {
+          "id": "QS009-area",
+          "type": "normalization",
+          "status": "passed",
+          "detail": "The shared effective envelope preserves the target Hamiltonian ratios and nominal pulse area."
+        },
+        {
+          "id": "QS009-anchors",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "detail": "Acceptance requires agreement with the three reported Fig. S9 fidelity anchors within the declared reconstructed tolerance."
+        }
+      ],
+      "open_questions": [
+        "Separate physical qubit/coupler envelopes cannot be converted into effective omega_n(t),J_n(t) without calibration transfer functions."
+      ]
+    }
+  ]
+}

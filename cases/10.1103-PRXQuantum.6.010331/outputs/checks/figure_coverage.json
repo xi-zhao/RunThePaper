@@ -1,0 +1,573 @@
+{
+  "schema_version": 2,
+  "paper_id": "10.1103-PRXQuantum.6.010331",
+  "implementations": {
+    "formula_and_model_campaign_v1": {
+      "status": "ready",
+      "target_ids": [
+        "T003",
+        "T004"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_formula_theory_targets.py",
+        "--config",
+        "config/formula_theory_targets.json"
+      ],
+      "code_refs": [
+        "scripts/run_formula_theory_targets.py",
+        "src/fidelity_response.py",
+        "src/gate_protocols.py",
+        "src/many_body_response.py",
+        "src/theory_targets.py"
+      ],
+      "config_ref": "config/formula_theory_targets.json",
+      "run_contract_ref": "run_contract.formula_theory_targets.json",
+      "expected_outputs": [
+        "outputs/data/fig7_formula_scalings.csv",
+        "outputs/data/fig8_public_anchor_scaling.csv",
+        "outputs/data/fig9_protocol_responses.csv",
+        "outputs/data/fig10_spin_lock_filter.csv",
+        "outputs/data/fig11_many_body_responses.csv",
+        "outputs/data/fig12_cavity_transfer.csv",
+        "outputs/data/fig17_phase_flip_first_order.csv",
+        "outputs/checks/formula_theory_targets.json"
+      ],
+      "acceptance_criteria": [
+        "Every public formula or Hamiltonian subset is executable without source pixels, author arrays, author code, raw/, or reference figures.",
+        "Unreleased PSD, calibration, geometry, circuit, and shot-model inputs remain explicit arguments or blocked inputs instead of fitted guesses.",
+        "Prepared code proves implementation readiness only; it cannot promote partial formula subsets to paper-exact scientific coverage."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "fig1a_atom_image",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 1(a)",
+      "reason": "Atom-array photograph; it is experimental context rather than a formula- or model-generated numerical result."
+    },
+    {
+      "item_id": "fig1b_ssb_decay_measurement",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 1(b)",
+      "reason": "Measured symmetric-stabilizer-benchmarking decay requires a new laboratory measurement, not additional numerical code."
+    },
+    {
+      "item_id": "fig1c_error_budget",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 1(c)",
+      "reason": "The absolute error budget requires the measured laser-noise PSD arrays, calibrated pulse trace, Doppler distribution and complete hardware error model, none of which is released numerically.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig1d_level_diagram",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 1(d)",
+      "reason": "Atomic-level schematic with no numerical observable to reproduce."
+    },
+    {
+      "item_id": "fig1e_pulse_pipeline",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 1(e)",
+      "reason": "Pulse-sequence illustration; its method context is documented but it is not a numerical target."
+    },
+    {
+      "item_id": "fig1f_error_scaling",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 1(f)",
+      "reason": "The published power laws and public intensity/lifetime terms were calculated, but a paper-level panel needs the unreleased absolute laser PSD and Doppler-noise amplitudes.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig2a_benchmark_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 2(a)",
+      "reason": "Benchmarking circuit diagram; scientific method context, not a numerical result."
+    },
+    {
+      "item_id": "fig2b_phase_calibration",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 2(b)",
+      "reason": "Measured phase-calibration scan requires the physical apparatus and raw shots."
+    },
+    {
+      "item_id": "fig3_experimental_series",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 3 experimental markers",
+      "reason": "The measured benchmarking series are laboratory reference evidence and cannot be regenerated by a numerical runner."
+    },
+    {
+      "item_id": "fig3_full_model_series",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 3 full-model curves",
+      "reason": "Independent rerun requires the calibrated clock/Rydberg error parameters, pulse trace and measured noise distributions that are not published as arrays.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig4_noise_response",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 4",
+      "reason": "The separate-noise trajectories depend on the same unreleased calibrated stochastic model and measured noise traces as Fig. 3.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig5_ssb_sensitivity",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 5",
+      "reason": "The analytic first-order mechanism is implemented, but the paper-exact curve additionally needs the calibrated clock/Rydberg channels and exact SSB circuit realization.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig6a_universal_response_rescaling",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "source_ref": "Fig. 6(a)",
+      "reason": "Appendix-L response functions are rescaled at the two printed Rabi frequencies from published formulas without using source pixels.",
+      "claim_refs": [
+        "CLM002"
+      ]
+    },
+    {
+      "item_id": "fig6b_measured_psd",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 6(b)",
+      "reason": "Measured laser power-spectral-density arrays require the experiment and are not released numerically."
+    },
+    {
+      "item_id": "fig6c_error_histogram",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 6(c)",
+      "reason": "The numerical contribution histogram consumes the unreleased measured PSD arrays from panel (b).",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig7_error_source_power_laws",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 7",
+      "reason": "All printed scaling exponents and public absolute terms are implemented, but the full panel's PSD and Doppler amplitudes are unavailable.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig8_principal_quantum_number",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 8",
+      "reason": "The printed Rabi/spacing anchors are reproduced, while the total-error optimum needs state-dependent lifetime, temperature, PSD, electric-field-noise and polarizability arrays not supplied by the paper.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig9a_frequency_response",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 9(a)",
+      "reason": "Three public controls were independently propagated, but the target paper does not identify the exact Fromonteil discrete protocol variant needed for paper-exact panel identity.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig9b_intensity_response",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 9(b)",
+      "reason": "The implemented Hamiltonian mechanism is independent, but exact protocol-variant metadata needed to identify every paper curve are absent.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig9c_protocol_infidelity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 9(c)",
+      "reason": "Absolute protocol infidelities require the experimental PSD and atomic-motion amplitudes, which are not released.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig10_experimental_decay",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 10 experimental series",
+      "reason": "Spin-lock decay measurements require the original experiment and raw shots."
+    },
+    {
+      "item_id": "fig10_theory_decay",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 10 analytic/full-model series",
+      "reason": "The finite-time sinc-squared filter is implemented, but the absolute decay curve needs the unreleased PSD and calibrated full-model inputs.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig11_many_body_response",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 11",
+      "reason": "A seven-site 128-dimensional Hamiltonian reconstruction runs and passes norm checks, but the atom geometry, C6/r^6 values, exact Rabi ramp and tangent-shape metadata are not specified.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig12_cavity_transfer",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 12 cavity-transfer theory series",
+      "reason": "The printed 140 kHz linewidth is implemented as a disclosed single-pole transfer, but the paper does not state the exact transfer convention.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig12_measured_psd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 12 measured PSD series",
+      "reason": "The unfiltered laser-noise spectrum is a measurement and the numerical array is not released."
+    },
+    {
+      "item_id": "fig12_filtered_projection",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 12 filtered-PSD/full-model projection",
+      "reason": "The projected absolute fidelity consumes the unreleased measured PSD and calibrated full error model.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "fig13_raw_ssb_decay",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 13",
+      "reason": "Raw SSB decay traces are measured laboratory data."
+    },
+    {
+      "item_id": "fig14_pair_resolved_measurements",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 14",
+      "reason": "Pair-resolved benchmark data require the physical experiment and raw shots."
+    },
+    {
+      "item_id": "fig15a_frequency_response",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "source_ref": "Fig. 15(a)",
+      "reason": "Both full-Haar and symmetric-Haar frequency responses are generated from the complete Appendix-L analytic fit.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig15b_intensity_response",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "source_ref": "Fig. 15(b)",
+      "reason": "Both full-Haar and symmetric-Haar intensity responses are generated from the complete Appendix-L analytic fit.",
+      "claim_refs": [
+        "CLM001"
+      ]
+    },
+    {
+      "item_id": "fig16a_benchmark_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 16(a)",
+      "reason": "Circuit schematic; its method is context rather than a numerical target."
+    },
+    {
+      "item_id": "fig16b_circuit_sensitivity",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 16(b)",
+      "reason": "The first-order sensitivity mechanism is implemented, but the calibrated clock/Rydberg channels and exact circuit realization needed for the plotted curve are absent.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig16c_modified_circuit",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 16(c)",
+      "reason": "Proposed circuit diagram with no plotted numerical observable."
+    },
+    {
+      "item_id": "fig17_phase_flip_model",
+      "item_type": "figure",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_source_input",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Fig. 17",
+      "reason": "The printed first-order formulas are generated, but the full quadratic inset lacks an explicitly specified circuit length and recovery realization.",
+      "claim_refs": [
+        "CLM006"
+      ]
+    },
+    {
+      "item_id": "fig18_injected_noise_measurement",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Fig. 18",
+      "reason": "Injected-noise response is an experimental measurement; its printed value is used only as a sanity reference."
+    },
+    {
+      "item_id": "table1_stabilizer_states",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Table I",
+      "reason": "Symbolic list of the twelve symmetric stabilizer states; method configuration rather than a numerical result."
+    },
+    {
+      "item_id": "table2_initialization_rotations",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Table II",
+      "reason": "Symbolic initialization rotation sequences; method configuration rather than a numerical result."
+    },
+    {
+      "item_id": "table3_recovery_rotations",
+      "item_type": "table",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Table III",
+      "reason": "Symbolic recovery rotation sequences; method configuration rather than a numerical result."
+    },
+    {
+      "item_id": "table4_model_fidelities",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Table IV",
+      "reason": "The printed values can be read as references, but an independent rerun requires the unreleased calibrated error-model inputs.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "table5_shot_noise_simulations",
+      "item_type": "table",
+      "kind": "numeric",
+      "decision": "deferred_blocked",
+      "blocker": "missing_author_data",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "formula_and_model_campaign_v1",
+      "source_ref": "Table V",
+      "reason": "Independent reproduction requires unpublished shot-noise distributions and the full calibrated error model.",
+      "claim_refs": [
+        "CLM003"
+      ]
+    },
+    {
+      "item_id": "table6_leakage_corrections",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "Table VI",
+      "reason": "Leakage corrections mix measured and author-model values whose raw measurement inputs are unavailable; they are reference evidence, not independent numerical outputs."
+    }
+  ]
+}

@@ -416,8 +416,12 @@ def _checks(
             "theory_a": theory_a,
         },
         "T003": {
-            "passed": bool(abs(float(t003_anchor["direct_b"]) - theory_b) <= 0.25),
+            # Fig. 1(e) reports b from the mixed finite-size ansatz printed in
+            # Supplement Eq. (9).  The raw log-log slope is only a diagnostic:
+            # the additive logarithm and offset make it a different observable.
+            "passed": bool(abs(float(t003_anchor["fitted_b"]) - theory_b) <= 0.25),
             "parameter_status": "reduced_scale",
+            "fitted_b": t003_anchor["fitted_b"],
             "direct_b": t003_anchor["direct_b"],
             "theory_b": theory_b,
         },
@@ -445,10 +449,24 @@ def _checks(
             "c_ratio_algebraic": float(c_alg_large / max(c_alg_small, 1e-12)),
         },
         "T007": {
-            "passed": bool(abs((theory_a + theory_b) - 2.0) < 1e-14),
+            # The analytic identity alone cannot validate a simulation panel.
+            # Require the independently generated finite-size observables to
+            # approach both printed exponents as well.
+            "passed": bool(
+                abs(float(t002_anchor["direct_a"]) - theory_a) <= 0.35
+                and abs(float(t003_anchor["fitted_b"]) - theory_b) <= 0.25
+                and abs(
+                    float(t002_anchor["direct_a"])
+                    + float(t003_anchor["fitted_b"])
+                    - 2.0
+                )
+                <= 0.35
+            ),
             "parameter_status": "paper_subset_reconstructed_numerics",
             "theory_a": theory_a,
             "theory_b": theory_b,
+            "simulation_fitted_entropy_exponent": t003_anchor["fitted_b"],
+            "simulation_direct_correlation_exponent": t002_anchor["direct_a"],
             "simulation_entropy_slope": entropy_slopes["algebraic"],
             "simulation_correlation_slope": corr_slopes["algebraic"],
         },

@@ -1,0 +1,651 @@
+{
+  "schema_version": 2,
+  "paper_id": "2406.07531",
+  "implementations": {
+    "paper_scale_all_targets": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_paper_scale.py",
+        "--config",
+        "config/paper_scale.json",
+        "--validate-only"
+      ],
+      "code_refs": [
+        "src/ibdet_reproduction/baths.py",
+        "src/ibdet_reproduction/embedding.py",
+        "src/ibdet_reproduction/spectra.py",
+        "src/ibdet_reproduction/ed.py",
+        "src/ibdet_reproduction/campaign.py",
+        "src/ibdet_reproduction/pyscf_backend.py",
+        "scripts/run_paper_scale.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.paper_scale.json",
+      "expected_outputs": [
+        "outputs/checks/paper_scale/plan.json",
+        "outputs/checks/paper_scale/input_inventory.json",
+        "outputs/paper_scale/<unit-id>/mean_field.npz",
+        "outputs/paper_scale/<unit-id>/embedding_hamiltonian.npz",
+        "outputs/paper_scale/<unit-id>/self_energy.npz",
+        "outputs/paper_scale/<unit-id>/observables.npz"
+      ],
+      "acceptance_criteria": [
+        "The plan covers all five materials and all nine target axes with explicit structures, basis choices, k meshes, embedding sizes, stages, sharding, checkpoints, resource estimates, and result hashes.",
+        "Scientific execution fails closed when the independent production GW or real-axis EOM-CCSD Green-function backend is unavailable; printed paper values, source pixels, author code, and author arrays are never substitutes.",
+        "A target remains compute-deferred until its full unit emits independently generated observables, convergence evidence, paper-parameter provenance, and a successful isolated attestation."
+      ]
+    },
+    "independent_method_validation": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/feature.json"
+      ],
+      "code_refs": [
+        "src/ibdet_reproduction/baths.py",
+        "src/ibdet_reproduction/embedding.py",
+        "src/ibdet_reproduction/spectra.py",
+        "src/ibdet_reproduction/ed.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/feature.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/feature/method_validation.npz",
+        "outputs/checks/feature/target_checks.json",
+        "outputs/checks/feature/generated_data_manifest.json"
+      ],
+      "acceptance_criteria": [
+        "Exact small-system Lehmann numerics independently validate bath construction, Eq. (2) HF subtraction, Eq. (4) replacement, Dyson spectra, causality, spectral weight, and the local-versus-nonlocal counterfactual.",
+        "The validation is labelled method_validation_only and never counts as execution of a material-specific target."
+      ]
+    }
+  },
+  "inventory_boundary": {
+    "status": "source_blocked",
+    "source_ref": "APS formal Supplemental Material for DOI 10.1103/PhysRevLett.133.216402",
+    "known_items": [
+      "Supplement Table S6",
+      "Supplement Table S7"
+    ],
+    "unknown_remainder": true,
+    "blocker": "missing_source_input",
+    "reason": "The published page confirms a subscription-gated supplement, but the legitimate APS endpoint remains inaccessible. The main text identifies Tables S6 and S7; any other supplemental figures, tables, or independent quantitative claims cannot be enumerated without guessing.",
+    "next_action": "Acquire the formal supplement through a legitimate subscription or author-provided manuscript route, freeze its hash, and replace this scope blocker with an atomic supplemental inventory."
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_workflow_and_orbital_illustration",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main PDF p. 2, Fig. 1",
+      "scientific_object": "ibDET workflow diagram and illustrative occupied embedding-orbital density",
+      "decision": "excluded",
+      "reason": "This is explanatory method context rather than an independently generated numerical observable."
+    },
+    {
+      "item_id": "main_fig2a_upper_gw_ibdet_pbe",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) upper axis",
+      "scientific_object": "Si Gamma-X gap versus embedding size from GW+ibDET@PBE",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "An independent periodic material calculation is required for this convergence curve.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_upper_gw_ibdet_hf",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) upper axis",
+      "scientific_object": "Si Gamma-X gap versus embedding size from GW+ibDET@HF",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "An independent periodic material calculation is required for this convergence curve.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_upper_gw_dmft_pbe",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) upper axis",
+      "scientific_object": "Si Gamma-X gap reference point from GW+DMFT@PBE",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed many-body reference point is a separate theoretical numerical result.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_upper_gw_dmft_hf",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) upper axis",
+      "scientific_object": "Si Gamma-X gap reference point from GW+DMFT@HF",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed many-body reference point is a separate theoretical numerical result.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_upper_eom_ccsd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) upper axis",
+      "scientific_object": "Si Gamma-X full-system EOM-CCSD reference gap",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed full-system reference is part of the numerical comparison contract.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_lower_gw_ibdet_pbe",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) lower axis",
+      "scientific_object": "Si X-X gap versus embedding size from GW+ibDET@PBE",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "An independent periodic material calculation is required for this convergence curve.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_lower_gw_ibdet_hf",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) lower axis",
+      "scientific_object": "Si X-X gap versus embedding size from GW+ibDET@HF",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "An independent periodic material calculation is required for this convergence curve.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_lower_gw_dmft_pbe",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) lower axis",
+      "scientific_object": "Si X-X gap reference point from GW+DMFT@PBE",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed many-body reference point is a separate theoretical numerical result.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_lower_gw_dmft_hf",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) lower axis",
+      "scientific_object": "Si X-X gap reference point from GW+DMFT@HF",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed many-body reference point is a separate theoretical numerical result.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_lower_eom_ccsd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(a) lower axis",
+      "scientific_object": "Si X-X full-system EOM-CCSD reference gap",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The displayed full-system reference is part of the numerical comparison contract.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_top_eom_ccsd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) top axis",
+      "scientific_object": "2D BN EOM-CCSD DOS reference shown behind HF+DMFT",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The reference DOS must be independently generated or analytically sourced, not copied from the panel.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_top_hf_dmft",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) top axis",
+      "scientific_object": "2D BN HF+DMFT density of states",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "This baseline is an independent numerical series in the paper comparison.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_middle_eom_ccsd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) middle axis",
+      "scientific_object": "2D BN EOM-CCSD DOS reference shown behind HF+ibDET",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The repeated display instance is independently judged within this comparison axis.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_middle_hf_ibdet",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) middle axis",
+      "scientific_object": "2D BN HF+ibDET density of states",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "This method curve is a separate theoretical numerical series.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_bottom_eom_ccsd",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) bottom axis",
+      "scientific_object": "2D BN EOM-CCSD DOS reference shown behind GW+ibDET",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The repeated display instance is independently judged within this comparison axis.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_bottom_gw_ibdet",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 2(b) bottom axis",
+      "scientific_object": "2D BN GW+ibDET density of states",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "This method curve is a separate theoretical numerical series.",
+      "claim_refs": [
+        "CLM_CONVERGENCE"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_gw_ibdet_spectral_weight",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 3(a)",
+      "scientific_object": "MgO momentum-resolved GW+ibDET spectral-weight heat map",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The spectral map requires an independent material-specific self-energy calculation.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_g0w0_pbe_bands",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 3(a)",
+      "scientific_object": "MgO G0W0@PBE quasiparticle-band overlay",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The white-dash baseline is a separate theoretical numerical layer.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_gw_ibdet_spectral_weight",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 3(b)",
+      "scientific_object": "SrTiO3 momentum-resolved GW+ibDET spectral-weight heat map",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The spectral map requires an independent material-specific self-energy calculation.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_g0w0_pbe_bands",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, Fig. 3(b)",
+      "scientific_object": "SrTiO3 G0W0@PBE quasiparticle-band overlay",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The white-dash baseline is a separate theoretical numerical layer.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    },
+    {
+      "item_id": "main_fig4a_gw_ibdet_spectral_weight",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(a)",
+      "scientific_object": "Na momentum-resolved GW+ibDET spectral-weight heat map",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The spectral map and derived occupied bandwidth require independent numerical execution.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4a_pbe_band",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(a)",
+      "scientific_object": "Na PBE band overlay",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The PBE comparison is a separate theoretical numerical series.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4a_g0w0_pbe_band",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(a)",
+      "scientific_object": "Na G0W0@PBE band overlay",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The GW baseline is a separate theoretical numerical series.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4a_arpes_plummer",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main PDF p. 4, Fig. 4(a)",
+      "scientific_object": "Na ARPES measurements reported by Plummer",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T006"
+      ],
+      "reason": "This is laboratory reference evidence; reproducing it would require a new experiment rather than formula-driven numerics."
+    },
+    {
+      "item_id": "main_fig4a_arpes_fink",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "experimental_measurement",
+      "source_ref": "Main PDF p. 4, Fig. 4(a)",
+      "scientific_object": "Na ARPES measurements reported by Fink",
+      "decision": "excluded",
+      "reference_for_target_ids": [
+        "T006"
+      ],
+      "reason": "This is laboratory reference evidence; reproducing it would require a new experiment rather than formula-driven numerics."
+    },
+    {
+      "item_id": "main_fig4b_local_minus_full_dos",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(b)",
+      "scientific_object": "Na DOS(Local) minus DOS(Full) spectral-difference heat map",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "This counterfactual observable requires independently computed local and full self-energies.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_top_real_correction",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(c) top axis",
+      "scientific_object": "Real Na 3s-3s intersite self-energy correction at omega=-3 eV",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The neighbour-shell series requires independently generated real-space self-energy data.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_top_imag_correction",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(c) top axis",
+      "scientific_object": "Imaginary Na 3s-3s intersite self-energy correction at omega=-3 eV",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The neighbour-shell series requires independently generated real-space self-energy data.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_bottom_real_correction",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(c) bottom axis",
+      "scientific_object": "Real Na 3s-3s intersite self-energy correction at omega=0 eV",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The neighbour-shell series requires independently generated real-space self-energy data.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "main_fig4c_bottom_imag_correction",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 4, Fig. 4(c) bottom axis",
+      "scientific_object": "Imaginary Na 3s-3s intersite self-energy correction at omega=0 eV",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "paper_scale_all_targets",
+      "reason": "The neighbour-shell series requires independently generated real-space self-energy data.",
+      "claim_refs": [
+        "CLM_NA_NONLOCAL"
+      ]
+    },
+    {
+      "item_id": "supplement_table_s6",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, MgO paragraph citing Supplement Table S6",
+      "scientific_object": "MgO quantitative method and band-gap comparison table",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T004"
+      ],
+      "blocker": "missing_source_input",
+      "reason": "The main text identifies the table, but its cells and full scientific scope are unavailable from the legitimate source package.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    },
+    {
+      "item_id": "supplement_table_s7",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main PDF p. 3, SrTiO3 paragraph citing Supplement Table S7",
+      "scientific_object": "SrTiO3 quantitative method and band-gap comparison table",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T005"
+      ],
+      "blocker": "missing_source_input",
+      "reason": "The main text identifies the table, but its cells and full scientific scope are unavailable from the legitimate source package.",
+      "claim_refs": [
+        "CLM_MATERIAL_ACCURACY"
+      ]
+    }
+  ]
+}

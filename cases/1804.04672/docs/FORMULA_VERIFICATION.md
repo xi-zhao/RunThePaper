@@ -11,17 +11,14 @@ outputs/checks/formula_verification.json
 Run:
 
 ```bash
-cd cases/1804.04672/code
-python scripts/run_first_target.py
-python scripts/run_cylinder_phase_diagram.py
-python scripts/run_gap_scaling.py
+python PRAgent-workflow/scripts/check_formula_gate.py case/<paper-id> --write
 ```
 
 ## Gate Summary
 
 | Formula | Role | Gate | Reason |
 | --- | --- | --- | --- |
-| `EQC001` | Main Bloch Hamiltonian | source_traced | Source-traced and used by `code/src/nonhermitian_chern.py`. |
+| `EQC001` | Main Bloch Hamiltonian | source_only | Source-traced and used by `src/nonhermitian_chern.py`. |
 | `EQC002` | Cylinder finite-strip Hamiltonian | reconstructed/source_only | Reconstructed from the source model and open-boundary hopping; used by the first runner. |
 | `EQC003` | Non-Bloch Chern number | source_only | Interpretive context only; not used by the first runner. |
 | `EQC004` | Cylinder non-Bloch bulk continuum | source_only | Supplement-derived equal-modulus condition used by the edge-branch diagnostic. |

@@ -1,0 +1,842 @@
+{
+  "schema_version": 2,
+  "paper_id": "0709.0548",
+  "implementations": {
+    "whole_paper_v2": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_scale.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_scale.json",
+      "run_contract_ref": "run_contract.json",
+      "expected_outputs": [
+        "outputs/data/fig1_discord.csv",
+        "outputs/data/ensemble_discord_long.csv",
+        "outputs/data/ensemble_eigenphases.csv",
+        "outputs/data/separability_certificates.csv",
+        "outputs/data/grouped_partition_witnesses.csv",
+        "outputs/data/root_phi_convergence.csv",
+        "outputs/data/formula_checks.csv",
+        "outputs/data/sampling_complexity.csv",
+        "outputs/data/symmetric_extension_contracts.json",
+        "outputs/checks/science_checks.json"
+      ],
+      "acceptance_criteria": [
+        "Every 500 by 41 value for both independent generators is frozen.",
+        "Control-register separability is certified by explicit product-mixture reconstruction at every declared unitary stage.",
+        "Finite root-grid phi dependence and its continuum convergence are measured rather than assumed.",
+        "Fixed-accuracy DQC1 trial counts reproduce the exact inverse-square polarization overhead and remain register-size independent.",
+        "Unavailable author generator and SDP certificate remain explicitly publication-underspecified."
+      ]
+    },
+    "t014_discord_signature_boundary": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t014_discord_signature.py",
+        "--config",
+        "config/t014_discord_signature.json"
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py",
+        "src/dqc1_discord/claim_boundaries.py",
+        "src/dqc1_discord/symmetric_extension.py",
+        "scripts/run_t014_discord_signature.py"
+      ],
+      "config_ref": "config/t014_discord_signature.json",
+      "run_contract_ref": "run_contract.t014.json",
+      "expected_outputs": [
+        "outputs/data/t014_discord_signature_boundary.csv",
+        "outputs/data/t014_symmetric_extension.csv",
+        "outputs/checks/t014_discord_signature_boundary.json",
+        "outputs/checks/t014_run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Positive analytic discord is frozen for every declared alpha within the paper's alpha<=1/2 boundary.",
+        "All declared grouped bipartitions remain non-detecting under negativity and realignment in the finite campaign.",
+        "Every declared first-level PPT symmetric-extension solve is feasible and passes marginal, swap, PSD, and PPT residual thresholds.",
+        "The phrase 'first signature' is interpreted from the paper's immediate scientific context, not as historical priority."
+      ]
+    },
+    "t015_context_claim_audit": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_t015_context_claim_audit.py",
+        "--config",
+        "config/t015_context_claims.json"
+      ],
+      "code_refs": [
+        "src/dqc1_discord/claim_boundaries.py",
+        "scripts/run_t015_context_claim_audit.py"
+      ],
+      "config_ref": "config/t015_context_claims.json",
+      "run_contract_ref": "run_contract.t015.json",
+      "expected_outputs": [
+        "outputs/data/t015_context_claim_audit.csv",
+        "outputs/checks/t015_context_claim_audit.json",
+        "outputs/checks/t015_run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Each externally cited claim declares its required internal theorem or contract fields.",
+        "The audit marks a claim publication-underspecified when those fields are absent from the frozen paper package.",
+        "No external theorem body is silently inferred."
+      ]
+    },
+    "claim_input_boundary": {
+      "status": "ready",
+      "target_ids": [
+        "T008",
+        "T014"
+      ],
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "src/dqc1_discord/model.py",
+        "src/dqc1_discord/claim_boundaries.py",
+        "src/dqc1_discord/implementation_closure.py",
+        "scripts/run_implementation_closure.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/manifest.json",
+        "outputs/checks/implementation_closure/T008.json",
+        "outputs/checks/implementation_closure/T014.json",
+        "outputs/data/implementation_closure/T008.json",
+        "outputs/data/implementation_closure/T014.json"
+      ],
+      "acceptance_criteria": [
+        "The common finite DQC1 kernel passes before any boundary artifact is accepted.",
+        "Every indispensable asymptotic or historical-review input is source-traced and hash-bound before claim-complete execution.",
+        "Missing inputs fail closed and never promote finite evidence to a full scientific claim."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1_finite_ensemble",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "claim_refs": [
+        "CLM_T005"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Main Fig. 1, dashed finite-n ensemble",
+      "scientific_object": "Finite-n 500-unitary average discord curve.",
+      "reason": "Two independent 500-unitary ensembles are generated without source pixels."
+    },
+    {
+      "item_id": "main_fig1_analytic_typical_discord",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Main Fig. 1, solid analytic curve",
+      "scientific_object": "Typical-unitary analytic discord is positive for alpha greater than zero.",
+      "reason": "The analytic curve is generated from Eqs. (22)-(23)."
+    },
+    {
+      "item_id": "main_fig1_pseudorandom_convergence",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "claim_refs": [
+        "CLM_T012"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Main Fig. 1, pseudorandom-unitary comparison",
+      "scientific_object": "Independent pseudorandom-circuit ensemble converges toward the typical-unitary curve.",
+      "reason": "The pseudorandom generator is independently implemented and compared without source-pixel input."
+    },
+    {
+      "item_id": "dqc1_circuit",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "DQC1 circuit diagram",
+      "reason": "Schematic only; the circuit state transformation is tested numerically."
+    },
+    {
+      "item_id": "eq1_state",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "claim_refs": [
+        "CLM_T001"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (1)",
+      "reason": "The density matrix, constructive separability and analytic discord are checked."
+    },
+    {
+      "item_id": "dqc1_state_and_readout",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "claim_refs": [
+        "CLM_T002"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (9) and normalized-trace readout text",
+      "scientific_object": "DQC1 block state yields the normalized-trace readout.",
+      "reason": "The block state and trace readout are checked independently."
+    },
+    {
+      "item_id": "dqc1_control_register_separability",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "claim_refs": [
+        "CLM_T006"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Text surrounding Eq. (9)",
+      "scientific_object": "The control-register split is separable while the final state remains discordant.",
+      "reason": "Constructive product-mixture separability and positive discord are checked separately."
+    },
+    {
+      "item_id": "dqc1_all_stage_separability",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "claim_refs": [
+        "CLM_T011"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "DQC1 circuit discussion before Eq. (9)",
+      "scientific_object": "The control qubit remains separable from the mixed register throughout the computation.",
+      "reason": "The all-stage product decomposition is checked explicitly."
+    },
+    {
+      "item_id": "dqc1_spectrum",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eqs. (10)-(13)",
+      "reason": "Dense spectrum and entropy identities are checked.",
+      "claim_refs": [
+        "CLM_T003"
+      ]
+    },
+    {
+      "item_id": "conditional_entropy",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eqs. (14)-(21)",
+      "reason": "Projective conditional entropy is minimized from eigenphases."
+    },
+    {
+      "item_id": "typical_discord",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "claim_refs": [
+        "CLM_T007"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eqs. (22)-(23)",
+      "reason": "Continuum limit, endpoints and finite-size convergence are reproduced."
+    },
+    {
+      "item_id": "finite_root_placement",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Typical-unitary paragraph before Eq. (21)",
+      "reason": "The literal finite root placement and phi-independence claims are actively falsified across dimensions.",
+      "claim_refs": [
+        "CLM_T010"
+      ]
+    },
+    {
+      "item_id": "grouped_control_partitions",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "claim_input_boundary",
+      "source_ref": "Entanglement discussion before Eq. (9)",
+      "reason": "All grouped-control bipartitions through five register qubits are tested with PPT negativity and realignment witnesses.",
+      "claim_refs": [
+        "CLM_T008"
+      ]
+    },
+    {
+      "item_id": "doherty_extension_claim",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Conclusion and cited private communication",
+      "reason": "The exact SDP contract is code-generated, but the paper supplies no tested author state list, solver configuration, or certificate; an independent solver campaign is executed separately under T014.",
+      "claim_refs": [
+        "CLM_T009"
+      ]
+    },
+    {
+      "item_id": "discord_first_signature",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "implementation_ref": "t014_discord_signature_boundary",
+      "source_ref": "paper-source/DQCdiscordPRL.tex:452-464",
+      "reason": "Positive discord is combined with independent PPT, realignment, and executed first-level PPT symmetric-extension non-detection evidence.",
+      "related_target_ids": [
+        "T007",
+        "T008",
+        "T009"
+      ],
+      "claim_refs": [
+        "CLM_T014"
+      ]
+    },
+    {
+      "item_id": "pseudorandom_generator",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Main Fig. 1 caption",
+      "reason": "A transparent independent brickwork circuit is compared by depth to QR-Haar, without claiming identity to the unpublished author generator.",
+      "claim_refs": [
+        "CLM_T012"
+      ]
+    },
+    {
+      "item_id": "mutual_information_entropy_identity",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, first paragraph",
+      "reason": "The marginal/joint and conditional-entropy definitions are checked on a nontrivial joint distribution."
+    },
+    {
+      "item_id": "shannon_entropy_definition",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, first paragraph",
+      "reason": "Direct probability-vector entropy is evaluated in the paper's base-2 convention."
+    },
+    {
+      "item_id": "von_neumann_entropy_definition",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, first paragraph",
+      "reason": "Trace and eigenvalue forms are cross-checked on a nontrivial density matrix."
+    },
+    {
+      "item_id": "classical_conditional_mutual_information",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, second paragraph",
+      "reason": "The two classical mutual-information forms are checked directly."
+    },
+    {
+      "item_id": "projective_conditional_state",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (2), first equality",
+      "reason": "Born-conditioned states are normalized explicitly after a local projective measurement."
+    },
+    {
+      "item_id": "projective_outcome_probability",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (2), second equality",
+      "reason": "Outcome probabilities are nonnegative and sum to one."
+    },
+    {
+      "item_id": "measurement_conditional_entropy",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph below Eq. (2)",
+      "reason": "The weighted conditional entropy and its sign are evaluated explicitly."
+    },
+    {
+      "item_id": "conditional_entropy_concavity_bound",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph below Eq. (2)",
+      "reason": "H(S)-H_tilde is checked to remain nonnegative."
+    },
+    {
+      "item_id": "measurement_dependent_classical_correlation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (3)",
+      "reason": "J_Pi is evaluated from the same conditional states."
+    },
+    {
+      "item_id": "nonselective_measurement_zero_discord",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph below Eq. (3)",
+      "reason": "The measured state is reconstructed and its measured-side discord is checked to vanish."
+    },
+    {
+      "item_id": "optimized_classical_correlation",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph before Eq. (4)",
+      "reason": "The projective-measurement optimization is implemented explicitly."
+    },
+    {
+      "item_id": "optimized_conditional_entropy",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph before Eq. (4)",
+      "reason": "Conditional entropy is minimized over the one-qubit projective manifold."
+    },
+    {
+      "item_id": "discord_equivalent_definitions",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "Eq. (4)",
+      "reason": "Mutual-minus-classical and conditional-minus-quantum forms use the same frozen entropy calculation."
+    },
+    {
+      "item_id": "discord_nonnegativity",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph after Eq. (4)",
+      "reason": "Representative classical, separable-discordant and maximally entangled states are checked."
+    },
+    {
+      "item_id": "classical_states_zero_discord",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph after Eq. (4)",
+      "reason": "A nontrivial locally diagonal state is included in the projective optimization audit."
+    },
+    {
+      "item_id": "positive_discord_nonclassicality",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001",
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_DISCORD_NONCLASSICALITY"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph after Eq. (4)",
+      "reason": "Eq. (1) provides a separable positive-discord witness cross-checked by PPT."
+    },
+    {
+      "item_id": "discord_marginal_entropy_upper_bound",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "paragraph after Eq. (4) and footnote [16]",
+      "reason": "D(S,M)<=H(M) is stress-tested across classical, separable-discordant and Bell states."
+    },
+    {
+      "item_id": "pure_state_joint_and_conditional_entropy",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, pure-state paragraph",
+      "reason": "Three nontrivial Schmidt spectra check zero joint and optimized conditional entropy."
+    },
+    {
+      "item_id": "pure_state_marginal_entropy_identity",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, pure-state paragraph",
+      "reason": "Both reduced entropies and conditional entropy are computed directly."
+    },
+    {
+      "item_id": "pure_state_discord_equals_entanglement",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, pure-state paragraph",
+      "reason": "Discord is compared with Schmidt entropy for three distinct pure states."
+    },
+    {
+      "item_id": "dqc1_classical_simulation_evidence",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "t015_context_claim_audit",
+      "source_ref": "p. 2, trace-estimation paragraph citing Ref. [8]",
+      "reason": "The dedicated contract audit records exactly which theorem fields are absent from the paper package instead of pretending to reproduce the missing citation body.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "discord_upper_bound_footnote_proof",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_T004"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "footnote [16]",
+      "reason": "The final bound and representative rank/degeneracy cases are independently checked."
+    },
+    {
+      "item_id": "discord_resource_interpretation",
+      "item_type": "method_claim",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "abstract and conclusion",
+      "reason": "Causal resource interpretation is scientific context rather than a standalone numerical object."
+    },
+    {
+      "item_id": "pure_state_entanglement_speedup_theorem",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "t015_context_claim_audit",
+      "source_ref": "p. 1 citing Refs. [5,7,9,10]",
+      "reason": "The dedicated contract audit records the missing theorem statement, assumptions, and quantifiers inside the frozen paper boundary.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "nmr_pseudopure_experimental_context",
+      "item_type": "method_claim",
+      "kind": "non_numeric",
+      "decision": "excluded",
+      "target_ids": [],
+      "source_ref": "p. 1 citing NMR experiments",
+      "reason": "External experimental history is context, not a result generated by this theory runner."
+    },
+    {
+      "item_id": "mixed_state_exponential_speedup_evidence",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "t015_context_claim_audit",
+      "source_ref": "p. 1 citing Ref. [11]",
+      "reason": "The dedicated contract audit records that the task-specific speedup theorem is cited but not internally specified.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "mixed_state_bounded_entanglement_ppt_speedup",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "t015_context_claim_audit",
+      "source_ref": "p. 1 citing Refs. [11,12]",
+      "reason": "The dedicated contract audit records the missing bounded-entanglement, PPT, and speedup contracts instead of leaving the item unmodeled.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "discord_includes_entanglement_and_separable_nonclassicality",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T001",
+        "T004"
+      ],
+      "claim_refs": [
+        "CLM_DISCORD_SCOPE"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 1, introduction",
+      "reason": "Bell, classical and Eq. (1) states cover the relevant structural cases."
+    },
+    {
+      "item_id": "qubit_discord_true_measure_claim",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "t015_context_claim_audit",
+      "source_ref": "conclusion citing Ref. [21]",
+      "reason": "The dedicated contract audit records that the cited operational axiom set and theorem are absent from this paper package.",
+      "causal_diagnosis_ref": "outputs/checks/similarity_scorecard.json#targets.T015.evaluation.causal_diagnosis",
+      "claim_refs": [
+        "CLM_T015"
+      ]
+    },
+    {
+      "item_id": "dqc1_sampling_overhead",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, paragraph below the DQC1 circuit",
+      "reason": "The bounded control-readout variance gives the paper's exact inverse-square polarization overhead.",
+      "claim_refs": [
+        "CLM_T013"
+      ]
+    },
+    {
+      "item_id": "dqc1_fixed_accuracy_trial_complexity",
+      "item_type": "method_claim",
+      "kind": "numeric",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "whole_paper_v2",
+      "source_ref": "p. 2, trace-estimation performance paragraph",
+      "reason": "The number of trials required for fixed RMS accuracy is computed explicitly and shown to be independent of register size.",
+      "claim_refs": [
+        "CLM_T013"
+      ]
+    }
+  ]
+}

@@ -82,7 +82,9 @@
       ],
       "numerical_form": "Enumerate all intra-atom and inter-atom point pairs for orderings ab, aabb, abab, and abba.",
       "code_refs": [
-        "src/giant_atoms/model.py::coefficients_from_ordering"
+        "src/giant_atoms/model.py::coefficients_from_ordering",
+        "src/giant_atoms/claim_campaign.py::pair_coefficients",
+        "src/giant_atoms/claim_campaign.py::collective_decay_factorized"
       ],
       "open_questions": []
     },
@@ -181,6 +183,163 @@
       "numerical_form": "Evaluate the frozen arrays at phi=pi/2 and compare against (g, Gamma_a, Gamma_b, Gamma_coll)=(1,0,0,0).",
       "code_refs": [
         "src/giant_atoms/reproduction.py::scientific_checks"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "General zero-decay factorization and topology implication",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (S135)-(S137) and the discussion following Eq. (S137)"
+        }
+      ],
+      "latex": "A_j=\\sum_n\\sqrt{\\gamma_{jn}}e^{ikx_{jn}},\\quad \\Gamma_j=|A_j|^2,\\quad \\Gamma_{{\\rm coll},jk}=\\Re(A_jA_k^*)",
+      "role": "arbitrary_connection_point_topology_proof",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The emission-amplitude factorization is traced to Supplement Eqs. (S135)-(S137)."
+        },
+        {
+          "id": "EQ005-C1",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Expanding A_j A_k* reproduces the full cosine point-pair sum, so Gamma_j=0 implies every collective decay involving j is zero."
+        },
+        {
+          "id": "EQ005-C2",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Separate and nested zero-phasor examples have zero exchange, while a braided example retains finite exchange."
+        },
+        {
+          "id": "EQ005-C3",
+          "type": "independent_implementation",
+          "status": "passed",
+          "reason": "Direct pair sums and the separately factorized phasor calculation agree for unequal rates and arbitrary connection counts."
+        }
+      ],
+      "numerical_form": "Evaluate arbitrary point/rate arrays by direct pair sums and independently by complex emission-amplitude factorization.",
+      "code_refs": [
+        "src/giant_atoms/claim_campaign.py::general_topology_result",
+        "tests/test_claim_campaign.py::test_collective_decay_factorizes_for_arbitrary_points_and_rates"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Protected-chain constraint rank and independent couplings",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (S122)-(S128)"
+        },
+        {
+          "type": "main_text",
+          "value": "Discussion following Main Fig. 3"
+        }
+      ],
+      "latex": "\\operatorname{rank}C_N=N,\\quad \\dim\\ker C_N=N-1,\\quad g_{j,j+1}=\\sqrt{\\gamma_j\\gamma_{j+1}}\\sin\\phi_{2j}",
+      "role": "all_N_chain_tunability_proof",
+      "derived_from": [
+        "EQ002",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The protected-chain phase constraints and coupling formulas are traced to Supplement Eqs. (S122)-(S128)."
+        },
+        {
+          "id": "EQ006-C1",
+          "type": "exact_rank_witness",
+          "status": "passed",
+          "reason": "Selecting the even phase columns of C_N gives the N by N identity matrix for every N>=2, proving rank N without extrapolating a finite numerical rank."
+        },
+        {
+          "id": "EQ006-C2",
+          "type": "constructive_solution",
+          "status": "passed",
+          "reason": "The N-1 odd control phases are free and the even phases solve the N zero-decay equations exactly."
+        },
+        {
+          "id": "EQ006-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "N=3,4,6 constructions have zero individual decay, no non-neighbor exchange, and full N-1 coupling-control rank."
+        }
+      ],
+      "numerical_form": "Construct C_N, expose its identity rank witness, solve dependent phases, and evaluate all pair coefficients.",
+      "code_refs": [
+        "src/giant_atoms/claim_campaign.py::chain_constraint_matrix",
+        "src/giant_atoms/claim_campaign.py::chain_tunability_result"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "All-to-all constraint count and N=3 constructions",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Eqs. (S129)-(S134)"
+        },
+        {
+          "type": "main_text",
+          "value": "Discussion following Main Fig. 4"
+        }
+      ],
+      "latex": "\\operatorname{rank}B_N=N,\\quad (2N-1)-N=N-1,\\quad g_{12}\\propto\\sin(\\phi_2+\\phi_3),\\ g_{13}\\propto\\sin\\phi_3,\\ g_{23}\\propto\\sin(\\phi_3+\\phi_4)",
+      "role": "all_N_control_count_and_N3_construction",
+      "derived_from": [
+        "EQ002",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007-C0",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The all-to-all constraints and printed N=3 constructions are traced to Supplement Eqs. (S129)-(S134)."
+        },
+        {
+          "id": "EQ007-C1",
+          "type": "exact_rank_witness",
+          "status": "passed",
+          "reason": "The first N columns of the sliding-window constraint matrix form a unit upper-triangular matrix, proving rank N for every N>=2."
+        },
+        {
+          "id": "EQ007-C2",
+          "type": "constructive_solution",
+          "status": "passed",
+          "reason": "The printed N=3 equal and signed phase choices satisfy zero decay and reproduce their stated coupling relations."
+        },
+        {
+          "id": "EQ007-C3",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The rank witness and free-control count hold at N=3,4,6; the exact witness supplies the all-N step."
+        }
+      ],
+      "numerical_form": "Construct B_N, verify its unit upper-triangular minor, and evaluate the two printed three-atom phase assignments.",
+      "code_refs": [
+        "src/giant_atoms/claim_campaign.py::all_to_all_constraint_matrix",
+        "src/giant_atoms/claim_campaign.py::all_to_all_result"
       ],
       "open_questions": []
     }

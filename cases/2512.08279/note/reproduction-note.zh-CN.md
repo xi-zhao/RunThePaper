@@ -1,39 +1,21 @@
-# PRL 137, 040403：可编程开放量子系统复现
+# Programmable Open Quantum Systems：科学复现讲义
 
 ## 结论
 
-论文两张数值主图均已按原文参数独立复现，科学相似度为 95/100。
+Both numerical main figures are independently reproduced at the paper's disclosed parameters. Fig. 2 closes analytically and statistically; Fig. 3 reproduces both 41-point SDP curves while certifying all 1000 source-script times and the omitted t=10 endpoint.
 
-- Main Fig. 2：推导出解析曲线，直接 Lindblad 演化误差仅
-  \(3.33\times10^{-16}\)；独立构造的固定 HPTP 处理器给出
-  \(p_+=1.5\)、\(p_-=0.5\)、采样开销 \(\kappa=2\)。
-- Main Fig. 3：完成两条各 41 点的 SDP 曲线。82 个解全部通过正性、保迹、
-  diamond 误差和单调性检查，并认证了源码实际使用的全部 1000 个时间点。
+公开状态为 **Partial scientific reproduction**。这表示公开包忠实保存当前证据边界，并不把 partial、review pending 或 paper-error assessment pending 包装成 complete。
 
-## 物理上好玩的地方
+## 我们复现的是什么
 
-所谓“可编程”不是为每个时刻重新设计一台量子过程，而是固定一个检索器，只
-更换程序态。允许检索器是保持厄米和迹、但不必完全正的映射后，可以通过带
-符号的物理通道抽样来实现它。
+本 case 先理解全文和公式，再用独立代码进行数值化。数值 runner 不把论文原图像素、作者数值数组或作者源码作为科学输入；原图只在数值数据冻结后用于画幅与科学区域对比。公开包包含公式推导、独立实现、生成数据、生成图、机器检查和有限的对比板。
 
-第一张数值图中，SWAP 相干演化与 Bell 基退相干恰好对易，因此返回概率可以
-闭式写成
+当前权威维度：`artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=repair_required, science=failed, execution=attested, pixel=missing, independent_review=passed, review_scope=complete, paper_assessment=inconclusive`。
 
-\[
-f(t)=\frac12\left(1+e^{-t/2}\cos2t\right).
-\]
+## 运行
 
-第二张图量化了近似编程的代价。纯耗散在允许约 0.11 的通道误差后，采样开销
-迅速降到 1；加入相干 \(Z\) 旋转后，即使允许 0.2 的误差，开销仍约为 1.207。
-这说明相干结构不是耗散曲线上的小修正，而会真实增加固定检索器需要承载的
-资源。
+从 `code` 目录执行 `python scripts/run_reproduction.py`，并使用主 README 给出的参数。普通复现入口会调用独立数值实现；算力较大的 paper-scale runner 和配置也保留在 `code/scripts` 与 `code/config`，但没有实际完成的计算绝不会被标记为已运行。
 
-## 复现边界
+## 论文审查边界
 
-论文没有发布机器可读曲线和随机种子，因此最终对照在独立生成之后才从原图
-数字化。Main Fig. 2 的随机点要求统计一致而非逐点相同；Main Fig. 3 的两条
-曲线相关系数分别为 0.99974 和 0.99998。
-
-源码还有两个值得记录的细节：补充材料中的一个转置位置与其自身
-vectorization 恒等式不一致；Fig. 3 脚本分配了 \(t=10\)，但实际循环只跑到
-\(9.99\)。复现保留了源码网格，并额外验证了 \(t=10\) 对所有解都可行。
+如果公式、图注或结论与独立计算稳定冲突，公开文档会记录该差异；只有证伪流程和独立评审满足后才升级为论文错误候选。当前限制：Scientific similarity 95/100; pixel fidelity 85.72/100.

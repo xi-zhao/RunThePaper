@@ -2,7 +2,7 @@
 
 ## Result
 
-All numerical panels are independently generated at reduced scale; SU(2), revival and exact-toy features reproduce, while long-time and entropy scaling remain partial.
+Historical T001-T009 scores are unchanged. The 17 review-localized implementation defects are repaired; their exact printed-scale adjudication remains externally compute-blocked and is not promoted to reproduced.
 
 The public status is **Partial scientific reproduction**. The package preserves the current evidence boundary and never presents partial, review-pending, or paper-assessment-pending work as complete.
 
@@ -10,7 +10,7 @@ The public status is **Partial scientific reproduction**. The package preserves 
 
 The case starts from a full-paper reading and equation-level derivation, then performs independent numerical work. Paper pixels, author numerical arrays, and author source code are not scientific inputs to the numerical runner. Source figures are used only after generated data are frozen, for layout and declared scientific-region comparison. The public package contains derivations, independent code, generated data and figures, machine-readable checks, and limited comparison boards.
 
-Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, science=passed, execution=attested, pixel=passed, independent_review=missing, paper_assessment=missing`.
+Current authoritative dimensions: `artifact_integrity=artifact_valid_with_warnings, numerical_scope=complete, parameters=mixed, parameter_provenance=passed, causal_resolution=terminal_blocker, science=passed, execution=attested, pixel=needs_repair, independent_review=stale, review_scope=stale, paper_assessment=stale`.
 
 ## Run
 

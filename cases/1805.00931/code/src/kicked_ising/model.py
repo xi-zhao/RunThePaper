@@ -911,7 +911,7 @@ class ProtectedOperatorBasis:
 
 @lru_cache(maxsize=None)
 def protected_operator_basis(time: int) -> ProtectedOperatorBasis:
-    """Build the complete source-derived protected basis for ``2 <= t <= 15``."""
+    """Build the complete theory-derived protected basis for ``2 <= t <= 15``."""
 
     if time < 2 or time > 15:
         raise ValueError("protected transfer basis is implemented for 2 <= t <= 15")

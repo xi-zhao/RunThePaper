@@ -120,9 +120,9 @@ edge_weight_right
 Implementation:
 
 ```text
-code/src/nonhermitian_chern.py:cylinder_hamiltonian
-code/src/nonhermitian_chern.py:generate_cylinder_spectrum_rows
-code/scripts/run_first_target.py
+src/nonhermitian_chern.py:cylinder_hamiltonian
+src/nonhermitian_chern.py:generate_cylinder_spectrum_rows
+scripts/run_first_target.py
 ```
 
 ## T001 Edge-State Classification Requirement
@@ -335,10 +335,10 @@ eigenvectors toward a boundary.
 Implementation:
 
 ```text
-code/src/nonhermitian_chern.py:non_bloch_cylinder_radius
-code/src/nonhermitian_chern.py:non_bloch_cylinder_hamiltonian
-code/src/nonhermitian_chern.py:non_bloch_cylinder_bulk_eigenvalues
-code/scripts/analyze_edge_branch_candidates.py
+src/nonhermitian_chern.py:non_bloch_cylinder_radius
+src/nonhermitian_chern.py:non_bloch_cylinder_hamiltonian
+src/nonhermitian_chern.py:non_bloch_cylinder_bulk_eigenvalues
+scripts/analyze_edge_branch_candidates.py
 ```
 
 ## EQC007: Finite-Size Gap-Square Extrapolation
@@ -383,10 +383,10 @@ boundary and the formula-level blue theory curve.
 Implementation:
 
 ```text
-code/src/nonhermitian_chern.py:disk_hamiltonian_sparse
-code/src/nonhermitian_chern.py:generate_disk_gap_scaling_rows
-code/src/nonhermitian_chern.py:fit_gap_scaling_by_mass
-code/scripts/run_gap_scaling.py
+src/nonhermitian_chern.py:disk_hamiltonian_sparse
+src/nonhermitian_chern.py:generate_disk_gap_scaling_rows
+src/nonhermitian_chern.py:fit_gap_scaling_by_mass
+scripts/run_gap_scaling.py
 ```
 
 ## Current Formula Gate Position

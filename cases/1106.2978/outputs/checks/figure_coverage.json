@@ -1,0 +1,458 @@
+{
+  "schema_version": 2,
+  "paper_id": "1106.2978",
+  "implementations": {
+    "exact_xxz_transfer": {
+      "status": "ready",
+      "target_ids": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021"
+      ],
+      "working_directory": "workspace",
+      "code_refs": [
+        "src/open_xxz/transfer.py",
+        "src/open_xxz/liouvillian.py",
+        "scripts/run_reproduction.py"
+      ],
+      "config_ref": "config/paper_exact.json",
+      "run_contract_ref": "run_contract.json",
+      "entrypoint": [
+        "python",
+        "scripts/run_reproduction.py",
+        "--config",
+        "config/paper_exact.json",
+        "--output-root",
+        "outputs"
+      ],
+      "expected_outputs": [
+        "outputs/data/magnetization_profiles.csv",
+        "outputs/data/current_scaling.csv",
+        "outputs/data/correlation_checks.csv",
+        "outputs/data/quantitative_claims.json",
+        "outputs/checks/science_checks.json",
+        "outputs/checks/generated_data_manifest.json",
+        "outputs/checks/run_summary.json"
+      ],
+      "acceptance_criteria": [
+        "Every scientific array is generated from the printed MPO and Lindblad equations without author code, author arrays, digitized curves or source pixels.",
+        "Transfer observables agree with an independent dense Liouvillian fixed-point solver for n=2,3,4.",
+        "All nine finite curves and all analytical overlays named by the Main Figure 2 caption are generated.",
+        "All 24 numerical figure panels and prose claims in the independent paper-only inventory have authored target mappings and machine evidence.",
+        "Easy-plane, isotropic, easy-axis, correlation and weak-coupling quantitative claims are either supported or retained as explicit paper discrepancies pending fresh review."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "INV-001",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Small-chain MPO construction, commutator identity and a structurally independent dense Liouvillian solve test the exact finite-n theorem.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "Boundary-divergence proof (Eqs. 8-10)",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The Hamiltonian commutator, cubic bulk algebra and boundary relations are tested explicitly before the dense Liouvillian fixed-point cross-check.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "Main Figure 1",
+      "item_type": "figure",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "decision": "excluded",
+      "reason": "Ladder tensor network diagram without numerical axes or data."
+    },
+    {
+      "item_id": "INV-003",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Explicit S_n matrices verify upper triangularity, unit diagonal and full-rank positive NESS.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "INV-004",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Minimal d=1+floor(n/2) and enlarged auxiliary contractions are compared entry by entry.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "INV-005",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Independent epsilon-squared interpolation proves the upper degree 2n-2 and a nonzero leading coefficient.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "INV-006",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Transfer normalization, one-point and two-point observables are cross-checked against the full density matrix.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "General transfer-MPO formulas (Eqs. 13-14)",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T011"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The general doubled-auxiliary transfer prescription is independently checked through normalization and arbitrary one- and two-point Pauli observables.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "INV-007",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The one-sided hopping vertex identity and bond-independent dense current verify the printed epsilon/2 current normalization.",
+      "claim_refs": [
+        "CLM_THEOREM"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(a)",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "All nine finite magnetization profiles and the isotropic analytical overlay follow from the printed transfer equations.",
+      "claim_refs": [
+        "CLM_PROFILES"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(b) main axes",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "All nine finite current curves and the isotropic analytical overlay follow from the printed transfer equations.",
+      "claim_refs": [
+        "CLM_TRANSPORT"
+      ]
+    },
+    {
+      "item_id": "Main Figure 2(b) inset",
+      "item_type": "figure_panel_region",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The easy-axis current sequence tests the printed exponential insulating law.",
+      "claim_refs": [
+        "CLM_TRANSPORT"
+      ]
+    },
+    {
+      "item_id": "Delta=1/2 thermodynamic current claim",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The paper prints a closed current formula, its limiting coefficients and a maximum near epsilon=1.63.",
+      "claim_refs": [
+        "CLM_TRANSPORT"
+      ]
+    },
+    {
+      "item_id": "INV-011",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_method_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T013"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Deterministic band-operation counts test the claimed O(n^2) cost without wall-clock noise.",
+      "claim_refs": [
+        "CLM_METHOD"
+      ]
+    },
+    {
+      "item_id": "INV-012",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_formula_audit",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T014"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Complete Eq. (7) substitution at r=m and r=m-1 audits the root-of-unity closure; the repaired diagnostic preserves a stable cutoff-index, hopping-parity and auxiliary-dimension discrepancy for fresh review.",
+      "claim_refs": [
+        "CLM_METHOD"
+      ]
+    },
+    {
+      "item_id": "INV-013",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_exact_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T015"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The general amplitudes reproduce every entry of the printed 3-by-3 Delta=1/2 matrix for all plotted couplings.",
+      "claim_refs": [
+        "CLM_METHOD"
+      ]
+    },
+    {
+      "item_id": "Delta=1/2 exponential thermodynamic convergence",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_spectral_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T020"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The fitted finite-current error rate is compared with the two-leading-eigenvalue ratio, while the Perron expectation and finite bulk profiles test asymptotic flatness.",
+      "claim_refs": [
+        "CLM_TRANSFER_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "INV-015",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_asymptotic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T016"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The easy-axis profile's coupling independence and the printed exponential current factor are both checked.",
+      "claim_refs": [
+        "CLM_ISOTROPIC_DERIVATION"
+      ]
+    },
+    {
+      "item_id": "Delta>=1 infinite transfer rank",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T021"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "For arbitrary requested rank, a shifted triangular minor has nonzero diagonal entries certified by the printed isotropic or hyperbolic amplitudes.",
+      "claim_refs": [
+        "CLM_TRANSFER_SPECTRUM"
+      ]
+    },
+    {
+      "item_id": "INV-016",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_formula_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T017"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Every printed lambda-to-zero isotropic amplitude is evaluated and compared.",
+      "claim_refs": [
+        "CLM_ISOTROPIC_DERIVATION"
+      ]
+    },
+    {
+      "item_id": "INV-017",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_formula_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T018"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The double commutator, both boundary identities and alpha normalization coefficient are independently checked.",
+      "claim_refs": [
+        "CLM_ISOTROPIC_DERIVATION"
+      ]
+    },
+    {
+      "item_id": "INV-018",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_asymptotic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T019"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "Finite-size convergence toward the continuum cosine profile is measured over four chain lengths.",
+      "claim_refs": [
+        "CLM_ISOTROPIC_DERIVATION"
+      ]
+    },
+    {
+      "item_id": "Isotropic current-ratio asymptote",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_asymptotic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The exact normalization ratio is evaluated directly and its n^-2 coefficient is checked against pi^2/epsilon.",
+      "claim_refs": [
+        "CLM_TRANSPORT"
+      ]
+    },
+    {
+      "item_id": "Isotropic connected-correlation claim",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The paper prints the complete leading 1/n correlation kernel.",
+      "claim_refs": [
+        "CLM_CORRELATIONS"
+      ]
+    },
+    {
+      "item_id": "Isotropic weak-coupling claim",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "theory_analytic_numerical",
+      "reproduction_content": "theory_numerical_only",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "implementation_ref": "exact_xxz_transfer",
+      "reason": "The paper prints weak-coupling current and profile formulas and the crossover epsilon star=2 pi/n.",
+      "claim_refs": [
+        "CLM_CORRELATIONS"
+      ]
+    }
+  ]
+}

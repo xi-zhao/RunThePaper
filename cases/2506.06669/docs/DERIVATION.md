@@ -13,7 +13,7 @@ $$
 
 status: `verified` · source: main Eq. (1); Supplement Sec. 3
 
-Code: `code/src/state_transfer.py::embed_vacuum`, `code/src/state_transfer.py::zigzag_hamiltonian`
+Code: `src/state_transfer.py::embed_vacuum`, `src/state_transfer.py::zigzag_hamiltonian`
 
 
 ### QS002 — Zig-zag PST onsite energies, couplings and spectrum
@@ -24,7 +24,7 @@ $$
 
 status: `verified` · source: main Eqs. (2)-(11); Supplement Secs. 3 and 5
 
-Code: `code/src/state_transfer.py::zigzag_parameters`, `code/src/state_transfer.py::zigzag_hamiltonian`
+Code: `src/state_transfer.py::zigzag_parameters`, `src/state_transfer.py::zigzag_hamiltonian`
 
 
 ### QS003 — Closed-form three-site populations
@@ -35,7 +35,7 @@ $$
 
 status: `verified` · source: main text after Eq. (9); Supplement Sec. 6
 
-Code: `code/src/state_transfer.py::three_site_populations`
+Code: `src/state_transfer.py::three_site_populations`
 
 
 ### QS004 — Isospectral FST deformation
@@ -46,7 +46,7 @@ $$
 
 status: `verified` · source: main Eq. (12); Supplement Sec. 4
 
-Code: `code/src/state_transfer.py::fst_hamiltonian`
+Code: `src/state_transfer.py::fst_hamiltonian`
 
 
 ### QS005 — Separable two-dimensional FST extension
@@ -57,7 +57,7 @@ $$
 
 status: `reconstructed` · source: main Fig. 4 discussion; main Eq. (13) W state
 
-Code: `code/src/state_transfer.py::fst_hamiltonian_2d`
+Code: `src/state_transfer.py::fst_hamiltonian_2d`
 
 
 ### QS006 — Independent relaxation/dephasing Lindblad dynamics
@@ -68,7 +68,7 @@ $$
 
 status: `verified` · source: Supplement Sec. 10
 
-Code: `code/src/state_transfer.py::collapse_operators`, `code/src/state_transfer.py::lindblad_trajectory`
+Code: `src/state_transfer.py::collapse_operators`, `src/state_transfer.py::lindblad_trajectory`
 
 
 ### QS007 — Static Gaussian parameter-noise ensemble
@@ -79,7 +79,7 @@ $$
 
 status: `source_only` · source: main Fig. 3(e); Supplement Figs. S7-S8 and Sec. 9
 
-Code: `code/src/state_transfer.py::sample_parameter_noise`
+Code: `src/state_transfer.py::sample_parameter_noise`
 
 
 ### QS008 — Large-m elimination of even sites
@@ -90,7 +90,7 @@ $$
 
 status: `verified` · source: main Eqs. (10)-(11); Supplement Sec. 5
 
-Code: `code/src/state_transfer.py::even_site_population`
+Code: `src/state_transfer.py::even_site_population`
 
 
 ### QS009 — Effective flattop-Gaussian pulse reconstruction
@@ -101,4 +101,4 @@ $$
 
 status: `reconstructed` · source: Supplement Sec. 10
 
-Code: `code/src/state_transfer.py::flattop_gaussian`, `code/src/state_transfer.py::pulsed_lindblad_final`
+Code: `src/state_transfer.py::flattop_gaussian`, `src/state_transfer.py::pulsed_lindblad_final`

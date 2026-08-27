@@ -122,6 +122,71 @@ def power_law_fit(x: FloatArray, y: FloatArray) -> dict[str, float]:
     }
 
 
+def linear_fit_through_origin(x: FloatArray, y: FloatArray) -> tuple[float, float, float]:
+    first = np.asarray(x, dtype=np.float64)
+    second = np.asarray(y, dtype=np.float64)
+    valid = np.isfinite(first) & np.isfinite(second)
+    if np.count_nonzero(valid) < 2:
+        raise ValueError("at least two finite samples are required")
+    first = first[valid]
+    second = second[valid]
+    slope = float(np.dot(first, second) / max(np.dot(first, first), 1e-30))
+    intercept = 0.0
+    prediction = slope * first
+    residual = second - prediction
+    total = second - np.mean(second)
+    r_squared = 1.0 - float(np.sum(residual**2) / max(np.sum(total**2), 1e-30))
+    return slope, intercept, r_squared
+
+
+def threshold_crossing(
+    x: FloatArray,
+    y: FloatArray,
+    *,
+    threshold: float,
+    rising: bool,
+) -> float | None:
+    first = np.asarray(x, dtype=np.float64)
+    second = np.asarray(y, dtype=np.float64)
+    if first.shape != second.shape or first.ndim != 1 or len(first) < 2:
+        return None
+    order = np.argsort(first)
+    first = first[order]
+    second = second[order]
+    for left in range(len(first) - 1):
+        y0 = float(second[left])
+        y1 = float(second[left + 1])
+        crossed = (y0 <= threshold <= y1) if rising else (y0 >= threshold >= y1)
+        if not crossed or np.isclose(y0, y1):
+            continue
+        weight = (threshold - y0) / (y1 - y0)
+        return float(first[left] + weight * (first[left + 1] - first[left]))
+    return None
+
+
+def green_kubo_viscosity(
+    stress: FloatArray,
+    time_step: float,
+    *,
+    max_lag_fraction: float = 0.5,
+) -> float:
+    values = np.asarray(stress, dtype=np.float64)
+    values = values[np.isfinite(values)]
+    if len(values) < 4:
+        return float("nan")
+    centered = values - np.mean(values)
+    max_lag = max(2, int(len(centered) * max_lag_fraction))
+    correlation = np.empty(max_lag, dtype=np.float64)
+    for lag in range(max_lag):
+        left = centered[: len(centered) - lag]
+        right = centered[lag:]
+        correlation[lag] = float(np.mean(left * right))
+    correlation = correlation[correlation > 0.0]
+    if not len(correlation):
+        return 0.0
+    return float(np.trapezoid(correlation, dx=time_step))
+
+
 def bimodality_coefficient(samples: FloatArray) -> float:
     values = np.asarray(samples, dtype=np.float64)
     values = values[np.isfinite(values)]

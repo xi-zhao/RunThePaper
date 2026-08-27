@@ -8,10 +8,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cd cases/2605.25594/code
 python scripts/run_reproduction.py
-python scripts/plot_reproduction.py
-python scripts/run_fig11_phenomenological_model.py
 ```
 
 Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.
 
-Boundary: The paper's L=32-38 targets were not forced through the current dense eigensolver: L=32 hit a 32-bit workspace failure and L=38 exceeds the practical single-A100 memory path. The T and randomized-site n operator panels remain outside the completed subset and are not replaced by proxy data. The printed slow-mode continuum equation also contains an exponent inconsistent with its preceding assumptions and following scaling claim; the published derivation marks the internally consistent correction as reconstructed.
+Boundary: Seven figure items have exploratory independent evidence; nine are compute-deferred with executable paper-scale contracts. Legacy fig9 artifacts are Main Fig. 10; legacy fig11 artifacts are Appendix Fig. A00. No result is accepted as paper-exact until production compute, convergence, falsification, and fresh-context review pass.

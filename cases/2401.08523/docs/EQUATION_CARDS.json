@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "paper_id": "2401.08523",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Physical thermal state and Fermi-Dirac occupation",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eq. (2), source label eq:PhysicalDensityOperator"
+        },
+        {
+          "type": "paper_figure",
+          "value": "main Fig. 1"
+        }
+      ],
+      "latex": "\\rho=(1-\\langle n\\rangle)aa^\\dagger+\\langle n\\rangle a^\\dagger a=(1+e^\\nu)^{-1}e^{\\nu a^\\dagger a},\\quad \\langle n\\rangle=(1+e^{\\epsilon/T})^{-1}",
+      "role": "Defines every physical single-mode state and the complete Figure 1 curve.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The thermal density operator and occupation are explicit in the main text and Figure 1 caption."
+        },
+        {
+          "id": "EQ001_particle_hole",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "n(x)+n(-x)=1, so positive and negative temperature branches meet at n=1/2."
+        },
+        {
+          "id": "EQ001_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "epsilon/T to +infinity gives the vacuum and to -infinity gives the excited state."
+        }
+      ],
+      "numerical_form": "Evaluate a stable logistic function on epsilon/T in [-6,6].",
+      "code_refs": [
+        "src/fermionic_phase_space.py::fermi_dirac_occupation"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Glauber P, Wigner W, and Husimi Q supernumbers",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eq. (6), source label eq:PhaseSpaceDistributions"
+        },
+        {
+          "type": "supplement_derivation",
+          "value": "Supplement sections (b)-(d)"
+        }
+      ],
+      "latex": "P=-\\langle n\\rangle+\\alpha\\alpha^*,\\quad W=1/2-\\langle n\\rangle+\\alpha\\alpha^*,\\quad Q=1-\\langle n\\rangle+\\alpha\\alpha^*",
+      "role": "Provides the common Grassmann soul and the three bodies feeding all disorder measures.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The three Gaussian supernumber expressions are printed in the main text and derived in Supplement (d)."
+        },
+        {
+          "id": "EQ002_normalization",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "The coefficient of alpha alpha* is one, hence every Berezin integral equals one."
+        },
+        {
+          "id": "EQ002_order",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Q_B-W_B=W_B-P_B=1/2 for every occupation."
+        }
+      ],
+      "numerical_form": "Represent only the ordinary bodies as arrays; retain the common nilpotent soul symbolically.",
+      "code_refs": [
+        "src/fermionic_phase_space.py::phase_space_bodies"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Fermionic phase-space majorization",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eqs. (7)-(11), source labels eq:MajorizationRelation through eq:ConcaveAverageIdentity"
+        },
+        {
+          "type": "supplement_derivation",
+          "value": "Supplement section (e)"
+        }
+      ],
+      "latex": "\\int \\mathcal D\\alpha\\,f(z)=f'(z_B),\\qquad z_{1,B}\\le z_{2,B}\\Rightarrow z_1\\prec z_2",
+      "role": "Shows that the uncertainty hierarchy is determined completely by the bounded bodies.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Taylor/Berezin identity and all P/W/Q majorization chains are explicit in the main text."
+        },
+        {
+          "id": "EQ003_nilpotent",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Because (alpha alpha*)^2=0, all Taylor terms beyond the first derivative vanish under Berezin integration."
+        },
+        {
+          "id": "EQ003_body_intervals",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The implementation verifies P_B in [-1,0], W_B in [-1/2,1/2], and Q_B in [0,1]."
+        }
+      ],
+      "numerical_form": "Check body interval endpoints and the constant P-W-Q spacing on n in [0,1].",
+      "code_refs": [
+        "src/fermionic_phase_space.py::phase_space_bodies",
+        "tests/test_fermionic_phase_space.py"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Covariance determinants and second-moment uncertainty",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main second-moment section and source label eq:SMURs"
+        },
+        {
+          "type": "paper_figure",
+          "value": "main Fig. 2(a)"
+        }
+      ],
+      "latex": "\\gamma(z)=z_B\\sigma_y,\\quad \\det\\gamma(z)=-z_B^2",
+      "role": "Generates all Figure 2(a) curves and exact lower bounds.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The covariance definition, determinant, and three uncertainty relations are printed in the main text."
+        },
+        {
+          "id": "EQ004_determinant",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "det(sigma_y)=-1, hence det(z_B sigma_y)=-z_B^2."
+        },
+        {
+          "id": "EQ004_bounds",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Dense occupation-grid checks give minima -1, -1/4, and -1 for P, W, and Q."
+        }
+      ],
+      "numerical_form": "Square the three bodies and apply the common minus sign.",
+      "code_refs": [
+        "src/fermionic_phase_space.py::covariance_determinants"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Rényi and Shannon phase-space entropies",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main entropy section, source labels eq:RenyiEntropy and eq:RenyiEntropiesPhaseSpace"
+        },
+        {
+          "type": "supplement_derivation",
+          "value": "Supplement section (g)"
+        }
+      ],
+      "latex": "S_r(z)=\\frac{\\ln r}{1-r}-\\ln|z_B|,\\qquad S_1(z)=-1-\\ln|z_B|",
+      "role": "Generates Figure 2(b-c), including the exact r=1 limit.",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The Rényi definition, Berezin integral, and closed forms are explicit in the main text."
+        },
+        {
+          "id": "EQ005_berezin",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Integral |z|^r equals r|z_B|^(r-1), giving the stated logarithm."
+        },
+        {
+          "id": "EQ005_shannon_limit",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "L'Hopital gives lim_{r to 1} ln(r)/(1-r)=-1."
+        },
+        {
+          "id": "EQ005_order",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "For the plotted orders 1/4,1/2,1,2,4, S_r(W) increases strictly with r away from its common singularity."
+        }
+      ],
+      "numerical_form": "Evaluate the order-dependent constant and subtract log absolute body; retain true +infinity at zero body.",
+      "code_refs": [
+        "src/fermionic_phase_space.py::renyi_offset",
+        "src/fermionic_phase_space.py::renyi_entropy"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Entropy bounds and curve intersections",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main source label eq:EURs"
+        },
+        {
+          "type": "paper_figure",
+          "value": "main Fig. 2 caption"
+        }
+      ],
+      "latex": "S_r(P),S_r(Q)\\ge\\frac{\\ln r}{1-r},\\quad S_r(W)\\ge\\frac{\\ln r}{1-r}+\\ln2",
+      "role": "Fixes the dashed uncertainty bounds and the n=1/4,1/2,3/4 crossing markers.",
+      "derived_from": [
+        "EQ004",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The bounds and crossing occupations are explicit in the main text and Figure 2 caption."
+        },
+        {
+          "id": "EQ006_bounds",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "The maximum body magnitudes are 1 for P/Q and 1/2 for W."
+        },
+        {
+          "id": "EQ006_crossings",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Substitution gives P=W at n=1/4, P=Q at 1/2, and W=Q at 3/4 for both moment and entropy measures."
+        }
+      ],
+      "numerical_form": "Evaluate exact bounds and analytic crossing coordinates; no fitted marker positions are used.",
+      "code_refs": [
+        "src/fermionic_phase_space.py::entropy_lower_bound",
+        "src/fermionic_phase_space.py::crossing_points"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ007",
+      "title": "Single-mode thermal loss channel",
+      "source_refs": [
+        {
+          "type": "paper_appendix",
+          "value": "End Matter Appendix B"
+        },
+        {
+          "type": "benchmark",
+          "value": "PRL-Bench idx 68 task 6, used only as an additional analytic check"
+        }
+      ],
+      "latex": "\\langle n_{out}\\rangle=\\tau\\langle n_{in}\\rangle+(1-\\tau)\\langle n_{env}\\rangle",
+      "role": "Validates that the same entropy model propagates correctly through the paper's fermionic Gaussian channel.",
+      "derived_from": [
+        "EQ001",
+        "EQ005"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Appendix B derives the affine output occupation in both Fock and phase space."
+        },
+        {
+          "id": "EQ007_endpoints",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "tau=1 returns the input and tau=0 returns the environment."
+        },
+        {
+          "id": "EQ007_benchmark",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "n_in=0.1, n_env=0.6, tau=0.6 gives n_out=0.3 and S_2(W_out)=ln(2.5)=0.9162907319."
+        }
+      ],
+      "numerical_form": "Evaluate one convex combination, then reuse EQ005.",
+      "code_refs": [
+        "src/fermionic_phase_space.py::thermal_loss_output_occupation",
+        "tests/test_fermionic_phase_space.py::FermionicPhaseSpaceTests.test_thermal_loss_benchmark"
+      ],
+      "open_questions": []
+    }
+  ]
+}

@@ -15,10 +15,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-CODE_ROOT = Path(__file__).resolve().parents[1]
-WORKSPACE = CODE_ROOT.parent if CODE_ROOT.name == "code" else CODE_ROOT
-CONFIG_ROOT = CODE_ROOT / "config"
-sys.path.insert(0, str(CODE_ROOT))
+WORKSPACE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(WORKSPACE))
 
 from src.fidelity_response import (  # noqa: E402
     GateParameters,
@@ -698,7 +696,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--config",
-        default=str(CONFIG_ROOT / "formula_theory_targets.json"),
+        default=str(WORKSPACE / "config" / "formula_theory_targets.json"),
     )
     args = parser.parse_args()
     config = json.loads(Path(args.config).read_text(encoding="utf-8"))

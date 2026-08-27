@@ -1,0 +1,1375 @@
+{
+  "schema_version": 2,
+  "paper_id": "2608.05312",
+  "source": "arXiv:2608.05312v1",
+  "inventory_boundary": {
+    "status": "complete",
+    "source_ref": "raw/paper.pdf and paper-source/main_PRL_v2_PNEdited.tex",
+    "unknown_remainder": false,
+    "reason": "The frozen TeX package contains the main paper and the complete appended Supplemental Material through Figure S5."
+  },
+  "implementations": {
+    "remaining_targets_clean_room_closure": {
+      "status": "ready",
+      "working_directory": "workspace",
+      "entrypoint": [
+        "python",
+        "scripts/run_implementation_closure.py",
+        "--config",
+        "config/implementation_closure.json",
+        "--output-root",
+        "outputs"
+      ],
+      "code_refs": [
+        "scripts/run_implementation_closure.py",
+        "src/implementation_closure.py",
+        "src/cavity_transport/model.py",
+        "src/cavity_transport/simulation.py",
+        "src/cavity_transport/liouvillian.py",
+        "src/cavity_transport/observables.py"
+      ],
+      "config_ref": "config/implementation_closure.json",
+      "run_contract_ref": "run_contract.implementation_closure.json",
+      "expected_outputs": [
+        "outputs/checks/implementation_closure/T011.json",
+        "outputs/checks/implementation_closure/T012.json",
+        "outputs/checks/implementation_closure/campaign_summary.json"
+      ],
+      "acceptance_criteria": [
+        "T011 fails closed until every publication-missing QCLE input is supplied through the declared schema.",
+        "T012 runs the independent zero-rate transport model and checks trace, sink-probability, finiteness, and zero-rate invariants.",
+        "The implementation must not read source figures, PDF pixels, author code, author arrays, or prior reproduction outputs.",
+        "Implementation readiness alone does not change scientific coverage, paper-exact status, or independent-review status."
+      ]
+    }
+  },
+  "items": [
+    {
+      "item_id": "main_fig1a_non_condon_coordinate_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(a), PDF p. 2",
+      "scientific_object": "Energy-coordinate schematic of non-Condon phonon emission and the blocked reverse process",
+      "decision": "excluded",
+      "reason": "Explanatory mechanism diagram, not a numerical observable."
+    },
+    {
+      "item_id": "main_fig1b_dark_bright_pathway_schematic",
+      "item_type": "figure_panel",
+      "kind": "non_numeric",
+      "scientific_role": "schematic_context",
+      "source_ref": "Main Fig. 1(b), PDF p. 2",
+      "scientific_object": "Dark-to-bright polaritonic relaxation pathway schematic",
+      "decision": "excluded",
+      "reason": "Explanatory level diagram, not a numerical observable."
+    },
+    {
+      "item_id": "main_fig1c_rescue_efficiency",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Optimized rescue-channel peak efficiency versus system size N",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated size-sweep series.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_dephasing_efficiency",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Optimized dephasing-channel peak efficiency versus system size N",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated size-sweep series.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_no_dissipation_efficiency",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "No-dissipation peak-efficiency baseline versus system size N",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated zero-dissipation series.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "main_fig1c_combined_efficiency",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 1(c), PDF p. 2",
+      "scientific_object": "Joint rescue-plus-dephasing optimized efficiency versus system size N",
+      "decision": "target",
+      "target_ids": [
+        "T001"
+      ],
+      "critical": true,
+      "paper_level_role": "main_claim",
+      "reason": "Independently generated combined-channel series.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_rescue_dark_n4",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Rescue dark-manifold population versus time for N=4",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory; the collapsed rescue curves remain distinct parameter series.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_rescue_dark_n16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Rescue dark-manifold population versus time for N=16",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory; the collapsed rescue curves remain distinct parameter series.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_rescue_dark_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Rescue dark-manifold population versus time for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory; the collapsed rescue curves remain distinct parameter series.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_dephasing_dark_n4",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Dephasing dark-manifold population versus time for N=4",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_dephasing_dark_n16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Dephasing dark-manifold population versus time for N=16",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2a_dephasing_dark_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(a), PDF p. 3",
+      "scientific_object": "Dephasing dark-manifold population versus time for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rescue_sink_n4",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Rescue cumulative sink population versus time for N=4",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rescue_sink_n16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Rescue cumulative sink population versus time for N=16",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_rescue_sink_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Rescue cumulative sink population versus time for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_dephasing_sink_n4",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Dephasing cumulative sink population versus time for N=4",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_dephasing_sink_n16",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Dephasing cumulative sink population versus time for N=16",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2b_dephasing_sink_n32",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(b), PDF p. 3",
+      "scientific_object": "Dephasing cumulative sink population versus time for N=32",
+      "decision": "target",
+      "target_ids": [
+        "T002"
+      ],
+      "critical": true,
+      "reason": "Independently generated size-resolved trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_rescue_bright_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), PDF p. 3",
+      "scientific_object": "Bright-manifold population during N=6 rescue dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_rescue_dark_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), PDF p. 3",
+      "scientific_object": "Dark-manifold population during N=6 rescue dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_rescue_cavity_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), PDF p. 3",
+      "scientific_object": "Cavity population during N=6 rescue dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2c_rescue_sink_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(c), PDF p. 3",
+      "scientific_object": "Sink population during N=6 rescue dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2d_dephasing_bright_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(d), PDF p. 3",
+      "scientific_object": "Bright-manifold population during N=6 dephasing dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2d_dephasing_dark_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(d), PDF p. 3",
+      "scientific_object": "Dark-manifold population during N=6 dephasing dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2d_dephasing_cavity_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(d), PDF p. 3",
+      "scientific_object": "Cavity population during N=6 dephasing dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig2d_dephasing_sink_population",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 2(d), PDF p. 3",
+      "scientific_object": "Sink population during N=6 dephasing dynamics",
+      "decision": "target",
+      "target_ids": [
+        "T003"
+      ],
+      "critical": true,
+      "reason": "Independently generated manifold trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_n6_efficiency_difference_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "N=6 rescue-minus-dephasing efficiency field versus temperature and rate ratio",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-map array.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3a_n6_zero_boundary",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(a), PDF p. 4",
+      "scientific_object": "N=6 contour where rescue and dephasing efficiencies are equal",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently derived zero contour and checked endpoints.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_n6_both_channels",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), PDF p. 4",
+      "scientific_object": "N=6 efficiency versus temperature with both channels",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_n6_rescue_only",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), PDF p. 4",
+      "scientific_object": "N=6 rescue-only efficiency versus temperature",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3b_n6_dephasing_only",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(b), PDF p. 4",
+      "scientific_object": "N=6 dephasing-only efficiency versus temperature",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3c_n64_both_channels",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(c), PDF p. 4",
+      "scientific_object": "N=64 efficiency versus temperature with both channels",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3c_n64_rescue_only",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(c), PDF p. 4",
+      "scientific_object": "N=64 rescue-only efficiency versus temperature",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "main_fig3c_n64_dephasing_only",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Main Fig. 3(c), PDF p. 4",
+      "scientific_object": "N=64 dephasing-only efficiency versus temperature",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "critical": true,
+      "reason": "Independently generated temperature-line series.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_site_n_efficiency_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 10",
+      "scientific_object": "Site-N drain efficiency field over rescue and dephasing rates",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently generated joint rate sweep.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_rescue_peak_marker",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 10",
+      "scientific_object": "Pure-rescue optimum on the site-N efficiency map",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently identified from the rescue cut.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_dephasing_peak_marker",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 10",
+      "scientific_object": "Pure-dephasing optimum on the site-N efficiency map",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently identified from the dephasing cut.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1a_combined_peak_marker",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(a), PDF p. 10",
+      "scientific_object": "Joint-channel optimum on the site-N efficiency map",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently identified from the two-dimensional map.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_rescue_only_cut",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 10",
+      "scientific_object": "Site-N efficiency versus pure rescue rate",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently generated pure-channel cut.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_dephasing_only_cut",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 10",
+      "scientific_object": "Site-N efficiency versus pure dephasing rate",
+      "decision": "target",
+      "target_ids": [
+        "T005"
+      ],
+      "reason": "Independently generated pure-channel cut.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_figs1b_no_dissipation_baseline",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S1(b), PDF p. 10",
+      "scientific_object": "Site-N no-dissipation baseline eta_0=0.65",
+      "decision": "target",
+      "target_ids": [
+        "T012"
+      ],
+      "paper_level_role": "supporting",
+      "implementation_ref": "remaining_targets_clean_room_closure",
+      "reason": "Independently generated at gamma_rec=gamma_deph=0 with 15 realizations and a target-specific physics check.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_site_n_baseline",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Site-N baseline row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the site-N baseline regime",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_site_n_longer_time",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Longer time row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the longer site-N measurement",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_site_n_larger_system",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Larger system row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the N=10 site-N regime",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_site_n_stronger_coupling",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Stronger coupling row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the stronger-coupling site-N regime",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_cavity_drain_baseline",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Cavity drain row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the cavity-drain baseline regime",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_cavity_drain_large_n",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Cavity drain large N row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the N=10 cavity-drain regime",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s1_cavity_drain_longer_time",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S1, Cavity drain longer time row, PDF p. 10",
+      "scientific_object": "Peak efficiencies for the longer cavity-drain measurement",
+      "decision": "target",
+      "target_ids": [
+        "T006"
+      ],
+      "reason": "Independently generated table row.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "supp_table_s2_detuning_0_mev",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S2, Delta=0 meV row, PDF p. 11",
+      "scientific_object": "Rescue and dephasing efficiencies at zero coherent detuning",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independently generated detuning-table row.",
+      "claim_refs": [
+        "CLM_DETUNING"
+      ]
+    },
+    {
+      "item_id": "supp_table_s2_detuning_5_mev",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S2, Delta=5 meV row, PDF p. 11",
+      "scientific_object": "Rescue and dephasing efficiencies at 5 meV detuning",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independently generated detuning-table row.",
+      "claim_refs": [
+        "CLM_DETUNING"
+      ]
+    },
+    {
+      "item_id": "supp_table_s2_detuning_10_mev",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S2, Delta=10 meV row, PDF p. 11",
+      "scientific_object": "Rescue and dephasing efficiencies at 10 meV detuning",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independently generated detuning-table row.",
+      "claim_refs": [
+        "CLM_DETUNING"
+      ]
+    },
+    {
+      "item_id": "supp_table_s2_detuning_20_mev",
+      "item_type": "table",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Table S2, Delta=20 meV row, PDF p. 11",
+      "scientific_object": "Rescue and dephasing efficiencies at 20 meV detuning",
+      "decision": "target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Independently generated detuning-table row.",
+      "claim_refs": [
+        "CLM_DETUNING"
+      ]
+    },
+    {
+      "item_id": "supp_figs2a_measured_gap",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(a), PDF p. 11",
+      "scientific_object": "Measured rescue peak-efficiency advantage versus N",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Derived from independently generated T001 arrays.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2a_logarithmic_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(a), PDF p. 11",
+      "scientific_object": "Finite-window b ln N-a fit over N<=32",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Fit coefficients independently recomputed.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2a_logarithmic_extrapolation",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(a), PDF p. 11",
+      "scientific_object": "Logarithmic-fit extrapolation toward the unit bound",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Generated from the independent fitted model, not source pixels.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2b_gap_deficit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(b), PDF p. 11",
+      "scientific_object": "Deficit 1-Delta eta_peak versus N",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Computed from independently generated efficiencies.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2b_dephasing_efficiency",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(b), PDF p. 11",
+      "scientific_object": "Optimized dephasing efficiency coincident with the gap deficit",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Independent T001 data contain the coincident dephasing series.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2b_power_law_fit",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(b), PDF p. 11",
+      "scientific_object": "Large-N power-law fit N^-0.77 over N>=16",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Power exponent independently recomputed.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs2b_inverse_n_bottleneck",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S2(b), PDF p. 11",
+      "scientific_object": "Asymptotic 1/N bottleneck comparator",
+      "decision": "target",
+      "target_ids": [
+        "T008"
+      ],
+      "reason": "Analytic comparator generated from the stated overlap scaling.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_without_rescue_bright",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), PDF p. 12",
+      "scientific_object": "Bright population for site-N drain without rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_without_rescue_dark",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), PDF p. 12",
+      "scientific_object": "Dark population for site-N drain without rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_without_rescue_cavity",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), PDF p. 12",
+      "scientific_object": "Cavity population for site-N drain without rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3a_without_rescue_sink",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(a), PDF p. 12",
+      "scientific_object": "Sink population for site-N drain without rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_with_rescue_bright",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), PDF p. 12",
+      "scientific_object": "Bright population for site-N drain with rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_with_rescue_dark",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), PDF p. 12",
+      "scientific_object": "Dark population for site-N drain with rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_with_rescue_cavity",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), PDF p. 12",
+      "scientific_object": "Cavity population for site-N drain with rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs3b_with_rescue_sink",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S3(b), PDF p. 12",
+      "scientific_object": "Sink population for site-N drain with rescue",
+      "decision": "target",
+      "target_ids": [
+        "T009"
+      ],
+      "reason": "Independently generated site-N trajectory.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_n64_efficiency_difference_map",
+      "item_type": "figure_panel",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, PDF p. 13",
+      "scientific_object": "N=64 rescue-minus-dephasing efficiency field",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independent reduced-grid data cover the displayed physical range.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_n64_zero_boundary",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, PDF p. 13",
+      "scientific_object": "N=64 zero-efficiency-difference boundary",
+      "decision": "target",
+      "target_ids": [
+        "T010"
+      ],
+      "reason": "Independently derived from the N=64 field.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "supp_figs4_n6_zero_boundary_overlay",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S4, PDF p. 13",
+      "scientific_object": "N=6 zero boundary overlaid for comparison",
+      "decision": "target",
+      "target_ids": [
+        "T004"
+      ],
+      "reason": "Independent T004 data cover this comparator without digitizing the source overlay.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "supp_figs5a_phenomenological_time_trace",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5(a), PDF p. 14",
+      "scientific_object": "Phenomenological-Lindblad drain population versus time in the QCLE setup",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T011"
+      ],
+      "blocker": "missing_source_input",
+      "implementation_ref": "remaining_targets_clean_room_closure",
+      "reason": "Benchmark chemical potentials, temperature, lead-coupling matrix, initial state, and dimensional conventions are not specified; author code is deliberately not used as scientific input.",
+      "claim_refs": [
+        "CLM_QCLE"
+      ]
+    },
+    {
+      "item_id": "supp_figs5a_qcle_time_trace",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5(a), PDF p. 14",
+      "scientific_object": "QCLE-friction drain population versus time",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T011"
+      ],
+      "blocker": "missing_source_input",
+      "implementation_ref": "remaining_targets_clean_room_closure",
+      "reason": "Benchmark chemical potentials, temperature, lead-coupling matrix, initial state, and dimensional conventions are not specified; source pixels cannot replace them.",
+      "claim_refs": [
+        "CLM_QCLE"
+      ]
+    },
+    {
+      "item_id": "supp_figs5b_phenomenological_coupling_curve",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5(b), PDF p. 14",
+      "scientific_object": "Phenomenological-Lindblad steady drain population versus g/t in the QCLE setup",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T011"
+      ],
+      "blocker": "missing_source_input",
+      "implementation_ref": "remaining_targets_clean_room_closure",
+      "reason": "Benchmark operating parameters required for a like-for-like curve are not published.",
+      "claim_refs": [
+        "CLM_QCLE"
+      ]
+    },
+    {
+      "item_id": "supp_figs5b_qcle_coupling_curve",
+      "item_type": "figure_series",
+      "kind": "numeric",
+      "scientific_role": "theory_numerical",
+      "source_ref": "Supplement Fig. S5(b), PDF p. 14",
+      "scientific_object": "QCLE-friction steady drain population versus g/t",
+      "decision": "deferred_blocked",
+      "target_ids": [
+        "T011"
+      ],
+      "blocker": "missing_source_input",
+      "implementation_ref": "remaining_targets_clean_room_closure",
+      "reason": "Missing benchmark inputs make independent QCLE numerics underdetermined; source pixels cannot substitute.",
+      "claim_refs": [
+        "CLM_QCLE"
+      ]
+    }
+  ],
+  "quantitative_claims": [
+    {
+      "item_id": "claim_size_independent_rescue_sum_rule",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Eq. (4), scaling discussion, and Supplement Fig. S2",
+      "scientific_object": "Total dark-to-bright rescue rate equals gamma_rec and is independent of N",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T001",
+        "T008"
+      ],
+      "reason": "Represented by the displayed size-scaling and fit items; retained without double counting.",
+      "claim_refs": [
+        "CLM_SIZE"
+      ]
+    },
+    {
+      "item_id": "claim_transient_bright_valve_signature",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 2 and Supplement Fig. S3 discussions",
+      "scientific_object": "Rescue empties the dark manifold through a transient bright population unlike dephasing",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T002",
+        "T003",
+        "T009"
+      ],
+      "reason": "Represented by the atomic dynamics series; retained without double counting.",
+      "claim_refs": [
+        "CLM_VALVE"
+      ]
+    },
+    {
+      "item_id": "claim_temperature_detailed_balance_signature",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Main Fig. 3 and Supplement detailed-balance section",
+      "scientific_object": "Thermal absorption degrades rescue while the rescue-dominant region grows with N",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T004",
+        "T010"
+      ],
+      "reason": "Represented by the temperature maps, boundaries, and line cuts.",
+      "claim_refs": [
+        "CLM_TEMPERATURE"
+      ]
+    },
+    {
+      "item_id": "claim_drain_geometry_reversal",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Supplement Site-N drain section and Table S1",
+      "scientific_object": "The rescue advantage requires a drain with zero dark-manifold overlap",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T005",
+        "T006"
+      ],
+      "reason": "Represented by Fig. S1 and Table S1; retained without double counting.",
+      "claim_refs": [
+        "CLM_DRAIN_GEOMETRY"
+      ]
+    },
+    {
+      "item_id": "claim_coherent_detuning_robustness",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Supplement coherent-detuning section and Table S2",
+      "scientific_object": "Rescue remains near unity while dephasing decreases with coherent detuning",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T007"
+      ],
+      "reason": "Represented by the four atomic Table S2 rows.",
+      "claim_refs": [
+        "CLM_DETUNING"
+      ]
+    },
+    {
+      "item_id": "claim_qcle_lindblad_agreement",
+      "item_type": "quantitative_claim",
+      "kind": "numeric",
+      "scientific_role": "analytic_claim",
+      "source_ref": "Supplement QCLE benchmark section and Fig. S5",
+      "scientific_object": "Phenomenological and QCLE models agree on transient structure and the efficiency peak",
+      "decision": "deferred_blocked",
+      "blocker": "covered_by_target",
+      "target_ids": [
+        "T011"
+      ],
+      "reason": "Represented by the four atomic Fig. S5 series; retained without adding another denominator item.",
+      "claim_refs": [
+        "CLM_QCLE"
+      ]
+    }
+  ]
+}

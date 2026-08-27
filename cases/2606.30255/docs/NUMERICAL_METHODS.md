@@ -1,43 +1,39 @@
 # Numerical Methods
 
-## Method Cards
+## NUM-WIGNER-DIRECT
 
-### NUM001 — density-matrix Born evaluation
-
-- Targets: `T-FIG003`, `T-FIG004`, `T-FIG005A`, `T-FIG005B`
-- Equation cards: `EQC001` through `EQC006`
-- Parameters: the target-specific \(w,v,\xi\) and angle geometry reported in
-  Section V of the paper
-- Grid: \(0^\circ\) to \(360^\circ\), inclusive, at \(0.25^\circ\)
-  increments
-- Boundary conditions: not applicable; polarization angles are checked for
-  \(180^\circ\) periodicity
-- Solver: direct real-valued NumPy matrix products and traces of \(4\times4\)
-  matrices
-- Tolerance: \(10^{-12}\) for matrix/scalar agreement, normalization, and
-  periodicity
-- Random seed: not applicable; the calculation is deterministic
+- Targets: `T-FIG003`, `T-FIG004`, `T-FIG005A`, `T-FIG005B`.
+- Equation cards: all seven `EQC-*` cards.
+- Method card: `MTH-SCANS`.
+- Parameters: the target-specific paper values recorded in
+  `physics_reproduction_project.json`.
+- Grid: inclusive \(0^\circ\)-\(360^\circ\) grid at \(0.5^\circ\).
+- Boundary conditions: angular projectors are periodic modulo \(180^\circ\).
+- Solver: direct complex linear algebra on a \(4\times4\) density matrix;
+  there is no optimization, fit, interpolation, or stochastic solver.
+- Tolerance: \(10^{-12}\) for algebraic identities and physical range checks.
+- Random seed: not applicable.
 - Output schema: CSV columns
-  `angle_deg,p_abprime,p_bcprime,p_acprime,wigner,violation_limit`
-- Validation checks: density-matrix trace/Hermiticity/positivity, projector
-  normalization, probability bounds, independent scalar Born identity,
-  Wigner identity, period, and analytic extrema
-- Numerical risks: degree/radian conversion, tensor-product ordering, swapped
-  fixed/rotating observer, and an incorrect sign for the \(\xi=\pi\) phase
+  `angle_deg,p_ab,p_bc,p_ac,wigner,w_limit`.
+- Validation checks: trace, Hermiticity, positive semidefiniteness,
+  probability bounds, Wigner identity, periodicity, exact analytic extrema,
+  fidelity, and all-five-series presence.
+- Numerical risks: degree/radian confusion, party/order reversal in the
+  asymmetric scans, treating Figure 4's central angle as its start angle, or
+  using a \(2\times2\) identity instead of \(I_4\).
+
+## Independence Boundary
+
+The target runner reads only the target specification and paper-derived
+parameters. It does not read the PDF, source-figure pixels, experimental ZIP,
+measured probabilities, or digitized coordinates. Reference assets enter only
+after the generated CSV and figure exist.
 
 ## Efficiency And Reuse Plan
 
-- Baseline implementation: explicit matrix Born trace for each scan point
-- Main bottleneck: none at this scale; fewer than six thousand \(4\times4\)
-  traces cover all four targets
-- Efficient implementation choice: keep the small explicit matrices because
-  they make the physical basis and independent checks auditable
-- Complexity or scaling: \(O(N)\) in angle samples with constant \(4\times4\)
-  work
-- Performance bottleneck removed: not applicable
-- Optional harness promotion candidate: none; this model is paper-specific
-- Case-specific parts that should not enter the harness: state parameters,
-  angle mapping, target labels, line styles, and analytic limits
-- Performance evidence: recorded per target in
-  `outputs/checks/<target>_scientific.json` and aggregated in
-  `outputs/checks/local_compute_time.json`
+- Baseline implementation: vectorized direct Born evaluation.
+- Complexity: \(O(N)\) grid points with constant \(4\times4\) work.
+- Main bottleneck: plotting and PNG encoding, not physics.
+- Performance choice: local CPU; no GPU or remote service.
+- Reuse boundary: all physics and scan conventions remain case-local because
+  they encode this paper's measurement ordering and figure targets.

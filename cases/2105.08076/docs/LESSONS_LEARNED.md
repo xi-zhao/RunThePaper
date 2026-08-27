@@ -4,7 +4,7 @@
 
 - Paper ID: `2105.08076`
 - Numerical panels: 9/9 implemented
-- Reduced feature checks: 7/9 passed
+- Reduced feature checks: 8/9 passed
 - Paper-scale status: A100 code ready, production unrun
 - Paper audit: three stable but still inconclusive discrepancies
 
@@ -24,10 +24,11 @@
 
 - Published figure captions omit several stochastic-integration and fitting
   details, so reduced parameters are reconstructed rather than paper-exact.
-- Small systems can reproduce phase ordering while giving seriously biased
-  asymptotic exponents.  This happened for T003 and propagated to T007.
+- Small systems can reproduce the paper's finite-size fit while still missing
+  a stricter joint asymptotic relation.  T003 passes its printed mixed-fit
+  contract, whereas T007 remains unreproduced.
 - A visually similar curve is not enough: the full-canvas mean is 88.16, but
-  the scientific-region mean is only 46.99 and two physics assertions fail.
+  the scientific-region mean is only 46.99 and one physics assertion fails.
 
 ## Generalized Lessons
 
@@ -42,7 +43,7 @@
 
 | Failure mode | Evidence | Detection |
 | --- | --- | --- |
-| Finite-size slope masquerades as asymptotic slope | T003 `0.76566` vs `0.25` | require convergence family before paper-exact promotion |
+| Raw slope substituted for the paper's mixed fit | old T003 check used `0.76566`; the printed fit gives `0.43988` | bind acceptance to the exact paper-defined observable |
 | Analytic reference plotted beside mismatching simulation | T007 identity passes while simulated slopes fail | require an assertion on generated simulation data |
 | Layout similarity hides scientific mismatch | 88.16 canvas vs 46.99 foreground | foreground scientific crop is the primary pixel metric |
 | First-use font discovery violates isolation | initial run attempted subprocesses | preseed deterministic Matplotlib font cache |

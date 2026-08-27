@@ -19,6 +19,12 @@ semantics against the already verified energy symmetry identified a renderer
 coordinate defect, not a numerical-model defect. Reorienting the axes raised
 the score to 81.35 without changing any scientific hash.
 
+A second, scope-level failure was exposed by the atomic inventory: a bundle of
+11 checks supporting Figs. 1-6 had been counted as an independent text target,
+while the Cantor-spectrum and continuity theorem families were absent. A green
+check bundle therefore cannot prove whole-paper coverage unless every central
+display-less claim has first been enumerated.
+
 ## Reusable Checks Or Tools
 
 | Lesson | General value |
@@ -28,6 +34,8 @@ the score to 81.35 without changing any scientific hash.
 | Publication sampling is not a physical parameter | Preserve the exact model while labeling render density as reconstructed. |
 | Pixel repair must identify its layer | Axis orientation belongs to RenderContract; changing arrays would have been an invalid repair. |
 | Cheap complete runs should not be wrapped in HPC machinery | Compute architecture should match the actual bottleneck. |
+| Supporting checks are not extra reproduction items | Count the scientific object once, then attach all invariants to it. |
+| Full-paper theory claims can be missing behind perfect figure coverage | Enumerate central display-less theorems and keep them at zero until independent evidence exists. |
 
 ## Harness backlog
 

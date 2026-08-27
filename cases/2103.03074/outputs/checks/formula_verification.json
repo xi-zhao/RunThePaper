@@ -1,12 +1,213 @@
 {
   "status": "passed",
-  "numeric_closed": [],
-  "checks": {
-    "big_batch_equals_direct_amplitude_max_abs_error": 0.0,
-    "joint_probability_identity": "P_U(s)=P_U(s1;s2)",
-    "conditional_normalization_depth20": 1.0,
-    "conditional_normalization_depth14": 1.0,
-    "xeb_formula": "F_XEB = mean(N*p_i)-1",
-    "porter_thomas_pdf": "Prob(p)=N exp(-N p); with x=Np, density exp(-x)"
-  }
+  "schema_version": 1,
+  "paper_id": "2103.03074",
+  "summary": {
+    "cards_total": 14,
+    "numeric_open": 14,
+    "numeric_closed": 0,
+    "blocked_cards": []
+  },
+  "formulas": {
+    "BBTN001": {
+      "title": "Output probability",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/big_batch_feature_sim.py::direct_amplitude"
+      ],
+      "open_questions": []
+    },
+    "BBTN002": {
+      "title": "Bitstring split",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/big_batch_feature_sim.py::choose_representative_closed_bits"
+      ],
+      "open_questions": []
+    },
+    "BBTN003": {
+      "title": "Head-tail amplitude factorization",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::head_tail_factorization_check"
+      ],
+      "open_questions": [
+        "The exact public 53-qubit circuit is now frozen and independently simplifies to 381 nodes, but the publication does not give the tensor-to-345/36 partition assignment, pairwise order, or slice-index list."
+      ]
+    },
+    "BBTN004": {
+      "title": "XEB fidelity",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/big_batch_feature_sim.py::postselection_curve"
+      ],
+      "open_questions": []
+    },
+    "BBTN005": {
+      "title": "Porter-Thomas distribution",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/big_batch_feature_sim.py::porter_thomas_pdf"
+      ],
+      "open_questions": []
+    },
+    "BBTN006": {
+      "title": "Conditional probability",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/big_batch_feature_sim.py::extract_big_batch"
+      ],
+      "open_questions": []
+    },
+    "BBTN007": {
+      "title": "Shared-head batch reuse cost",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::head_tail_batch_reuse_check",
+        "src/scientific_closure.py::_target_payloads"
+      ],
+      "open_questions": [
+        "The exact m20 tensor-to-345/36 membership, first-cut edges, partition seed, and tie-breaking rule are not printed."
+      ]
+    },
+    "BBTN008": {
+      "title": "Complete-subspace marginal/XEB identity",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::marginal_xeb_relation",
+        "src/sycamore_cleanroom.py::marginal_xeb_toy_check"
+      ],
+      "open_questions": []
+    },
+    "BBTN009": {
+      "title": "Complex64 versus complex128 error diagnostics",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_precision_check"
+      ],
+      "open_questions": [
+        "No published acceptance threshold or production subtask identity makes the paper-scale sufficient-precision claim non-unique."
+      ]
+    },
+    "BBTN010": {
+      "title": "Complex64 tensor memory",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::memory_arithmetic"
+      ],
+      "open_questions": []
+    },
+    "BBTN011": {
+      "title": "Projected-state fidelity",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::noisy_fidelity_projection_smoke"
+      ],
+      "open_questions": [
+        "The paper's noisy algorithm, fidelity observable, work measure, and 1/f phrasing remain externally unresolved."
+      ]
+    },
+    "BBTN012": {
+      "title": "Full-state batch cardinality",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke",
+        "src/sycamore_cleanroom.py::full_state_resource_contract"
+      ],
+      "open_questions": [
+        "Exact formal-PRL EFGH circuit members and closed/open qubit-id lists are not frozen locally."
+      ]
+    },
+    "BBTN013": {
+      "title": "Streaming Porter-Thomas goodness of fit",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "verified",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke"
+      ],
+      "open_questions": [
+        "The paper does not print a numerical goodness-of-fit threshold."
+      ]
+    },
+    "BBTN014": {
+      "title": "Lag-one sample independence diagnostic",
+      "numeric_gate": "open",
+      "numeric_gate_policy": "source_and_symbolic",
+      "derivation_status": "reconstructed",
+      "failed_checks": [],
+      "source_verified": true,
+      "derivation_verified": true,
+      "code_refs": [
+        "src/sycamore_cleanroom.py::reduced_full_state_streaming_smoke"
+      ],
+      "open_questions": [
+        "The cited follow-on method, paper-scale backend, and complete independence test suite are external to this case."
+      ]
+    }
+  },
+  "findings": []
 }

@@ -13,7 +13,7 @@
 | EQ009 | extreme-quench Loschmidt matrix | sector switching | `extreme_quench_loschmidt_rates` | source-sign discrepancy exposed |
 | EQ010 | tilted postselection | normalized observable | `postselection_normalization_check` | source-normalization discrepancy exposed |
 | EQ011 | complex-time identity | normalized characteristic function | `complex_time_postselection_check` | source-normalization discrepancy exposed |
-| EQ012 | general time-dependent mode equation | ramp family | `ramp_mode_occupations` | reconstructed protocol |
+| EQ012 | general time-dependent mode equation | arbitrary-ramp half-mode theorem | endpoint continuity plus `ramp_mode_occupations` falsification examples | verified theorem; reconstructed example protocols |
 
 Detailed algebra is in `DERIVATION.md`; machine gates are in
 `outputs/checks/formula_verification.json`.

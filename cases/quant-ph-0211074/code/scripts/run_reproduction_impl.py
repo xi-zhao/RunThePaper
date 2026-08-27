@@ -27,6 +27,8 @@ from vidal_entanglement.model import (  # noqa: E402
     entropy_from_covariance,
     entropy_from_spectrum,
     fermion_mode_probabilities,
+    finite_chain_correlation_coefficients,
+    finite_xy_parity_diagnostics,
     majorization_margin,
     retained_weight_rank,
     resolved_spectrum_rank,
@@ -1009,6 +1011,169 @@ def main() -> int:
         np.max(np.abs(np.diff(noncritical_xxz_tail)[-3:]))
     )
 
+    # T019: test the Z2 argument preceding Eq. (6) by an independent dense
+    # Pauli construction.  This does not reuse the Fourier/covariance path.
+    odd_majorana_rows = [
+        finite_xy_parity_diagnostics(
+            int(n_sites),
+            a=float(parameters["odd_majorana_a"]),
+            gamma=float(parameters["odd_majorana_gamma"]),
+        )
+        for n_sites in parameters["odd_majorana_n_sites"]
+    ]
+    odd_majorana_passed = all(
+        float(row["spectral_gap"]) >= float(acceptance["min_xy_symmetry_gap"])
+        and abs(abs(float(row["parity_expectation_real"])) - 1.0)
+        <= float(acceptance["max_parity_expectation_error"])
+        and float(row["parity_eigenstate_residual"])
+        <= float(acceptance["max_parity_eigenstate_residual"])
+        and float(row["hamiltonian_parity_commutator_norm"])
+        <= float(acceptance["max_xy_parity_commutator_norm"])
+        and float(row["max_majorana_parity_anticommutator_norm"])
+        <= float(acceptance["max_majorana_parity_anticommutator_norm"])
+        and float(row["max_odd_majorana_expectation_abs"])
+        <= float(acceptance["max_odd_majorana_expectation"])
+        for row in odd_majorana_rows
+    )
+    write_csv(
+        data_root / "odd_majorana_checks.csv",
+        list(odd_majorana_rows[0]),
+        odd_majorana_rows,
+    )
+    write_json(
+        checks_root / "T019_odd_majorana_check.json",
+        {
+            "schema_version": 1,
+            "target_id": "T019",
+            "status": "passed" if odd_majorana_passed else "failed",
+            "scientific_input": "paper Eqs. (1), (5), and the Z2 statement preceding Eq. (6)",
+            "boundary": parameters["odd_majorana_boundary"],
+            "author_code_used": False,
+            "author_arrays_used": False,
+            "source_pixels_used_as_numeric_input": False,
+            "checks": odd_majorana_rows,
+        },
+    )
+
+    # T020: construct finite-N correlation sums on explicit fermion momentum
+    # sectors and compare B_L^(N), S_L^(N) with the thermodynamic Eq. (8)
+    # integral at fixed L.  The omitted sector/grid convention is declared,
+    # never reverse engineered from the author's figure.
+    finite_n_rows: list[dict[str, Any]] = []
+    finite_n_series: list[dict[str, Any]] = []
+    for probe in parameters["finite_n_covariance_probes"]:
+        a_value = float(probe["a"])
+        gamma_value = float(probe["gamma"])
+        for shift in probe["momentum_shifts"]:
+            shift_value = float(shift)
+            for length in parameters["finite_n_block_lengths"]:
+                block_length = int(length)
+                reference_coefficients = correlation_coefficients(
+                    block_length - 1,
+                    a=a_value,
+                    gamma=gamma_value,
+                    quadrature_points=quadrature,
+                )
+                reference_covariance = block_covariance(
+                    block_length, reference_coefficients
+                )
+                reference_entropy = entropy_from_covariance(reference_covariance)[0]
+                covariance_errors: list[float] = []
+                entropy_errors: list[float] = []
+                for n_sites in parameters["finite_n_site_counts"]:
+                    finite_coefficients = finite_chain_correlation_coefficients(
+                        block_length - 1,
+                        a=a_value,
+                        gamma=gamma_value,
+                        n_sites=int(n_sites),
+                        momentum_shift=shift_value,
+                    )
+                    finite_covariance = block_covariance(
+                        block_length, finite_coefficients
+                    )
+                    finite_entropy = entropy_from_covariance(finite_covariance)[0]
+                    covariance_error = float(
+                        np.linalg.norm(
+                            finite_covariance - reference_covariance,
+                            ord="fro",
+                        )
+                    )
+                    entropy_error = float(abs(finite_entropy - reference_entropy))
+                    covariance_errors.append(covariance_error)
+                    entropy_errors.append(entropy_error)
+                    finite_n_rows.append(
+                        {
+                            "a": a_value,
+                            "gamma": gamma_value,
+                            "momentum_shift": shift_value,
+                            "block_length": block_length,
+                            "n_sites": int(n_sites),
+                            "covariance_frobenius_error": covariance_error,
+                            "entropy_absolute_error_bits": entropy_error,
+                        }
+                    )
+                covariance_monotone = all(
+                    later <= earlier * 1.01 or later <= 1e-12
+                    for earlier, later in zip(
+                        covariance_errors, covariance_errors[1:]
+                    )
+                )
+                entropy_monotone = all(
+                    later <= earlier * 1.01 or later <= 1e-12
+                    for earlier, later in zip(
+                        entropy_errors, entropy_errors[1:]
+                    )
+                )
+                finite_n_series.append(
+                    {
+                        "a": a_value,
+                        "gamma": gamma_value,
+                        "momentum_shift": shift_value,
+                        "block_length": block_length,
+                        "covariance_monotone_to_roundoff": covariance_monotone,
+                        "entropy_monotone_to_roundoff": entropy_monotone,
+                        "covariance_error_contraction": covariance_errors[0]
+                        / max(covariance_errors[-1], 1e-16),
+                        "entropy_error_contraction": entropy_errors[0]
+                        / max(entropy_errors[-1], 1e-16),
+                        "final_covariance_frobenius_error": covariance_errors[-1],
+                        "final_entropy_absolute_error_bits": entropy_errors[-1],
+                    }
+                )
+    finite_n_convergence_passed = all(
+        bool(row["covariance_monotone_to_roundoff"])
+        and bool(row["entropy_monotone_to_roundoff"])
+        and float(row["covariance_error_contraction"])
+        >= float(acceptance["min_finite_n_error_contraction"])
+        and float(row["entropy_error_contraction"])
+        >= float(acceptance["min_finite_n_error_contraction"])
+        and float(row["final_covariance_frobenius_error"])
+        <= float(acceptance["max_finite_n_covariance_error"])
+        and float(row["final_entropy_absolute_error_bits"])
+        <= float(acceptance["max_finite_n_entropy_error"])
+        for row in finite_n_series
+    )
+    write_csv(
+        data_root / "finite_n_covariance_convergence.csv",
+        list(finite_n_rows[0]),
+        finite_n_rows,
+    )
+    write_json(
+        checks_root / "T020_finite_N_convergence.json",
+        {
+            "schema_version": 1,
+            "target_id": "T020",
+            "status": "passed" if finite_n_convergence_passed else "failed",
+            "scientific_input": "paper Eqs. (7)-(9) and reference [13] finite-N note",
+            "evidence_kind": "fixed_L_finite_N_falsification_sweep",
+            "universal_sector_proof_claimed": False,
+            "author_code_used": False,
+            "author_arrays_used": False,
+            "source_pixels_used_as_numeric_input": False,
+            "series": finite_n_series,
+        },
+    )
+
     convergence_differences = []
     for a_value in [0.6, 0.9, 1.0]:
         fine = correlation_coefficients(
@@ -1121,6 +1286,8 @@ def main() -> int:
             <= int(row["algebraic_spectrum_dimension"])
             for row in rank_rows
         ),
+        "odd_majorana_parity_symmetry": odd_majorana_passed,
+        "finite_n_fixed_l_convergence": finite_n_convergence_passed,
     }
     target_results = {
         "T001": {
@@ -1225,6 +1392,18 @@ def main() -> int:
             "root_cause_if_incomplete": "publication_underspecified_and_finite_rank_evidence_cannot_prove_unbounded_growth",
             "code_fault_assessment": "not_found_after_three_thresholds_and_critical_gapped_comparison",
         },
+        "T019": {
+            "status": "passed_finite_chain_z2_certificate",
+            "direct_cause_if_incomplete": None,
+            "root_cause_if_incomplete": None,
+            "code_fault_assessment": "ruled_out_by_dense_pauli_commutator_anticommutator_and_ground_state_checks",
+        },
+        "T020": {
+            "status": "passed_fixed_l_finite_n_convergence_sweep",
+            "direct_cause_if_incomplete": None,
+            "root_cause_if_incomplete": None,
+            "code_fault_assessment": "not_found_after_two_sector_fixed_l_covariance_and_entropy_convergence_checks",
+        },
     }
     science_status = "passed" if all(gates.values()) else "failed"
     checks = {
@@ -1248,6 +1427,8 @@ def main() -> int:
             "T015",
             "T016",
             "T017",
+            "T019",
+            "T020",
         ],
         "author_code_used": False,
         "author_arrays_used": False,
@@ -1321,6 +1502,26 @@ def main() -> int:
             "gapped_effective_rank_series": gapped_rank_series,
             "critical_effective_rank_growth": critical_rank_growth,
             "gapped_effective_rank_growth": gapped_rank_growth,
+            "odd_majorana_max_expectation_abs": max(
+                float(row["max_odd_majorana_expectation_abs"])
+                for row in odd_majorana_rows
+            ),
+            "odd_majorana_max_parity_residual": max(
+                float(row["parity_eigenstate_residual"])
+                for row in odd_majorana_rows
+            ),
+            "finite_n_max_final_covariance_error": max(
+                float(row["final_covariance_frobenius_error"])
+                for row in finite_n_series
+            ),
+            "finite_n_max_final_entropy_error_bits": max(
+                float(row["final_entropy_absolute_error_bits"])
+                for row in finite_n_series
+            ),
+            "finite_n_min_covariance_error_contraction": min(
+                float(row["covariance_error_contraction"])
+                for row in finite_n_series
+            ),
         },
         "target_assessments": {
             "T001": "bounded_reproduction_supported",
@@ -1340,6 +1541,8 @@ def main() -> int:
             "T015": "inconclusive_publication_underspecified_rg_map",
             "T016": "paper_supported",
             "T017": "inconclusive_epsilon_effective_rank_proxy_publication_underspecified",
+            "T019": "paper_supported_by_independent_finite_chain_z2_certificate",
+            "T020": "paper_supported_by_fixed_l_finite_n_convergence_sweep",
         },
         "target_results": target_results,
         "paper_review": {
@@ -1373,6 +1576,10 @@ def main() -> int:
         data_root / "product_spectrum_checks.csv",
         data_root / "effective_rank_checks.csv",
         data_root / "xxz_regime_checks.csv",
+        data_root / "odd_majorana_checks.csv",
+        data_root / "finite_n_covariance_convergence.csv",
+        checks_root / "T019_odd_majorana_check.json",
+        checks_root / "T020_finite_N_convergence.json",
         checks_root / "science_checks.json",
         xxx_checkpoint_path(
             output_root,
@@ -1417,9 +1624,11 @@ def main() -> int:
             "xxx_sector_dimension": len(xxx_ground.basis),
             "xxx_noncritical_sector_dimension": len(xxx_noncritical_ground.basis),
             "majorization_checks": len(majorization_rows),
-            "whole_paper_targets": 17,
+            "whole_paper_targets": 19,
             "product_spectra_enumerated": len(spectrum_rows),
             "effective_rank_checks": len(rank_rows),
+            "odd_majorana_chain_sizes": len(odd_majorana_rows),
+            "finite_n_convergence_points": len(finite_n_rows),
         },
     )
     print(json.dumps(checks, indent=2, default=scientific_json))

@@ -36,12 +36,12 @@
 
 | Candidate | Why it is reusable | Suggested destination |
 | --- | --- | --- |
-| benchmark corpus validator | Many systems papers rely on benchmark tables | shared benchmark validator |
-| routing legality checker | Hardware-compliance checks recur in compiler/routing papers | shared legality checks |
-| randomized-run recorder | Exact reproduction needs seeds and tie-breaking trace | shared run metadata |
-| table reproduction report generator | Table-level results need exact/partial/input-only status | shared report generator |
-| compute budget and attempt planner | Algorithm tables often need many randomized attempts but not necessarily more memory | shared compute planner |
-| post-first-attempt time budget request | Turns measured runtime into a concrete user decision | shared time-budget workflow |
+| benchmark corpus validator | Many systems papers rely on benchmark tables | `PRAgent-workflow/benchmarks` |
+| routing legality checker | Hardware-compliance checks recur in compiler/routing papers | `PRAgent-workflow/checks` |
+| randomized-run recorder | Exact reproduction needs seeds and tie-breaking trace | `PRAgent-workflow/run_metadata` |
+| table reproduction report generator | Table-level results need exact/partial/input-only status | `PRAgent-workflow/reports` |
+| compute budget and attempt planner | Algorithm tables often need many randomized attempts but not necessarily more memory | `PRAgent-workflow/compute_budget` |
+| post-first-attempt time budget request | Turns measured runtime into a concrete user decision | `PRAgent-workflow/time_budget` |
 
 ## Harness Backlog Items
 

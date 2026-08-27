@@ -18,7 +18,7 @@
   5. check Hermiticity and absence of transitions outside the block.
 - Parameters: paper-exact \(K=\cos\theta\), \(Q=\sin\theta\), periodic even
   chains.
-- Code pointer: `code/src/kitaev_aklt.py`.
+- Code pointer: `src/kitaev_aklt.py`.
 - Checks: full-space versus assembled-sector spectra for \(N=4\); all basis
   states have requested \(w\); dimensions sum to \(3^N\).
 - Status: verified. This is an exact change of basis and symmetry
@@ -39,7 +39,7 @@
   4. evaluate periodic traces for sector configurations;
   5. normalize and verify sector support.
 - Parameters: bond dimension four; alternating X/Y tensors; no truncation.
-- Code pointer: `code/src/kitaev_aklt.py`.
+- Code pointer: `src/kitaev_aklt.py`.
 - Checks: selected printed \(C\) matrices, transfer-matrix norm, exact
   zero-energy expectation at \(\theta=\pi/4\), and uniform-\(-\) product-state
   identity.
@@ -65,19 +65,28 @@
      separately confirm equality of all one-flip sector energies.
 - Paper parameters: \(N=4,6,8,10,12\) and
   \(\theta=40^\circ,30^\circ,20^\circ,10^\circ,0^\circ\).
-- Code pointer: `code/src/kitaev_aklt.py`,
-  `code/scripts/run_paper_target.py`.
+- Code pointer: `src/kitaev_aklt.py`,
+  `scripts/run_paper_target.py`.
 - Checks: residual, normalization, solver agreement on small \(N\), energy
   ordering, and the \(\theta\to45^\circ\) exact limit.
 - Status: verified_reconstructed. The algebra and observable are exact; the
   solver protocol is reconstructed because the paper does not report it.
 - Open questions: raw author overlap values are unavailable.
 
-## METHOD004 — Historical image diagnostic, excluded
+## METHOD004 — Source-panel digitization for comparison only
 
-The historical case had a post-freeze image diagnostic. It is intentionally
-absent from this public package and is not a reproduction method. The accepted
-scientific lane independently diagonalizes the Hamiltonian and freezes its
-arrays before any visual inspection. Paper imagery may be used only for a
-raster-level rendering assessment; it must not provide coordinates, parameters,
-or values to the numerical implementation.
+- Source: `internal-paper-reference/Overlap_GS_MPS_shrunk.png` and
+  `Overlap_FE_MPS_shrunk.png`.
+- Role: obtain approximate reference coordinates for numerical-closeness
+  checks without treating pixels as generated scientific evidence.
+- Inputs: known axes \(N=4,\ldots,12\), overlap range \(0.8\) to \(1.0\), and
+  colored marker pixels.
+- Outputs: digitized reference CSV with pixel uncertainty.
+- Algorithm: calibrate the plot rectangle from axis lines, isolate the five
+  marker colors near each known \(N\), and map median marker centers to data
+  coordinates.
+- Code pointer: `scripts/digitize_overlap_panels.py`.
+- Checks: recovered x positions, monotone curve order, and manual overlay.
+- Status: reconstructed.
+- Open questions: antialiasing limits reference precision to roughly
+  \(10^{-3}\); this does not affect independent-data coverage.

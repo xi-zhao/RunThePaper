@@ -84,4 +84,4 @@
 
 - 在公式驱动复现中，先问“正式版是否改过这条式子”，再把 PDF 公式转成代码。
 - 对端口、规范、Fourier 约定，要求至少一个 convention-independent observable 闭合整个推导。
-- 本案例的抽象经验已写入 `the project reproduction experience register`，具体工具需求已写入 `the project tooling backlog`。
+- 本案例的抽象经验已写入 `PRAgent-workflow/REPRODUCTION_EXPERIENCE.md`，具体工具需求已写入 `PRAgent-workflow/HARNESS_BACKLOG.md`。

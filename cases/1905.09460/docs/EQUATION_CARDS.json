@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "paper_id": "1905.09460",
+  "cards": [
+    {
+      "id": "EQ001",
+      "title": "Non-Hermitian Aubry-Andre-Harper Hamiltonian",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eqs. (1)-(4)"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eqs. (S-1)-(S-3)"
+        }
+      ],
+      "latex": "H\\psi_n=J(\\psi_{n+1}+\\psi_{n-1})+V\\cos(2\\pi\\alpha n+\\theta+ih)\\psi_n",
+      "role": "Defines the periodic and open matrices behind Main Figure 1 and Supplement Figure S1.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ001_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The operator and boundary matrices are explicit in the main text and supplement."
+        },
+        {
+          "id": "EQ001_pt",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "Direct cosine expansion gives V_-n=V_n*, correcting the extra minus sign printed after main Eq. (4)."
+        },
+        {
+          "id": "EQ001_hermitian",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "At h=0 the onsite potential and hopping matrix are real symmetric."
+        }
+      ],
+      "numerical_form": "Build a dense complex tridiagonal matrix and add or omit the two corner hoppings for periodic or open boundaries.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::aah_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ002",
+      "title": "Fourier-dual Hatano-Nelson representation",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eqs. (S-4)-(S-8)"
+        }
+      ],
+      "latex": "E\\phi_m=\\frac V2(e^{-h}\\phi_{m+1}+e^h\\phi_{m-1})+2J\\cos(2\\pi\\alpha m)\\phi_m",
+      "role": "Connects imaginary phase to an imaginary gauge field and establishes the localization duality.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ002_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S-4)-(S-8) explicitly print the Fourier transform and the dual matrix."
+        },
+        {
+          "id": "EQ002_transform",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The discrete Fourier transform maps the two exponential pieces of the cosine to asymmetric nearest-neighbor hopping."
+        },
+        {
+          "id": "EQ002_spectrum",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The implementation compares the two finite rational-approximant spectra after sorting."
+        }
+      ],
+      "numerical_form": "Construct the dual matrix independently for a small rational approximant and compare eigenvalue sets.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::dual_hatano_nelson_hamiltonian"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ003",
+      "title": "Common localization and PT-breaking threshold",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eqs. (6)-(7)"
+        },
+        {
+          "type": "supplement_derivation",
+          "value": "Supplement S.1"
+        }
+      ],
+      "latex": "h_c=\\gamma=\\log(2J/V)",
+      "role": "Fixes the vertical transition line in Main Figure 1 and Supplement Figure S1.",
+      "derived_from": [
+        "EQ002"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ003_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (6)-(7) and Supplement S.1 explicitly state the common Lyapunov exponent and threshold."
+        },
+        {
+          "id": "EQ003_value",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "J=V=1 gives h_c=ln 2=0.6931471805599453."
+        },
+        {
+          "id": "EQ003_phases",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Numerical spectra are real/delocalized below the threshold and complex/localized above it."
+        }
+      ],
+      "numerical_form": "Evaluate log(2J/V) and check spectral-imaginary and IPR changes on both sides.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::critical_phase"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ004",
+      "title": "Determinant winding and its large-L reduction",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eq. (5)"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eqs. (S-9)-(S-21)"
+        }
+      ],
+      "latex": "w=\\frac{1}{2\\pi i}\\int_0^{2\\pi}\\partial_\\theta\\log\\det[H(\\theta/L,h)-E_B]d\\theta=0\\;(h<h_c),-1\\;(h>h_c)",
+      "role": "Generates Main Figure 1(d) and proves the transition is topological.",
+      "derived_from": [
+        "EQ002",
+        "EQ003"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ004_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eq. (5) defines the winding and Supplement Eqs. (S-9)-(S-21) derive its two phases."
+        },
+        {
+          "id": "EQ004_circle",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "The transformed determinant is a clockwise circle A exp(-i theta)+D."
+        },
+        {
+          "id": "EQ004_orientation",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Phase unwrapping gives zero below h_c and minus one above h_c."
+        }
+      ],
+      "numerical_form": "Use the stable scaled determinant circle and independently unwrap its phase on a theta grid.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::winding_number"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ005",
+      "title": "Inverse participation ratio and edge localization",
+      "source_refs": [
+        {
+          "type": "paper_definition",
+          "value": "paragraph below Main Figure 1"
+        },
+        {
+          "type": "supplement_section",
+          "value": "Supplement S.3"
+        }
+      ],
+      "latex": "\\operatorname{IPR}(\\psi)=\\frac{\\sum_n|\\psi_n|^4}{(\\sum_n|\\psi_n|^2)^2}",
+      "role": "Measures bulk localization and supplies the boundary-state classification for Supplement Figure S1.",
+      "derived_from": [
+        "EQ001"
+      ],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ005_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "The IPR formula is printed below Main Fig. 1 and Supplement S.3 defines the open-boundary calculation."
+        },
+        {
+          "id": "EQ005_limits",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A uniform normalized vector gives 1/L and a one-site vector gives one."
+        },
+        {
+          "id": "EQ005_norm",
+          "type": "normalization",
+          "status": "passed",
+          "reason": "Every eigenvector is normalized before IPR and boundary weights are evaluated."
+        }
+      ],
+      "numerical_form": "Normalize every right eigenvector, compute IPR columnwise, and sum boundary-window probabilities for edge identity.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::inverse_participation_ratios",
+        "src/nonhermitian_quasicrystal.py::edge_state_counts"
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "EQ006",
+      "title": "Frequency-domain laser and saturated gain",
+      "source_refs": [
+        {
+          "type": "paper_equation",
+          "value": "main Eqs. (8)-(9)"
+        },
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eq. (S-31)"
+        },
+        {
+          "type": "paper_figure",
+          "value": "main Fig. 3"
+        }
+      ],
+      "latex": "i\\dot\\psi_n=J(\\psi_{n+1}+\\psi_{n-1})+V_0e^{2\\pi i\\alpha n+i\\theta}\\psi_n+i\\mathcal L_n(g)\\psi_n,\\quad \\dot g=\\gamma_\\parallel[g_0-g(1+I)]",
+      "role": "Defines the laser spectra and bandwidth transition in Main Figure 3.",
+      "derived_from": [
+        "EQ001",
+        "EQ003"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ006_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Eqs. (8)-(9) and Supplement Eq. (S-31) explicitly define the laser field and gain dynamics."
+        },
+        {
+          "id": "EQ006_threshold",
+          "type": "symbolic_identity",
+          "status": "passed",
+          "reason": "J=Delta_FM/2 and the AAH threshold J=V0 give Delta_FM=2V0."
+        },
+        {
+          "id": "EQ006_growth",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The selected stationary mode has zero maximum growth rate to numerical tolerance."
+        }
+      ],
+      "numerical_form": "Solve the stationary neutral-growth eigenmode and saturated intensity using all printed physical parameters.",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::stationary_laser_spectrum"
+      ],
+      "open_questions": [
+        "The paper omits mode truncation, theta, random seed, integration duration, and the dimensionless transient gain-relaxation setting."
+      ]
+    },
+    {
+      "id": "EQ007",
+      "title": "Laser spectral bandwidth",
+      "source_refs": [
+        {
+          "type": "paper_figure",
+          "value": "main Fig. 3(a)"
+        }
+      ],
+      "latex": "\\sigma_n=\\sqrt{\\sum_n n^2p_n},\\quad p_n=|\\psi_n|^2/\\sum_m|\\psi_m|^2",
+      "role": "Turns every independently generated laser spectrum into the plotted width observable.",
+      "derived_from": [
+        "EQ006"
+      ],
+      "derivation_status": "reconstructed",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ007_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Main Fig. 3(a) explicitly identifies the plotted object as oscillating laser bandwidth."
+        },
+        {
+          "id": "EQ007_delta",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "A one-mode spectrum has zero width."
+        },
+        {
+          "id": "EQ007_symmetry",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "Reflecting a spectrum about the central axial mode leaves the width unchanged."
+        }
+      ],
+      "numerical_form": "Use the RMS axial-mode displacement from the gain-line center; this is the mode-locking bandwidth convention consistent with Figure 3(a).",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::spectral_bandwidth"
+      ],
+      "open_questions": [
+        "The paper labels the observable only as oscillating laser bandwidth and does not define its estimator."
+      ]
+    },
+    {
+      "id": "EQ008",
+      "title": "Exact and first-order etalon transmission",
+      "source_refs": [
+        {
+          "type": "supplement_equation",
+          "value": "Supplement Eqs. (S-27)-(S-30)"
+        },
+        {
+          "type": "paper_figure",
+          "value": "Supplement Fig. S2"
+        }
+      ],
+      "latex": "t_{et}=\\frac{1-R}{1-Re^{2i\\delta+i\\phi}},\\quad t_{et}\\simeq1-R+Re^{2i\\delta+i\\phi},\\quad R=[(n_1-1)/(n_1+1)]^2",
+      "role": "Generates both axes of Supplement Figure S2 and validates the physical implementation approximation.",
+      "derived_from": [],
+      "derivation_status": "verified",
+      "numeric_gate_policy": "source_and_symbolic",
+      "checks": [
+        {
+          "id": "EQ008_source",
+          "type": "source_trace",
+          "status": "passed",
+          "reason": "Supplement Eqs. (S-27)-(S-30) explicitly print both transmission expressions and the reflectance."
+        },
+        {
+          "id": "EQ008_zero_R",
+          "type": "limiting_case",
+          "status": "passed",
+          "reason": "Both expressions reduce to unit transmission at R=0."
+        },
+        {
+          "id": "EQ008_error",
+          "type": "numeric_sanity",
+          "status": "passed",
+          "reason": "The maximum exact-versus-first-order error is recorded over the plotted four free-spectral ranges."
+        }
+      ],
+      "numerical_form": "Evaluate the complex exact and approximate functions on normalized frequency in [-2,2].",
+      "code_refs": [
+        "src/nonhermitian_quasicrystal.py::etalon_transmission"
+      ],
+      "open_questions": []
+    }
+  ]
+}

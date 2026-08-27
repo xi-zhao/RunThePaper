@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "target_id": "T_FIGA",
+  "artifact_stage": "final_reproduction",
+  "parameter_match": "paper_exact",
+  "generated_data_provenance": "independent_numerics",
+  "status": "passed",
+  "runtime_seconds": 0.5015377911040559,
+  "parameters": {
+    "target_probability": 0.020833333333333332,
+    "N_shot_values": [
+      30,
+      100
+    ],
+    "repetitions": 1000,
+    "percentile": 81.05694691387022,
+    "rng_seed": 190410247
+  },
+  "metrics": {
+    "conventional_log_log_slope": -1.074437585212052,
+    "median_eis30_to_conventional_ratio": 3.384497699426787,
+    "median_eis30_to_eis100_ratio": 0.5988554874628369
+  },
+  "checks": [
+    {
+      "check_id": "paper_percentile_exact",
+      "status": "passed",
+      "evidence": {
+        "value": 81.05694691387022,
+        "paper_definition": "100*8/pi^2"
+      }
+    },
+    {
+      "check_id": "four_series_complete",
+      "status": "passed",
+      "evidence": {
+        "eis_100": 10,
+        "conventional": 11,
+        "classical": 109,
+        "eis_30": 11
+      }
+    },
+    {
+      "check_id": "conventional_error_converges",
+      "status": "passed",
+      "evidence": {
+        "log_log_slope": -1.074437585212052,
+        "threshold": -0.75
+      }
+    },
+    {
+      "check_id": "eis30_comparable_to_conventional",
+      "status": "passed",
+      "evidence": {
+        "median_interpolated_error_ratio": 3.384497699426787,
+        "accepted_range": [
+          0.25,
+          4.0
+        ]
+      }
+    },
+    {
+      "check_id": "lower_shot_eis_not_worse_at_fixed_queries",
+      "status": "passed",
+      "evidence": {
+        "median_interpolated_error_ratio_N30_over_N100": 0.5988554874628369,
+        "maximum": 1.35
+      }
+    },
+    {
+      "check_id": "all_errors_finite_positive",
+      "status": "passed",
+      "evidence": {
+        "rows": 141
+      }
+    }
+  ],
+  "summary": {
+    "checks_total": 6,
+    "checks_passed": 6,
+    "checks_failed": 0,
+    "failed_check_ids": []
+  },
+  "artifacts": {
+    "data": "outputs/data/figa_percentile_comparison.csv",
+    "figure": "outputs/figures/figa_percentile_comparison.png"
+  },
+  "data_sha256": "9b2702ed593c4e352e0a87560221c53d6d682b78476e2d6501e2e91187f8eb0c"
+}

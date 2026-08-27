@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "run_id": "2602.12212-paper-scale-closure-v1-20260824",
+  "target_ids": [
+    "T001",
+    "T002",
+    "T003",
+    "T004",
+    "T005",
+    "T006",
+    "T007",
+    "T008A",
+    "T008B",
+    "T009"
+  ],
+  "command": [
+    "python",
+    "scripts/run_paper_scale_closure.py",
+    "--config",
+    "config/paper_scale_closure.json"
+  ],
+  "inputs": [
+    "config/paper_scale_closure.json",
+    "mplconfig/fontlist-v390.json",
+    "scripts/run_paper_scale_closure.py",
+    "scripts/run_spin1_foliation.py",
+    "scripts/run_manybody_campaign.py",
+    "scripts/run_dynamics.py",
+    "scripts/render_campaign_figures.py",
+    "src/leaf_thermodynamics.py"
+  ],
+  "parameter_file": "config/paper_scale_closure.json",
+  "parameter_selector": "parameters",
+  "expected_parameters": {
+    "profile": "paper-scale-closure",
+    "scientific_input_boundary": {
+      "source_pixels_used": false,
+      "author_numeric_arrays_used": false,
+      "author_code_used": false,
+      "reference_figures_accessed_by_runner": false
+    },
+    "steps": [
+      {
+        "module": "run_spin1_foliation",
+        "target_ids": [
+          "T001"
+        ],
+        "args": [
+          "--no-reference-comparison"
+        ]
+      },
+      {
+        "module": "run_manybody_campaign",
+        "target_ids": [
+          "T002",
+          "T004",
+          "T005",
+          "T006",
+          "T008A",
+          "T008B",
+          "T009"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--lengths",
+          "6",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "--groups",
+          "main",
+          "supplemental",
+          "--boundary",
+          "periodic",
+          "--force"
+        ]
+      },
+      {
+        "module": "run_manybody_campaign",
+        "target_ids": [
+          "T007"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--lengths",
+          "6",
+          "8",
+          "10",
+          "12",
+          "--groups",
+          "integrable",
+          "--boundary",
+          "periodic",
+          "--force"
+        ]
+      },
+      {
+        "module": "run_dynamics",
+        "target_ids": [
+          "T003"
+        ],
+        "args": [
+          "--backend",
+          "numpy",
+          "--length",
+          "12",
+          "--beta",
+          "0.5",
+          "--time-max",
+          "3.0",
+          "--time-points",
+          "61",
+          "--boundary",
+          "periodic",
+          "--max-band-representatives",
+          "48",
+          "--no-reference-comparison"
+        ]
+      },
+      {
+        "module": "render_campaign_figures",
+        "target_ids": [
+          "T002",
+          "T004",
+          "T005",
+          "T006",
+          "T007",
+          "T008A",
+          "T008B",
+          "T009"
+        ],
+        "args": [
+          "--no-reference-comparison"
+        ]
+      }
+    ]
+  },
+  "outputs": [
+    "outputs/checks/paper_scale_closure.json",
+    "outputs/checks/t001_spin1_foliation.json",
+    "outputs/checks/t002_figure.json",
+    "outputs/checks/t003_dynamics.json",
+    "outputs/checks/t004_figure.json",
+    "outputs/checks/t005_figure.json",
+    "outputs/checks/t006_figure.json",
+    "outputs/checks/t007_figure.json",
+    "outputs/checks/t008a_figure.json",
+    "outputs/checks/t008b_figure.json",
+    "outputs/checks/t009_figure.json",
+    "outputs/checks/manybody_campaign_manifest.json",
+    "outputs/checks/campaign_shards/main_L6.json",
+    "outputs/checks/campaign_shards/main_L8.json",
+    "outputs/checks/campaign_shards/main_L9.json",
+    "outputs/checks/campaign_shards/main_L10.json",
+    "outputs/checks/campaign_shards/main_L11.json",
+    "outputs/checks/campaign_shards/main_L12.json",
+    "outputs/checks/campaign_shards/supplemental_L6.json",
+    "outputs/checks/campaign_shards/supplemental_L8.json",
+    "outputs/checks/campaign_shards/supplemental_L9.json",
+    "outputs/checks/campaign_shards/supplemental_L10.json",
+    "outputs/checks/campaign_shards/supplemental_L11.json",
+    "outputs/checks/campaign_shards/supplemental_L12.json",
+    "outputs/checks/campaign_shards/integrable_L6.json",
+    "outputs/checks/campaign_shards/integrable_L8.json",
+    "outputs/checks/campaign_shards/integrable_L10.json",
+    "outputs/checks/campaign_shards/integrable_L12.json",
+    "outputs/data/t001_spin1_foliation.csv",
+    "outputs/data/t003_dynamics.csv",
+    "outputs/data/campaign_shards/main_L6_typicality.csv",
+    "outputs/data/campaign_shards/main_L6_compression.csv",
+    "outputs/data/campaign_shards/main_L8_typicality.csv",
+    "outputs/data/campaign_shards/main_L8_compression.csv",
+    "outputs/data/campaign_shards/main_L9_typicality.csv",
+    "outputs/data/campaign_shards/main_L9_compression.csv",
+    "outputs/data/campaign_shards/main_L10_typicality.csv",
+    "outputs/data/campaign_shards/main_L10_compression.csv",
+    "outputs/data/campaign_shards/main_L11_typicality.csv",
+    "outputs/data/campaign_shards/main_L11_compression.csv",
+    "outputs/data/campaign_shards/main_L12_typicality.csv",
+    "outputs/data/campaign_shards/main_L12_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L6_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L6_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L8_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L8_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L9_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L9_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L10_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L10_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L11_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L11_compression.csv",
+    "outputs/data/campaign_shards/supplemental_L12_typicality.csv",
+    "outputs/data/campaign_shards/supplemental_L12_compression.csv",
+    "outputs/data/campaign_shards/integrable_L6_typicality.csv",
+    "outputs/data/campaign_shards/integrable_L8_typicality.csv",
+    "outputs/data/campaign_shards/integrable_L10_typicality.csv",
+    "outputs/data/campaign_shards/integrable_L12_typicality.csv",
+    "outputs/figures/t001_spin1_foliation.png",
+    "outputs/figures/t002_main_typicality.png",
+    "outputs/figures/t003_dynamics.png",
+    "outputs/figures/t004_s1_beta025.png",
+    "outputs/figures/t005_s2_beta075.png",
+    "outputs/figures/t006_s3_beta175.png",
+    "outputs/figures/t007_s4_integrable.png",
+    "outputs/figures/t008a_main_compression.png",
+    "outputs/figures/t008b_supp_compression.png",
+    "outputs/figures/t009_entropy_gain.png"
+  ],
+  "timeout_seconds": 1800,
+  "environment": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "MPLCONFIGDIR": "mplconfig"
+  }
+}

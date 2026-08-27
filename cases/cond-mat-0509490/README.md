@@ -6,7 +6,7 @@ Published as: [Dynamics of a Quantum Phase Transition: Exact Solution of the Qua
 
 Formal citation: Phys. Rev. Lett. 95, 245701 (2005) · DOI `10.1103/PhysRevLett.95.245701` · Locator `245701`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **90.00/100**
+Public status: **Scientific reproduction — independent review pending** · Audit score: **90.00/100**
 
 Case scaffolded from framework/templates/paper_case.
 
@@ -37,13 +37,13 @@ cd cases/cond-mat-0509490/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=not_required, pixel=not_comparable, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=paper_exact, causal_resolution=not_required, pixel=not_comparable, independent_review=stale, review_scope=stale, paper_assessment=stale.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

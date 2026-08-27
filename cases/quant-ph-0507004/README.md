@@ -6,7 +6,7 @@ Published as: [Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model](https
 
 Formal citation: Phys. Rev. Lett. 95, 050402 (2005) · DOI `10.1103/PhysRevLett.95.050402` · Locator `050402`
 
-Public status: **Scientific reproduction — paper-error candidates identified** · Audit score: **69.00/100**
+Public status: **Partial scientific reproduction** · Audit score: **80.88/100**
 
 Whole-paper exact parity-block implementation; Main Fig. 1 finite-N discrepancy retained for fresh review.
 
@@ -37,13 +37,13 @@ cd cases/quant-ph-0507004/code
 python scripts/run_reproduction.py --config config/paper_exact.json
 ```
 
-Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).
+Published machine-readable artifacts are kept under [data](outputs/data/), [figures](outputs/figures/), [checks](outputs/checks/).
 
 ## Reproduction Boundary
 
-This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
+This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.
 
-Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=repair_required, science=failed, pixel=not_comparable, paper_assessment=mixed.
+Remaining limitation: Remaining lifecycle boundaries: artifact_integrity=artifact_valid_with_warnings, parameters=mixed, causal_resolution=repair_required, science=failed, pixel=not_comparable, paper_assessment=inconclusive.
 
 Final-parameter rule: final public figures use the paper parameters when feasible. Any reduced-scale, subset, proxy, or blocked target must be labeled explicitly and cannot be presented as a complete reproduction.
 

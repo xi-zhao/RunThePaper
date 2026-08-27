@@ -3,7 +3,7 @@
 - Generated numerical data: [`../outputs/data/`](../outputs/data/)
 - Generated figures: [`../outputs/figures/`](../outputs/figures/)
 - Machine-readable checks: [`../outputs/checks/`](../outputs/checks/)
-
+- Limited paper-reference comparisons: none published.
 - Independent implementation: [`../code/src/`](../code/src/)
 - Reproduction entrypoints: [`../code/scripts/`](../code/scripts/)
 
