@@ -19,6 +19,7 @@ README_PATHS = {
 CHINESE_STATUS = {
     "Partial scientific reproduction": "部分科学复现",
     "Scientific reproduction — independent review pending": "科学复现，待独立评审",
+    "Scientific reproduction — visual review pending": "科学复现，待视觉评审",
     "Scientific reproduction — invalid": "科学复现无效",
     "Scientific reproduction — paper-error candidates identified": "科学复现，发现论文错误候选",
 }
@@ -279,7 +280,15 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
     paper_id = str(case["paper_id"])
     preprint = case["preprint"]
     publication = case["publication"]
-    figures = sorted((case_dir / "outputs" / "figures").glob("*.png"))
+    data_dir = case_dir / "outputs" / "data"
+    figure_dir = case_dir / "outputs" / "figures"
+    has_data = data_dir.is_dir() and any(
+        path.is_file() for path in data_dir.rglob("*")
+    )
+    has_figures = figure_dir.is_dir() and any(
+        path.is_file() for path in figure_dir.rglob("*")
+    )
+    figures = sorted(figure_dir.rglob("*.png")) if has_figures else []
     featured_results = [
         item for item in case.get("featured_results", []) if isinstance(item, dict)
     ]
@@ -443,25 +452,46 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
                 "",
             ]
         )
+    artifact_links = []
+    if has_data:
+        artifact_links.append("[data](outputs/data/)")
+    if has_figures:
+        artifact_links.append("[figures](outputs/figures/)")
+    artifact_links.append("[checks](outputs/checks/)")
     lines.extend(
         [
-            "Generated files are kept under [data](outputs/data/), [figures](outputs/figures/), and [checks](outputs/checks/).",
+            "Published machine-readable artifacts are kept under "
+            + ", ".join(artifact_links)
+            + ".",
             "",
             "## Reproduction Boundary",
             "",
         ]
     )
+    published_parts = [
+        "paper-derived code",
+        "public validation checks",
+        "explanatory notes",
+    ]
+    if has_data:
+        published_parts.insert(1, "generated data")
+    if has_figures:
+        published_parts.insert(2 if has_data else 1, "generated figures")
     if comparison_results:
         lines.extend(
             [
-                f"This public case includes paper-derived code, generated data, generated figures, public validation checks, explanatory notes, and {len(comparison_results)} limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.",
+                "This public case includes "
+                + ", ".join(published_parts)
+                + f", and {len(comparison_results)} limited comparison panels. Those panels use the minimum paper excerpts needed for validation and clearly separate the paper reference from the independent result. The case does not redistribute the paper PDF, arXiv source archive, standalone original figures, EPS paths, digitized source curves, or source-derived point sets.",
                 "",
             ]
         )
     else:
         lines.extend(
             [
-                "This public case includes paper-derived code, generated data, generated figures, public validation checks, and explanatory notes. It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.",
+                "This public case includes "
+                + ", ".join(published_parts)
+                + ". It does not redistribute the paper PDF, arXiv source archive, original figures, EPS paths, digitized source curves, source-derived point sets, or source-vs-generated composite panels.",
                 "",
             ]
         )
@@ -473,11 +503,21 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
             "",
         ]
     )
-    if not featured_results:
+    if not featured_results and figures:
         lines.extend(["## Generated Figures", ""])
         for figure in figures:
             label = figure.stem.replace("_", " ")
-            lines.extend([f"![{label}](outputs/figures/{figure.name})", ""])
+            relative = figure.relative_to(figure_dir).as_posix()
+            lines.extend([f"![{label}](outputs/figures/{relative})", ""])
+    elif not featured_results and not figures:
+        lines.extend(
+            [
+                "## Generated Figures",
+                "",
+                "No generated figure is published at the current partial boundary.",
+                "",
+            ]
+        )
     return "\n".join(lines).rstrip() + "\n"
 
 

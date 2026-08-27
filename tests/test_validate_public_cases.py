@@ -6,10 +6,39 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 
 from scripts.validate_public_cases import (
+    requires_generated_results,
     scientific_python_files,
     validate_authority_projection,
     validate_paper_identity,
 )
+from scripts.render_case_catalog import CHINESE_STATUS
+
+
+class PublicStatusRenderingTests(unittest.TestCase):
+    def test_visual_review_pending_has_chinese_label(self) -> None:
+        self.assertEqual(
+            "科学复现，待视觉评审",
+            CHINESE_STATUS["Scientific reproduction — visual review pending"],
+        )
+
+
+class LifecycleEvidenceRequirementTests(unittest.TestCase):
+    def test_partial_case_may_publish_without_success_artifacts(self) -> None:
+        self.assertFalse(
+            requires_generated_results({"authoritative_status": "partial"})
+        )
+
+    def test_result_claiming_states_require_data_and_figures(self) -> None:
+        for status in (
+            "complete",
+            "review_pending",
+            "visual_pending",
+            "paper_error_candidate",
+        ):
+            with self.subTest(status=status):
+                self.assertTrue(
+                    requires_generated_results({"authoritative_status": status})
+                )
 
 
 class PaperIdentityValidationTests(unittest.TestCase):

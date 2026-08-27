@@ -51,6 +51,12 @@ DOI = re.compile(r"^10\.\d{4,9}/\S+$", re.IGNORECASE)
 DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 GIT_SHA = re.compile(r"^[0-9a-f]{40}$")
 AUTHORITY_SOURCE = "PRAgent authoritative_reproduction_state schema v3"
+RESULT_REQUIRED_STATUSES = {
+    "complete",
+    "review_pending",
+    "visual_pending",
+    "paper_error_candidate",
+}
 
 
 def load_catalog() -> list[dict[str, Any]]:
@@ -85,6 +91,17 @@ def scientific_python_files(case_dir: Path) -> list[Path]:
         for path in (case_dir / "code").rglob("*.py")
         if path.name not in {"__init__.py", "verify_public_artifacts.py"}
     ]
+
+
+def requires_generated_results(case: dict[str, Any]) -> bool:
+    """Require frozen data and figures only when the lifecycle claims results.
+
+    A partial case may be published precisely to expose a failed or objectively
+    blocked attempt.  Requiring successful result artifacts from that state
+    would either reject honest cases or encourage placeholder outputs.
+    """
+
+    return str(case.get("authoritative_status", "")) in RESULT_REQUIRED_STATUSES
 
 
 def validate_markdown_links(path: Path, errors: list[str]) -> None:
@@ -255,16 +272,25 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
 
     required_groups = {
         "scientific Python implementation": scientific_python_files(case_dir),
-        "generated data": [
-            p for p in (case_dir / "outputs" / "data").rglob("*") if p.is_file()
-        ],
-        "generated figure": [
-            p for p in (case_dir / "outputs" / "figures").rglob("*") if p.is_file()
-        ],
         "machine-readable check": [
             p for p in (case_dir / "outputs" / "checks").rglob("*.json") if p.is_file()
         ],
     }
+    if requires_generated_results(case):
+        required_groups.update(
+            {
+                "generated data": [
+                    p
+                    for p in (case_dir / "outputs" / "data").rglob("*")
+                    if p.is_file()
+                ],
+                "generated figure": [
+                    p
+                    for p in (case_dir / "outputs" / "figures").rglob("*")
+                    if p.is_file()
+                ],
+            }
+        )
     for label, paths in required_groups.items():
         if not paths:
             errors.append(f"{paper_id} has no {label}")
