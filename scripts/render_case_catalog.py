@@ -5,6 +5,13 @@ import json
 from pathlib import Path
 from typing import Any
 
+if __package__:
+    from .library_navigation import render_learning_paths, validate_learning_path
+    from .library_updates import collect_updates, render_updates
+else:
+    from library_navigation import render_learning_paths, validate_learning_path
+    from library_updates import collect_updates, render_updates
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "cases" / "catalog.json"
 COLLECTIONS_PATH = ROOT / "cases" / "collections.json"
@@ -73,6 +80,7 @@ def load_collections(cases: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not isinstance(paper_ids, list) or not paper_ids:
             raise ValueError(f"collection {collection_id} must contain paper_ids")
         grouped_ids.extend(str(paper_id) for paper_id in paper_ids)
+        validate_learning_path(collection)
 
     if len(grouped_ids) != len(set(grouped_ids)):
         raise ValueError("a paper may appear in only one primary collection")
@@ -122,6 +130,8 @@ def render_readme_catalog(
             "Open a collection in the [full catalog](CASES.md) for paper references,",
             "recorded status, bilingual notes, code, and evidence.",
             "",
+            "[Find a learning path](LEARNING_PATHS.md) · [Recent case updates](UPDATES.md)",
+            "",
             "| Research collection | Cases |",
             "| --- | ---: |",
         ]
@@ -130,6 +140,8 @@ def render_readme_catalog(
         lines = [
             f"**{len(cases)} 篇公开论文案例**，包含部分复现和受阻的尝试。",
             "按主题进入[完整目录](CASES.md)，查看论文来源、已记录状态、中英文讲义、代码和证据。",
+            "",
+            "[选择学习路径](LEARNING_PATHS.md) · [查看案例增量更新](UPDATES.md)",
             "",
             "| 研究主题 | 案例数 |",
             "| --- | ---: |",
@@ -176,6 +188,8 @@ def render_cases_index(
         "# Published Cases / 论文目录",
         "",
         "[English introduction](README.md) · [中文介绍](README.zh-CN.md)",
+        "",
+        "[Learning paths / 学习路径](LEARNING_PATHS.md) · [Case updates / 案例更新](UPDATES.md)",
         "",
         f"{len(cases)} paper cases, grouped by research topic. Each paper appears in one primary collection.",
         "Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.",
@@ -566,6 +580,8 @@ def expected_files(
             README_PATHS["zh-CN"], cases, collections, "zh-CN"
         ),
         ROOT / "CASES.md": render_cases_index(cases, collections),
+        ROOT / "LEARNING_PATHS.md": render_learning_paths(cases, collections),
+        ROOT / "UPDATES.md": render_updates(collect_updates(ROOT)),
     }
     for case in cases:
         case_dir = ROOT / "cases" / str(case["paper_id"])
@@ -577,6 +593,14 @@ def expected_files(
             case, case_dir
         )
     return rendered
+
+
+def write_if_changed(path: Path, content: str) -> bool:
+    if path.exists() and path.read_text(encoding="utf-8") == content:
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+    return True
 
 
 def main() -> int:
@@ -597,8 +621,7 @@ def main() -> int:
             if not path.exists() or path.read_text(encoding="utf-8") != content:
                 stale.append(path.relative_to(ROOT))
         else:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding="utf-8")
+            write_if_changed(path, content)
     if stale:
         for path in stale:
             print(f"stale generated file: {path}")

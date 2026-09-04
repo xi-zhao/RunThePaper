@@ -2,6 +2,8 @@
 
 [English introduction](README.md) · [中文介绍](README.zh-CN.md)
 
+[Learning paths / 学习路径](LEARNING_PATHS.md) · [Case updates / 案例更新](UPDATES.md)
+
 100 paper cases, grouped by research topic. Each paper appears in one primary collection.
 Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.
 

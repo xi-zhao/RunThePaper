@@ -69,6 +69,8 @@ for its scope and remaining review work.
 Open a collection in the [full catalog](CASES.md) for paper references,
 recorded status, bilingual notes, code, and evidence.
 
+[Find a learning path](LEARNING_PATHS.md) · [Recent case updates](UPDATES.md)
+
 | Research collection | Cases |
 | --- | ---: |
 | [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 25 |

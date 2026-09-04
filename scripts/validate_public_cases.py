@@ -403,7 +403,7 @@ def main() -> int:
         errors.append(
             f"catalog entries without case folders: {', '.join(stale_catalog_entries)}"
         )
-    for root_doc in (ROOT / "README.md", ROOT / "CASES.md", ROOT / "ROADMAP.md"):
+    for root_doc in sorted(ROOT.glob("*.md")):
         if root_doc.is_file():
             validate_markdown_links(root_doc, errors)
     if errors:

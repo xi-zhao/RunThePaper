@@ -64,9 +64,42 @@ Every case must include scientific Python code in `code/` beyond
 it does not replace the implementation that computes or reanalyzes the paper's
 scientific result.
 
-## Before Opening a Pull Request
+## Organize the library and record updates
 
-Regenerate navigation after adding or changing a catalog entry:
+The public library has one case catalog, one editorial organization file, and
+Git history:
+
+- `cases/catalog.json` receives paper identity, scientific state and evidence
+  pointers from the PRAgent projection.
+- `cases/collections.json` assigns every case to one primary research
+  collection. Each collection also owns bilingual prerequisites and an ordered
+  learning route with a concrete exercise per paper. Refer to existing paper
+  IDs; do not copy scientific status into the editorial metadata.
+- `UPDATES.md` is generated from committed case history. It distinguishes
+  additions, updates and removals, and names the changed kinds of material.
+  Reading routes and directory-only changes are not scientific case updates.
+
+For each increment:
+
+1. Fix or reproduce the paper in PRAgent, validate its evidence and export the
+   permitted public files through its publish manifest.
+2. Assign a new paper to a collection; revise learning routes when a paper is
+   removed or a better starting sequence is available. Every case must appear
+   in exactly one primary collection.
+3. Regenerate navigation, run the public checks below, review and commit the
+   case projection. This commit is the immutable source of the update record.
+4. Run the generator again to include that commit in `UPDATES.md`; verify and
+   commit the changed navigation. Only changed pages are written. A repeated
+   run with the same inputs changes no files.
+
+The generator refreshes both READMEs, `CASES.md`, `LEARNING_PATHS.md`,
+`UPDATES.md`, and case navigation together. It reads complete local Git history;
+a shallow clone must retrieve missing history before regeneration. It does
+not fetch papers, run scientific experiments, commit, or publish on its own.
+
+## Checks before a pull request
+
+Regenerate navigation after changing a catalog entry or learning route:
 
 ```bash
 python scripts/render_case_catalog.py
@@ -77,5 +110,6 @@ Then verify the public package:
 ```bash
 python scripts/render_case_catalog.py --check
 python scripts/validate_public_cases.py
+python -m unittest discover -s tests -q
 python -m compileall -q scripts cases
 ```

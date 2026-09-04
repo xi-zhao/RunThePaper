@@ -63,6 +63,8 @@ python scripts/run_reproduction.py --config config/paper_exact.json
 **100 篇公开论文案例**，包含部分复现和受阻的尝试。
 按主题进入[完整目录](CASES.md)，查看论文来源、已记录状态、中英文讲义、代码和证据。
 
+[选择学习路径](LEARNING_PATHS.md) · [查看案例增量更新](UPDATES.md)
+
 | 研究主题 | 案例数 |
 | --- | ---: |
 | [量子计算、算法与纠错](CASES.md#collection-quantum-computing) | 25 |
