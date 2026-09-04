@@ -109,13 +109,6 @@ def paper_reference(case: dict[str, Any]) -> str:
     return f"{preprint_reference(case)}<br>{publication_reference(case)}"
 
 
-def catalog_focus(case: dict[str, Any]) -> str:
-    topic = str(case["topic"]).strip()
-    if topic.startswith("Independent scientific reproduction of "):
-        return "Independent formula, code, and data reconstruction with explicit remaining boundaries."
-    return topic
-
-
 def render_readme_catalog(
     cases: list[dict[str, Any]],
     collections: list[dict[str, Any]],
@@ -123,104 +116,29 @@ def render_readme_catalog(
 ) -> str:
     if language not in README_PATHS:
         raise ValueError(f"unsupported README language: {language}")
-    cases_by_id = {str(case["paper_id"]): case for case in cases}
     if language == "en":
         lines = [
-            f"**{len(cases)} public cases, organized as research collections.** Each paper is",
-            "placed on one primary path even when its ideas cross several fields.",
+            f"**{len(cases)} public paper cases**, including partial and blocked reproductions.",
+            "Open a collection in the [full catalog](CASES.md) for paper references,",
+            "recorded status, bilingual notes, code, and evidence.",
             "",
-            "Choose a collection to open its catalog, or use the [detailed index](CASES.md)",
-            "for paper identities, scores, and reproduction boundaries.",
-            "",
-            "**Jump to a collection**",
-            "",
+            "| Research collection | Cases |",
+            "| --- | ---: |",
         ]
         title_field = "title_en"
     else:
         lines = [
-            f"**{len(cases)} 篇公开案例，按研究主题进入。** 这里的分类是一条主要阅读路径，",
-            "很多论文同时横跨多个方向。论文标题保留原文。",
+            f"**{len(cases)} 篇公开论文案例**，包含部分复现和受阻的尝试。",
+            "按主题进入[完整目录](CASES.md)，查看论文来源、已记录状态、中英文讲义、代码和证据。",
             "",
-            "选择一个主题展开目录，也可以进入 [完整索引（英文）](CASES.md) 查看论文身份、分数和复现边界。",
-            "",
-            "**快速入口**",
-            "",
+            "| 研究主题 | 案例数 |",
+            "| --- | ---: |",
         ]
         title_field = "title_zh"
     for collection in collections:
-        count = len(collection["paper_ids"])
         lines.append(
-            f"- [{collection[title_field]} ({count})](#collection-{collection['id']})"
-        )
-
-    for collection in collections:
-        collection_id = str(collection["id"])
-        paper_ids = [str(paper_id) for paper_id in collection["paper_ids"]]
-        lines.extend(
-            [
-                "",
-                f'<a id="collection-{collection_id}"></a>',
-                "",
-                "<details>",
-                f"<summary><strong>{collection[title_field]} ({len(paper_ids)})</strong></summary>",
-                "",
-            ]
-        )
-        if language == "en":
-            lines.extend(
-                [
-                    str(collection["description_en"]),
-                    "",
-                    "| Paper | Reproduced focus | Status | Open |",
-                    "| --- | --- | --- | --- |",
-                ]
-            )
-        else:
-            lines.extend(
-                [
-                    str(collection["description_zh"]),
-                    "",
-                    "| 论文 | 复现状态 | 查看 |",
-                    "| --- | --- | --- |",
-                ]
-            )
-        for paper_id in paper_ids:
-            case = cases_by_id[paper_id]
-            case_root = f"cases/{paper_id}"
-            paper = f"[{case['title']}]({case_root}/README.md)"
-            if language == "en":
-                resources = (
-                    f"[Note]({case_root}/note/reproduction-note.en.md) · "
-                    f"[Code]({case_root}/code/README.md)"
-                )
-                lines.append(
-                    f"| {paper} | {catalog_focus(case)} | {case['status']} | {resources} |"
-                )
-            else:
-                status = CHINESE_STATUS.get(str(case["status"]))
-                if status is None:
-                    raise ValueError(
-                        f"missing Chinese status for {paper_id}: {case['status']}"
-                    )
-                resources = (
-                    f"[中文讲义]({case_root}/note/reproduction-note.zh-CN.md) · "
-                    f"[代码]({case_root}/code/README.md)"
-                )
-                lines.append(f"| {paper} | {status} | {resources} |")
-        lines.extend(["", "</details>"])
-    if language == "en":
-        lines.extend(
-            [
-                "",
-                "Status describes reproduction scope, not rank. See [how to read reproduction quality](#how-to-read-reproduction-quality) and the [detailed case index](CASES.md) for paper identities, audit scores, generated figures, checks, and explicit boundaries.",
-            ]
-        )
-    else:
-        lines.extend(
-            [
-                "",
-                "这里的状态描述复现范围，不是论文排名，也不是完成度奖杯。部分复现、输入缺失、算力阻塞和待独立评审都会照实保留。详情可查看[如何理解复现质量](#如何理解复现质量)和[完整索引（英文）](CASES.md)。",
-            ]
+            f"| [{collection[title_field]}](CASES.md#collection-{collection['id']}) "
+            f"| {len(collection['paper_ids'])} |"
         )
     return "\n".join(lines)
 
@@ -250,29 +168,62 @@ def render_readme(
     return rendered
 
 
-def render_cases_index(cases: list[dict[str, Any]]) -> str:
+def render_cases_index(
+    cases: list[dict[str, Any]], collections: list[dict[str, Any]]
+) -> str:
+    cases_by_id = {str(case["paper_id"]): case for case in cases}
     lines = [
-        "# Published Cases",
+        "# Published Cases / 论文目录",
         "",
-        "Every case provides a public overview, Chinese and English getting-started notes, runnable code, generated data and figures, and an explicit reproduction boundary.",
+        "[English introduction](README.md) · [中文介绍](README.zh-CN.md)",
         "",
-        "| Paper ID | Topic | Public status | Audit score |",
-        "| --- | --- | --- | ---: |",
+        f"{len(cases)} paper cases, grouped by research topic. Each paper appears in one primary collection.",
+        "Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.",
+        "",
+        "The audit score records evidence strength at export time. It is not a percentage of physical correctness or a cross-paper ranking.",
+        "Status and scores are taken from the public catalog; the case completion assessment records the remaining work.",
+        "",
+        "审计分数记录导出时的证据情况；科学一致性、复现范围和独立评审状态请结合案例页面阅读。",
+        "",
     ]
-    for case in cases:
-        paper_id = str(case["paper_id"])
+    for collection in collections:
         lines.append(
-            f"| [`{paper_id}`](cases/{paper_id}/README.md) | {case['topic']} | "
-            f"{case['status']} | {float(case['audit_score']):.2f} |"
+            f"- [{collection['title_en']} / {collection['title_zh']} "
+            f"({len(collection['paper_ids'])})](#collection-{collection['id']})"
         )
-    lines.extend(
-        [
-            "",
-            "The audit score records evidence strength at export time. It is not a visual-style rating, and it does not erase the limitation stated by each case.",
-            "It is also not a cross-paper ranking or a publishing threshold: publication readiness comes from satisfying the public case contract and stating the remaining boundary honestly.",
-            "",
-        ]
-    )
+    for collection in collections:
+        lines.extend(
+            [
+                "",
+                f'<a id="collection-{collection["id"]}"></a>',
+                "",
+                f"## {collection['title_en']}",
+                "",
+                str(collection["description_en"]),
+                "",
+                f"**{collection['title_zh']}** — {collection['description_zh']}",
+                "",
+                "| Paper / References | Public status / Audit score | Read / Run |",
+                "| --- | --- | --- |",
+            ]
+        )
+        for paper_id in collection["paper_ids"]:
+            case = cases_by_id[str(paper_id)]
+            case_root = f"cases/{paper_id}"
+            chinese_status = CHINESE_STATUS.get(str(case["status"]))
+            if chinese_status is None:
+                raise ValueError(
+                    f"missing Chinese status for {paper_id}: {case['status']}"
+                )
+            lines.append(
+                f"| [{case['title']}]({case_root}/README.md)<br>{paper_reference(case)} "
+                f"| {case['status']}<br>{chinese_status}<br>Audit: {float(case['audit_score']):.2f}/100 "
+                f"| [English]({case_root}/note/reproduction-note.en.md) · "
+                f"[中文]({case_root}/note/reproduction-note.zh-CN.md)<br>"
+                f"[Code]({case_root}/code/README.md) · "
+                f"[Checks]({case_root}/outputs/checks/) |"
+            )
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -614,7 +565,7 @@ def expected_files(
         README_PATHS["zh-CN"]: render_readme(
             README_PATHS["zh-CN"], cases, collections, "zh-CN"
         ),
-        ROOT / "CASES.md": render_cases_index(cases),
+        ROOT / "CASES.md": render_cases_index(cases, collections),
     }
     for case in cases:
         case_dir = ROOT / "cases" / str(case["paper_id"])
