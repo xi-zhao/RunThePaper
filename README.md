@@ -1,25 +1,42 @@
 <h1 align="center">RunThePaper</h1>
 
-<p align="center"><strong>Read the paper. Run the result.</strong></p>
+<p align="center"><strong>An executable history of science.</strong></p>
 
 <p align="center">
   <strong>English</strong> · <a href="README.zh-CN.md">Simplified Chinese</a>
 </p>
 
 <p align="center">
-  <a href="#browse-the-papers">Browse papers</a> ·
-  <a href="#run-this-example">Run an example</a> ·
-  <a href="#how-to-read-the-results">Read the evidence</a> ·
-  <a href="#contribute">Contribute</a>
+  <a href="LEARNING_PATHS.md">Learning paths</a> ·
+  <a href="#browse-the-papers">Paper catalog</a> ·
+  <a href="HISTORY.md">Paper timeline</a> ·
+  <a href="UPDATES.md">Case updates</a> ·
+  <a href="#run-this-example">Run an example</a>
 </p>
 
-**RunThePaper is an open library of physics paper reproductions.** Each case
-brings together the derivation, runnable code, generated data and figures,
-validation checks, and a clear account of what remains unresolved. Notes are
-available in English and Chinese.
+**RunThePaper is building an executable history of science.** Our paper
+reproduction agent, **PRAgent**, reconstructs the derivations, methods, and
+computations behind papers. RunThePaper brings the resulting code, notes, data,
+figures, and evidence together, organized by research field, learning path, and
+paper chronology. The current collection focuses on physics and quantum science,
+with English and Chinese notes.
 
-Use a case to understand a method, check a published result, or start a new
-calculation without rebuilding the whole research context from a PDF.
+A paper compresses a research result. Getting started often requires working
+through intermediate derivations, parameter choices, and numerical decisions.
+We preserve that path so the next researcher can understand how a result was
+obtained, run the calculation, and build on it. Making these working foundations
+accessible to students, researchers, and scientific agents is our approach to
+research infrastructure for the AI era.
+
+| What you want to do | Your starting point |
+| --- | --- |
+| **Enter a research field** | Prerequisites, a suggested paper order, and a first exercise for beginning graduate students and undergraduates with the relevant foundations. [Choose a learning path](LEARNING_PATHS.md). |
+| **Continue existing work** | Derivations, code, results, and checks together for verification, teaching, new parameter studies, and extensions. [Browse the cases](CASES.md). |
+| **Build AI for Science** | A machine-readable case index, executable calculations, and evidence records as domain context and validation material for scientific agents. [Explore the index](cases/catalog.json). |
+
+Start with one formula, run one calculation, explain its output, then change an
+assumption. Each case records the scope it reproduces and the work still open,
+so you can choose a starting point with its limitations in view.
 
 ## Start with a result
 
@@ -69,7 +86,7 @@ for its scope and remaining review work.
 Open a collection in the [full catalog](CASES.md) for paper references,
 recorded status, bilingual notes, code, and evidence.
 
-[Find a learning path](LEARNING_PATHS.md) · [Recent case updates](UPDATES.md)
+[Learning paths](LEARNING_PATHS.md) · [Paper timeline](HISTORY.md) · [Recent case updates](UPDATES.md)
 
 | Research collection | Cases |
 | --- | ---: |
@@ -112,17 +129,36 @@ These are claim-level outcomes, not a percentage of fully reproduced papers.
 The audit includes the [full ledger and measurement method](evaluation/claim-first-100/README.md),
 including fidelity evidence and its limits.
 
-## How cases are made
+## What makes this history executable
 
-We build cases with **PRAgent**, our paper reproduction harness: it organizes
-paper understanding, derivation, implementation, numerical execution, checks,
-and independent review. RunThePaper publishes the resulting research materials
-and their recorded boundaries. The PRAgent execution system is developed
-separately and is not distributed in this repository.
+**PRAgent reproduces papers; RunThePaper organizes and accumulates the work.**
+PRAgent handles paper understanding, derivation, implementation, and computation,
+and organizes validation and independent review. RunThePaper publishes the
+shareable materials, evidence, and recorded review state. The PRAgent execution
+system is developed separately and is not distributed in this repository.
 
-Our aim is to make each reproduction useful to the next researcher: a place
-to rerun a result, investigate a discrepancy, or change an assumption and ask a
-new question. See the [roadmap](ROADMAP.md) for planned work.
+A paper is one entry into this history. Its case connects a research question
+to the claims, derivations, code, generated results, and checks behind it.
+You can follow that chain, rerun a calculation, inspect a discrepancy, or ask
+what happens when an assumption changes.
+
+As these cases accumulate, they form a shared knowledge foundation for
+learning and further research. Tracing relationships between discoveries,
+retrieving across cases, and measuring their value to scientific agents are
+[next-stage work](ROADMAP.md).
+
+## A history that keeps growing
+
+Research collections organize the papers by field. Learning paths add
+prerequisites, reading order, and exercises. The [paper timeline](HISTORY.md)
+provides a chronological route into the collection. These views refer to the
+same cases and their recorded scientific state.
+
+The [update history](UPDATES.md) is generated from actual commits. It separates
+new papers, updates, and removals, and shows whether code, derivations, data,
+figures, or validation evidence changed. Every entry links an exact revision.
+The catalog, learning paths, paper timeline, and update history follow one
+[maintenance workflow](CONTRIBUTING.md#organize-the-library-and-record-updates).
 
 ## Contribute
 
@@ -132,6 +168,9 @@ new question. See the [roadmap](ROADMAP.md) for planned work.
   observed result so someone else can check it.
 - **Review or extend a case:** contribute a derivation check, missing input,
   correction, or additional result through the [contribution workflow](CONTRIBUTING.md).
+- **Improve a learning path:** report a missing prerequisite, unclear
+  derivation, or command that failed, or suggest a paper order and exercise.
+  A specific learning experience can improve the shared research foundation.
 
 When using a case in your work, cite the original paper and link the case at
 the commit you used so readers can inspect the same materials.

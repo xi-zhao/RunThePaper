@@ -6,9 +6,11 @@ from pathlib import Path
 from typing import Any
 
 if __package__:
+    from .library_history import render_history
     from .library_navigation import render_learning_paths, validate_learning_path
     from .library_updates import collect_updates, render_updates
 else:
+    from library_history import render_history
     from library_navigation import render_learning_paths, validate_learning_path
     from library_updates import collect_updates, render_updates
 
@@ -130,7 +132,7 @@ def render_readme_catalog(
             "Open a collection in the [full catalog](CASES.md) for paper references,",
             "recorded status, bilingual notes, code, and evidence.",
             "",
-            "[Find a learning path](LEARNING_PATHS.md) · [Recent case updates](UPDATES.md)",
+            "[Learning paths](LEARNING_PATHS.md) · [Paper timeline](HISTORY.md) · [Recent case updates](UPDATES.md)",
             "",
             "| Research collection | Cases |",
             "| --- | ---: |",
@@ -141,7 +143,7 @@ def render_readme_catalog(
             f"**{len(cases)} 篇公开论文案例**，包含部分复现和受阻的尝试。",
             "按主题进入[完整目录](CASES.md)，查看论文来源、已记录状态、中英文讲义、代码和证据。",
             "",
-            "[选择学习路径](LEARNING_PATHS.md) · [查看案例增量更新](UPDATES.md)",
+            "[选择学习路径](LEARNING_PATHS.md) · [沿论文年代浏览](HISTORY.md) · [查看案例增量更新](UPDATES.md)",
             "",
             "| 研究主题 | 案例数 |",
             "| --- | ---: |",
@@ -189,7 +191,7 @@ def render_cases_index(
         "",
         "[English introduction](README.md) · [中文介绍](README.zh-CN.md)",
         "",
-        "[Learning paths / 学习路径](LEARNING_PATHS.md) · [Case updates / 案例更新](UPDATES.md)",
+        "[Learning paths / 学习路径](LEARNING_PATHS.md) · [Paper timeline / 论文年代](HISTORY.md) · [Case updates / 案例更新](UPDATES.md)",
         "",
         f"{len(cases)} paper cases, grouped by research topic. Each paper appears in one primary collection.",
         "Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.",
@@ -581,6 +583,7 @@ def expected_files(
         ),
         ROOT / "CASES.md": render_cases_index(cases, collections),
         ROOT / "LEARNING_PATHS.md": render_learning_paths(cases, collections),
+        ROOT / "HISTORY.md": render_history(cases),
         ROOT / "UPDATES.md": render_updates(collect_updates(ROOT)),
     }
     for case in cases:

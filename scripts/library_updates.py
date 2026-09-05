@@ -121,11 +121,11 @@ def _markdown_text(value: str) -> str:
 def render_updates(updates: list[LibraryUpdate]) -> str:
     lines = [
         "# Case Updates / 案例增量更新", "",
-        "[Library / 论文目录](CASES.md) · [Learning paths / 学习路径](LEARNING_PATHS.md)", "",
+        "[Library / 论文目录](CASES.md) · [Learning paths / 学习路径](LEARNING_PATHS.md) · [Paper timeline / 论文年代](HISTORY.md)", "",
         "Recent case changes from committed Git history, newest first. Each entry links the exact revision; a file update does not assert a successful reproduction or improved score.",
         "按时间倒序列出已提交的案例变更，区分新增、更新和移出，并链接到对应版本。代码、数据或证据文件的更新不自动意味着复现完成或分数提高。", "",
-        "This page records repository history, including any local commits awaiting publication. Uncommitted edits are excluded. Navigation-only changes are excluded, and regenerating unchanged content creates no update.",
-        "这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动不计入。仅修改导航或重新生成相同内容不会产生案例更新。", "",
+        "This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.",
+        "这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。", "",
     ]
     if not updates:
         lines.extend(["No committed case changes are available. / 暂无已提交的案例变更。", ""])
@@ -151,7 +151,7 @@ def render_updates(updates: list[LibraryUpdate]) -> str:
         lines.append("")
     lines.extend([
         "## Refreshing this page / 如何更新", "",
-        "After the validated case projection is committed, run `python scripts/render_case_catalog.py`. The same command refreshes the directory, learning paths, and this history. Scientific state is always imported from PRAgent; it is never inferred from this changelog.",
-        "案例投影通过检查并提交后，运行 `python scripts/render_case_catalog.py`，即可同步刷新目录、学习路径与本页。科学状态始终来自 PRAgent 的案例证据，不由更新日志裁决。", "",
+        "After the validated case projection is committed, run `python scripts/render_case_catalog.py`. The same command refreshes the directory, learning paths, paper timeline, and this history. Scientific state is always imported from PRAgent; it is never inferred from this changelog.",
+        "案例投影通过检查并提交后，运行 `python scripts/render_case_catalog.py`，即可同步刷新目录、学习路径、论文时间线与本页。科学状态始终来自 PRAgent 的案例证据，不由更新日志裁决。", "",
     ])
     return "\n".join(lines)

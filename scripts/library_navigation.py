@@ -37,7 +37,7 @@ def render_learning_paths(
     lines = [
         "# Start Researching / 从这里开始研究",
         "",
-        "[English introduction](README.md) · [中文介绍](README.zh-CN.md) · [All papers / 完整目录](CASES.md)",
+        "[English introduction](README.md) · [中文介绍](README.zh-CN.md) · [All papers / 完整目录](CASES.md) · [Paper timeline / 论文年代](HISTORY.md)",
         "",
         "Choose a direction, check the prerequisites, then follow the suggested paper order. These are learning routes, not a ranking of scientific completion.",
         "先选方向、确认基础，再按建议顺序进入论文。这里给出学习路径；案例是否完成复现，仍以各自的证据和评审状态为准。",

@@ -1,7 +1,7 @@
 # Contributing
 
-RunThePaper accepts contributions that make a reproduction case more accurate,
-clear, runnable, or honest.
+RunThePaper is building an executable history of science. Contributions help
+people understand a discovery, run its calculations, or build on its results.
 
 Good contributions include:
 
@@ -10,7 +10,9 @@ Good contributions include:
 - adding a missing validation check;
 - reducing ambiguity in a reproduction note;
 - reporting a mismatch between generated results and the paper;
-- adding a new case with clear evidence boundaries.
+- adding a new case with clear evidence boundaries;
+- improving a learning path with prerequisites and a concrete exercise;
+- explaining a connection between papers, supported by sources and case evidence.
 
 Please do not add original paper PDFs, publisher source archives, or original
 figure assets unless the license explicitly allows redistribution and the case
@@ -77,7 +79,11 @@ Git history:
   IDs; do not copy scientific status into the editorial metadata.
 - `UPDATES.md` is generated from committed case history. It distinguishes
   additions, updates and removals, and names the changed kinds of material.
-  Reading routes and directory-only changes are not scientific case updates.
+  Reading routes and top-level navigation changes are not case updates.
+- `HISTORY.md` uses the earliest recorded arXiv year or an explicit parenthesized
+  publication year. Missing or ambiguous years remain undated. It never uses a
+  metadata check date or a case commit date as a paper date; correct identity
+  metadata in PRAgent before re-projecting it.
 
 For each increment:
 
@@ -92,7 +98,7 @@ For each increment:
    commit the changed navigation. Only changed pages are written. A repeated
    run with the same inputs changes no files.
 
-The generator refreshes both READMEs, `CASES.md`, `LEARNING_PATHS.md`,
+The generator refreshes both READMEs, `CASES.md`, `LEARNING_PATHS.md`, `HISTORY.md`,
 `UPDATES.md`, and case navigation together. It reads complete local Git history;
 a shallow clone must retrieve missing history before regeneration. It does
 not fetch papers, run scientific experiments, commit, or publish on its own.

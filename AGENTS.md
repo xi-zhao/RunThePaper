@@ -2,9 +2,14 @@
 
 ## Project Positioning
 
-RunThePaper is the public output library for reproduced papers.
+RunThePaper is building **an executable history of science / 可执行的科学史**:
+paper-based research cases whose derivations, methods, code, generated results,
+and evidence let people understand a finding, rerun its calculations, and
+continue the research. The current collection focuses on physics and quantum
+science. Preserve this positioning in public writing; see
+[the brand narrative](docs/BRAND_NARRATIVE.md).
 
-PRAgent is the harness we use to reproduce papers: agent workflows,
+PRAgent is our paper reproduction agent. Its harness, agent workflows,
 diagnostics, internal reference checks, source-material handling, and production
 automation live there.
 
@@ -37,12 +42,31 @@ official paper, remain outside this repository's open-content license, and
 state that it does not establish author-data-level equivalence. Do not publish
 the underlying standalone source panels alongside the comparison.
 
-RunThePaper is also not a model training-pack repository. Our service object is
-the human reader: researchers, builders, students, and reviewers who want to
-understand what was reproduced, how it was reproduced, what code can run, and
-where the reproduction boundary is. If model companies later want to consume the
-work for training, they can build their own training packs from the public
-materials.
+The primary entry audience is beginning graduate students and undergraduates
+with the relevant foundations. Researchers, educators, and reviewers also need
+to inspect, run, and extend the work. Structured cases and executable evidence
+are a foundation for future AI for Science uses; improvements to scientific
+agents require measured evaluation before being claimed. Training-pack
+production is outside this repository's current scope.
+
+## Organization and incremental growth
+
+Keep one scientific case behind every navigation view:
+
+- `cases/catalog.json` is the public projection of authoritative paper identity
+  and scientific state; do not edit these facts locally.
+- `cases/collections.json` owns primary collections and bilingual learning
+  routes. Learning order never changes scientific status.
+- `HISTORY.md` derives chronology from recorded paper identities. Dates alone
+  do not establish influence, priority, or a complete history of a field.
+- `UPDATES.md` derives additions, revisions, and removals from committed case
+  history. A revision is not automatically a scientific improvement, and a
+  local commit is not a publication receipt.
+
+Regenerate these views using `scripts/render_case_catalog.py` and follow
+[the incremental workflow](CONTRIBUTING.md#organize-the-library-and-record-updates).
+Keep specific claims traceable; a case count never means that many fully
+reproduced papers.
 
 ## Core Case Rule
 
