@@ -15,11 +15,18 @@
 </p>
 
 **RunThePaper is building an executable history of science.** Our paper
-reproduction agent, **PRAgent**, reconstructs the derivations, methods, and
-computations behind papers. RunThePaper brings the resulting code, notes, data,
-figures, and evidence together, organized by research field, learning path, and
-paper chronology. The current collection focuses on physics and quantum science,
-with English and Chinese notes.
+reproduction agent, **PRAgent**, independently reconstructs the derivations,
+methods, and computations behind papers. RunThePaper brings the resulting code,
+notes, data, figures, and evidence together, organized by research field, learning
+path, and paper chronology. The current collection focuses on physics and quantum
+science, with English and Chinese notes.
+
+**The starting point is independent reconstruction from papers—not just summaries
+or wrappers around authors' code.** PRAgent's reproduction workflow does not
+require authors to release runnable code. RunThePaper preserves the resulting
+implementations, evidence, and limitations so readers can inspect, rerun, and
+extend the work. Missing scientific inputs or experimental resources remain
+explicit case boundaries.
 
 A paper compresses a research result. Getting started often requires working
 through intermediate derivations, parameter choices, and numerical decisions.
@@ -131,11 +138,20 @@ including fidelity evidence and its limits.
 
 ## What makes this history executable
 
-**PRAgent reproduces papers; RunThePaper organizes and accumulates the work.**
-PRAgent handles paper understanding, derivation, implementation, and computation,
-and organizes validation and independent review. RunThePaper publishes the
-shareable materials, evidence, and recorded review state. The PRAgent execution
-system is developed separately and is not distributed in this repository.
+**Independent reproduction is the starting point; an executable history preserves
+what we learn; original research is the direction.**
+
+| Project | Role |
+| --- | --- |
+| [PRAgent](https://github.com/xi-zhao/PRAgent) | **Independently reconstruct and check:** rebuild methods from papers, implement and run reproduction code, and organize validation and independent review. |
+| [RunThePaper](https://github.com/xi-zhao/RunThePaper) | **Preserve and share:** accumulate derivations, code, data, figures, evidence, failure records, and review status for people and agents to inspect, run, and extend. |
+| [CyberEinstein](https://github.com/xi-zhao/CyberEinstein) | **Build toward original research:** connect field history, reproduction evidence, and new questions into a sustained research process. |
+
+You do not need access to PRAgent to read or rerun the public cases here. The
+PRAgent execution system is developed separately and is not distributed in this
+repository. CyberEinstein builds on these existing assets; its sustained
+original-research workflow is the next stage, not a prerequisite for using this
+collection.
 
 A paper is one entry into this history. Its case connects a research question
 to the claims, derivations, code, generated results, and checks behind it.
