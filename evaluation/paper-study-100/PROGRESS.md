@@ -1,6 +1,6 @@
 # 研究执行进度
 
-2026-09-21。**当前主稿已调整为面向arXiv的科研技术报告。** 用户目标是通过正式、可引用的技术成果展示科研与实现能力，不以期刊录用为前提。10页英文稿包含4张主图和100篇附图（Figure 1已重绘为分层架构图），来源为实际公开实现和已有数组的只读重分析。
+2026-09-21。**当前主稿已调整为面向arXiv的科研技术报告。** 用户目标是通过正式、可引用的技术成果展示科研与实现能力，不以期刊录用为前提。11页英文稿包含5张主图和100篇附图（Figure 1为分层架构图，Figure 2为总体复现程度），来源为实际公开实现和已有数组的只读重分析。
 
 arXiv草稿源包已通过干净目录中的两遍PDFLaTeX编译；署名、作者顺序和单位尚待作者提供，未提交arXiv。主入口：[技术报告](preprint/PRAgent_Technical_Report.pdf)、[源码包与提交说明](preprint/ARXIV_SUBMISSION.md)。此前档案审计稿保留为补充研究记录。
 
@@ -9,11 +9,13 @@ arXiv草稿源包已通过干净目录中的两遍PDFLaTeX编译；署名、作�
 | 公开证据整理 | 统一100篇身份；可提取记录包含3,927条证据、1,721份输入哈希及逐篇核查队列 | 原文逐对象核对、实际物理条件和数值一致性审阅 |
 | 生产case准备 | 来源、推导、责任清单、独立实现、运行合同；22项软件测试和开发诊断 | 正式生产入口返回isolation_unavailable，未执行；独立科学验收未开始 |
 | 公开投影 | 保持既有归档不变 | 由PRAgent生成适用公开清单后投影 |
-| 完整稿件 | 10页英文PDF；3张主图与100篇附图；8条参考文献；中文摘要、证据索引、图表复算脚本 | 科学比较结果、作者与单位、投稿声明及针对目标期刊的定稿 |
+| 完整稿件 | 11页英文PDF；5张主图与100篇附图；8条参考文献；中文摘要、证据索引、图表复算脚本 | 科学比较结果、作者与单位、投稿声明及针对目标期刊的定稿 |
+
+总体复现图按本文100篇重新对齐历史记录：1,399条数值结论等权覆盖率40.9%，有测量论文逐篇平均57.8%；未测量保留缺失。科学检查与独立复核状态单列，未作新的科学裁决。
 
 ## 当前入口
 
-- [完整论文PDF](manuscript/PRAgent_100_Papers_Manuscript.pdf)、[可编辑正文](manuscript/paper.md)、[中文读稿说明](manuscript/读稿说明.md)。
+- [当前技术报告PDF](preprint/PRAgent_Technical_Report.pdf)、[可编辑正文](preprint/report.md)、[中文读稿说明](preprint/中文说明.md)。
 - [统一100篇附表](manuscript/cohort_100.csv)、[图表统计](manuscript/figure_data.json)、[陈述依据](manuscript/claim_evidence.csv)。
 - [公开档案报告](analysis/ARCHIVE_REPORT.md)、[逐结果证据](data/results.jsonl)、[输入哈希](data/inputs.jsonl)、[语义核对队列](analysis/semantic_review_queue.csv)。
 

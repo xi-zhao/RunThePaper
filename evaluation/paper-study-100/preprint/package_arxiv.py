@@ -20,9 +20,9 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 text=(HERE/'main.tex').read_text()
 figs=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
-require(len(figs)==len(set(figs))==5,'Expected four main figures and one cohort figure')
+require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort figure')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
-files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json']
+files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv']
 for name in files:
     require(bool(re.fullmatch(r'[a-zA-Z0-9_+.,=/\-]+',name)),f'Unsupported filename: {name}')
     require((HERE/name).is_file(),f'Missing input: {name}')
@@ -45,6 +45,19 @@ with tempfile.TemporaryDirectory(prefix='pragent-arxiv-check-') as td:
     roster=list(csv.DictReader((root/'anc/cohort_100.csv').open()))
     require(len(roster)==len({r['paper_id'] for r in roster})==100,'Cohort identity mismatch')
     for row in roster:require(row['paper_id'] in flat,'Missing rendered identity: '+row['paper_id'])
+    overview=json.loads((root/'anc/overview_summary.json').read_text())
+    paper_rows=list(csv.DictReader((root/'anc/overview_papers.csv').open()))
+    claim_rows=list(csv.DictReader((root/'anc/overview_claims.csv').open()))
+    check_rows=list(csv.DictReader((root/'anc/overview_checks.csv').open()))
+    require({r['paper_id'] for r in paper_rows}=={r['paper_id'] for r in roster} and len(paper_rows)==100,'Overview roster mismatch')
+    require(len(claim_rows)==overview['numerical_claims']==1399,'Overview claim denominator mismatch')
+    require(len(check_rows)==len({r['mapping_row_id'] for r in check_rows})==overview['claim_checks']==3667,'Overview check denominator mismatch')
+    require(sum(r['coverage_available']=='True' for r in paper_rows)==97,'Overview measurement coverage mismatch')
+    require(all(r['reproduced_percent']=='' for r in paper_rows if r['coverage_available']=='False'),'Missing paper scores must remain empty')
+    for key in ['reproduced','externally_blocked','attempted_not_reproduced','pending']:
+        rebuilt=100*sum(int(r[key+'_checks'])/int(r['checks_total']) for r in claim_rows)/len(claim_rows)
+        require(abs(rebuilt-overview['claim_weighted_percent'][key])<1e-9,'Overview aggregate mismatch: '+key)
+    require(overview['new_scientific_verdicts']==0,'Overview scientific boundary changed')
     pages=len(a)
 summary=json.loads((HERE/'anc/result_summary.json').read_text())
 require(summary['new_solver_runs']==0,'Solver execution boundary changed')
@@ -57,7 +70,7 @@ metadata={
     'authors':[], 'affiliations':[], 'license':None,
     'suggested_primary_category':'physics.comp-ph','optional_cross_list':'quant-ph',
     'category_status':'editorial_suggestion_not_confirmed_by_arxiv',
-    'comments':f'Technical report, {pages} pages, 4 main figures and a supplementary cohort figure. Code and public research artifacts: https://github.com/xi-zhao/RunThePaper',
+    'comments':f'Technical report, {pages} pages, 5 main figures and a supplementary cohort figure. Code and public research artifacts: https://github.com/xi-zhao/RunThePaper',
     'abstract':'Turning a physics paper into executable research requires mathematical interpretation, numerical implementation and evidence that connects computed outputs to the source problem. We present PRAgent, a human-guided workflow for AI-assisted scientific reproduction, together with RunThePaper, a public collection of research cases. The workflow connects source objects and equation-level reasoning to case-specific code, generated arrays, physical diagnostics and versioned reports. We describe its use in a fixed 100-paper project and examine three implemented studies: resource estimation for randomized Hamiltonian simulation, interacting quantum walks and quantum discord. Reanalysis of archived quantum-walk arrays gives particle-number residuals below $3\\times10^{-15}$ across 4,509 stored state-time slices. Resource-estimation tables recover distinct gate-count scalings, while discord ensembles expose the importance of separating finite-instance calculations from analytical references. These examples demonstrate concrete implementations and inspectable computational outputs across different numerical tasks. The contribution is a research workflow and its reusable artifacts, rather than a new physical theory or a controlled benchmark of autonomous agents. We provide source-linked figures, analysis code and a unified cohort record to support inspection and further development.',
     'ready_for_submission':False,'submission_status':'not_submitted',
     'remaining_inputs':['Author names, order and affiliations','Author confirmation of final manuscript and responsibilities','Distribution license and account/category eligibility'],
