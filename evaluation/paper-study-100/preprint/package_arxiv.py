@@ -22,7 +22,7 @@ text=(HERE/'main.tex').read_text()
 figs=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
 require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort figure')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
-files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv']
+files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv','anc/diagnostic_followup_summary.json','anc/diagnostic_followup_cases.csv','anc/diagnostic_followup_targets.csv']
 for name in files:
     require(bool(re.fullmatch(r'[a-zA-Z0-9_+.,=/\-]+',name)),f'Unsupported filename: {name}')
     require((HERE/name).is_file(),f'Missing input: {name}')
@@ -70,6 +70,15 @@ with tempfile.TemporaryDirectory(prefix='pragent-arxiv-check-') as td:
             count=sum(r['count_in_reason_table']=='True' and r['summary_science']==status and category['category'] in r['open_root_categories'].split(' | ') for r in reason_cases)
             require(count==category[status],'Reason category count mismatch')
     require(reasons['independent_scientific_reassessment'] is False,'Reason audit boundary changed')
+    followup=json.loads((root/'anc/diagnostic_followup_summary.json').read_text())
+    followup_cases=list(csv.DictReader((root/'anc/diagnostic_followup_cases.csv').open()))
+    followup_targets=list(csv.DictReader((root/'anc/diagnostic_followup_targets.csv').open()))
+    legacy_ids={r['paper_id'] for r in reason_cases if r['count_in_reason_table']=='True' and 'unresolved' in r['open_root_categories'].split(' | ')}
+    require(len(followup_cases)==8 and {r['paper_id'] for r in followup_cases}==legacy_ids,'Diagnostic follow-up cohort mismatch')
+    require(len(followup_targets)==len({(r['paper_id'],r['target_id']) for r in followup_targets})==44,'Diagnostic target count mismatch')
+    require(all(r['explicit_remaining_gap'] for r in followup_targets),'Missing target-specific explanation')
+    require(sum(r['scorecard_root']=='unresolved' for r in followup_targets)==41,'Legacy label count mismatch')
+    require(followup['diagnosis_accepted_by_new_scientific_review'] is False,'Follow-up acceptance boundary changed')
     pages=len(a)
 summary=json.loads((HERE/'anc/result_summary.json').read_text())
 require(summary['new_solver_runs']==0,'Solver execution boundary changed')

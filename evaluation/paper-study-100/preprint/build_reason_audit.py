@@ -19,7 +19,7 @@ CATEGORIES={
  'method_or_scope': ('Method, capability or scope limitation', {'system_capability_limit','reproduction_method_gap','scope_definition_gap'}, 'Repair or extend the method/scope and retest the original scientific requirement.'),
  'result_discrepancy': ('Scientific result discrepancy', {'paper_claim_discrepancy'}, 'Independently review the equations, implementation and source claim; a paper error is not established.'),
  'evidence_process': ('Evidence or review process gap', {'review_or_evidence_process_gap'}, 'Repair evidence links and obtain valid execution and review records.'),
- 'unresolved': ('Root cause unresolved', {'unresolved'}, 'Run discriminating checks before choosing between a code defect and an external limitation.'),
+ 'unresolved': ('Legacy causal-record reconciliation', {'unresolved'}, 'Reconcile documented blockers, structured labels and supporting evidence before accepting the causal diagnosis.'),
 }
 case_rows=[]; target_rows=[]; inputs=[]
 for p in roster:

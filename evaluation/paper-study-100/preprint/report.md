@@ -99,12 +99,14 @@ Compute capacity & 3 & 6 \\
 Method, capability or scope limitation & 7 & 2 \\
 Scientific result discrepancy & 4 & 12 \\
 Evidence or review process gap & 14 & 9 \\
-Root cause unresolved & 6 & 2 \\
+Legacy causal-record reconciliation & 6 & 2 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-**Table 1.** Archived diagnostic themes among cases with consistent summary and detailed science labels. Counts are not additive. Classifications are retained from the archive, not independently re-adjudicated here. The eight cases with an unresolved diagnosis remain unresolved; they are not relabelled as externally blocked.
+**Table 1.** Archived diagnostic themes among cases with consistent summary and detailed science labels. Counts are not additive. Classifications are retained from the archive, not independently re-adjudicated here. The final row counts unreconciled legacy diagnostic records, not unexplained physical failures; these are examined separately below.
+
+Follow-up inspection finds specific boundary statements for all 44 legacy targets in these eight cases. Three reservoir-computing targets have updated compute-capacity diagnoses; their derived state still carries old codes. The other 41 codes require reconciliation with recorded calibration, scale, scope and solver-setting boundaries. The eight-case audit separates these known obstacles from remaining tests. In `2506.06669`, a later scorecard attributes the crossover discrepancy to missing pulse channel/timing definitions, but its cited detailed test file is absent from the public snapshot. That attribution needs inspectable evidence and independent verification. This documentary audit changes no scientific acceptance state.
 
 Concrete examples distinguish the actions needed to resolve these boundaries:
 

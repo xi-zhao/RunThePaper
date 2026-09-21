@@ -9,12 +9,19 @@
 - Clean-directory source-package compilation passed twice with PDFLaTeX; delivered and rebuilt PDF text match. No overfull boxes, missing characters or undefined references. All 100 identities and the new source datasets are present.
 - Author metadata remains pending. No arXiv submission is claimed.
 
-PDF SHA-256: `ef8c9ed1d0b64306296b9fd77ff5b6cb9f0c37eaa6e14654b8c92089cd0898d8`.
+PDF SHA-256: `9e5f7b778f01302ebfeb760195e13fd1498da8921ccfd2bac62e834e9c9bdeb5`.
 
 ## Recorded reason audit
 
 - Science states compared across all 97 available cases; six inconsistencies preserved. Four among 63 failed/pending cases excluded from cause frequencies.
-- Table 1 recounted from 59 case rows (27 failed, 32 pending); category overlap disclosed. Eight retain unresolved diagnoses.
+- Table 1 recounted from 59 case rows (27 failed, 32 pending); category overlap disclosed. Eight contain unreconciled legacy causal records; a documentary follow-up supplies their specific boundaries.
 - All 100 identities and 1,116 target diagnoses included with source pointers and frozen-input hashes. This is recorded attribution, not a new verdict.
 - Four examples distinguish missing inputs, measured disagreement, incomplete production execution and pending scope/review.
-- Figure assets unchanged; no case execution or acceptance-state change. Twelve ancillary files build cleanly in the source package.
+- Figure assets unchanged; no case execution or acceptance-state change. Fifteen ancillary files build cleanly in the source package.
+
+## Legacy diagnostic reconciliation
+
+- Eight cases and all 44 legacy unresolved targets matched to frozen scorecards and detailed reports. Every target has an explicit remaining-gap statement.
+- Three targets have updated compute-capacity diagnoses; 41 retain old codes. No scientific acceptance or state promotion performed.
+- Reservoir workload checked against the public resource benchmark. The D001 detailed test file is absent from the public snapshot; its recorded attribution is not claimed independently verified.
+- Figure assets and pages 1-5 unchanged; revised page 6 and all following pages rendered. All 15 ancillary files compile from a clean source package; 100 identities and 44 unique diagnostic targets validated.

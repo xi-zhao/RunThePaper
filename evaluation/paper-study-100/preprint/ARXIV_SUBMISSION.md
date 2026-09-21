@@ -4,7 +4,7 @@
 
 ## 文件与编译
 
-上传源文件包 `arxiv_source_draft.zip`，顶层文件为 `main.tex`，处理器选择PDFLaTeX。包内包括 `authors.tex`、6张实际使用的PDF图和12个ancillary数据文件。主PDF不混入源文件包；无需本机字体、绝对路径或shell escape。
+上传源文件包 `arxiv_source_draft.zip`，顶层文件为 `main.tex`，处理器选择PDFLaTeX。包内包括 `authors.tex`、6张实际使用的PDF图和15个ancillary数据文件。主PDF不混入源文件包；无需本机字体、绝对路径或shell escape。
 
 arXiv要求由TeX生成的文章提供源文件，图表必须一并包含；提交时仍需查看arXiv服务器生成的PDF。来源：[Submission Overview](https://info.arxiv.org/help/submit/index.html)、[Submit TeX/LaTeX](https://info.arxiv.org/help/submit_tex.html)。
 
