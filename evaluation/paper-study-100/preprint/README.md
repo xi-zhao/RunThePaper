@@ -12,7 +12,7 @@
 
 ## 可复算成果
 
-当前主图全部由固定公开版本的数值数组重绘，没有运行原案例求解器，也没有复制作者原图。`build_evidence.py`读取公开Git对象，复算量子游走粒子数守恒残差和资源比例，保存输入哈希及结果摘要。物理模型、原始理论与源论文作者明确归属；报告贡献为实现、工作流与科研工件组织。
+Figure 1为重新设计并逐项核对的概念架构图；Figures 2-4由固定公开版本的数值数组重绘，没有运行原案例求解器，也没有复制作者原图。`build_evidence.py`读取公开Git对象，复算量子游走粒子数守恒残差和资源比例，保存输入哈希及结果摘要。物理模型、原始理论与源论文作者明确归属；报告贡献为实现、工作流与科研工件组织。
 
 ```bash
 python build_evidence.py
@@ -20,7 +20,7 @@ bash build_report.sh
 python package_arxiv.py
 ```
 
-图表环境沿用 `../manuscript/requirements.txt`。排版使用Pandoc和标准PDFLaTeX，没有本机系统字体、绝对文件路径或非标准期刊类依赖。打包工具在干净目录中解包并执行两次PDFLaTeX，检查每张引用图和100个队列身份。
+数值图环境沿用 `../manuscript/requirements.txt`。Figure 1保留已审阅的设计图；`build_figure1.py`使用 `reportlab==4.4.9`将原PNG无像素修改地封装为PDF。执行数据复算不会覆盖该设计。排版使用Pandoc和标准PDFLaTeX，没有本机系统字体、绝对文件路径或非标准期刊类依赖。打包工具在干净目录中解包并执行两次PDFLaTeX，检查每张引用图和100个队列身份。
 
 ## 尚待作者提供
 

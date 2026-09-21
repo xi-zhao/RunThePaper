@@ -38,7 +38,7 @@ Three relationships are particularly important. A source object identifies what 
 
 The project uses AI assistance within a human-guided research process (Fig. 1). The execution host supports interpretation, code development and debugging. Shared workflow tools manage case records, validation inputs and report generation. Paper-specific implementations remain in their own cases. This division gives a reusable organization to the work while allowing the numerical method to depend on the physics.
 
-![The research workflow implemented around PRAgent and RunThePaper. Source interpretation, domain implementation and physical diagnostics produce a persistent case that can be inspected and shared. Human guidance includes scope selection and interpretation. The diagram describes the workflow and its artifact relationships; it is not a claim of fully autonomous execution or uniform completion across the cohort.](figures/fig1_workflow.pdf){width=100%}
+![Architecture of the human-guided research workflow. Human decisions guide the four PRAgent stages; assessment can return work for revision. Derivations, code, data and review records persist in a versioned research case, from which selected artifacts enter RunThePaper. Dashed connections indicate human guidance; solid arrows indicate workflow or artifact transfer. The schematic describes these relationships, not uniform case completion.](figures/fig1_workflow.pdf){width=100%}
 
 ## From equations to implementation
 
@@ -46,7 +46,7 @@ The first technical task is to translate the source problem into a numerical con
 
 This translation is a scientific design decision. In a particle-number-conserving Hamiltonian, an invariant sector may provide an exact representation of the desired dynamics. In a resource estimate, the relevant output may be a bound on circuit length rather than a simulated many-qubit state. In an ensemble calculation, a new sample can probe a stated distribution without reconstructing an unpublished author realization. The case must state which task it performs before its output can be interpreted.
 
-The numerical implementation then separates model construction, solution, observables and rendering. This organization makes it possible to inspect or replace one component without obscuring the rest. For example, a quantum-walk state can be propagated once and used to compute density, correlation and double occupancy. A resource-bound evaluator can produce a numerical table independently of how that table is plotted. Figures in this report are regenerated from stored tables, illustrating that separation directly.
+The numerical implementation then separates model construction, solution, observables and rendering. This organization makes it possible to inspect or replace one component without obscuring the rest. For example, a quantum-walk state can be propagated once and used to compute density, correlation and double occupancy. A resource-bound evaluator can produce a numerical table independently of how that table is plotted. Numerical figures in this report are regenerated from stored tables, illustrating that separation directly.
 
 ## Physical checks and versioned evidence
 
@@ -167,9 +167,11 @@ The public case archive is available at [RunThePaper, revision 43a64cd](https://
 
 # AI assistance and manuscript responsibility {.unnumbered}
 
-AI-assisted tools were used in software development and in preparing this report. The report does not attribute authorship to an AI system or claim a uniformly autonomous experimental campaign. The human authors are responsible for the interpretation of results, citations and final submitted text.
+AI-assisted tools were used in software development, manuscript preparation and the visual design of the workflow schematic. Numerical figures were plotted from the archived arrays. The report does not attribute authorship to an AI system or claim a uniformly autonomous experimental campaign. The human authors are responsible for the interpretation of results, citations and final submitted text.
 
 # References {.unnumbered}
+
+\begingroup\small
 
 1. Sandve, G. K., Nekrutenko, A., Taylor, J. and Hovig, E. Ten Simple Rules for Reproducible Computational Research. *PLoS Computational Biology* **9**, e1003285 (2013). [doi:10.1371/journal.pcbi.1003285](https://doi.org/10.1371/journal.pcbi.1003285).
 
@@ -186,6 +188,8 @@ AI-assisted tools were used in software development and in preparing this report
 7. Yan, Z. et al. Strongly correlated quantum walks with a 12-qubit superconducting processor. *Science* **364**, 753–756 (2019). [doi:10.1126/science.aaw1611](https://doi.org/10.1126/science.aaw1611).
 
 8. Datta, A., Shaji, A. and Caves, C. M. Quantum Discord and the Power of One Qubit. *Physical Review Letters* **100**, 050502 (2008). [doi:10.1103/PhysRevLett.100.050502](https://doi.org/10.1103/PhysRevLett.100.050502). Source preprint: [arXiv:0709.0548](https://arxiv.org/abs/0709.0548).
+
+\endgroup
 
 \clearpage
 

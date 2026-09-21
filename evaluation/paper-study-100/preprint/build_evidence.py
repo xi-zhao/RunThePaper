@@ -11,7 +11,6 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
@@ -103,14 +102,12 @@ axs[1].axhline(0,color='#666666',lw=.6)
 fig.tight_layout(w_pad=1.8)
 save(fig,'fig4_discord')
 
-fig,ax=plt.subplots(figsize=(7.2,2.6));ax.set(xlim=(0,10),ylim=(0,3.6));ax.axis('off')
-boxes=[(.1,2.0,'Source and scope','Paper objects; assumptions'),(3.5,2.0,'Model and derivation','Equations; conventions; units'),(6.9,2.0,'Numerical implementation','Domain code; parameters'),(6.9,.35,'Physical diagnostics','Conservation; references'),(3.5,.35,'Versioned research case','Arrays; checks; review state'),(.1,.35,'Public research artifact','RunThePaper; reuse and study')]
-for x0,y0,t,s in boxes:
- ax.add_patch(FancyBboxPatch((x0,y0),2.95,1.05,boxstyle='round,pad=0.03',facecolor='#F1F5F8',edgecolor=colors[0]))
- ax.text(x0+1.475,y0+.69,t,ha='center',fontsize=9,fontweight='bold');ax.text(x0+1.475,y0+.29,s,ha='center',fontsize=7.5)
-for a,b in [((3.07,2.525),(3.45,2.525)),((6.47,2.525),(6.85,2.525)),((8.375,1.97),(8.375,1.43)),((6.85,.875),(6.5,.875)),((3.45,.875),(3.1,.875))]:ax.annotate('',xy=b,xytext=a,arrowprops={'arrowstyle':'->','color':colors[0]})
-ax.text(5,3.35,'Human-guided research with AI-assisted implementation',ha='center',fontsize=10,fontweight='bold')
-save(fig,'fig1_workflow')
+# Figure 1 is a separately reviewed conceptual design asset. Numerical
+# reanalysis must not overwrite it with a generic box-and-arrow diagram.
+# To rebuild its PDF wrapper, run build_figure1.py; no pixel editing occurs.
+for filename in ['fig1_workflow.png', 'fig1_workflow.pdf']:
+    if not (HERE / 'figures' / filename).is_file():
+        raise FileNotFoundError(f'Missing reviewed workflow asset: {filename}')
 
 def conservation(data,keys,expected):
  grouped=collections.defaultdict(list)
