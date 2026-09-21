@@ -28,7 +28,7 @@ def csv_rows(name):
 
 def write_csv(name, rows):
     with (ANC / name).open('w', newline='') as stream:
-        out = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        out = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         out.writeheader()
         out.writerows(rows)
 
@@ -175,5 +175,7 @@ ax3.set_xlabel('Papers (fixed denominator: 100; hatched = 3 unavailable assessme
 ax3.tick_params(labelsize=7,length=3)
 for ext in ['pdf', 'svg', 'png']:
     fig.savefig(HERE / f'figures/fig_overall_reproduction.{ext}', dpi=300, facecolor='white')
+svg = HERE / 'figures/fig_overall_reproduction.svg'
+svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines()) + '\n')
 plt.close(fig)
 print(json.dumps({k:v for k,v in summary.items() if k!='inputs'},indent=2))
