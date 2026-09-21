@@ -1,17 +1,14 @@
-# Study population flow
+# Unified study flow
 
-This diagram reports selection only. It does not depict accepted results or an experimental success rate.
+The manuscript uses one fixed cohort of 100 paper identities. Availability is attached to measurements, not used to split the paper into origin-based groups.
 
 ```mermaid
 flowchart LR
-    H["Original historical archive: 100 papers"] --> R["Retained historical group: 97"]
-    H --> E["Recorded retrospective exclusions: 3"]
-    R --> A["Read-only evidence extraction: 97 papers"]
-    A --> Q["Source-semantic review: pending"]
-    N["Fixed prospective additions: 3"] --> P["Production case implementations prepared"]
-    P --> U["Verified isolation unavailable; acceptance pending"]
-    R --> D["Planned detailed-analysis population: 100"]
-    N --> D
+    C["Fixed cohort: 100 papers"] --> R["Unified roster; no identity dropped"]
+    R --> A["Public evidence extraction"]
+    A --> D["Artifact availability, target mapping, reference audit"]
+    D --> Q["Source-level scientific reassessment"]
+    Q --> V["Physical conditions, numerical comparison, independent review"]
 ```
 
-The original 100 records are preserved. The three new identities make the full selection history 103. The detailed analysis will report historical and new groups separately; source availability and selection differ between the groups. Counts originate from `cohort.json` and `data/summary.json`.
+The current empirical results describe the public evidence audit. Source-level reassessment and scientific acceptance are not completed by this extraction. Each table states its unit and available-data denominator; missing measurements remain unknown. The immutable selection history remains in `../cohort.json` for provenance, and the full roster is in [cohort_100.csv](cohort_100.csv).
