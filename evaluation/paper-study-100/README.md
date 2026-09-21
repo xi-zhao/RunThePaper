@@ -1,8 +1,10 @@
 # PRAgent：100篇物理论文研究
 
-**完整英文论文初稿已生成，按统一的100篇队列组织。** 当前实证结果来自公开记录审计；原文逐对象重评、正式生产运行与独立科学验收尚未完成。
+**当前对外主稿为面向arXiv的技术报告，按统一的100篇项目队列组织。** 正文以科研工作流、具体数值实现和代表性结果展示项目能力。原档案审计稿保留为补充分析。
 
-阅读入口：[论文PDF](manuscript/PRAgent_100_Papers_Manuscript.pdf)、[可编辑正文](manuscript/paper.md)、[中文摘要与读稿说明](manuscript/读稿说明.md)、[统一100篇附表](manuscript/cohort_100.csv)。实际状态见 [PROGRESS.md](PROGRESS.md)。
+阅读入口：[技术报告PDF](preprint/PRAgent_Technical_Report.pdf)、[可编辑正文](preprint/report.md)、[中文说明](preprint/中文说明.md)、[arXiv提交准备](preprint/ARXIV_SUBMISSION.md)、[统一100篇附表](manuscript/cohort_100.csv)。实际状态见 [PROGRESS.md](PROGRESS.md)。
+
+已制作并在干净目录验证arXiv草稿源包；英文署名、顺序和单位尚待作者提供，尚未提交arXiv。4张主图包含流程、资源估算、量子游走和量子关联。此前的审计结果及图表仍保存在 `manuscript/`，其边界不被新报告改写。
 
 ## 研究问题
 
