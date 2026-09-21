@@ -80,7 +80,40 @@ Equal weighting of measured claims gives 40.9% reproduced, 21.3% externally bloc
 
 The frozen assessment records separately report complete numerical scope for 83 papers, passed scientific checks for 34 and passed independent review for 26 (Fig. 2c). These overlapping attributes are not a completion funnel. Although 26 papers have full recorded claim coverage, none of the available whole-paper assessments records completion. Historical coverage and assessment records need not represent the same evaluation event; coverage does not override later or stricter checks. No new scientific verdicts are issued here.
 
-![Overall reproduction profile of the unified 100-paper project. **a**, Archived dispositions averaged equally over 1,399 measured numerical claims; checks may be shared across claims. **b**, One bar per paper, ordered by recorded reproduced coverage, with the same colors as panel a. Hatched bars retain the three papers without measurements; they are not zero scores. The 57.8% mean gives each measured paper equal weight. **c**, Stored scope, scientific-check and independent-review dimensions, each with a fixed denominator of 100 papers; hatched segments indicate unavailable assessments. Coverage comes from the archived August 2026 table; assessment dimensions are read from the frozen case records. No panel represents a new independent assessment or an autonomous-agent success rate.](figures/fig_overall_reproduction.pdf){width=100%}
+![Overall reproduction profile of the unified 100-paper project. **a**, Archived dispositions averaged equally over 1,399 measured numerical claims; checks may be shared across claims. **b**, One bar per paper, ordered by recorded reproduced coverage, with the same colors as panel a. Hatched bars retain the three papers without measurements; they are not zero scores. The 57.8% mean gives each measured paper equal weight. **c**, Stored scope, scientific-check and independent-review dimensions, each with a fixed denominator of 100 papers; hatched segments indicate unavailable assessments. Coverage comes from the archived August 2026 table; assessment dimensions are read from the frozen case records. Panel c retains completion-summary labels; six differ from the detailed state, as discussed below. No panel represents a new independent assessment or an autonomous-agent success rate.](figures/fig_overall_reproduction.pdf){width=100%}
+
+## Why cases remain failed or pending
+
+The scientific-check labels in Fig. 2c summarize acceptance gates; they do not identify a unique cause. A failed gate may reflect a numerical mismatch, unavailable source inputs, an unverified derivation or missing independent data. Pending may coexist with useful calculations when a comparison, execution record or fresh review remains open. A missing or stale independent review is not itself evidence that a numerical result is wrong.
+
+Six cases have inconsistent science labels between the public completion summary and detailed state; four belong to the 63 failed-or-pending cases. Their labels are preserved and their causes excluded from this comparison until reconciled. Table 1 covers the remaining 59 cases: 27 marked failed and 32 pending. It counts papers with at least one open target diagnosis in each category. Categories overlap, and a diagnosed boundary can coexist with locally passed checks; the table does not assign one exclusive cause to each case.
+
+\begin{center}
+\small
+\begin{tabular}{lrr}
+\toprule
+Recorded open impediment & Failed (27) & Pending (32) \\
+\midrule
+Source or external input unavailable & 22 & 21 \\
+Compute capacity & 3 & 6 \\
+Method, capability or scope limitation & 7 & 2 \\
+Scientific result discrepancy & 4 & 12 \\
+Evidence or review process gap & 14 & 9 \\
+Root cause unresolved & 6 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+**Table 1.** Archived diagnostic themes among cases with consistent summary and detailed science labels. Counts are not additive. Classifications are retained from the archive, not independently re-adjudicated here. The eight cases with an unresolved diagnosis remain unresolved; they are not relabelled as externally blocked.
+
+Concrete examples distinguish the actions needed to resolve these boundaries:
+
+- **Missing source inputs.** In case `10.1038-s41586-026-10720-3`, fibre-dispersion targets lack experiment-specific coefficients and per-panel fitted values. The recorded next step is to obtain those inputs and rerun the unchanged equations at the source conditions. A formula-level calculation does not supply the missing experimental specification.
+- **An attempted result that did not match.** In case `2409.18176`, target T006's hole-transport response has recorded maximum deviations of 0.405 and 0.252 under two density conventions, both above its declared 0.1 tolerance. The diagnosis calls for an independently justified extension of the kinetic method or clarification of the normalization; tuning parameters to match the plot would not resolve the scientific discrepancy.
+- **A production campaign not completed.** In case `1709.03478`, target T002 has reduced-scale and isolated test results, but its 2,784-task production/convergence campaign remains unexecuted. The next step is to run and aggregate the CPU campaign, then apply convergence and source-feature checks. This differs from a measured disagreement after a completed campaign.
+- **Useful local results with unresolved scope and review.** The discord case `0709.0548` records passed local scientific assertions, but unpublished ensemble details limit exact comparison; a finite partition study does not establish an asymptotic claim. Its review is also stale. Resolution requires a specified ensemble/limit protocol, appropriate evidence and fresh review, not merely more plots.
+
+The case ledger retains all 100 identities, including unavailable assessments and all six status inconsistencies. The target ledger records each direct statement, root-cause hypothesis, code-fault assessment, next discriminating test and source pointer. These records make limitations inspectable while leaving unresolved attribution explicit.
 
 # Representative implementations and results
 

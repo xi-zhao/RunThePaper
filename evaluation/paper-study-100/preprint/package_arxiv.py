@@ -22,7 +22,7 @@ text=(HERE/'main.tex').read_text()
 figs=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
 require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort figure')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
-files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv']
+files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv']
 for name in files:
     require(bool(re.fullmatch(r'[a-zA-Z0-9_+.,=/\-]+',name)),f'Unsupported filename: {name}')
     require((HERE/name).is_file(),f'Missing input: {name}')
@@ -58,6 +58,18 @@ with tempfile.TemporaryDirectory(prefix='pragent-arxiv-check-') as td:
         rebuilt=100*sum(int(r[key+'_checks'])/int(r['checks_total']) for r in claim_rows)/len(claim_rows)
         require(abs(rebuilt-overview['claim_weighted_percent'][key])<1e-9,'Overview aggregate mismatch: '+key)
     require(overview['new_scientific_verdicts']==0,'Overview scientific boundary changed')
+    reasons=json.loads((root/'anc/reason_summary.json').read_text())
+    reason_cases=list(csv.DictReader((root/'anc/reason_cases.csv').open()))
+    reason_targets=list(csv.DictReader((root/'anc/reason_targets.csv').open()))
+    require(len(reason_cases)==100 and {r['paper_id'] for r in reason_cases}=={r['paper_id'] for r in roster},'Reason ledger roster mismatch')
+    require(len(reason_targets)==reasons['target_rows']==1116,'Target reason ledger mismatch')
+    require(sum(r['count_in_reason_table']=='True' for r in reason_cases)==59,'Reason denominator mismatch')
+    require(sum(r['science_states_match']=='False' for r in reason_cases)==6,'Snapshot discrepancy mismatch')
+    for category in reasons['reason_counts']:
+        for status in ['failed','pending']:
+            count=sum(r['count_in_reason_table']=='True' and r['summary_science']==status and category['category'] in r['open_root_categories'].split(' | ') for r in reason_cases)
+            require(count==category[status],'Reason category count mismatch')
+    require(reasons['independent_scientific_reassessment'] is False,'Reason audit boundary changed')
     pages=len(a)
 summary=json.loads((HERE/'anc/result_summary.json').read_text())
 require(summary['new_solver_runs']==0,'Solver execution boundary changed')

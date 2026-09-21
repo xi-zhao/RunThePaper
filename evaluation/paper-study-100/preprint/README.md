@@ -2,7 +2,7 @@
 
 **定位：适合公开阅读、引用与个人成果展示的科研技术报告。** 主线是研究方法、系统设计与具体科学实现，不以档案审计作为主贡献；不依赖期刊投稿来成立。
 
-- [11页英文技术报告](PRAgent_Technical_Report.pdf)
+- [12页英文技术报告](PRAgent_Technical_Report.pdf)
 - [可编辑正文](report.md)、[独立LaTeX源文件](main.tex)
 - [arXiv草稿源包](arxiv_source_draft.zip)
 - [中文摘要与阅读说明](中文说明.md)
@@ -17,6 +17,7 @@ Figure 1为重新设计并逐项核对的概念架构图；Figure 2将历史结�
 ```bash
 python build_evidence.py
 python build_overview.py
+python build_reason_audit.py
 bash build_report.sh
 python package_arxiv.py
 ```
@@ -26,6 +27,10 @@ python package_arxiv.py
 ## 总体复现图口径
 
 全图保留100篇，不设置来源分组。历史数值结论等权覆盖率为40.9%，有测量论文的逐篇平均为57.8%；3篇没有该项测量，保留缺失。两者均不表示整篇论文完成率。图中核验状态来自同一冻结版本中的案例评估文件，历史覆盖表不覆盖后续或更严格的验收结论。逐篇、逐结论、逐检查源数据及文件哈希保存在 `anc/overview_*`，随arXiv草稿源包提供。
+
+## 失败与待核验原因
+
+正文新增原因表和4个具体案例，区分原文输入缺失、计算资源、方法能力、结果差异、证据流程及归因未明。63个科学检查失败或待核验案例中，4个摘要与详细状态矛盾，暂不归因；其余59个按案例统计，允许原因重叠。全队列共6个状态矛盾保存在台账，不在此修改公开科学状态。`anc/reason_cases.csv`保留100篇，`anc/reason_targets.csv`保留1,116条目标诊断、后续验证步骤与来源定位；源包附带全部4份原因数据。
 
 ## 尚待作者提供
 
