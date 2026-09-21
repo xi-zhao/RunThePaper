@@ -35,7 +35,10 @@ without rerunning their science, and prepare three newly selected low-compute
 papers in PRAgent. The original 100-paper archive and the three exclusions
 remain unchanged; the full selection history therefore contains 103 papers.
 
-The added papers are selected, not yet executed or scientifically accepted.
+The [archive extraction and implementation progress](evaluation/paper-study-100/PROGRESS.md)
+is now recorded. The added papers have production-case implementations and
+development diagnostics; verified production execution and scientific acceptance
+remain pending.
 Report historical and prospective work separately, including selection bias,
 actual conditions, evidence limits, and any failures. A planned total of 100
 is not a claim of 100 successful reproductions. Public case creation still

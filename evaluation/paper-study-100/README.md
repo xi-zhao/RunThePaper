@@ -1,6 +1,8 @@
 # PRAgent：100篇论文研究计划（97篇归档 + 3篇新增）
 
-**状态：计划已落地；3篇新增论文尚未运行；不存在新增成功成绩。**
+**状态：97篇归档提取与3篇新增实现已落地；正式生产运行、科学重评与独立验收尚未完成。**
+
+实际进度见[PROGRESS.md](PROGRESS.md)，逐篇证据入口见[归档报告](analysis/ARCHIVE_REPORT.md)。
 
 先完成一篇聚焦的系统与实证论文，再推进产品化。暂定题目为
 *PRAgent: An Empirical Study of AI-Assisted Research Reproduction Across 100 Physics Papers*。
@@ -17,7 +19,7 @@
 | 原始历史档案 | 100 | 完整保留，包括历史失败、受限成果和旧分数 |
 | 纳入详细分析的历史论文 | 97 | 只读重评已有代码、数据、推导和检查；不重跑 |
 | 历史中未纳入详细分析 | 3 | 2101.12558、2211.15015、2406.07531；理由见清单 |
-| 新增论文 | 3 | 在PRAgent中开展新的独立实现与核验；当前未开始 |
+| 新增论文 | 3 | 在PRAgent中开展新的独立实现与核验；当前处于实现与开发诊断阶段，生产运行未发生 |
 | 计划详细分析集合 | 100 | 97篇历史 + 3篇新增，分层报告 |
 | 全部选择记录涉及的不同论文 | 103 | 原100篇 + 新3篇，不删除旧3篇以伪装成原始百篇 |
 
@@ -101,7 +103,7 @@
 5. **W1 图表与稿件：** 先结果表和主图，再写结果/方法，最后摘要；来源逐项核对。
    完成标准：统计可由记录复算，所有科学数值有来源，旧/新组、筛选与审阅深度明确。
 
-本PR只交付计划、身份清单、目标草案和只读计划校验器，不声称H1、N1-N3或W1已经完成。
+本目录保留冻结计划，并增加只读归档提取、证据表、描述报告和方法草稿。各环节完成边界见[PROGRESS.md](PROGRESS.md)，不把实现或文件存在写成科学验收。
 
 ## 计划校验（不运行论文）
 
@@ -114,3 +116,13 @@ python evaluation/paper-study-100/validate_plan.py --repository-root .
 
 校验器只读取本计划的JSON及可选的历史CSV，不导入、执行或修改任何案例。
 通过仅表示计划计数、身份和未执行状态自洽，不是科学验收。
+
+## 归档证据工具
+
+```bash
+python evaluation/paper-study-100/build_archive_evidence.py --repository-root .
+python evaluation/paper-study-100/validate_archive_evidence.py
+python evaluation/paper-study-100/build_archive_report.py
+```
+
+提取器读取固定版本的Git对象，不运行案例。`data/results.jsonl`保留原有对象和未映射目标；所有新科学判断仍为not_evaluated。分析目录的逐篇队列用于继续原文核对。新增case的生产证据保存在PRAgent，尚未进行公开投影。
