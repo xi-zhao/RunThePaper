@@ -3,7 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage[margin=24mm,top=22mm,bottom=23mm]{geometry}
-\usepackage{amsmath,amssymb,graphicx,booktabs,longtable,array,xcolor}
+\usepackage{amsmath,amssymb,graphicx,booktabs,longtable,array,xcolor,calc}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black,pdftitle={PRAgent:
@@ -13,8 +13,8 @@ AI-Assisted Physics Paper Reproduction}}
 \providecommand{\pandocbounded}[1]{#1}
 \setlength{\emergencystretch}{4em}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{5pt}
-\linespread{1.035}
+\setlength{\parskip}{4pt}
+\linespread{1.01}
 \setcounter{secnumdepth}{2}
 \renewcommand{\topfraction}{0.93}
 \renewcommand{\bottomfraction}{0.87}
@@ -32,7 +32,8 @@ AI-Assisted Physics Paper Reproduction}}
 {\small September 2026\par}
 \end{center}
 \begin{abstract}
-Reproducing a physics paper requires an executable interpretation of its model, a suitable numerical method and checks that connect the computed observables to the scientific question. We present PRAgent, an AI-assisted system that brings these tasks together in a human-guided research workflow. We examine its implemented capabilities through three public research cases: precision-aware evaluation of Hamiltonian-simulation resource bounds, quantum dynamics in exact particle-number sectors, and ensemble-based quantum-discord calculations. The cases show how physical structure determines the computational representation, how numerical difficulties are handled in code, and how controls and statistical comparisons constrain the interpretation of results. A fixed 100-paper project provides a broader view of recorded reproduction coverage and verification status. Further diagnostic examples examine source ambiguity, incomplete model implementations and resource requirements. Our evidence consists of case-specific implementations, archived computational outputs and new checks of selected stored arrays. It supports an account of PRAgent's demonstrated capabilities within the recorded human-guided workflow. RunThePaper makes the resulting code, data and explanations available as research artifacts that can be inspected and extended.
+PRAgent connects physics-paper interpretation, numerical implementation and scientific assessment in a human-guided research workflow. We examine the system through public implementations and a documentary audit of a fixed 100-paper project. Three cases provide concrete evidence: resource-bound code that refines large integer decisions with 60-digit arithmetic; quantum dynamics implemented in conserved particle sectors; and finite-ensemble discord calculations that expose a discrepancy with an analytical reference. A surface-code case illustrates a system-level distinction: checks pass for an implemented repetition-code proxy, while the original paper target remains unaccepted. To evaluate the breadth of these results, we trace 3,241 archived result-object records from 95 papers to their declared comparison conditions and references, and reconcile summary and detailed assessment records. This audit finds that the 26 papers with all associated checks historically labelled reproduced and the 26 with summary-level review marked passed are disjoint. Consequently, check-label fractions cannot serve as a scientific reproduction rate. The contribution is an inspectable implementation and assessment workflow, supported by numerical examples and explicit evidence links. The archive establishes bounded capabilities within that workflow; it does not yet establish an autonomous-agent success rate or complete reproduction of the cohort.
+
 \end{abstract}
 
 \section{Introduction}\label{introduction}
@@ -53,26 +54,19 @@ and explanations of what the calculation establishes. The system is used
 with human guidance; throughout this report, demonstrated capability
 refers to what is implemented and evidenced in that combined workflow.
 
-We examine three aspects of PRAgent's capability. \textbf{Scientific
-formulation} connects a paper's model and observable to an explicit
-computational representation. \textbf{Numerical implementation} handles
-the practical requirements of that representation, including precision,
-basis construction and sampling. \textbf{Verification and diagnosis} use
-physical checks, control models and targeted comparisons to assess
-results and identify the next investigation when a reproduction remains
-incomplete.
-
-Three detailed cases make these capabilities concrete.
+We make these capabilities assessable through source-target-to-evidence
+chains. Three detailed cases supply the numerical examples.
 Hamiltonian-simulation resource estimates require stable arithmetic and
 precision-aware integer decisions. Quantum walks use conserved particle
 sectors to construct exact finite-dimensional dynamics. Quantum-discord
 calculations distinguish finite ensembles from an analytical reference
-and from an unpublished author realization. We then place these
-implementations in the context of one fixed 100-paper project and
-examine diagnostic records for incomplete targets. The technical
-contribution is the implemented research system and its inspectable
-evidence across these tasks; the source papers supply the underlying
-physical methods.
+and from an unpublished author realization. A further case shows how the
+assessment records distinguish local model checks from acceptance of the
+source target. A uniform documentary audit then tests whether aggregate
+labels across the fixed 100-paper project can support a broader
+performance claim. The technical contribution is the implemented
+research system and its inspectable evidence across these tasks; the
+source papers supply the underlying physical methods.
 
 \section{Research context}\label{research-context}
 
@@ -132,17 +126,55 @@ supports targeted follow-up: revise the model, investigate a convention,
 extend a calculation or obtain a missing input. The scientific meaning
 of a check is preserved alongside its pass or fail status.
 
-\begin{figure}
+\begin{center}
+\begin{minipage}{\linewidth}
 \centering
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={PRAgent's human-guided research workflow. Paper interpretation, numerical implementation and assessment produce a persistent research case. Human guidance can shape the task and revisions; case-specific code performs the numerical work. Derivations, arrays and review records remain linked to the result, and selected artifacts enter the public RunThePaper collection. Dashed connections indicate human guidance; solid arrows indicate workflow or artifact transfer.}]{figures/fig1_workflow.pdf}
-\caption{PRAgent's human-guided research workflow. Paper interpretation,
-numerical implementation and assessment produce a persistent research
-case. Human guidance can shape the task and revisions; case-specific
-code performs the numerical work. Derivations, arrays and review records
-remain linked to the result, and selected artifacts enter the public
-RunThePaper collection. Dashed connections indicate human guidance;
-solid arrows indicate workflow or artifact transfer.}
-\end{figure}
+\includegraphics[width=0.80\linewidth]{figures/fig1_workflow.pdf}
+\captionof{figure}{PRAgent's human-guided research workflow. Paper interpretation, numerical implementation and assessment produce a persistent research case. Human guidance can shape the task and revisions; case-specific code performs the numerical work. Derivations, arrays and review records remain linked to the result, and selected artifacts enter the public RunThePaper collection. Dashed connections indicate human guidance; solid arrows indicate workflow or artifact transfer.}
+\end{minipage}
+\end{center}
+
+\subsection{A concrete assessment chain: a valid proxy is an incomplete
+target}\label{a-concrete-assessment-chain-a-valid-proxy-is-an-incomplete-target}
+
+Case \texttt{2502.20558}, target T001, makes the assessment model
+tangible. The source target is the logical-error-versus-rounds
+comparison in Fig. 2b for surface-code memory with delayed-erasure
+handling and maximum-likelihood decoding. The public implementation
+instead computes a classical repetition-code analogue. Table 1 follows
+the links preserved in the frozen archive.
+
+\begin{center}
+\begin{minipage}{\linewidth}
+\small
+\renewcommand{\arraystretch}{1.15}
+\captionof{table}{A frozen cross-artifact assessment chain. Exact fields, source pointers and file-presence checks are supplied in \texttt{anc/audit\_system\_chain.json}.}
+\begin{tabular}{@{}p{0.20\linewidth}p{0.37\linewidth}p{0.36\linewidth}@{}}
+\toprule
+Evidence layer & Observed record & Meaning for the source target \\
+\midrule
+Source objects & Three Fig. 2b items: exact-time, no-SSR and SSR curves & The requested observable belongs to the surface-code method. \\
+Implemented calculation & Repetition-code proxy; distance 5, loss probability 0.01, 200,000 shots & An executable mechanism model is available. \\
+Local check & Proxy marked physically consistent; expected ordering holds & The declared proxy passes its local checks. \\
+Assessment gate & Local physics status passed, but final eligibility false and gate exploratory-only & Passing those checks does not accept the source target. \\
+Target disposition & Model mismatch; attempted, not reproduced & The surface-code circuit and required decoder remain missing. \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+\end{center}
+
+This distinction is a useful system behavior: it preserves a runnable
+intermediate implementation while preventing its local checks from being
+presented as achievement of the paper's result. The earlier proxy record
+cites unavailable author materials; the diagnosis record instead
+identifies the absent surface-code and decoder implementation as a
+current system limitation. The public history contains only one version
+of the detailed state, so it does not establish who detected this
+mismatch, a timed review intervention, or an autonomous repair.
+Moreover, a detailed validation check and execution-attestation file
+cited by the final record are absent from the public snapshot. The
+evidence supports the recorded separation of proxy validity and target
+acceptance, not independent verification of the claimed isolated run.
 
 \subsection{Evidence used to assess
 capability}\label{evidence-used-to-assess-capability}
@@ -152,11 +184,14 @@ The examples below are drawn from public files at
 revision 43a64cd}. We inspect the recorded implementations, reanalyze
 selected stored arrays and regenerate numerical figures. The
 accompanying analysis reads frozen Git objects and records input hashes;
-it does not execute the original scientific solvers. Historical
-execution and diagnostic claims are identified as such. The cases were
-selected for contrasting numerical tasks and inspectable outputs, so
-they establish concrete examples of implemented capability rather than
-an average success rate.
+it does not execute the original scientific solvers. New work in this
+report consists of documentary linkage and consistency checks, figure
+regeneration, and selected arithmetic checks on stored values. Archived
+scientific labels remain historical observations rather than new
+verdicts. Historical execution and diagnostic claims are identified as
+such. The cases were selected for contrasting numerical tasks and
+inspectable outputs, so they establish concrete examples of implemented
+capability rather than an average success rate.
 
 \section{Demonstrated scientific
 capabilities}\label{demonstrated-scientific-capabilities}
@@ -168,13 +203,14 @@ remaining case-specific boundary needed to interpret that evidence.
 \subsection{Stable resource estimation for Hamiltonian
 simulation}\label{stable-resource-estimation-for-hamiltonian-simulation}
 
-PRAgent's qDRIFT case demonstrates precision-aware numerical
-implementation: it evaluates how Hamiltonian-simulation resource bounds
-depend on simulation time and an error criterion {[}6{]}. Its inputs
-include Hamiltonian summary parameters and the error-bound expressions
-associated with different compilation methods. The scientific output is
-an integer circuit-resource bound, which determines the numerical
-requirements of the implementation.
+The original target of PRAgent's qDRIFT case is the comparison of
+formula-based Hamiltonian-simulation resource bounds: it evaluates how
+Hamiltonian-simulation resource bounds depend on simulation time and an
+error criterion {[}6{]}. Its inputs include Hamiltonian summary
+parameters and the error-bound expressions associated with different
+compilation methods. The scientific output is an integer
+circuit-resource bound, which determines the numerical requirements of
+the implementation.
 
 The archived implementation evaluates qDRIFT and deterministic or
 randomized product-formula bounds. It computes multiplicative
@@ -195,40 +231,54 @@ being requested.
 
 The public tables contain 366 rows for time-dependent resource estimates
 and 366 rows for phase-estimation estimates. Figure 2a redraws the
-propane resource curves directly from these tables. Figure 2b compares
-the stored randomized second-order Trotter and qDRIFT phase-estimation
-counts at failure probability 0.05. The resulting ratios are 303.72 for
-carbon dioxide, 788.73 for ethane and 1405.51 for propane. These are
-ratios of theoretical resource estimates under the case's declared
-formulas and parameters; they are not measured wall-clock speedups of
-PRAgent or demonstrations on quantum hardware.
+propane resource curves. Figure 2b tests the numerical representation
+required by the first stored propane row, at simulation time 100. Its
+deterministic first-order count is 3,056,542,447,900,034,673,748,014:
+the spacing between neighboring binary64 values at that magnitude is
+536,870,912. Converting that integer and its predecessor to binary64
+gives the same value. Four of the five methods in this row exhibit this
+adjacent-integer collapse. This direct check of the stored integers
+establishes why binary64 alone cannot resolve the requested integer
+boundary; it does not evaluate the physical error bound.
 
-This case demonstrates PRAgent's implementation of a scientific
-comparison across numerical scales, including precision-sensitive
-integer decisions. The remaining source-value discrepancy and pending
-review limit the case-level conclusion; they do not alter the
-bound-evaluation method described here.
+The code implements the boundary condition \[
+\log E(N)\leq\log\epsilon,\qquad
+N=1\ \text{or}\ \log E(N-1)>\log\epsilon,
+\] using decimal refinement after a floating-point estimate. An archived
+target-check record marks the minimal-integer checks passed for three
+methods across three molecules. The record supplies Boolean outcomes,
+not signed bound margins for every table row. Thus the public evidence
+supports a precision-aware implementation and recorded boundary checks;
+a fully independent certificate would require reevaluating both
+inequalities at the declared precision and conditions. We do not claim
+that additional verification here.
+
+A separate printed-value discrepancy and missing independent review
+remain open. The capability demonstrated here is the implemented
+treatment of a specific numerical obstacle, with inspectable output
+integers and check records.
 
 \begin{figure}
 \centering
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Hamiltonian-simulation resource estimates redrawn from the public qDRIFT case. a, The stored propane gate-count bounds for five compilation strategies across the source time range. b, Ratios of randomized second-order Trotter to qDRIFT counts in the phase-estimation table at failure probability 0.05. These are formula-based resource estimates; neither panel reports physical quantum-device execution or an agent runtime advantage.}]{figures/fig2_resources.pdf}
-\caption{Hamiltonian-simulation resource estimates redrawn from the
-public qDRIFT case. \textbf{a}, The stored propane gate-count bounds for
-five compilation strategies across the source time range. \textbf{b},
-Ratios of randomized second-order Trotter to qDRIFT counts in the
-phase-estimation table at failure probability 0.05. These are
-formula-based resource estimates; neither panel reports physical
-quantum-device execution or an agent runtime advantage.}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Resource-bound outputs and their precision requirement. a, Archived propane gate-count bounds for five compilation strategies. b, Binary64 spacing at each method's first stored propane count, at simulation time 100. The dashed line marks unit spacing; four counts cannot distinguish adjacent integers after conversion to binary64. Panel b is a new representation check on stored integers, not a rerun or independent certificate of the error-bound inequalities.}]{figures/fig2_resources.pdf}
+\caption{Resource-bound outputs and their precision requirement.
+\textbf{a}, Archived propane gate-count bounds for five compilation
+strategies. \textbf{b}, Binary64 spacing at each method's first stored
+propane count, at simulation time 100. The dashed line marks unit
+spacing; four counts cannot distinguish adjacent integers after
+conversion to binary64. Panel b is a new representation check on stored
+integers, not a rerun or independent certificate of the error-bound
+inequalities.}
 \end{figure}
 
 \subsection{Interacting quantum walks in exact particle
 sectors}\label{interacting-quantum-walks-in-exact-particle-sectors}
 
-PRAgent's quantum-walk case demonstrates model-based representation and
-physical validation. It implements the coherent theoretical model
-associated with the superconducting-processor experiment of Yan and
-colleagues {[}7{]}. A Bose-Hubbard Hamiltonian provides the case
-formulation, \[
+The source target in PRAgent's quantum-walk case is the density and
+correlation structure of interacting excitations. The public code
+implements the coherent theoretical model associated with the
+superconducting-processor experiment of Yan and colleagues {[}7{]}. A
+Bose-Hubbard Hamiltonian provides the case formulation, \[
 H=\sum_{j=1}^{L-1}J_j(a_j^\dagger a_{j+1}+a_{j+1}^\dagger a_j)
 +\sum_{j=1}^{L}\frac{U_j}{2}n_j(n_j-1)+\sum_{j=1}^{L}h_jn_j.
 \] The implementation retains source-linked coupling and interaction
@@ -262,16 +312,20 @@ CSV values. Across 1,503 one-excitation state-time slices, the maximum
 deviation from one is \(1.78\times10^{-15}\). Across 3,006
 two-excitation slices, including the recorded model and launch
 combinations, the maximum deviation from two is \(2.66\times10^{-15}\).
-These residuals demonstrate conservation consistency in the inspected
-arrays. They do not by themselves establish agreement with all
-observables or source conditions.
+These residuals establish internal conservation consistency. In a
+normalized fixed-number sector, the density sum equals the particle
+number by construction: incorrect couplings or an incorrect comparison
+time can still pass this test. It therefore supplies no quantitative
+measure of agreement with the source density or correlation curves.
 
-The capability evidenced here is the connection between physical
+The supported capability is the implemented connection between physical
 structure and computation: the conserved sector determines the basis,
 one propagation supplies several observables, and explicit limits
-provide controls. A source-time discrepancy in supplementary comparisons
-and missing author realization-level parameters remain open in the
-broader case.
+provide controls. The public comparison still has an unresolved
+source-time discrepancy and missing author realization-level parameters.
+Until those conditions and direct observable errors are checked, this
+chain establishes model implementation and internal consistency rather
+than source-result reproduction.
 
 \begin{figure}
 \centering
@@ -302,9 +356,9 @@ motivates comparing the resulting discord with an analytical reference,
 while the implementation must also specify the unitary ensemble and
 optimization procedure.
 
-The public numerical-method record describes two independent ensembles
-of 500 matrices in \(U(32)\): a QR-based Haar construction and a
-depth-32 local brickwork construction. The latter is explicitly
+The public numerical-method record describes two separately generated
+ensembles of 500 matrices in \(U(32)\): a QR-based Haar construction and
+a depth-32 local brickwork construction. The latter is explicitly
 identified as an independent probe because the original finite
 pseudorandom generator is not published. Each curve is stored on a
 41-point polarization grid, with mean, standard deviation, standard
@@ -321,12 +375,18 @@ use the case's stored pointwise 95\% interval endpoints. They describe
 ensemble uncertainty under the recorded procedure, not simultaneous
 confidence bands or uncertainty in the analytical expression.
 
-The implemented comparison keeps the finite register, sampled ensemble
-and analytical reference distinct. This is the capability demonstrated
-by the case: it exposes a reproducible numerical difference together
-with the conditions under which it occurs. Explaining that difference
-requires further analysis of finite-size and optimization effects; the
-plot alone does not diagnose a source-paper error.
+Both generators feed the same entropy and measurement-optimization
+implementation. The archived production configuration specifies 129
+projective axes for this shared routine. Agreement between the two
+ensemble means is therefore not a comparison of independent discord
+implementations. Their narrow intervals describe sampling variability
+and cannot exclude shared discretization, optimization or formula
+errors. The observed discrepancy is preserved in the archived outputs,
+but its cause remains unresolved; finite-size effects and shared
+numerical bias require discriminating checks before a physical or
+source-paper conclusion follows. The demonstrated capability is
+producing and exposing this comparison with its sampling conditions, not
+having resolved the discrepancy.
 
 The code also makes a useful logical distinction in its treatment of
 entanglement. For the control-register split, it constructs a convex
@@ -338,81 +398,169 @@ be as important as its implementation.
 
 \begin{figure}
 \centering
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Quantum-discord outputs redrawn from the archived DQC1 case. a, The analytical reference and means of the QR-Haar and independent brickwork ensembles. b, Mean-minus-reference residuals expose deviations that are less visible in the main curves. Shading uses the stored pointwise interval endpoints. Ensemble specifications originate in the public method record; these are generated case outputs rather than recovered author samples.}]{figures/fig4_discord.pdf}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Quantum-discord outputs redrawn from the archived DQC1 case. a, The analytical reference and means of the QR-Haar and separately generated brickwork ensembles, evaluated through shared numerical routines. b, Mean-minus-reference residuals expose deviations that are less visible in the main curves. Shading uses the stored pointwise interval endpoints. Ensemble specifications originate in the public method record; these are generated case outputs rather than recovered author samples.}]{figures/fig4_discord.pdf}
 \caption{Quantum-discord outputs redrawn from the archived DQC1 case.
 \textbf{a}, The analytical reference and means of the QR-Haar and
-independent brickwork ensembles. \textbf{b}, Mean-minus-reference
-residuals expose deviations that are less visible in the main curves.
-Shading uses the stored pointwise interval endpoints. Ensemble
-specifications originate in the public method record; these are
-generated case outputs rather than recovered author samples.}
+separately generated brickwork ensembles, evaluated through shared
+numerical routines. \textbf{b}, Mean-minus-reference residuals expose
+deviations that are less visible in the main curves. Shading uses the
+stored pointwise interval endpoints. Ensemble specifications originate
+in the public method record; these are generated case outputs rather
+than recovered author samples.}
 \end{figure}
 
-\section{Coverage across the 100-paper
-project}\label{coverage-across-the-100-paper-project}
+\section{Evidence across the 100-paper
+project}\label{evidence-across-the-100-paper-project}
 
-The project is organized around one fixed cohort of 100 paper
-identities. The full roster accompanies the report. It is a purposive
-research collection, with outcome-informed selection and feasibility
-considerations; the preserved selection history contains 103 distinct
-identities. The cohort size describes project scope, not a count of
-fully successful reproductions. Missing measurements remain attached to
-their identities in the same roster.
+\subsection{Selection and source-result
+linkage}\label{selection-and-source-result-linkage}
 
-The frozen public extraction contains code for 97 cohort members and
-data for 96. The supplementary roster records availability and mapping
-gaps. These artifacts establish the breadth of implemented work; the
-coverage and assessment measures below describe how much of the
-scientific task was checked.
+The analysis retains one fixed roster of 100 paper identities. It is a
+retrospective, purposive collection rather than a preregistered
+benchmark. The selection history contains 103 identities: three archived
+cases were replaced after evidence limitations were identified, and
+three low-compute studies were selected for planned work. The excluded
+cases lacked established comparisons for NiO arrays, source-condition
+rheology, or a 30-material comparison; all six identities and the
+recorded reasons are preserved in
+\texttt{anc/selection\_provenance.json}. This outcome-informed selection
+limits population-level performance claims. The three planned studies
+remain unmeasured in this snapshot; they are included in the same roster
+without imputed scores.
 
-\subsection{Coverage and verification answer different
-questions}\label{coverage-and-verification-answer-different-questions}
+The public extraction contains code for 97 cohort members and data for
+96. To separate file availability from scientific support, we audit the
+linkage of archived result objects to source references, execution
+targets, declared parameter matches, reference types and cited public
+files. The inventory has 3,241 object records from 95 papers. Two
+further cases have assessment records but no object inventory; three
+have no measurements. Objects vary in granularity, including curves and
+result components, so their count is not a common scientific
+denominator.
 
-Figure 5 aligns the archived claim-coverage table of 27 August 2026 to
-the unified 100-paper roster. Coverage is measured for 97 papers; three
-remain unmeasured. The records contain 1,399 numerical claims and 3,667
-distinct checks. For claim \(c\),
-\(r_c=n_{c,\mathrm{reproduced}}/n_{c,\mathrm{checks}}\). Reconstruction
-uses all listed claim associations, including supporting associations;
-checks can be shared across claims. Fifteen non-numerical claims are
-excluded.
+The audit identifies 950 records whose mapped targets all declare
+paper-exact conditions and a numerical reference; 1,176 with a proxy,
+subset or reduced-scale comparison; 675 with unspecified or other
+conditions; 423 with figure or feature references; and 17 with mixed or
+insufficient comparison metadata. These are descriptions of archived
+evidence scope, not newly certified outcomes. In particular, the first
+category does not establish that the declared conditions or numerical
+comparator are correct. The accompanying object ledger preserves those
+declarations, source locations, gaps and cited-file availability so that
+a later scientific review can examine them individually.
 
-Equal weighting of measured claims gives 40.9\% reproduced, 21.3\%
-externally blocked and 37.8\% attempted but not reproduced (Fig. 5a).
-Averaging first within each paper and then across measured papers gives
-57.8\% coverage (Fig. 5b). Unequal claim counts explain the difference.
-Missing measurements are not imputed; these percentages describe
-recorded claim coverage rather than whole-paper success.
+\subsection{What the historical percentages
+measure}\label{what-the-historical-percentages-measure}
 
-Coverage asks how much of the recorded claim set has supporting checks.
-Assessment separately asks whether the numerical scope is complete,
-whether scientific gates pass, and whether independent review passes.
-These requirements can be satisfied separately. The frozen records
-report complete numerical scope for 83 papers, passed scientific checks
-for 34 and passed independent review for 26 (Fig. 5c). These overlapping
-attributes are not a completion funnel. Although 26 papers have full
-recorded claim coverage, none of the available whole-paper assessments
-records completion. Historical coverage and assessment records need not
-represent the same evaluation event; coverage does not override later or
-stricter checks. No new scientific verdicts are issued here.
+Figure 5a--b reconstructs an archived table dated 27 August 2026. Across
+97 measured papers it contains 1,399 numerical claims, 3,667 distinct
+checks and 16,376 claim--check associations. Fifteen non-numerical
+claims are excluded. Define \[
+h_c=\frac{\#\{\text{checks associated with }c\text{ and labelled reproduced}\}}
+{\#\{\text{checks associated with }c\}}.
+\] Associations include supporting checks, and the same check can
+contribute to several claims. The mean of \(h_c\) over claims is 40.9\%;
+averaging first within each paper and then over measured papers gives
+57.8\%. These are archived check-label fractions. They do not measure
+the fraction of source results reproduced, the extent of agreement with
+source observables, or whole-paper completion.
+
+The metric depends on how a check list is partitioned: duplicating one
+positive check can change \(h_c\) without changing a calculation or its
+agreement with the paper. The ancillary sensitivity table demonstrates
+this on mixed-label claims. Restricting associations to the primary
+claim would still not establish direct scientific support. We retain the
+historical fractions to describe the archive, and use the source-result
+ledger and detailed examples to identify what evidence each calculation
+actually supplies.
+
+\subsection{Joint states and conflicting
+records}\label{joint-states-and-conflicting-records}
+
+The completion summaries mark numerical scope complete for 83 papers,
+science passed for 34, and independent review passed for 26. A separate
+historical set of 26 papers has \(h_c=1\) for every measured claim.
+Table 2 shows that these two sets of 26 are disjoint. Furthermore, only
+one paper has both summary-level science and review marked passed.
+Marginal counts therefore cannot be interpreted as successive stages of
+a successful reproduction funnel. Review status is also distinct from
+the scientific conclusion: case \texttt{1803.01876} has review passed,
+science failed and paper assessment inconclusive in both records. Thus a
+passed review label cannot itself be read as a positive reproduction
+certificate.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2727}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3636}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3636}}@{}}
+\caption{Two separate contingency tables share the review columns; the
+first two rows and last two rows each sum to 97. Three unavailable cases
+remain outside each comparison. Case identities are supplied in the
+joint-state ledger.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition among 97 available cases
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Review passed in summary
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Review not passed in summary
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Condition among 97 available cases
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Review passed in summary
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+Review not passed in summary
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Historical check-label fraction 100\% & 0 & 26 \\
+Historical check-label fraction below 100\% & 26 & 45 \\
+Science passed in summary & 1 & 33 \\
+Science not passed in summary & 25 & 38 \\
+\end{longtable}
+
+Even within the same frozen Git revision, summary and detailed records
+disagree for six science states, six review states, seven execution
+states and one numerical-scope state. Additional conflicts concern
+assessment, provenance and evidence dimensions. We do not choose a
+preferred label without reconciliation. Figure 5c instead shows
+agreement, conflict and missingness explicitly: the two records agree on
+a positive scope state for 83 papers, a positive science state for 32
+and a positive review state for 26. Agreement is consistency between
+records, not independent confirmation of their scientific validity.
+
+Neither record set marks any available case complete. Among the 26
+papers with all associated checks historically labelled reproduced, the
+detailed records show 20 reviews missing, three stale and three passed.
+They also record 22 attested executions and four missing attestations.
+Other overlapping blockers include seven cases with missing parameter
+provenance and five with targets not declared paper-exact. The three
+review-passed cases retain mixed or paper-error-candidate assessments
+and other blockers. This explains why local labels cannot establish
+completion; it does not reduce all incompleteness to a lack of compute
+or a single isolation-backend issue. Nor does a missing review prove
+that an otherwise unexamined scientific result is wrong.
 
 \begin{figure}
 \centering
-\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Overall reproduction profile of the unified 100-paper project. a, Archived dispositions averaged equally over 1,399 measured numerical claims; checks may be shared across claims. b, One bar per paper, ordered by recorded reproduced coverage, with the same colors as panel a. Hatched bars retain the three papers without measurements; they are not zero scores. The 57.8\% mean gives each measured paper equal weight. c, Stored scope, scientific-check and independent-review dimensions, each with a fixed denominator of 100 papers; hatched segments indicate unavailable assessments. Coverage comes from the archived August 2026 table; assessment dimensions are read from the frozen case records. Panel c retains completion-summary labels; six differ from the detailed state, as discussed below. No panel represents a new independent assessment or an autonomous-agent success rate.}]{figures/fig_overall_reproduction.pdf}
-\caption{Overall reproduction profile of the unified 100-paper project.
-\textbf{a}, Archived dispositions averaged equally over 1,399 measured
-numerical claims; checks may be shared across claims. \textbf{b}, One
-bar per paper, ordered by recorded reproduced coverage, with the same
-colors as panel a. Hatched bars retain the three papers without
-measurements; they are not zero scores. The 57.8\% mean gives each
-measured paper equal weight. \textbf{c}, Stored scope, scientific-check
-and independent-review dimensions, each with a fixed denominator of 100
-papers; hatched segments indicate unavailable assessments. Coverage
-comes from the archived August 2026 table; assessment dimensions are
-read from the frozen case records. Panel c retains completion-summary
-labels; six differ from the detailed state, as discussed below. No panel
-represents a new independent assessment or an autonomous-agent success
-rate.}
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio,alt={Historical check labels and assessment-record consistency for the fixed 100-paper project. a, Fractions of associated checks carrying each archived label, averaged over 1,399 claims. b, The same fractions by paper; hatched bars retain three unmeasured papers. The 57.8\% mean weights measured papers equally. Supporting and shared checks contribute to both panels, so neither is a scientific reproduction rate. c, Agreement between completion summaries and detailed states, with conflicts and unavailable records shown separately and a fixed denominator of 100. Agreed positive means complete scope or passed science/review in both records; it is not a new verification verdict.}]{figures/fig_overall_reproduction.pdf}
+\caption{Historical check labels and assessment-record consistency for
+the fixed 100-paper project. \textbf{a}, Fractions of associated checks
+carrying each archived label, averaged over 1,399 claims. \textbf{b},
+The same fractions by paper; hatched bars retain three unmeasured
+papers. The 57.8\% mean weights measured papers equally. Supporting and
+shared checks contribute to both panels, so neither is a scientific
+reproduction rate. \textbf{c}, Agreement between completion summaries
+and detailed states, with conflicts and unavailable records shown
+separately and a fixed denominator of 100. Agreed positive means
+complete scope or passed science/review in both records; it is not a new
+verification verdict.}
 \end{figure}
 
 \section{Diagnostic capability and observed
@@ -423,10 +571,9 @@ discriminating test or a missing scientific requirement. Source
 ambiguity, incomplete implementation, execution resources and
 experimental apparatus provide four directions for investigation. The
 three examples below illustrate this process without estimating cause
-prevalence. Six cases have inconsistent summary and detailed science
-labels; the supplementary ledger preserves them. Source pointers and
-recorded confidence for the examples are supplied in
-\texttt{anc/obstacle\_examples.json}.
+prevalence. The consistency audit above preserves conflicts before
+diagnostic interpretation. Source pointers and recorded confidence for
+the examples are supplied in \texttt{anc/obstacle\_examples.json}.
 
 \textbf{Testing source identifiability.} For Fig. 2 of Phys. Rev.~Lett.
 124, 113601 (target T001), the archived diagnosis identifies unspecified
@@ -441,16 +588,13 @@ calculation. Pending gates remain in the record; the diagnosis does not
 establish a false physical claim or independently exclude implementation
 error.
 
-\textbf{Checking implementation scope.} In \texttt{2502.20558} (T001), a
-repetition-code mechanism model passes its local checks, yet its output
-remains orders of magnitude above the paper's surface-code
-maximum-likelihood-decoding curves. The implementation audit identifies
-the missing scientific object: the required surface-code circuit and
-lifecycle-aware decoder have not been implemented. Checks for the
-simpler model therefore cannot validate the original observable. The
-follow-up is to implement that circuit and decoder, validate tractable
-instances and evaluate the paper-level target. Additional hardware alone
-would not supply the missing method.
+\textbf{Checking implementation scope.} The surface-code example in
+Table 1 distinguishes an incomplete scientific method from a missing
+author artifact. A local proxy can be tested and executable while
+failing the requested model. The required next capability is a
+surface-code circuit and lifecycle-aware decoder, followed by validation
+on tractable instances and evaluation of the source observable.
+Additional hardware alone would not supply that missing method.
 
 \textbf{Relating execution requirements to measurements.} Case
 \texttt{1709.03478} (T002) records reduced-scale tests and one full-size
@@ -492,14 +636,14 @@ chosen with knowledge of their outputs. A controlled evaluation would
 need recorded intervention and resource budgets, common acceptance
 criteria and a comparison condition.
 
-The report's new computations check selected archived arrays. They do
-not independently revalidate all earlier execution, diagnostic or review
-claims. The public archive also omits some evidence from the originating
-workspace. The documented production workflow retains an infrastructure
-gap: a verified numerical isolation backend sufficient for the relevant
-completion conditions was not established in the study record.
-Historical outputs and implemented code remain distinguishable from a
-newly completed production campaign.
+The report adds documentary re-adjudication of evidence scope and
+consistency, plus arithmetic checks on selected stored arrays. It does
+not independently revalidate every source comparison, execution or
+causal diagnosis. A cited-file presence check establishes availability
+only; it does not certify the file's scientific content. Missing public
+files limit external verification even where a private run may have
+existed. Later production-backend readiness is a separate deployment
+issue and cannot be used to explain all archived completion states.
 
 The next evaluation should test whether these implemented capabilities
 transfer to new papers under a recorded protocol. Useful measures
@@ -511,17 +655,20 @@ development priorities identified by the cases.
 
 \section{Conclusion}\label{conclusion}
 
-PRAgent demonstrates a set of implemented capabilities for AI-assisted
-physics paper reproduction: translating scientific models into
-computational representations, solving case-specific numerical problems,
-and checking outputs against physical and statistical requirements.
-Precision-aware resource estimation, exact-sector quantum walks and
-ensemble-based discord analysis provide inspectable evidence for these
-capabilities. The 100-paper project places that technical depth in a
-broader record of coverage and verification, while diagnostic cases show
-how the workflow makes incomplete work actionable. RunThePaper preserves
-the resulting code, data and explanations for inspection and further
-research.
+PRAgent's public cases provide concrete implementations of
+precision-sensitive resource evaluation, conserved-sector quantum
+dynamics and finite-ensemble discord analysis. The surface-code example
+adds a system-level result: the assessment records retain a passing
+proxy calculation while leaving the original target unaccepted. These
+examples make the system's scientific representation, numerical methods
+and acceptance distinctions inspectable. The 100-paper audit also
+identifies where a broader capability claim would exceed the evidence:
+auxiliary check labels are not source-result success rates, review and
+science states often do not overlap, and some records conflict. The
+resulting source-object ledger makes the next evaluation concrete:
+verify the declared comparison conditions and numerical references,
+reconcile the assessment records, and test new papers with recorded
+human interventions and resource budgets.
 
 \section*{Data, code and
 reproducibility}\label{data-code-and-reproducibility}
@@ -531,11 +678,13 @@ The public case archive is available at
 \href{https://github.com/xi-zhao/RunThePaper/tree/43a64cd03824edb136b549f352412e8d263d9361}{RunThePaper,
 revision 43a64cd}. The three implementations are identified by case IDs
 \texttt{1811.08017}, \texttt{10.1126-science.aaw1611} and
-\texttt{0709.0548}. The report package includes an input-hash ledger,
-numerical summaries and a unified cohort roster. The accompanying
-analysis script reads frozen public Git objects and reconstructs all new
-figures without executing case code. The private production environment
-is not included in this release.
+\texttt{0709.0548}. The report package includes input hashes, numerical
+summaries, a unified cohort roster, source-object and state-conflict
+ledgers, joint-state tables and the concrete proxy assessment chain. The
+accompanying analysis scripts read frozen public Git objects and
+reconstruct all new numerical figures without executing case code; the
+workflow schematic is retained as a conceptual diagram. The private
+production environment is not included in this release.
 
 \section*{AI assistance and manuscript
 responsibility}\label{ai-assistance-and-manuscript-responsibility}

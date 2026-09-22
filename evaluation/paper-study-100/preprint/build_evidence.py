@@ -5,6 +5,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 from pathlib import Path
 import subprocess
 import numpy as np
@@ -57,10 +58,18 @@ ratios={}
 for mol in ['carbon dioxide','ethane','propane']:
     row=next(r for r in phase if r['molecule']==mol and abs(float(r['failure_probability'])-.05)<1e-12)
     ratios[mol]=float(row['random_trotter_second_order'])/float(row['qdrift'])
-axs[1].bar(range(3),list(ratios.values()),color=colors[0],width=.65)
-for i,v in enumerate(ratios.values()):axs[1].text(i,v+30,f'{v:.2f}',ha='center',fontsize=8)
-axs[1].set(xticks=range(3),xticklabels=['CO$_2$','Ethane','Propane'],ylabel='Randomized Trotter / qDRIFT',ylim=(0,1650),title='b  Phase-estimation resource ratio')
-axs[1].text(.5,.91,'Failure probability = 0.05',ha='center',transform=axs[1].transAxes,fontsize=8)
+# Demonstrate floating-point resolution using archived integers only.
+precision=[]
+for method in methods:
+    n=int(q[0][method]);precision.append({'method':method,'stored_integer':str(n),'binary64_spacing':math.ulp(float(n)),'float_n_equals_float_n_minus_1':float(n)==float(n-1)})
+axs[1].barh(range(5),[r['binary64_spacing'] for r in precision],color=colors,height=.6)
+axs[1].set_xscale('log')
+axs[1].axvline(1,color='#333333',ls='--',lw=.8)
+axs[1].set(yticks=range(5),yticklabels=['qDRIFT','1st det.','1st rand.','Higher det.','Higher rand.'],xlabel='Binary64 spacing (gate-count units)',title='b  Adjacent-integer resolution')
+axs[0].set_title('a  Propane Hamiltonian resource bounds',pad=20)
+axs[1].set_title('b  Adjacent-integer resolution',pad=20)
+axs[1].text(.02,1.01,'Stored propane row, time = 100',transform=axs[1].transAxes,fontsize=7)
+axs[1].tick_params(labelsize=7)
 fig.tight_layout(w_pad=1.6)
 save(fig,'fig2_resources')
 
@@ -113,7 +122,7 @@ def conservation(data,keys,expected):
  grouped=collections.defaultdict(list)
  for r in data:grouped[tuple(r[k] for k in keys)].append(float(r['density']))
  return {'array_rows':len(data),'state_time_slices':len(grouped),'max_density_sum_error':max(abs(sum(v)-expected) for v in grouped.values())}
-summary={'source_commit':REV,'phase_resource_ratios_pf_0_05':ratios,'resource_table_rows':len(q),'phase_table_rows':len(phase),'one_excitation':conservation(one,['launch','time_ns'],1),'two_excitation':conservation(two,['model','launch','time_ns'],2),'discord_grid_points':len(disc),'discord_at_alpha_1':{k:float(v) for k,v in disc[-1].items() if k!='alpha_index'},'illustrative_correlation_time_ns':55.5,'correlation_max_displayed_value':max(float(a.max()) for a in chosen),'new_solver_runs':0,'interpretation':'Read-only reanalysis of archived generated arrays; not whole-paper acceptance.'}
+summary={'source_commit':REV,'phase_resource_ratios_pf_0_05':ratios,'resource_table_rows':len(q),'phase_table_rows':len(phase),'one_excitation':conservation(one,['launch','time_ns'],1),'two_excitation':conservation(two,['model','launch','time_ns'],2),'discord_grid_points':len(disc),'discord_at_alpha_1':{k:float(v) for k,v in disc[-1].items() if k!='alpha_index'},'illustrative_correlation_time_ns':55.5,'correlation_max_displayed_value':max(float(a.max()) for a in chosen),'integer_resolution_audit':precision,'new_solver_runs':0,'interpretation':'Read-only reanalysis of archived generated arrays; not whole-paper acceptance.'}
 (HERE/'anc'/'result_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 (HERE/'anc'/'input_manifest.json').write_text(json.dumps(INPUTS,indent=2)+'\n')
 print(json.dumps(summary,indent=2))

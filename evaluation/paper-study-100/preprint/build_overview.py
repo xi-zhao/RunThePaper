@@ -80,9 +80,15 @@ for r in roster:
         row['science'] = assessment['dimensions']['science']
         row['independent_review'] = assessment['dimensions']['independent_review']
         row['whole_paper_complete'] = assessment['complete']
+        detailed = json.loads(frozen(f'cases/{pid}/outputs/checks/authoritative_reproduction_state.json'))
+        for key in ['numerical_scope', 'science', 'independent_review']:
+            row['detail_'+key] = detailed['dimensions'][key]
+            row['agreement_'+key] = row[key] == row['detail_'+key]
     else:
         for key in ['numerical_scope', 'science', 'independent_review', 'whole_paper_complete']:
             row[key] = 'unavailable'
+        for key in ['numerical_scope', 'science', 'independent_review']:
+            row['detail_'+key] = row['agreement_'+key] = 'unavailable'
     papers.append(row)
 measured = [r for r in papers if r['coverage_available']]
 missing = [r for r in papers if not r['coverage_available']]
@@ -90,7 +96,7 @@ pooled = {label: 100 * np.mean([c[label + '_fraction'] for c in claim_data]) for
 assert abs(sum(pooled.values()) - 100) < 1e-9
 summary = {
     'source_commit': SOURCE,
-    'measurement': 'cohort_aligned_historical_claim_coverage_not_new_scientific_acceptance',
+    'measurement': 'claim_weighted_archived_reproduced_check_fraction_not_scientific_reproduction_degree',
     'coverage_snapshot_generated_at': old_summary['generated_at'],
     'cohort_papers': len(papers), 'papers_with_coverage': len(measured),
     'papers_without_coverage': len(missing), 'missing_paper_ids': [r['paper_id'] for r in missing],
@@ -107,6 +113,14 @@ summary = {
     'new_scientific_verdicts': 0,
     'inputs': manifest,
 }
+summary['record_agreement_counts'] = {}
+for key in ['numerical_scope', 'science', 'independent_review']:
+    pos='complete' if key=='numerical_scope' else 'passed'
+    summary['record_agreement_counts'][key] = {
+        'agreed_positive': sum(r[key]==r['detail_'+key]==pos for r in papers),
+        'agreed_other': sum(r['agreement_'+key] is True and r[key]!=pos for r in papers),
+        'conflict': sum(r['agreement_'+key] is False for r in papers),
+        'unavailable': sum(r[key]=='unavailable' for r in papers)}
 figure_order = sorted(measured, key=lambda r: (-r['reproduced_percent'], r['paper_id'])) + missing
 for rank, row in enumerate(figure_order, 1):
     row['figure_rank'] = rank
@@ -123,12 +137,12 @@ navy, amber, slate, light = '#285A78', '#D2A45F', '#AAB7C3', '#EEF1F4'
 fig = plt.figure(figsize=(7.2, 5.9), facecolor='white')
 ax1 = fig.add_axes([.10, .805, .86, .115])
 ax2 = fig.add_axes([.10, .40, .86, .265])
-ax3 = fig.add_axes([.25, .065, .71, .205])
+ax3 = fig.add_axes([.25, .11, .71, .16])
 fig.text(.025, .963, 'a', fontsize=11, fontweight='bold')
-fig.text(.10, .963, 'Recorded reproduction across numerical claims', fontsize=10, fontweight='bold')
+fig.text(.10, .963, 'Archived check labels, averaged by claim', fontsize=10, fontweight='bold')
 fig.text(.10, .931, f'{len(claim_data):,} claims in {len(measured)} papers with measurements; equal weight per claim', fontsize=8, color='#52616E')
 left = 0
-for label, title, color in zip(labels[:3], ['Reproduced', 'Externally blocked', 'Attempted, not reproduced'], [navy, amber, slate]):
+for label, title, color in zip(labels[:3], ['Label: reproduced', 'Label: externally blocked', 'Label: attempted, not reproduced'], [navy, amber, slate]):
     value = pooled[label]
     ax1.barh(0, value, left=left, height=.65, color=color, edgecolor='white', linewidth=1)
     ax1.text(left + value/2, 0, f'{value:.1f}%', ha='center', va='center', fontweight='bold', fontsize=11, color='white' if label=='reproduced' else '#23384A')
@@ -136,8 +150,8 @@ for label, title, color in zip(labels[:3], ['Reproduced', 'Externally blocked', 
     left += value
 ax1.set(xlim=(0,100), ylim=(-.75,.4)); ax1.axis('off')
 fig.text(.025, .720, 'b', fontsize=11, fontweight='bold')
-fig.text(.10, .720, 'Coverage varies across the 100-paper project', fontsize=10, fontweight='bold')
-fig.text(.10, .687, f'Mean recorded coverage: {summary["mean_paper_coverage_measured_percent"]:.1f}% among measured papers', fontsize=8, color='#52616E')
+fig.text(.10, .720, 'Archived check-label fractions across 100 papers', fontsize=10, fontweight='bold')
+fig.text(.10, .687, f'Mean fraction labelled reproduced: {summary["mean_paper_coverage_measured_percent"]:.1f}% among measured papers', fontsize=8, color='#52616E')
 ordered = sorted(measured, key=lambda r: (-r['reproduced_percent'], r['paper_id'])) + missing
 x = np.arange(1, 101)
 bottom = np.zeros(100)
@@ -148,31 +162,25 @@ for label, color in zip(labels[:3], [navy, amber, slate]):
 for rank in range(len(measured)+1, 101):
     ax2.bar(rank, 100, width=.85, color='white', edgecolor='#9BA8B4', linewidth=.4, hatch='///')
 ax2.set(xlim=(0,101), ylim=(0,100), yticks=[0,50,100], xticks=[1,25,50,75,100])
-ax2.set_ylabel('Claim coverage (%)', fontsize=8)
-ax2.set_xlabel('Papers ordered by recorded coverage (one bar per paper)', fontsize=8, labelpad=5)
+ax2.set_ylabel('Associated-check fraction (%)', fontsize=8)
+ax2.set_xlabel('Papers ordered by archived fraction (one bar per paper)', fontsize=8, labelpad=5)
 ax2.tick_params(labelsize=7, length=3)
 ax2.text(1,1.035,'3 unmeasured papers: hatched',ha='right',transform=ax2.transAxes,fontsize=7,color='#52616E')
 fig.text(.025, .31, 'c', fontsize=11, fontweight='bold')
-fig.text(.10, .31, 'Recorded scope, scientific checks and independent review', fontsize=10, fontweight='bold')
-settings = [
- ('numerical_scope', 'Numerical scope', [('complete','Complete',navy),('incomplete','Incomplete',slate)]),
- ('science','Scientific checks', [('passed','Passed',navy),('failed','Failed',amber),('pending','Pending',slate)]),
- ('independent_review','Independent review',[('passed','Passed',navy),('stale','Stale',amber),('missing','Missing',slate)]),
-]
-for y,(key,title,items) in zip([2,1,0],settings):
+fig.text(.10, .31, 'Agreement between summary and detailed records', fontsize=10, fontweight='bold')
+for y,(key,title) in zip([2,1,0],[('numerical_scope','Numerical scope'),('science','Scientific checks'),('independent_review','Independent review')]):
     left=0
     ax3.text(-2,y,title,ha='right',va='center',fontsize=7.5)
-    for code,name,color in items:
-        n=summary['assessment_counts'][key].get(code,0)
-        ax3.barh(y,n,left=left,height=.58,color=color,edgecolor='white',linewidth=.8)
-        ax3.text(left+n/2,y,f'{name} {n}',ha='center',va='center',fontsize=7,color='white' if color==navy else '#23384A')
+    for code,color in [('agreed_positive',navy),('agreed_other',slate),('conflict',amber),('unavailable','white')]:
+        n=summary['record_agreement_counts'][key][code]
+        ax3.barh(y,n,left=left,height=.58,color=color,edgecolor='white' if code!='unavailable' else '#9BA8B4',linewidth=.6,hatch='///' if code=='unavailable' else None)
+        ax3.text(left+n/2,y,str(n),ha='center',va='center',fontsize=7,color='white' if code=='agreed_positive' else '#23384A')
         left+=n
-    n=summary['assessment_counts'][key].get('unavailable',0)
-    ax3.barh(y,n,left=left,height=.58,color='white',edgecolor='#9BA8B4',linewidth=.4,hatch='///')
 ax3.set(xlim=(0,100),ylim=(-.55,2.6),xticks=[0,25,50,75,100],yticks=[])
 ax3.spines['left'].set_visible(False)
-ax3.set_xlabel('Papers (fixed denominator: 100; hatched = 3 unavailable assessments)', fontsize=7.5)
+ax3.set_xlabel('Papers (100): blue = agreed complete/pass; gray = agreed other', fontsize=7.5)
 ax3.tick_params(labelsize=7,length=3)
+fig.text(.25,.008,'Amber = conflicting records; hatched = unavailable. Agreement is not independent verification.',fontsize=6.8,color='#52616E')
 for ext in ['pdf', 'svg', 'png']:
     fig.savefig(HERE / f'figures/fig_overall_reproduction.{ext}', dpi=300, facecolor='white')
 svg = HERE / 'figures/fig_overall_reproduction.svg'

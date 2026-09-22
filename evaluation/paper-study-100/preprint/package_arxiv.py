@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Package an explicit arXiv source allowlist and verify a clean-directory build."""
+import collections
+import math
 import csv
 import hashlib
 import io
@@ -24,6 +26,7 @@ require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort 
 require(figs==['figures/fig1_workflow.pdf','figures/fig2_resources.pdf','figures/fig3_quantum_walks.pdf','figures/fig4_discord.pdf','figures/fig_overall_reproduction.pdf','figures/figS1_cohort_matrix.pdf'],'Figure order differs from capability narrative')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
 files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv','anc/diagnostic_followup_summary.json','anc/diagnostic_followup_cases.csv','anc/diagnostic_followup_targets.csv','anc/obstacle_examples.json']
+files += ['anc/'+name for name in ['audit_case_states.csv','audit_state_conflicts.csv','audit_result_objects.csv','audit_completion_blockers.csv','audit_joint_states.csv','audit_check_sensitivity.csv','audit_precision.csv','audit_summary.json','audit_system_chain.json','audit_qdrift_check_record.json']]
 for name in files:
     require(bool(re.fullmatch(r'[a-zA-Z0-9_+.,=/\-]+',name)),f'Unsupported filename: {name}')
     require((HERE/name).is_file(),f'Missing input: {name}')
@@ -92,6 +95,40 @@ with tempfile.TemporaryDirectory(prefix='pragent-arxiv-check-') as td:
     require(obstacles['new_solver_runs']==obstacles['new_independent_causal_verdicts']==0,'Obstacle verdict boundary changed')
     require(not any('responsibility_' in name for name in files),'Withdrawn attribution files in source package')
     require('Attribution domain & Failed' not in text and '48 cases' not in text,'Withdrawn causal count table remains')
+    audit=json.loads((root/'anc/audit_summary.json').read_text())
+    def audit_rows(name):return list(csv.DictReader((root/'anc'/name).open()))
+    states=audit_rows('audit_case_states.csv'); objects=audit_rows('audit_result_objects.csv')
+    conflicts=audit_rows('audit_state_conflicts.csv'); joints=audit_rows('audit_joint_states.csv')
+    require(len(states)==100 and {r['paper_id'] for r in states}=={r['paper_id'] for r in roster},'Audit roster mismatch')
+    available=[r for r in states if r['summary_available']=='True' and r['detail_available']=='True']
+    require(len(available)==audit['available_case_pairs']==97,'Audit available-state mismatch')
+    require(len(objects)==len({(r['paper_id'],r['item_id']) for r in objects})==audit['object_records']==3241,'Result-object identity mismatch')
+    require(len({r['paper_id'] for r in objects})==audit['cases_with_object_records']==95,'Result-object case count mismatch')
+    require(dict(collections.Counter(r['evidence_scope'] for r in objects))==audit['evidence_scope_counts'],'Evidence scope counts mismatch')
+    require(all(r['assessment_limit'] and r['source_pointer'] for r in objects),'Missing object audit limitation or source')
+    require(dict(collections.Counter(r['dimension'] for r in conflicts))==audit['dimension_conflicts'],'State-conflict counts mismatch')
+    require(audit['agreed_dimensions']==overview['record_agreement_counts'],'Figure and audit record agreement differ')
+    for dim,counts in audit['agreed_dimensions'].items():
+        positive='complete' if dim=='numerical_scope' else 'passed'
+        require(sum(r['summary_'+dim]==r['detail_'+dim]==positive for r in available)==counts['agreed_positive'],'Agreed positive count mismatch')
+        require(sum(r['summary_'+dim]!=r['detail_'+dim] for r in available)==counts['conflict'],'Conflict count mismatch')
+        require(sum(counts.values())==100,'Agreement denominator mismatch')
+    for row in joints:
+        positive=lambda r: r['historical_all_checks_reproduced']=='True' if row['basis']=='historical_full_vs_summary_review' else r['summary_science']=='passed'
+        ids={r['paper_id'] for r in available if positive(r)==(row['row_positive']=='True') and (r['summary_independent_review']=='passed')==(row['column_positive']=='True')}
+        require(len(ids)==int(row['cases']) and ids==set(filter(None,row['paper_ids'].split(' | '))),'Joint-state membership mismatch')
+    require(audit['full_and_summary_review_intersection']==[] and len(audit['summary_science_and_review_intersection'])==1,'Headline joint-state mismatch')
+    require(all(r['summary_complete']==r['detail_complete']=='False' for r in available),'Unexpected completed case')
+    for name,digest in audit['derived_input_hashes'].items():require(sha(root/'anc'/name)==digest,'Stale audit input: '+name)
+    chain=json.loads((root/'anc/audit_system_chain.json').read_text())
+    require(chain['scorecard_fields']['physics_status']=='passed' and chain['scorecard_fields']['final_reproduction_eligible'] is False,'Proxy acceptance distinction changed')
+    require(chain['detailed_state']['science_status']=='failed' and chain['cited_attempt_file_presence']=={'data':True,'check':False,'attestation':False},'Proxy evidence boundary changed')
+    precision=audit_rows('audit_precision.csv')
+    for row in precision:
+        n=int(row['stored_gate_count'])
+        require(math.ulp(float(n))==float(row['binary64_spacing']) and (float(n)==float(n-1))==(row['adjacent_integer_values_collapse']=='True'),'Integer resolution mismatch')
+    require(sum(r['adjacent_integer_values_collapse']=='True' for r in precision)==4,'Precision statement mismatch')
+    require(audit['new_solver_runs']==audit['new_scientific_acceptance_verdicts']==0,'Audit scientific boundary changed')
     pages=len(a)
 summary=json.loads((HERE/'anc/result_summary.json').read_text())
 require(summary['new_solver_runs']==0,'Solver execution boundary changed')

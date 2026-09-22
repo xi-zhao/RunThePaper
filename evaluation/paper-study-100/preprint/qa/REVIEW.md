@@ -1,33 +1,25 @@
-# Technical report verification
+# Technical report verification — evidence-chain revision
 
-- Ten pages, five main figures and the supplementary cohort figure rendered and visually reviewed. The diagnostic-analysis page was also inspected separately.
-- Overall reproduction Figure 5 and all other scientific figure assets are unchanged. Missing coverage remains empty and hatched; the fixed cohort contains 100 papers.
-- The existing overview preserves 1,399 numerical claims, 3,667 distinct checks, 40.90024768% claim-weighted coverage and 57.82308285% measured-paper mean. These are coverage measures, not causal or whole-paper success rates.
-- Clean-directory source-package compilation passed twice with PDFLaTeX; delivered and rebuilt PDF text match. No overfull boxes, missing glyphs or undefined references. All 100 identities are present.
-- No solver was executed and no production case or scientific acceptance state was changed. Author metadata remains pending; arXiv submission was not attempted.
+- Final PDF: 12 pages, five main figures, two tables and one supplementary cohort figure. All pages rendered and inspected; the system page, complete evidence-chain table and revised Figures 2 and 5 were checked at readable resolution. No clipped labels or overlapping plot annotations remain.
+- Clean-directory source compilation passed twice with PDFLaTeX. Delivered and packaged PDF text match, with no overfull boxes, missing glyphs or undefined references. All 100 cohort identities render in the supplement.
+- The source package includes six figure PDFs, 26 ancillary files and two TeX sources. Withdrawn responsibility-count files remain excluded. Metadata title and abstract derive from the manuscript; author information is still pending.
+- No case solver was executed. New work comprises documentary linkage/state checks, stored-array arithmetic and rendering. No public case or PRAgent acceptance state was changed; arXiv submission was not attempted.
 
-PDF SHA-256: `83278f5e8d8a04e104f7e11ddd607575d791638862b1d271bc7536ccef107465`.
+## Metric and consistency audit
 
-## Observed obstacles and diagnostic reasoning
+- Historical fractions remain 40.90024768% by claim and 57.82308285% by measured paper, across 1,399 numerical claims, 3,667 unique checks and 16,376 associations. They are explicitly labelled historical check-label fractions, not scientific reproduction rates. Three papers remain unmeasured.
+- The two sets of 26 (full historical labels and summary review passed) are disjoint. Summary science passed and review passed intersect in one case. Both contingency tables are independently reconstructed from the case ledger during packaging.
+- Summary/detail conflicts are six science states, six review states, seven execution states and one numerical-scope state, with other dimensions preserved in the conflict ledger. Figure 5 uses agreement categories, not a preferred conflicting state.
+- Among the full-historical-label group, detailed review states are 20 missing, three stale and three passed; execution states are 22 attested and four missing. Overlapping additional blockers are preserved. Zero completion is not attributed to a universal backend problem.
+- The 3,241 unique result-object records come from 95 papers. Scope counts reconcile to the ledger, but metadata categories do not certify source conditions or scientific correctness. Two assessed cases lack an object inventory; three cases are unavailable.
 
-- Removed the four-domain numerical attribution table and subgroup frequencies from the manuscript and public reading notes. Four domains remain diagnostic questions, not responsibility estimates.
-- Three illustrative target records cover source identifiability, implementation scope and an outstanding resource-backed campaign. Their selection is explicitly nonrepresentative.
-- Each narrative separates the observation, archived investigation, supported interpretation and outstanding verification. Underlying tests were not independently rerun for this report.
-- `anc/obstacle_examples.json` contains exact frozen source pointers, source-file hashes and original target records. Packaging checks their statements and confidence against the existing target ledger.
-- The CPU-hour arithmetic is derived from an archived timing statement. It is not a new benchmark or proof of computational impossibility.
-- Original contradictory state labels and the missing public D001 test file remain disclosed. No undocumented cause is promoted to a confirmed verdict.
+## Capability evidence
 
-## Submission package
+- Figure 2b now measures binary64 spacing at the stored first propane row. Four of five adjacent-integer pairs collapse under binary64 conversion. Archived minimal-integer Boolean checks are preserved separately; no new bound certificate is claimed.
+- Quantum-walk conservation is explicitly internal consistency: incorrect couplings or comparison times may still pass. The manuscript does not infer source-curve agreement from this residual.
+- Discord ensembles share entropy and angle-search routines. The archived configuration uses 129 projective axes. Narrow sampling intervals do not exclude common numerical bias; the approximately 0.02-bit discrepancy remains unexplained.
+- Table 1 reproduces the frozen proxy-versus-target distinction for 2502.20558/T001. Public data are available but the cited detailed check and attestation are absent. No time-ordered autonomous intervention or repair trajectory is claimed.
+- Outcome-informed replacement of three archived cases is disclosed in methods while retaining a single fixed 100-paper analysis roster.
 
-- Six figure PDFs and 16 ancillary files are included with the TeX sources. The new ancillary record supports the three illustrative narratives.
-- All four exploratory responsibility files are excluded from the package and relocated to `qa/exploratory_attribution/`, with an explicit withdrawn-status note. They are retained only for analysis history.
-- The original diagnostic ledgers and eight-case follow-up remain traceable records, not new estimates of causal prevalence.
-
-## Capability-focused revision
-
-- Title, abstract and introduction now describe PRAgent's implemented scientific formulation, numerical implementation, verification and diagnostic capabilities in the recorded human-guided workflow.
-- Detailed implementations begin in Section 4 on page 2. Their figures are now Figures 2-4; overall reproduction is Figure 5. Source-paper figure numbers in diagnostic examples were preserved.
-- Figure assets and ancillary numerical/evidence data are unchanged. The fixed 100-paper denominator, missing coverage and assessment states remain intact.
-- General autonomy, selection and execution limitations are consolidated; case-specific conditions remain next to the relevant evidence. No autonomous attribution or new causal prevalence claims were introduced.
-- The title, subtitle and submission abstract are extracted from the manuscript during packaging. Author metadata remains pending.
-- Final 10-page layout rendered and inspected, including the first page at readable resolution. References fit within the main text's last page; the cohort supplement occupies the final page.
+PDF SHA-256: `643bc67ce62e2ddc606b6812e44d9ab4f427183749633452a6352e0f20a4574e`.
+Source ZIP SHA-256: `0529e2ec9ae49094dab31881f6f2366fc1515bcd77326362b069d7040ab803b1`.
