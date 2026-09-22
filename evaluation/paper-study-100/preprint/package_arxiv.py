@@ -21,6 +21,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 text=(HERE/'main.tex').read_text()
 figs=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
 require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort figure')
+require(figs==['figures/fig1_workflow.pdf','figures/fig2_resources.pdf','figures/fig3_quantum_walks.pdf','figures/fig4_discord.pdf','figures/fig_overall_reproduction.pdf','figures/figS1_cohort_matrix.pdf'],'Figure order differs from capability narrative')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
 files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv','anc/diagnostic_followup_summary.json','anc/diagnostic_followup_cases.csv','anc/diagnostic_followup_targets.csv','anc/obstacle_examples.json']
 for name in files:
@@ -97,14 +98,19 @@ require(summary['new_solver_runs']==0,'Solver execution boundary changed')
 require(summary['one_excitation']['state_time_slices']+summary['two_excitation']['state_time_slices']==4509,'State-time count mismatch')
 require(summary['one_excitation']['max_density_sum_error']<3e-15 and summary['two_excitation']['max_density_sum_error']<3e-15,'Conservation statement contradicted')
 author_pending='author metadata pending' in (HERE/'authors.tex').read_text()
+manuscript=(HERE/'report.md').read_text()
+report_title=re.search(r"^title: '(.+)'$",manuscript,re.M).group(1)
+report_subtitle=re.search(r"^subtitle: '(.+)'$",manuscript,re.M).group(1)
+report_abstract=' '.join(manuscript.split(r'\begin{abstract}',1)[1].split(r'\end{abstract}',1)[0].split())
+require(bool(report_abstract),'Missing manuscript abstract')
 metadata={
-    'title':'PRAgent: Building Reproducible Physics Research Workflows with AI Agents',
-    'subtitle':'A Technical Report on a 100-Paper Project',
+    'title':report_title,
+    'subtitle':report_subtitle,
     'authors':[], 'affiliations':[], 'license':None,
     'suggested_primary_category':'physics.comp-ph','optional_cross_list':'quant-ph',
     'category_status':'editorial_suggestion_not_confirmed_by_arxiv',
     'comments':f'Technical report, {pages} pages, 5 main figures and a supplementary cohort figure. Code and public research artifacts: https://github.com/xi-zhao/RunThePaper',
-    'abstract':'Turning a physics paper into executable research requires mathematical interpretation, numerical implementation and evidence that connects computed outputs to the source problem. We present PRAgent, a human-guided workflow for AI-assisted scientific reproduction, together with RunThePaper, a public collection of research cases. The workflow connects source objects and equation-level reasoning to case-specific code, generated arrays, physical diagnostics and versioned reports. We describe its use in a fixed 100-paper project and examine three implemented studies: resource estimation for randomized Hamiltonian simulation, interacting quantum walks and quantum discord. Reanalysis of archived quantum-walk arrays gives particle-number residuals below $3\\times10^{-15}$ across 4,509 stored state-time slices. Resource-estimation tables recover distinct gate-count scalings, while discord ensembles expose the importance of separating finite-instance calculations from analytical references. These examples demonstrate concrete implementations and inspectable computational outputs across different numerical tasks. The contribution is a research workflow and its reusable artifacts, rather than a new physical theory or a controlled benchmark of autonomous agents. We provide source-linked figures, analysis code and a unified cohort record to support inspection and further development.',
+    'abstract':report_abstract,
     'ready_for_submission':False,'submission_status':'not_submitted',
     'remaining_inputs':['Author names, order and affiliations','Author confirmation of final manuscript and responsibilities','Distribution license and account/category eligibility'],
 }

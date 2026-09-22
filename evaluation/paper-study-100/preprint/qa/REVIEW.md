@@ -1,12 +1,12 @@
 # Technical report verification
 
-- Twelve pages, five main figures and the supplementary cohort figure rendered and visually reviewed. The diagnostic-analysis page was also inspected separately.
-- Overall reproduction Figure 2 and all other scientific figure assets are unchanged. Missing coverage remains empty and hatched; the fixed cohort contains 100 papers.
+- Ten pages, five main figures and the supplementary cohort figure rendered and visually reviewed. The diagnostic-analysis page was also inspected separately.
+- Overall reproduction Figure 5 and all other scientific figure assets are unchanged. Missing coverage remains empty and hatched; the fixed cohort contains 100 papers.
 - The existing overview preserves 1,399 numerical claims, 3,667 distinct checks, 40.90024768% claim-weighted coverage and 57.82308285% measured-paper mean. These are coverage measures, not causal or whole-paper success rates.
 - Clean-directory source-package compilation passed twice with PDFLaTeX; delivered and rebuilt PDF text match. No overfull boxes, missing glyphs or undefined references. All 100 identities are present.
 - No solver was executed and no production case or scientific acceptance state was changed. Author metadata remains pending; arXiv submission was not attempted.
 
-PDF SHA-256: `9dfcb3c166369402c22d9bf907a6ffd6ed8c879911afee695bee590ac0925f5e`.
+PDF SHA-256: `83278f5e8d8a04e104f7e11ddd607575d791638862b1d271bc7536ccef107465`.
 
 ## Observed obstacles and diagnostic reasoning
 
@@ -22,3 +22,12 @@ PDF SHA-256: `9dfcb3c166369402c22d9bf907a6ffd6ed8c879911afee695bee590ac0925f5e`.
 - Six figure PDFs and 16 ancillary files are included with the TeX sources. The new ancillary record supports the three illustrative narratives.
 - All four exploratory responsibility files are excluded from the package and relocated to `qa/exploratory_attribution/`, with an explicit withdrawn-status note. They are retained only for analysis history.
 - The original diagnostic ledgers and eight-case follow-up remain traceable records, not new estimates of causal prevalence.
+
+## Capability-focused revision
+
+- Title, abstract and introduction now describe PRAgent's implemented scientific formulation, numerical implementation, verification and diagnostic capabilities in the recorded human-guided workflow.
+- Detailed implementations begin in Section 4 on page 2. Their figures are now Figures 2-4; overall reproduction is Figure 5. Source-paper figure numbers in diagnostic examples were preserved.
+- Figure assets and ancillary numerical/evidence data are unchanged. The fixed 100-paper denominator, missing coverage and assessment states remain intact.
+- General autonomy, selection and execution limitations are consolidated; case-specific conditions remain next to the relevant evidence. No autonomous attribution or new causal prevalence claims were introduced.
+- The title, subtitle and submission abstract are extracted from the manuscript during packaging. Author metadata remains pending.
+- Final 10-page layout rendered and inspected, including the first page at readable resolution. References fit within the main text's last page; the cohort supplement occupies the final page.
