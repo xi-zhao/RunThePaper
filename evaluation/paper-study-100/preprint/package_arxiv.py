@@ -22,7 +22,7 @@ text=(HERE/'main.tex').read_text()
 figs=re.findall(r'\\includegraphics(?:\[[^\]]*\])?\{([^}]+)\}',text)
 require(len(figs)==len(set(figs))==6,'Expected five main figures and one cohort figure')
 require(not any(s in text for s in ['/Users/','/Volumes/','fontspec','write18']),'Nonportable LaTeX source')
-files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv','anc/diagnostic_followup_summary.json','anc/diagnostic_followup_cases.csv','anc/diagnostic_followup_targets.csv','anc/responsibility_summary.json','anc/responsibility_cases.csv','anc/responsibility_targets.csv','anc/responsibility_counts.csv']
+files=['main.tex','authors.tex',*figs,'anc/result_summary.json','anc/input_manifest.json','anc/cohort_100.csv','anc/selection_provenance.json','anc/overview_summary.json','anc/overview_papers.csv','anc/overview_claims.csv','anc/overview_checks.csv','anc/reason_summary.json','anc/reason_cases.csv','anc/reason_targets.csv','anc/reason_counts.csv','anc/diagnostic_followup_summary.json','anc/diagnostic_followup_cases.csv','anc/diagnostic_followup_targets.csv','anc/obstacle_examples.json']
 for name in files:
     require(bool(re.fullmatch(r'[a-zA-Z0-9_+.,=/\-]+',name)),f'Unsupported filename: {name}')
     require((HERE/name).is_file(),f'Missing input: {name}')
@@ -79,24 +79,18 @@ with tempfile.TemporaryDirectory(prefix='pragent-arxiv-check-') as td:
     require(all(r['explicit_remaining_gap'] for r in followup_targets),'Missing target-specific explanation')
     require(sum(r['scorecard_root']=='unresolved' for r in followup_targets)==41,'Legacy label count mismatch')
     require(followup['diagnosis_accepted_by_new_scientific_review'] is False,'Follow-up acceptance boundary changed')
-    responsibility=json.loads((root/'anc/responsibility_summary.json').read_text())
-    domain_cases=list(csv.DictReader((root/'anc/responsibility_cases.csv').open()))
-    domain_targets=list(csv.DictReader((root/'anc/responsibility_targets.csv').open()))
-    domain_counts=list(csv.DictReader((root/'anc/responsibility_counts.csv').open()))
-    require(len(domain_cases)==100 and {r['paper_id'] for r in domain_cases}=={r['paper_id'] for r in roster},'Responsibility roster mismatch')
-    require(len(domain_targets)==len({(r['paper_id'],r['target_id']) for r in domain_targets})==responsibility['open_target_rows']==523,'Responsibility target mismatch')
-    require(sum(r['count_in_table']=='True' for r in domain_cases)==59,'Responsibility denominator mismatch')
-    for item in domain_counts:
-        if item['domain']=='equipment':
-            require(all(item[k]=='' for k in ['failed','pending','total']),'Equipment unknown must not become zero')
-            continue
-        for status in ['failed','pending']:
-            count=sum(r['count_in_table']=='True' and r['summary_science']==status and item['domain'] in r['attribution_domains'].split(' | ') for r in domain_cases)
-            require(count==int(item[status]),'Responsibility count mismatch')
-    for row in domain_cases:
-        assigned={v for t in domain_targets if t['paper_id']==row['paper_id'] for v in t['attribution_domains'].split(' | ') if v}
-        require(assigned==set(filter(None,row['attribution_domains'].split(' | '))),'Target/case attribution mismatch')
-    require(responsibility['new_independent_causal_verdicts']==0,'Responsibility audit boundary changed')
+    obstacles=json.loads((root/'anc/obstacle_examples.json').read_text())
+    require(len(obstacles['examples'])==3,'Expected three illustrative diagnostic examples')
+    original_targets={(r['paper_id'],r['target_id']):r for r in reason_targets}
+    for example in obstacles['examples']:
+        original=original_targets[(example['paper_id'],example['target_id'])]
+        require(example['source_pointer']==original['source_pointer'],'Obstacle source mismatch')
+        for field in ['direct_cause_statement','root_cause_statement','root_cause_confidence']:
+            require(example['archived_target_record'][field]==original[field],'Obstacle diagnosis mismatch')
+        require(example['underlying_tests_independently_rerun_for_report'] is False,'Obstacle execution boundary changed')
+    require(obstacles['new_solver_runs']==obstacles['new_independent_causal_verdicts']==0,'Obstacle verdict boundary changed')
+    require(not any('responsibility_' in name for name in files),'Withdrawn attribution files in source package')
+    require('Attribution domain & Failed' not in text and '48 cases' not in text,'Withdrawn causal count table remains')
     pages=len(a)
 summary=json.loads((HERE/'anc/result_summary.json').read_text())
 require(summary['new_solver_runs']==0,'Solver execution boundary changed')

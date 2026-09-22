@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Editorial attribution domains from recorded diagnoses, not new causal verdicts."""
+"""Rebuild withdrawn exploratory attribution for audit history, not publication."""
 import collections
 import csv
 import hashlib
@@ -8,9 +8,11 @@ from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
 ANC=HERE/'anc'
+OUT=HERE/'qa/exploratory_attribution'
+OUT.mkdir(parents=True,exist_ok=True)
 def read(name):return list(csv.DictReader((ANC/name).open()))
 def write(name,rows):
- with (ANC/name).open('w',newline='') as f:
+ with (OUT/name).open('w',newline='') as f:
   w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
 cases=read('reason_cases.csv');targets=read('reason_targets.csv')
 followup={(r['paper_id'],r['target_id']):r for r in read('diagnostic_followup_targets.csv')}
@@ -59,6 +61,7 @@ for key,label in [('paper','Paper information or claims'),('agent','Agent implem
   'count_status':'recorded_domain_count' if key!='equipment' else 'not_established_not_zero'})
 source_names=['reason_cases.csv','reason_targets.csv','diagnostic_followup_targets.csv']
 summary={'source_commit':json.loads((ANC/'reason_summary.json').read_text())['source_commit'],
+ 'publication_use':'withdrawn_from_manuscript_and_submission_package',
  'scope':'editorial_domains_of_recorded_limitations_not_confirmed_exclusive_root_causes',
  'cohort_papers':100,'case_denominator':len(selected),'failed':27,'pending':32,'open_target_rows':len(rows),
  'counts':frequency,'categories_overlap':True,'mapping_rules':rules,
@@ -73,5 +76,5 @@ assert len(rows)==len({(r['paper_id'],r['target_id']) for r in rows})
 assert summary['unallocated_external_target_count']==27
 assert [r['total'] for r in frequency]==[48,33,10,'']
 for name,data in [('responsibility_targets.csv',rows),('responsibility_cases.csv',case_rows),('responsibility_counts.csv',frequency)]:write(name,data)
-(ANC/'responsibility_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+(OUT/'responsibility_summary.json').write_text(json.dumps(summary,indent=2)+'\n')
 print(json.dumps({k:summary[k] for k in ['case_denominator','open_target_rows','counts','cases_without_assigned_domain']},indent=2))
