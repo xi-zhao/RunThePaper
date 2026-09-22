@@ -9,19 +9,28 @@
 - Clean-directory source-package compilation passed twice with PDFLaTeX; delivered and rebuilt PDF text match. No overfull boxes, missing characters or undefined references. All 100 identities and the new source datasets are present.
 - Author metadata remains pending. No arXiv submission is claimed.
 
-PDF SHA-256: `9e5f7b778f01302ebfeb760195e13fd1498da8921ccfd2bac62e834e9c9bdeb5`.
+PDF SHA-256: `f65acd817248b82aac7fdd1172bc58ef7e92b016d3225f486b2f22df91101bbe`.
 
 ## Recorded reason audit
 
 - Science states compared across all 97 available cases; six inconsistencies preserved. Four among 63 failed/pending cases excluded from cause frequencies.
-- Table 1 recounted from 59 case rows (27 failed, 32 pending); category overlap disclosed. Eight contain unreconciled legacy causal records; a documentary follow-up supplies their specific boundaries.
+- The archived six-theme ledger retains 59 case rows (27 failed, 32 pending). Table 1 now uses four responsibility domains; the mapping and category overlap are explicit.
 - All 100 identities and 1,116 target diagnoses included with source pointers and frozen-input hashes. This is recorded attribution, not a new verdict.
-- Four examples distinguish missing inputs, measured disagreement, incomplete production execution and pending scope/review.
-- Figure assets unchanged; no case execution or acceptance-state change. Fifteen ancillary files build cleanly in the source package.
+- Examples distinguish publication information gaps, missing Agent implementations, measured resource requirements and the evidence needed for an equipment attribution.
+- Figure assets unchanged; no case execution or acceptance-state change. Nineteen ancillary files build cleanly in the source package.
 
 ## Legacy diagnostic reconciliation
 
 - Eight cases and all 44 legacy unresolved targets matched to frozen scorecards and detailed reports. Every target has an explicit remaining-gap statement.
 - Three targets have updated compute-capacity diagnoses; 41 retain old codes. No scientific acceptance or state promotion performed.
 - Reservoir workload checked against the public resource benchmark. The D001 detailed test file is absent from the public snapshot; its recorded attribution is not claimed independently verified.
-- Figure assets and pages 1-5 unchanged; revised page 6 and all following pages rendered. All 15 ancillary files compile from a clean source package; 100 identities and 44 unique diagnostic targets validated.
+- Figure assets unchanged. All 12 final pages rendered and inspected, including a separate inspection of the revised Table 1 page. All 19 ancillary files compile from a clean source package; 100 identities and 44 unique diagnostic targets validated.
+
+## Four responsibility domains
+
+- Reconstructed 523 unique open target records from the 59 consistent failed/pending cases. Preserved all 100 cohort identities in the case ledger.
+- Table 1 reports overlapping recorded domains: paper 48 (22 failed/26 pending), Agent 33 (20/13), compute 10 (3/7). Equipment remains unestablished and blank, never imputed as zero.
+- Agent includes workflow and diagnostic-record maintenance, not just numerical implementation. Paper-side discrepancies retain recorded confidence, not newly established errors.
+- Three updated reservoir scorecard diagnoses account for the additional compute case; old raw diagnoses remain unchanged.
+- All 27 external-access targets remain explicitly unallocated; the authorization-gated supplement case has no assigned domain. No forced causal attribution.
+- Clean source-package recompilation and all target-to-case counts passed; no overfull boxes, missing glyphs or undefined references. No new solver execution, scientific acceptance or arXiv submission.

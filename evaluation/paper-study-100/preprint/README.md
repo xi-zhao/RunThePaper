@@ -19,6 +19,7 @@ python build_evidence.py
 python build_overview.py
 python build_reason_audit.py
 python build_diagnostic_followup.py
+python build_responsibility_audit.py
 bash build_report.sh
 python package_arxiv.py
 ```
@@ -31,7 +32,9 @@ python package_arxiv.py
 
 ## 失败与待核验原因
 
-正文新增原因表和4个具体案例，区分原文输入缺失、计算资源、方法能力、结果差异、证据流程及诊断记录未对齐。63个科学检查失败或待核验案例中，4个摘要与详细状态矛盾，暂不归因；其余59个按案例统计，允许原因重叠。全队列共6个状态矛盾保存在台账，不在此修改公开科学状态。`anc/reason_cases.csv`保留100篇，`anc/reason_targets.csv`保留1,116条目标诊断、后续验证步骤与来源定位；源包附带全部4份原因数据。
+正文按用户指定的四个责任领域归因：**论文本身、Agent、算力、实验设备**。59个可比较案例中，48个涉及论文信息或疑似论文结论差异，33个涉及Agent实现或工作流，10个涉及计算容量；类别重叠。实验设备原因未从现有诊断中单独建立，保留未确认，不能记成零。详情见[四类归因说明](四类归因说明.md)。
+
+论文信息缺失不等于论文结论错误；Agent流程缺口不等于代码错误；未运行不自动等于算力不足。27条外部访问诊断暂不强分，包括付费补充材料、计算软件许可和未核验计算平台。责任映射保留100篇及59案的523条开放诊断，四份 `anc/responsibility_*` 随源包提供。旧六类 `anc/reason_*` 作为原始诊断台账保留。63个失败或待核验案例中，4个摘要与详细状态冲突，仍排除；全队列6个状态冲突未被修改。
 
 ## 旧归因标签复查
 
