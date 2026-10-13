@@ -8,6 +8,15 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-13 — docs: fix GitHub math rendering in reproduction reports
+
+[Commit / 提交 de80ebd](https://github.com/xi-zhao/runthepaper/commit/de80ebd11a6156ac0da7eccebe5084d4a393bfc8) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+
 ## 2026-10-13 — docs: publish qLDPC and Liouvillian reproduction reports
 
 [Commit / 提交 cee027a](https://github.com/xi-zhao/runthepaper/commit/cee027a20ba1745165a359d1366c78fb02146f72) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
@@ -150,30 +159,6 @@ This page records repository history, including any local commits awaiting publi
 | [Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/cond-mat-0509490) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 | [Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/quant-ph-0507004) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 | [Entanglement of Formation of an Arbitrary State of Two Qubits](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/quant-ph-9709029) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-
-## 2026-08-20 — Merge pull request #18 from xi-zhao/c/publish-theory-classics-12
-
-[Commit / 提交 99124f2](https://github.com/xi-zhao/runthepaper/commit/99124f2f9b0c8fe1b7da5504b49d890ade8f3608) · Added / 新增 12 · Updated / 更新 0 · Removed / 移出 0
-
-<details>
-<summary>View 12 affected papers / 查看涉及的论文</summary>
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Thermodynamics of Quantum Jump Trajectories](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/0911.0556) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Exact nonequilibrium steady state of a strongly driven open XXZ chain](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/1106.2978) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Anomalous edge states and the bulk-edge correspondence for periodically driven two-dimensional systems](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/1212.3324) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Phase Structure of Driven Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/1508.03344) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Squeezed Spin States](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/PhysRevA.47.5138) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Energy Levels and Wave Functions of Bloch Electrons in Rational and Irrational Magnetic Fields](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/PhysRevB.14.2239) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Quantum Spin Hall Effect in Graphene](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/cond-mat-0411737) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Dynamics of a Quantum Phase Transition](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/cond-mat-0503511) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Localization of Interacting Fermions at High Temperature](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/cond-mat-0610854) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Real Spectra in Non-Hermitian Hamiltonians Having PT Symmetry](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/physics-9712001) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Entanglement in Quantum Critical Phenomena](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/quant-ph-0211074) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/quant-ph-0403025) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-
-</details>
 
 ## Refreshing this page / 如何更新
 
