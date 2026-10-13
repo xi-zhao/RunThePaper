@@ -8,6 +8,15 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-13 — docs: publish qLDPC and Liouvillian reproduction reports
+
+[Commit / 提交 cee027a](https://github.com/xi-zhao/runthepaper/commit/cee027a20ba1745165a359d1366c78fb02146f72) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/cee027a20ba1745165a359d1366c78fb02146f72/cases/2610.10731) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/cee027a20ba1745165a359d1366c78fb02146f72/cases/2610.12348) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
 ## 2026-08-27 — data: refresh attested spin-model provenance
 
 [Commit / 提交 8b51499](https://github.com/xi-zhao/runthepaper/commit/8b51499e0b92ad61d97d7b3b3829d2eb278353b6) · Added / 新增 0 · Updated / 更新 1 · Removed / 移出 0
@@ -165,14 +174,6 @@ This page records repository history, including any local commits awaiting publi
 | [Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas](https://github.com/xi-zhao/runthepaper/tree/99124f2f9b0c8fe1b7da5504b49d890ade8f3608/cases/quant-ph-0403025) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 </details>
-
-## 2026-08-12 — fix: restore executable public runners
-
-[Commit / 提交 2fb3bf3](https://github.com/xi-zhao/runthepaper/commit/2fb3bf3188af0e00b9ba20a5de02579b9f01420c) · Added / 新增 0 · Updated / 更新 1 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [An Algorithm for Fast Assembling Large-Scale Defect-Free Atom Arrays](https://github.com/xi-zhao/runthepaper/tree/2fb3bf3188af0e00b9ba20a5de02579b9f01420c/cases/2604.08669) | Updated / 更新 | Code / 代码 |
 
 ## Refreshing this page / 如何更新
 
