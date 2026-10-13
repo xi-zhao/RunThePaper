@@ -23,9 +23,9 @@ python cases/2610.12348/code/scripts/run_reproduction.py --mode quick
 
 ## H3 参数
 
-原文组使用 $N=8$、fermion $L=16$、boson $L=9$，$\delta/g=5$、$\Gamma/g=10$、$tg=250$、photon cutoff 8，`rtol=1e-9`、`atol=1e-11`。初始腔真空和 photon-counting unraveling 是本案明确声明的条件。实际样本数取外层 `cohort.samples`；嵌套 `initial.samples` 是未参与计算的旧元数据。生成配置保留原值，避免改写历史。
+原文组使用 $`N=8`$、fermion $`L=16`$、boson $`L=9`$，$`\delta/g=5`$、$`\Gamma/g=10`$、$`tg=250`$、photon cutoff 8，`rtol=1e-9`、`atol=1e-11`。初始腔真空和 photon-counting unraveling 是本案明确声明的条件。实际样本数取外层 `cohort.samples`；嵌套 `initial.samples` 是未参与计算的旧元数据。生成配置保留原值，避免改写历史。
 
-压力组为 fermion L8N4、boson L5N4，各取 GS 及两个 Fock 初态；$(\delta/g,\Gamma/g,tg)$ 取 (0,10,50)、(5,10,50)、(10,10,50)、(5,5,50)、(5,20,50)、(5,10,250)。每组 16 条随机流，跨参数配对；原文没有这些参数曲线，因此不能计作新增原图复现。
+压力组为 fermion L8N4、boson L5N4，各取 GS 及两个 Fock 初态；$`(\delta/g,\Gamma/g,tg)`$ 取 (0,10,50)、(5,10,50)、(10,10,50)、(5,5,50)、(5,20,50)、(5,10,250)。每组 16 条随机流，跨参数配对；原文没有这些参数曲线，因此不能计作新增原图复现。
 
 [配置](../code/h3/config.json)、[生成器](../code/h3/generate.py)、[数组](../outputs/data/h3/samples.npz)、[运行汇总](../outputs/data/h3/results.json)。主生成历史墙时 1447.9 秒，仅供估计。
 

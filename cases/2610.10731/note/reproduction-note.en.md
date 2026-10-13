@@ -15,13 +15,13 @@ This is a theoretical and numerical reproduction. We did not operate a neutral-a
 Finite-group polynomials are expanded into binary permutation matrices. The exact GF(2) checks are
 
 $$H_XH_Z^T=0,\qquad M_XH_X=M_ZH_Z=0,\qquad
-k=n-\operatorname{rank}H_X-\operatorname{rank}H_Z.$$
+k=n-\mathrm{rank}H_X-\mathrm{rank}H_Z.$$
 
-All five Table II constructions pass the commutation and metacheck identities. Their tricycle and quadcycle logical dimensions are 3 and 6. The two small tricycle codes have exact $(d_X,d_Z)=(6,3),(8,4)$. For the larger three, only the $d_X$ upper bounds 15, 19 and 28 are established; their $d_Z$ values are exactly 5, 6 and 7. Quadcycle distances are exactly 6 and 8 for 54 and 72 qubits; explicit logical operators give upper bounds 14, 17 and 21 for 162, 228 and 420 qubits. The final bound improves the paper's heuristic estimate of 25, without refuting an exact-distance theorem. Larger-code minimum distances remain unknown. See the [derivation](../docs/DERIVATION.md) and [distance witnesses](../outputs/data/extra-distances.json).
+All five Table II constructions pass the commutation and metacheck identities. Their tricycle and quadcycle logical dimensions are 3 and 6. The two small tricycle codes have exact $`(d_X,d_Z)=(6,3),(8,4)`$. For the larger three, only the $`d_X`$ upper bounds 15, 19 and 28 are established; their $`d_Z`$ values are exactly 5, 6 and 7. Quadcycle distances are exactly 6 and 8 for 54 and 72 qubits; explicit logical operators give upper bounds 14, 17 and 21 for 162, 228 and 420 qubits. The final bound improves the paper's heuristic estimate of 25, without refuting an exact-distance theorem. Larger-code minimum distances remain unknown. See the [derivation](../docs/DERIVATION.md) and [distance witnesses](../outputs/data/extra-distances.json).
 
-The SD6 calculation retains one-qubit/idle depolarization, two-qubit depolarization, preparation and measurement flips, each at its stated rate $p$. The CCZ one-pair marginal uses $16p_{\rm CCZ}/21$ under the uniform-nonidentity convention. The resulting Clifford phase diagnostic is not complete magic-state infidelity.
+The SD6 calculation retains one-qubit/idle depolarization, two-qubit depolarization, preparation and measurement flips, each at its stated rate $`p`$. The CCZ one-pair marginal uses $`16p_{\rm CCZ}/21`$ under the uniform-nonidentity convention. The resulting Clifford phase diagnostic is not complete magic-state infidelity.
 
-Every attempt enters the acceptance denominator. Final quad readout does not enter postselection. For operational metacheck record $S$, hidden preparation frame $F$ and detector word $D$,
+Every attempt enters the acceptance denominator. Final quad readout does not enter postselection. For operational metacheck record $`S`$, hidden preparation frame $`F`$ and detector word $`D`$,
 
 $$A=\{D\oplus\widehat F(S)=0\},\qquad
 \alpha=P(A),\qquad p_L=P(L\ne0\mid A).$$
@@ -30,7 +30,7 @@ Frame MAP sums probabilities of fault explanations within the same frame class. 
 
 ## Main result
 
-At $p=0.001$, $p_{\rm CCZ}=0.002$, with the fixed default order and declared `fresh_aligned` timing:
+At $`p=0.001`$, $`p_{\rm CCZ}=0.002`$, with the fixed default order and declared `fresh_aligned` timing:
 
 | Acceptance per attempt | 54-qubit code | 72-qubit code |
 |---|---:|---:|
@@ -62,7 +62,7 @@ The [historical registered pixel comparison](../docs/COMPARISONS.md) separates a
 
 ## Scope and remaining work
 
-Complete conditional logical-error counting, rare-event statistics for larger codes, the $10^{-9}$ target and the claimed 10–40-fold resource advantage remain unfinished. No certified failures in a bounded low-order fault subset does not imply zero logical error. The ancillary animation also has a code-coordinate/gate-table consistency issue under its literal combined implementation; that separate source-implementation audit does not refute the abstract factory and is not counted as an acceptance result here.
+Complete conditional logical-error counting, rare-event statistics for larger codes, the $`10^{-9}`$ target and the claimed 10–40-fold resource advantage remain unfinished. No certified failures in a bounded low-order fault subset does not imply zero logical error. The ancillary animation also has a code-coordinate/gate-table consistency issue under its literal combined implementation; that separate source-implementation audit does not refute the abstract factory and is not counted as an acceptance result here.
 
 Our remaining calculations and source information that could resolve ambiguities are listed separately in [boundaries](../docs/BOUNDARIES.md). Missing author code is not treated as an external blocker while relevant independent checks remain feasible. No author email was sent.
 

@@ -25,7 +25,7 @@ python cases/2610.10731/code/scripts/run_reproduction.py --mode quick
 
 ## 已固定的约定
 
-- $p$ 是各指定 SD6 通道的总概率；CCZ 单 pair 边缘采用 $16p_{CCZ}/21$ 的均匀非平凡 Pauli 参数。
+- $`p`$ 是各指定 SD6 通道的总概率；CCZ 单 pair 边缘采用 $`16p_{CCZ}/21`$ 的均匀非平凡 Pauli 参数。
 - `fresh_aligned` 与 `baseline` 是声明的独立调度变体，未认定为作者程序。
 - R+H 与 H+M 保留；门序和 idle 噪声由具体线路决定。
 - 每次尝试均计入接受率分母；最终 quad readout 不参与 acceptance mask。
