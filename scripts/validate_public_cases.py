@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -232,6 +233,23 @@ def validate_authority_projection(
         errors.append(f"{paper_id} provenance master_git_sha mismatch")
 
 
+def validate_scorecard(case: dict[str, Any], scorecard: dict[str, Any]) -> None:
+    catalog_score = case["audit_score"]
+    scorecard_score = scorecard["overall_score"]
+    if catalog_score is None or scorecard_score is None:
+        if not (catalog_score is None and scorecard_score is None
+                and scorecard.get("score_status") == "not_assessed"
+                and isinstance(scorecard.get("reason"), str)
+                and scorecard["reason"].strip()):
+            raise ValueError("unscored cases require matching null scores and an explicit not_assessed reason")
+        return
+    left, right = float(catalog_score), float(scorecard_score)
+    if not all(math.isfinite(v) and 0 <= v <= 100 for v in (left, right)):
+        raise ValueError("scores must be finite and between 0 and 100")
+    if abs(left-right) > 0.005:
+        raise ValueError(f"catalog/scorecard mismatch: {left} != {right}")
+
+
 def validate_case(case: dict[str, Any], errors: list[str]) -> None:
     paper_id = str(case.get("paper_id", ""))
     case_dir = ROOT / "cases" / paper_id
@@ -319,13 +337,7 @@ def validate_case(case: dict[str, Any], errors: list[str]) -> None:
     if scorecard_path.is_file():
         try:
             scorecard = json.loads(scorecard_path.read_text(encoding="utf-8"))
-            catalog_score = float(case["audit_score"])
-            scorecard_score = float(scorecard["overall_score"])
-            if abs(catalog_score - scorecard_score) > 0.005:
-                errors.append(
-                    f"catalog/scorecard mismatch for {paper_id}: "
-                    f"{catalog_score} != {scorecard_score}"
-                )
+            validate_scorecard(case, scorecard)
         except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
             errors.append(f"invalid scorecard contract for {paper_id}: {exc}")
 

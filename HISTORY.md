@@ -11,7 +11,7 @@ This is a chronology of the papers currently included. Curated accounts of how d
 Each entry uses the earlier year of its recorded arXiv identifier or an explicit year in parentheses in its publication citation, with a source link. Ambiguous or missing years remain undated. Paper dates and [case update dates](UPDATES.md) have separate records.
 每项取已记录 arXiv 编号年份与正式引文中明确标注的括号年份中较早者，并链接到依据。缺失或有歧义的年份列入待补充。论文年代与[复现材料更新日期](UPDATES.md)分别记录。
 
-**100 paper cases / 篇论文案例 · recorded years / 已记录年代 1976–2026**
+**102 paper cases / 篇论文案例 · recorded years / 已记录年代 1976–2026**
 
 - [1970s / 1970 年代](#decade-1970)
 - [1990s / 1990 年代](#decade-1990)
@@ -153,3 +153,5 @@ Each entry uses the earlier year of its recorded arXiv identifier or an explicit
 | 2026<br>[preprint / 预印本](https://arxiv.org/abs/2607.28795) | [High-rate qLDPC processors](cases/2607.28795/README.md) | Partial scientific reproduction | [Derivation / 推导](cases/2607.28795/docs/DERIVATION.md) · [Code / 代码](cases/2607.28795/code/README.md) · [Evidence / 证据](cases/2607.28795/outputs/checks/completion_assessment.json) |
 | 2026<br>[preprint / 预印本](https://arxiv.org/abs/2608.03987) | [Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators](cases/2608.03987/README.md) | Partial scientific reproduction | [Derivation / 推导](cases/2608.03987/docs/DERIVATION.md) · [Code / 代码](cases/2608.03987/code/README.md) · [Evidence / 证据](cases/2608.03987/outputs/checks/completion_assessment.json) |
 | 2026<br>[preprint / 预印本](https://arxiv.org/abs/2608.05312) | [Unidirectional Dark-to-Bright Rescue in Cavity-Coupled Quantum Transport](cases/2608.05312/README.md) | Partial scientific reproduction | [Derivation / 推导](cases/2608.05312/docs/DERIVATION.md) · [Code / 代码](cases/2608.05312/code/README.md) · [Evidence / 证据](cases/2608.05312/outputs/checks/completion_assessment.json) |
+| 2026<br>[preprint / 预印本](https://arxiv.org/abs/2610.10731v1) | [Single-shot magic state factories for quantum LDPC codes](cases/2610.10731/README.md) | Partial scientific reproduction | [Derivation / 推导](cases/2610.10731/docs/DERIVATION.md) · [Code / 代码](cases/2610.10731/code/README.md) · [Evidence / 证据](cases/2610.10731/outputs/checks/completion_assessment.json) |
+| 2026<br>[preprint / 预印本](https://arxiv.org/abs/2610.12348v1) | [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](cases/2610.12348/README.md) | Partial scientific reproduction | [Derivation / 推导](cases/2610.12348/docs/DERIVATION.md) · [Code / 代码](cases/2610.12348/code/README.md) · [Evidence / 证据](cases/2610.12348/outputs/checks/completion_assessment.json) |

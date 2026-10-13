@@ -34,6 +34,10 @@ CHINESE_STATUS = {
 }
 
 
+def audit_label(value: Any) -> str:
+    return "Not assessed / 未评分" if value is None else f"{float(value):.2f}/100"
+
+
 def load_catalog() -> list[dict[str, Any]]:
     payload = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     if (
@@ -233,7 +237,7 @@ def render_cases_index(
                 )
             lines.append(
                 f"| [{case['title']}]({case_root}/README.md)<br>{paper_reference(case)} "
-                f"| {case['status']}<br>{chinese_status}<br>Audit: {float(case['audit_score']):.2f}/100 "
+                f"| {case['status']}<br>{chinese_status}<br>Audit: {audit_label(case['audit_score'])} "
                 f"| [English]({case_root}/note/reproduction-note.en.md) · "
                 f"[中文]({case_root}/note/reproduction-note.zh-CN.md)<br>"
                 f"[Code]({case_root}/code/README.md) · "
@@ -292,10 +296,12 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
         )
     lines.extend(
         [
-            f"Public status: **{case['status']}** · Audit score: **{float(case['audit_score']):.2f}/100**",
+            f"Public status: **{case['status']}** · Audit score: **{audit_label(case['audit_score'])}**",
             "",
             str(case["summary"]),
             "",
+            *([f"![Independently generated overview](outputs/figures/{case['overview_figure']})", ""]
+              if case.get("overview_figure") else []),
             "## Start Here / 从这里开始",
             "",
             "- [中文复现 Note](note/reproduction-note.zh-CN.md)",
@@ -386,7 +392,7 @@ def render_case_readme(case: dict[str, Any], case_dir: Path) -> str:
             "```bash",
             "python -m venv .venv",
             "source .venv/bin/activate",
-            "pip install -r requirements.txt",
+            f"pip install -r {case.get('requirements_file', 'requirements.txt')}",
         ]
     )
     extras = [str(item) for item in case.get("extra_dependencies", [])]
@@ -505,7 +511,7 @@ def render_code_readme(case: dict[str, Any]) -> str:
         "```bash",
         "python -m venv .venv",
         "source .venv/bin/activate",
-        "pip install -r requirements.txt",
+        f"pip install -r {case.get('requirements_file', 'requirements.txt')}",
     ]
     if extras:
         lines.append("pip install " + " ".join(extras))
@@ -541,7 +547,7 @@ def render_code_readme(case: dict[str, Any]) -> str:
         )
     lines.extend(
         [
-            "Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.",
+            str(case.get("output_note", "Generated data files are written to `../outputs/data/`, figures to `../outputs/figures/`, and machine-readable checks to `../outputs/checks/`.")),
             "",
             f"Boundary: {case['limitation']}",
             "",

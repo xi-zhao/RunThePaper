@@ -4,7 +4,7 @@
 
 [Learning paths / 学习路径](LEARNING_PATHS.md) · [Paper timeline / 论文年代](HISTORY.md) · [Case updates / 案例更新](UPDATES.md)
 
-100 paper cases, grouped by research topic. Each paper appears in one primary collection.
+102 paper cases, grouped by research topic. Each paper appears in one primary collection.
 Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.
 
 The audit score records evidence strength at export time. It is not a percentage of physical correctness or a cross-paper ranking.
@@ -12,9 +12,9 @@ Status and scores are taken from the public catalog; the case completion assessm
 
 审计分数记录导出时的证据情况；科学一致性、复现范围和独立评审状态请结合案例页面阅读。
 
-- [Quantum computing, algorithms & error correction / 量子计算、算法与纠错 (25)](#collection-quantum-computing)
+- [Quantum computing, algorithms & error correction / 量子计算、算法与纠错 (26)](#collection-quantum-computing)
 - [Quantum information, foundations & sensing / 量子信息、基础问题与精密测量 (18)](#collection-quantum-information)
-- [Many-body physics, phases & nonequilibrium dynamics / 多体物理、相变与非平衡动力学 (27)](#collection-many-body)
+- [Many-body physics, phases & nonequilibrium dynamics / 多体物理、相变与非平衡动力学 (28)](#collection-many-body)
 - [Topology, non-Hermitian physics, materials & transport / 拓扑、非厄米、材料与输运 (21)](#collection-topology-materials)
 - [Atomic, optical, photonic & field physics / 原子、光学、光子学与场论 (9)](#collection-amo-field)
 
@@ -28,6 +28,7 @@ Circuit compilation, quantum simulation, fault tolerance, and error mitigation a
 
 | Paper / References | Public status / Audit score | Read / Run |
 | --- | --- | --- |
+| [Single-shot magic state factories for quantum LDPC codes](cases/2610.10731/README.md)<br>[arXiv:2610.10731v1](https://arxiv.org/abs/2610.10731v1)<br>Not recorded / 未检索到正式发表（checked 2026-10-13） | Partial scientific reproduction<br>部分科学复现<br>Audit: Not assessed / 未评分 | [English](cases/2610.10731/note/reproduction-note.en.md) · [中文](cases/2610.10731/note/reproduction-note.zh-CN.md)<br>[Code](cases/2610.10731/code/README.md) · [Checks](cases/2610.10731/outputs/checks/) |
 | [Tackling the Qubit Mapping Problem for NISQ-Era Quantum Devices](cases/10.1145-3297858.3304023/README.md)<br>[arXiv:1809.02573](https://arxiv.org/abs/1809.02573)<br>[ASPLOS '19, pp. 1001–1014](https://doi.org/10.1145/3297858.3304023) · DOI `10.1145/3297858.3304023` | Partial scientific reproduction<br>部分科学复现<br>Audit: 68.29/100 | [English](cases/10.1145-3297858.3304023/note/reproduction-note.en.md) · [中文](cases/10.1145-3297858.3304023/note/reproduction-note.zh-CN.md)<br>[Code](cases/10.1145-3297858.3304023/code/README.md) · [Checks](cases/10.1145-3297858.3304023/outputs/checks/) |
 | [Simulating the Sycamore quantum supremacy circuits](cases/2103.03074/README.md)<br>[arXiv:2103.03074](https://arxiv.org/abs/2103.03074)<br>[Phys. Rev. Lett. 128, 030501 (2022)](https://doi.org/10.1103/PhysRevLett.128.030501) · DOI `10.1103/PhysRevLett.128.030501` | Scientific reproduction — paper-error candidates identified<br>科学复现，发现论文错误候选<br>Audit: 55.00/100 | [English](cases/2103.03074/note/reproduction-note.en.md) · [中文](cases/2103.03074/note/reproduction-note.zh-CN.md)<br>[Code](cases/2103.03074/code/README.md) · [Checks](cases/2103.03074/outputs/checks/) |
 | [Efficient simulation of logical magic state preparation protocols](cases/2512.23799/README.md)<br>[arXiv:2512.23799](https://arxiv.org/abs/2512.23799)<br>[PRX Quantum 7, 020329 (2026)](https://doi.org/10.1103/fby6-xjbm) · DOI `10.1103/fby6-xjbm` | Partial scientific reproduction<br>部分科学复现<br>Audit: 59.11/100 | [English](cases/2512.23799/note/reproduction-note.en.md) · [中文](cases/2512.23799/note/reproduction-note.zh-CN.md)<br>[Code](cases/2512.23799/code/README.md) · [Checks](cases/2512.23799/outputs/checks/) |
@@ -93,6 +94,7 @@ Time crystals, many-body scars, quantum phase transitions, and thermalization tu
 
 | Paper / References | Public status / Audit score | Read / Run |
 | --- | --- | --- |
+| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](cases/2610.12348/README.md)<br>[arXiv:2610.12348v1](https://arxiv.org/abs/2610.12348v1)<br>Not recorded / 未检索到正式发表（checked 2026-10-13） | Partial scientific reproduction<br>部分科学复现<br>Audit: Not assessed / 未评分 | [English](cases/2610.12348/note/reproduction-note.en.md) · [中文](cases/2610.12348/note/reproduction-note.zh-CN.md)<br>[Code](cases/2610.12348/code/README.md) · [Checks](cases/2610.12348/outputs/checks/) |
 | [Discrete time crystals: rigidity, criticality, and realizations](cases/1608.02589/README.md)<br>[arXiv:1608.02589](https://arxiv.org/abs/1608.02589)<br>[Phys. Rev. Lett. 118, 030401 (2017)](https://doi.org/10.1103/PhysRevLett.118.030401) · DOI `10.1103/PhysRevLett.118.030401` | Partial scientific reproduction<br>部分科学复现<br>Audit: 73.56/100 | [English](cases/1608.02589/note/reproduction-note.en.md) · [中文](cases/1608.02589/note/reproduction-note.zh-CN.md)<br>[Code](cases/1608.02589/code/README.md) · [Checks](cases/1608.02589/outputs/checks/) |
 | [Quantum many-body scars](cases/1711.03528/README.md)<br>[arXiv:1711.03528](https://arxiv.org/abs/1711.03528)<br>[Nature Physics 14, 745–749 (2018)](https://doi.org/10.1038/s41567-018-0137-5) · DOI `10.1038/s41567-018-0137-5` | Partial scientific reproduction<br>部分科学复现<br>Audit: 72.50/100 | [English](cases/1711.03528/note/reproduction-note.en.md) · [中文](cases/1711.03528/note/reproduction-note.zh-CN.md)<br>[Code](cases/1711.03528/code/README.md) · [Checks](cases/1711.03528/outputs/checks/) |
 | [Localization Driven Superradiant Instability](cases/10.1103-PhysRevLett.124.113601/README.md)<br>[1909.08125](https://arxiv.org/abs/1909.08125)<br>[Physical Review Letters 124, 113601 (2020)](https://doi.org/10.1103/PhysRevLett.124.113601) · DOI `10.1103/PhysRevLett.124.113601` | Partial scientific reproduction<br>部分科学复现<br>Audit: 89.50/100 | [English](cases/10.1103-PhysRevLett.124.113601/note/reproduction-note.en.md) · [中文](cases/10.1103-PhysRevLett.124.113601/note/reproduction-note.zh-CN.md)<br>[Code](cases/10.1103-PhysRevLett.124.113601/code/README.md) · [Checks](cases/10.1103-PhysRevLett.124.113601/outputs/checks/) |
