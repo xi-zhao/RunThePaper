@@ -8,6 +8,15 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-15 — fix: validate current native publication snapshots at exact commits
+
+[Commit / 提交 735be24](https://github.com/xi-zhao/runthepaper/commit/735be24b7932a9ff7c1e6b7678170210fcd471d3) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+
 ## 2026-10-13 — docs: fix GitHub math rendering in reproduction reports
 
 [Commit / 提交 de80ebd](https://github.com/xi-zhao/runthepaper/commit/de80ebd11a6156ac0da7eccebe5084d4a393bfc8) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
@@ -145,20 +154,6 @@ This page records repository history, including any local commits awaiting publi
 | [Entanglement of Formation of an Arbitrary State of Two Qubits](https://github.com/xi-zhao/runthepaper/tree/2674ff163c30e06e45a53e228f31774b21d855c2/cases/quant-ph-9709029) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Derivation and notes / 推导与讲义 |
 
 </details>
-
-## 2026-08-21 — feat: publish seven classic PR reproductions
-
-[Commit / 提交 6f1f8a5](https://github.com/xi-zhao/runthepaper/commit/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da) · Added / 新增 7 · Updated / 更新 0 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Quantum Discord and the Power of One Qubit](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/0709.0548) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Necessary and Sufficient Condition for Nonzero Quantum Discord](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/1004.0190) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Dynamical Quantum Phase Transitions in the Transverse-Field Ising Model](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/1206.2505) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Quantum Speed Limit for Non-Markovian Dynamics](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/1302.5069) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Dynamics of a Quantum Phase Transition: Exact Solution of the Quantum Ising Model](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/cond-mat-0509490) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Large-N Scaling Behavior of the Lipkin-Meshkov-Glick Model](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/quant-ph-0507004) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Entanglement of Formation of an Arbitrary State of Two Qubits](https://github.com/xi-zhao/runthepaper/tree/6f1f8a57f75edaef17f9ff817a6aef0bbfc226da/cases/quant-ph-9709029) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 ## Refreshing this page / 如何更新
 
