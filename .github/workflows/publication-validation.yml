@@ -1,0 +1,39 @@
+name: Publication validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  public-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0 # The navigation checker derives UPDATES.md from committed history.
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Check publication admission and save exact-commit receipt
+        env:
+          PUBLICATION_SHA: ${{ github.sha }}
+        run: python scripts/verify_publication.py --expected-sha "$PUBLICATION_SHA" --receipt "$RUNNER_TEMP/publication-validation.json"
+      - name: Run validator regression tests
+        if: always()
+        run: python -m unittest discover -s tests -q
+      - name: Save receipt and validator log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: publication-validation-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/publication-validation.json
+            ${{ runner.temp }}/publication-validation.log
+          if-no-files-found: error
+          retention-days: 90

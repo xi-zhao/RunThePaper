@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import re
 import sys
@@ -231,6 +232,90 @@ def validate_authority_projection(
             errors.append(f"{paper_id} {label} complete flag mismatch")
     if provenance.get("master_git_sha") != master_git_sha:
         errors.append(f"{paper_id} provenance master_git_sha mismatch")
+    if (case.get("authority_mode") == "native"
+            or completion.get("authority_mode") == "native"
+            or provenance.get("authority_mode") == "native"
+            or completion.get("format") == "pragent.public-native-assessment.v1"
+            or any("source_run_id" in p or "source_version" in p
+                   for p in (completion, provenance))):
+        validate_native_publication(case, case_dir, completion, provenance, errors)
+
+
+def validate_native_publication(case, case_dir, completion, provenance, errors):
+    """Package admission is separate from scientific completion and source access."""
+    paper_id = case["paper_id"]
+    for label, payload in (("catalog", case), ("completion", completion),
+                           ("provenance", provenance)):
+        if payload.get("authority_mode") != "native":
+            errors.append(f"{paper_id} {label} authority_mode mismatch")
+    if completion.get("assessment_freshness") != "current":
+        errors.append(f"{paper_id} native assessment is not current")
+    if completion.get("integrity") != "valid":
+        errors.append(f"{paper_id} native assessment integrity is not valid")
+    for field in ("source_run_id", "source_version", "source_snapshot_sha256"):
+        value = completion.get(field)
+        valid = (isinstance(value, int) and not isinstance(value, bool) and value > 0
+                 if field == "source_version" else
+                 isinstance(value, str) and bool(re.fullmatch(
+                     r"[0-9a-f]{64}" if field == "source_snapshot_sha256"
+                     else r"[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}", value)))
+        if (not valid or provenance.get(field) != value
+                or type(provenance.get(field)) is not type(value)):
+            errors.append(f"{paper_id} missing or inconsistent {field}")
+    if completion.get("master_git_sha") != case.get("master_git_sha"):
+        errors.append(f"{paper_id} completion master_git_sha mismatch")
+    manifest_path = case_dir / "outputs/checks/publication_manifest.json"
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if (manifest.get("format") != "runthepaper.publication-manifest.v1"
+                or manifest.get("paper_id") != paper_id
+                or manifest.get("master_git_sha") != case.get("master_git_sha")):
+            raise ValueError("manifest identity mismatch")
+        files = manifest["files"]
+        if not isinstance(files, dict) or not files:
+            raise ValueError("empty manifest")
+        generated = {"README.md", "code/README.md", "note/reproduction-note.md"}
+        excluded = generated | {"outputs/checks/publication_manifest.json"}
+        actual = {p.relative_to(case_dir).as_posix() for p in case_dir.rglob("*")
+                  if p.is_file() and p.suffix != ".pyc" and p.name != ".DS_Store"}
+        if set(files) != actual - excluded:
+            errors.append(f"{paper_id} publication file inventory mismatch")
+        for name, expected in files.items():
+            path = case_dir / name
+            if (not isinstance(name, str) or not name or Path(name).is_absolute()
+                    or ".." in Path(name).parts or path.is_symlink()
+                    or not path.resolve().is_relative_to(case_dir.resolve())):
+                errors.append(f"{paper_id} unsafe manifest path")
+                continue
+            if (not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected)
+                    or not path.is_file()
+                    or hashlib.sha256(path.read_bytes()).hexdigest() != expected):
+                errors.append(f"{paper_id} publication hash mismatch: {name}")
+        lineage = provenance.get("files")
+        if not isinstance(lineage, list) or not lineage:
+            raise ValueError("missing source lineage")
+        seen = set()
+        for row in lineage:
+            name = row["public_path"]
+            if (name in seen or name not in files
+                    or row.get("public_sha256") != files[name]
+                    or not re.fullmatch(r"[0-9a-f]{64}", str(row.get("source_sha256", "")))):
+                errors.append(f"{paper_id} invalid source lineage: {name}")
+            seen.add(name)
+            if row.get("transformation") not in {"byte-for-byte", "path-only adaptation/redaction"}:
+                errors.append(f"{paper_id} unknown source transformation: {name}")
+            if (row.get("transformation") == "byte-for-byte"
+                    and row.get("source_sha256") != row.get("public_sha256")):
+                errors.append(f"{paper_id} byte-for-byte source hash mismatch: {name}")
+        derived = provenance.get("generated_checks")
+        if (not isinstance(derived, list) or len(set(derived)) != len(derived)
+                or any(not isinstance(p, str) or not p.startswith("outputs/checks/")
+                       or not p.endswith(".json") or p not in files for p in derived)):
+            errors.append(f"{paper_id} invalid generated-check inventory")
+        elif set(files) != seen | set(derived) | {"outputs/checks/publication_provenance.json"}:
+            errors.append(f"{paper_id} source lineage does not cover the publication")
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        errors.append(f"{paper_id} invalid publication manifest: {exc}")
 
 
 def validate_scorecard(case: dict[str, Any], scorecard: dict[str, Any]) -> None:
