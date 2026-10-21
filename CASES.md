@@ -4,7 +4,7 @@
 
 [Learning paths / 学习路径](LEARNING_PATHS.md) · [Paper timeline / 论文年代](HISTORY.md) · [Case updates / 案例更新](UPDATES.md)
 
-102 paper cases, grouped by research topic. Each paper appears in one primary collection.
+104 paper cases, grouped by research topic. Each paper appears in one primary collection.
 Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.
 
 The audit score records evidence strength at export time. It is not a percentage of physical correctness or a cross-paper ranking.
@@ -13,7 +13,7 @@ Status and scores are taken from the public catalog; the case completion assessm
 审计分数记录导出时的证据情况；科学一致性、复现范围和独立评审状态请结合案例页面阅读。
 
 - [Quantum computing, algorithms & error correction / 量子计算、算法与纠错 (26)](#collection-quantum-computing)
-- [Quantum information, foundations & sensing / 量子信息、基础问题与精密测量 (18)](#collection-quantum-information)
+- [Quantum information, foundations & sensing / 量子信息、基础问题与精密测量 (20)](#collection-quantum-information)
 - [Many-body physics, phases & nonequilibrium dynamics / 多体物理、相变与非平衡动力学 (28)](#collection-many-body)
 - [Topology, non-Hermitian physics, materials & transport / 拓扑、非厄米、材料与输运 (21)](#collection-topology-materials)
 - [Atomic, optical, photonic & field physics / 原子、光学、光子学与场论 (9)](#collection-amo-field)
@@ -83,6 +83,8 @@ Entanglement, quantum resources, open systems, foundations, and sensing with ins
 | [Necessary and Sufficient Condition for Nonzero Quantum Discord](cases/1004.0190/README.md)<br>[arXiv:1004.0190](https://arxiv.org/abs/1004.0190)<br>[Phys. Rev. Lett. 105, 190502 (2010)](https://doi.org/10.1103/PhysRevLett.105.190502) · DOI `10.1103/PhysRevLett.105.190502` | Partial scientific reproduction<br>部分科学复现<br>Audit: 90.00/100 | [English](cases/1004.0190/note/reproduction-note.en.md) · [中文](cases/1004.0190/note/reproduction-note.zh-CN.md)<br>[Code](cases/1004.0190/code/README.md) · [Checks](cases/1004.0190/outputs/checks/) |
 | [Quantum Speed Limit for Non-Markovian Dynamics](cases/1302.5069/README.md)<br>[arXiv:1302.5069](https://arxiv.org/abs/1302.5069)<br>[Phys. Rev. Lett. 111, 010402 (2013)](https://doi.org/10.1103/PhysRevLett.111.010402) · DOI `10.1103/PhysRevLett.111.010402` | Scientific reproduction — independent review pending<br>科学复现，待独立评审<br>Audit: 90.00/100 | [English](cases/1302.5069/note/reproduction-note.en.md) · [中文](cases/1302.5069/note/reproduction-note.zh-CN.md)<br>[Code](cases/1302.5069/code/README.md) · [Checks](cases/1302.5069/outputs/checks/) |
 | [Quantum Discord and the Power of One Qubit](cases/0709.0548/README.md)<br>[arXiv:0709.0548](https://arxiv.org/abs/0709.0548)<br>[Phys. Rev. Lett. 100, 050502 (2008)](https://doi.org/10.1103/PhysRevLett.100.050502) · DOI `10.1103/PhysRevLett.100.050502` | Partial scientific reproduction<br>部分科学复现<br>Audit: 78.85/100 | [English](cases/0709.0548/note/reproduction-note.en.md) · [中文](cases/0709.0548/note/reproduction-note.zh-CN.md)<br>[Code](cases/0709.0548/code/README.md) · [Checks](cases/0709.0548/outputs/checks/) |
+| [Non-Hermitian Skin Effect and Chiral Damping in Open Quantum Systems](cases/1904.08432/README.md)<br>[arXiv:1904.08432v2](https://arxiv.org/abs/1904.08432v2)<br>[Phys. Rev. Lett. 123, 170401 (2019)](https://doi.org/10.1103/PhysRevLett.123.170401) · DOI `10.1103/PhysRevLett.123.170401` | Scientific reproduction — main physical results reproduced<br>主要物理结果已复现<br>Audit: Not assessed / 未评分 | [English](cases/1904.08432/note/reproduction-note.en.md) · [中文](cases/1904.08432/note/reproduction-note.zh-CN.md)<br>[Code](cases/1904.08432/code/README.md) · [Checks](cases/1904.08432/outputs/checks/) |
+| [Pontus-Mpemba Effects](cases/2505.14622/README.md)<br>[arXiv:2505.14622v2](https://arxiv.org/abs/2505.14622v2)<br>[Phys. Rev. Lett. 135, 140404 (2025)](https://doi.org/10.1103/hhgj-89gj) · DOI `10.1103/hhgj-89gj` | Scientific reproduction — main physical results reproduced<br>主要物理结果已复现<br>Audit: Not assessed / 未评分 | [English](cases/2505.14622/note/reproduction-note.en.md) · [中文](cases/2505.14622/note/reproduction-note.zh-CN.md)<br>[Code](cases/2505.14622/code/README.md) · [Checks](cases/2505.14622/outputs/checks/) |
 
 <a id="collection-many-body"></a>
 

@@ -1,0 +1,75 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Skin effect 与 chiral damping 复现报告</title><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:#203047;background:#f4f6f9;font:16px/1.75 system-ui,-apple-system,"PingFang SC",sans-serif}main{max-width:1180px;margin:auto;padding:46px 26px 80px}h1{font-size:33px;line-height:1.3;letter-spacing:-.5px}h2{margin-top:50px;font-size:24px}h3{font-size:19px}p{max-width:900px}a{color:#2161ad;text-underline-offset:3px}.eyebrow{font-size:13px;letter-spacing:.12em;color:#61758e}.lead{font-size:19px;line-height:1.85}.badges{display:flex;gap:12px;flex-wrap:wrap}.badge{padding:10px 16px;background:white;border:1px solid #d8e1e9;border-radius:9px}.badge b{display:block;font-size:22px}.muted,figcaption{font-size:13px;color:#63748a}.note{background:#fff6df;border-left:4px solid #d59a23;padding:18px 22px;margin:24px 0}.success{background:#edf7f1;border-left-color:#379169}nav{position:sticky;top:0;z-index:5;background:#f4f6f9ed;padding:14px 0;border-bottom:1px solid #dce3ec;display:flex;gap:24px;flex-wrap:wrap}section{scroll-margin-top:75px}.compare{display:grid;grid-template-columns:minmax(0, .8fr) minmax(0,1.2fr);gap:18px;align-items:start;margin:24px 0}.box{background:white;border:1px solid #dce3ec;border-radius:12px;padding:17px;overflow:hidden}figure{margin:0}img{display:block;width:100%;height:auto;max-height:980px;object-fit:contain;background:#fff}.box a{font-size:13px}.wide{max-width:950px;margin:24px auto}table{border-collapse:collapse;width:100%;background:#fff;font-size:14px}th,td{text-align:left;padding:12px 14px;vertical-align:top;border-bottom:1px solid #e1e6ee}th{background:#eaf0f6}td:first-child{white-space:nowrap}code{font-size:.9em;background:#eaf0f6;padding:2px 5px;border-radius:4px}pre{white-space:pre-wrap;word-break:break-word;background:#f0f3f7;font-size:12px;padding:16px;max-height:520px;overflow:auto}details{background:#fff;border:1px solid #dce3ec;border-radius:9px;padding:12px 16px;margin:18px 0}summary{cursor:pointer;font-weight:600}select{font:inherit;padding:8px;border:1px solid #bdcad9;border-radius:6px}footer{border-top:1px solid #dce3ec;margin-top:40px;padding-top:20px;font-size:13px;color:#63748a}.cardgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cardgrid .box{padding:25px}@media(max-width:760px){main{padding:25px 16px}h1{font-size:27px}.compare,.cardgrid{grid-template-columns:1fr}nav{gap:16px;font-size:14px}table{font-size:12px}td,th{padding:9px}}
+</style><main><div class="eyebrow">RunThePaper · PRL 数值复现 · 2026-10-20</div>
+<h1>Non-Hermitian Skin Effect<br>and Chiral Damping</h1>
+<p class="lead"><b>主要物理结果已复现。</b>非厄米皮肤效应、开边界下的快速衰减和向右传播的手性波前均得到计算支持；对照模型没有该手性波前。</p>
+<p class="muted">Fei Song, Shunyu Yao &amp; Zhong Wang · <a href="https://doi.org/10.1103/PhysRevLett.123.170401">PRL 123, 170401 (2019)</a>。本轮核对版本：<a href="https://arxiv.org/abs/1904.08432v2">arXiv:1904.08432v2</a>。</p>
+<div class="badges"><div class="badge"><b>6 / 6</b>复现范围内的数值子图已计算</div><div class="badge"><b>0.987</b>拟合波前速度（论文约 1）</div></div>
+<nav><a href="#finding">结论</a><a href="#figures">原图对照</a><a href="#accuracy">数值核验</a><a href="#files">来源与文件</a></nav>
+<section id="finding"><h2>续查结果：三条周期曲线已对齐到图形精度</h2>
+<p><b>初态和胞元计数已核实；直接求解稳态方程，自然产生此前的基线偏移。</b>统一参考后，图 2(a)A、图 3(a)、图 3(b) 周期曲线的相对 RMSE 分别为 0.011%、0.025%、0.020%，均与原始 EPS 坐标精度相容。<a href="../alignment/index.html">查看本轮对照图、数值与条件核对 →</a></p>
+<p><b>实际影响：</b>改变密度偏离量的基线和有限链长时平台；同一模型的动力学不变，已核对的主要边界效应与手性波前仍成立。</p>
+<details><summary>展开参考态解释与本轮验证</summary>
+<p>在 t₁=t₂、偶数胞元数的有限周期链中，存在不衰减暗模。用 P 表示归一化暗模投影，三种合法稳态参考给出：</p>
+<table><tr><th>参考态</th><th>暗模占据</th><th>相对 .5I 的每胞元偏离量</th></tr><tr><td>C₀ = .5(I−P)</td><td>0</td><td>加 1/(2L)</td></tr><tr><td>Cₕ = .5I</td><td>.5</td><td>不变</td></tr><tr><td>C₁ = .5(I+P)</td><td>1</td><td>减 1/(2L)</td></tr></table>
+<p>Cₕ 是文中给出的合法稳态；C₁ 是我们所用满填充初态的有限链长时极限。C₀ 与公开周期链图线相容，但图线相容不能证明作者采用了 C₀ 或某种特定求解器。</p>
+<p>直接 Lyapunov 求解和小系统独立 SVD 均得到 C₀；20 组链长与增益/损耗控制支持此机制。对应偏移为图 2(a)A 的 1/300、图 3(b) 的 1/120。图 3(a) 在 10–180 胞元 × 三种参考态中，仅 L=30、C₀ 满足全部端点误差带，早晚时间段判断一致。</p>
+<p>本轮重新读取原始 EPS，使用全部刻度标定轴，并在原图时间点计算；没有自由拟合曲线平移或缩放。矩阵指数、仿射 ODE、SVD 截断和 80 位精度控制均已核对。</p>
+<p class="muted">“该机制能解释图线”已有直接证据；“作者采用了此求解器”仍未确认。图 3(a) 的 L=30 是稳定的图线推断。它们不阻碍本轮计算，不归因为作者表达不清。有限链的稳态参考与具体初态的长时极限仍需区分。</p>
+</details></section>
+<section id="figures"><details data-section><summary>原图与复现图 · 展开图 2–4</summary>
+<p>彩色曲线来自独立数组；本页生成图不含作者参考坐标。三条周期曲线的有限参考对照见稳态对齐报告。以下周期链图使用已披露的候选参考；图线匹配不代表作者实现身份已确认。</p><h3>图 2(a) · 四组周期链衰减</h3><div class="compare"><p class="box"><a href="https://arxiv.org/abs/1904.08432v2" target="_blank">在官方论文中查看原图</a>；本页展示独立计算图。</p><figure class="box"><b>复现图 · 独立计算</b><a href="../../outputs/figures/F2a.png" target="_blank"><img loading="lazy" src="../../outputs/figures/F2a.png" alt="图 2(a) · 四组周期链衰减 独立计算图" id=""></a><figcaption>A 展示与图线相容的 C₀ 候选参考；B/C/D 使用各自有限网格或有隙驻态条件。</figcaption></figure></div><figure class="box wide"><img loading="lazy" src="../../outputs/figures/F2b.png" alt="四组PBC/OBC独立有限谱"><figcaption>图 2(b)：150胞元，300个本征值。所有四组开边界谱及边缘态使用稳定厄米方法；未用病态非正规本征向量做动力学。</figcaption></figure><h3>图 3 · 总体和局部衰减</h3><div class="compare"><p class="box"><a href="https://arxiv.org/abs/1904.08432v2" target="_blank">在官方论文中查看原图</a>；本页展示独立计算图。</p><figure class="box"><b>复现图 · 独立计算</b><a href="../../outputs/figures/F3.png" target="_blank"><img loading="lazy" src="../../outputs/figures/F3.png" alt="图 3 · 总体和局部衰减 独立计算图" id=""></a><figcaption>OBC L=30/40/50/60；局部 x=1/10/20/30。PBC 图3(a)的L30标为推断，图3(b)用L60；二者均公开标明驻态参考。</figcaption></figure></div><h3>图 4 · 边界、模型与手性波前</h3><div class="compare"><p class="box"><a href="https://arxiv.org/abs/1904.08432v2" target="_blank">在官方论文中查看原图</a>；本页展示独立计算图。</p><figure class="box"><b>复现图 · 独立计算</b><a href="../../outputs/figures/F4.png" target="_blank"><img loading="lazy" src="../../outputs/figures/F4.png" alt="图 4 · 边界、模型与手性波前 独立计算图" id="q-image"></a><figcaption>模型I到t=70、模型II到t=20。热图使用独立演化；PBC模型I参考与图3曲线排查一致，图4本身的逐像素色标没有单独认证。模型II用其实际Lyapunov驻态。</figcaption></figure></div><figure class="box wide"><img loading="lazy" src="../../outputs/figures/conventions.png" alt="驻态参考差异与幂律趋近"><figcaption>左：同一物理演化、三种驻态参考。右：热力学网格的有限时间拟合；−1/4 的收敛较慢，不能只用原图有限窗口判定渐近指数。</figcaption></figure></details></section><section id="accuracy"><details data-section><summary>数值核验 · 算法、误差与原图比较</summary><table><tr><th>检查</th><th>实际结果</th><th>限制</th></tr><tr><td>完整Fock vs相关矩阵</td><td>最大差 1.96×10⁻¹⁴</td><td>2种模型、2种边界、满填充与一般混态</td></tr><tr><td>原始X直接expm vs步进传播</td><td>最大差 9.13×10⁻¹⁵</td><td>原尺寸与模型II控制点，并做半步长检查</td></tr><tr><td>分离自适应ODE审查</td><td>原始24数组最大差 3.57×10⁻¹³</td><td>绑定v1数组；后续驻态参考扩展另有核验</td></tr><tr><td>手性波前速度</td><td>0.98698</td><td>胞元10–50，首次局部/PBC参考 &lt; .1；时间网格 .1</td></tr><tr><td>临界幂律指数</td><td>10⁴–10⁵：−.2560；10⁷–10⁸：−.25019</td><td>解析目标−.25，32768→65536网格复核</td></tr><tr><td>t₁&lt;t₂ 幂律指数</td><td>−.500021</td><td>解析目标−.5，窗口10⁴–10⁵</td></tr></table><h3>原始完整核验的逐项比较（保留旧标定）</h3><p>三条周期曲线的最新 EPS 重标定结果见 <a href="../alignment/index.html">对齐续查</a>；以下旧表保留以便追溯。</p><p>Log10 RMSE 的单位是 decade；它不等于原始密度的相对误差。下表同时给出密度单位 RMSE。解析参考态与离散链长候选的比较另存于检查结果；这些误差以相应候选条件为前提。</p><table><tr><th>原图曲线</th><th>Log10 RMSE</th><th>密度 RMSE</th><th>矢量读取点</th></tr><tr><td>F2a_A</td><td>5.18e-05</td><td>7.47e-06</td><td>3254</td></tr><tr><td>F2a_B</td><td>5.15e-05</td><td>5.27e-06</td><td>2874</td></tr><tr><td>F2a_C</td><td>2.22e-04</td><td>1.17e-05</td><td>2785</td></tr><tr><td>F2a_D</td><td>2.23e-04</td><td>1.10e-05</td><td>1487</td></tr><tr><td>F3a_periodic</td><td>2.51e-04</td><td>1.25e-04</td><td>260</td></tr><tr><td>F3a_open_30</td><td>2.02e-04</td><td>9.77e-05</td><td>310</td></tr><tr><td>F3a_open_40</td><td>2.02e-04</td><td>9.17e-05</td><td>296</td></tr><tr><td>F3a_open_50</td><td>2.02e-04</td><td>7.33e-05</td><td>294</td></tr><tr><td>F3a_open_60</td><td>2.27e-04</td><td>8.23e-05</td><td>282</td></tr><tr><td>F3b_periodic</td><td>9.61e-05</td><td>5.69e-05</td><td>162</td></tr><tr><td>F3b_x_1</td><td>1.15e-04</td><td>2.15e-05</td><td>210</td></tr><tr><td>F3b_x_10</td><td>1.15e-04</td><td>4.94e-05</td><td>238</td></tr><tr><td>F3b_x_20</td><td>1.20e-04</td><td>5.12e-05</td><td>230</td></tr><tr><td>F3b_x_30</td><td>1.15e-04</td><td>5.37e-05</td><td>218</td></tr></table><p class="muted">14条曲线属于3个原始子图，不把它们重复计入6个数值子图的分母。有限谱与热图另做算符、边界、稳态、物理性及图示特征核对，未声称对全部原图完成逐像素评分。</p><details><summary>查看本地数值证据</summary><p class="muted">下列数据直接来自 <a href="../../outputs/checks/numerical-checks.json">calculation/checks/results.json</a>。科学判断由实际计算支持，未经过形式化证明内核。</p><pre>{
+  &quot;crosscheck_pass&quot;: true,
+  &quot;fock_max_error&quot;: 1.9637069748057456e-14,
+  &quot;propagator_max_error&quot;: 9.131584377541913e-15,
+  &quot;new_reference_array_error&quot;: 2.4424906541753444e-15,
+  &quot;critical_far_asymptote&quot;: {
+    &quot;fit_window&quot;: [
+      10000000.0,
+      100000000.0
+    ],
+    &quot;fitted_exponent&quot;: -0.25018987525013014,
+    &quot;max_relative_grid_refinement&quot;: 1.1452880818788786e-10,
+    &quot;times&quot;: [
+      10000000.0,
+      11659144.011798311,
+      13593563.908785269,
+      15848931.924611142,
+      18478497.974222906,
+      21544346.900318824,
+      25118864.315095823,
+      29286445.64625237,
+      34145488.738336004,
+      39810717.05534969,
+      46415888.33612782,
+      54116952.654646374,
+      63095734.448019296,
+      73564225.44596422,
+      85769589.85908946,
+      100000000.0
+    ],
+    &quot;density&quot;: [
+      0.0028870465867239267,
+      0.002778217526587536,
+      0.0026735003439334114,
+      0.002572738647737569,
+      0.002475782107174829,
+      0.0023824862046980927,
+      0.0022927120004599174,
+      0.002206325907425827,
+      0.0021231994765777986,
+      0.0020432091916508183,
+      0.001966236272885753,
+      0.0018921664893185254,
+      0.0018208899791589857,
+      0.0017523010778433823,
+      0.0016862981533721688,
+      0.001622783448570347
+    ]
+  },
+  &quot;basis_change&quot;: {
+    &quot;unitarity_error&quot;: 3.1401849173675503e-16,
+    &quot;sy_to_sz_error&quot;: 3.1401849173675503e-16,
+    &quot;loss_localization_error&quot;: 2.220446049250313e-16,
+    &quot;gain_localization_error&quot;: 2.220446049250313e-16
+  }
+}</pre></details></details></section><section id="files"><details data-section><summary>来源、代码与复查文件</summary><p><a href="https://arxiv.org/abs/1904.08432v2">固定版本原文</a> · <a href="../DERIVATION.md">推导与参考态约定</a> · <a href="../../code/model/generate.py">独立生成器</a> · <a href="../../outputs/data/generation.json">生成说明</a> · <a href="../../outputs/checks/numerical-checks.json">实际核验结果</a> · <a href="../REVIEW.md">分离代码审查</a></p><p>6 个数值子图均已计算。周期曲线的参考态、初态与链长续查已有明确结果，见新报告；作者实际实现身份不作断言。本轮没有逐字核对最终期刊全文，也未开展原文展望的相互作用与无序扩展。</p><p class="muted">最初生成在读取原图数值坐标前冻结。参考态扩展是在原图检查后加入的解析约定排查，保留了前后执行证据，不冒充另一轮结果盲测。PRAgent采用有实际生成与checker绑定的同一Agent科学记录，不是Lean式形式化证明；额外分离代码审查的覆盖边界见链接。</p></details></section><footer>原图：Fei Song, Shunyu Yao, Zhong Wang, Non-Hermitian Skin Effect and Chiral Damping in Open Quantum Systems, arXiv:1904.08432v2 / PRL123,170401 (2019)，原文与原图请从官方来源获取。独立数值与报告：PRAgent案例1904.08432。本次公开报告由用户授权发布。</footer></main><script>function revealSection(hash){const section=document.getElementById(hash.slice(1));const detail=section?.querySelector(':scope > details[data-section]');if(detail)detail.open=true;}document.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',()=>revealSection(link.hash)));window.addEventListener('hashchange',()=>revealSection(location.hash));revealSection(location.hash);</script></html>

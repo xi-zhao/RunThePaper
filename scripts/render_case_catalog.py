@@ -26,6 +26,7 @@ README_PATHS = {
     "zh-CN": ROOT / "README.zh-CN.md",
 }
 CHINESE_STATUS = {
+    "Scientific reproduction — main physical results reproduced": "主要物理结果已复现",
     "Partial scientific reproduction": "部分科学复现",
     "Scientific reproduction — independent review pending": "科学复现，待独立评审",
     "Scientific reproduction — visual review pending": "科学复现，待视觉评审",

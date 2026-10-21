@@ -79,7 +79,7 @@ python scripts/run_reproduction.py --config config/paper_exact.json
 ## 浏览论文
 
 <!-- case-catalog:start -->
-**102 篇公开论文案例**，包含部分复现和受阻的尝试。
+**104 篇公开论文案例**，包含部分复现和受阻的尝试。
 按主题进入[完整目录](CASES.md)，查看论文来源、已记录状态、中英文讲义、代码和证据。
 
 [选择学习路径](LEARNING_PATHS.md) · [沿论文年代浏览](HISTORY.md) · [查看案例增量更新](UPDATES.md)
@@ -87,7 +87,7 @@ python scripts/run_reproduction.py --config config/paper_exact.json
 | 研究主题 | 案例数 |
 | --- | ---: |
 | [量子计算、算法与纠错](CASES.md#collection-quantum-computing) | 26 |
-| [量子信息、基础问题与精密测量](CASES.md#collection-quantum-information) | 18 |
+| [量子信息、基础问题与精密测量](CASES.md#collection-quantum-information) | 20 |
 | [多体物理、相变与非平衡动力学](CASES.md#collection-many-body) | 28 |
 | [拓扑、非厄米、材料与输运](CASES.md#collection-topology-materials) | 21 |
 | [原子、光学、光子学与场论](CASES.md#collection-amo-field) | 9 |

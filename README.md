@@ -89,7 +89,7 @@ for its scope and remaining review work.
 ## Browse the papers
 
 <!-- case-catalog:start -->
-**102 public paper cases**, including partial and blocked reproductions.
+**104 public paper cases**, including partial and blocked reproductions.
 Open a collection in the [full catalog](CASES.md) for paper references,
 recorded status, bilingual notes, code, and evidence.
 
@@ -98,7 +98,7 @@ recorded status, bilingual notes, code, and evidence.
 | Research collection | Cases |
 | --- | ---: |
 | [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 26 |
-| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 18 |
+| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 20 |
 | [Many-body physics, phases & nonequilibrium dynamics](CASES.md#collection-many-body) | 28 |
 | [Topology, non-Hermitian physics, materials & transport](CASES.md#collection-topology-materials) | 21 |
 | [Atomic, optical, photonic & field physics](CASES.md#collection-amo-field) | 9 |
