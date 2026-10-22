@@ -8,6 +8,28 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-22 — research: publish ten PRL reproductions and discrepancy evidence
+
+[Commit / 提交 2c51abb](https://github.com/xi-zhao/runthepaper/commit/2c51abb3f5e48919bdc553b62239a4c9b486a8ce) · Added / 新增 10 · Updated / 更新 0 · Removed / 移出 0
+
+<details>
+<summary>View 10 affected papers / 查看涉及的论文</summary>
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Entanglement, Nonlinear Dynamics, and the Heisenberg Limit](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0711.4840) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Measure for the Degree of Non-Markovian Behavior of Quantum Processes in Open Systems](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0908.0238) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Fast Optimal Frictionless Atom Cooling in Harmonic Traps: Shortcut to Adiabaticity](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0910.0709) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Single Photons from Coupled Quantum Modes](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/1002.4341) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Non-Bloch Band Theory of Non-Hermitian Systems](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/1902.10958) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Model for a Quantum Hall Effect without Landau Levels: Condensed-Matter Realization of the "Parity Anomaly"](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/PhysRevLett.61.2015) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Coherent Destruction of Tunneling](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/PhysRevLett.67.516) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Effect of Suddenly Turning on Interactions in the Luttinger Model](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/cond-mat-0606236) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Localization Transitions in Non-Hermitian Quantum Mechanics](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/cond-mat-9603165) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Quantum Zeno Subspaces](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/quant-ph-0201115) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
+</details>
+
 ## 2026-10-21 — research: publish two PRL reproductions and reference alignment
 
 [Commit / 提交 0170931](https://github.com/xi-zhao/runthepaper/commit/0170931f534331bde5a9b1ee7907c4c62f5fd22a) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
@@ -43,15 +65,6 @@ This page records repository history, including any local commits awaiting publi
 | --- | --- | --- |
 | [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
 | [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
-
-## 2026-10-13 — docs: publish qLDPC and Liouvillian reproduction reports
-
-[Commit / 提交 cee027a](https://github.com/xi-zhao/runthepaper/commit/cee027a20ba1745165a359d1366c78fb02146f72) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/cee027a20ba1745165a359d1366c78fb02146f72/cases/2610.10731) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/cee027a20ba1745165a359d1366c78fb02146f72/cases/2610.12348) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 ## Refreshing this page / 如何更新
 
