@@ -8,6 +8,28 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-24 — research: publish native ten evaluation public reports
+
+[Commit / 提交 2d6566c](https://github.com/xi-zhao/runthepaper/commit/2d6566c2a95837de923a34e2257c1157d144dfe7) · Added / 新增 10 · Updated / 更新 0 · Removed / 移出 0
+
+<details>
+<summary>View 10 affected papers / 查看涉及的论文</summary>
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Measuring non-Markovianity with entanglement](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/0911.4270) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Growth of entanglement entropy in a free-fermion model](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1202.5532) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Error mitigation for short-depth quantum circuits](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1612.02058) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Barren plateaus in quantum circuit optimization](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1803.11173) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Bulk-boundary correspondence in non-Hermitian systems](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1805.06492) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Measurement-induced phase transition in the dynamics of entanglement](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1808.06134) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Topological theory of non-Hermitian skin effect](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/1910.02878) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Quantum Spin Hall Effect and Topological Phase Transition in HgTe Quantum Wells](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/cond-mat-0506581) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Relaxation of an Isolated Interacting Fermion System by a Generalized Gibbs Ensemble](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/cond-mat-0604476) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Scaling of Entanglement close to a Quantum Phase Transition](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/quant-ph-0202029) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
+</details>
+
 ## 2026-10-22 — research: publish ten PRL reproductions and discrepancy evidence
 
 [Commit / 提交 2c51abb](https://github.com/xi-zhao/runthepaper/commit/2c51abb3f5e48919bdc553b62239a4c9b486a8ce) · Added / 新增 10 · Updated / 更新 0 · Removed / 移出 0
@@ -56,15 +78,6 @@ This page records repository history, including any local commits awaiting publi
 | --- | --- | --- |
 | [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
 | [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
-
-## 2026-10-13 — docs: fix GitHub math rendering in reproduction reports
-
-[Commit / 提交 de80ebd](https://github.com/xi-zhao/runthepaper/commit/de80ebd11a6156ac0da7eccebe5084d4a393bfc8) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
-| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/de80ebd11a6156ac0da7eccebe5084d4a393bfc8/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
 
 ## Refreshing this page / 如何更新
 
