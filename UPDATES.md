@@ -8,6 +8,28 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-10-24 — docs: repair native ten navigation and note links
+
+[Commit / 提交 273a9bd](https://github.com/xi-zhao/runthepaper/commit/273a9bdaec0603772210e791d043a5bf1a84663c) · Added / 新增 0 · Updated / 更新 10 · Removed / 移出 0
+
+<details>
+<summary>View 10 affected papers / 查看涉及的论文</summary>
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Measuring non-Markovianity with entanglement](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/0911.4270) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Growth of entanglement entropy in a free-fermion model](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1202.5532) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Error mitigation for short-depth quantum circuits](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1612.02058) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Barren plateaus in quantum circuit optimization](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1803.11173) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Bulk-boundary correspondence in non-Hermitian systems](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1805.06492) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Measurement-induced phase transition in the dynamics of entanglement](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1808.06134) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Topological theory of non-Hermitian skin effect](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/1910.02878) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Quantum Spin Hall Effect and Topological Phase Transition in HgTe Quantum Wells](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/cond-mat-0506581) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Relaxation of an Isolated Interacting Fermion System by a Generalized Gibbs Ensemble](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/cond-mat-0604476) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+| [Scaling of Entanglement close to a Quantum Phase Transition](https://github.com/xi-zhao/runthepaper/tree/273a9bdaec0603772210e791d043a5bf1a84663c/cases/quant-ph-0202029) | Updated / 更新 | Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
+
+</details>
+
 ## 2026-10-24 — research: publish native ten evaluation public reports
 
 [Commit / 提交 2d6566c](https://github.com/xi-zhao/runthepaper/commit/2d6566c2a95837de923a34e2257c1157d144dfe7) · Added / 新增 10 · Updated / 更新 0 · Removed / 移出 0
@@ -69,15 +91,6 @@ This page records repository history, including any local commits awaiting publi
 | --- | --- | --- |
 | [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/6dabfdc6c896526bcbd80e1d8ad46b5aa4f86f8a/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源 |
 | [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/6dabfdc6c896526bcbd80e1d8ad46b5aa4f86f8a/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源 |
-
-## 2026-10-15 — fix: validate current native publication snapshots at exact commits
-
-[Commit / 提交 735be24](https://github.com/xi-zhao/runthepaper/commit/735be24b7932a9ff7c1e6b7678170210fcd471d3) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
-| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/735be24b7932a9ff7c1e6b7678170210fcd471d3/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Derivation and notes / 推导与讲义 |
 
 ## Refreshing this page / 如何更新
 
