@@ -91,7 +91,7 @@ for its scope and remaining review work.
 [**New: ten PRL reproductions and the latest comparison findings**](docs/reproductions/prl-ten-20261022.md)
 
 <!-- case-catalog:start -->
-**114 public paper cases**, including partial and blocked reproductions.
+**124 public paper cases**, including partial and blocked reproductions.
 Open a collection in the [full catalog](CASES.md) for paper references,
 recorded status, bilingual notes, code, and evidence.
 
@@ -99,10 +99,10 @@ recorded status, bilingual notes, code, and evidence.
 
 | Research collection | Cases |
 | --- | ---: |
-| [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 26 |
-| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 23 |
-| [Many-body physics, phases & nonequilibrium dynamics](CASES.md#collection-many-body) | 29 |
-| [Topology, non-Hermitian physics, materials & transport](CASES.md#collection-topology-materials) | 24 |
+| [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 28 |
+| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 25 |
+| [Many-body physics, phases & nonequilibrium dynamics](CASES.md#collection-many-body) | 32 |
+| [Topology, non-Hermitian physics, materials & transport](CASES.md#collection-topology-materials) | 27 |
 | [Atomic, optical, photonic & field physics](CASES.md#collection-amo-field) | 12 |
 <!-- case-catalog:end -->
 
