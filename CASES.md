@@ -4,7 +4,7 @@
 
 [Learning paths / 学习路径](LEARNING_PATHS.md) · [Paper timeline / 论文年代](HISTORY.md) · [Case updates / 案例更新](UPDATES.md)
 
-124 paper cases, grouped by research topic. Each paper appears in one primary collection.
+126 paper cases, grouped by research topic. Each paper appears in one primary collection.
 Open the paper title for its scope and remaining boundary, or go directly to a note, code, or checks.
 
 The audit score records evidence strength at export time. It is not a percentage of physical correctness or a cross-paper ranking.
@@ -12,8 +12,8 @@ Status and scores are taken from the public catalog; the case completion assessm
 
 审计分数记录导出时的证据情况；科学一致性、复现范围和独立评审状态请结合案例页面阅读。
 
-- [Quantum computing, algorithms & error correction / 量子计算、算法与纠错 (28)](#collection-quantum-computing)
-- [Quantum information, foundations & sensing / 量子信息、基础问题与精密测量 (25)](#collection-quantum-information)
+- [Quantum computing, algorithms & error correction / 量子计算、算法与纠错 (29)](#collection-quantum-computing)
+- [Quantum information, foundations & sensing / 量子信息、基础问题与精密测量 (26)](#collection-quantum-information)
 - [Many-body physics, phases & nonequilibrium dynamics / 多体物理、相变与非平衡动力学 (32)](#collection-many-body)
 - [Topology, non-Hermitian physics, materials & transport / 拓扑、非厄米、材料与输运 (27)](#collection-topology-materials)
 - [Atomic, optical, photonic & field physics / 原子、光学、光子学与场论 (12)](#collection-amo-field)
@@ -56,6 +56,7 @@ Circuit compilation, quantum simulation, fault tolerance, and error mitigation a
 | [Realified tensor networks: quantum circuit simulation on real-valued matrix accelerators](cases/2608.03987/README.md)<br>[arXiv:2608.03987](https://arxiv.org/abs/2608.03987)<br>Not recorded / 未检索到正式发表（checked 2026-08-07） | Partial scientific reproduction<br>部分科学复现<br>Audit: 72.00/100 | [English](cases/2608.03987/note/reproduction-note.en.md) · [中文](cases/2608.03987/note/reproduction-note.zh-CN.md)<br>[Code](cases/2608.03987/code/README.md) · [Checks](cases/2608.03987/outputs/checks/) |
 | [Single-shot magic state factories for quantum LDPC codes](cases/2610.10731/README.md)<br>[arXiv:2610.10731v1](https://arxiv.org/abs/2610.10731v1)<br>Not recorded / 未检索到正式发表（checked 2026-10-13） | Partial scientific reproduction<br>部分科学复现<br>Audit: Not assessed / 未评分 | [English](cases/2610.10731/note/reproduction-note.en.md) · [中文](cases/2610.10731/note/reproduction-note.zh-CN.md)<br>[Code](cases/2610.10731/code/README.md) · [Checks](cases/2610.10731/outputs/checks/) |
 | [Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas](cases/quant-ph-0403025/README.md)<br>[arXiv:quant-ph/0403025](https://arxiv.org/abs/quant-ph/0403025)<br>[Phys. Rev. A 71, 022316 (2005)](https://doi.org/10.1103/PhysRevA.71.022316) · DOI `10.1103/PhysRevA.71.022316` | Partial scientific reproduction<br>部分科学复现<br>Audit: 90.00/100 | [English](cases/quant-ph-0403025/note/reproduction-note.en.md) · [中文](cases/quant-ph-0403025/note/reproduction-note.zh-CN.md)<br>[Code](cases/quant-ph-0403025/code/README.md) · [Checks](cases/quant-ph-0403025/outputs/checks/) |
+| [Dynamically corrected gates suppressing spatiotemporal error correlations as measured by randomized benchmarking](cases/1909.10727/README.md)<br>[arXiv:1909.10727v1](https://arxiv.org/abs/1909.10727v1)<br>[Phys. Rev. Research 2, 013156 (2020)](https://doi.org/10.1103/PhysRevResearch.2.013156) · DOI `10.1103/PhysRevResearch.2.013156` | Partial scientific reproduction<br>部分科学复现<br>Audit: Not assessed / 未评分 | [English](cases/1909.10727/note/reproduction-note.en.md) · [中文](cases/1909.10727/note/reproduction-note.zh-CN.md)<br>[Code](cases/1909.10727/code/README.md) · [Checks](cases/1909.10727/outputs/checks/) |
 
 <a id="collection-quantum-information"></a>
 
@@ -92,6 +93,7 @@ Entanglement, quantum resources, open systems, foundations, and sensing with ins
 | [Scaling of Entanglement close to a Quantum Phase Transition](cases/quant-ph-0202029/README.md)<br>[quant-ph/0202029v2](https://arxiv.org/abs/quant-ph/0202029)<br>Not recorded / 未检索到正式发表（checked 2026-10-24） | Scientific reproduction — main physical results reproduced<br>主要物理结果已复现<br>Audit: Not assessed / 未评分 | [English](cases/quant-ph-0202029/note/reproduction-note.en.md) · [中文](cases/quant-ph-0202029/note/reproduction-note.zh-CN.md)<br>[Code](cases/quant-ph-0202029/code/README.md) · [Checks](cases/quant-ph-0202029/outputs/checks/) |
 | [Entanglement in Quantum Critical Phenomena](cases/quant-ph-0211074/README.md)<br>[arXiv:quant-ph/0211074](https://arxiv.org/abs/quant-ph/0211074)<br>[Phys. Rev. Lett. 90, 227902 (2003)](https://doi.org/10.1103/PhysRevLett.90.227902) · DOI `10.1103/PhysRevLett.90.227902` | Partial scientific reproduction<br>部分科学复现<br>Audit: 87.33/100 | [English](cases/quant-ph-0211074/note/reproduction-note.en.md) · [中文](cases/quant-ph-0211074/note/reproduction-note.zh-CN.md)<br>[Code](cases/quant-ph-0211074/code/README.md) · [Checks](cases/quant-ph-0211074/outputs/checks/) |
 | [Entanglement of Formation of an Arbitrary State of Two Qubits](cases/quant-ph-9709029/README.md)<br>[arXiv:quant-ph/9709029](https://arxiv.org/abs/quant-ph/9709029)<br>[Phys. Rev. Lett. 80, 2245–2248 (1998)](https://doi.org/10.1103/PhysRevLett.80.2245) · DOI `10.1103/PhysRevLett.80.2245` | Scientific reproduction — independent review pending<br>科学复现，待独立评审<br>Audit: 90.00/100 | [English](cases/quant-ph-9709029/note/reproduction-note.en.md) · [中文](cases/quant-ph-9709029/note/reproduction-note.zh-CN.md)<br>[Code](cases/quant-ph-9709029/code/README.md) · [Checks](cases/quant-ph-9709029/outputs/checks/) |
+| [Adaptive characterization of spatially inhomogeneous fields and errors in qubit registers](cases/1904.07225/README.md)<br>[arXiv:1904.07225v2](https://arxiv.org/abs/1904.07225v2)<br>[npj Quantum Inf. 6, 53 (2020)](https://doi.org/10.1038/s41534-020-0286-0) · DOI `10.1038/s41534-020-0286-0` | Partial scientific reproduction<br>部分科学复现<br>Audit: Not assessed / 未评分 | [English](cases/1904.07225/note/reproduction-note.en.md) · [中文](cases/1904.07225/note/reproduction-note.zh-CN.md)<br>[Code](cases/1904.07225/code/README.md) · [Checks](cases/1904.07225/outputs/checks/) |
 
 <a id="collection-many-body"></a>
 
