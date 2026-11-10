@@ -8,6 +8,15 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-11-10 — research: publish QC27 and QC28 reproductions
+
+[Commit / 提交 e828216](https://github.com/xi-zhao/runthepaper/commit/e828216f024fff8837563a4a69354b084fac8236) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Adaptive characterization of spatially inhomogeneous fields and errors in qubit registers](https://github.com/xi-zhao/runthepaper/tree/e828216f024fff8837563a4a69354b084fac8236/cases/1904.07225) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Dynamically corrected gates suppressing spatiotemporal error correlations as measured by randomized benchmarking](https://github.com/xi-zhao/runthepaper/tree/e828216f024fff8837563a4a69354b084fac8236/cases/1909.10727) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
 ## 2026-10-24 — docs: repair native ten navigation and note links
 
 [Commit / 提交 273a9bd](https://github.com/xi-zhao/runthepaper/commit/273a9bdaec0603772210e791d043a5bf1a84663c) · Added / 新增 0 · Updated / 更新 10 · Removed / 移出 0
@@ -82,15 +91,6 @@ This page records repository history, including any local commits awaiting publi
 | --- | --- | --- |
 | [Non-Hermitian Skin Effect and Chiral Damping in Open Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/0170931f534331bde5a9b1ee7907c4c62f5fd22a/cases/1904.08432) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 | [Pontus-Mpemba Effects](https://github.com/xi-zhao/runthepaper/tree/0170931f534331bde5a9b1ee7907c4c62f5fd22a/cases/2505.14622) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-
-## 2026-10-15 — fix: bind native packages to portable export source
-
-[Commit / 提交 6dabfdc](https://github.com/xi-zhao/runthepaper/commit/6dabfdc6c896526bcbd80e1d8ad46b5aa4f86f8a) · Added / 新增 0 · Updated / 更新 2 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Single-shot magic state factories for quantum LDPC codes](https://github.com/xi-zhao/runthepaper/tree/6dabfdc6c896526bcbd80e1d8ad46b5aa4f86f8a/cases/2610.10731) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源 |
-| [Constructing Large and Structured Decoherence-Free Subspaces in Hybrid Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/6dabfdc6c896526bcbd80e1d8ad46b5aa4f86f8a/cases/2610.12348) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源 |
 
 ## Refreshing this page / 如何更新
 
