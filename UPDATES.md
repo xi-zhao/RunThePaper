@@ -8,6 +8,31 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-11-10 — research: publish the remaining thirteen Q-CTRL reproductions
+
+[Commit / 提交 447a5a6](https://github.com/xi-zhao/runthepaper/commit/447a5a6abceb0aeb079695f98bfd05e96707db39) · Added / 新增 13 · Updated / 更新 0 · Removed / 移出 0
+
+<details>
+<summary>View 13 affected papers / 查看涉及的论文</summary>
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Enhancing the sensitivity of atom-interferometric inertial sensors using robust control](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/10.1038-s41467-023-43374-0) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Experimental quantum verification in the presence of temporally correlated noise](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/10.1038-s41534-017-0052-0) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Application of optimal band-limited control protocols to quantum noise sensing](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1704.02050) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Machine Learning for Predictive Estimation of Qubit Dynamics Subject to Dephasing](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1712.01291) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Optimally band-limited spectroscopy of control noise using a qubit sensor](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1803.05538) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Phase-Modulated Entangling Gates Robust to Static and Time-Varying Errors](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1808.10462) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Qiskit Backend Specifications for OpenQASM and OpenPulse Experiments](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1809.03452) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Simultaneous Spectral Estimation of Dephasing and Amplitude Noise on a Qubit Sensor via Optimally Band-Limited Control](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1911.02005) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Adaptive filtering of projective quantum measurements using discrete stochastic methods](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/1911.05752) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Numeric Optimization for Configurable, Parallel, Error‐Robust Entangling Gates in Large Ion Registers](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/2005.00366) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Optimized Bayesian system identification in quantum devices](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/2211.09090) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Automated discovery of heralded ballistic graph state generators for fusion-based photonic quantum computation](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/2508.16505) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Heterogeneous architectures enable a 138× reduction in physical qubit requirements for fault-tolerant quantum computing under detailed accounting](https://github.com/xi-zhao/runthepaper/tree/447a5a6abceb0aeb079695f98bfd05e96707db39/cases/2604.06319) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
+</details>
+
 ## 2026-11-10 — research: publish QC27 and QC28 reproductions
 
 [Commit / 提交 e828216](https://github.com/xi-zhao/runthepaper/commit/e828216f024fff8837563a4a69354b084fac8236) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
@@ -82,15 +107,6 @@ This page records repository history, including any local commits awaiting publi
 | [Quantum Zeno Subspaces](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/quant-ph-0201115) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 </details>
-
-## 2026-10-21 — research: publish two PRL reproductions and reference alignment
-
-[Commit / 提交 0170931](https://github.com/xi-zhao/runthepaper/commit/0170931f534331bde5a9b1ee7907c4c62f5fd22a) · Added / 新增 2 · Updated / 更新 0 · Removed / 移出 0
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Non-Hermitian Skin Effect and Chiral Damping in Open Quantum Systems](https://github.com/xi-zhao/runthepaper/tree/0170931f534331bde5a9b1ee7907c4c62f5fd22a/cases/1904.08432) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Pontus-Mpemba Effects](https://github.com/xi-zhao/runthepaper/tree/0170931f534331bde5a9b1ee7907c4c62f5fd22a/cases/2505.14622) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 ## Refreshing this page / 如何更新
 
