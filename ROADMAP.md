@@ -27,7 +27,24 @@ These are working entry points. Learning paths have not yet been validated
 through a student study, and chronology alone does not explain intellectual
 connections between papers.
 
-## Next: validate the first research experience
+## Next: a 97-plus-3 paper study
+
+Prioritize the [100-paper manuscript plan](evaluation/paper-study-100/README.md)
+before new productization or learner studies. Analyze 97 existing archives
+without rerunning their science, and prepare three newly selected low-compute
+papers in PRAgent. The original 100-paper archive and the three exclusions
+remain unchanged; the full selection history therefore contains 103 papers.
+
+The [archive extraction and implementation progress](evaluation/paper-study-100/PROGRESS.md)
+is now recorded. The added papers have production-case implementations and
+development diagnostics; verified production execution and scientific acceptance
+remain pending.
+Report historical and prospective work separately, including selection bias,
+actual conditions, evidence limits, and any failures. A planned total of 100
+is not a claim of 100 successful reproductions. Public case creation still
+requires PRAgent's publish-manifest projection; this plan adds no catalog case.
+
+## Later: validate the first research experience
 
 The first audience is beginning graduate students and undergraduates with the
 relevant foundations. Choose a small set of routes and observe whether readers
