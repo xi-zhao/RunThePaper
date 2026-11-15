@@ -91,7 +91,7 @@ for its scope and remaining review work.
 [**New: ten PRL reproductions and the latest comparison findings**](docs/reproductions/prl-ten-20261022.md)
 
 <!-- case-catalog:start -->
-**139 public paper cases**, including partial and blocked reproductions.
+**157 public paper cases**, including partial and blocked reproductions.
 Open a collection in the [full catalog](CASES.md) for paper references,
 recorded status, bilingual notes, code, and evidence.
 
@@ -99,11 +99,11 @@ recorded status, bilingual notes, code, and evidence.
 
 | Research collection | Cases |
 | --- | ---: |
-| [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 34 |
-| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 33 |
-| [Many-body physics, phases & nonequilibrium dynamics](CASES.md#collection-many-body) | 32 |
+| [Quantum computing, algorithms & error correction](CASES.md#collection-quantum-computing) | 42 |
+| [Quantum information, foundations & sensing](CASES.md#collection-quantum-information) | 34 |
+| [Many-body physics, phases & nonequilibrium dynamics](CASES.md#collection-many-body) | 34 |
 | [Topology, non-Hermitian physics, materials & transport](CASES.md#collection-topology-materials) | 27 |
-| [Atomic, optical, photonic & field physics](CASES.md#collection-amo-field) | 13 |
+| [Atomic, optical, photonic & field physics](CASES.md#collection-amo-field) | 20 |
 <!-- case-catalog:end -->
 
 For another starting point, explore [non-Hermitian edge states](cases/1803.01876/README.md)

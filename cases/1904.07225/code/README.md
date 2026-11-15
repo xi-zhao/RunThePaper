@@ -10,6 +10,6 @@ cd cases/1904.07225/code
 python scripts/run_reproduction.py
 ```
 
-Default run repeats square-field held-out trials at frozen settings. The optional six-ion and camera runs use pinned author files. See docs/NUMERICAL_METHODS.md.
+Runs the listed independent stages into a fresh directory. See docs/NUMERICAL_METHODS.md.
 
-Boundary: 逐档重调的最大预算比分别为方形场 1.75、六离子 1.49。原仿真轨迹、历史滤波和制图配置、原拟合森林与选帧未取得。
+Boundary: 这里的 Brier 分数评估公开读出的预测。原 SSIM 倍数仍需同期逐次地图和制图设置。
