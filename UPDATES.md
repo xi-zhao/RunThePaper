@@ -8,6 +8,37 @@ Recent case changes from committed Git history, newest first. Each entry links t
 This page records repository history, including any local commits awaiting publication. Uncommitted edits, top-level navigation, and learning-route definitions are excluded. Regenerating unchanged content creates no update.
 这里记录仓库提交历史，可能包含尚未推送的本地提交；未提交改动、顶层导航和学习路径定义不计入。重新生成相同内容不会产生案例更新。
 
+## 2026-11-15 — cases: publish eighteen Q-CTRL reproductions and refresh QC28
+
+[Commit / 提交 85afc63](https://github.com/xi-zhao/runthepaper/commit/85afc63dee23eb8d374f5172ad275c9bd9c87ac5) · Added / 新增 18 · Updated / 更新 1 · Removed / 移出 0
+
+<details>
+<summary>View 19 affected papers / 查看涉及的论文</summary>
+
+| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
+| --- | --- | --- |
+| [Data needs and challenges for quantum dot devices automation](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/10.1038-s41534-024-00878-x) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Adaptive characterization of spatially inhomogeneous fields and errors in qubit registers](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/1904.07225) | Updated / 更新 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Software tools for quantum control: improving quantum computer performance through noise and error suppression](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2001.04060) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Quantum Oscillator Noise Spectroscopy via Displaced Cat States](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2010.04375) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Error-Robust Quantum Logic Optimization Using a Cloud Quantum Computer Interface](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2010.08057) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Experimental Deep Reinforcement Learning for Error-Robust Gate-Set Design on a Superconducting Quantum Computer](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2105.01079) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Quantum computing for transport optimization](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2206.07313) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Experimental Benchmarking of an Automated Deterministic Error-Suppression Workflow for Quantum Algorithms](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2209.06864) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Learning to rank quantum circuits for hardware-optimized performance enhancement](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2404.06535) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Integrated error-suppressed pipeline for quantum optimization of nontrivial binary combinatorial optimization problems on gate-model hardware at the 156-qubit scale](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2406.01743) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Achieving Computational Gains with Quantum Error-Correction Primitives: Generation of Long-Range Entanglement Enhanced by Error Detection](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2411.14638) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Quantum-assured magnetic navigation achieves positioning accuracy better than a strategic-grade INS in airborne and ground-based field trials](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2504.08167) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Δ-Motif: Parallel Subgraph Isomorphism via Tabular Operations for Scalable Layout Selection](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2508.21287) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [No need to calibrate: characterization and compilation for high-fidelity circuit execution using imperfect gates](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2511.21831) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Practical protein-pocket hydration-site prediction for drug discovery on a quantum computer](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2512.08390) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Simulating the dynamics of an SU(2) matrix model on a trapped-ion quantum computer](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2604.14094) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Fast, accurate, high-resolution simulation of large-scale Fermi-Hubbard models on a digital quantum processor](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2605.04025) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Driving Exchange Interaction in Spin Qubits with Quasi-Zero Pulses](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2606.07472) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+| [Experimental demonstration of the Quantum Fourier Transform on up to 100 qubits using a convolutional compilation strategy](https://github.com/xi-zhao/runthepaper/tree/85afc63dee23eb8d374f5172ad275c9bd9c87ac5/cases/2608.05435) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
+
+</details>
+
 ## 2026-11-10 — research: publish the remaining thirteen Q-CTRL reproductions
 
 [Commit / 提交 447a5a6](https://github.com/xi-zhao/runthepaper/commit/447a5a6abceb0aeb079695f98bfd05e96707db39) · Added / 新增 13 · Updated / 更新 0 · Removed / 移出 0
@@ -83,28 +114,6 @@ This page records repository history, including any local commits awaiting publi
 | [Quantum Spin Hall Effect and Topological Phase Transition in HgTe Quantum Wells](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/cond-mat-0506581) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 | [Relaxation of an Isolated Interacting Fermion System by a Generalized Gibbs Ensemble](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/cond-mat-0604476) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 | [Scaling of Entanglement close to a Quantum Phase Transition](https://github.com/xi-zhao/runthepaper/tree/2d6566c2a95837de923a34e2257c1157d144dfe7/cases/quant-ph-0202029) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-
-</details>
-
-## 2026-10-22 — research: publish ten PRL reproductions and discrepancy evidence
-
-[Commit / 提交 2c51abb](https://github.com/xi-zhao/runthepaper/commit/2c51abb3f5e48919bdc553b62239a4c9b486a8ce) · Added / 新增 10 · Updated / 更新 0 · Removed / 移出 0
-
-<details>
-<summary>View 10 affected papers / 查看涉及的论文</summary>
-
-| Paper / 论文 | Change / 变更 | Files affected / 涉及内容 |
-| --- | --- | --- |
-| [Entanglement, Nonlinear Dynamics, and the Heisenberg Limit](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0711.4840) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Measure for the Degree of Non-Markovian Behavior of Quantum Processes in Open Systems](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0908.0238) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Fast Optimal Frictionless Atom Cooling in Harmonic Traps: Shortcut to Adiabaticity](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/0910.0709) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Single Photons from Coupled Quantum Modes](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/1002.4341) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Non-Bloch Band Theory of Non-Hermitian Systems](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/1902.10958) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Model for a Quantum Hall Effect without Landau Levels: Condensed-Matter Realization of the "Parity Anomaly"](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/PhysRevLett.61.2015) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Coherent Destruction of Tunneling](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/PhysRevLett.67.516) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Effect of Suddenly Turning on Interactions in the Luttinger Model](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/cond-mat-0606236) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Localization Transitions in Non-Hermitian Quantum Mechanics](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/cond-mat-9603165) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
-| [Quantum Zeno Subspaces](https://github.com/xi-zhao/runthepaper/tree/2c51abb3f5e48919bdc553b62239a4c9b486a8ce/cases/quant-ph-0201115) | Added / 新增 | Catalog / 目录信息; Checks and provenance / 检查与来源; Code / 代码; Data / 数据; Figures / 图片; Derivation and notes / 推导与讲义 |
 
 </details>
 
